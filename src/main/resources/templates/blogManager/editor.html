@@ -4,58 +4,21 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H+ 后台主题UI框架 - Bootstrap3 Markdown编辑器</title>
-    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <title> Bootstrap3 Markdown编辑器</title>
     <link rel="shortcut icon" href="favicon.ico">
-    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/plugins/markdown/bootstrap-markdown.min.css" charset="UTF-8"/>
-    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+
+    <link href="/css/summernote/summernote.css" rel="stylesheet">
+    <link href="/css/summernote/summernote-bs3.css" rel="stylesheet">
+
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
     <!-- 全局js -->
-    <script src="js/jquery.min.js?v=2.1.4"></script>
-    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
     <!-- 自定义js -->
-    <script src="js/content.js?v=1.0.0"></script>
-    <!-- simditor -->
-    <script type="text/javascript" src="js/plugins/markdown/markdown.js"></script>
-    <script type="text/javascript" src="js/plugins/markdown/to-markdown.js"></script>
-    <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.js"></script>
-    <script type="text/javascript">
-        //显示中文提示
-        (function ($) {
-            $.fn.markdown.messages.zh = {
-                'Bold': "粗体",
-                'Italic': "斜体",
-                'Heading': "标题",
-                'URL/Link': "链接",
-                'Image': "图片",
-                'List': "列表",
-                'Unordered List': "无序列表",
-                'Ordered List': "有序列表",
-                'Code': "代码",
-                'Quote': "引用",
-                'Preview': "预览",
-                'strong text': "粗体",
-                'emphasized text': "强调",
-                'heading text': "标题",
-                'enter link description here': "输入链接说明",
-                'Insert Hyperlink': "URL地址",
-                'enter image description here': "输入图片说明",
-                'Insert Image Hyperlink': "图片URL地址",
-                'enter image title here': "在这里输入图片标题",
-                'list text here': "这里是列表文本",
-                'code text here': "这里输入代码",
-                'quote here': "这里输入引用文本"
-            };
-        }(jQuery));
-        //初始化编辑器
-        $("#editor").markdown({
-            autofocus: true,
-            language: 'zh',
-        })
-    </script>
+    <script src="/js/content.js?v=1.0.0"></script>
 </head>
 
 <body class="gray-bg">
@@ -182,18 +145,87 @@
                         </form>
                     </div>
                 </div>
-                <div class="mail-text">
-                    <div class="ibox-content">
-                        <textarea name="content" data-provide="markdown" rows="14"></textarea>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>编辑区</h5>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <div class="summernote" id="summernote">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="mail-body text-right tooltip-demo">
-                    <a href="mailbox.html" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"
+                    <a id="send" class="btn btn-sm btn-primary" data-toggle="tooltip"
+                       data-placement="top"
                        title="Send"><i class="fa fa-reply"></i> 发布</a>
                 </div>
             </div>
         </div>
+        <!-- SUMMERNOTE -->
+        <script src="/js/summernote/summernote.min.js"></script>
+        <script src="/js/summernote/summernote-zh-CN.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#summernote').summernote({
+                    height: 200,
+                    onImageUpload: function (files, editor, $editable) {
+                        sendFile(files[0], editor, $editable);
+                    }
+                });
+
+                function sendFile(file, editor, $editable) {
+                    data = new FormData();
+                    data.append("file", file);
+                    $.ajax({
+                        data: data,
+                        type: "POST",
+                        url: "/upload",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        //todo 未做验证，需要验证
+                        success: function (data) {
+                            editor.insertImage($editable, data);
+                        }
+                    });
+                }
+            });
+        </script>
     </div>
 </div>
 </body>
 </html>
+<!--<script>-->
+<!--$(document).ready(function () {-->
+<!--$('.summernote').summernote({-->
+<!--lang: 'zh-CN',-->
+<!--height: 275,-->
+<!--dialogsFade: true,  // Add fade effect on dialogs-->
+<!--callbacks: {-->
+<!--onImageUpload: function (files) {-->
+<!--sendFile(files[0]);-->
+<!--},-->
+<!--onPaste: function (ne) {-->
+<!--var bufferTest = ((ne.originalEvent || ne).clipboardData || window.clipboardData).getData('Text/plain');-->
+<!--ne.preventDefault ? ne.preventDefault() : (ne.returnValue = false);-->
+<!--setTimeout(function () {-->
+<!--document.execCommand("insertText", false, bufferText);-->
+<!--}, 10);-->
+<!--}-->
+<!--}-->
+<!--});-->
+
+<!--$("#send").click(function () {-->
+<!--//获取内容-->
+<!--var comment = $(".summernote").code()-->
+<!--console.log(comment);-->
+<!--});-->
+<!--});-->
+
+<!--</script>-->

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @ClassName: LoginController
  * @Description:
@@ -53,8 +55,9 @@ public class LoginController {
         return "/login";
     }
 
-    @RequestMapping("/index")
-    public String toIndex() {
-        return "/index";
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        loginService.logout();
+        return "/login";
     }
 }

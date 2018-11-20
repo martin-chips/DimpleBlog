@@ -4037,13 +4037,13 @@ code {
 .ibox-content {
     background-color: #ffffff;
     color: inherit;
-    padding: 10px 20px 20px 10px;
+    padding: 15px 20px 20px 20px;
     border-color: #e7eaec;
     -webkit-border-image: none;
     -o-border-image: none;
     border-image: none;
     border-style: solid solid none;
-    border-width: 0px 0px;
+    border-width: 1px 0px;
 }
 
 table.table-mail tr td {
@@ -4387,7 +4387,7 @@ a.close-canvas-menu:hover {
 }
 
 .modal-backdrop {
-    z-index: 2040 !important;
+    /*z-index: 2040 !important;*/
 }
 
 .modal {
@@ -5285,11 +5285,11 @@ a.compose-mail {
 
 .mail-body {
     border-top: 1px solid #e7eaec;
-    padding: 12px;
+    padding: 20px;
 }
 
 .mail-text {
-    border-top: 0px solid #e7eaec;
+    border-top: 1px solid #e7eaec;
 }
 
 .mail-text .note-toolbar {
