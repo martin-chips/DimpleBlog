@@ -1,0 +1,107 @@
+package com.dimple.config;
+
+import com.dimple.realm.UserRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Properties;
+
+/**
+ * @ClassName: ShiroConfig
+ * @Description:
+ * @Auther: Owenb
+ * @Date: 11/19/18 19:21
+ * @Version: 1.0
+ */
+@Configuration
+public class ShiroConfig {
+
+    @Bean
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager) {
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        //拦截器
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/fonts/**", "anon");
+        filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/html/**", "anon");
+        //配置退出过滤器，具体代码Shiro已经实现
+        filterChainDefinitionMap.put("/logout", "logout");
+        //<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
+        //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
+        filterChainDefinitionMap.put("/**", "authc");
+        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        // 登录成功后要跳转的链接
+        shiroFilterFactoryBean.setSuccessUrl("/index");
+        //未授权界面;
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        return shiroFilterFactoryBean;
+    }
+
+    /**
+     * 设置凭证管理器
+     *
+     * @return
+     */
+    @Bean
+    public HashedCredentialsMatcher getHashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        hashedCredentialsMatcher.setHashAlgorithmName("md5");
+        hashedCredentialsMatcher.setHashIterations(2);
+        return hashedCredentialsMatcher;
+    }
+
+    @Bean
+    public UserRealm getUserRealm() {
+        UserRealm userRealm = new UserRealm();
+        userRealm.setCredentialsMatcher(getHashedCredentialsMatcher());
+        return userRealm;
+    }
+
+    @Bean
+    public SecurityManager getSecurityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(getUserRealm());
+        return securityManager;
+    }
+
+    /**
+     * 开启Shiro AOP注解支持
+     *
+     * @param securityManager
+     * @return
+     */
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
+
+    @Bean
+    public SimpleMappingExceptionResolver getSimpleMappingExceptionResolver() {
+        SimpleMappingExceptionResolver simpleMappingExceptionResolver = new SimpleMappingExceptionResolver();
+        Properties properties = new Properties();
+        //数据库异常
+        properties.setProperty("DatabaseException", "databaseError");
+        properties.setProperty("UnauthorizedException", "/user/403");
+        simpleMappingExceptionResolver.setExceptionMappings(properties);
+        simpleMappingExceptionResolver.setDefaultErrorView("error");    // No default
+        simpleMappingExceptionResolver.setExceptionAttribute("exception");     // Default is "exception"
+        //r.setWarnLogCategory("example.MvcLogger");     // No default
+        return simpleMappingExceptionResolver;
+    }
+}

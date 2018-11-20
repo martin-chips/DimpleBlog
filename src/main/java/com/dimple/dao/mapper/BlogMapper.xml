@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dimple.dao.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.dimple.bean.Blog" >
+    <id column="article_id" property="articleId" jdbcType="INTEGER" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="support" property="support" jdbcType="BIT" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="click" property="click" jdbcType="INTEGER" />
+    <result column="up" property="up" jdbcType="TINYINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    article_id, category_id, title, summary, content, create_time, status, support, tags, 
+    click, up, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.BlogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from blog
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dimple.bean.BlogExample" >
+    delete from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dimple.bean.Blog" >
+    insert into blog (article_id, category_id, title, 
+      summary, content, create_time, 
+      status, support, tags, 
+      click, up, update_time
+      )
+    values (#{articleId,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{summary,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{support,jdbcType=BIT}, #{tags,jdbcType=VARCHAR}, 
+      #{click,jdbcType=INTEGER}, #{up,jdbcType=TINYINT}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dimple.bean.Blog" >
+    insert into blog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="support != null" >
+        support,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="click != null" >
+        click,
+      </if>
+      <if test="up != null" >
+        up,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="support != null" >
+        #{support,jdbcType=BIT},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="click != null" >
+        #{click,jdbcType=INTEGER},
+      </if>
+      <if test="up != null" >
+        #{up,jdbcType=TINYINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dimple.bean.BlogExample" resultType="java.lang.Integer" >
+    select count(*) from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update blog
+    <set >
+      <if test="record.articleId != null" >
+        article_id = #{record.articleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryId != null" >
+        category_id = #{record.categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.support != null" >
+        support = #{record.support,jdbcType=BIT},
+      </if>
+      <if test="record.tags != null" >
+        tags = #{record.tags,jdbcType=VARCHAR},
+      </if>
+      <if test="record.click != null" >
+        click = #{record.click,jdbcType=INTEGER},
+      </if>
+      <if test="record.up != null" >
+        up = #{record.up,jdbcType=TINYINT},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update blog
+    set article_id = #{record.articleId,jdbcType=INTEGER},
+      category_id = #{record.categoryId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=TINYINT},
+      support = #{record.support,jdbcType=BIT},
+      tags = #{record.tags,jdbcType=VARCHAR},
+      click = #{record.click,jdbcType=INTEGER},
+      up = #{record.up,jdbcType=TINYINT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dimple.bean.Blog" >
+    update blog
+    <set >
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="support != null" >
+        support = #{support,jdbcType=BIT},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="click != null" >
+        click = #{click,jdbcType=INTEGER},
+      </if>
+      <if test="up != null" >
+        up = #{up,jdbcType=TINYINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dimple.bean.Blog" >
+    update blog
+    set category_id = #{categoryId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      support = #{support,jdbcType=BIT},
+      tags = #{tags,jdbcType=VARCHAR},
+      click = #{click,jdbcType=INTEGER},
+      up = #{up,jdbcType=TINYINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+</mapper>

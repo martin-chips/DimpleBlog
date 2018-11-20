@@ -1,0 +1,83 @@
+package com.dimple.realm;
+
+import com.dimple.bean.Permission;
+import com.dimple.bean.Role;
+import com.dimple.bean.User;
+import com.dimple.service.UserService;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+
+import java.util.List;
+
+/**
+ * @ClassName: UserRealm
+ * @Description:
+ * @Auther: Owenb
+ * @Date: 11/19/18 17:45
+ * @Version: 1.0
+ */
+public class UserRealm extends AuthorizingRealm {
+
+    Logger logger = LoggerFactory.getLogger(UserRealm.class);
+
+    @Autowired
+    @Lazy //就是这里，必须延时加载，根本原因是bean实例化的顺序上，shiro的bean必须要先实例化，否则@Cacheable注解无效，理论上可以用@Order控制顺序
+            UserService userService;
+
+    /**
+     * 授权
+     *
+     * @param principalCollection
+     * @return
+     */
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        //身份认证方法中的第一个参数，在这里可以取到
+        User user = (User) principalCollection.getPrimaryPrincipal();
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            info.addRole(role.getName());
+            for (Permission permission : role.getPermissions()) {
+                info.addStringPermission(permission.getName());
+            }
+        }
+        return info;
+    }
+
+    /**
+     * 身份认证
+     *
+     * @param token
+     * @return
+     * @throws AuthenticationException
+     */
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        logger.info("进入doGetAuthenticationInfo");
+        String loginId = (String) token.getPrincipal();
+        User userDB = userService.findByUserLoginId(loginId);
+        if (userDB == null) {
+            return null;
+        }
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(
+                userDB,
+                userDB.getPassword(),
+                ByteSource.Util.bytes(userDB.getSalt()),
+                getName()
+        );
+
+        return info;
+    }
+}

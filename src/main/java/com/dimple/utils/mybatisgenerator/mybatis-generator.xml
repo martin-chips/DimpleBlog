@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="context1">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <!-- 使用自定义的插件 -->
+        <commentGenerator type="com.dimple.utils.mybatisgenerator.MyBatisGeneratorCustomer">
+
+        </commentGenerator>
+
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/dimple_blog?useUnicode=true&amp;characterEncoding=UTF8"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+        <!--需要修改targetProject-->
+        <javaModelGenerator targetPackage="com.dimple.bean"
+                            targetProject="E:\Code\SpringBoot\DimpleBlog\src\main\java"/>
+
+        <!--需要修改targetProject-->
+
+        <sqlMapGenerator targetPackage="com.dimple.dao.mapper"
+                         targetProject="E:\Code\SpringBoot\DimpleBlog\src\main\java"/>
+
+        <!--需要修改targetProject-->
+        <!--E:\Code\SpringBoot\DimpleBlog\src\main\java\com\dimple\utils\mybatisgenerator\mybatis-generator.xml-->
+        <javaClientGenerator targetPackage="com.dimple.dao"
+                             targetProject="E:\Code\SpringBoot\DimpleBlog\src\main\java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="blog">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="category">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="links">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="permission">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="role">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="role_permission">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="user">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="user_role">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="visitor">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>
