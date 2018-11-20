@@ -12,8 +12,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class CommonController {
-    @RequestMapping("/login")
-    public String toLogin() {
-        return "/login";
-    }
 }

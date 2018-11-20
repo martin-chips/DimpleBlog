@@ -117,22 +117,6 @@
 
     <build>
         <resources>
-
-            <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-                <filtering>false</filtering>
-                <excludes>
-                    <exclude>static/fonts/**</exclude>
-                </excludes>
-            </resource>
-
-            <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>static/fonts/**</include>
-                </includes>
-            </resource>
             <resource>
                 <directory>src/main/java</directory>
                 <includes>

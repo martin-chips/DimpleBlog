@@ -3,7 +3,7 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dimple_blog
+    url: jdbc:mysql://localhost:3306/dimple_blog?useSSL=true
   cache:
     redis:
       time-to-live: 60s
@@ -27,3 +27,7 @@ spring:
 mybatis:
   mapper-locations: classpath:com/dimple/dao/mapper/*.xml
   type-aliases-package: com.dimple.bean
+# 打印sql
+logging:
+  level:
+    com.dimple.dao: debug

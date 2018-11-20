@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H+ 后台主题UI框架 - Bootstrap3 Markdown编辑器</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/plugins/markdown/bootstrap-markdown.min.css" charset="UTF-8"/>
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+    <!-- simditor -->
+    <script type="text/javascript" src="js/plugins/markdown/markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/to-markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.js"></script>
+    <script type="text/javascript">
+        //显示中文提示
+        (function ($) {
+            $.fn.markdown.messages.zh = {
+                'Bold': "粗体",
+                'Italic': "斜体",
+                'Heading': "标题",
+                'URL/Link': "链接",
+                'Image': "图片",
+                'List': "列表",
+                'Unordered List': "无序列表",
+                'Ordered List': "有序列表",
+                'Code': "代码",
+                'Quote': "引用",
+                'Preview': "预览",
+                'strong text': "粗体",
+                'emphasized text': "强调",
+                'heading text': "标题",
+                'enter link description here': "输入链接说明",
+                'Insert Hyperlink': "URL地址",
+                'enter image description here': "输入图片说明",
+                'Insert Image Hyperlink': "图片URL地址",
+                'enter image title here': "在这里输入图片标题",
+                'list text here': "这里是列表文本",
+                'code text here': "这里输入代码",
+                'quote here': "这里输入引用文本"
+            };
+        }(jQuery));
+        //初始化编辑器
+        $("#editor").markdown({
+            autofocus: true,
+            language: 'zh',
+        })
+    </script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content mailbox-content">
+                    <div class="file-manager">
+                        <a class="btn btn-block btn-primary compose-mail" href="mail_compose.html">写博客</a>
+                        <div class="space-25"></div>
+                        <h5>文件夹</h5>
+                        <ul class="folder-list m-b-md" style="padding: 0">
+                            <li>
+                                <a href="/test"> <i class="fa fa-inbox "></i> 已发布 <span
+                                        class="label label-warning pull-right">16</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailbox.html"> <i class="fa fa-file-text-o"></i> 草稿箱 <span
+                                        class="label label-danger pull-right">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailbox.html"> <i class="fa fa-trash-o"></i> 垃圾箱</a>
+                            </li>
+                        </ul>
+                        <h5>分类</h5>
+                        <ul class="category-list" style="padding: 0">
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-navy"></i> 工作</a>
+                            </li>
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-danger"></i> 文档</a>
+                            </li>
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-primary"></i> 社交</a>
+                            </li>
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-info"></i> 广告</a>
+                            </li>
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-warning"></i> 客户端</a>
+                            </li>
+                        </ul>
+
+                        <h5 class="tag-title">标签</h5>
+                        <ul class="tag-list" style="padding: 0">
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 朋友</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 工作</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 家庭</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 孩子</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 假期</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 音乐</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 照片</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 电影</a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 animated fadeInRight">
+            <div class="mail-box-header">
+                <div class="pull-right tooltip-demo">
+                    <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
+                       title="存为草稿"><i class="fa fa-pencil"></i> 存为草稿</a>
+                    <a href="mailbox.html" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top"
+                       title="放弃"><i class="fa fa-times"></i> 放弃</a>
+                </div>
+                <h2>
+                    写博客
+                </h2>
+            </div>
+            <div class="mail-box">
+                <div class="mail-body">
+                    <div class="col-lg-12">
+                        <form class="form-horizontal" method="post">
+                            <div class="col-lg-3">
+                                <label class="control-label">封面</label>
+                                <img src="../../img/p_big3.jpg" width="100%" height="150px"/>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">标题</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">摘要</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" placeholder="留空则默认为博文前150字节为博文的摘要">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">标签</label>
+                                    <div class="col-sm-10">
+                                        <input id="firstname" name="firstname" class="form-control" type="text">
+                                        <span class="help-block m-b-none"><i
+                                                class="fa fa-info-circle"></i> 多个标签之间使用";"分隔</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">分类</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="account">
+                                            <option>选项 1</option>
+                                            <option>选项 2</option>
+                                            <option>选项 3</option>
+                                            <option>选项 4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="mail-text">
+                    <div class="ibox-content">
+                        <textarea name="content" data-provide="markdown" rows="14"></textarea>
+                    </div>
+                </div>
+                <div class="mail-body text-right tooltip-demo">
+                    <a href="mailbox.html" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"
+                       title="Send"><i class="fa fa-reply"></i> 发布</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
