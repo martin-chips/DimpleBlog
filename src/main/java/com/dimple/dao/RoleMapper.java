@@ -2,8 +2,12 @@ package com.dimple.dao;
 
 import com.dimple.bean.Role;
 import com.dimple.bean.RoleExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 
 public interface RoleMapper {
     int countByExample(RoleExample example);

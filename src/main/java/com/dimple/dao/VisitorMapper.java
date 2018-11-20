@@ -4,6 +4,8 @@ import com.dimple.bean.Visitor;
 import com.dimple.bean.VisitorExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 
 public interface VisitorMapper {
     int countByExample(VisitorExample example);

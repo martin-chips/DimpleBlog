@@ -3,6 +3,8 @@ package com.dimple.realm;
 import com.dimple.bean.Permission;
 import com.dimple.bean.Role;
 import com.dimple.bean.User;
+import com.dimple.service.PermissionService;
+import com.dimple.service.RoleService;
 import com.dimple.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -34,6 +36,10 @@ public class UserRealm extends AuthorizingRealm {
     @Autowired
     @Lazy //就是这里，必须延时加载，根本原因是bean实例化的顺序上，shiro的bean必须要先实例化，否则@Cacheable注解无效，理论上可以用@Order控制顺序
             UserService userService;
+    @Autowired
+    RoleService roleService;
+    @Autowired
+    PermissionService permissionService;
 
     /**
      * 授权
@@ -42,14 +48,15 @@ public class UserRealm extends AuthorizingRealm {
      * @return
      */
     @Override
+
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //身份认证方法中的第一个参数，在这里可以取到
         User user = (User) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        List<Role> roles = user.getRoles();
+        List<Role> roles = roleService.findByUserId(user.getUserId());
         for (Role role : roles) {
             info.addRole(role.getName());
-            for (Permission permission : role.getPermissions()) {
+            for (Permission permission : permissionService.findByRoleId(role.getRoleId())) {
                 info.addStringPermission(permission.getName());
             }
         }

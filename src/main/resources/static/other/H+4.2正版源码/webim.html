@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - WebIM 即时通信</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+
+    <!-- Gritter -->
+    <link href="js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="js/plugins/layer/layim/layim.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="wrapper wrapper-content">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>WebIM 即时通信 简介</h5>
+
+                            </div>
+                            <div class="ibox-content">
+                                <p>WebIM基于阿里大牛贤心的layim修改而来，layim是一款不错的web即时通讯的jQuery插件。主要修改内容：</p>
+                                <hr>
+                                <ul>
+                                    <li>1. 所有图片图标修改为字体图标，提高加载效率；</li>
+                                    <li>2. 整合到H+中，解决了一些兼容性问题；</li>
+                                </ul>
+                                <hr>
+                                <p>作者：<a href="http://sentsin.com/" target="_blank">贤心</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>示例</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="alert alert-info">
+                                    请在右下角的窗口中查看。
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>如何使用</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <ul class="list-group clear-list" style="margin-bottom:0;">
+                                    <li class="list-group-item fist-item">
+                                        <p>
+                                            <span class="label label-success">1</span> 安装插件
+                                        </p>
+                                        <br>
+                                        <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head>
+    ……
+    &lt;link href="js/plugins/layer/layim/layim.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+……
+    &lt;script src="js/plugins/layer/layer.min.js"&gt;&lt;/script&gt;
+    &lt;script src="js/plugins/layer/layim/layim.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>
+                                            <span class="label label-info">2</span> 插件配置
+                                        </p>
+                                        <br>
+                                        <pre>在js/plugins/layer/layer.min.js中找到如下内容，进行自定义设置：
+___________________________________________________________________
+var config = {
+    msgurl: 'mailbox.html',
+    chatlogurl: 'mailbox.html',
+    aniTime: 200,
+    right: -232,
+    api: {
+        friend: 'js/plugins/layer/layim/data/friend.json', //好友列表接口
+        group: 'js/plugins/layer/layim/data/group.json', //群组列表接口
+        chatlog: 'js/plugins/layer/layim/data/chatlog.json', //聊天记录接口
+        groups: 'js/plugins/layer/layim/data/groups.json', //群组成员接口
+        sendurl: '' //发送消息接口
+    },
+    user: { //当前用户信息
+        name: '游客',
+        face: 'http://tp1.sinaimg.cn/1670071920/180/1287996904/1'
+    },
+
+    //自动回复内置文案，也可动态读取数据库配置
+    autoReplay: [
+        '您好，我现在有事不在，一会再和您联系。',
+        '你没发错吧？',
+        '洗澡中，请勿打扰，偷窥请购票，个体四十，团体八折，订票电话：一般人我不告诉他！',
+        '你好，我是主人的美女秘书，有什么事就跟我说吧，等他回来我会转告他的。',
+        '我正在拉磨，没法招呼您，因为我们家毛驴去动物保护协会把我告了，说我剥夺它休产假的权利。',
+        '<（@￣︶￣@）>',
+        '你要和我说话？你真的要和我说话？你确定自己想说吗？你一定非说不可吗？那你说吧，这是自动回复。',
+        '主人正在开机自检，键盘鼠标看好机会出去凉快去了，我是他的电冰箱，我打字比较慢，你慢慢说，别急……',
+        '(*^__^*) 嘻嘻，是贤心吗？'
+    ],
+
+    ……</pre>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>
+                                            <span class="label label-primary">3</span> 输出数据
+                                        </p>
+                                        <br>
+                                        <p>按照js/plugins/layer/layim/data/的json文件提供的数据接口输出规定的数据格式，注意：如果第二步修改了api的内容，注意输出数据的路径。</p>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+
+    <script src="http://res.sentsin.com/lay/lib/layer/1.8.5/layer.min.js"></script>
+    <script src="js/plugins/layer/layim/layim.js"></script>
+
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+</body>
+
+</html>

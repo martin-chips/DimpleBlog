@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 徽章，标签，进度条</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>徽章 (Badges)</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="badges_labels.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="badges_labels.html#">选项1</a>
+                                </li>
+                                <li><a href="badges_labels.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <p>
+                            要添加徽章，只需要在元素上添加<code>.badge</code>即可，改变徽章的颜色可使用如下class，如<code>.badge-primary</code>。
+                        </p>
+                        <p><span class="badge">空</span>
+                        </p>
+                        <p><span class="badge badge-primary">badge-primary</span>
+                        </p>
+                        <p><span class="badge badge-info">badge-info</span>
+                        </p>
+                        <p><span class="badge badge-success">badge-success</span>
+                        </p>
+                        <p><span class="badge badge-warning">badge-warning</span>
+                        </p>
+                        <p><span class="badge badge-danger">badge-danger</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>标签 (Labels)</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="badges_labels.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="badges_labels.html#">选项1</a>
+                                </li>
+                                <li><a href="badges_labels.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <p>
+                            要添加徽章，只需要在元素上添加class<code>.label</code>即可，如果需要修改颜色，添加如下class，如<code>.label-primary</code>
+                        </p>
+                        <p><span class="label">空</span>
+                        </p>
+                        <p><span class="label label-primary">label-primary</span>
+                        </p>
+                        <p><span class="label label-info">label-info</span>
+                        </p>
+                        <p><span class="label label-success">label-success</span>
+                        </p>
+                        <p><span class="label label-warning">label-warning</span>
+                        </p>
+                        <p><span class="label label-danger">label-danger</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>进度条 (Progress Bars)</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="badges_labels.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="badges_labels.html#">选项1</a>
+                                </li>
+                                <li><a href="badges_labels.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <h5>基本</h5>
+                        <div class="progress">
+                            <div style="width: 35%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="35" role="progressbar" class="progress-bar progress-bar-success">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                        </div>
+
+                        <div class="progress progress-bar-default">
+                            <div style="width: 43%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="43" role="progressbar" class="progress-bar">
+                                <span class="sr-only">43% Complete (success)</span>
+                            </div>
+                        </div>
+
+                        <h5>条纹</h5>
+
+                        <div class="progress progress-striped">
+                            <div style="width: 50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" role="progressbar" class="progress-bar progress-bar-warning">
+                                <span class="sr-only">40% Complete (success)</span>
+                            </div>
+                        </div>
+
+                        <h5>动画</h5>
+
+                        <div class="progress progress-striped active">
+                            <div style="width: 75%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" role="progressbar" class="progress-bar progress-bar-danger">
+                                <span class="sr-only">40% Complete (success)</span>
+                            </div>
+                        </div>
+
+                        <h5>堆叠</h5>
+
+                        <div class="progress progress-striped active">
+                            <div style="width: 30%" class="progress-bar progress-bar-success">
+                                <span class="sr-only">30% Complete (success)</span>
+                            </div>
+                            <div style="width: 20%" class="progress-bar progress-bar-warning">
+                                <span class="sr-only">15% Complete (warning)</span>
+                            </div>
+                            <div style="width: 40%" class="progress-bar progress-bar-danger">
+                                <span class="sr-only">40% Complete (danger)</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+
+
+
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+
+</body>
+
+</html>

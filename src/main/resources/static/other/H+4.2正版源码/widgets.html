@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 小工具</title>
+
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="widget style1">
+                    <div class="row">
+                        <div class="col-xs-4 text-center">
+                            <i class="fa fa-trophy fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日收入 </span>
+                            <h2 class="font-bold">&yen; 4,232</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="widget style1 navy-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-cloud fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日温度 </span>
+                            <h2 class="font-bold">26'C</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="widget style1 lazur-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-envelope-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 新消息 </span>
+                            <h2 class="font-bold">260</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="widget style1 yellow-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-music fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 新专辑 </span>
+                            <h2 class="font-bold">12</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="widget navy-bg no-padding">
+                    <div class="p-m">
+                        <h1 class="m-xs">&yen; 1,540</h1>
+
+                        <h3 class="font-bold no-margins">
+                            年收入
+                        </h3>
+                        <small>项目年收入</small>
+                    </div>
+                    <div class="flot-chart">
+                        <div class="flot-chart-content" id="flot-chart1"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="widget lazur-bg no-padding">
+                    <div class="p-m">
+                        <h1 class="m-xs">&yen; 210,660</h1>
+
+                        <h3 class="font-bold no-margins">
+                            月收入
+                        </h3>
+                        <small>项目年收入</small>
+                    </div>
+                    <div class="flot-chart">
+                        <div class="flot-chart-content" id="flot-chart2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="widget yellw-bg no-padding">
+                    <div class="p-m">
+                        <h1 class="m-xs">&yen; 50,992</h1>
+
+                        <h3 class="font-bold no-margins">
+                            半年收入
+                        </h3>
+                        <small>市场销售额</small>
+                    </div>
+                    <div class="flot-chart">
+                        <div class="flot-chart-content" id="flot-chart3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="widget style1 navy-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-user fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h2 class="font-bold">217</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 navy-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-thumbs-up fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h2 class="font-bold">400</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 navy-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-rss fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h2 class="font-bold">10</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 lazur-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-phone fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h2 class="font-bold">120</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 lazur-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-euro fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h2 class="font-bold">462</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 yellow-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-shield fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h2 class="font-bold">610</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="widget-head-color-box navy-bg p-lg text-center">
+                    <div class="m-b-md">
+                        <h2 class="font-bold no-margins">
+                                Beaut-zihan
+                            </h2>
+                        <small>项目经理</small>
+                    </div>
+                    <img src="img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                    <div>
+                        <span>100 动态</span> |
+                        <span>350 关注</span> |
+                        <span>610 关注者</span>
+                    </div>
+                </div>
+                <div class="widget-text-box">
+                    <h4 class="media-heading">Beaut-zihan</h4>
+                    <p>前端工程师</p>
+                    <div class="text-right">
+                        <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
+                        <a class="btn btn-xs btn-primary"><i class="fa fa-heart"></i> 收藏</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget navy-bg p-lg text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-shield fa-4x"></i>
+                        <h1 class="m-xs">456</h1>
+                        <h3 class="font-bold no-margins">
+                                安全问题
+                            </h3>
+                        <small>账户</small>
+                    </div>
+                </div>
+                <div class="widget  p-lg text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-flash fa-4x"></i>
+                        <h1 class="m-xs">612</h1>
+                        <h3 class="font-bold no-margins">
+                                离线
+                            </h3>
+                        <small>账户</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="widget lazur-bg p-xl">
+
+                    <h2>
+                                    Beaut-zihan
+                                </h2>
+                    <ul class="list-unstyled m-t-md">
+                        <li>
+                            <span class="fa fa-envelope m-r-xs"></span>
+                            <label>Email:</label>
+                            i@zi-han.net
+                        </li>
+                        <li>
+                            <span class="fa fa-home m-r-xs"></span>
+                            <label>Address:</label>
+                            上海市闵行区绿地科技岛广场A座2606室
+                        </li>
+                        <li>
+                            <span class="fa fa-phone m-r-xs"></span>
+                            <label>Contact:</label>
+                            (+020) 6780 3462
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="widget red-bg p-lg text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-bell fa-4x"></i>
+                        <h1 class="m-xs">47</h1>
+                        <h3 class="font-bold no-margins">
+                                通知
+                            </h3>
+                        <small>我们检测到的错误。</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget yellow-bg p-lg text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-thumbs-up fa-4x"></i>
+                        <h1 class="m-xs">520</h1>
+                        <h3 class="font-bold no-margins">
+                            喜欢
+                        </h3>
+                        <small>账户</small>
+                    </div>
+                </div>
+                <div class="widget yellow-bg p-lg text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-warning fa-4x"></i>
+                        <h3 class="font-bold no-margins">
+                                安全
+                            </h3>
+                        <small>共10个问题</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t-lg">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-content">
+
+                        <div>
+                            <div class="chat-activity-list">
+
+                                <div class="chat-element">
+                                    <a href="widgets.html#" class="pull-left">
+                                        <img alt="image" class="img-circle" src="img/a2.jpg">
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right text-navy">1分钟前</small>
+                                        <strong>奔波儿灞</strong>
+                                        <p class="m-b-xs">
+                                            跑步呐，最重要的是要有动力
+                                        </p>
+                                        <small class="text-muted">今天 09:02</small>
+                                    </div>
+                                </div>
+
+                                <div class="chat-element right">
+                                    <a href="widgets.html#" class="pull-right">
+                                        <img alt="image" class="img-circle" src="img/a4.jpg">
+                                    </a>
+                                    <div class="media-body text-right ">
+                                        <small class="pull-left">5分钟前</small>
+                                        <strong>灞波儿奔 </strong>
+                                        <p class="m-b-xs">
+                                            V信已经提前恢复，也算是个好消息吧
+                                        </p>
+                                        <small class="text-muted">11月7日 21:38</small>
+                                    </div>
+                                </div>
+
+                                <div class="chat-element ">
+                                    <a href="widgets.html#" class="pull-left">
+                                        <img alt="image" class="img-circle" src="img/a2.jpg">
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right">2小时前</small>
+                                        <strong>奔波儿灞</strong>
+                                        <p class="m-b-xs">
+                                            是你对不对
+                                        </p>
+                                        <small class="text-muted">11月8日 14:27</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-form">
+                            <form role="form">
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="消息内容…"></textarea>
+                                </div>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-sm btn-primary m-t-n-xs"><strong>发送消息</strong>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-danger m-r-sm">12</button>
+                                    消息
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary m-r-sm">28</button>
+                                    文章
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info m-r-sm">15</button>
+                                    评论
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-info m-r-sm">20</button>
+                                    新闻
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success m-r-sm">40</button>
+                                    赞
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger m-r-sm">30</button>
+                                    通知
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-warning m-r-sm">20</button>
+                                    专辑
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-default m-r-sm">40</button>
+                                    群组
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning m-r-sm">30</button>
+                                    权限
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="ibox-content text-center">
+                                <h1>奔波儿灞</h1>
+                                <div class="m-b-sm">
+                                    <img alt="image" class="img-circle" src="img/a8.jpg">
+                                </div>
+                                <p class="font-bold">CEO</p>
+
+                                <div class="text-center">
+                                    <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
+                                    <a class="btn btn-xs btn-primary"><i class="fa fa-heart"></i> 收藏</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="ibox-content">
+                                <div>
+                                    <div>
+                                        <span>内存</span>
+                                        <small class="pull-right">10/200 GB</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width: 60%;" class="progress-bar"></div>
+                                    </div>
+
+                                    <div>
+                                        <span>带宽</span>
+                                        <small class="pull-right">20 GB</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width: 50%;" class="progress-bar"></div>
+                                    </div>
+
+                                    <div>
+                                        <span>占用</span>
+                                        <small class="pull-right">73%</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width: 40%;" class="progress-bar"></div>
+                                    </div>
+
+                                    <div>
+                                        <span>FTP</span>
+                                        <small class="pull-right">400 GB</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width: 20%;" class="progress-bar progress-bar-danger"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox-content">
+                    <h2>任务列表</h2>
+                    <ul class="todo-list m-t">
+                        <li>
+                            <input type="checkbox" value="" name="" class="i-checks" />
+                            <span class="m-l-xs">开会</span>
+                            <small class="label label-primary"><i class="fa fa-clock-o"></i> 1小时</small>
+                        </li>
+                        <li>
+                            <input type="checkbox" value="" name="" class="i-checks" checked/>
+                            <span class="m-l-xs">项目开发</span>
+                            <small class="label label-info"><i class="fa fa-clock-o"></i> 3小时</small>
+                        </li>
+                        <li>
+                            <input type="checkbox" value="" name="" class="i-checks" />
+                            <span class="m-l-xs">修改bug</span>
+                            <small class="label label-warning"><i class="fa fa-clock-o"></i> 2小时</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <h2>Mini版任务列表</h2>
+                        <ul class="todo-list m-t small-list">
+                            <li>
+                                <a href="widgets.html#" class="check-link"><i class="fa fa-check-square"></i> </a>
+                                <span class="m-l-xs todo-completed">开会</span>
+
+                            </li>
+                            <li>
+                                <a href="widgets.html#" class="check-link"><i class="fa fa-check-square"></i> </a>
+                                <span class="m-l-xs  todo-completed">项目开发</span>
+
+                            </li>
+                            <li>
+                                <a href="widgets.html#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                <span class="m-l-xs">修改bug</span>
+                                <small class="label label-primary"><i class="fa fa-clock-o"></i> 1小时</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t-lg">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <h2>世界地图</h2>
+                    <small>中国地图或者省份地图可使用百度前端团队提供的echarts.js。<a href="graph_echarts.html">百度ECharts</a></small>
+                    <div id="world-map" style="height: 300px;"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/jquery-ui-1.10.4.min.js"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+
+
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Jvectormap -->
+    <script src="js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+    <!-- Flot -->
+    <script src="js/plugins/flot/jquery.flot.js"></script>
+    <script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="js/plugins/flot/jquery.flot.resize.js"></script>
+    <script>
+        $(document).ready(function () {
+            var d1 = [[1262304000000, 6], [1264982400000, 3057], [1267401600000, 20434], [1270080000000, 31982], [1272672000000, 26602], [1275350400000, 27826], [1277942400000, 24302], [1280620800000, 24237], [1283299200000, 21004], [1285891200000, 12144], [1288569600000, 10577], [1291161600000, 10295]];
+            var d2 = [[1262304000000, 5], [1264982400000, 200], [1267401600000, 1605], [1270080000000, 6129], [1272672000000, 11643], [1275350400000, 19055], [1277942400000, 30062], [1280620800000, 39197], [1283299200000, 37000], [1285891200000, 27000], [1288569600000, 21000], [1291161600000, 17000]];
+
+            var data1 = [
+                {
+                    label: "Data 1",
+                    data: d1,
+                    color: '#17a084'
+                },
+                {
+                    label: "Data 2",
+                    data: d2,
+                    color: '#127e68'
+                }
+            ];
+            $.plot($("#flot-chart1"), data1, {
+                xaxis: {
+                    tickDecimals: 0
+                },
+                series: {
+                    lines: {
+                        show: true,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 1
+                            }, {
+                                opacity: 1
+                            }]
+                        },
+                    },
+                    points: {
+                        width: 0.1,
+                        show: false
+                    },
+                },
+                grid: {
+                    show: false,
+                    borderWidth: 0
+                },
+                legend: {
+                    show: false,
+                }
+            });
+
+            var data2 = [
+                {
+                    label: "Data 1",
+                    data: d1,
+                    color: '#19a0a1'
+                }
+            ];
+            $.plot($("#flot-chart2"), data2, {
+                xaxis: {
+                    tickDecimals: 0
+                },
+                series: {
+                    lines: {
+                        show: true,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 1
+                            }, {
+                                opacity: 1
+                            }]
+                        },
+                    },
+                    points: {
+                        width: 0.1,
+                        show: false
+                    },
+                },
+                grid: {
+                    show: false,
+                    borderWidth: 0
+                },
+                legend: {
+                    show: false,
+                }
+            });
+
+            var data3 = [
+                {
+                    label: "Data 1",
+                    data: d1,
+                    color: '#fbbe7b'
+                },
+                {
+                    label: "Data 2",
+                    data: d2,
+                    color: '#f8ac59'
+                }
+            ];
+            $.plot($("#flot-chart3"), data3, {
+                xaxis: {
+                    tickDecimals: 0
+                },
+                series: {
+                    lines: {
+                        show: true,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 1
+                            }, {
+                                opacity: 1
+                            }]
+                        },
+                    },
+                    points: {
+                        width: 0.1,
+                        show: false
+                    },
+                },
+                grid: {
+                    show: false,
+                    borderWidth: 0
+                },
+                legend: {
+                    show: false,
+                }
+            });
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            $(".todo-list").sortable({
+                placeholder: "sort-highlight",
+                handle: ".handle",
+                forcePlaceholderSize: true,
+                zIndex: 999999
+            }).disableSelection();;
+
+            var mapData = {
+                "US": 498,
+                "SA": 200,
+                "CA": 1300,
+                "DE": 220,
+                "FR": 540,
+                "CN": 120,
+                "AU": 760,
+                "BR": 550,
+                "IN": 200,
+                "GB": 120,
+                "RU": 2000
+            };
+
+            $('#world-map').vectorMap({
+                map: 'world_mill_en',
+                backgroundColor: "transparent",
+                regionStyle: {
+                    initial: {
+                        fill: '#e4e4e4',
+                        "fill-opacity": 1,
+                        stroke: 'none',
+                        "stroke-width": 0,
+                        "stroke-opacity": 0
+                    }
+                },
+                series: {
+                    regions: [{
+                        values: mapData,
+                        scale: ["#1ab394", "#22d6b1"],
+                        normalizeFunction: 'polynomial'
+                    }]
+                },
+            });
+        });
+    </script>
+
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+
+</body>
+
+</html>

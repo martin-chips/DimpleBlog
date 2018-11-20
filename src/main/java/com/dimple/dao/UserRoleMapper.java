@@ -4,6 +4,8 @@ import com.dimple.bean.UserRole;
 import com.dimple.bean.UserRoleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 
 public interface UserRoleMapper {
     int countByExample(UserRoleExample example);

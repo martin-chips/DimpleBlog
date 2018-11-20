@@ -28,10 +28,6 @@ public class HomeController {
     @Autowired
     LoginService loginService;
 
-    @RequestMapping({"/", "/index"})
-    public String index() {
-        return "/index";
-    }
 
     @RequestMapping("/403")
     public String unauthorizedRole() {
@@ -39,25 +35,19 @@ public class HomeController {
         return "/user/403";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String toLogin(Map<String, Object> map, HttpServletRequest request) {
-        loginService.logout();
-        return "/user/login";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(String username, String password, Model model) throws Exception {
-        System.out.println("login()");
-        Result result = loginService.login(username, password);
-        if (result.getCode() == ResultEnum.SUCCESS.getCode()) {
-            return "/index";
-        } else {
-            model.addAttribute("msg", result.getMsg());
-            model.addAttribute("userName", username);
-            return "/user/login";
-        }
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public String login(String username, String password, Model model) throws Exception {
+//        System.out.println("login()");
+//        Result result = loginService.login(username, password);
+//        if (result.getCode() == ResultEnum.SUCCESS.getCode()) {
+//            return "/index";
+//        } else {
+//            model.addAttribute("msg", result.getMsg());
+//            model.addAttribute("userName", username);
+//            return "/user/login";
+//        }
+//    }
 
     @RequestMapping("/logout")
     public String logOut(HttpSession session) {
@@ -65,17 +55,4 @@ public class HomeController {
         return "/user/login";
     }
 
-
-    @RequestMapping("/userupdate")
-    @ResponseBody
-    @RequiresPermissions(value = {"user:update"})
-    public String logOut() {
-        return "/user/login";
-    }
-    @RequestMapping("/userinsert")
-    @ResponseBody
-    @RequiresPermissions(value = {"user:insert"})
-    public String insert() {
-        return "/user/login";
-    }
 }

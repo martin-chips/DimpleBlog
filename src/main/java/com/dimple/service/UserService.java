@@ -1,7 +1,10 @@
 package com.dimple.service;
 
+import com.dimple.bean.User;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+
+import java.util.List;
 
 /**
  * @ClassName: UserService
@@ -12,6 +15,6 @@ import org.springframework.cache.annotation.Cacheable;
  */
 @CacheConfig(cacheNames = "user")
 public interface UserService {
-//    @Cacheable(key = "'loginId'.concat(#loginId)")
-//    User findByUserLoginId(String loginId);
+    @Cacheable(key = "'loginId'.concat(#loginId)")
+    User findByUserLoginId(String loginId);
 }

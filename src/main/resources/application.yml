@@ -18,7 +18,12 @@ spring:
         max-active: 8
         min-idle: 5
         max-wait: 10000ms
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+  thymeleaf:
+    suffix: .html
+    # 关闭缓存
+    cache: false
+    encoding: UTF-8
+    prefix: classpath:/templates
+mybatis:
+  mapper-locations: classpath:com/dimple/dao/mapper/*.xml
+  type-aliases-package: com.dimple.bean
