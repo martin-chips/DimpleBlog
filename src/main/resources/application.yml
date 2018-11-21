@@ -24,6 +24,10 @@ spring:
     cache: false
     encoding: UTF-8
     prefix: classpath:/templates
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      
 mybatis:
   mapper-locations: classpath:com/dimple/dao/mapper/*.xml
   type-aliases-package: com.dimple.bean

@@ -13,6 +13,7 @@
     <link href="/css/summernote/summernote.css" rel="stylesheet">
     <link href="/css/summernote/summernote-bs3.css" rel="stylesheet">
 
+
     <link href="/css/style.css?v=4.1.0" rel="stylesheet">
     <!-- 全局js -->
     <script src="/js/jquery.min.js?v=2.1.4"></script>
@@ -153,7 +154,7 @@
                                 <h5>编辑区</h5>
                             </div>
                             <div class="ibox-content no-padding">
-                                <div class="summernote" id="summernote">
+                                <div id="summernote">
                                 </div>
                             </div>
                         </div>
@@ -166,16 +167,16 @@
                 </div>
             </div>
         </div>
-        <!-- SUMMERNOTE -->
         <script src="/js/summernote/summernote.min.js"></script>
         <script src="/js/summernote/summernote-zh-CN.js"></script>
 
         <script>
             $(document).ready(function () {
                 $('#summernote').summernote({
-                    height: 200,
+                    height: 270,
+                    lang: 'zh-CN',
                     onImageUpload: function (files, editor, $editable) {
-                        sendFile(files[0], editor, $editable);
+                        sendFile(files[0], 1, $editable);
                     }
                 });
 
@@ -185,13 +186,13 @@
                     $.ajax({
                         data: data,
                         type: "POST",
-                        url: "/upload",
+                        url: "/uploadImg",
                         cache: false,
                         contentType: false,
                         processData: false,
                         //todo 未做验证，需要验证
                         success: function (data) {
-                            editor.insertImage($editable, data);
+                            $('.summernote').summernote('insertImage', data);//新增窗口的富文本编辑器
                         }
                     });
                 }
@@ -201,31 +202,3 @@
 </div>
 </body>
 </html>
-<!--<script>-->
-<!--$(document).ready(function () {-->
-<!--$('.summernote').summernote({-->
-<!--lang: 'zh-CN',-->
-<!--height: 275,-->
-<!--dialogsFade: true,  // Add fade effect on dialogs-->
-<!--callbacks: {-->
-<!--onImageUpload: function (files) {-->
-<!--sendFile(files[0]);-->
-<!--},-->
-<!--onPaste: function (ne) {-->
-<!--var bufferTest = ((ne.originalEvent || ne).clipboardData || window.clipboardData).getData('Text/plain');-->
-<!--ne.preventDefault ? ne.preventDefault() : (ne.returnValue = false);-->
-<!--setTimeout(function () {-->
-<!--document.execCommand("insertText", false, bufferText);-->
-<!--}, 10);-->
-<!--}-->
-<!--}-->
-<!--});-->
-
-<!--$("#send").click(function () {-->
-<!--//获取内容-->
-<!--var comment = $(".summernote").code()-->
-<!--console.log(comment);-->
-<!--});-->
-<!--});-->
-
-<!--</script>-->

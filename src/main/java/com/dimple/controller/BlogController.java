@@ -126,4 +126,55 @@ public class BlogController {
             return null;
         }
     }
+
+    @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
+    @ResponseBody
+    public String uploadImage(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
+
+        System.out.print("上传文件===" + "\n");
+        //判断文件是否为空
+        if (file.isEmpty()) {
+            return "上传文件不可为空";
+        }
+
+        // 获取文件名
+        String fileName = file.getOriginalFilename();
+//        System.out.print("上传的文件名为: "+fileName+"\n");
+
+        fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+        System.out.print("（加个时间戳，尽量避免文件名称重复）保存的文件名为: " + fileName + "\n");
+
+
+        //加个时间戳，尽量避免文件名称重复
+        String path = "E:/fileUpload/" + fileName;
+        //String path = "E:/fileUpload/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+        //文件绝对路径
+        System.out.print("保存文件绝对路径" + path + "\n");
+
+        //创建文件路径
+        File dest = new File(path);
+
+        //判断文件是否已经存在
+        if (dest.exists()) {
+            return "文件已经存在";
+        }
+
+        //判断文件父目录是否存在
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdir();
+        }
+
+        String url;
+        try {
+            //上传文件
+            file.transferTo(dest); //保存文件
+            System.out.print("保存文件路径" + path + "\n");
+            //url="http://你自己的域名/项目名/images/"+fileName;//正式项目
+            url = "http://localhost:8080/images/" + fileName;
+        } catch (IOException e) {
+            return "上传失败";
+        }
+        return url;
+    }
+
 }

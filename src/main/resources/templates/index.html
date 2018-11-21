@@ -121,20 +121,32 @@
                     <a href="/optLog" class="J_menuItem"><i class="fa fa-flask"></i> <span class="nav-label">操作日志</span></a>
                 </li>
                 <li>
-                    <a href="/links" class="J_menuItem"><i class="fa fa-table"></i> <span class="nav-label">友情链接</span></a>
+                    <a class="J_menuItem"><i class="fa fa-table"></i> <span
+                            class="nav-label">友情链接</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/localPicture">未处理消息</a>
+                        </li>
+                        <li><a class="J_menuItem" href="/qiniuyun">友链列表</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="/resources" class="J_menuItem"><i class="fa fa-picture-o"></i> <span
-                            class="nav-label">资源管理</span></a>
-
+                    <a class="J_menuItem"><i class="fa fa-picture-o"></i> <span
+                            class="nav-label">资源管理</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/localPicture">软件分享</a>
+                        </li>
+                        <li><a class="J_menuItem" href="/qiniuyun">学习资料分享</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="/picture"><i class="fa fa-picture-o"></i> <span class="nav-label">图库</span><span
+                    <a><i class="fa fa-picture-o"></i> <span class="nav-label">图库</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/localPicture">本地图库</a>
+                        <li><a class="J_menuItem" href="/gallery/localGallery">本地图库</a>
                         </li>
-                        <li><a class="J_menuItem" href="/qiniuyun">七牛云图库</a>
+                        <li><a class="J_menuItem" href="/gallery/qiNiuGallery">七牛云图库</a>
                         </li>
                         <li><a class="J_menuItem" href="/blueimp">Blueimp相册</a>
                         </li>
@@ -159,12 +171,12 @@
                 <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
                         class="fa fa-bars"></i> </a>
                     <!--<div class="h"> Dimple's BlogEnum Manager System</div>-->
-                    <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
-                        <div class="form-group">
-                            <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search"
-                                   id="top-search">
-                        </div>
-                    </form>
+                    <!--<form role="search" class="navbar-form-custom" method="post" action="search_results.html">-->
+                        <!--<div class="form-group">-->
+                            <!--<input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search"-->
+                                   <!--id="top-search">-->
+                        <!--</div>-->
+                    <!--</form>-->
                 </div>
                 <!-- 右侧的breadcrumb -->
                 <ul class="nav navbar-top-links navbar-right">

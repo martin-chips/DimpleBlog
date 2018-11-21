@@ -21,7 +21,7 @@ import java.util.Properties;
  * @Date: 11/19/18 19:21
  * @Version: 1.0
  */
-@Configuration
+//@Configuration
 public class ShiroConfig {
 
     @Bean("shiroFilter")
