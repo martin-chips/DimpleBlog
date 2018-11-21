@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Bootstrap3 Markdown编辑器</title>
@@ -9,17 +8,18 @@
     <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
-
     <link href="/css/summernote/summernote.css" rel="stylesheet">
     <link href="/css/summernote/summernote-bs3.css" rel="stylesheet">
-
-
     <link href="/css/style.css?v=4.1.0" rel="stylesheet">
     <!-- 全局js -->
     <script src="/js/jquery.min.js?v=2.1.4"></script>
     <script src="/js/bootstrap.min.js?v=3.3.6"></script>
     <!-- 自定义js -->
     <script src="/js/content.js?v=1.0.0"></script>
+    <script src="/js/summernote/summernote.min.js"></script>
+    <script src="/js/summernote/summernote-zh-CN.js"></script>
+    <!--页面JS-->
+    <script src="/js/pagejs/editor.js"></script>
 </head>
 
 <body class="gray-bg">
@@ -29,22 +29,21 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content mailbox-content">
                     <div class="file-manager">
-                        <a class="btn btn-block btn-primary compose-mail" href="mail_compose.html">写博客</a>
+                        <a class="btn btn-block btn-primary compose-mail">编辑博客</a>
                         <div class="space-25"></div>
                         <h5>文件夹</h5>
                         <ul class="folder-list m-b-md" style="padding: 0">
                             <li>
-                                <a href="/test"> <i class="fa fa-inbox "></i> 已发布 <span
+                                <a> <i class="fa fa-inbox "></i> 已发布 <span
                                         class="label label-warning pull-right">16</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="mailbox.html"> <i class="fa fa-file-text-o"></i> 草稿箱 <span
-                                        class="label label-danger pull-right">2</span>
+                                <a> <i class="fa fa-file-text-o"></i> 草稿箱 <span class="label label-danger pull-right">2</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="mailbox.html"> <i class="fa fa-trash-o"></i> 垃圾箱</a>
+                                <a> <i class="fa fa-trash-o"></i> 垃圾箱</a>
                             </li>
                         </ul>
                         <h5>分类</h5>
@@ -120,15 +119,15 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">摘要</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" placeholder="留空则默认为博文前150字节为博文的摘要">
+                                        <input type="text" class="form-control">
+                                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 留空则默认为博文前150字节为博文的摘要</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">标签</label>
                                     <div class="col-sm-10">
                                         <input id="firstname" name="firstname" class="form-control" type="text">
-                                        <span class="help-block m-b-none"><i
-                                                class="fa fa-info-circle"></i> 多个标签之间使用";"分隔</span>
+                                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 多个标签之间使用";"分隔</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -167,37 +166,6 @@
                 </div>
             </div>
         </div>
-        <script src="/js/summernote/summernote.min.js"></script>
-        <script src="/js/summernote/summernote-zh-CN.js"></script>
-
-        <script>
-            $(document).ready(function () {
-                $('#summernote').summernote({
-                    height: 270,
-                    lang: 'zh-CN',
-                    onImageUpload: function (files, editor, $editable) {
-                        sendFile(files[0], 1, $editable);
-                    }
-                });
-
-                function sendFile(file, editor, $editable) {
-                    data = new FormData();
-                    data.append("file", file);
-                    $.ajax({
-                        data: data,
-                        type: "POST",
-                        url: "/uploadImg",
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        //todo 未做验证，需要验证
-                        success: function (data) {
-                            $('.summernote').summernote('insertImage', data);//新增窗口的富文本编辑器
-                        }
-                    });
-                }
-            });
-        </script>
     </div>
 </div>
 </body>
