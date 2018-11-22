@@ -1,6 +1,7 @@
 package com.dimple.bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LinksExample {
@@ -73,7 +74,7 @@ public class LinksExample {
     }
 
     /**
-     * links 2018-11-20
+     * links 2018-11-21
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -246,323 +247,243 @@ public class LinksExample {
             return (Criteria) this;
         }
 
-        public Criteria andContentIsNull() {
-            addCriterion("content is null");
+        public Criteria andDisplayIsNull() {
+            addCriterion("display is null");
             return (Criteria) this;
         }
 
-        public Criteria andContentIsNotNull() {
-            addCriterion("content is not null");
+        public Criteria andDisplayIsNotNull() {
+            addCriterion("display is not null");
             return (Criteria) this;
         }
 
-        public Criteria andContentEqualTo(String value) {
-            addCriterion("content =", value, "content");
+        public Criteria andDisplayEqualTo(Boolean value) {
+            addCriterion("display =", value, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotEqualTo(String value) {
-            addCriterion("content <>", value, "content");
+        public Criteria andDisplayNotEqualTo(Boolean value) {
+            addCriterion("display <>", value, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentGreaterThan(String value) {
-            addCriterion("content >", value, "content");
+        public Criteria andDisplayGreaterThan(Boolean value) {
+            addCriterion("display >", value, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentGreaterThanOrEqualTo(String value) {
-            addCriterion("content >=", value, "content");
+        public Criteria andDisplayGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("display >=", value, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentLessThan(String value) {
-            addCriterion("content <", value, "content");
+        public Criteria andDisplayLessThan(Boolean value) {
+            addCriterion("display <", value, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentLessThanOrEqualTo(String value) {
-            addCriterion("content <=", value, "content");
+        public Criteria andDisplayLessThanOrEqualTo(Boolean value) {
+            addCriterion("display <=", value, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentLike(String value) {
-            addCriterion("content like", value, "content");
+        public Criteria andDisplayIn(List<Boolean> values) {
+            addCriterion("display in", values, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotLike(String value) {
-            addCriterion("content not like", value, "content");
+        public Criteria andDisplayNotIn(List<Boolean> values) {
+            addCriterion("display not in", values, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentIn(List<String> values) {
-            addCriterion("content in", values, "content");
+        public Criteria andDisplayBetween(Boolean value1, Boolean value2) {
+            addCriterion("display between", value1, value2, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotIn(List<String> values) {
-            addCriterion("content not in", values, "content");
+        public Criteria andDisplayNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("display not between", value1, value2, "display");
             return (Criteria) this;
         }
 
-        public Criteria andContentBetween(String value1, String value2) {
-            addCriterion("content between", value1, value2, "content");
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotBetween(String value1, String value2) {
-            addCriterion("content not between", value1, value2, "content");
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionIsNull() {
-            addCriterion("description is null");
+        public Criteria andStatusEqualTo(Boolean value) {
+            addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionIsNotNull() {
-            addCriterion("description is not null");
+        public Criteria andStatusNotEqualTo(Boolean value) {
+            addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionEqualTo(String value) {
-            addCriterion("description =", value, "description");
+        public Criteria andStatusGreaterThan(Boolean value) {
+            addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionNotEqualTo(String value) {
-            addCriterion("description <>", value, "description");
+        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionGreaterThan(String value) {
-            addCriterion("description >", value, "description");
+        public Criteria andStatusLessThan(Boolean value) {
+            addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
-            addCriterion("description >=", value, "description");
+        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
+            addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionLessThan(String value) {
-            addCriterion("description <", value, "description");
+        public Criteria andStatusIn(List<Boolean> values) {
+            addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionLessThanOrEqualTo(String value) {
-            addCriterion("description <=", value, "description");
+        public Criteria andStatusNotIn(List<Boolean> values) {
+            addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionLike(String value) {
-            addCriterion("description like", value, "description");
+        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
+            addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionNotLike(String value) {
-            addCriterion("description not like", value, "description");
+        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionIn(List<String> values) {
-            addCriterion("description in", values, "description");
+        public Criteria andWeightIsNull() {
+            addCriterion("weight is null");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionNotIn(List<String> values) {
-            addCriterion("description not in", values, "description");
+        public Criteria andWeightIsNotNull() {
+            addCriterion("weight is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionBetween(String value1, String value2) {
-            addCriterion("description between", value1, value2, "description");
+        public Criteria andWeightEqualTo(Integer value) {
+            addCriterion("weight =", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andDescriptionNotBetween(String value1, String value2) {
-            addCriterion("description not between", value1, value2, "description");
+        public Criteria andWeightNotEqualTo(Integer value) {
+            addCriterion("weight <>", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayIsNull() {
-            addCriterion("link_display is null");
+        public Criteria andWeightGreaterThan(Integer value) {
+            addCriterion("weight >", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayIsNotNull() {
-            addCriterion("link_display is not null");
+        public Criteria andWeightGreaterThanOrEqualTo(Integer value) {
+            addCriterion("weight >=", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayEqualTo(Boolean value) {
-            addCriterion("link_display =", value, "linkDisplay");
+        public Criteria andWeightLessThan(Integer value) {
+            addCriterion("weight <", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayNotEqualTo(Boolean value) {
-            addCriterion("link_display <>", value, "linkDisplay");
+        public Criteria andWeightLessThanOrEqualTo(Integer value) {
+            addCriterion("weight <=", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayGreaterThan(Boolean value) {
-            addCriterion("link_display >", value, "linkDisplay");
+        public Criteria andWeightIn(List<Integer> values) {
+            addCriterion("weight in", values, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("link_display >=", value, "linkDisplay");
+        public Criteria andWeightNotIn(List<Integer> values) {
+            addCriterion("weight not in", values, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayLessThan(Boolean value) {
-            addCriterion("link_display <", value, "linkDisplay");
+        public Criteria andWeightBetween(Integer value1, Integer value2) {
+            addCriterion("weight between", value1, value2, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayLessThanOrEqualTo(Boolean value) {
-            addCriterion("link_display <=", value, "linkDisplay");
+        public Criteria andWeightNotBetween(Integer value1, Integer value2) {
+            addCriterion("weight not between", value1, value2, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayIn(List<Boolean> values) {
-            addCriterion("link_display in", values, "linkDisplay");
+        public Criteria andCreateDateIsNull() {
+            addCriterion("create_date is null");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayNotIn(List<Boolean> values) {
-            addCriterion("link_display not in", values, "linkDisplay");
+        public Criteria andCreateDateIsNotNull() {
+            addCriterion("create_date is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayBetween(Boolean value1, Boolean value2) {
-            addCriterion("link_display between", value1, value2, "linkDisplay");
+        public Criteria andCreateDateEqualTo(Date value) {
+            addCriterion("create_date =", value, "createDate");
             return (Criteria) this;
         }
 
-        public Criteria andLinkDisplayNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("link_display not between", value1, value2, "linkDisplay");
+        public Criteria andCreateDateNotEqualTo(Date value) {
+            addCriterion("create_date <>", value, "createDate");
             return (Criteria) this;
         }
 
-        public Criteria andLinkHandleIsNull() {
-            addCriterion("link_handle is null");
+        public Criteria andCreateDateGreaterThan(Date value) {
+            addCriterion("create_date >", value, "createDate");
             return (Criteria) this;
         }
 
-        public Criteria andLinkHandleIsNotNull() {
-            addCriterion("link_handle is not null");
+        public Criteria andCreateDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_date >=", value, "createDate");
             return (Criteria) this;
         }
 
-        public Criteria andLinkHandleEqualTo(Boolean value) {
-            addCriterion("link_handle =", value, "linkHandle");
+        public Criteria andCreateDateLessThan(Date value) {
+            addCriterion("create_date <", value, "createDate");
             return (Criteria) this;
         }
 
-        public Criteria andLinkHandleNotEqualTo(Boolean value) {
-            addCriterion("link_handle <>", value, "linkHandle");
+        public Criteria andCreateDateLessThanOrEqualTo(Date value) {
+            addCriterion("create_date <=", value, "createDate");
             return (Criteria) this;
         }
 
-        public Criteria andLinkHandleGreaterThan(Boolean value) {
-            addCriterion("link_handle >", value, "linkHandle");
+        public Criteria andCreateDateIn(List<Date> values) {
+            addCriterion("create_date in", values, "createDate");
             return (Criteria) this;
         }
 
-        public Criteria andLinkHandleGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("link_handle >=", value, "linkHandle");
+        public Criteria andCreateDateNotIn(List<Date> values) {
+            addCriterion("create_date not in", values, "createDate");
             return (Criteria) this;
         }
 
-        public Criteria andLinkHandleLessThan(Boolean value) {
-            addCriterion("link_handle <", value, "linkHandle");
+        public Criteria andCreateDateBetween(Date value1, Date value2) {
+            addCriterion("create_date between", value1, value2, "createDate");
             return (Criteria) this;
         }
 
-        public Criteria andLinkHandleLessThanOrEqualTo(Boolean value) {
-            addCriterion("link_handle <=", value, "linkHandle");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkHandleIn(List<Boolean> values) {
-            addCriterion("link_handle in", values, "linkHandle");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkHandleNotIn(List<Boolean> values) {
-            addCriterion("link_handle not in", values, "linkHandle");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkHandleBetween(Boolean value1, Boolean value2) {
-            addCriterion("link_handle between", value1, value2, "linkHandle");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkHandleNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("link_handle not between", value1, value2, "linkHandle");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightIsNull() {
-            addCriterion("link_weight is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightIsNotNull() {
-            addCriterion("link_weight is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightEqualTo(Integer value) {
-            addCriterion("link_weight =", value, "linkWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightNotEqualTo(Integer value) {
-            addCriterion("link_weight <>", value, "linkWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightGreaterThan(Integer value) {
-            addCriterion("link_weight >", value, "linkWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightGreaterThanOrEqualTo(Integer value) {
-            addCriterion("link_weight >=", value, "linkWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightLessThan(Integer value) {
-            addCriterion("link_weight <", value, "linkWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightLessThanOrEqualTo(Integer value) {
-            addCriterion("link_weight <=", value, "linkWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightIn(List<Integer> values) {
-            addCriterion("link_weight in", values, "linkWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightNotIn(List<Integer> values) {
-            addCriterion("link_weight not in", values, "linkWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightBetween(Integer value1, Integer value2) {
-            addCriterion("link_weight between", value1, value2, "linkWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andLinkWeightNotBetween(Integer value1, Integer value2) {
-            addCriterion("link_weight not between", value1, value2, "linkWeight");
+        public Criteria andCreateDateNotBetween(Date value1, Date value2) {
+            addCriterion("create_date not between", value1, value2, "createDate");
             return (Criteria) this;
         }
 
@@ -635,6 +556,76 @@ public class LinksExample {
             addCriterion("url not between", value1, value2, "url");
             return (Criteria) this;
         }
+
+        public Criteria andDescriptionIsNull() {
+            addCriterion("description is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("description is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("description =", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("description <>", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("description >", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("description >=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("description <", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("description <=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLike(String value) {
+            addCriterion("description like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotLike(String value) {
+            addCriterion("description not like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("description in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("description not in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("description between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("description not between", value1, value2, "description");
+            return (Criteria) this;
+        }
     }
 
     /**
@@ -648,7 +639,7 @@ public class LinksExample {
     }
 
     /**
-     * links 2018-11-20
+     * links 2018-11-21
      */
     public static class Criterion {
         private String condition;

@@ -1,7 +1,11 @@
 package com.dimple.bean;
 
-import java.io.Serializable;
+import lombok.ToString;
 
+import java.io.Serializable;
+import java.util.Date;
+
+@ToString
 public class Links implements Serializable {
     /**
      * id
@@ -14,34 +18,34 @@ public class Links implements Serializable {
     private String title;
 
     /**
-     * 友链的内容
+     * 是否显示(1表示显示，0表示不显示)
      */
-    private String content;
+    private Boolean display;
 
     /**
-     * 友链的描述
+     * 是否已经处理(1表示已经处理，0表示没有处理)
      */
-    private String description;
-
-    /**
-     * 是否显示
-     */
-    private Boolean linkDisplay;
-
-    /**
-     * 是否已经处理
-     */
-    private Boolean linkHandle;
+    private Boolean status;
 
     /**
      * 权重
      */
-    private Integer linkWeight;
+    private Integer weight;
+
+    /**
+     * 创建时间
+     */
+    private Date createDate;
 
     /**
      * 友链链接地址
      */
     private String url;
+
+    /**
+     * 友链的描述
+     */
+    private String description;
 
     /**
      * links
@@ -81,19 +85,83 @@ public class Links implements Serializable {
     }
 
     /**
-     * 友链的内容
-     * @return content 友链的内容
+     * 是否显示(1表示显示，0表示不显示)
+     * @return display 是否显示(1表示显示，0表示不显示)
      */
-    public String getContent() {
-        return content;
+    public Boolean getDisplay() {
+        return display;
     }
 
     /**
-     * 友链的内容
-     * @param content 友链的内容
+     * 是否显示(1表示显示，0表示不显示)
+     * @param display 是否显示(1表示显示，0表示不显示)
      */
-    public void setContent(String content) {
-        this.content = content;
+    public void setDisplay(Boolean display) {
+        this.display = display;
+    }
+
+    /**
+     * 是否已经处理(1表示已经处理，0表示没有处理)
+     * @return status 是否已经处理(1表示已经处理，0表示没有处理)
+     */
+    public Boolean getStatus() {
+        return status;
+    }
+
+    /**
+     * 是否已经处理(1表示已经处理，0表示没有处理)
+     * @param status 是否已经处理(1表示已经处理，0表示没有处理)
+     */
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    /**
+     * 权重
+     * @return weight 权重
+     */
+    public Integer getWeight() {
+        return weight;
+    }
+
+    /**
+     * 权重
+     * @param weight 权重
+     */
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    /**
+     * 创建时间
+     * @return create_date 创建时间
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    /**
+     * 创建时间
+     * @param createDate 创建时间
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    /**
+     * 友链链接地址
+     * @return url 友链链接地址
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * 友链链接地址
+     * @param url 友链链接地址
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     /**
@@ -112,67 +180,5 @@ public class Links implements Serializable {
         this.description = description;
     }
 
-    /**
-     * 是否显示
-     * @return link_display 是否显示
-     */
-    public Boolean getLinkDisplay() {
-        return linkDisplay;
-    }
 
-    /**
-     * 是否显示
-     * @param linkDisplay 是否显示
-     */
-    public void setLinkDisplay(Boolean linkDisplay) {
-        this.linkDisplay = linkDisplay;
-    }
-
-    /**
-     * 是否已经处理
-     * @return link_handle 是否已经处理
-     */
-    public Boolean getLinkHandle() {
-        return linkHandle;
-    }
-
-    /**
-     * 是否已经处理
-     * @param linkHandle 是否已经处理
-     */
-    public void setLinkHandle(Boolean linkHandle) {
-        this.linkHandle = linkHandle;
-    }
-
-    /**
-     * 权重
-     * @return link_weight 权重
-     */
-    public Integer getLinkWeight() {
-        return linkWeight;
-    }
-
-    /**
-     * 权重
-     * @param linkWeight 权重
-     */
-    public void setLinkWeight(Integer linkWeight) {
-        this.linkWeight = linkWeight;
-    }
-
-    /**
-     * 友链链接地址
-     * @return url 友链链接地址
-     */
-    public String getUrl() {
-        return url;
-    }
-
-    /**
-     * 友链链接地址
-     * @param url 友链链接地址
-     */
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

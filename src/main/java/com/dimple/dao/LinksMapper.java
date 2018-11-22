@@ -4,7 +4,6 @@ import com.dimple.bean.Links;
 import com.dimple.bean.LinksExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 public interface LinksMapper {
     int countByExample(LinksExample example);

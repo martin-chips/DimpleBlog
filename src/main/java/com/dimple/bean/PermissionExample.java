@@ -73,7 +73,7 @@ public class PermissionExample {
     }
 
     /**
-     * permission 2018-11-20
+     * permission 2018-11-21
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -328,7 +328,7 @@ public class PermissionExample {
     }
 
     /**
-     * permission 2018-11-20
+     * permission 2018-11-21
      */
     public static class Criterion {
         private String condition;

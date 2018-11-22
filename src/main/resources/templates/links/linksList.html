@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
@@ -7,19 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>Bootstrap Table</title>
-    <!--css样式-->
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap/bootstrap-table.css" rel="stylesheet">
-    <!--js-->
-    <script src="js/bootstrap/jquery-1.12.0.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-    <script src="js/bootstrap/bootstrap-table.js"></script>
-    <script src="js/bootstrap/bootstrap-table-zh-CN.js"></script>
+    <title>H+ 后台主题UI框架 - Bootstrap Table</title>
+
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
 </head>
 
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
+    <button id="bu">sss</button>
     <div class="ibox float-e-margins">
         <div class="ibox-title">
             <h5>其他</h5>
@@ -27,49 +31,24 @@
         <div class="ibox-content">
             <div class="row row-lg">
                 <div class="col-sm-12">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th data-field="state" data-checkbox="true"></th>
-                            <th>序号</th>
-                            <th>名称</th>
-                            <th>链接地址</th>
-                            <th>描述</th>
-                            <th>权重</th>
-                            <th>状态</th>
-                            <th>申请时间</th>
-                            <td>操作</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--<tr th:each="link,linkStat :${links}">-->
-                        <!--<td th:text="${linkStat.count}">1</td>-->
-                        <!--<td th:text="${link.title}">Dimple'Blog</td>-->
-                        <!--<td th:text="${link.description}">边小丰的个人博客</td>-->
-                        <!--<td th:text="${link.weight}">权重</td>-->
-                        <!--&lt;!&ndash;todo 这里设计一个开关切换是否显现&ndash;&gt;-->
-                        <!--<td th:text="${link.linkDisplay}">是否显示</td>-->
-                        <!--<td th:text="${link.create_time}">申请时间</td>-->
-                        <!--</tr>-->
-                        <tr>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>Dimple'Blog</td>
-                            <td>边小丰的个人博客</td>
-                            <td>111</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>2018年11月21日14:03:04</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="example-wrap">
+                        <table id="links_table"></table>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 
+<!-- 自定义js -->
+<script src="/js/content.js?v=1.0.0"></script>
+<!-- layer javascript -->
+<script src="/js/plugins/layer/layer.min.js"></script>
+<!-- Bootstrap table -->
+<script src="/js/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+<script src="/js/bootstrap-table/links_table.js"></script>
 
 </body>
 

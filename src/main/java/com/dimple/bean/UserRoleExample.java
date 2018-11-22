@@ -73,7 +73,7 @@ public class UserRoleExample {
     }
 
     /**
-     * user_role 2018-11-20
+     * user_role 2018-11-21
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -308,7 +308,7 @@ public class UserRoleExample {
     }
 
     /**
-     * user_role 2018-11-20
+     * user_role 2018-11-21
      */
     public static class Criterion {
         private String condition;

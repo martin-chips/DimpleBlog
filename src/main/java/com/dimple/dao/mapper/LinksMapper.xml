@@ -4,12 +4,12 @@
   <resultMap id="BaseResultMap" type="com.dimple.bean.Links" >
     <id column="link_id" property="linkId" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="link_display" property="linkDisplay" jdbcType="BIT" />
-    <result column="link_handle" property="linkHandle" jdbcType="BIT" />
-    <result column="link_weight" property="linkWeight" jdbcType="INTEGER" />
+    <result column="display" property="display" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="weight" property="weight" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    link_id, title, content, description, link_display, link_handle, link_weight, url
+    link_id, title, display, status, weight, create_date, url, description
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.LinksExample" >
     select
@@ -103,12 +103,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dimple.bean.Links" >
-    insert into links (link_id, title, content, 
-      description, link_display, link_handle, 
-      link_weight, url)
-    values (#{linkId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{linkDisplay,jdbcType=BIT}, #{linkHandle,jdbcType=BIT}, 
-      #{linkWeight,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR})
+    insert into links (link_id, title, display, 
+      status, weight, create_date, 
+      url, description)
+    values (#{linkId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{display,jdbcType=BIT}, 
+      #{status,jdbcType=BIT}, #{weight,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{url,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.Links" >
     insert into links
@@ -119,23 +119,23 @@
       <if test="title != null" >
         title,
       </if>
-      <if test="content != null" >
-        content,
+      <if test="display != null" >
+        display,
       </if>
-      <if test="description != null" >
-        description,
+      <if test="status != null" >
+        status,
       </if>
-      <if test="linkDisplay != null" >
-        link_display,
+      <if test="weight != null" >
+        weight,
       </if>
-      <if test="linkHandle != null" >
-        link_handle,
-      </if>
-      <if test="linkWeight != null" >
-        link_weight,
+      <if test="createDate != null" >
+        create_date,
       </if>
       <if test="url != null" >
         url,
+      </if>
+      <if test="description != null" >
+        description,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -145,23 +145,23 @@
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
+      <if test="display != null" >
+        #{display,jdbcType=BIT},
       </if>
-      <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
       </if>
-      <if test="linkDisplay != null" >
-        #{linkDisplay,jdbcType=BIT},
+      <if test="weight != null" >
+        #{weight,jdbcType=INTEGER},
       </if>
-      <if test="linkHandle != null" >
-        #{linkHandle,jdbcType=BIT},
-      </if>
-      <if test="linkWeight != null" >
-        #{linkWeight,jdbcType=INTEGER},
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -180,23 +180,23 @@
       <if test="record.title != null" >
         title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.content != null" >
-        content = #{record.content,jdbcType=VARCHAR},
+      <if test="record.display != null" >
+        display = #{record.display,jdbcType=BIT},
       </if>
-      <if test="record.description != null" >
-        description = #{record.description,jdbcType=VARCHAR},
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=BIT},
       </if>
-      <if test="record.linkDisplay != null" >
-        link_display = #{record.linkDisplay,jdbcType=BIT},
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=INTEGER},
       </if>
-      <if test="record.linkHandle != null" >
-        link_handle = #{record.linkHandle,jdbcType=BIT},
-      </if>
-      <if test="record.linkWeight != null" >
-        link_weight = #{record.linkWeight,jdbcType=INTEGER},
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.url != null" >
         url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -207,12 +207,12 @@
     update links
     set link_id = #{record.linkId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
-      content = #{record.content,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      link_display = #{record.linkDisplay,jdbcType=BIT},
-      link_handle = #{record.linkHandle,jdbcType=BIT},
-      link_weight = #{record.linkWeight,jdbcType=INTEGER},
-      url = #{record.url,jdbcType=VARCHAR}
+      display = #{record.display,jdbcType=BIT},
+      status = #{record.status,jdbcType=BIT},
+      weight = #{record.weight,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      url = #{record.url,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -223,23 +223,23 @@
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=VARCHAR},
+      <if test="display != null" >
+        display = #{display,jdbcType=BIT},
       </if>
-      <if test="description != null" >
-        description = #{description,jdbcType=VARCHAR},
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
       </if>
-      <if test="linkDisplay != null" >
-        link_display = #{linkDisplay,jdbcType=BIT},
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=INTEGER},
       </if>
-      <if test="linkHandle != null" >
-        link_handle = #{linkHandle,jdbcType=BIT},
-      </if>
-      <if test="linkWeight != null" >
-        link_weight = #{linkWeight,jdbcType=INTEGER},
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
       </if>
     </set>
     where link_id = #{linkId,jdbcType=INTEGER}
@@ -247,12 +247,12 @@
   <update id="updateByPrimaryKey" parameterType="com.dimple.bean.Links" >
     update links
     set title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      link_display = #{linkDisplay,jdbcType=BIT},
-      link_handle = #{linkHandle,jdbcType=BIT},
-      link_weight = #{linkWeight,jdbcType=INTEGER},
-      url = #{url,jdbcType=VARCHAR}
+      display = #{display,jdbcType=BIT},
+      status = #{status,jdbcType=BIT},
+      weight = #{weight,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      url = #{url,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
     where link_id = #{linkId,jdbcType=INTEGER}
   </update>
 </mapper>
