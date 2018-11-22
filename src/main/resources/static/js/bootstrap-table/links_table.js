@@ -2,7 +2,7 @@
  * http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
  */
 $('#links_table').bootstrapTable({
-    method: 'get',
+    method: 'post',
     contentType: "application/x-www-form-urlencoded",//一种编码。好像在post请求的时候需要用到。这里用的get请求，注释掉这句话也能拿到数据
     url: "/links/linksList",//要请求数据的文件路径
     dataField: "data",//这是返回的json数组的key.默认好像是"rows".这里只有前后端约定好就行
@@ -67,9 +67,9 @@ $('#links_table').bootstrapTable({
             actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="editLink(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
             actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="deleteLink(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>删除</a> ');
             if (row.display == false) {
-                actions.push('<a class="btn btn-info btn-xs ' + '" href="#" onclick="updateLink(\'' + row.linkId + '\')"><i class="fa fa-key"></i>显示</a>');
+                actions.push('<a class="btn btn-info btn-xs " href="#" onclick="updateLink(' + row.linkId + "," + row.display + ')"><i class="fa fa-key"></i>显示</a>')
             } else {
-                actions.push('<a class="btn btn-default btn-xs ' + '" href="#" onclick="updateLink(\'' + row.linkId + '\')"><i class="fa fa-key"></i>隐藏</a>')
+                actions.push('<a class="btn btn-default btn-xs " href="#" onclick="updateLink(' + row.linkId + "," + row.display + ')"><i class="fa fa-key"></i>隐藏</a>')
             }
             return actions.join('');
         }
@@ -81,7 +81,8 @@ function queryParams(params) {
     return {
         pageSize: params.limit, //每一页的数据行数，默认是上面设置的10(pageSize)
         pageNum: params.offset / params.limit + 1, //当前页面,默认是上面设置的1(pageNumber)
-        param: "" //这里是其他的参数，根据自己的需求定义，可以是多个
+        param: "",//这里是其他的参数，根据自己的需求定义，可以是多个
+        search: params.search,
     }
 }
 
@@ -102,7 +103,11 @@ function responseHandler(result) {
 
 //刷新表格数据,点击按钮调用这个方法就可以刷新
 function refresh() {
-    $('#links_table').bootstrapTable('refresh', {url: "/links/linksList"});
+    //todo 修改数据后不会停留在当前页面
+    // var pageNum = $('#links_table').bootstrapTable('getOptions').pageNumber;
+    // console.log(pageNum);
+    // console.log($('#links_table').bootstrapTable('getOptions'))
+    $('#links_table').bootstrapTable('refresh');
 }
 
 /**
@@ -110,7 +115,17 @@ function refresh() {
  * @param linkId
  */
 function editLink(linkId) {
-    parent.layer.msg('玩命提示中' + linkId);
+    layer.open({
+        type: 2,
+        title: '修改Link信息',
+        shadeClose: true,
+        shade: false,
+        maxmin: true, //开启最大化最小化按钮
+        area: ['600px', '400px'],
+        content: '/links/modify?linkId=' + linkId
+    });
+
+
 }
 
 /**
@@ -118,15 +133,50 @@ function editLink(linkId) {
  * @param linkId
  */
 function deleteLink(linkId) {
-    parent.layer.msg('玩命删除中' + linkId);
+    parent.layer.confirm('确定要删除该友链吗？', {
+        btn: ['确定', '取消'], //按钮
+        shade: false //不显示遮罩
+    }, function () {
+        $.ajax({
+            type: "POST",
+            url: "/links/linkDelete",
+            data: {"linkId": linkId},
+            success: function (data) {
+                if (data.code == 200) {
+                    parent.layer.msg('删除成功', {icon: 1});
+                    refresh();
+                } else {
+                    parent.layer.msg('删除失败', {shift: 6});
+                    // parent.layer.msg('切换失败', {icon: 2});
+                }
+            },
+        });
+
+    });
+
+    // parent.layer.msg('玩命删除中' + linkId);
 }
 
 /**
  * 更新Link的status
  * @param linkId
  */
-function updateLink(linkId) {
-    parent.layer.msg('玩命切换中' + linkId);
+function updateLink(linkId, status) {
+    console.log(status);
+    $.ajax({
+        type: "POST",
+        url: "/links/linkSwitch",
+        data: {"linkId": linkId, "status": status},
+        success: function (data) {
+            if (data.code == 200) {
+                parent.layer.msg('切换成功', {icon: 1});
+                refresh();
+            } else {
+                parent.layer.msg('切换失败', {icon: 2});
+            }
+        },
+
+    })
 }
 
 /**

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <!--IOS风格切换插件-->
+    <link href="/css/switchery/switchery.css" rel="stylesheet">
+    <script src="/js/switchery/switchery.js"></script>
+
+</head>
+<body>
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <form class="form-horizontal m-t" id="commentForm">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">名称：</label>
+                <div class="col-sm-8">
+                    <input name="name" th:value="${linkInfo.data.title}" minlength="2" type="text" class="form-control"
+                           required=""
+                           aria-required="true">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">描述：</label>
+                <div class="col-sm-8">
+                    <input id="cemail" th:value="${linkInfo.data.description}" type="text" class="form-control"
+                           name="description" required=""
+                           aria-required="true">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">链接地址：</label>
+                <div class="col-sm-8">
+                    <input id="curl" th:value="${linkInfo.data.url}" class="form-control" name="url">
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label class="col-sm-3 control-label">是否显示：</label>
+                <div class="col-sm-8">
+                    <input type="checkbox" class="js-switch" checked/>
+                    <!--<div class="onoffswitch">-->
+                    <!--<input type="checkbox" class="onoffswitch-checkbox" id="status" name="status" checked="checked">-->
+                    <!--<label class="onoffswitch-label" for="status">-->
+                    <!--<span class="onoffswitch-inner"></span>-->
+                    <!--<span class="onoffswitch-switch"></span>-->
+                    <!--</label>-->
+                    <!--</div>-->
+                </div>
+                <!--<label class="col-sm-3 control-label">状态：</label>-->
+                <!--<div class="col-sm-8">-->
+                <!--<textarea id="ccomment" name="comment" class="form-control" required=""-->
+                <!--aria-required="true"></textarea>-->
+                <!--</div>-->
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">权重：</label>
+                <div class="col-sm-8">
+<textarea id="ccomsment" name="comment" class="form-control" required=""
+          aria-required="true"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-3">
+                    <button class="btn btn-primary" type="submit">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="/js/content.js?v=1.0.0"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/js/plugins/validate/messages_zh.min.js"></script>
+    <script src="/js/switchery/switchery.js"></script>
+    <script>
+        var elem = document.querySelector('.js-switch');
+        var init = new Switchery(elem);
+    </script>
+</div>
+</body>
+</html>

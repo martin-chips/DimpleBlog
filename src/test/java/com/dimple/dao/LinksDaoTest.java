@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @ClassName: LinksDaoTest
@@ -36,13 +37,18 @@ public class LinksDaoTest {
      */
     @Test
     public void insertLinks() {
-        Links links = new Links();
-        links.setTitle("测试title");
-        links.setCreateDate(new Date());
-        links.setDescription("测试一个description ");
-        links.setDisplay(true);
-        links.setUrl("www.bianxiaofeng.com");
         for (int i = 0; i < 100; i++) {
+            Links links = new Links();
+            if (i % 2 == 0) {
+                links.setDisplay(false);
+            } else {
+                links.setDisplay(true);
+            }
+            links.setUrl("www." + UUID.randomUUID().toString().substring(0, 5) + ".com");
+            links.setCreateDate(new Date());
+            links.setTitle("测试Title" + UUID.randomUUID().toString().substring(5, 8));
+            links.setDescription("测试Description" + UUID.randomUUID().toString().substring(5, 10));
+            links.setWeight(i);
             linksMapper.insert(links);
         }
     }
