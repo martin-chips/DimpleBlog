@@ -48,16 +48,31 @@ $('#links_table').bootstrapTable({
             }
         }
     }, {
-        field: 'createDate',
+        field: 'createTime',
         title: '创建时间',
         align: 'center',
         formatter: function (value, row, index) {
-            return formatDate(row.createDate);
+            return formatDate(value);
         }
     }, {
         field: 'weight',
         title: '权重',
         align: 'center',
+    }, {
+        field: 'click',
+        title: '点击次数',
+        align: 'center',
+    }, {
+        field: 'available',
+        title: '是否死链',
+        align: 'center',
+        formatter: function (value, row, index) {
+            if (value == false) {
+                return '<span class="badge badge-primary">否</span>';
+            } else if (value == true) {
+                return '<span class="badge badge-danger">是</span>';
+            }
+        }
     }, {
         field: 'no',
         title: '操作  ',
@@ -121,7 +136,7 @@ function editLink(linkId) {
         shadeClose: true,
         shade: false,
         maxmin: true, //开启最大化最小化按钮
-        area: ['600px', '400px'],
+        area: ['600px', '500px'],
         content: '/links/modify?linkId=' + linkId
     });
 
@@ -183,7 +198,33 @@ function updateLink(linkId, status) {
  * 时间格式化
  */
 function formatDate(date) {
+    console.log(date);
     var newDate = new Date(date).toJSON();
     var dateFormat = new Date(+new Date(newDate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
     return dateFormat;
 }
+
+//Switchery按钮初始化
+var elem = document.querySelector('.js-switch');
+var init = new Switchery(elem, {color: '#7c8bc7', jackColor: '#9decff'});
+elem.onchange = function () {
+    var isChecked = elem.checked;
+};
+
+//link 提交按钮点击事件
+$("#linkSubmit").click(function () {
+    // var formData = new FormData($("#form-add")[0]);
+    $.ajax({
+        type:"POST",
+        data: $("#linkAddForm").serializeArray(),
+        contentType: false,
+        processData: false,
+        url: "links/addLink",
+        success:function (data) {
+            if (data != null && data.code == 200) {
+                parent.layer.msg('添加成功', {icon: 1});
+            }
+        }
+    })
+
+});

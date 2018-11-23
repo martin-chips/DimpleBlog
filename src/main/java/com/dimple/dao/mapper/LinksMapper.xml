@@ -7,9 +7,11 @@
     <result column="display" property="display" jdbcType="BIT" />
     <result column="status" property="status" jdbcType="BIT" />
     <result column="weight" property="weight" jdbcType="INTEGER" />
-    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="click" property="click" jdbcType="INTEGER" />
+    <result column="available" property="available" jdbcType="BIT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    link_id, title, display, status, weight, create_date, url, description
+    link_id, title, display, status, weight, create_time, url, description, click, available
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.LinksExample" >
     select
@@ -104,11 +106,13 @@
   </delete>
   <insert id="insert" parameterType="com.dimple.bean.Links" >
     insert into links (link_id, title, display, 
-      status, weight, create_date, 
-      url, description)
+      status, weight, create_time, 
+      url, description, click, 
+      available)
     values (#{linkId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{display,jdbcType=BIT}, 
-      #{status,jdbcType=BIT}, #{weight,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{url,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+      #{status,jdbcType=BIT}, #{weight,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{url,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{click,jdbcType=INTEGER}, 
+      #{available,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.Links" >
     insert into links
@@ -128,14 +132,20 @@
       <if test="weight != null" >
         weight,
       </if>
-      <if test="createDate != null" >
-        create_date,
+      <if test="createTime != null" >
+        create_time,
       </if>
       <if test="url != null" >
         url,
       </if>
       <if test="description != null" >
         description,
+      </if>
+      <if test="click != null" >
+        click,
+      </if>
+      <if test="available != null" >
+        available,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -154,14 +164,20 @@
       <if test="weight != null" >
         #{weight,jdbcType=INTEGER},
       </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="click != null" >
+        #{click,jdbcType=INTEGER},
+      </if>
+      <if test="available != null" >
+        #{available,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -189,14 +205,20 @@
       <if test="record.weight != null" >
         weight = #{record.weight,jdbcType=INTEGER},
       </if>
-      <if test="record.createDate != null" >
-        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.url != null" >
         url = #{record.url,jdbcType=VARCHAR},
       </if>
       <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.click != null" >
+        click = #{record.click,jdbcType=INTEGER},
+      </if>
+      <if test="record.available != null" >
+        available = #{record.available,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -210,9 +232,11 @@
       display = #{record.display,jdbcType=BIT},
       status = #{record.status,jdbcType=BIT},
       weight = #{record.weight,jdbcType=INTEGER},
-      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       url = #{record.url,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR}
+      description = #{record.description,jdbcType=VARCHAR},
+      click = #{record.click,jdbcType=INTEGER},
+      available = #{record.available,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -232,14 +256,20 @@
       <if test="weight != null" >
         weight = #{weight,jdbcType=INTEGER},
       </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="click != null" >
+        click = #{click,jdbcType=INTEGER},
+      </if>
+      <if test="available != null" >
+        available = #{available,jdbcType=BIT},
       </if>
     </set>
     where link_id = #{linkId,jdbcType=INTEGER}
@@ -250,9 +280,11 @@
       display = #{display,jdbcType=BIT},
       status = #{status,jdbcType=BIT},
       weight = #{weight,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       url = #{url,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR}
+      description = #{description,jdbcType=VARCHAR},
+      click = #{click,jdbcType=INTEGER},
+      available = #{available,jdbcType=BIT}
     where link_id = #{linkId,jdbcType=INTEGER}
   </update>
 </mapper>

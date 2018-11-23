@@ -74,7 +74,7 @@ public class LinksExample {
     }
 
     /**
-     * links 2018-11-21
+     * links 2018-11-23
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -427,63 +427,63 @@ public class LinksExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateIsNull() {
-            addCriterion("create_date is null");
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateIsNotNull() {
-            addCriterion("create_date is not null");
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateEqualTo(Date value) {
-            addCriterion("create_date =", value, "createDate");
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateNotEqualTo(Date value) {
-            addCriterion("create_date <>", value, "createDate");
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateGreaterThan(Date value) {
-            addCriterion("create_date >", value, "createDate");
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("create_date >=", value, "createDate");
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateLessThan(Date value) {
-            addCriterion("create_date <", value, "createDate");
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateLessThanOrEqualTo(Date value) {
-            addCriterion("create_date <=", value, "createDate");
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateIn(List<Date> values) {
-            addCriterion("create_date in", values, "createDate");
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateNotIn(List<Date> values) {
-            addCriterion("create_date not in", values, "createDate");
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateBetween(Date value1, Date value2) {
-            addCriterion("create_date between", value1, value2, "createDate");
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCreateDateNotBetween(Date value1, Date value2) {
-            addCriterion("create_date not between", value1, value2, "createDate");
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
@@ -626,6 +626,126 @@ public class LinksExample {
             addCriterion("description not between", value1, value2, "description");
             return (Criteria) this;
         }
+
+        public Criteria andClickIsNull() {
+            addCriterion("click is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickIsNotNull() {
+            addCriterion("click is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickEqualTo(Integer value) {
+            addCriterion("click =", value, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickNotEqualTo(Integer value) {
+            addCriterion("click <>", value, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickGreaterThan(Integer value) {
+            addCriterion("click >", value, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickGreaterThanOrEqualTo(Integer value) {
+            addCriterion("click >=", value, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickLessThan(Integer value) {
+            addCriterion("click <", value, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickLessThanOrEqualTo(Integer value) {
+            addCriterion("click <=", value, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickIn(List<Integer> values) {
+            addCriterion("click in", values, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickNotIn(List<Integer> values) {
+            addCriterion("click not in", values, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickBetween(Integer value1, Integer value2) {
+            addCriterion("click between", value1, value2, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andClickNotBetween(Integer value1, Integer value2) {
+            addCriterion("click not between", value1, value2, "click");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableIsNull() {
+            addCriterion("available is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableIsNotNull() {
+            addCriterion("available is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableEqualTo(Boolean value) {
+            addCriterion("available =", value, "available");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableNotEqualTo(Boolean value) {
+            addCriterion("available <>", value, "available");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableGreaterThan(Boolean value) {
+            addCriterion("available >", value, "available");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("available >=", value, "available");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableLessThan(Boolean value) {
+            addCriterion("available <", value, "available");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableLessThanOrEqualTo(Boolean value) {
+            addCriterion("available <=", value, "available");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableIn(List<Boolean> values) {
+            addCriterion("available in", values, "available");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableNotIn(List<Boolean> values) {
+            addCriterion("available not in", values, "available");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableBetween(Boolean value1, Boolean value2) {
+            addCriterion("available between", value1, value2, "available");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvailableNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("available not between", value1, value2, "available");
+            return (Criteria) this;
+        }
     }
 
     /**
@@ -639,7 +759,7 @@ public class LinksExample {
     }
 
     /**
-     * links 2018-11-21
+     * links 2018-11-23
      */
     public static class Criterion {
         private String condition;

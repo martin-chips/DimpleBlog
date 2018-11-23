@@ -1,11 +1,8 @@
 package com.dimple.bean;
 
-import lombok.ToString;
-
 import java.io.Serializable;
 import java.util.Date;
 
-@ToString
 public class Links implements Serializable {
     /**
      * id
@@ -35,7 +32,7 @@ public class Links implements Serializable {
     /**
      * 创建时间
      */
-    private Date createDate;
+    private Date createTime;
 
     /**
      * 友链链接地址
@@ -46,6 +43,16 @@ public class Links implements Serializable {
      * 友链的描述
      */
     private String description;
+
+    /**
+     * 友链点击数
+     */
+    private Integer click;
+
+    /**
+     * 友链是否可用（定时任务查询）
+     */
+    private Boolean available;
 
     /**
      * links
@@ -134,18 +141,18 @@ public class Links implements Serializable {
 
     /**
      * 创建时间
-     * @return create_date 创建时间
+     * @return create_time 创建时间
      */
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreateTime() {
+        return createTime;
     }
 
     /**
      * 创建时间
-     * @param createDate 创建时间
+     * @param createTime 创建时间
      */
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     /**
@@ -180,5 +187,35 @@ public class Links implements Serializable {
         this.description = description;
     }
 
+    /**
+     * 友链点击数
+     * @return click 友链点击数
+     */
+    public Integer getClick() {
+        return click;
+    }
 
+    /**
+     * 友链点击数
+     * @param click 友链点击数
+     */
+    public void setClick(Integer click) {
+        this.click = click;
+    }
+
+    /**
+     * 友链是否可用（定时任务查询）
+     * @return available 友链是否可用（定时任务查询）
+     */
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    /**
+     * 友链是否可用（定时任务查询）
+     * @param available 友链是否可用（定时任务查询）
+     */
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
 }

@@ -74,7 +74,7 @@ public class CategoryExample {
     }
 
     /**
-     * category 2018-11-21
+     * category 2018-11-23
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -379,7 +379,7 @@ public class CategoryExample {
     }
 
     /**
-     * category 2018-11-21
+     * category 2018-11-23
      */
     public static class Criterion {
         private String condition;

@@ -45,7 +45,7 @@ public class LinksDaoTest {
                 links.setDisplay(true);
             }
             links.setUrl("www." + UUID.randomUUID().toString().substring(0, 5) + ".com");
-            links.setCreateDate(new Date());
+            links.setCreateTime(new Date());
             links.setTitle("测试Title" + UUID.randomUUID().toString().substring(5, 8));
             links.setDescription("测试Description" + UUID.randomUUID().toString().substring(5, 10));
             links.setWeight(i);
@@ -62,6 +62,9 @@ public class LinksDaoTest {
         logger.info(links.toString());
     }
 
+    /**
+     * 删除所有的友链
+     */
     @Test
     public void deleteAllLinks() {
         linksMapper.deleteByExample(null);

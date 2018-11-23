@@ -62,7 +62,7 @@ public class LinksController {
     public Result linksList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                             @RequestParam(value = "search", defaultValue = "") String search) {
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize,"create_time desc");
         List<Links> allLinks = linksService.getAllLinksHandled(search);
         PageInfo pageInfo = new PageInfo(allLinks);
         return ResultUtil.success(pageInfo);
@@ -103,6 +103,7 @@ public class LinksController {
      * @return
      */
     @RequestMapping("/addLink")
+    @ResponseBody
     public Result addLink(Links links) {
         Result result = linksService.addLink(links);
         return result;

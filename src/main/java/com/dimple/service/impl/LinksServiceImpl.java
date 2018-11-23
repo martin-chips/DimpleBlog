@@ -36,12 +36,8 @@ public class LinksServiceImpl implements LinksService {
             linksExample.or().andTitleLike(search);
             linksExample.or().andDescriptionLike(search);
             linksExample.or().andUrlLike(search);
-//            LinksExample.Criteria criteriaTemp = linksExample.createCriteria();
-//            criteriaTemp.andTitleLike(search);
-//            criteriaTemp.andDescriptionLike(search);
-//            criteriaTemp.andUrlLike(search);
-//            linksExample.or(criteriaTemp);
         }
+//        linksExample.setOrderByClause("'create_time' DESC");
         List<Links> links = linksMapper.selectByExample(linksExample);
         return links;
     }
@@ -87,7 +83,7 @@ public class LinksServiceImpl implements LinksService {
         if (links == null || StringUtils.isBlank(links.getTitle()) || StringUtils.isBlank(links.getUrl())) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        links.setCreateDate(new Date());
+        links.setCreateTime(new Date());
         //设置是否显示，默认是显示的
         links.setDisplay(true);
         //设置是否已经处理，默认已经处理
@@ -101,7 +97,7 @@ public class LinksServiceImpl implements LinksService {
         if (links == null || StringUtils.isBlank(links.getTitle()) || StringUtils.isBlank(links.getUrl())) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        links.setCreateDate(new Date());
+        links.setCreateTime(new Date());
         //设置是否显示，默认是不显示
         links.setDisplay(false);
         //设置是否已经处理，默认未处理

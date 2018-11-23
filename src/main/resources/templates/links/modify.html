@@ -16,19 +16,18 @@
 <body>
 <div class="ibox float-e-margins">
     <div class="ibox-content">
-        <form class="form-horizontal m-t" id="commentForm">
+        <form class="form-horizontal m-t" id="modifyLinksFrom">
             <div class="form-group">
                 <label class="col-sm-3 control-label">名称：</label>
                 <div class="col-sm-8">
-                    <input name="name" th:value="${linkInfo.data.title}" minlength="2" type="text" class="form-control"
-                           required=""
-                           aria-required="true">
+                    <input id="linkTitle" name="name" th:value="${linkInfo.data.title}" type="text" class="form-control"
+                           required="" aria-required="true">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">描述：</label>
                 <div class="col-sm-8">
-                    <input id="cemail" th:value="${linkInfo.data.description}" type="text" class="form-control"
+                    <input id="linkDescription" th:value="${linkInfo.data.description}" type="text" class="form-control"
                            name="description" required=""
                            aria-required="true">
                 </div>
@@ -36,34 +35,20 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">链接地址：</label>
                 <div class="col-sm-8">
-                    <input id="curl" th:value="${linkInfo.data.url}" class="form-control" name="url">
+                    <input id="linkUrl" th:value="${linkInfo.data.url}" class="form-control" name="url" required="">
                 </div>
             </div>
             <div class="form-group">
-
                 <label class="col-sm-3 control-label">是否显示：</label>
                 <div class="col-sm-8">
-                    <input type="checkbox" class="js-switch" checked/>
-                    <!--<div class="onoffswitch">-->
-                    <!--<input type="checkbox" class="onoffswitch-checkbox" id="status" name="status" checked="checked">-->
-                    <!--<label class="onoffswitch-label" for="status">-->
-                    <!--<span class="onoffswitch-inner"></span>-->
-                    <!--<span class="onoffswitch-switch"></span>-->
-                    <!--</label>-->
-                    <!--</div>-->
+                    <input id="linkDisplay" type="checkbox" class="js-switch" checked/>
                 </div>
-                <!--<label class="col-sm-3 control-label">状态：</label>-->
-                <!--<div class="col-sm-8">-->
-                <!--<textarea id="ccomment" name="comment" class="form-control" required=""-->
-                <!--aria-required="true"></textarea>-->
-                <!--</div>-->
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">权重：</label>
                 <div class="col-sm-8">
-<textarea id="ccomsment" name="comment" class="form-control" required=""
-          aria-required="true"></textarea>
+                    <input id="linkWeight" th:value="${linkInfo.data.weight}" class="form-control" name="url">
                 </div>
             </div>
             <div class="form-group">
@@ -82,12 +67,17 @@
     <script src="/js/content.js?v=1.0.0"></script>
 
     <!-- jQuery Validation plugin javascript-->
-    <script src="/js/plugins/validate/jquery.validate.min.js"></script>
-    <script src="/js/plugins/validate/messages_zh.min.js"></script>
+    <script src="/js/validate/jquery.validate.min.js"></script>
+    <script src="/js/validate/messages_zh.min.js"></script>
     <script src="/js/switchery/switchery.js"></script>
+    <script src="/js/validate/validate-index.js"></script>
     <script>
         var elem = document.querySelector('.js-switch');
-        var init = new Switchery(elem);
+        var init = new Switchery(elem, {color: '#7c8bc7', jackColor: '#9decff'});
+        elem.onchange = function () {
+            var isChecked = elem.checked;
+            console.log(isChecked);
+        };
     </script>
 </div>
 </body>
