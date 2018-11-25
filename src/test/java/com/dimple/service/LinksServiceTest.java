@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
+
 /**
  * @ClassName: LinksServiceTest
  * @Description:
@@ -21,7 +23,7 @@ public class LinksServiceTest {
 
     @Test
     public void testGetAllLinksMethod() {
-        System.out.println(linksService.getAllLinksHandled("", startTime, endTime, display).toString());
+        System.out.println(linksService.getAllLinksHandled("", new Date(), new Date(), true).toString());
 
     }
 

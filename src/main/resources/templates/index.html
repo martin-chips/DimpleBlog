@@ -25,11 +25,40 @@
     <script src="/js/plugins/layer/layer.min.js"></script>
 
     <!-- 自定义js -->
-    <script src="/js/hplus.js?v=4.1.0"></script>
     <script type="text/javascript" src="/js/contabs.js"></script>
-
-    <!-- 第三方插件 -->
     <script src="/js/plugins/pace/pace.min.js"></script>
+    <script src="/js/fullscreen/jquery.fullscreen.js"></script>
+    <script src="/js/custom/index.js"></script>
+    <!-- 第三方插件 -->
+
+    <style type="text/css">
+        .nav > li:hover .dropdown-menu {
+            display: block;
+        }
+
+        #content-main.max {
+            height: calc(100% - 110px);
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            position: absolute;
+            top: 0px;
+            z-index: 9998;
+            margin: 0;
+        }
+
+        /** 首页样式 */
+        .ax_close_max {
+            position: fixed;
+            top: 5px;
+            left: 5px;
+            z-index: 9999;
+            display: none;
+            color: #ccc;
+        }
+
+    </style>
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
@@ -210,7 +239,12 @@
                     </li>
                 </ul>
             </div>
-            <a href="#" class="roll-nav roll-right J_tabExit"><i class="fa fa-refresh"></i> 刷新</a>
+            <a href="#" class="roll-nav roll-right J_tabExit tabReload"><i class="fa fa-refresh"></i> 刷新</a>
+
+
+            <a id="ax_close_max" class="ax_close_max animated bounceInUp closeFullScreen" href="#" title="关闭全屏"> <i
+                    class="fa fa-home fa-4x"></i></a>
+
         </div>
         <div class="row J_mainContent" id="content-main">
 
