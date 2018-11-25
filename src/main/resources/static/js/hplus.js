@@ -63,6 +63,7 @@ $(document).ready(function () {
         var heightWithoutNavbar = $("body > #wrapper").height() - 61;
         $(".sidebard-panel").css("min-height", heightWithoutNavbar + "px");
     }
+
     fix_height();
 
     $(window).bind("load resize click scroll", function () {
@@ -275,4 +276,13 @@ $(function () {
 //判断浏览器是否支持html5本地存储
 function localStorageSupport() {
     return (('localStorage' in window) && window['localStorage'] !== null)
+}
+
+//todo 刷新按钮
+//刷新iframe
+function refreshTab() {
+    var currentId = $('.page-tabs-content').find('.active').attr('data-id');
+    var target = $('.RuoYi_iframe[data-id="' + currentId + '"]');
+    var url = target.attr('src');
+    target.attr('src', url).ready();
 }

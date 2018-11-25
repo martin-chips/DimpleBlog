@@ -27,7 +27,7 @@ public class LinksServiceImpl implements LinksService {
     LinksMapper linksMapper;
 
     @Override
-    public List<Links> getAllLinksHandled(String search) {
+    public List<Links> getAllLinksHandled(String search, Date startTime, Date endTime, boolean display) {
         LinksExample linksExample = new LinksExample();
         LinksExample.Criteria criteria = linksExample.createCriteria();
         //获取已经处理的友链
@@ -37,7 +37,6 @@ public class LinksServiceImpl implements LinksService {
             linksExample.or().andDescriptionLike(search);
             linksExample.or().andUrlLike(search);
         }
-//        linksExample.setOrderByClause("'create_time' DESC");
         List<Links> links = linksMapper.selectByExample(linksExample);
         return links;
     }
@@ -57,16 +56,22 @@ public class LinksServiceImpl implements LinksService {
     }
 
     @Override
-    public Result deleteLink(Integer linkId) {
-        if (linkId == null) {
+    public Result deleteLinks(Integer[] linkIds) {
+        //参数合法性校验
+        if (linkIds == null || linkIds.length == 0) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        Links link = linksMapper.selectByPrimaryKey(linkId);
-        if (link == null) {
-            return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
+        //todo 事务的设置，需要设置单个事务失败不影响整个事物
+        //记录操作的数
+        Integer count = 0;
+        for (Integer linkId : linkIds) {
+            Links link = linksMapper.selectByPrimaryKey(linkId);
+            if (link == null) {
+                return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
+            }
+            count += linksMapper.deleteByPrimaryKey(linkId);
         }
-        int i = linksMapper.deleteByPrimaryKey(linkId);
-        return ResultUtil.success(i);
+        return ResultUtil.success(count);
     }
 
     @Override

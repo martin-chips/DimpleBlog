@@ -4,7 +4,9 @@ import com.dimple.bean.Permission;
 import com.dimple.bean.PermissionExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PermissionMapper {
     int countByExample(PermissionExample example);
 

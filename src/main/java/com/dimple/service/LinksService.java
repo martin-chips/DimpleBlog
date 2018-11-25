@@ -3,6 +3,7 @@ package com.dimple.service;
 import com.dimple.bean.Links;
 import com.dimple.utils.message.Result;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,9 +17,13 @@ public interface LinksService {
     /**
      * 获取所有的Links
      *
+     * @param title     友链的标题
+     * @param startTime 查询开始的时间
+     * @param endTime   查询结束的时间
+     * @param display   是否显示
      * @return
      */
-    List<Links> getAllLinksHandled(String search);
+    List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, boolean display);
 
     /**
      * 更改Links的状态
@@ -32,13 +37,13 @@ public interface LinksService {
     /**
      * 删除Link
      *
-     * @param linkId 需要删除的Link的id
+     * @param linkIds 需要删除的Links的id，传入Integer数组
      * @return
      */
-    Result deleteLink(Integer linkId);
+    Result deleteLinks(Integer[] linkIds);
 
     /**
-     * 根据Link的Id获取Link的信息
+     * 根据Link的Id获取Link的信息,
      *
      * @param linkId
      * @return

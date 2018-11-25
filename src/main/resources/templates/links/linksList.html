@@ -14,111 +14,104 @@
     <link href="/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="/css/common/common.css" rel="stylesheet">
+
 
     <!-- 全局js -->
     <script src="/js/jquery.min.js?v=2.1.4"></script>
     <script src="/js/bootstrap.min.js?v=3.3.6"></script>
     <!--IOS风格切换插件-->
-    <link href="/css/switchery/switchery.css" rel="stylesheet">
-    <script src="/js/switchery/switchery.js"></script>
-
+    <!--<link href="/css/switchery/switchery.css" rel="stylesheet">-->
+    <script src="/js/layer/layer.min.js"></script>
+    <script src="/js/layui/layui.js"></script>
+    <script src="/js/common/common.js"></script>
 </head>
 
 <body class="gray-bg">
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content mailbox-content">
-                    <div class="file-manager">
-                        <a class="btn btn-block btn-primary compose-mail" href="mail_compose.html">友链列表</a>
-                        <div class="space-25"></div>
-                        <h5>概览</h5>
-                        <ul class="folder-list m-b-md" style="padding: 0">
-                            <li>
-                                <a href="mailbox.html"> <i class="fa fa-inbox "></i> 友链 <span
-                                        class="label label-warning pull-right">16</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailbox.html"> <i class="fa fa-envelope-o"></i> 死链</a>
-                            </li>
-                            <li>
-                                <a href="mailbox.html"> <i class="fa fa-envelope-o"></i> 未处理友链</a>
-                            </li>
-                            <li>
-                                <a href="mailbox.html"> <i class="fa fa-trash-o"></i> 隐藏友链</a>
-                            </li>
-                            <li>
-                                <a href="mailbox.html"> <i class="fa fa-file-text-o"></i> 已显示友链 <span
-                                        class="label label-danger pull-right">2</span>
-                                </a>
-                            </li>
-                        </ul>
+<div class="col-sm-2">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content mailbox-content">
+            <div class="file-manager">
+                <!--<a class="btn btn-block btn-primary compose-mail" href="mail_compose.html" style="margin-top: 100px">友链列表</a>-->
+                <div class="space-25"></div>
+                <h3 style="margin-bottom: 20px">概览</h3>
+                <ul class="folder-list m-b-md" style="padding: 0">
+                    <li>
+                        <a href="mailbox.html"> <i class="fa fa-inbox "></i> 友链 <span
+                                class="label label-warning pull-right">16</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailbox.html"> <i class="fa fa-envelope-o"></i> 死链</a>
+                    </li>
+                    <li>
+                        <a href="mailbox.html"> <i class="fa fa-envelope-o"></i> 未处理友链</a>
+                    </li>
+                    <li>
+                        <a href="mailbox.html"> <i class="fa fa-trash-o"></i> 隐藏友链</a>
+                    </li>
+                    <li>
+                        <a href="mailbox.html"> <i class="fa fa-file-text-o"></i> 已显示友链 <span
+                                class="label label-danger pull-right">2</span>
+                        </a>
+                    </li>
+                </ul>
 
-                    </div>
-                </div>
             </div>
-            <form class="form-horizontal m-t" id="linkAddForm" th:action="@{/links/addLink}">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">名称：</label>
-                    <div class="col-sm-8">
-                        <input id="linkTitle" name="title" type="text" class="form-control"
-                               required="" aria-required="true">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">描述：</label>
-                    <div class="col-sm-8">
-                        <input id="linkDescription" type="text" class="form-control"
-                               name="description" required=""
-                               aria-required="true">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">链接地址：</label>
-                    <div class="col-sm-8">
-                        <input id="linkUrl" class="form-control" name="url" required="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">是否显示：</label>
-                    <div class="col-sm-8">
-                        <input id="linkDisplay" type="checkbox" class="js-switch" checked/>
-                    </div>
-                </div>
+        </div>
+    </div>
+</div>
+<div class="container-div ui-layout-center col-sm-10 animated fadeInRight">
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">权重：</label>
-                    <div class="col-sm-8">
-                        <input id="linkWeight" class="form-control" name="weight">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3 col-sm-offset-3">
-                        <button class="btn btn-primary" id="linkSubmit" type="submit">提交</button>
-                    </div>
+    <div class="row">
+
+        <div class="col-sm-10 search-collapse ">
+            <form id="link-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            友链名称：<input type="text" name="title" id="link_title"/>
+                        </li>
+                        <li class="select-time">
+                            <label>创建时间： </label>
+                            <input type="text" class="time-input" name="startTime" id="startTime" placeholder="开始时间"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" name="endTime" id="endTime" placeholder="结束时间"/>
+                        </li>
+                        <li>
+                            友链状态：<select name="display" id="link_display">
+                            <option value="">所有</option>
+                            <option value="1">显示</option>
+                            <option value="0">隐藏</option>
+                        </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="searchCustom()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="resetForm()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
                 </div>
             </form>
         </div>
-        <div class="col-sm-9 animated fadeInRight">
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>友链列表</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row row-lg">
-                            <div class="col-sm-12">
-                                <div class="example-wrap">
-                                    <table id="links_table"></table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="addLink()">
+                <i class="fa fa-plus"></i> 新增
+            </a>
+            <a class="btn btn-primary btn-edit disabled" onclick="updateLinks()"
+            >
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger btn-del disabled" onclick="deleteLinks()"
+            >
+                <i class="fa fa-remove"></i> 删除
+            </a>
+        </div>
+
+        <div class="col-sm-12 select-table table-striped ">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
     </div>
 </div>
@@ -126,7 +119,7 @@
 <!-- 自定义js -->
 <script src="/js/content.js?v=1.0.0"></script>
 <!-- layer javascript -->
-<script src="/js/plugins/layer/layer.min.js"></script>
+<script src="/js/layer/layer.min.js"></script>
 <!-- Bootstrap table -->
 <script src="/js/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>

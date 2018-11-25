@@ -1,7 +1,7 @@
 /**
  * http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
  */
-$('#links_table').bootstrapTable({
+$('#bootstrap-table').bootstrapTable({
     method: 'post',
     contentType: "application/x-www-form-urlencoded",//一种编码。好像在post请求的时候需要用到。这里用的get请求，注释掉这句话也能拿到数据
     url: "/links/linksList",//要请求数据的文件路径
@@ -11,31 +11,38 @@ $('#links_table').bootstrapTable({
     queryParams: queryParams,//请求服务器时所传的参数
     sidePagination: 'server',//指定服务器端分页
     pageSize: 10,//单页记录数
-    striped: true,//隔行变色
-    search: true,//显示搜索框
+    // striped: true,//隔行变色
+    search: false,//显示搜索框
+    showSearch: true,
     showRefresh: true,//显示刷新按钮
     showToggle: true,//显示切换按钮
     showColumns: true,//显示列表选择按钮
-    height: "600",
+    height: "540",
     undefinedText: '未知',//当数据为undefined显示的字符
     pageList: [10, 20, 30, 40],//分页步进值
     responseHandler: responseHandler,//请求数据成功后，渲染表格前的方法
     clickToSelect: true,//点击自动勾选复选框
+    toolbar: '#toolbar',
     columns: [{
         checkbox: true
     }, {
         field: 'title',
         title: '名称',
         align: 'center',
+        formatter: function (value, row, index) {
+            //设置点击title就可以进入
+            var url = "http://" + row.url;
+            return "<a title='" + row.url + "' target='_blank' href='" + url + "'>" + value + "</a>"
+        }
+    }, {
+        field: 'linkId',
+        title: 'no',
+        visible: false//设置隐藏列
     }, {
         field: 'description',
         title: '描述',
         align: 'center',
-    }, {
-        field: 'url',
-        title: '链接地址',
-        align: 'center',
-
+        width: 200,
     }, {
         field: 'display',
         title: '状态',
@@ -88,16 +95,20 @@ $('#links_table').bootstrapTable({
             }
             return actions.join('');
         }
-    }]
+    }],
 })
+
+var searchFlag = false;
 
 //请求服务数据时所传参数
 function queryParams(params) {
+    console.log(params.search);
     return {
         pageSize: params.limit, //每一页的数据行数，默认是上面设置的10(pageSize)
         pageNum: params.offset / params.limit + 1, //当前页面,默认是上面设置的1(pageNumber)
-        param: "",//这里是其他的参数，根据自己的需求定义，可以是多个
-        search: params.search,
+        // param: "",//这里是其他的参数，根据自己的需求定义，可以是多个
+        // search: params.search,
+
     }
 }
 
@@ -118,11 +129,7 @@ function responseHandler(result) {
 
 //刷新表格数据,点击按钮调用这个方法就可以刷新
 function refresh() {
-    //todo 修改数据后不会停留在当前页面
-    // var pageNum = $('#links_table').bootstrapTable('getOptions').pageNumber;
-    // console.log(pageNum);
-    // console.log($('#links_table').bootstrapTable('getOptions'))
-    $('#links_table').bootstrapTable('refresh');
+    $('#bootstrap-table').bootstrapTable('refresh');
 }
 
 /**
@@ -152,10 +159,15 @@ function deleteLink(linkId) {
         btn: ['确定', '取消'], //按钮
         shade: false //不显示遮罩
     }, function () {
+        var ids = new Array();
+        ids[0] = linkId;
         $.ajax({
             type: "POST",
-            url: "/links/linkDelete",
-            data: {"linkId": linkId},
+            url: "/links/deleteLinks",
+            dataType: "json",
+            cache: false,
+            contentType: "application/json",
+            data: JSON.stringify(ids),
             success: function (data) {
                 if (data.code == 200) {
                     parent.layer.msg('删除成功', {icon: 1});
@@ -181,6 +193,7 @@ function updateLink(linkId, status) {
     $.ajax({
         type: "POST",
         url: "/links/linkSwitch",
+
         data: {"linkId": linkId, "status": status},
         success: function (data) {
             if (data.code == 200) {
@@ -198,7 +211,6 @@ function updateLink(linkId, status) {
  * 时间格式化
  */
 function formatDate(date) {
-    console.log(date);
     var newDate = new Date(date).toJSON();
     var dateFormat = new Date(+new Date(newDate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
     return dateFormat;
@@ -215,16 +227,117 @@ elem.onchange = function () {
 $("#linkSubmit").click(function () {
     // var formData = new FormData($("#form-add")[0]);
     $.ajax({
-        type:"POST",
+        type: "POST",
         data: $("#linkAddForm").serializeArray(),
         contentType: false,
         processData: false,
         url: "links/addLink",
-        success:function (data) {
+        success: function (data) {
             if (data != null && data.code == 200) {
                 parent.layer.msg('添加成功', {icon: 1});
             }
         }
     })
-
 });
+
+/**
+ * 修改Links
+ */
+function updateLinks() {
+    var row = $("#bootstrap-table").bootstrapTable('getSelections');
+    editLink(row[0].linkId);
+
+}
+
+/**
+ * 批量删除
+ */
+function deleteLinks() {
+    //获取所有的选中列
+    var rows = $("#bootstrap-table").bootstrapTable('getSelections');
+    var ids = new Array();
+    for (var i = 0; i < rows.length; i++) {
+        ids[i] = rows[i].linkId;
+    }
+    if (ids.length == 0) {
+        parent.layer.msg('请选择需要删除的Link', {icon: 2});
+        return;
+    }
+    parent.layer.confirm('确定要删除这' + ids.length + '个友链吗？', {
+        btn: ['确定', '取消'], //按钮
+        shade: false //不显示遮罩
+    }, function () {
+        var jsonData = JSON.stringify(ids);
+        $.ajax({
+            type: "POST",
+            data: jsonData,//后台返回的数据的类型
+            dataType: "json",
+            cache: false,
+            contentType: "application/json",
+            url: "/links/deleteLinks",
+            success: function (data) {
+                if (data != null && data.code == 200) {
+                    parent.layer.msg('删除成功', {icon: 1});
+                    refresh();
+                } else {
+                    parent.layer.msg('删除失败，请稍后重试！', {icon: 2});
+                }
+            },
+            error: function (data) {
+                parent.layer.msg('系统故障，请联系管理员！', {icon: 2});
+            }
+        })
+
+    });
+}
+
+/**
+ * 添加Link
+ */
+function addLink() {
+    layer.open({
+        type: 2,
+        title: '新增Link信息',
+        shadeClose: true,
+        shade: false,
+        maxmin: true, //开启最大化最小化按钮
+        area: ['600px', '550px'],
+        content: '/links/addLinkView'
+    });
+}
+
+/**
+ * 清空form表单
+ */
+function resetForm() {
+    $("#link-form")[0].reset();
+}
+
+
+// 搜索-默认第一个form
+function searchCustom() {
+    var currentId = isEmpty(formId) ? $('form').attr('id') : "link-form";
+    var formId = "link-form";
+    var params = $("#bootstrap-table").bootstrapTable('getOptions');
+    params.queryParams = function (params) {
+        var search = {};
+        $.each($("#" + currentId).serializeArray(), function (i, field) {
+            search[field.name] = field.value;
+        });
+        search.pageSize = params.limit;
+        search.pageNum = params.offset / params.limit + 1;
+        // links_title: $("#link_title").val();
+        // links_display: $("#link_display option:selected").val();
+        // startTime: $("#startTime").val();
+        // endTime:$("#endTime").val();
+        return search;
+    }
+    $("#bootstrap-table").bootstrapTable('refresh', params);
+}
+
+function isEmpty(value) {
+    if (value == null || this.trim(value) == "") {
+        return true;
+    }
+    return false;
+}

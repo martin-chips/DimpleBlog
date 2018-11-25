@@ -21,7 +21,7 @@ public class LinksServiceTest {
 
     @Test
     public void testGetAllLinksMethod() {
-        System.out.println(linksService.getAllLinksHandled("").toString());
+        System.out.println(linksService.getAllLinksHandled("", startTime, endTime, display).toString());
 
     }
 

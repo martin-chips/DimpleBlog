@@ -4,7 +4,9 @@ import com.dimple.bean.Blog;
 import com.dimple.bean.BlogExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface BlogMapper {
     int countByExample(BlogExample example);
 
