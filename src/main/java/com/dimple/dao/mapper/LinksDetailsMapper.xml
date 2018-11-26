@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dimple.dao.CustomMapper">
+    <select id="selectLinksDetails" resultType="com.dimple.bean.LinksDetails">
+        select count(*)                                         as total,
+               (select count(*) from links where available = 0) as disabled,
+               (select count(*) from links where status = 0)    as unHandled,
+               (select count(*) from links where display = 0)   as hide,
+               (select count(*) from links where display = 1)   as display
+        from links;
+    </select>
+</mapper>

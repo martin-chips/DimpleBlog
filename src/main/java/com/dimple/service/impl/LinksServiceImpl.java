@@ -1,7 +1,9 @@
 package com.dimple.service.impl;
 
 import com.dimple.bean.Links;
+import com.dimple.bean.LinksDetails;
 import com.dimple.bean.LinksExample;
+import com.dimple.dao.CustomMapper;
 import com.dimple.dao.LinksMapper;
 import com.dimple.service.LinksService;
 import com.dimple.utils.message.Result;
@@ -12,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: LinksServiceImpl
@@ -25,17 +29,25 @@ import java.util.List;
 public class LinksServiceImpl implements LinksService {
     @Autowired
     LinksMapper linksMapper;
+    @Autowired
+    CustomMapper customMapper;
 
     @Override
-    public List<Links> getAllLinksHandled(String search, Date startTime, Date endTime, boolean display) {
+    public List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, boolean display) {
         LinksExample linksExample = new LinksExample();
         LinksExample.Criteria criteria = linksExample.createCriteria();
         //获取已经处理的友链
         criteria.andStatusEqualTo(true);
-        if (StringUtils.isNotBlank(search)) {
-            linksExample.or().andTitleLike(search);
-            linksExample.or().andDescriptionLike(search);
-            linksExample.or().andUrlLike(search);
+        if (startTime != null && endTime != null) {
+            criteria.andCreateTimeBetween(startTime, endTime);
+        } else if (startTime != null) {
+            criteria.andCreateTimeGreaterThanOrEqualTo(startTime);
+        } else if (endTime != null) {
+            criteria.andCreateTimeLessThanOrEqualTo(endTime);
+        }
+        criteria.andDisplayEqualTo(display);
+        if (StringUtils.isNotBlank(title)) {
+            criteria.andTitleLike("%"+title+"%");
         }
         List<Links> links = linksMapper.selectByExample(linksExample);
         return links;
@@ -118,5 +130,11 @@ public class LinksServiceImpl implements LinksService {
         }
         linksMapper.updateByPrimaryKey(links);
         return ResultUtil.success();
+    }
+
+    @Override
+    public LinksDetails getDetails() {
+        LinksDetails linksDetails = customMapper.selectLinksDetails();
+        return linksDetails;
     }
 }

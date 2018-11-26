@@ -11,15 +11,15 @@
     border-top: 3px solid #d2d6de;
     margin-bottom: 20px;
     width: 100%;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1)
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
 }
 
-.box-header:before,.box-body:before,.box-footer:before,.box-header:after,.box-body:after,.box-footer:after {
+.box-header:before, .box-body:before, .box-footer:before, .box-header:after, .box-body:after, .box-footer:after {
     content: " ";
     display: table
 }
 
-.box-header:after,.box-body:after,.box-footer:after {
+.box-header:after, .box-body:after, .box-footer:after {
     clear: both
 }
 
@@ -43,7 +43,7 @@
     box-shadow: none
 }
 
-.box-main>.box-header {
+.box-main > .box-header {
     border-bottom: 1px solid #eee;
     padding: 12px 10px 2px 15px
 }
@@ -55,39 +55,39 @@
     line-height: 1;
 }
 
-.box-main>.box-header .box-title {
+.box-main > .box-header .box-title {
     font-size: 16px;
     margin-bottom: 13px;
     float: left
 }
 
-.box-main>.box-header .box-title .fa {
+.box-main > .box-header .box-title .fa {
     font-size: 14px;
     padding-right: 3px;
     margin-top: -2px
 }
 
-.box-main>.box-header .box-tools {
+.box-main > .box-header .box-tools {
     position: relative;
     top: -5px;
     right: 0
 }
 
-.box-main>.box-header .box-tools .btn {
+.box-main > .box-header .box-tools .btn {
     padding: 3px 10px 5px 10px;
     font-size: 14px;
     margin-bottom: 2px
 }
 
-.box-main>.box-header .box-tools .btn-box-tool {
+.box-main > .box-header .box-tools .btn-box-tool {
     padding: 4px 2px
 }
 
-.box-main form>.box-footer,.nav-main form>.box-footer {
+.box-main form > .box-footer, .nav-main form > .box-footer {
     background: #fafafa
 }
 
-.box-main form>.box-footer .row,.nav-main form>.box-footer .row {
+.box-main form > .box-footer .row, .nav-main form > .box-footer .row {
     margin: 5px 0 5px -25px
 }
 
@@ -101,7 +101,7 @@
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     margin-right: 5px;
-    color: rgba(255,255,255,0.7)
+    color: rgba(255, 255, 255, 0.7)
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
@@ -121,13 +121,13 @@ label.error {
     font-size: 12px
 }
 
-.Validform_error,input.error,select.error {
+.Validform_error, input.error, select.error {
     background-color: #fbe2e2;
     border-color: #c66161;
     color: #c00
 }
 
-.Validform_wrong,.Validform_right,.Validform_warning {
+.Validform_wrong, .Validform_right, .Validform_warning {
     display: inline-block;
     height: 20px;
     font-size: 12px;
@@ -144,7 +144,7 @@ label.error {
 }
 
 /** 复选框&单选框  */
-.check-box,.radio-box {
+.check-box, .radio-box {
     display: inline-block;
     box-sizing: border-box;
     cursor: pointer;
@@ -161,7 +161,7 @@ label.error {
 }
 
 /* iCheck */
-.icheckbox-blue,.iradio-blue {
+.icheckbox-blue, .iradio-blue {
     display: block;
     margin: 0;
     padding: 0;
@@ -172,11 +172,11 @@ label.error {
     cursor: pointer
 }
 
-.icheckbox-blue,.icheckbox-blue.static:hover {
+.icheckbox-blue, .icheckbox-blue.static:hover {
     background-position: 0 0
 }
 
-.icheckbox-blue.hover,.icheckbox-blue:hover {
+.icheckbox-blue.hover, .icheckbox-blue:hover {
     background-position: -20px 0
 }
 
@@ -193,11 +193,11 @@ label.error {
     background-position: -80px 0
 }
 
-.iradio-blue,.iradio-blue.static:hover {
+.iradio-blue, .iradio-blue.static:hover {
     background-position: -100px 0
 }
 
-.iradio-blue.hover,.iradio-blue:hover {
+.iradio-blue.hover, .iradio-blue:hover {
     background-position: -120px 0
 }
 
@@ -285,7 +285,7 @@ label.error {
 ul {
     margin: 0;
     padding: 0;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 li {
@@ -311,14 +311,14 @@ label {
     height: 100%;
 }
 
-.search-collapse,.select-table {
+.search-collapse, .select-table {
     width: 100%;
-    background: #fff;
+    /*background: #fff;*/
     border-radius: 6px;
     margin-top: 10px;
     padding-top: 5px;
     padding-bottom: 13px;
-    box-shadow: 1px 1px 3px rgba(0,0,0,.2);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
 }
 
 .search-collapse {
@@ -329,13 +329,13 @@ label {
     color: #333;
 }
 
-@media ( max-width : 768px) {
+@media ( max-width: 768px) {
     .search-collapse {
         display: none;
     }
 }
 
-@media ( min-width : 768px) {
+@media ( min-width: 768px) {
     .select-list li {
         float: left;
     }
@@ -378,7 +378,7 @@ label {
     width: 133px;
 }
 
-.select-time label,.select-time span,.select-time input {
+.select-time label, .select-time span, .select-time input {
     float: left;
 }
 
@@ -415,26 +415,26 @@ label {
 }
 
 .table-striped .bootstrap-table {
-    border: 0px!important;
+    border: 0px !important;
 }
 
-.table-striped .table, .fixed-table-container, table, .table-striped .table, .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
-    border-bottom: 1px solid #e7eaec!important;
-    background-color: transparent!important;
+.table-striped .table, .fixed-table-container, table, .table-striped .table, .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    border-bottom: 1px solid #e7eaec !important;
+    background-color: transparent !important;
     border: 0px;
 }
 
-.table-striped .table>thead>tr>th, .table-striped .table>tbody>tr>th {
-    border-bottom: 1px solid #ccc!important;
-    border-top: 0px!important;
+.table-striped .table > thead > tr > th, .table-striped .table > tbody > tr > th {
+    border-bottom: 1px solid #ccc !important;
+    border-top: 0px !important;
 }
 
-.table-striped .table>thead:first-child>tr:first-child>th {
+.table-striped .table > thead:first-child > tr:first-child > th {
     color: #333;
 }
 
-.table-bordered td,.table-bordered th {
-    border: 1px solid #ddd!important
+.table-bordered td, .table-bordered th {
+    border: 1px solid #ddd !important
 }
 
 /** 首页样式 */
@@ -445,4 +445,17 @@ label {
     z-index: 9999;
     display: none;
     color: #ccc;
+}
+
+/*设置友链详情*/
+.linksDetails > li {
+    margin-top: 10px;
+}
+.search-collapse{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.select-table{
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

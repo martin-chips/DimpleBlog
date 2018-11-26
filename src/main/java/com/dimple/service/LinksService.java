@@ -1,10 +1,12 @@
 package com.dimple.service;
 
 import com.dimple.bean.Links;
+import com.dimple.bean.LinksDetails;
 import com.dimple.utils.message.Result;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: LinksService
@@ -73,4 +75,11 @@ public interface LinksService {
      * @return
      */
     Result updateLinkInfo(Links links);
+
+    /**
+     * 获取友链列表的详情页面的信息
+     *
+     * @return
+     */
+    LinksDetails getDetails();
 }

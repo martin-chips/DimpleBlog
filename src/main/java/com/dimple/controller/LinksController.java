@@ -1,6 +1,7 @@
 package com.dimple.controller;
 
 import com.dimple.bean.Links;
+import com.dimple.bean.LinksDetails;
 import com.dimple.service.LinksService;
 import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultUtil;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: LinksController
@@ -39,6 +41,8 @@ public class LinksController {
     @RequestMapping("/linksListView")
     public ModelAndView linkedListView(ModelAndView modelAndView) {
         modelAndView.setViewName("/links/linksList");
+        LinksDetails details = linksService.getDetails();
+        modelAndView.addObject("linksDetails", details);
         return modelAndView;
     }
 

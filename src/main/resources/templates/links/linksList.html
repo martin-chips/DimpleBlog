@@ -35,28 +35,41 @@
                 <!--<a class="btn btn-block btn-primary compose-mail" href="mail_compose.html" style="margin-top: 100px">友链列表</a>-->
                 <div class="space-25"></div>
                 <h3 style="margin-bottom: 20px">概览</h3>
-                <ul class="folder-list m-b-md" style="padding: 0">
+                <ul class="folder-list m-b-md linksDetails" style="padding: 0">
+                    <!--todo 颜色配置-->
                     <li>
-                        <a href="mailbox.html"> <i class="fa fa-inbox "></i> 友链 <span
-                                class="label label-warning pull-right">16</span>
+                        <a href="#"> <i class="fa fa-inbox "></i> 友链 <span class="label label-warning pull-right">
+                            <div th:text="${linksDetails.total}"></div>
+                        </span>
                         </a>
                     </li>
                     <li>
-                        <a href="mailbox.html"> <i class="fa fa-envelope-o"></i> 死链</a>
+                        <a href="#"> <i class="fa fa-envelope-o"></i> 死链<span class="label label-warning pull-right">
+                            <div th:text="${linksDetails.disabled}"></div>
+                        </span>
+                        </a>
                     </li>
                     <li>
-                        <a href="mailbox.html"> <i class="fa fa-envelope-o"></i> 未处理友链</a>
+                        <a href="#"> <i class="fa fa-envelope-o"></i> 未处理友链<span
+                                class="label label-warning pull-right">
+                            <div th:text="${linksDetails.unHandled}"></div>
+                        </span>
+                        </a>
                     </li>
                     <li>
-                        <a href="mailbox.html"> <i class="fa fa-trash-o"></i> 隐藏友链</a>
+                        <a href="#"> <i class="fa fa-trash-o"></i> 隐藏友链<span class="label label-warning pull-right">
+                            <div th:text="${linksDetails.hide}"></div>
+                        </span>
+                        </a>
                     </li>
                     <li>
-                        <a href="mailbox.html"> <i class="fa fa-file-text-o"></i> 已显示友链 <span
-                                class="label label-danger pull-right">2</span>
+                        <a href="#"> <i class="fa fa-file-text-o"></i> 已显示友链 <span
+                                class="label label-danger pull-right">
+                            <div th:text="${linksDetails.display}"></div>
+                        </span>
                         </a>
                     </li>
                 </ul>
-
             </div>
         </div>
     </div>
@@ -70,7 +83,7 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            友链名称：<input type="text" name="title" id="link_title"/>
+                            友链名称：<input type="text" name="links_title" id="link_title"/>
                         </li>
                         <li class="select-time">
                             <label>创建时间： </label>
@@ -79,7 +92,7 @@
                             <input type="text" class="time-input" name="endTime" id="endTime" placeholder="结束时间"/>
                         </li>
                         <li>
-                            友链状态：<select name="display" id="link_display">
+                            友链状态：<select name="links_display" id="link_display">
                             <option value="">所有</option>
                             <option value="1">显示</option>
                             <option value="0">隐藏</option>
@@ -96,7 +109,7 @@
             </form>
         </div>
 
-        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+        <div class="btn-group-sm hidden-xs" id="toolbar" role="group" style="margin-top: 10px">
             <a class="btn btn-success" onclick="addLink()">
                 <i class="fa fa-plus"></i> 新增
             </a>

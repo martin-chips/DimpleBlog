@@ -246,7 +246,6 @@ $("#linkSubmit").click(function () {
 function updateLinks() {
     var row = $("#bootstrap-table").bootstrapTable('getSelections');
     editLink(row[0].linkId);
-
 }
 
 /**
@@ -311,6 +310,7 @@ function addLink() {
  */
 function resetForm() {
     $("#link-form")[0].reset();
+    refresh();
 }
 
 
