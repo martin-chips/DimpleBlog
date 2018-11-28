@@ -120,6 +120,12 @@ public class LinksController {
         return result;
     }
 
+    @PutMapping("/links")
+    @ResponseBody
+    public Result updateLinksInfo(Links links) {
+        Result result = linksService.updateLinkInfo(links);
+        return result;
+    }
 
     @ApiOperation(value = "新增友链")
     @ApiImplicitParam(name = "links", value = "传入的links的信息，除id以外，其他的必填")
@@ -130,4 +136,48 @@ public class LinksController {
         return result;
     }
 
+    /**
+     * =================================================未处理友链Controller=======================================
+     */
+
+    @GetMapping("/links/unhandled/list.html")
+    @ApiOperation(value = "返回未处理友链列表界面", notes = "不可操作")
+    @ApiImplicitParam(name = "modelAndView", value = "ModelAndView对象", readOnly = true)
+    public ModelAndView unHandledLinkedListView(ModelAndView modelAndView) {
+        modelAndView.setViewName("/links/links-list-unhandled");
+        LinksDetails details = linksService.getDetails();
+        modelAndView.addObject("linksDetails", details);
+        return modelAndView;
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "查询未处理友链列表数据", notes = "返回数据类型JSON")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "1", dataType = "Integer"),
+            @ApiImplicitParam(name = "pageSize", value = "当前页码", defaultValue = "10", dataType = "Integer"),
+            @ApiImplicitParam(name = "links_title", value = "查询友链的标题", dataType = "String"),
+            @ApiImplicitParam(name = "startTime", value = "友链添加开始的时间", dataType = "Date"),
+            @ApiImplicitParam(name = "endTime", value = "友链添加结束的时间", dataType = "Date"),
+    })
+    @GetMapping("/links/unhandled/list.json")
+    public Result getUnHandledLinks(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                    @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                    @RequestParam(value = "links_title", defaultValue = "") String title,
+                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
+                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
+        PageHelper.startPage(pageNum, pageSize, "create_time desc");
+        List<Links> links = linksService.getAllLinksUnHandled(startTime, endTime, title);
+        PageInfo pageInfo = new PageInfo(links);
+        return ResultUtil.success(pageInfo);
+    }
+
+
+    @ApiOperation(value = "通过友链的申请", notes = "")
+    @ApiImplicitParam(name = "linkId", value = "需要通过友链申请的友链的ID", required = true, dataType = "Integer")
+    @PutMapping("/links/unhandled/{linkId}")
+    @ResponseBody
+    public Result passLinksApply(@PathVariable Integer linkId) {
+        Result result = linksService.passLinksApply(linkId);
+        return result;
+    }
 }

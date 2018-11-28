@@ -132,13 +132,48 @@ public class LinksServiceImpl implements LinksService {
         if (links == null || links.getLinkId() == null) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        linksMapper.updateByPrimaryKey(links);
-        return ResultUtil.success();
+        int i = linksMapper.updateByPrimaryKeySelective(links);
+        return ResultUtil.success(i);
     }
 
     @Override
     public LinksDetails getDetails() {
         LinksDetails linksDetails = customMapper.selectLinksDetails();
         return linksDetails;
+    }
+
+    @Override
+    public List<Links> getAllLinksUnHandled(Date startTime, Date endTime, String title) {
+        LinksExample linksExample = new LinksExample();
+        LinksExample.Criteria criteria = linksExample.createCriteria();
+        //设置查询条件为未处理的
+        criteria.andStatusEqualTo(false);
+        if (startTime != null && endTime != null) {
+            criteria.andCreateTimeBetween(startTime, endTime);
+        } else if (startTime != null) {
+            criteria.andCreateTimeGreaterThanOrEqualTo(startTime);
+        } else if (endTime != null) {
+            criteria.andCreateTimeLessThanOrEqualTo(endTime);
+        }
+        if (StringUtils.isNotBlank(title)) {
+            criteria.andTitleLike("%" + title + "%");
+        }
+        List<Links> links = linksMapper.selectByExample(linksExample);
+        return links;
+    }
+
+    @Override
+    public Result passLinksApply(Integer linkId) {
+        if (linkId == null) {
+            return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
+        }
+        Links links = linksMapper.selectByPrimaryKey(linkId);
+        if (links == null) {
+            return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
+        }
+        //设置通过友链申请
+        links.setStatus(true);
+        int i = linksMapper.updateByPrimaryKey(links);
+        return ResultUtil.success(i);
     }
 }

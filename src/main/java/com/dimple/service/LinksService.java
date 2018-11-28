@@ -83,4 +83,22 @@ public interface LinksService {
      * @return
      */
     LinksDetails getDetails();
+
+    /**
+     * 获取所有的没有处理的Links
+     *
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @param title     友链的标题
+     * @return
+     */
+    List<Links> getAllLinksUnHandled(Date startTime, Date endTime, String title);
+
+    /**
+     * 通过友链的申请
+     *
+     * @param linkId 要通过的id
+     * @return
+     */
+    Result passLinksApply(Integer linkId);
 }
