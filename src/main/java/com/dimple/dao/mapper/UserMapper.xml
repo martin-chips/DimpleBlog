@@ -7,7 +7,10 @@
     <result column="user_login_id" property="userLoginId" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
-    <result column="locked" property="locked" jdbcType="TINYINT" />
+    <result column="locked" property="locked" jdbcType="BIT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="BIT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, user_name, user_login_id, password, salt, locked
+    user_id, user_name, user_login_id, password, salt, locked, email, phone, sex
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.UserExample" >
     select
@@ -102,11 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.dimple.bean.User" >
     insert into user (user_id, user_name, user_login_id, 
-      password, salt, locked
-      )
+      password, salt, locked, 
+      email, phone, sex)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userLoginId,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT}
-      )
+      #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{locked,jdbcType=BIT}, 
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.User" >
     insert into user
@@ -129,6 +132,15 @@
       <if test="locked != null" >
         locked,
       </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -147,7 +159,16 @@
         #{salt,jdbcType=VARCHAR},
       </if>
       <if test="locked != null" >
-        #{locked,jdbcType=TINYINT},
+        #{locked,jdbcType=BIT},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -176,7 +197,16 @@
         salt = #{record.salt,jdbcType=VARCHAR},
       </if>
       <if test="record.locked != null" >
-        locked = #{record.locked,jdbcType=TINYINT},
+        locked = #{record.locked,jdbcType=BIT},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -190,7 +220,10 @@
       user_login_id = #{record.userLoginId,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       salt = #{record.salt,jdbcType=VARCHAR},
-      locked = #{record.locked,jdbcType=TINYINT}
+      locked = #{record.locked,jdbcType=BIT},
+      email = #{record.email,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -211,7 +244,16 @@
         salt = #{salt,jdbcType=VARCHAR},
       </if>
       <if test="locked != null" >
-        locked = #{locked,jdbcType=TINYINT},
+        locked = #{locked,jdbcType=BIT},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=BIT},
       </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
@@ -222,7 +264,10 @@
       user_login_id = #{userLoginId,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
-      locked = #{locked,jdbcType=TINYINT}
+      locked = #{locked,jdbcType=BIT},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=BIT}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

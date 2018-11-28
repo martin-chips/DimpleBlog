@@ -3,11 +3,9 @@ package com.dimple.controller;
 import com.alibaba.fastjson.JSON;
 import com.dimple.utils.QiNiuUtils;
 import com.qiniu.util.StringMap;
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -25,13 +23,23 @@ import java.util.*;
  * @Version: 1.0
  */
 @Controller
+@RequestMapping("/blog")
+@Api("博客管理接口测试模块")
 public class BlogController {
-    @RequestMapping("/editBlog")
-    public String editBlog() {
-        return "/blogManager/editor";
+
+    /**
+     * 定义的返回视图的前缀
+     */
+    private static String PREFIX = "/blogManager/";
+
+    //统一页面返回
+    @GetMapping("/{uri}")
+    public String returnPage(@PathVariable("uri") String uri) {
+        return PREFIX + uri;
     }
 
-    @RequestMapping(value = "/uploadQiNiu", method = RequestMethod.POST)
+
+    @PostMapping(value = "/uploadQiNiu")
     @ResponseBody
     public Object uploadQiNiu(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         File distFile = null;

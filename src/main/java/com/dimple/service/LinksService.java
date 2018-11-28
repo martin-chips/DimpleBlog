@@ -3,6 +3,7 @@ package com.dimple.service;
 import com.dimple.bean.Links;
 import com.dimple.bean.LinksDetails;
 import com.dimple.utils.message.Result;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ public interface LinksService {
      * @param display   是否显示
      * @return
      */
-    List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, boolean display);
+    List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, Boolean display);
 
     /**
      * 更改Links的状态

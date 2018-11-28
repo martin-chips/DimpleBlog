@@ -7,15 +7,19 @@ import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName: LinksController
@@ -25,113 +29,101 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Controller
-@RequestMapping("/links")
+@Api(tags = "友链API接口")
 public class LinksController {
-
+    /**
+     * 定义的返回视图的前缀
+     */
+    private static String PREFIX = "/links/";
 
     @Autowired
     LinksService linksService;
 
     /**
-     * 返回友链页面
+     * 统一页面返回
+     *
+     * @param uri 请求的URI的地址
+     * @return 视图地址
+     */
+    @GetMapping("links/to/{uri}.html")
+    @ApiIgnore
+    public String returnPage(@PathVariable("uri") String uri) {
+        return PREFIX + uri;
+    }
+
+    /**
+     * 转到LinksList界面
      *
      * @param modelAndView
      * @return
      */
-    @RequestMapping("/linksListView")
+    @GetMapping("/links/list.html")
+    @ApiIgnore
     public ModelAndView linkedListView(ModelAndView modelAndView) {
-        modelAndView.setViewName("/links/linksList");
+        modelAndView.setViewName("/links/links-list");
         LinksDetails details = linksService.getDetails();
         modelAndView.addObject("linksDetails", details);
         return modelAndView;
     }
 
-    /**
-     * 通用的无页面中转
-     *
-     * @param url 请求的uri
-     * @return
-     */
-    @RequestMapping("/{url}")
-    public String exchange(@PathVariable("url") String url) {
-        return "/links/" + url;
-    }
-
-    /**
-     * 返回修改友链界面
-     *
-     * @param linkId       要修改的友链的id
-     * @param modelAndView 填充友链数据
-     * @return
-     */
-    @RequestMapping("/modify")
-    public ModelAndView modify(Integer linkId, ModelAndView modelAndView) {
-        modelAndView.setViewName("/links/modify");
+    @ApiIgnore
+    @GetMapping("/links/{linkId}.html")
+    public ModelAndView toUpdateLinksView(@PathVariable Integer linkId, ModelAndView modelAndView) {
+        modelAndView.setViewName("/links/links-update");
         Result linkInfo = linksService.getLinkInfo(linkId);
         modelAndView.addObject("linkInfo", linkInfo);
         return modelAndView;
     }
 
-    /**
-     * 友链列表
-     *
-     * @param pageNum   当前第几页
-     * @param pageSize  每一页的大小
-     * @param title     友链的title
-     * @param startTime 查询开始的时间
-     * @param endTime   查询结束的时间
-     * @param display   状态是否为显示
-     * @return Result
-     */
+
     @ResponseBody
-    @RequestMapping("/linksList")
+    @ApiOperation(value = "查询显示友链列表数据", notes = "返回数据类型JSON")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "1", dataType = "Integer"),
+            @ApiImplicitParam(name = "pageSize", value = "当前页码", defaultValue = "10", dataType = "Integer"),
+            @ApiImplicitParam(name = "links_title", value = "查询友链的标题", dataType = "String"),
+            @ApiImplicitParam(name = "startTime", value = "友链添加开始的时间", dataType = "Date"),
+            @ApiImplicitParam(name = "endTime", value = "友链添加结束的时间", dataType = "Date"),
+            @ApiImplicitParam(name = "links_display", value = "友链是否显示", dataType = "Boolean"),
+    })
+    @GetMapping("/links.json")
     public Result linksList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                             @RequestParam(value = "links_title", defaultValue = "") String title,
                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime,
-                            @RequestParam(value = "links_display", defaultValue = "1", required = false) boolean display) {
+                            @RequestParam(value = "links_display", required = false) Boolean display) {
         PageHelper.startPage(pageNum, pageSize, "create_time desc");
         List<Links> allLinks = linksService.getAllLinksHandled(title, startTime, endTime, display);
         PageInfo pageInfo = new PageInfo(allLinks);
         return ResultUtil.success(pageInfo);
     }
 
-    /**
-     * 友链的状态的切换
-     *
-     * @param status 状态（当前的状态）
-     * @param linkId id
-     * @return
-     */
-    @RequestMapping("/linkSwitch")
+    @ApiOperation(value = "切换友链的状态", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "status", value = "当前该友链的状态", dataType = "Boolean"),
+            @ApiImplicitParam(name = "linkId", value = "需要切换友链状态的友链ID", dataType = "Integer")
+    })
+    @PutMapping("/links/{linkId}/{status}")
     @ResponseBody
-    public Result linkSwitch(@RequestParam("status") Boolean status, @RequestParam("linkId") Integer linkId) {
+    public Result linkSwitch(@PathVariable("status") Boolean status, @PathVariable("linkId") Integer linkId) {
         Result result = linksService.switchLinkStatus(linkId, status);
         return result;
     }
 
-    /**
-     * 删除友链
-     *
-     * @param linkIds 友链的id,可以为多个
-     * @return 处理结果
-     */
-    @RequestMapping("/deleteLinks")
+    @ApiOperation(value = "删除友链", notes = "需要传入的为一个数组")
+    @ApiImplicitParam(name = "linkIds", value = "友链的ID数组，格式为：1,2,3···,也可以传入单个参数如1")
+    @DeleteMapping("links/{linkIds}")
     @ResponseBody
-    public Result linkDelete(@RequestBody Integer[] linkIds) {
+    public Result linkDelete(@PathVariable Integer[] linkIds) {
         Result result = linksService.deleteLinks(linkIds);
         return result;
     }
 
 
-    /**
-     * 添加友链（管理员端添加）
-     *
-     * @param links 友链的信息
-     * @return
-     */
-    @RequestMapping("/addLink")
+    @ApiOperation(value = "新增友链")
+    @ApiImplicitParam(name = "links", value = "传入的links的信息，除id以外，其他的必填")
+    @PostMapping("/links")
     @ResponseBody
     public Result addLink(Links links) {
         Result result = linksService.addLink(links);

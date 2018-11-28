@@ -9,6 +9,7 @@ import com.dimple.service.LinksService;
 import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultEnum;
 import com.dimple.utils.message.ResultUtil;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class LinksServiceImpl implements LinksService {
     CustomMapper customMapper;
 
     @Override
-    public List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, boolean display) {
+    public List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, Boolean display) {
         LinksExample linksExample = new LinksExample();
         LinksExample.Criteria criteria = linksExample.createCriteria();
         //获取已经处理的友链
@@ -45,9 +46,12 @@ public class LinksServiceImpl implements LinksService {
         } else if (endTime != null) {
             criteria.andCreateTimeLessThanOrEqualTo(endTime);
         }
-        criteria.andDisplayEqualTo(display);
+
         if (StringUtils.isNotBlank(title)) {
-            criteria.andTitleLike("%"+title+"%");
+            criteria.andTitleLike("%" + title + "%");
+        }
+        if (display != null) {
+            criteria.andDisplayEqualTo(display);
         }
         List<Links> links = linksMapper.selectByExample(linksExample);
         return links;

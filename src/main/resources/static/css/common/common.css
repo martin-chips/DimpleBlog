@@ -313,7 +313,7 @@ label {
 
 .search-collapse, .select-table {
     width: 100%;
-    /*background: #fff;*/
+    background: #fff;
     border-radius: 6px;
     margin-top: 10px;
     padding-top: 5px;

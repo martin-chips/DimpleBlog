@@ -31,7 +31,22 @@ public class User implements Serializable {
     /**
      * 是否锁定
      */
-    private Byte locked;
+    private Boolean locked;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 手机号
+     */
+    private String phone;
+
+    /**
+     * 性别（1代表男，0代表女）
+     */
+    private Boolean sex;
 
     /**
      * user
@@ -122,7 +137,7 @@ public class User implements Serializable {
      * 是否锁定
      * @return locked 是否锁定
      */
-    public Byte getLocked() {
+    public Boolean getLocked() {
         return locked;
     }
 
@@ -130,7 +145,55 @@ public class User implements Serializable {
      * 是否锁定
      * @param locked 是否锁定
      */
-    public void setLocked(Byte locked) {
+    public void setLocked(Boolean locked) {
         this.locked = locked;
+    }
+
+    /**
+     * 邮箱
+     * @return email 邮箱
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * 邮箱
+     * @param email 邮箱
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * 手机号
+     * @return phone 手机号
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * 手机号
+     * @param phone 手机号
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * 性别（1代表男，0代表女）
+     * @return sex 性别（1代表男，0代表女）
+     */
+    public Boolean getSex() {
+        return sex;
+    }
+
+    /**
+     * 性别（1代表男，0代表女）
+     * @param sex 性别（1代表男，0代表女）
+     */
+    public void setSex(Boolean sex) {
+        this.sex = sex;
     }
 }

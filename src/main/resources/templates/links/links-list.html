@@ -38,13 +38,13 @@
                 <ul class="folder-list m-b-md linksDetails" style="padding: 0">
                     <!--todo 颜色配置-->
                     <li>
-                        <a href="#"> <i class="fa fa-inbox "></i> 友链 <span class="label label-warning pull-right">
+                        <a href="#"> <i class="fa fa-heart-o "></i> 友链 <span class="label label-success pull-right">
                             <div th:text="${linksDetails.total}"></div>
                         </span>
                         </a>
                     </li>
                     <li>
-                        <a href="#"> <i class="fa fa-envelope-o"></i> 死链<span class="label label-warning pull-right">
+                        <a href="#"> <i class="fa fa-square-o"></i> 死链<span class="label label-danger pull-right">
                             <div th:text="${linksDetails.disabled}"></div>
                         </span>
                         </a>
@@ -57,14 +57,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#"> <i class="fa fa-trash-o"></i> 隐藏友链<span class="label label-warning pull-right">
+                        <a href="#"> <i class="fa fa-trash-o"></i> 已隐藏友链<span class="label label-default pull-right">
                             <div th:text="${linksDetails.hide}"></div>
                         </span>
                         </a>
                     </li>
                     <li>
                         <a href="#"> <i class="fa fa-file-text-o"></i> 已显示友链 <span
-                                class="label label-danger pull-right">
+                                class="label label-info pull-right">
                             <div th:text="${linksDetails.display}"></div>
                         </span>
                         </a>
@@ -113,12 +113,10 @@
             <a class="btn btn-success" onclick="addLink()">
                 <i class="fa fa-plus"></i> 新增
             </a>
-            <a class="btn btn-primary btn-edit disabled" onclick="updateLinks()"
-            >
+            <a class="btn btn-primary btn-edit disabled" onclick="updateLinks()">
                 <i class="fa fa-edit"></i> 修改
             </a>
-            <a class="btn btn-danger btn-del disabled" onclick="deleteLinks()"
-            >
+            <a class="btn btn-danger btn-del disabled" onclick="deleteLinks()">
                 <i class="fa fa-remove"></i> 删除
             </a>
         </div>

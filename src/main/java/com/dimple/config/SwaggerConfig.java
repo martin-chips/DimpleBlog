@@ -33,14 +33,14 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("this is a title")
-                .description("this is a description")
+                .title("Dimple Blog管理系统")
+                .description("Dimple个人博客管理系统Swagger页面调试页面")
                 //服务条款地址
                 .termsOfServiceUrl("http://www.bianxiaofeng.com")
                 //版本
-                .version("this is a version")
+                .version("V1.0")
                 //添加联系
-                .contact(new Contact("dimple", "http://www.bianxiaofeng.com", "bianxiaofeng@sohu.com"))
+                .contact(new Contact("Dimple", "http://www.bianxiaofeng.com", "bianxiaofeng@sohu.com"))
                 .build();
     }
 

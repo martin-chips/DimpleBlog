@@ -2,9 +2,9 @@
  * http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
  */
 $('#bootstrap-table').bootstrapTable({
-    method: 'post',
+    method: 'GET',
     contentType: "application/x-www-form-urlencoded",//一种编码。好像在post请求的时候需要用到。这里用的get请求，注释掉这句话也能拿到数据
-    url: "/links/linksList",//要请求数据的文件路径
+    url: "/links.json",//要请求数据的文件路径
     dataField: "data",//这是返回的json数组的key.默认好像是"rows".这里只有前后端约定好就行
     pageNumber: 1, //初始化加载第一页，默认第一页
     pagination: true,//是否分页
@@ -17,7 +17,7 @@ $('#bootstrap-table').bootstrapTable({
     showRefresh: true,//显示刷新按钮
     showToggle: true,//显示切换按钮
     showColumns: true,//显示列表选择按钮
-    height: "540",
+    // height: "540",
     undefinedText: '未知',//当数据为undefined显示的字符
     pageList: [10, 20, 30, 40],//分页步进值
     responseHandler: responseHandler,//请求数据成功后，渲染表格前的方法
@@ -49,9 +49,9 @@ $('#bootstrap-table').bootstrapTable({
         align: 'center',
         formatter: function (value, row, index) {
             if (value == true) {
-                return '<span class="badge badge-primary">显示</span>';
+                return '<span class="badge badge-info">显示</span>';
             } else if (value == false) {
-                return '<span class="badge badge-danger">隐藏</span>';
+                return '<span class="badge badge-default">隐藏</span>';
             }
         }
     }, {
@@ -98,7 +98,6 @@ $('#bootstrap-table').bootstrapTable({
     }],
 })
 
-var searchFlag = false;
 
 //请求服务数据时所传参数
 function queryParams(params) {
@@ -114,12 +113,6 @@ function queryParams(params) {
 
 //请求成功方法
 function responseHandler(result) {
-    console.log(result);
-    // var errcode = result.errcode;//在此做了错误代码的判断
-    // if (errcode != 0) {
-    //     alert("错误代码" + errcode);
-    //     return;
-    // }
     //如果没有错误则返回数据，渲染表格
     return {
         total: result.data.total, //总页数,前面的key必须为"total"
@@ -144,7 +137,7 @@ function editLink(linkId) {
         shade: false,
         maxmin: true, //开启最大化最小化按钮
         area: ['600px', '500px'],
-        content: '/links/modify?linkId=' + linkId
+        content: '/links/' + linkId + '.html'
     });
 
 
@@ -162,26 +155,22 @@ function deleteLink(linkId) {
         var ids = new Array();
         ids[0] = linkId;
         $.ajax({
-            type: "POST",
-            url: "/links/deleteLinks",
+            type: "DELETE",
+            url: "/links/" + ids,
             dataType: "json",
             cache: false,
             contentType: "application/json",
-            data: JSON.stringify(ids),
             success: function (data) {
                 if (data.code == 200) {
                     parent.layer.msg('删除成功', {icon: 1});
                     refresh();
                 } else {
                     parent.layer.msg('删除失败', {shift: 6});
-                    // parent.layer.msg('切换失败', {icon: 2});
                 }
             },
         });
 
     });
-
-    // parent.layer.msg('玩命删除中' + linkId);
 }
 
 /**
@@ -189,12 +178,9 @@ function deleteLink(linkId) {
  * @param linkId
  */
 function updateLink(linkId, status) {
-    console.log(status);
     $.ajax({
-        type: "POST",
-        url: "/links/linkSwitch",
-
-        data: {"linkId": linkId, "status": status},
+        type: "PUT",
+        url: "/links/" + linkId + "/" + status,
         success: function (data) {
             if (data.code == 200) {
                 parent.layer.msg('切换成功', {icon: 1});
@@ -203,7 +189,6 @@ function updateLink(linkId, status) {
                 parent.layer.msg('切换失败', {icon: 2});
             }
         },
-
     })
 }
 
@@ -216,12 +201,6 @@ function formatDate(date) {
     return dateFormat;
 }
 
-//Switchery按钮初始化
-var elem = document.querySelector('.js-switch');
-var init = new Switchery(elem, {color: '#7c8bc7', jackColor: '#9decff'});
-elem.onchange = function () {
-    var isChecked = elem.checked;
-};
 
 //link 提交按钮点击事件
 $("#linkSubmit").click(function () {
@@ -301,7 +280,7 @@ function addLink() {
         shade: false,
         maxmin: true, //开启最大化最小化按钮
         area: ['600px', '550px'],
-        content: '/links/addLinkView'
+        content: '/links/to/links-add.html'
     });
 }
 
@@ -326,10 +305,6 @@ function searchCustom() {
         });
         search.pageSize = params.limit;
         search.pageNum = params.offset / params.limit + 1;
-        // links_title: $("#link_title").val();
-        // links_display: $("#link_display option:selected").val();
-        // startTime: $("#startTime").val();
-        // endTime:$("#endTime").val();
         return search;
     }
     $("#bootstrap-table").bootstrapTable('refresh', params);
