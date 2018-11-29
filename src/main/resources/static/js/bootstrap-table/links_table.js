@@ -135,7 +135,7 @@ function editLink(linkId) {
         shadeClose: true,
         shade: false,
         maxmin: true, //开启最大化最小化按钮
-        area: ['600px', '500px'],
+        area: ['35%', '70%'],
         content: '/links/' + linkId + '.html'
     });
 
@@ -261,8 +261,8 @@ function addLink() {
         shadeClose: true,
         shade: false,
         maxmin: true, //开启最大化最小化按钮
-        area: ['600px', '550px'],
-        content: '/links/to/links-add.html'
+        area: ['35%', '70%'],
+        content: '/links/links-add'
     });
 }
 

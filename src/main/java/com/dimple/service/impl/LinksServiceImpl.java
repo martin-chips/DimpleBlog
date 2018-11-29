@@ -105,10 +105,8 @@ public class LinksServiceImpl implements LinksService {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
         links.setCreateTime(new Date());
-        //设置是否显示，默认是显示的
-        links.setDisplay(true);
-        //设置是否已经处理，默认已经处理
-        links.setStatus(true);
+        //设置是否已经处理，默认未处理
+        links.setStatus(false);
         linksMapper.insert(links);
         return ResultUtil.success();
     }

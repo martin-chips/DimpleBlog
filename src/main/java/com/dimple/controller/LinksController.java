@@ -68,6 +68,11 @@ public class LinksController {
         return modelAndView;
     }
 
+    @GetMapping("/links/links-add")
+    public String toLinksAdd() {
+        return "/links/links-add";
+    }
+
     @ApiIgnore
     @GetMapping("/links/{linkId}.html")
     public ModelAndView toUpdateLinksView(@PathVariable Integer linkId, ModelAndView modelAndView) {

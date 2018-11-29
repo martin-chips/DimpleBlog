@@ -43,8 +43,8 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">是否显示：</label>
                 <div class="col-sm-8">
-                    <input type="checkbox" class="js-switch" checked/>
-                    <input id="display" type="hidden" name="display">
+                    <input type="checkbox" class="js-switch" th:checked="${linkInfo.data.display}"/>
+                    <input id="display" type="hidden" name="display" th:value="${linkInfo.data.display}">
                 </div>
             </div>
 
@@ -78,14 +78,12 @@
         $(function () {
             //link 提交按钮点击事件
             $("#linkUpdateSubmit").click(function () {
-                console.log($("#updateLinksFrom").serializeArray());
                 $.ajax({
                     type: "PUT",
                     dataType: "json",
                     data: $("#updateLinksFrom").serializeArray(),
                     url: "/links",
                     success: function (data) {
-                        console.log(data);
                         if (data != null && data.code == 200) {
                             parent.layer.msg('修改成功！', {icon: 1});
                             var index = parent.layer.getFrameIndex(window.name);
@@ -105,10 +103,8 @@
             var init = new Switchery(elem, {color: '#7c8bc7', jackColor: '#9decff'});
             elem.onchange = function () {
                 var isChecked = elem.checked;
-                alert(isChecked);
                 $("#display").val(isChecked);
             };
-
         });
     </script>
 </div>
