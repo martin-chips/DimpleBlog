@@ -78,7 +78,6 @@
         $(function () {
             //link 提交按钮点击事件
             $("#linkSubmit").click(function () {
-                console.log($("#linkAddForm").serializeArray());
                 $.ajax({
                     type: "POST",
                     dataType: "json",

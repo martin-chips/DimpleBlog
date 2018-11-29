@@ -35,7 +35,6 @@
                 <div class="space-25"></div>
                 <h3 style="margin-bottom: 20px">概览</h3>
                 <ul class="folder-list m-b-md linksDetails" style="padding: 0">
-                    <!--todo 颜色配置-->
                     <li>
                         <a href="#"> <i class="fa fa-heart-o "></i> 友链 <span class="label label-success pull-right">
                             <div th:text="${linksDetails.total}"></div>
@@ -90,12 +89,6 @@
                             <span>-</span>
                             <input type="text" class="time-input" name="endTime" id="endTime" placeholder="结束时间"/>
                         </li>
-                        <li>
-                            友链状态：<select name="links_display" id="link_display">
-                            <option value="">所有</option>
-                            <option value="1">显示</option>
-                            <option value="0">隐藏</option>
-                        </select>
                         </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="searchCustom()"><i

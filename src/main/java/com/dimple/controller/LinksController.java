@@ -2,6 +2,8 @@ package com.dimple.controller;
 
 import com.dimple.bean.Links;
 import com.dimple.bean.LinksDetails;
+import com.dimple.constant.Status;
+import com.dimple.framework.annotation.Log;
 import com.dimple.service.LinksService;
 import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultUtil;
@@ -127,6 +129,7 @@ public class LinksController {
         return result;
     }
 
+    @Log(title = "新增友链", action = Status.INSERT)
     @ApiOperation(value = "新增友链")
     @ApiImplicitParam(name = "links", value = "传入的links的信息，除id以外，其他的必填")
     @PostMapping("/links")

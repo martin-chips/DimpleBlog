@@ -50,7 +50,7 @@
         <!--<table tableName="role_permission">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="user">
+        <table tableName="operator_log">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
         <!--<table tableName="user_role">-->
