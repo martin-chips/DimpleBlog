@@ -35,27 +35,30 @@ public class LoginController {
      * @return
      * @throws Exception
      */
+//    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+//    public String login(String loginId, String password, Model model) throws Exception {
+//        Result result = loginService.login(loginId, password);
+//        if (result.getCode() == ResultEnum.SUCCESS.getCode()) {
+//            return "redirect:/index.html";
+//        } else {
+//            model.addAttribute(ResultUtil.error(result.getCode(), result.getMsg()));
+//            return "redirect:/login.html";
+//        }
+//    }
+
+    @ResponseBody
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public String login(String loginId, String password, Model model) throws Exception {
-        if (StringUtils.isBlank(loginId) || StringUtils.isBlank(password)) {
-            model.addAttribute(ResultUtil.error(ResultEnum.USER_NAME_OR_PASSWORD_IS_NULL.getCode(), ResultEnum.USER_NAME_OR_PASSWORD_IS_NULL.getMsg()));
-            return "redirect:/login";
-        }
+    public Result login1(String loginId, String password) throws Exception {
         Result result = loginService.login(loginId, password);
-        if (result.getCode() == ResultEnum.SUCCESS.getCode()) {
-            return "redirect:/index";
-        } else {
-            model.addAttribute(ResultUtil.error(result.getCode(), result.getMsg()));
-            return "redirect:/login";
-        }
+        return result;
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/login.html")
     public String toLogin() {
         return "/login";
     }
 
-    @RequestMapping("/logout")
+    @RequestMapping("/logout.html")
     public String logout(HttpSession session) {
         loginService.logout();
         return "/login";

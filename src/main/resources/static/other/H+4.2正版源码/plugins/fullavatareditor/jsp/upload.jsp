@@ -20,7 +20,7 @@ if ( contentType.indexOf("multipart/form-data") >= 0 )
 	Result result = new Result();
 	result.avatarUrls = new ArrayList();
 	result.success = false;
-	result.msg = "Failure!";
+	result.msg = "FAILURE!";
 
 	FileItemFactory factory = new DiskFileItemFactory();
 	ServletFileUpload upload = new ServletFileUpload(factory);

@@ -100,7 +100,7 @@ public class LogAspect {
         }
         //设置异常处理
         if (e != null) {
-            operatorLog.setStatus(Status.Failure);
+            operatorLog.setStatus(Status.FAILURE);
             operatorLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 255));
         }
         //设置方法名称(未采用getSimpleName的方法)

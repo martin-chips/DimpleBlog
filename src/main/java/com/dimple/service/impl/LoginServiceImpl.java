@@ -1,6 +1,9 @@
 package com.dimple.service.impl;
 
+import com.dimple.constant.Status;
 import com.dimple.service.LoginService;
+import com.dimple.utils.LoginLogUtil;
+import com.dimple.utils.ServletUtil;
 import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultEnum;
 import com.dimple.utils.message.ResultUtil;
@@ -23,7 +26,18 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Result login(String loginId, String password) {
+
+        String kaptcha = ServletUtil.getRequest().getParameter("kaptcha");
+        //获取kaptcha生成的验证码
+        String kaptchaExpected = (String) ServletUtil.getRequest().getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+        //验证码校验
+        if (StringUtils.isBlank(ServletUtil.getRequest().getParameter("kaptcha")) || !kaptchaExpected.equals(kaptcha)) {
+            LoginLogUtil.log(loginId, Status.LOGIN_FAILURE, "验证码错误");
+            return ResultUtil.error(ResultEnum.KAPTCHA_CHECK_ERROR.getCode(), ResultEnum.KAPTCHA_CHECK_ERROR.getMsg());
+        }
+        //账号和密码为空校验
         if (StringUtils.isBlank(loginId) || StringUtils.isBlank(password)) {
+            LoginLogUtil.log(loginId, Status.LOGIN_FAILURE, "账号不存在");
             return ResultUtil.error(ResultEnum.USER_NAME_OR_PASSWORD_IS_NULL.getCode(), ResultEnum.USER_NAME_OR_PASSWORD_IS_NULL.getMsg());
         }
         //获取Subject对象
@@ -33,21 +47,24 @@ public class LoginServiceImpl implements LoginService {
         Integer code = null;
         try {
             currentUser.login(usernamePasswordToken);
-            Session session = currentUser.getSession();
-            session.setAttribute("loginId", loginId);
+            LoginLogUtil.log(loginId, Status.LOGIN_FAILURE, "登录成功");
             return ResultUtil.success();
         } catch (UnknownAccountException e) {
             code = ResultEnum.USER_NOT_EXIST.getCode();
             msg = ResultEnum.USER_NOT_EXIST.getMsg();
+            LoginLogUtil.log(loginId, Status.LOGIN_FAILURE, "账号不存在");
         } catch (IncorrectCredentialsException e) {
             code = ResultEnum.USER_PASSWORD_INCORRECT.getCode();
             msg = ResultEnum.USER_PASSWORD_INCORRECT.getMsg();
+            LoginLogUtil.log(loginId, Status.LOGIN_FAILURE, "密码错误");
         } catch (LockedAccountException e) {
             code = ResultEnum.USER_ACCOUNT_LOCKED.getCode();
             msg = ResultEnum.USER_ACCOUNT_LOCKED.getMsg();
+            LoginLogUtil.log(loginId, Status.LOGIN_FAILURE, "账户被锁定");
         } catch (AuthenticationException exception) {
             code = ResultEnum.USER_CHECK_ERROR.getCode();
             msg = ResultEnum.USER_CHECK_ERROR.getMsg();
+            LoginLogUtil.log(loginId, Status.LOGIN_FAILURE, "身份认证异常");
         }
         return ResultUtil.error(code, msg);
     }

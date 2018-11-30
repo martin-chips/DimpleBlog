@@ -18,10 +18,13 @@ public enum ResultEnum {
     USER_PASSWORD_INCORRECT(5, "密码错误"),
     USER_ACCOUNT_LOCKED(6, "用户已被锁定"),
     USER_CHECK_ERROR(7, "用户验证失败"),
+    KAPTCHA_CHECK_ERROR(8, "验证码校验失败"),
+
     //    友链
-    LINKS_NOT_FOUND(20, "友链不存在"),
-    LINKS_PARAM_ERROR(21, "友链参数错误"),
-    ;
+    LINKS_NOT_FOUND(20,"友链不存在"),
+
+    LINKS_PARAM_ERROR(21,"友链参数错误"),
+            ;
 
     private Integer code;
     private String msg;
@@ -46,4 +49,4 @@ public enum ResultEnum {
     public void setMsg(String msg) {
         this.msg = msg;
     }
-}
+    }

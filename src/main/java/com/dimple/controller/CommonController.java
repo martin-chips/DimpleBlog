@@ -14,13 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CommonController {
 
-    @RequestMapping("/index")
+    @RequestMapping("/index.html")
     public String toIndex() {
         return "/index";
     }
 
-    @RequestMapping("/to/{url}/{uri}")
-    public String toURL(@PathVariable("url") String url, @PathVariable("uri") String uri) {
-        return "/" + url + "/" + uri;
-    }
 }

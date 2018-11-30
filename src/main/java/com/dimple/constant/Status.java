@@ -17,7 +17,19 @@ public class Status {
     /**
      * 失败
      */
-    public static final Boolean Failure = false;
+    public static final Boolean FAILURE = false;
+    /**
+     * 登录成功
+     */
+    public static final Byte LOGIN_SUCCESS = 1;
+    /**
+     * 登录失败
+     */
+    public static final Byte LOGIN_FAILURE = 0;
+    /**
+     * 退出成功
+     */
+    public static final Byte LOGOUT = 2;
 
     /**
      * 其它
