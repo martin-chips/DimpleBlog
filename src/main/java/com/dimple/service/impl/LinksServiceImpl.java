@@ -3,23 +3,20 @@ package com.dimple.service.impl;
 import com.dimple.bean.Links;
 import com.dimple.bean.LinksDetails;
 import com.dimple.bean.LinksExample;
+import com.dimple.constant.LinksSearchCode;
 import com.dimple.dao.CustomMapper;
 import com.dimple.dao.LinksMapper;
 import com.dimple.service.LinksService;
 import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultEnum;
 import com.dimple.utils.message.ResultUtil;
-import com.sun.org.apache.regexp.internal.RE;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName: LinksServiceImpl
@@ -38,6 +35,7 @@ public class LinksServiceImpl implements LinksService {
 
     @Override
     public List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, Boolean display) {
+
         LinksExample linksExample = new LinksExample();
         LinksExample.Criteria criteria = linksExample.createCriteria();
         //获取已经处理的友链
@@ -182,5 +180,62 @@ public class LinksServiceImpl implements LinksService {
     public Integer getUnHandledLinksCount() {
         Integer count = customMapper.selectUnHandledLinksCount();
         return count;
+    }
+
+    @Override
+    public List<Links> getLinksCondition(String title, Date startTime, Date endTime, Boolean display, LinksSearchCode searchCode) {
+        if (searchCode == null) {
+            return getAllLinksHandled(title, startTime, endTime, display);
+        }
+        List<Links> links = null;
+        switch (searchCode) {
+            case SEARCH_CODE_ALL:
+                links = getLinksAll();
+                break;
+            case SEARCH_CODE_DIE:
+                links = getLinksDie();
+                break;
+            case SEARCH_CODE_UNHANDLED:
+                links = getAllLinksUnHandled(null, null, null);
+                break;
+            case SEARCH_CODE_HIDE:
+                links = getLinksHide();
+                break;
+            case SEARCH_CODE_DISPLAY:
+                links = getLinksDisplay();
+                break;
+            default:
+                break;
+        }
+        return links;
+    }
+
+    @Override
+    public List<Links> getLinksAll() {
+        return linksMapper.selectByExample(null);
+    }
+
+    @Override
+    public List<Links> getLinksDie() {
+        LinksExample linksExample = new LinksExample();
+        LinksExample.Criteria criteria = linksExample.createCriteria();
+        criteria.andAvailableEqualTo(false);
+        return linksMapper.selectByExample(linksExample);
+    }
+
+    @Override
+    public List<Links> getLinksHide() {
+        LinksExample linksExample = new LinksExample();
+        LinksExample.Criteria criteria = linksExample.createCriteria();
+        criteria.andDisplayEqualTo(false);
+        return linksMapper.selectByExample(linksExample);
+    }
+
+    @Override
+    public List<Links> getLinksDisplay() {
+        LinksExample linksExample = new LinksExample();
+        LinksExample.Criteria criteria = linksExample.createCriteria();
+        criteria.andDisplayEqualTo(true);
+        return linksMapper.selectByExample(linksExample);
     }
 }

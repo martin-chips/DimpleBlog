@@ -75,9 +75,9 @@ $('#bootstrap-table').bootstrapTable({
         align: 'center',
         formatter: function (value, row, index) {
             if (value == false) {
-                return '<span class="badge badge-primary">否</span>';
-            } else if (value == true) {
                 return '<span class="badge badge-danger">是</span>';
+            } else if (value == true) {
+                return '<span class="badge badge-primary">否</span>';
             }
         }
     }, {
@@ -104,9 +104,6 @@ function queryParams(params) {
     return {
         pageSize: params.limit, //每一页的数据行数，默认是上面设置的10(pageSize)
         pageNum: params.offset / params.limit + 1, //当前页面,默认是上面设置的1(pageNumber)
-        // param: "",//这里是其他的参数，根据自己的需求定义，可以是多个
-        // search: params.search,
-
     }
 }
 
@@ -201,7 +198,6 @@ function formatDate(date) {
 }
 
 
-
 /**
  * 修改Links
  */
@@ -275,16 +271,30 @@ function resetForm() {
 }
 
 
-// 搜索
-function searchCustom() {
+/**
+ * 搜索栏搜索
+ * code:1表示显示所有的友链
+ * 2、表示显示所有的死链
+ * 3、表示显示所有的未处理的友链
+ * 4、表示显示已经隐藏的友链
+ * 5、表示显示所有的已经显示的友链
+ */
+function searchCustom(code) {
     var currentId = isEmpty(formId) ? $('form').attr('id') : "link-form";
     var formId = "link-form";
+    console.log(code);
     var params = $("#bootstrap-table").bootstrapTable('getOptions');
     params.queryParams = function (params) {
         var search = {};
-        $.each($("#" + currentId).serializeArray(), function (i, field) {
-            search[field.name] = field.value;
-        });
+        if (code == null) {
+            $.each($("#" + currentId).serializeArray(), function (i, field) {
+                console.log(i);
+                console.log(field);
+                search[field.name] = field.value;
+            });
+        } else if (code != null) {
+            search["searchCode"] = code;
+        }
         search.pageSize = params.limit;
         search.pageNum = params.offset / params.limit + 1;
         return search;

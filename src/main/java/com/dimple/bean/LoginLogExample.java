@@ -74,7 +74,7 @@ public class LoginLogExample {
     }
 
     /**
-     * login_log 2018-11-30
+     * login_log 2018-12-01
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -117,63 +117,63 @@ public class LoginLogExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andLoginIdIsNull() {
-            addCriterion("login_id is null");
+        public Criteria andLogIdIsNull() {
+            addCriterion("log_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdIsNotNull() {
-            addCriterion("login_id is not null");
+        public Criteria andLogIdIsNotNull() {
+            addCriterion("log_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdEqualTo(Integer value) {
-            addCriterion("login_id =", value, "loginId");
+        public Criteria andLogIdEqualTo(Integer value) {
+            addCriterion("log_id =", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdNotEqualTo(Integer value) {
-            addCriterion("login_id <>", value, "loginId");
+        public Criteria andLogIdNotEqualTo(Integer value) {
+            addCriterion("log_id <>", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdGreaterThan(Integer value) {
-            addCriterion("login_id >", value, "loginId");
+        public Criteria andLogIdGreaterThan(Integer value) {
+            addCriterion("log_id >", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("login_id >=", value, "loginId");
+        public Criteria andLogIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("log_id >=", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdLessThan(Integer value) {
-            addCriterion("login_id <", value, "loginId");
+        public Criteria andLogIdLessThan(Integer value) {
+            addCriterion("log_id <", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdLessThanOrEqualTo(Integer value) {
-            addCriterion("login_id <=", value, "loginId");
+        public Criteria andLogIdLessThanOrEqualTo(Integer value) {
+            addCriterion("log_id <=", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdIn(List<Integer> values) {
-            addCriterion("login_id in", values, "loginId");
+        public Criteria andLogIdIn(List<Integer> values) {
+            addCriterion("log_id in", values, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdNotIn(List<Integer> values) {
-            addCriterion("login_id not in", values, "loginId");
+        public Criteria andLogIdNotIn(List<Integer> values) {
+            addCriterion("log_id not in", values, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdBetween(Integer value1, Integer value2) {
-            addCriterion("login_id between", value1, value2, "loginId");
+        public Criteria andLogIdBetween(Integer value1, Integer value2) {
+            addCriterion("log_id between", value1, value2, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLoginIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("login_id not between", value1, value2, "loginId");
+        public Criteria andLogIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("log_id not between", value1, value2, "logId");
             return (Criteria) this;
         }
 
@@ -729,7 +729,7 @@ public class LoginLogExample {
     }
 
     /**
-     * login_log 2018-11-30
+     * login_log 2018-12-01
      */
     public static class Criterion {
         private String condition;

@@ -34,6 +34,10 @@ $('#bootstrap-table').bootstrapTable({
         title: 'IP地址',
         align: 'center',
     }, {
+        field: 'logId',
+        title: 'no',
+        visible: false//设置隐藏列
+    }, {
         field: 'loginLocation',
         title: '登录地点',
         align: 'center',
@@ -97,54 +101,6 @@ function refresh() {
 }
 
 /**
- * 编辑Link
- * @param linkId
- */
-function editLink(linkId) {
-    layer.open({
-        type: 2,
-        title: '修改Link信息',
-        shadeClose: true,
-        shade: false,
-        maxmin: true, //开启最大化最小化按钮
-        area: ['35%', '70%'],
-        content: '/links/' + linkId + '.html'
-    });
-
-
-}
-
-/**
- * 删除Link
- * @param linkId
- */
-function deleteLink(linkId) {
-    parent.layer.confirm('确定要删除该友链吗？', {
-        btn: ['确定', '取消'], //按钮
-        shade: false //不显示遮罩
-    }, function () {
-        var ids = new Array();
-        ids[0] = linkId;
-        $.ajax({
-            type: "DELETE",
-            url: "/links/" + ids,
-            dataType: "json",
-            cache: false,
-            contentType: "application/json",
-            success: function (data) {
-                if (data.code == 200) {
-                    parent.layer.msg('删除成功', {icon: 1});
-                    refresh();
-                } else {
-                    parent.layer.msg('删除失败', {shift: 6});
-                }
-            },
-        });
-
-    });
-}
-
-/**
  * 更新Link的status
  * @param linkId
  */
@@ -174,28 +130,20 @@ function formatDate(date) {
 
 
 /**
- * 修改Links
- */
-function updateLinks() {
-    var row = $("#bootstrap-table").bootstrapTable('getSelections');
-    editLink(row[0].linkId);
-}
-
-/**
  * 批量删除
  */
-function deleteLinks() {
+function deleteLog() {
     //获取所有的选中列
     var rows = $("#bootstrap-table").bootstrapTable('getSelections');
     var ids = new Array();
     for (var i = 0; i < rows.length; i++) {
-        ids[i] = rows[i].linkId;
+        ids[i] = rows[i].logId;
     }
     if (ids.length == 0) {
-        parent.layer.msg('请选择需要删除的Link!', {icon: 2});
+        parent.layer.msg('请选择需要删除的Log记录!', {icon: 2});
         return;
     }
-    parent.layer.confirm('确定要删除这' + ids.length + '个友链吗？', {
+    parent.layer.confirm('确定要删除这' + ids.length + '条Log记录吗？', {
         btn: ['确定', '取消'], //按钮
         shade: false //不显示遮罩
     }, function () {
@@ -204,7 +152,7 @@ function deleteLinks() {
             dataType: "json",
             cache: false,
             contentType: "application/json",
-            url: "/links/" + ids,
+            url: "/log/loginLog/" + ids,
             success: function (data) {
                 console.log(data);
                 if (data != null && data.code == 200) {
@@ -223,37 +171,23 @@ function deleteLinks() {
 }
 
 /**
- * 添加Link
- */
-function addLink() {
-    layer.open({
-        type: 2,
-        title: '新增Link信息',
-        shadeClose: true,
-        shade: false,
-        maxmin: true, //开启最大化最小化按钮
-        area: ['35%', '70%'],
-        content: '/links/links-add'
-    });
-}
-
-/**
  * 清空form表单
  */
 function resetForm() {
-    $("#link-form")[0].reset();
+    $("#loginLog-form")[0].reset();
     refresh();
 }
 
 
 // 搜索
 function searchCustom() {
-    var currentId = isEmpty(formId) ? $('form').attr('id') : "link-form";
-    var formId = "link-form";
+    var currentId = isEmpty(formId) ? $('form').attr('id') : "loginLog-form";
+    var formId = "loginLog-form";
     var params = $("#bootstrap-table").bootstrapTable('getOptions');
     params.queryParams = function (params) {
         var search = {};
         $.each($("#" + currentId).serializeArray(), function (i, field) {
+            console.log(field)
             search[field.name] = field.value;
         });
         search.pageSize = params.limit;
@@ -268,4 +202,35 @@ function isEmpty(value) {
         return true;
     }
     return false;
+}
+
+/**
+ * 清空Log
+ */
+function clean() {
+    parent.layer.confirm('确定要清空登录日志吗？', {
+        btn: ['确定', '取消'], //按钮
+        shade: false //不显示遮罩
+    }, function () {
+        $.ajax({
+            type: "DELETE",
+            dataType: "json",
+            cache: false,
+            contentType: "application/json",
+            url: "/log/loginLog/",
+            success: function (data) {
+                console.log(data);
+                if (data != null && data.code == 200) {
+                    parent.layer.msg('删除成功', {icon: 1});
+                    refresh();
+                } else {
+                    parent.layer.msg('删除失败，请稍后重试！', {icon: 2});
+                }
+            },
+            error: function (data) {
+                parent.layer.msg('系统故障，请联系管理员！', {icon: 2});
+            }
+        })
+
+    });
 }

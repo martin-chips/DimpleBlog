@@ -7,7 +7,7 @@ public class LoginLog implements Serializable {
     /**
      * 登录日志记录的主键
      */
-    private Integer loginId;
+    private Integer logId;
 
     /**
      * 登录的用户名称	
@@ -58,18 +58,18 @@ public class LoginLog implements Serializable {
 
     /**
      * 登录日志记录的主键
-     * @return login_id 登录日志记录的主键
+     * @return log_id 登录日志记录的主键
      */
-    public Integer getLoginId() {
-        return loginId;
+    public Integer getLogId() {
+        return logId;
     }
 
     /**
      * 登录日志记录的主键
-     * @param loginId 登录日志记录的主键
+     * @param logId 登录日志记录的主键
      */
-    public void setLoginId(Integer loginId) {
-        this.loginId = loginId;
+    public void setLogId(Integer logId) {
+        this.logId = logId;
     }
 
     /**

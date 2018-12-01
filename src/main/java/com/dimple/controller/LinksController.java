@@ -2,6 +2,7 @@ package com.dimple.controller;
 
 import com.dimple.bean.Links;
 import com.dimple.bean.LinksDetails;
+import com.dimple.constant.LinksSearchCode;
 import com.dimple.constant.Status;
 import com.dimple.framework.annotation.Log;
 import com.dimple.service.LinksService;
@@ -99,9 +100,10 @@ public class LinksController {
                             @RequestParam(value = "links_title", defaultValue = "") String title,
                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime,
+                            @RequestParam(value = "searchCode", required = false) LinksSearchCode linksSearchCode,
                             @RequestParam(value = "links_display", required = false) Boolean display) {
         PageHelper.startPage(pageNum, pageSize, "create_time desc");
-        List<Links> allLinks = linksService.getAllLinksHandled(title, startTime, endTime, display);
+        List<Links> allLinks = linksService.getLinksCondition(title, startTime, endTime, display, linksSearchCode);
         PageInfo pageInfo = new PageInfo(allLinks);
         return ResultUtil.success(pageInfo);
     }

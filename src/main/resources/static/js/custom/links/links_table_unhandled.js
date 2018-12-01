@@ -272,15 +272,22 @@ function resetForm() {
 
 
 // 搜索-默认第一个form
-function searchCustom() {
+function searchCustom(code) {
     var currentId = isEmpty(formId) ? $('form').attr('id') : "link-form";
     var formId = "link-form";
+    console.log(code);
     var params = $("#bootstrap-table").bootstrapTable('getOptions');
     params.queryParams = function (params) {
         var search = {};
-        $.each($("#" + currentId).serializeArray(), function (i, field) {
-            search[field.name] = field.value;
-        });
+        if (code == null) {
+            $.each($("#" + currentId).serializeArray(), function (i, field) {
+                console.log(i);
+                console.log(field);
+                search[field.name] = field.value;
+            });
+        } else if (code != null) {
+            search["searchCode"] = code;
+        }
         search.pageSize = params.limit;
         search.pageNum = params.offset / params.limit + 1;
         return search;

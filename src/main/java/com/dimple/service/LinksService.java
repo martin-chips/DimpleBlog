@@ -2,12 +2,11 @@ package com.dimple.service;
 
 import com.dimple.bean.Links;
 import com.dimple.bean.LinksDetails;
+import com.dimple.constant.LinksSearchCode;
 import com.dimple.utils.message.Result;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName: LinksService
@@ -20,10 +19,11 @@ public interface LinksService {
     /**
      * 获取所有的Links
      *
-     * @param title     友链的标题
-     * @param startTime 查询开始的时间
-     * @param endTime   查询结束的时间
-     * @param display   是否显示
+     * @param title      友链的标题
+     * @param startTime  查询开始的时间
+     * @param endTime    查询结束的时间
+     * @param display    是否显示
+     * @param searchCode
      * @return
      */
     List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, Boolean display);
@@ -102,5 +102,50 @@ public interface LinksService {
      */
     Result passLinksApply(Integer linkId);
 
+    /**
+     * 获取没有处理的链接的个数
+     *
+     * @return
+     */
     Integer getUnHandledLinksCount();
+
+    /**
+     * 根据具体的search code获取不同的返回结果
+     *
+     * @param title
+     * @param startTime
+     * @param endTime
+     * @param display
+     * @param searchCode
+     * @return
+     */
+    List<Links> getLinksCondition(String title, Date startTime, Date endTime, Boolean display, LinksSearchCode searchCode);
+
+    /**
+     * 获取所有的友链（包括未处理的和已经处理的了的）
+     *
+     * @return
+     */
+    List<Links> getLinksAll();
+
+    /**
+     * 获取所有的死链
+     *
+     * @return
+     */
+    List<Links> getLinksDie();
+
+    /**
+     * 获取所有的已经隐藏的友链
+     *
+     * @return
+     */
+    List<Links> getLinksHide();
+
+    /**
+     * 获取所有的已经显示的友链
+     *
+     * @return
+     */
+    List<Links> getLinksDisplay();
 }
