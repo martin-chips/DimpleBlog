@@ -19,7 +19,7 @@ public class OperatorLog implements Serializable {
      * 操作类型
 
      */
-    private String action;
+    private String operatorType;
 
     /**
      * 请求的方法
@@ -34,27 +34,27 @@ public class OperatorLog implements Serializable {
     /**
      * 请求的URL
      */
-    private String operUrl;
+    private String operatorUrl;
 
     /**
      * 操作人员
      */
-    private String operName;
+    private String operatorName;
 
     /**
      * 操作的IP地址
      */
-    private String operIp;
+    private String operatorIp;
 
     /**
      * 操作的地点
      */
-    private String operLocation;
+    private String operatorLocation;
 
     /**
      * 请求的参数
      */
-    private String operParam;
+    private String operatorParam;
 
     /**
      * 状态（1、true表示正常，0，false表示异常）
@@ -69,7 +69,7 @@ public class OperatorLog implements Serializable {
     /**
      * 操作时间
      */
-    private Date operTime;
+    private Date operatorTime;
 
     /**
      * operator_log
@@ -115,21 +115,21 @@ public class OperatorLog implements Serializable {
     /**
      * 操作类型
 
-     * @return action 操作类型
+     * @return operator_type 操作类型
 
      */
-    public String getAction() {
-        return action;
+    public String getOperatorType() {
+        return operatorType;
     }
 
     /**
      * 操作类型
 
-     * @param action 操作类型
+     * @param operatorType 操作类型
 
      */
-    public void setAction(String action) {
-        this.action = action;
+    public void setOperatorType(String operatorType) {
+        this.operatorType = operatorType;
     }
 
     /**
@@ -166,82 +166,82 @@ public class OperatorLog implements Serializable {
 
     /**
      * 请求的URL
-     * @return oper_url 请求的URL
+     * @return operator_url 请求的URL
      */
-    public String getOperUrl() {
-        return operUrl;
+    public String getOperatorUrl() {
+        return operatorUrl;
     }
 
     /**
      * 请求的URL
-     * @param operUrl 请求的URL
+     * @param operatorUrl 请求的URL
      */
-    public void setOperUrl(String operUrl) {
-        this.operUrl = operUrl;
+    public void setOperatorUrl(String operatorUrl) {
+        this.operatorUrl = operatorUrl;
     }
 
     /**
      * 操作人员
-     * @return oper_name 操作人员
+     * @return operator_name 操作人员
      */
-    public String getOperName() {
-        return operName;
+    public String getOperatorName() {
+        return operatorName;
     }
 
     /**
      * 操作人员
-     * @param operName 操作人员
+     * @param operatorName 操作人员
      */
-    public void setOperName(String operName) {
-        this.operName = operName;
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
     }
 
     /**
      * 操作的IP地址
-     * @return oper_ip 操作的IP地址
+     * @return operator_ip 操作的IP地址
      */
-    public String getOperIp() {
-        return operIp;
+    public String getOperatorIp() {
+        return operatorIp;
     }
 
     /**
      * 操作的IP地址
-     * @param operIp 操作的IP地址
+     * @param operatorIp 操作的IP地址
      */
-    public void setOperIp(String operIp) {
-        this.operIp = operIp;
+    public void setOperatorIp(String operatorIp) {
+        this.operatorIp = operatorIp;
     }
 
     /**
      * 操作的地点
-     * @return oper_location 操作的地点
+     * @return operator_location 操作的地点
      */
-    public String getOperLocation() {
-        return operLocation;
+    public String getOperatorLocation() {
+        return operatorLocation;
     }
 
     /**
      * 操作的地点
-     * @param operLocation 操作的地点
+     * @param operatorLocation 操作的地点
      */
-    public void setOperLocation(String operLocation) {
-        this.operLocation = operLocation;
+    public void setOperatorLocation(String operatorLocation) {
+        this.operatorLocation = operatorLocation;
     }
 
     /**
      * 请求的参数
-     * @return oper_param 请求的参数
+     * @return operator_param 请求的参数
      */
-    public String getOperParam() {
-        return operParam;
+    public String getOperatorParam() {
+        return operatorParam;
     }
 
     /**
      * 请求的参数
-     * @param operParam 请求的参数
+     * @param operatorParam 请求的参数
      */
-    public void setOperParam(String operParam) {
-        this.operParam = operParam;
+    public void setOperatorParam(String operatorParam) {
+        this.operatorParam = operatorParam;
     }
 
     /**
@@ -278,17 +278,17 @@ public class OperatorLog implements Serializable {
 
     /**
      * 操作时间
-     * @return oper_time 操作时间
+     * @return operator_time 操作时间
      */
-    public Date getOperTime() {
-        return operTime;
+    public Date getOperatorTime() {
+        return operatorTime;
     }
 
     /**
      * 操作时间
-     * @param operTime 操作时间
+     * @param operatorTime 操作时间
      */
-    public void setOperTime(Date operTime) {
-        this.operTime = operTime;
+    public void setOperatorTime(Date operatorTime) {
+        this.operatorTime = operatorTime;
     }
 }

@@ -9,18 +9,26 @@ package com.dimple.constant;
  */
 public class OperatorType {
     /**
-     * 其它
+     * 所有
      */
-    public static final String OTHER = "0";
+    public static final String ALL = "0";
 
     /**
-     * 管理员用户
+     * 新增
      */
-    public static final String MANAGE = "1";
+    public static final String ADD = "1";
 
     /**
-     * 演示用户
+     * 删除
      */
-    public static final String CHANNEL = "2";
+    public static final String DELETE = "2";
+    /**
+     * 更新
+     */
+    public static final String UPDATE = "3";
+    /**
+     * 查询
+     */
+    public static final String QUERY = "4";
 
 }

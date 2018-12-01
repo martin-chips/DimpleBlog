@@ -2,6 +2,8 @@ package com.dimple.service;
 
 import com.dimple.bean.OperatorLog;
 
+import java.util.List;
+
 /**
  * @ClassName: OperatorLogService
  * @Description:
@@ -17,4 +19,5 @@ public interface OperatorLogService {
      * @return sql执行的条数
      */
     Integer insertOperatorLog(OperatorLog operatorLog);
+
 }

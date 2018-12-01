@@ -28,7 +28,7 @@ public @interface Log {
     /**
      * 渠道
      */
-    String channel() default OperatorType.MANAGE;
+    String channel()default "";
 
     /**
      * 是否保存请求的参数

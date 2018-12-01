@@ -135,8 +135,6 @@ function editLink(linkId) {
         area: ['35%', '70%'],
         content: '/links/' + linkId + '.html'
     });
-
-
 }
 
 /**

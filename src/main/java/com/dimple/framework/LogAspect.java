@@ -91,12 +91,12 @@ public class LogAspect {
         operatorLog.setStatus(Status.SUCCESS);
         String ip = ShiroUtil.getIp();
         //设置IP地址
-        operatorLog.setOperIp(ip);
-        operatorLog.setOperLocation(AddressUtil.getRealAddressByIP(ip));
+        operatorLog.setOperatorIp(ip);
+        operatorLog.setOperatorLocation(AddressUtil.getRealAddressByIP(ip));
         //设置请求的URL
-        operatorLog.setOperUrl(ServletUtil.getRequest().getRequestURI());
+        operatorLog.setOperatorUrl(ServletUtil.getRequest().getRequestURI());
         if (user != null) {
-            operatorLog.setOperName(user.getUserName());
+            operatorLog.setOperatorName(user.getUserName());
         }
         //设置异常处理
         if (e != null) {
@@ -108,7 +108,7 @@ public class LogAspect {
         String methodName = joinPoint.getSignature().getName();
         operatorLog.setMethod(className + "." + methodName + "()");
         setControllerMethodDescription(operatorLog, controllerLog);
-        operatorLog.setOperTime(new Date());
+        operatorLog.setOperatorTime(new Date());
         operatorLogService.insertOperatorLog(operatorLog);
     }
 
@@ -119,14 +119,14 @@ public class LogAspect {
      * @param controllerLog controller上注解标注的对象
      */
     private void setControllerMethodDescription(OperatorLog operatorLog, Log controllerLog) {
-        operatorLog.setAction(controllerLog.action());
+        operatorLog.setOperatorType(controllerLog.action());
         operatorLog.setTitle(controllerLog.title());
         operatorLog.setChannel(controllerLog.channel());
         //设置参数保存（比如密码这些就可以不用显示直接设置为false）
         if (controllerLog.isSaveRequestData()) {
             Map<String, String[]> parameterMap = ServletUtil.getRequest().getParameterMap();
             String params = JSONObject.toJSONString(parameterMap);
-            operatorLog.setOperParam(StringUtils.substring(params, 0, 255));
+            operatorLog.setOperatorParam(StringUtils.substring(params, 0, 255));
         }
     }
 

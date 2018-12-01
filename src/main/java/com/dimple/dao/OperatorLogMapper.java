@@ -2,13 +2,9 @@ package com.dimple.dao;
 
 import com.dimple.bean.OperatorLog;
 import com.dimple.bean.OperatorLogExample;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface OperatorLogMapper {
     int countByExample(OperatorLogExample example);
 

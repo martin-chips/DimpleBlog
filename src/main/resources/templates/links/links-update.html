@@ -88,7 +88,9 @@
                             parent.layer.msg('修改成功！', {icon: 1});
                             var index = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(index);//关闭当前页
-                            window.parent.location.reload();
+                            $("#bootstrap-table").bootstrapTable('refresh', {
+                                silent: true
+                            });
                         } else {
                             layer.alert('修改失败！', {
                                 icon: 5,
