@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @ClassName: LoginLogServiceImpl
  * @Description:
@@ -25,5 +27,11 @@ public class LoginLogServiceImpl implements LoginLogService {
     public Integer insertLoginLog(LoginLog loginLog) {
         int i = loginLogMapper.insertSelective(loginLog);
         return i;
+    }
+
+    @Override
+    public List<LoginLog> getAllLoginLog() {
+        List<LoginLog> loginLogs = loginLogMapper.selectByExample(null);
+        return loginLogs;
     }
 }

@@ -101,4 +101,6 @@ public interface LinksService {
      * @return
      */
     Result passLinksApply(Integer linkId);
+
+    Integer getUnHandledLinksCount();
 }

@@ -1,10 +1,8 @@
 package com.dimple.controller;
 
+import com.dimple.service.LinksService;
 import com.dimple.service.LoginService;
 import com.dimple.utils.message.Result;
-import com.dimple.utils.message.ResultEnum;
-import com.dimple.utils.message.ResultUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,26 +23,8 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     @Autowired
     LoginService loginService;
-
-    /**
-     * 登录的Controller
-     *
-     * @param loginId
-     * @param password
-     * @param model
-     * @return
-     * @throws Exception
-     */
-//    @RequestMapping(value = "/auth", method = RequestMethod.POST)
-//    public String login(String loginId, String password, Model model) throws Exception {
-//        Result result = loginService.login(loginId, password);
-//        if (result.getCode() == ResultEnum.SUCCESS.getCode()) {
-//            return "redirect:/index.html";
-//        } else {
-//            model.addAttribute(ResultUtil.error(result.getCode(), result.getMsg()));
-//            return "redirect:/login.html";
-//        }
-//    }
+    @Autowired
+    LinksService linksService;
 
     @ResponseBody
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
@@ -62,5 +42,11 @@ public class LoginController {
     public String logout(HttpSession session) {
         loginService.logout();
         return "/login";
+    }
+
+    @RequestMapping("/index.html")
+    public String index(Model model) {
+        model.addAttribute("unhandledLinksCount", linksService.getUnHandledLinksCount());
+        return "/index";
     }
 }

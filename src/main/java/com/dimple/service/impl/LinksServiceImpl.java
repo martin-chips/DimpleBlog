@@ -9,10 +9,12 @@ import com.dimple.service.LinksService;
 import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultEnum;
 import com.dimple.utils.message.ResultUtil;
+import com.sun.org.apache.regexp.internal.RE;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Service
+@Transactional
 public class LinksServiceImpl implements LinksService {
     @Autowired
     LinksMapper linksMapper;
@@ -173,5 +176,11 @@ public class LinksServiceImpl implements LinksService {
         links.setStatus(true);
         int i = linksMapper.updateByPrimaryKey(links);
         return ResultUtil.success(i);
+    }
+
+    @Override
+    public Integer getUnHandledLinksCount() {
+        Integer count = customMapper.selectUnHandledLinksCount();
+        return count;
     }
 }

@@ -18,4 +18,11 @@ public interface CustomMapper {
      * @return 友链概览
      */
     LinksDetails selectLinksDetails();
+
+    /**
+     * 获取未处理的Links的个数
+     *
+     * @return
+     */
+    Integer selectUnHandledLinksCount();
 }

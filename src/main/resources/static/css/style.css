@@ -7938,3 +7938,9 @@ body.skin-3 {
         font-size: 12px
     }
 }
+.btn-outline {
+    color: inherit;
+    background-color: transparent;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}

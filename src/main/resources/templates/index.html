@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -132,8 +132,6 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_validate.html">访客记录</a>
-                        </li>
                         <li><a class="J_menuItem" href="form_advanced.html">访客统计</a>
                         </li>
                         <li><a class="J_menuItem" href="form_wizard.html">黑名单</a>
@@ -144,18 +142,25 @@
                     <a class="J_menuItem"><i class="fa fa-flask"></i> <span class="nav-label">操作日志</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/links/list.html">访问日志</a></li>
                         <li><a class="J_menuItem" href="#">操作日志</a></li>
-                        <li><a class="J_menuItem" href="/links/list.html">登录日志</a></li>
+                        <li><a class="J_menuItem" href="/log/loginLog.html">登录日志</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="J_menuItem"><i class="fa fa-flask"></i> <span class="nav-label">操作日志</span></a>
-                </li>
-                <li>
-                    <a class="J_menuItem"><i class="fa fa-table"></i> <span class="nav-label">友情链接</span><span
-                            class="fa arrow"></span></a>
+                    <a class="J_menuItem">
+                        <i class="fa fa-table"></i>
+                        <span class="nav-label">友情链接</span>
+                        <span th:if=" ${unhandledLinksCount>0}" class="label label-warning pull-right">
+                            <div th:text="${unhandledLinksCount}"></div>
+                        </span>
+                        <span th:if=" ${unhandledLinksCount==0}" class="fa arrow"></span>
+                    </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/links/unhandled/list.html">未处理消息</a></li>
+                        <li><a class="J_menuItem" href="/links/unhandled/list.html">未处理消息 <span
+                                th:if=" ${unhandledLinksCount>0}" class="label label-warning pull-right">
+                            <div th:text="${unhandledLinksCount}"></div>
+                        </span></a></li>
                         <li><a class="J_menuItem" href="/links/list.html">友链列表</a></li>
                     </ul>
                 </li>
@@ -186,7 +191,14 @@
                             class="nav-label">畅言评论</span></a>
                 </li>
                 <li>
-                    <a href="/toFrontPage"><i class="fa fa-desktop"></i> <span class="nav-label">转到前台</span></a>
+                    <a><i class="fa fa-picture-o"></i> <span class="nav-label">系统配置</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/gallery/localGallery">SwaggerUI</a>
+                        </li>
+                        <li><a class="J_menuItem" href="/gallery/qiNiuGallery">系统监控</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -212,6 +224,8 @@
                 <ul class="nav navbar-top-links navbar-right welcome-message">
                     <li>
                         <span class="m-r-sm text-muted">欢迎来到Dimple博客管理后台.</span>
+                    </li>
+                    <li><a href="/toFrontPage"><i class="fa fa-desktop"></i> <span class="nav-label">Blog首页</span></a>
                     </li>
                     <li><a id="fullScreen"><i class="fa fa-arrows-alt"></i>全屏</a></li>
                     <li><a href="/logout"><i class="fa fa-sign-out"></i>退出</a></li>

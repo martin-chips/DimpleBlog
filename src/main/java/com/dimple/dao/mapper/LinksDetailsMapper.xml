@@ -9,4 +9,9 @@
                (select count(*) from links where display = 1)   as display
         from links;
     </select>
+    <select id="selectUnHandledLinksCount" resultType="java.lang.Integer">
+        select count(*)
+        from links
+        where status = 0;
+    </select>
 </mapper>

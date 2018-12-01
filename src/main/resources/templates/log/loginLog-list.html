@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - Bootstrap Table</title>
+
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="/css/common/common.css" rel="stylesheet">
+
+
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <!--IOS风格切换插件-->
+    <!--<link href="/css/switchery/switchery.css" rel="stylesheet">-->
+    <script src="/js/layer/layer.min.js"></script>
+    <script src="/js/layui/layui.js"></script>
+    <script src="/js/common/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<!--<div class="col-sm-2">-->
+    <!--<div class="ibox float-e-margins">-->
+        <!--<div class="ibox-content mailbox-content">-->
+            <!--<div class="file-manager">-->
+                <!--<div class="space-25"></div>-->
+                <!--<h3 style="margin-bottom: 20px">概览</h3>-->
+                <!--<ul class="folder-list m-b-md linksDetails" style="padding: 0">-->
+                    <!--<li>-->
+                        <!--<a href="#"> <i class="fa fa-heart-o "></i> 友链 <span class="label label-success pull-right">-->
+                            <!--<div th:text="${linksDetails.total}"></div>-->
+                        <!--</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="#"> <i class="fa fa-square-o"></i> 死链<span class="label label-danger pull-right">-->
+                            <!--<div th:text="${linksDetails.disabled}"></div>-->
+                        <!--</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="#"> <i class="fa fa-envelope-o"></i> 未处理友链<span-->
+                                <!--class="label label-warning pull-right">-->
+                            <!--<div th:text="${linksDetails.unHandled}"></div>-->
+                        <!--</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="#"> <i class="fa fa-trash-o"></i> 已隐藏友链<span class="label label-default pull-right">-->
+                            <!--<div th:text="${linksDetails.hide}"></div>-->
+                        <!--</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="#"> <i class="fa fa-file-text-o"></i> 已显示友链 <span-->
+                                <!--class="label label-info pull-right">-->
+                            <!--<div th:text="${linksDetails.display}"></div>-->
+                        <!--</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="container-div ui-layout-center col-sm-10 animated fadeInRight">
+
+    <div class="row">
+
+        <div class="col-sm-10 search-collapse ">
+            <form id="link-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <label>登录地址：</label><input type="text" name="ipaddr"/>
+                        </li>
+                        <li>
+                            <label>登录名称：</label><input type="text" name="loginName"/>
+                        </li>
+                        <li>
+                            <label>登录状态：</label><select name="status" >
+                            <option value="">所有</option>
+                            <option></option>
+                        </select>
+                        </li>
+                        <li class="select-time">
+                            <label>登录时间： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm hidden-xs" id="toolbar" role="group" style="margin-top: 10px">
+            <a class="btn btn-danger" onclick="$.operate.clean()" >
+                <i class="fa fa-trash"></i> 清空
+            </a>
+            <a class="btn btn-danger btn-del disabled" onclick="deleteLinks()">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+        </div>
+
+        <div class="col-sm-12 select-table table-striped ">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+
+<!-- 自定义js -->
+<script src="/js/content.js?v=1.0.0"></script>
+<!-- layer javascript -->
+<script src="/js/layer/layer.min.js"></script>
+<!-- Bootstrap table -->
+<script src="/js/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+<script src="/static/js/custom/log/loginLog.js" th:src="@{/js/custom/log/loginLog.js}"></script>
+
+</body>
+
+</html>

@@ -2,6 +2,8 @@ package com.dimple.service;
 
 import com.dimple.bean.LoginLog;
 
+import java.util.List;
+
 /**
  * @ClassName: LoginLogService
  * @Description: 登录日志的Service类
@@ -18,4 +20,10 @@ public interface LoginLogService {
      */
     Integer insertLoginLog(LoginLog loginLog);
 
+    /**
+     * 获得所有的登录日志
+     *
+     * @return
+     */
+    List<LoginLog> getAllLoginLog();
 }
