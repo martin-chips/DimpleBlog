@@ -128,13 +128,43 @@ function refresh() {
 function editLink(linkId) {
     layer.open({
         type: 2,
-        title: '修改Link信息',
-        shadeClose: true,
-        shade: false,
-        maxmin: true, //开启最大化最小化按钮
         area: ['35%', '70%'],
-        content: '/links/' + linkId + '.html'
+        fix: false,
+        //不固定
+        maxmin: true,
+        shade: 0.3,
+        title: "111",
+        content: '/links/' + linkId + '.html',
+        btn: ['确定', '关闭'],
+        // 弹层外区域关闭
+        shadeClose: true,
+        yes: function (index, layero) {
+            var body = top.layer.getChildFrame('body', index);
+            var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+            console.log(body.find('#linkDescription').val())
+            layer.closeAll();
+            refresh();
+        },
+        cancel: function (index) {
+            return true;
+        },
+        zIndex: layer.zIndex //重点1
+        , success: function (layero) {
+            layer.setTop(layero); //重点2
+        },
+        end: function () {
+            // window.location.reload();
+        }
     });
+    // layer.open({
+    //     type: 2,
+    //     title: '修改Link信息',
+    //     shadeClose: true,
+    //     shade: false,
+    //     maxmin: true, //开启最大化最小化按钮
+    //     area: ['35%', '70%'],
+    //     content: '/links/' + linkId + '.html'
+    // });
 }
 
 /**

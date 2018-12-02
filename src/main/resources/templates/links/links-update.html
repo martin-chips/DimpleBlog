@@ -76,6 +76,9 @@
     <script src="/js/validate/validate-index.js"></script>
     <script>
         $(function () {
+            function hh() {
+                console.log(111);
+            }
             //link 提交按钮点击事件
             $("#linkUpdateSubmit").click(function () {
                 $.ajax({
@@ -108,6 +111,88 @@
                 var isChecked = elem.checked;
                 $("#display").val(isChecked);
             };
+
+            $("#form-user-edit").validate({
+                rules: {
+                    userName: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                        remote: {
+                            url:"system/user/checkEmailUnique",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                "userId": function () {
+                                    return $("input[name='userId']").val();
+                                },
+                                "email": function () {
+                                    return $("input[name='email']").val();
+                                }
+                            },
+                            dataFilter: function (data, type) {
+                                if (data == "0") return true;
+                                else return false;
+                            }
+                        }
+                    },
+                    phonenumber: {
+                        required: true,
+                        isPhone: true,
+                        remote: {
+                            url: "system/user/checkPhoneUnique",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                "userId": function () {
+                                    return $("input[name='userId']").val();
+                                },
+                                "phonenumber": function () {
+                                    return $("input[name='phonenumber']").val();
+                                }
+                            },
+                            dataFilter: function (data, type) {
+                                if (data == "0") return true;
+                                else return false;
+                            }
+                        }
+                    },
+                },
+                messages: {
+                    "email": {
+                        remote: "Email已经存在"
+                    },
+                    "phonenumber": {
+                        remote: "手机号码已经存在"
+                    }
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        type: "PUT",
+                        dataType: "json",
+                        data: $("#updateLinksFrom").serializeArray(),
+                        url: "/links",
+                        success: function (data) {
+                            if (data != null && data.code == 200) {
+                                parent.layer.msg('修改成功！', {icon: 1});
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);//关闭当前页
+                                $("#bootstrap-table").bootstrapTable('refresh', {
+                                    silent: true
+                                });
+                            } else {
+                                layer.alert('修改失败！', {
+                                    icon: 5,
+                                    skin: 'layer-ext-moon'
+                                });
+                            }
+                        }
+                    });
+                    return false;
+                }
+            });
         });
     </script>
 </div>

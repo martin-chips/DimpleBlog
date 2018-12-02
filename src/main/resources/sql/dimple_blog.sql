@@ -3,15 +3,15 @@
 
  Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 50724
+ Source Server Version : 50561
  Source Host           : localhost:3306
  Source Schema         : dimple_blog
 
  Target Server Type    : MySQL
- Target Server Version : 50724
+ Target Server Version : 50561
  File Encoding         : 65001
 
- Date: 30/11/2018 18:11:24
+ Date: 03/12/2018 07:44:31
 */
 
 SET NAMES utf8mb4;
@@ -27,13 +27,13 @@ CREATE TABLE `blog`  (
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
   `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '摘要',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '内容',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `status` tinyint(4) NULL DEFAULT NULL COMMENT '状态，1表示已发表，2表示在草稿箱，3表示在垃圾箱',
   `support` tinyint(1) NULL DEFAULT NULL COMMENT '是否推荐',
   `tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标签',
   `click` int(11) NULL DEFAULT NULL COMMENT '点击次数',
   `up` tinyint(4) NULL DEFAULT NULL COMMENT '置顶量',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`article_id`) USING BTREE,
   INDEX `category_id`(`category_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -45,8 +45,8 @@ DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`  (
   `category_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '分类的id',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '分类的名称',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`category_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -60,61 +60,26 @@ CREATE TABLE `links`  (
   `display` tinyint(1) NULL DEFAULT NULL COMMENT '是否显示(1表示显示，0表示不显示)',
   `status` tinyint(1) NULL DEFAULT NULL COMMENT '是否已经处理(1表示已经处理，0表示没有处理)',
   `weight` int(11) NULL DEFAULT NULL COMMENT '权重',
-  `create_time` timestamp(0) NOT NULL COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '友链链接地址',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '友链的描述',
   `click` int(11) NULL DEFAULT NULL COMMENT '友链点击数',
   `available` tinyint(1) NULL DEFAULT NULL COMMENT '友链是否可用（定时任务查询）',
   PRIMARY KEY (`link_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 594 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 596 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of links
 -- ----------------------------
-INSERT INTO `links` VALUES (548, '123', 1, 1, 1, '2018-11-29 14:06:58', '132', '123', NULL, NULL);
-INSERT INTO `links` VALUES (549, '111', 1, 1, 111, '2018-11-29 14:08:47', '111', '111', NULL, NULL);
-INSERT INTO `links` VALUES (550, '二位', 1, 1, 111, '2018-11-29 14:11:28', '111', '11222', NULL, NULL);
-INSERT INTO `links` VALUES (547, '44', 1, 1, 44, '2018-11-29 14:00:34', '44', '444', NULL, NULL);
-INSERT INTO `links` VALUES (524, 'qqq', NULL, NULL, 1166, '2018-11-28 14:58:35', '32432', '324324', NULL, NULL);
-INSERT INTO `links` VALUES (538, '66', 1, 1, 666, '2018-11-29 12:58:50', '666', '666', NULL, NULL);
-INSERT INTO `links` VALUES (536, '1', 1, 1, 1, '2018-11-29 12:50:26', 'www', 'www', NULL, 0);
-INSERT INTO `links` VALUES (537, '问问', 1, 1, 1, '2018-11-29 12:51:25', 'www', 'www', NULL, NULL);
-INSERT INTO `links` VALUES (523, 'qqq', NULL, NULL, 11, '2018-11-28 14:59:26', '32432规范购房的', '324324', NULL, NULL);
-INSERT INTO `links` VALUES (534, '凄凄切切', 1, 1, 11, '2018-11-29 12:44:34', '去去去', '去去去', NULL, 0);
-INSERT INTO `links` VALUES (535, '1', 1, 1, 1, '2018-11-29 12:48:23', '1', '1', NULL, NULL);
 INSERT INTO `links` VALUES (522, 'qqq', 0, NULL, 11, '2018-11-28 15:02:36', '1414112', '111', NULL, NULL);
-INSERT INTO `links` VALUES (425, '测试Title791', NULL, NULL, 100, '2018-11-28 15:04:49', 'www.ff217.com', '测试Description99a-6', NULL, NULL);
-INSERT INTO `links` VALUES (426, '测试Titlef52', 1, 1, 10, '2018-11-23 09:46:06', 'www.00079.com', '测试Descriptiond04-4', NULL, 1);
-INSERT INTO `links` VALUES (427, '测试Title3b3', 0, 1, 118888, '2018-11-23 09:46:06', 'www.76603.com', '测试Description5b7-8', NULL, NULL);
-INSERT INTO `links` VALUES (428, '测试Title952', 0, 1, 12, '2018-11-23 09:46:06', 'www.81f90.com', '测试Descriptioncba-b', NULL, NULL);
-INSERT INTO `links` VALUES (533, 's', 1, 1, 11, '2018-11-29 12:38:53', '32432', '324324', NULL, NULL);
-INSERT INTO `links` VALUES (430, '测试Titleac1', 0, 1, 14, '2018-11-23 09:46:06', 'www.78dca.com', '测试Description7a4-8', NULL, NULL);
-INSERT INTO `links` VALUES (431, '测试Title72c', 1, 1, 15, '2018-11-23 09:46:06', 'www.8d9a6.com', '测试Description33e-4', NULL, NULL);
-INSERT INTO `links` VALUES (432, '测试Title91c', 0, 1, 16, '2018-11-23 09:46:06', 'www.47b9a.com', '测试Descriptioncdd-0', NULL, NULL);
-INSERT INTO `links` VALUES (539, '1', 1, 1, 1, '2018-11-29 13:02:53', '1', '1', NULL, NULL);
-INSERT INTO `links` VALUES (540, '1', 1, 1, 1, '2018-11-29 13:03:09', '1', '1', NULL, NULL);
-INSERT INTO `links` VALUES (434, '测试Titleeb0', 0, 1, 18, '2018-11-23 09:46:06', 'www.fc97b.com', '测试Description83e-6', NULL, NULL);
-INSERT INTO `links` VALUES (545, '问问', 1, 1, 1, '2018-11-29 13:58:26', 'www', 'www', NULL, NULL);
-INSERT INTO `links` VALUES (436, '测试Title56a', 0, 1, 20, '2018-11-23 09:46:06', 'www.2699e.com', '测试Description3c9-8', NULL, NULL);
-INSERT INTO `links` VALUES (437, '测试Title59f', NULL, NULL, 21, '2018-11-28 15:04:03', 'www.29b2d.com121', '测试Descriptionfce-4', NULL, NULL);
-INSERT INTO `links` VALUES (438, '测试Title24d', 0, 1, 22, '2018-11-23 09:46:06', 'www.eb39b.com', '测试Description3a4-4', NULL, NULL);
-INSERT INTO `links` VALUES (439, '测试Title921', 1, 1, 23, '2018-11-23 09:46:06', 'www.ecff1.com', '测试Description85f-6', NULL, NULL);
-INSERT INTO `links` VALUES (440, '测试Title167', 0, 1, 24, '2018-11-23 09:46:06', 'www.f2010.com', '测试Description2ef-c', NULL, NULL);
-INSERT INTO `links` VALUES (541, '1', 0, 1, 12, '2018-11-29 13:04:38', '1', '1', NULL, NULL);
-INSERT INTO `links` VALUES (542, '问问', 1, 1, 123, '2018-11-29 13:54:52', 'www', 'www', NULL, NULL);
-INSERT INTO `links` VALUES (442, '测试Title941', 0, 1, 26, '2018-11-23 09:46:06', 'www.6e68e.com', '测试Description7b6-1', NULL, NULL);
-INSERT INTO `links` VALUES (443, '测试Titlefe3', 0, 1, 27, '2018-11-23 09:46:06', 'www.6cd38.com', '测试Descriptionea7-a', NULL, NULL);
+INSERT INTO `links` VALUES (425, '测试Title791', NULL, NULL, 100, '2018-12-01 15:21:14', 'www.ff217.com', '测试Description99a-6', NULL, 0);
+INSERT INTO `links` VALUES (437, '测试Title59f', NULL, NULL, 21, '2018-12-01 15:21:14', 'www.29b2d.com121', '测试Descriptionfce-4', NULL, 0);
+INSERT INTO `links` VALUES (438, '测试Title24d', 1, 1, 22, '2018-11-23 09:46:06', 'www.eb39b.com', '测试Description3a4-4', NULL, NULL);
+INSERT INTO `links` VALUES (439, '测试Title921', 0, 1, 23, '2018-11-23 09:46:06', 'www.ecff1.com', '测试Description85f-6', NULL, NULL);
+INSERT INTO `links` VALUES (440, '测试Title167', 1, 1, 24, '2018-11-23 09:46:06', 'www.f2010.com', '测试Description2ef-c', NULL, NULL);
+INSERT INTO `links` VALUES (595, '123', 0, 0, 123, '2018-12-01 22:18:05', '123', '1232312', NULL, NULL);
+INSERT INTO `links` VALUES (443, '测试Titlefe3', 0, 1, 2745456, '2018-12-01 23:47:00', 'www.6cd38.com', '测试Descriptionea7-a', NULL, NULL);
 INSERT INTO `links` VALUES (444, '测试Titlef08', 0, 1, 28, '2018-11-23 09:46:06', 'www.6fab2.com', '测试Description756-1', NULL, NULL);
-INSERT INTO `links` VALUES (560, '1123', 1, 1, 123, '2018-11-29 14:47:57', '132', '132', NULL, NULL);
-INSERT INTO `links` VALUES (559, '1223', 1, 1, 11, '2018-11-29 14:43:47', '1323', '1223', NULL, NULL);
-INSERT INTO `links` VALUES (558, '123', 1, 1, 31, '2018-11-29 14:42:20', '132', '12', NULL, NULL);
-INSERT INTO `links` VALUES (557, '123·', 1, 1, 13, '2018-11-29 14:21:24', '132', '123', NULL, NULL);
-INSERT INTO `links` VALUES (556, '123·', 1, 1, 13, '2018-11-29 14:18:18', '132445', '123412', NULL, NULL);
-INSERT INTO `links` VALUES (555, '123', 1, 1, 32, '2018-11-29 14:16:09', '1', '132', NULL, NULL);
-INSERT INTO `links` VALUES (554, '123·', 1, 1, 13, '2018-11-29 14:15:51', '132', '123', NULL, NULL);
-INSERT INTO `links` VALUES (553, '123·', 1, 1, 13, '2018-11-29 14:15:13', '132', '123', NULL, NULL);
-INSERT INTO `links` VALUES (552, '111', 1, 1, 111, '2018-11-29 14:14:49', '111', '11', NULL, NULL);
-INSERT INTO `links` VALUES (551, '11', 1, 1, 111, '2018-11-29 14:11:59', '111', '11', NULL, NULL);
 INSERT INTO `links` VALUES (455, '测试Title167', 1, 1, 39, '2018-11-23 09:46:06', 'www.a2198.com', '测试Descriptionaad-9', NULL, NULL);
 INSERT INTO `links` VALUES (456, '测试Title031', 0, 1, 40, '2018-11-23 09:46:06', 'www.b3882.com', '测试Descriptionbff-f', NULL, NULL);
 INSERT INTO `links` VALUES (457, '测试Titlec2c', 1, 1, 41, '2018-11-23 09:46:06', 'www.6418e.com', '测试Descriptionf85-1', NULL, NULL);
@@ -137,7 +102,6 @@ INSERT INTO `links` VALUES (473, '测试Title728', 0, 1, 57, '2018-11-23 09:46:0
 INSERT INTO `links` VALUES (474, '测试Titlee70', 1, 1, 58, '2018-11-23 09:46:06', 'www.03245.com', '测试Description482-4', NULL, NULL);
 INSERT INTO `links` VALUES (475, '测试Title0fd', 0, 1, 59, '2018-11-23 09:46:06', 'www.62473.com', '测试Descriptione85-8', NULL, NULL);
 INSERT INTO `links` VALUES (476, '测试Titled45', 0, 1, 60, '2018-11-23 09:46:06', 'www.549df.com', '测试Description98a-b', NULL, NULL);
-INSERT INTO `links` VALUES (546, '是i', 1, 1, 111, '2018-11-29 14:00:14', '热热我', 'UI㔿', NULL, NULL);
 INSERT INTO `links` VALUES (478, '测试Title699', 1, 1, 62, '2018-11-23 09:46:06', 'www.c2ee7.com', '测试Description53f-4', NULL, NULL);
 INSERT INTO `links` VALUES (479, '测试Titlecb8', 0, 1, 63, '2018-11-23 09:46:06', 'www.d1e9e.com', '测试Description121-6', NULL, NULL);
 INSERT INTO `links` VALUES (480, '测试Title598', 1, 1, 64, '2018-11-23 09:46:06', 'www.4feb9.com', '测试Description558-a', NULL, NULL);
@@ -163,35 +127,26 @@ INSERT INTO `links` VALUES (499, '测试Title4e2', 1, 1, 83, '2018-11-23 09:46:0
 INSERT INTO `links` VALUES (500, '测试Titleb60', 0, 1, 84, '2018-11-23 09:46:06', 'www.b71f5.com', '测试Description387-7', NULL, NULL);
 INSERT INTO `links` VALUES (501, '测试Titled16', 1, 1, 85, '2018-11-23 09:46:06', 'www.16f9e.com', '测试Descriptionb50-0', NULL, NULL);
 INSERT INTO `links` VALUES (502, '测试Titlec67', 0, 1, 86, '2018-11-23 09:46:06', 'www.86cf5.com', '测试Description25e-5', NULL, NULL);
-INSERT INTO `links` VALUES (503, '测试Titlea9e', 1, 1, 87, '2018-11-23 09:46:06', 'www.50caa.com', '测试Description7f9-7', NULL, NULL);
+INSERT INTO `links` VALUES (503, '测试Titlea9e11111111', 1, 1, 87, '2018-12-01 23:48:28', 'www.50caa.com', '测试Description7f9-7', NULL, NULL);
 INSERT INTO `links` VALUES (504, '测试Title281', 0, 1, 88, '2018-11-23 09:46:06', 'www.25725.com', '测试Descriptiond3a-0', NULL, NULL);
 INSERT INTO `links` VALUES (505, '测试Title0d7', 1, 1, 89, '2018-11-23 09:46:06', 'www.1701d.com', '测试Description960-3', NULL, NULL);
 INSERT INTO `links` VALUES (506, '测试Titled1a', 0, 1, 90, '2018-11-23 09:46:06', 'www.f7f18.com', '测试Descriptione55-e', NULL, NULL);
 INSERT INTO `links` VALUES (507, '测试Title773', 1, 1, 91, '2018-11-23 09:46:06', 'www.4940e.com', '测试Description9ce-a', NULL, NULL);
 INSERT INTO `links` VALUES (508, '测试Title153', 0, 1, 92, '2018-11-23 09:46:06', 'www.24396.com', '测试Description3a4-c', NULL, NULL);
-INSERT INTO `links` VALUES (509, '测试Title468', 1, 1, 93, '2018-11-23 09:46:06', 'www.6e15c.com', '测试Description6ae-c', NULL, NULL);
+INSERT INTO `links` VALUES (509, '测试Title468111', 1, 1, 93, '2018-12-01 23:49:24', 'www.6e15c.com二位', '测试Description6ae-c', NULL, NULL);
 INSERT INTO `links` VALUES (510, '测试Title4a4', 0, 1, 94, '2018-11-23 09:46:06', 'www.626a6.com', '测试Descriptionfa4-9', NULL, NULL);
 INSERT INTO `links` VALUES (511, '测试Title241', 1, 1, 95, '2018-11-23 09:46:06', 'www.69eb2.com', '测试Descriptionb13-4', NULL, NULL);
 INSERT INTO `links` VALUES (512, '测试Titleadd', 0, 1, 96, '2018-11-23 09:46:06', 'www.a3823.com', '测试Description019-d', NULL, NULL);
 INSERT INTO `links` VALUES (513, '测试Title965', 1, 1, 97, '2018-11-23 09:46:06', 'www.ec973.com', '测试Description865-e', NULL, NULL);
 INSERT INTO `links` VALUES (514, '测试Titlef22', 0, 1, 98, '2018-11-23 09:46:06', 'www.57487.com', '测试Descriptionf81-e', NULL, NULL);
 INSERT INTO `links` VALUES (515, '测试Title0c2', 1, 1, 99, '2018-11-23 09:46:06', 'www.69f6f.com', '测试Description8b9-c', NULL, NULL);
-INSERT INTO `links` VALUES (543, '问问', 1, 1, 1, '2018-11-29 13:56:27', 'www', 'www', NULL, NULL);
-INSERT INTO `links` VALUES (544, '问问', 1, 1, 1, '2018-11-29 13:58:01', 'www', 'www', NULL, NULL);
-INSERT INTO `links` VALUES (561, '1', 1, 1, 1, '2018-11-29 14:49:00', '1', '1', NULL, NULL);
-INSERT INTO `links` VALUES (562, '1', 1, 1, 0, '2018-11-29 14:50:15', '0', '0', NULL, NULL);
-INSERT INTO `links` VALUES (563, '1', 1, 1, 1, '2018-11-29 14:51:48', '1', '1', NULL, NULL);
-INSERT INTO `links` VALUES (564, '1', 1, 1, 1, '2018-11-29 14:55:22', '1', '1', NULL, NULL);
-INSERT INTO `links` VALUES (565, '1', 1, 1, 1, '2018-11-29 14:56:42', '1', '1', NULL, NULL);
-INSERT INTO `links` VALUES (566, '1', 1, 1, NULL, '2018-11-29 15:00:17', '1', '1', NULL, 1);
-INSERT INTO `links` VALUES (567, '1', 1, 1, 1, '2018-11-29 15:01:48', '1', '1', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for login_log
 -- ----------------------------
 DROP TABLE IF EXISTS `login_log`;
 CREATE TABLE `login_log`  (
-  `login_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '登录日志记录的主键',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '登录日志记录的主键',
   `login_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录的用户名称	',
   `status` tinyint(1) NULL DEFAULT NULL COMMENT '登录的状态（1表示登录成功，0表示失败，2表示退出成功',
   `ip_address` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录的IP地址',
@@ -199,128 +154,19 @@ CREATE TABLE `login_log`  (
   `browser` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录的浏览器类型',
   `os` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录的设备的类型',
   `msg` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录的信息\n',
-  `login_time` datetime(0) NULL DEFAULT NULL COMMENT '登录的时间',
-  PRIMARY KEY (`login_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 116 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志记录' ROW_FORMAT = Dynamic;
+  `login_time` datetime NULL DEFAULT NULL COMMENT '登录的时间',
+  PRIMARY KEY (`log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 140 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of login_log
 -- ----------------------------
-INSERT INTO `login_log` VALUES (1, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', NULL);
-INSERT INTO `login_log` VALUES (2, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:09:45');
-INSERT INTO `login_log` VALUES (3, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:10:01');
-INSERT INTO `login_log` VALUES (4, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:10:17');
-INSERT INTO `login_log` VALUES (5, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:10:37');
-INSERT INTO `login_log` VALUES (6, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:11:35');
-INSERT INTO `login_log` VALUES (7, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:29:35');
-INSERT INTO `login_log` VALUES (8, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:30:06');
-INSERT INTO `login_log` VALUES (9, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:30:10');
-INSERT INTO `login_log` VALUES (10, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:30:24');
-INSERT INTO `login_log` VALUES (11, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:30:30');
-INSERT INTO `login_log` VALUES (12, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:31:50');
-INSERT INTO `login_log` VALUES (13, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:40:10');
-INSERT INTO `login_log` VALUES (14, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:44:15');
-INSERT INTO `login_log` VALUES (15, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:45:14');
-INSERT INTO `login_log` VALUES (16, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:52:29');
-INSERT INTO `login_log` VALUES (17, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 13:54:34');
-INSERT INTO `login_log` VALUES (18, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:55:33');
-INSERT INTO `login_log` VALUES (19, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 13:55:41');
-INSERT INTO `login_log` VALUES (20, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 13:55:51');
-INSERT INTO `login_log` VALUES (21, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 13:55:55');
-INSERT INTO `login_log` VALUES (22, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 13:56:14');
-INSERT INTO `login_log` VALUES (23, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:57:06');
-INSERT INTO `login_log` VALUES (24, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:57:44');
-INSERT INTO `login_log` VALUES (25, NULL, 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:57:59');
-INSERT INTO `login_log` VALUES (26, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:58:08');
-INSERT INTO `login_log` VALUES (27, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:58:21');
-INSERT INTO `login_log` VALUES (28, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:59:02');
-INSERT INTO `login_log` VALUES (29, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:59:22');
-INSERT INTO `login_log` VALUES (30, NULL, 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 13:59:55');
-INSERT INTO `login_log` VALUES (31, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 14:00:09');
-INSERT INTO `login_log` VALUES (32, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 14:00:38');
-INSERT INTO `login_log` VALUES (33, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 14:01:16');
-INSERT INTO `login_log` VALUES (34, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:02:01');
-INSERT INTO `login_log` VALUES (35, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:02:25');
-INSERT INTO `login_log` VALUES (36, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Microsoft Edge', 'Windows 10', '登录成功', '2018-11-30 14:03:05');
-INSERT INTO `login_log` VALUES (37, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Microsoft Edge', 'Windows 10', '登录成功', '2018-11-30 14:04:07');
-INSERT INTO `login_log` VALUES (38, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:05:17');
-INSERT INTO `login_log` VALUES (39, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:13:43');
-INSERT INTO `login_log` VALUES (40, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:14:31');
-INSERT INTO `login_log` VALUES (41, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:15:59');
-INSERT INTO `login_log` VALUES (42, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:16:43');
-INSERT INTO `login_log` VALUES (43, NULL, 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 14:21:14');
-INSERT INTO `login_log` VALUES (44, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:23:53');
-INSERT INTO `login_log` VALUES (45, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:25:21');
-INSERT INTO `login_log` VALUES (46, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:26:00');
-INSERT INTO `login_log` VALUES (47, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:26:04');
-INSERT INTO `login_log` VALUES (48, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:26:41');
-INSERT INTO `login_log` VALUES (49, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:27:00');
-INSERT INTO `login_log` VALUES (50, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:29:39');
-INSERT INTO `login_log` VALUES (51, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:39:15');
-INSERT INTO `login_log` VALUES (52, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 14:40:03');
-INSERT INTO `login_log` VALUES (53, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:42:39');
-INSERT INTO `login_log` VALUES (54, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:48:16');
-INSERT INTO `login_log` VALUES (55, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:52:36');
-INSERT INTO `login_log` VALUES (56, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 14:53:09');
-INSERT INTO `login_log` VALUES (57, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:53:47');
-INSERT INTO `login_log` VALUES (58, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Microsoft Edge', 'Windows 10', '登录成功', '2018-11-30 14:54:09');
-INSERT INTO `login_log` VALUES (59, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:55:23');
-INSERT INTO `login_log` VALUES (60, NULL, 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 14:55:56');
-INSERT INTO `login_log` VALUES (61, NULL, 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 14:56:41');
-INSERT INTO `login_log` VALUES (62, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 14:56:46');
-INSERT INTO `login_log` VALUES (63, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:57:00');
-INSERT INTO `login_log` VALUES (64, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:57:29');
-INSERT INTO `login_log` VALUES (65, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:57:38');
-INSERT INTO `login_log` VALUES (66, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:58:27');
-INSERT INTO `login_log` VALUES (67, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:59:03');
-INSERT INTO `login_log` VALUES (68, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 14:59:27');
-INSERT INTO `login_log` VALUES (69, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 15:02:03');
-INSERT INTO `login_log` VALUES (70, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:02:23');
-INSERT INTO `login_log` VALUES (71, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:03:35');
-INSERT INTO `login_log` VALUES (72, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:03:49');
-INSERT INTO `login_log` VALUES (73, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:04:31');
-INSERT INTO `login_log` VALUES (74, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:07:20');
-INSERT INTO `login_log` VALUES (75, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:08:07');
-INSERT INTO `login_log` VALUES (76, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:08:14');
-INSERT INTO `login_log` VALUES (77, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:29:20');
-INSERT INTO `login_log` VALUES (78, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:29:30');
-INSERT INTO `login_log` VALUES (79, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:30:21');
-INSERT INTO `login_log` VALUES (80, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:40:04');
-INSERT INTO `login_log` VALUES (81, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:53:00');
-INSERT INTO `login_log` VALUES (82, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:54:59');
-INSERT INTO `login_log` VALUES (83, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:57:20');
-INSERT INTO `login_log` VALUES (84, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 15:57:29');
-INSERT INTO `login_log` VALUES (85, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 15:57:39');
-INSERT INTO `login_log` VALUES (86, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:58:14');
-INSERT INTO `login_log` VALUES (87, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:58:44');
-INSERT INTO `login_log` VALUES (88, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 15:58:48');
-INSERT INTO `login_log` VALUES (89, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:58:53');
-INSERT INTO `login_log` VALUES (90, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:59:02');
-INSERT INTO `login_log` VALUES (91, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:59:29');
-INSERT INTO `login_log` VALUES (92, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 15:59:56');
-INSERT INTO `login_log` VALUES (93, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:01:38');
-INSERT INTO `login_log` VALUES (94, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:01:46');
-INSERT INTO `login_log` VALUES (95, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:02:35');
-INSERT INTO `login_log` VALUES (96, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 16:03:06');
-INSERT INTO `login_log` VALUES (97, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:03:11');
-INSERT INTO `login_log` VALUES (98, NULL, 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 16:09:42');
-INSERT INTO `login_log` VALUES (99, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 16:10:09');
-INSERT INTO `login_log` VALUES (100, NULL, 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 16:10:35');
-INSERT INTO `login_log` VALUES (101, NULL, 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 16:10:40');
-INSERT INTO `login_log` VALUES (102, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 16:20:08');
-INSERT INTO `login_log` VALUES (103, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:20:28');
-INSERT INTO `login_log` VALUES (104, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:46:29');
-INSERT INTO `login_log` VALUES (105, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:46:41');
-INSERT INTO `login_log` VALUES (106, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:47:19');
-INSERT INTO `login_log` VALUES (107, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:47:47');
-INSERT INTO `login_log` VALUES (108, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:48:00');
-INSERT INTO `login_log` VALUES (109, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:48:04');
-INSERT INTO `login_log` VALUES (110, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:48:21');
-INSERT INTO `login_log` VALUES (111, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:48:29');
-INSERT INTO `login_log` VALUES (112, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-11-30 16:48:47');
-INSERT INTO `login_log` VALUES (113, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 18:07:55');
-INSERT INTO `login_log` VALUES (114, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '验证码错误', '2018-11-30 18:08:42');
-INSERT INTO `login_log` VALUES (115, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-11-30 18:09:28');
+INSERT INTO `login_log` VALUES (134, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '身份认证异常', '2018-12-01 22:02:56');
+INSERT INTO `login_log` VALUES (135, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '身份认证异常', '2018-12-01 22:03:01');
+INSERT INTO `login_log` VALUES (136, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-12-01 22:03:17');
+INSERT INTO `login_log` VALUES (137, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-12-01 23:06:04');
+INSERT INTO `login_log` VALUES (138, 'admin', 0, '0:0:0:0:0:0:0:1', '', 'Chrome', 'Windows 10', '登录成功', '2018-12-02 11:06:51');
+INSERT INTO `login_log` VALUES (139, 'admin', 0, '0:0:0:0:0:0:0:1', NULL, 'Chrome', 'Windows 10', '登录成功', '2018-12-02 11:06:52');
 
 -- ----------------------------
 -- Table structure for operator_log
@@ -329,19 +175,19 @@ DROP TABLE IF EXISTS `operator_log`;
 CREATE TABLE `operator_log`  (
   `operId` int(11) NOT NULL AUTO_INCREMENT COMMENT '操作序号\n',
   `title` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作模块名称',
-  `action` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作类型\n',
+  `operator_type` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作类型\n',
   `method` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求的方法',
   `channel` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源渠道',
-  `oper_url` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求的URL',
-  `oper_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人员',
-  `oper_ip` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作的IP地址',
-  `oper_location` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作的地点',
-  `oper_param` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求的参数',
+  `operator_url` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求的URL',
+  `operator_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人员',
+  `operator_ip` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作的IP地址',
+  `operator_location` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作的地点',
+  `operator_param` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求的参数',
   `status` tinyint(1) NULL DEFAULT NULL COMMENT '状态（1、true表示正常，0，false表示异常）',
   `error_msg` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '错误消息',
-  `oper_time` datetime(0) NULL DEFAULT NULL COMMENT '操作时间',
+  `operator_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`operId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 83 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of operator_log
@@ -428,6 +274,8 @@ INSERT INTO `operator_log` VALUES (79, '新增友链', '1', 'com.dimple.controll
 INSERT INTO `operator_log` VALUES (80, '新增友链', '1', 'com.dimple.controller.LinksController.addLink()', '1', '/links', '我是管理员', '0:0:0:0:0:0:0:1', '', '{\"title\":[\"12\"],\"description\":[\"3132\"],\"url\":[\"\"],\"display\":[\"\"],\"weight\":[\"123\"]}', 1, NULL, '2018-11-29 15:42:47');
 INSERT INTO `operator_log` VALUES (81, '新增友链', '1', 'com.dimple.controller.LinksController.addLink()', '1', '/links', '我是管理员', '0:0:0:0:0:0:0:1', '', '{\"title\":[\"12\"],\"description\":[\"3132\"],\"url\":[\"121\"],\"display\":[\"\"],\"weight\":[\"123\"]}', 1, NULL, '2018-11-29 15:42:51');
 INSERT INTO `operator_log` VALUES (82, '新增友链', '1', 'com.dimple.controller.LinksController.addLink()', '1', '/links', '我是管理员', '0:0:0:0:0:0:0:1', '', '{\"title\":[\"123\"],\"description\":[\"123\"],\"url\":[\"132\"],\"display\":[\"true\"],\"weight\":[\"13\"]}', 1, NULL, '2018-11-30 10:17:35');
+INSERT INTO `operator_log` VALUES (83, '新增友链', '1', 'com.dimple.controller.LinksController.addLink()', '1', '/links', '我是管理员', '0:0:0:0:0:0:0:1', '', '{\"title\":[\"111\"],\"description\":[\"11\"],\"url\":[\"11\"],\"display\":[\"true\"],\"weight\":[\"11\"]}', 1, NULL, '2018-12-01 11:25:58');
+INSERT INTO `operator_log` VALUES (84, '新增友链', '1', 'com.dimple.controller.LinksController.addLink()', '', '/links', '我是管理员', '0:0:0:0:0:0:0:1', NULL, '{\"title\":[\"123\"],\"description\":[\"123\"],\"url\":[\"123\"],\"display\":[\"true\"],\"weight\":[\"123\"]}', 1, NULL, '2018-12-01 22:05:06');
 
 -- ----------------------------
 -- Table structure for permission
@@ -531,7 +379,7 @@ CREATE TABLE `visitor`  (
   `browser` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '游客登录的浏览器',
   `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '游客登录的ip',
   `locked` tinyint(4) NULL DEFAULT NULL COMMENT '游客账户是否被锁定',
-  `visit_time` datetime(0) NULL DEFAULT NULL COMMENT '游客访问时间',
+  `visit_time` datetime NULL DEFAULT NULL COMMENT '游客访问时间',
   PRIMARY KEY (`visitor_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
