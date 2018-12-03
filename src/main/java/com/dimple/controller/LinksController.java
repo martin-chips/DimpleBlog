@@ -63,21 +63,21 @@ public class LinksController {
     @GetMapping("/links/list.html")
     @ApiIgnore
     public ModelAndView linkedListView(ModelAndView modelAndView) {
-        modelAndView.setViewName("/links/links-list");
+        modelAndView.setViewName("/links/list");
         LinksDetails details = linksService.getDetails();
         modelAndView.addObject("linksDetails", details);
         return modelAndView;
     }
 
-    @GetMapping("/links/links-add")
+    @GetMapping("/links/add.html")
     public String toLinksAdd() {
-        return "/links/links-add";
+        return "/links/add";
     }
 
     @ApiIgnore
     @GetMapping("/links/{linkId}.html")
     public ModelAndView toUpdateLinksView(@PathVariable Integer linkId, ModelAndView modelAndView) {
-        modelAndView.setViewName("/links/links-update");
+        modelAndView.setViewName("/links/update");
         Result linkInfo = linksService.getLinkInfo(linkId);
         modelAndView.addObject("linkInfo", linkInfo);
         return modelAndView;
@@ -94,7 +94,7 @@ public class LinksController {
             @ApiImplicitParam(name = "endTime", value = "友链添加结束的时间", dataType = "Date"),
             @ApiImplicitParam(name = "links_display", value = "友链是否显示", dataType = "Boolean"),
     })
-    @GetMapping("/links.json")
+    @GetMapping("/links/links.json")
     public Result linksList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                             @RequestParam(value = "links_title", defaultValue = "") String title,
@@ -121,11 +121,11 @@ public class LinksController {
     }
 
     @ApiOperation(value = "删除友链", notes = "需要传入的为一个数组")
-    @ApiImplicitParam(name = "linkIds", value = "友链的ID数组，格式为：1,2,3···,也可以传入单个参数如1")
-    @DeleteMapping("links/{linkIds}")
+    @ApiImplicitParam(name = "ids", value = "友链的ID数组，格式为：1,2,3···,也可以传入单个参数如1")
+    @DeleteMapping("/links/{ids}")
     @ResponseBody
-    public Result linkDelete(@PathVariable Integer[] linkIds) {
-        Result result = linksService.deleteLinks(linkIds);
+    public Result linkDelete(@PathVariable Integer[] ids) {
+        Result result = linksService.deleteLinks(ids);
         return result;
     }
 
@@ -154,7 +154,7 @@ public class LinksController {
     @ApiOperation(value = "返回未处理友链列表界面", notes = "不可操作")
     @ApiImplicitParam(name = "modelAndView", value = "ModelAndView对象", readOnly = true)
     public ModelAndView unHandledLinkedListView(ModelAndView modelAndView) {
-        modelAndView.setViewName("/links/links-list-unhandled");
+        modelAndView.setViewName("/links/list-unhandled");
         LinksDetails details = linksService.getDetails();
         modelAndView.addObject("linksDetails", details);
         return modelAndView;
@@ -173,10 +173,11 @@ public class LinksController {
     public Result getUnHandledLinks(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                     @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                     @RequestParam(value = "links_title", defaultValue = "") String title,
+                                    @RequestParam(value = "searchCode", required = false) LinksSearchCode linksSearchCode,
                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
         PageHelper.startPage(pageNum, pageSize, "create_time desc");
-        List<Links> links = linksService.getAllLinksUnHandled(startTime, endTime, title);
+        List<Links> links = linksService.getLinksCondition(title, startTime, endTime, null, linksSearchCode == null ? LinksSearchCode.SEARCH_CODE_UNHANDLED : linksSearchCode);
         PageInfo pageInfo = new PageInfo(links);
         return ResultUtil.success(pageInfo);
     }

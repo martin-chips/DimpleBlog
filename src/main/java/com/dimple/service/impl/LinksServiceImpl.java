@@ -73,20 +73,20 @@ public class LinksServiceImpl implements LinksService {
     }
 
     @Override
-    public Result deleteLinks(Integer[] linkIds) {
+    public Result deleteLinks(Integer[] ids) {
         //参数合法性校验
-        if (linkIds == null || linkIds.length == 0) {
+        if (ids == null || ids.length == 0) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
         //todo 事务的设置，需要设置单个事务失败不影响整个事物
         //记录操作的数
         Integer count = 0;
-        for (Integer linkId : linkIds) {
-            Links link = linksMapper.selectByPrimaryKey(linkId);
+        for (Integer id : ids) {
+            Links link = linksMapper.selectByPrimaryKey(id);
             if (link == null) {
                 return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
             }
-            count += linksMapper.deleteByPrimaryKey(linkId);
+            count += linksMapper.deleteByPrimaryKey(id);
         }
         return ResultUtil.success(count);
     }

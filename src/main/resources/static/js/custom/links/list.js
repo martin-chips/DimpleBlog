@@ -7,13 +7,13 @@ $(function () {
 
 function initTable() {
     var option = {
-        url: "/links/unhandled/list.json",
+        url: "/links/links.json",
         addUrl: "/links/add.html",
         updateUrl: "/links/{id}.html",
         deleteUrl: "/links/{id}",
         sortName: "createTime",
         sortOrder: "desc",
-        modalName: "未处理友链",
+        modalName: "友链",
         search: false,
         uniqueId: "linkId",//唯一标识
         showExport: false,
@@ -98,6 +98,24 @@ function initTable() {
     $.table.init(option);
 }
 
+/**
+ * 更新Link的status
+ * @param linkId
+ */
+function updateLink(linkId, status) {
+    $.ajax({
+        type: "PUT",
+        url: "/links/" + linkId + "/" + status,
+        success: function (data) {
+            if (data.code == 200) {
+                $.modal.msgSuccess("切换成功！")
+                $.table.refresh();
+            } else {
+                $.modal.msgError("切换失败！");
+            }
+        },
+    });
+}
 
 /**
  * 更新友链的状态，主要表示友链有没有通过

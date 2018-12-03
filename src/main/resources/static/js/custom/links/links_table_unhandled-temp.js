@@ -4,7 +4,7 @@
 $('#bootstrap-table').bootstrapTable({
     method: 'GET',
     contentType: "application/x-www-form-urlencoded",//一种编码。好像在post请求的时候需要用到。这里用的get请求，注释掉这句话也能拿到数据
-    url: "/links.json",//要请求数据的文件路径
+    url: "/links/unhandled/list.json",//要请求数据的文件路径
     dataField: "data",//这是返回的json数组的key.默认好像是"rows".这里只有前后端约定好就行
     pageNumber: 1, //初始化加载第一页，默认第一页
     pagination: true,//是否分页
@@ -49,7 +49,7 @@ $('#bootstrap-table').bootstrapTable({
         align: 'center',
         formatter: function (value, row, index) {
             if (value == true) {
-                return '<span class="badge badge-info">显示</span>';
+                return '<span class="badge badge-info">通过</span>';
             } else if (value == false) {
                 return '<span class="badge badge-default">隐藏</span>';
             }
@@ -59,15 +59,11 @@ $('#bootstrap-table').bootstrapTable({
         title: '创建时间',
         align: 'center',
         formatter: function (value, row, index) {
-            return formatDate(value);
+            return $.common.dateFormat(value);
         }
     }, {
         field: 'weight',
         title: '权重',
-        align: 'center',
-    }, {
-        field: 'click',
-        title: '点击次数',
         align: 'center',
     }, {
         field: 'available',
@@ -75,9 +71,9 @@ $('#bootstrap-table').bootstrapTable({
         align: 'center',
         formatter: function (value, row, index) {
             if (value == false) {
-                return '<span class="badge badge-danger">是</span>';
-            } else if (value == true) {
                 return '<span class="badge badge-primary">否</span>';
+            } else if (value == true) {
+                return '<span class="badge badge-danger">是</span>';
             }
         }
     }, {
@@ -87,12 +83,8 @@ $('#bootstrap-table').bootstrapTable({
         formatter: function (value, row, index) {
             var actions = [];
             actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="editLink(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-            actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="deleteLink(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>删除</a> ');
-            if (row.display == false) {
-                actions.push('<a class="btn btn-info btn-xs " href="#" onclick="updateLink(' + row.linkId + "," + row.display + ')"><i class="fa fa-key"></i>显示</a>')
-            } else {
-                actions.push('<a class="btn btn-default btn-xs " href="#" onclick="updateLink(' + row.linkId + "," + row.display + ')"><i class="fa fa-key"></i>隐藏</a>')
-            }
+            actions.push('<a class="btn btn-info btn-xs " href="#" onclick="updateLink(' + row.linkId + ')"><i class="fa fa-key"></i>通过</a>');
+            actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="deleteLink(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>拒绝</a> ');
             return actions.join('');
         }
     }],
@@ -104,6 +96,9 @@ function queryParams(params) {
     return {
         pageSize: params.limit, //每一页的数据行数，默认是上面设置的10(pageSize)
         pageNum: params.offset / params.limit + 1, //当前页面,默认是上面设置的1(pageNumber)
+        // param: "",//这里是其他的参数，根据自己的需求定义，可以是多个
+        // search: params.search,
+
     }
 }
 
@@ -128,43 +123,15 @@ function refresh() {
 function editLink(linkId) {
     layer.open({
         type: 2,
-        area: ['35%', '70%'],
-        fix: false,
-        //不固定
-        maxmin: true,
-        shade: 0.3,
-        title: "111",
-        content: '/links/' + linkId + '.html',
-        btn: ['确定', '关闭'],
-        // 弹层外区域关闭
+        title: '修改Link信息',
         shadeClose: true,
-        yes: function (index, layero) {
-            var body = top.layer.getChildFrame('body', index);
-            var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-            console.log(body.find('#linkDescription').val())
-            layer.closeAll();
-            refresh();
-        },
-        cancel: function (index) {
-            return true;
-        },
-        zIndex: layer.zIndex //重点1
-        , success: function (layero) {
-            layer.setTop(layero); //重点2
-        },
-        end: function () {
-            // window.location.reload();
-        }
+        shade: false,
+        maxmin: true, //开启最大化最小化按钮
+        area: ['600px', '500px'],
+        content: '/links/' + linkId + '.html'
     });
-    // layer.open({
-    //     type: 2,
-    //     title: '修改Link信息',
-    //     shadeClose: true,
-    //     shade: false,
-    //     maxmin: true, //开启最大化最小化按钮
-    //     area: ['35%', '70%'],
-    //     content: '/links/' + linkId + '.html'
-    // });
+
+
 }
 
 /**
@@ -172,7 +139,7 @@ function editLink(linkId) {
  * @param linkId
  */
 function deleteLink(linkId) {
-    parent.layer.confirm('确定要删除该友链吗？', {
+    parent.layer.confirm('确定要拒绝该友链申请吗？', {
         btn: ['确定', '取消'], //按钮
         shade: false //不显示遮罩
     }, function () {
@@ -186,12 +153,15 @@ function deleteLink(linkId) {
             contentType: "application/json",
             success: function (data) {
                 if (data.code == 200) {
-                    parent.layer.msg('删除成功', {icon: 1});
+                    parent.layer.msg('操作成功！', {icon: 1});
                     refresh();
                 } else {
-                    parent.layer.msg('删除失败', {shift: 6});
+                    parent.layer.msg('操作失败！', {shift: 6});
                 }
             },
+            error: function (data) {
+                parent.layer.msg('系统故障，请联系管理员！', {icon: 2});
+            }
         });
 
     });
@@ -201,18 +171,21 @@ function deleteLink(linkId) {
  * 更新Link的status
  * @param linkId
  */
-function updateLink(linkId, status) {
+function updateLink(linkId) {
     $.ajax({
         type: "PUT",
-        url: "/links/" + linkId + "/" + status,
+        url: "/links/unhandled/" + linkId,
         success: function (data) {
             if (data.code == 200) {
-                parent.layer.msg('切换成功', {icon: 1});
+                parent.layer.msg('操作成功！', {icon: 1});
                 refresh();
             } else {
-                parent.layer.msg('切换失败', {icon: 2});
+                parent.layer.msg('操作失败', {icon: 2});
             }
         },
+        error: function (data) {
+            parent.layer.msg('系统故障，请联系管理员！', {icon: 2});
+        }
     })
 }
 
@@ -224,7 +197,6 @@ function formatDate(date) {
     var dateFormat = new Date(+new Date(newDate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
     return dateFormat;
 }
-
 
 /**
  * 修改Links
@@ -245,7 +217,7 @@ function deleteLinks() {
         ids[i] = rows[i].linkId;
     }
     if (ids.length == 0) {
-        parent.layer.msg('请选择需要删除的Link!', {icon: 2});
+        parent.layer.msg('请选择需要删除的Link', {icon: 2});
         return;
     }
     parent.layer.confirm('确定要删除这' + ids.length + '个友链吗？', {
@@ -259,7 +231,6 @@ function deleteLinks() {
             contentType: "application/json",
             url: "/links/" + ids,
             success: function (data) {
-                console.log(data);
                 if (data != null && data.code == 200) {
                     parent.layer.msg('删除成功', {icon: 1});
                     refresh();
@@ -285,8 +256,8 @@ function addLink() {
         shadeClose: true,
         shade: false,
         maxmin: true, //开启最大化最小化按钮
-        area: ['35%', '70%'],
-        content: '/links/links-add'
+        area: ['600px', '550px'],
+        content: '/links/to/add.html'
     });
 }
 
@@ -299,14 +270,7 @@ function resetForm() {
 }
 
 
-/**
- * 搜索栏搜索
- * code:1表示显示所有的友链
- * 2、表示显示所有的死链
- * 3、表示显示所有的未处理的友链
- * 4、表示显示已经隐藏的友链
- * 5、表示显示所有的已经显示的友链
- */
+// 搜索-默认第一个form
 function searchCustom(code) {
     var currentId = isEmpty(formId) ? $('form').attr('id') : "link-form";
     var formId = "link-form";

@@ -40,10 +40,10 @@ public interface LinksService {
     /**
      * 删除Link
      *
-     * @param linkIds 需要删除的Links的id，传入Integer数组
+     * @param ids 需要删除的Links的id，传入Integer数组
      * @return
      */
-    Result deleteLinks(Integer[] linkIds);
+    Result deleteLinks(Integer[] ids);
 
     /**
      * 根据Link的Id获取Link的信息,

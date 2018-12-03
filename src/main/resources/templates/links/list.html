@@ -102,7 +102,7 @@
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="searchCustom(null)"><i
                                     class="fa fa-search"></i>&nbsp;搜索</a>
-                            <a class="btn btn-warning btn-rounded btn-sm" onclick="resetForm()"><i
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.table.resetFormRefresh()"><i
                                     class="fa fa-refresh"></i>&nbsp;重置</a>
                         </li>
                     </ul>
@@ -111,13 +111,13 @@
         </div>
 
         <div class="btn-group-sm hidden-xs" id="toolbar" role="group" style="margin-top: 10px">
-            <a class="btn btn-success" onclick="addLink()">
+            <a class="btn btn-success" onclick="$.operate.add()">
                 <i class="fa fa-plus"></i> 新增
             </a>
-            <a class="btn btn-primary btn-edit disabled" onclick="updateLinks()">
+            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.update()">
                 <i class="fa fa-edit"></i> 修改
             </a>
-            <a class="btn btn-danger btn-del disabled" onclick="deleteLinks()">
+            <a class="btn btn-danger btn-del disabled" onclick="$.operate.deleteAll()">
                 <i class="fa fa-remove"></i> 删除
             </a>
         </div>
@@ -136,8 +136,12 @@
 <script src="/js/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 <script src="/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-<script src="/js/custom/links/links_table.js"></script>
+<script src="/js/custom/links/list.js"></script>
+<script src="/js/custom/common/dimple-blog.js"></script>
+<script src="/js/blockUI/jquery.blockUI.js"></script>
+<script>
 
+</script>
 </body>
 
 </html>

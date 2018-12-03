@@ -115,7 +115,7 @@
 			message:  '<div class="loaderbox"><div class="loading-activity"></div> 加载中......</div>',
 
 			title: null,		// title string; only used when theme == true
-			draggable: true,	// only used when theme == true (requires jquery-ui.js to be loaded)
+			draggable: true,	// only used when theme == true (requires jquery-dimple-blog.js to be loaded)
 
 			theme: false, // set to true to use with jQuery UI themes
 
