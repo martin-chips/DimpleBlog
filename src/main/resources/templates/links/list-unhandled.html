@@ -103,15 +103,14 @@
                 </div>
             </form>
         </div>
-
         <div class="btn-group-sm hidden-xs" id="toolbar" role="group" style="margin-top: 10px">
-            <a class="btn btn-success" onclick="addLink()">
+            <a class="btn btn-success" onclick="$.operate.add()">
                 <i class="fa fa-plus"></i> 新增
             </a>
-            <a class="btn btn-primary btn-edit disabled" onclick="updateLinks()">
+            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.update()">
                 <i class="fa fa-edit"></i> 修改
             </a>
-            <a class="btn btn-danger btn-del disabled" onclick="deleteLinks()">
+            <a class="btn btn-danger btn-del disabled" onclick="$.operate.deleteAll()">
                 <i class="fa fa-remove"></i> 删除
             </a>
         </div>
@@ -122,16 +121,8 @@
     </div>
 </div>
 
-<!-- 自定义js -->
-<script src="/js/content.js?v=1.0.0"></script>
-<!-- layer javascript -->
-<script src="/js/layer/layer.min.js"></script>
-<!-- Bootstrap table -->
-<script src="/js/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-<script src="/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+<div th:include="/common :: common-footer"></div>
 <script src="/js/custom/links/links_table_unhandled.js"></script>
-<script src="/js/custom/common/dimple-blog.js"></script>
 </body>
 
 </html>

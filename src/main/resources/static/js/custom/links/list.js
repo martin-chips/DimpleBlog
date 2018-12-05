@@ -131,14 +131,7 @@ function updateLinkStatus(linkId) {
     $.operate.submit(url, "put", "json", "");
 }
 
-/**
- * 搜索栏搜索
- * code:1表示显示所有的友链
- * 2、表示显示所有的死链
- * 3、表示显示所有的未处理的友链
- * 4、表示显示已经隐藏的友链
- * 5、表示显示所有的已经显示的友链
- */
+
 function searchCustom(code) {
     var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : "link-form";
     var formId = "link-form";

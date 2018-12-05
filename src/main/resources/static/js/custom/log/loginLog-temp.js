@@ -33,11 +33,7 @@ $('#bootstrap-table').bootstrapTable({
         field: 'ipAddress',
         title: 'IP地址',
         align: 'center',
-    }, {
-        field: 'logId',
-        title: 'no',
-        visible: false//设置隐藏列
-    }, {
+    },  {
         field: 'loginLocation',
         title: '登录地点',
         align: 'center',

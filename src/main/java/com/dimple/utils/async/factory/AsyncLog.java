@@ -1,22 +1,42 @@
-package com.dimple.utils;
+package com.dimple.utils.async.factory;
 
 import com.dimple.bean.LoginLog;
+import com.dimple.bean.OperatorLog;
 import com.dimple.constant.Status;
 import com.dimple.service.LoginLogService;
+import com.dimple.service.OperatorLogService;
+import com.dimple.utils.*;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.TimerTask;
 
 /**
- * @ClassName: LoginLogUtil
- * @Description: 登录的日志的记录的util
+ * @ClassName: AsyncLog
+ * @Description: 异步记录日志
  * @Auther: Owenb
- * @Date: 11/29/18 17:31
+ * @Date: 12/03/18 20:21
  * @Version: 1.0
  */
 @Slf4j
-public class LoginLogUtil {
+@Component
+public class AsyncLog {
+    /**
+     * 记录操作日志
+     *
+     * @param operatorLog
+     * @return
+     */
+    @Async
+    public void recordOperateLog(OperatorLog operatorLog) {
+
+        operatorLog.setOperatorLocation(AddressUtil.getRealAddressByIP(operatorLog.getOperatorIp()));
+        log.info(operatorLog.toString());
+        SpringUtil.getBean(OperatorLogService.class).insertOperatorLog(operatorLog);
+    }
 
     /**
      * 记录用户登录信息
@@ -27,16 +47,8 @@ public class LoginLogUtil {
      * @param msg     操作信息
      * @return LoginLog对象
      */
-    public static void log(String loginId, Byte status, String msg, Object... args) {
-        //拼装Log
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(LogUtil.getBlock(ShiroUtil.getIp()));
-        stringBuffer.append(LogUtil.getBlock(AddressUtil.getRealAddressByIP(ShiroUtil.getIp())));
-        stringBuffer.append(LogUtil.getBlock(loginId));
-        stringBuffer.append(LogUtil.getBlock(status));
-        stringBuffer.append(LogUtil.getBlock(msg));
-        //显示Log
-        log.info(stringBuffer.toString(), args);
+    @Async
+    public void recordLoginLog(String loginId, Byte status, String msg, Object... args) {
         if (Status.LOGIN_SUCCESS == status || Status.LOGOUT == status) {
             saveLoginLog(loginId, msg, Status.SUCCESS);
         } else {
@@ -50,7 +62,6 @@ public class LoginLogUtil {
         String os = userAgent.getOperatingSystem().getName();
         //获取浏览器类型
         String browser = userAgent.getBrowser().getName();
-        LoginLogService loginLogService = SpringUtil.getBean(LoginLogService.class);
         LoginLog loginLog = new LoginLog();
         loginLog.setLoginName(loginName);
         loginLog.setStatus(status);
@@ -61,8 +72,7 @@ public class LoginLogUtil {
         loginLog.setMsg(msg);
         //设置时间戳
         loginLog.setLoginTime(new Date());
-        loginLogService.insertLoginLog(loginLog);
+        log.info(loginLog.toString());
+        SpringUtil.getBean(LoginLogService.class).insertLoginLog(loginLog);
     }
-
-
 }

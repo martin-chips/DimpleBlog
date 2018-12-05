@@ -1,8 +1,11 @@
 package com.dimple.bean;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@ToString
 public class OperatorLog implements Serializable {
     /**
      * 操作序号

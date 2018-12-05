@@ -6,9 +6,9 @@ import com.dimple.bean.User;
 import com.dimple.constant.Status;
 import com.dimple.framework.annotation.Log;
 import com.dimple.service.OperatorLogService;
-import com.dimple.utils.AddressUtil;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.ShiroUtil;
+import com.dimple.utils.async.factory.AsyncLog;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -24,7 +24,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -42,6 +41,9 @@ public class LogAspect {
 
     @Autowired
     OperatorLogService operatorLogService;
+
+    @Autowired
+    AsyncLog asyncLog;
 
 
     /**
@@ -77,53 +79,55 @@ public class LogAspect {
      * 处理日志信息
      *
      * @param joinPoint 切入点对象
-     * @param e         异常信息
+     * @param exception 异常信息
      */
     @Async
-    public void handleLog(JoinPoint joinPoint, Exception e) {
-        Log controllerLog = getAnnotationLog(joinPoint);
-        if (controllerLog == null) {
+    public void handleLog(JoinPoint joinPoint, Exception exception) {
+        Log annotationLog = getAnnotationLog(joinPoint);
+        if (annotationLog == null) {
             return;
         }
         //获取当前用户
         User user = ShiroUtil.getUser();
+        //日志
         OperatorLog operatorLog = new OperatorLog();
-        operatorLog.setStatus(Status.SUCCESS);
+        //请求的地址
         String ip = ShiroUtil.getIp();
-        //设置IP地址
         operatorLog.setOperatorIp(ip);
-        operatorLog.setOperatorLocation(AddressUtil.getRealAddressByIP(ip));
-        //设置请求的URL
+        //设置请求的地址
         operatorLog.setOperatorUrl(ServletUtil.getRequest().getRequestURI());
+        //设置操作的人员
         if (user != null) {
-            operatorLog.setOperatorName(user.getUserName());
+            operatorLog.setOperatorName(user.getUserLoginId());
         }
-        //设置异常处理
-        if (e != null) {
+        //设置是否异常
+        if (exception != null) {
             operatorLog.setStatus(Status.FAILURE);
-            operatorLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 255));
+            operatorLog.setErrorMsg(StringUtils.substring(exception.getMessage(), 0, 2000));
+        } else {
+            operatorLog.setStatus(Status.SUCCESS);
         }
-        //设置方法名称(未采用getSimpleName的方法)
+        //设置方法名称
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         operatorLog.setMethod(className + "." + methodName + "()");
-        setControllerMethodDescription(operatorLog, controllerLog);
-        operatorLog.setOperatorTime(new Date());
-        operatorLogService.insertOperatorLog(operatorLog);
+        //处理注解上的参数
+        setControllerMethodDescription(operatorLog, annotationLog);
+        asyncLog.recordOperateLog(operatorLog);
     }
 
     /**
      * 将Controller注解中的参数拿到，设置到Log对象中去
      *
      * @param operatorLog   log对象
-     * @param controllerLog controller上注解标注的对象
+     * @param annotationLog controller上注解标注的对象
      */
-    private void setControllerMethodDescription(OperatorLog operatorLog, Log controllerLog) {
-        operatorLog.setOperatorType(controllerLog.action());
-        operatorLog.setTitle(controllerLog.title());
-        operatorLog.setChannel(controllerLog.channel());
+    private void setControllerMethodDescription(OperatorLog operatorLog, Log annotationLog) {
+        operatorLog.setOperatorType(annotationLog.action());
+        operatorLog.setTitle(annotationLog.title());
+        operatorLog.setChannel(annotationLog.channel());
         //设置参数保存（比如密码这些就可以不用显示直接设置为false）
-        if (controllerLog.isSaveRequestData()) {
+        if (annotationLog.isSaveRequestData()) {
             Map<String, String[]> parameterMap = ServletUtil.getRequest().getParameterMap();
             String params = JSONObject.toJSONString(parameterMap);
             operatorLog.setOperatorParam(StringUtils.substring(params, 0, 255));

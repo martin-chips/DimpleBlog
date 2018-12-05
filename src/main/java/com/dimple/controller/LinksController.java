@@ -63,7 +63,7 @@ public class LinksController {
     @GetMapping("/links/list.html")
     @ApiIgnore
     public ModelAndView linkedListView(ModelAndView modelAndView) {
-        modelAndView.setViewName("/links/list");
+        modelAndView.setViewName("links/list");
         LinksDetails details = linksService.getDetails();
         modelAndView.addObject("linksDetails", details);
         return modelAndView;
@@ -71,13 +71,13 @@ public class LinksController {
 
     @GetMapping("/links/add.html")
     public String toLinksAdd() {
-        return "/links/add";
+        return "links/add";
     }
 
     @ApiIgnore
     @GetMapping("/links/{linkId}.html")
     public ModelAndView toUpdateLinksView(@PathVariable Integer linkId, ModelAndView modelAndView) {
-        modelAndView.setViewName("/links/update");
+        modelAndView.setViewName("links/update");
         Result linkInfo = linksService.getLinkInfo(linkId);
         modelAndView.addObject("linkInfo", linkInfo);
         return modelAndView;
@@ -154,7 +154,7 @@ public class LinksController {
     @ApiOperation(value = "返回未处理友链列表界面", notes = "不可操作")
     @ApiImplicitParam(name = "modelAndView", value = "ModelAndView对象", readOnly = true)
     public ModelAndView unHandledLinkedListView(ModelAndView modelAndView) {
-        modelAndView.setViewName("/links/list-unhandled");
+        modelAndView.setViewName("links/list-unhandled");
         LinksDetails details = linksService.getDetails();
         modelAndView.addObject("linksDetails", details);
         return modelAndView;

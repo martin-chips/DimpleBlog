@@ -248,15 +248,15 @@
             },
             //错误消息提示
             alertError: function (content) {
-                $.modal.alert(content, modal_status.FAIL);
+                $.modal.msgAlert(content, modal_status.FAIL);
             },
             // 成功提示
             alertSuccess: function (content) {
-                $.modal.alert(content, modal_status.SUCCESS);
+                $.modal.msgAlert(content, modal_status.SUCCESS);
             },
             // 警告提示
             alertWarning: function (content) {
-                $.modal.alert(content, modal_status.WARNING);
+                $.modal.msgAlert(content, modal_status.WARNING);
             },
             // 关闭窗体
             close: function () {

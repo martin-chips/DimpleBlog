@@ -16,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 
 /**
  * @ClassName: QiNiuUtils
- * @Description:
+ * @Description: 七牛云图片上传的工具类
  * @Auther: Owenb
  * @Date: 11/20/18 18:55
  * @Version: 1.0

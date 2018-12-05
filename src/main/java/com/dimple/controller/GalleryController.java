@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GalleryController {
     @RequestMapping("/localGallery")
     public String toLocalGallery() {
-        return "/gallery/localGallery";
+        return "gallery/localGallery";
     }
 }

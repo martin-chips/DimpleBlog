@@ -1,0 +1,48 @@
+<!--统一整理所有的共同依赖文件-->
+
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<!--通用的头文件，主要是CSS样式-->
+<head th:fragment="common-head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!--网站图标-->
+    <!--<link rel="shortcut icon" href="favicon.ico">-->
+    <link th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-table/bootstrap-table.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
+    <link th:href="@{/css/common/common.css}" rel="stylesheet">
+</head>
+<!--通用的脚文件， 主要是JS文件-->
+<div th:fragment="common-footer">
+    <script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+    <script th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+    <!--自定义JS-->
+    <script th:src="@{/js/content.js?v=1.0.0}"></script>
+    <!-- jQuery Validation plugin javascript-->
+    <script th:src="@{/js/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/js/validate/messages_zh.min.js}"></script>
+    <script th:src="@{/js/validate/validate-index.js}"></script>
+
+    <script th:src="@{/js/layer/layer.min.js}"></script>
+    <script th:src="@{/js/layui/layui.js}"></script>
+
+    <script th:src="@{/js/common/common.js}"></script>
+
+    <!--BootStrap-Table-->
+    <script th:src="@{/js/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script th:src="@{/js/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+    <script th:src="@{/js/bootstrap-table/bootstrap-table-zh-CN.js}"></script>
+
+    <!--遮罩-->
+    <script th:src="@{/js/blockUI/jquery.blockUI.js}"></script>
+
+    <!--通用UI JS框架-->
+    <script th:src="@{/js/custom/common/dimple-blog.js}"></script>
+</div>
+</html>

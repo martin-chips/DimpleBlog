@@ -54,10 +54,10 @@ public class LoginLogController {
         return ResultUtil.success(integer);
     }
 
-    @DeleteMapping("/log/loginLog/{logIds}")
+    @DeleteMapping("/log/loginLog/{ids}")
     @ResponseBody
-    public Result deleteLoginLog(@PathVariable Integer logIds[]) {
-        Integer integer = loginLogService.deleteLoginLog(logIds);
+    public Result deleteLoginLog(@PathVariable Integer ids[]) {
+        Integer integer = loginLogService.deleteLoginLog(ids);
         return ResultUtil.success(integer);
     }
 }

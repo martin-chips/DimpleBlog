@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
 
-    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="/css/animate.css" rel="stylesheet">
-    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
-    <!--IOS风格切换插件-->
-    <link href="/css/switchery/switchery.css" rel="stylesheet">
-    <script src="/js/switchery/switchery.js"></script>
 
+<head th:include="/common :: common-head">
 </head>
+<!--IOS风格切换插件-->
+<link href="/static/css/switchery/switchery.css" th:href="@{/css/switchery/switchery.css}" rel="stylesheet">
+
+
 <body>
 <div class="ibox float-e-margins">
     <div class="ibox-content">
@@ -58,46 +53,10 @@
         </form>
     </div>
 
-    <!-- 全局js -->
-    <script src="/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <div th:include="/common :: common-footer"></div>
+    <script src="/static/js/switchery/switchery.js" th:src="@{/js/switchery/switchery.js}"></script>
+    <script src="/static/js/custom/links/update.js" th:src="@{/js/custom/links/update.js}"></script>
 
-    <!-- 自定义js -->
-    <script src="/js/content.js?v=1.0.0"></script>
-
-    <!-- jQuery Validation plugin javascript-->
-    <script src="/js/validate/jquery.validate.min.js"></script>
-    <script src="/js/validate/messages_zh.min.js"></script>
-    <script src="/js/validate/validate-index.js"></script>
-
-    <!-- layer javascript -->
-    <script src="/js/layer/layer.min.js"></script>
-
-    <script src="/js/blockUI/jquery.blockUI.js"></script>
-    <script src="/js/custom/common/dimple-blog.js"></script>
-    <script>
-        function submitHandler() {
-            if ($.validateCustom.form("updateLinksFrom")) {
-                updateLinks();
-            }
-        }
-        function updateLinks() {
-            $.ajax({
-                type: "PUT",
-                dataType: "json",
-                data: $("#updateLinksFrom").serializeArray(),
-                url: "/links",
-                success: function (data) {
-                    if (data != null && data.code == web_status.SUCCESS) {
-                        $.modal.msgReload("修改成功！", modal_status.SUCCESS);
-                    } else {
-                        $.modal.msgReload("修改失败！", modal_status.FAIL);
-                    }
-                }
-            });
-            return false;
-        }
-    </script>
 </div>
 </body>
 </html>

@@ -1,8 +1,11 @@
 package com.dimple.bean;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@ToString
 public class LoginLog implements Serializable {
     /**
      * 登录日志记录的主键

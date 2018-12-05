@@ -1,31 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>H+ 后台主题UI框架 - Bootstrap Table</title>
-
-    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link href="/css/animate.css" rel="stylesheet">
-    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
-    <link href="/css/common/common.css" rel="stylesheet">
-
-
-    <!-- 全局js -->
-    <script src="/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
-    <!--IOS风格切换插件-->
-    <!--<link href="/css/switchery/switchery.css" rel="stylesheet">-->
-    <script src="/js/layer/layer.min.js"></script>
-    <script src="/js/layui/layui.js"></script>
-    <script src="/js/common/common.js"></script>
-</head>
+<head th:include="/common :: common-head"></head>
 
 <body class="gray-bg">
 <!--<div class="col-sm-2">-->
@@ -113,10 +89,10 @@
         </div>
 
         <div class="btn-group-sm hidden-xs" id="toolbar" role="group" style="margin-top: 10px">
-            <a class="btn btn-danger" onclick="clean()">
+            <a class="btn btn-danger" onclick="$.operate.clean()">
                 <i class="fa fa-trash"></i> 清空
             </a>
-            <a class="btn btn-danger btn-del disabled" onclick="deleteLog()">
+            <a class="btn btn-danger btn-del disabled" onclick="$.operate.deleteAll()">
                 <i class="fa fa-remove"></i> 删除
             </a>
         </div>
@@ -127,15 +103,9 @@
     </div>
 </div>
 
-<!-- 自定义js -->
-<script src="/js/content.js?v=1.0.0"></script>
-<!-- layer javascript -->
-<script src="/js/layer/layer.min.js"></script>
-<!-- Bootstrap table -->
-<script src="/js/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-<script src="/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-<script src="/static/js/custom/log/loginLog.js" th:src="@{/js/custom/log/loginLog.js}"></script>
+
+<div th:include="/common :: common-footer"></div>
+<script src="/static/js/custom/log/loginLogList.js" th:src="@{/js/custom/log/loginLogList.js}"></script>
 
 </body>
 

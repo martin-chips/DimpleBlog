@@ -29,7 +29,7 @@ public class OperatorLogController {
 
     @RequestMapping("/log/operatorLog.html")
     public String operatorList() {
-        return "/log/operatorLog-list";
+        return "log/operatorLog-list";
     }
 
 

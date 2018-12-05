@@ -35,18 +35,18 @@ public class LoginController {
 
     @RequestMapping("/login.html")
     public String toLogin() {
-        return "/login";
+        return "login";
     }
 
     @RequestMapping("/logout.html")
     public String logout(HttpSession session) {
         loginService.logout();
-        return "/login";
+        return "login";
     }
 
-    @RequestMapping("/index.html")
+    @RequestMapping({"/index.html", "/"})
     public String index(Model model) {
         model.addAttribute("unhandledLinksCount", linksService.getUnHandledLinksCount());
-        return "/index";
+        return "index";
     }
 }

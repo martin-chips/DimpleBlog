@@ -15,7 +15,7 @@ public class UserController {
 
     @RequestMapping("/personInfo")
     public String userProfile() {
-        return "/user/profile";
+        return "user/profile";
     }
 
 }
