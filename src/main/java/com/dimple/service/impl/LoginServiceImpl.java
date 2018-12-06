@@ -1,11 +1,12 @@
 package com.dimple.service.impl;
 
 import com.dimple.constant.Status;
+import com.dimple.exception.user.*;
 import com.dimple.service.LoginService;
+import com.dimple.utils.MessageUtil;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.async.factory.AsyncLog;
 import com.dimple.utils.message.Result;
-import com.dimple.utils.message.ResultEnum;
 import com.dimple.utils.message.ResultUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -36,12 +37,12 @@ public class LoginServiceImpl implements LoginService {
         //验证码校验
         if (StringUtils.isBlank(ServletUtil.getRequest().getParameter("kaptcha")) || !kaptchaExpected.equals(kaptcha)) {
             asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, "验证码错误");
-            return ResultUtil.error(ResultEnum.KAPTCHA_CHECK_ERROR.getCode(), ResultEnum.KAPTCHA_CHECK_ERROR.getMsg());
+            throw new CaptchaException();
         }
         //账号和密码为空校验
         if (StringUtils.isBlank(loginId) || StringUtils.isBlank(password)) {
             asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, "账号不存在");
-            return ResultUtil.error(ResultEnum.USER_NAME_OR_PASSWORD_IS_NULL.getCode(), ResultEnum.USER_NAME_OR_PASSWORD_IS_NULL.getMsg());
+            throw new UserAccountNotExistsException();
         }
         //获取Subject对象
         Subject currentUser = SecurityUtils.getSubject();
@@ -50,26 +51,21 @@ public class LoginServiceImpl implements LoginService {
         Integer code = null;
         try {
             currentUser.login(usernamePasswordToken);
-            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, "登录成功");
+            asyncLog.recordLoginLog(loginId, Status.LOGOUT_SUCCESS, MessageUtil.getMessage("user.login.success"));
             return ResultUtil.success();
         } catch (UnknownAccountException e) {
-            code = ResultEnum.USER_NOT_EXIST.getCode();
-            msg = ResultEnum.USER_NOT_EXIST.getMsg();
-            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, "账号不存在");
+            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, MessageUtil.getMessage("user.not.exists"));
+            throw new UserAccountNotExistsException();
         } catch (IncorrectCredentialsException e) {
-            code = ResultEnum.USER_PASSWORD_INCORRECT.getCode();
-            msg = ResultEnum.USER_PASSWORD_INCORRECT.getMsg();
-            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, "密码错误");
+            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, MessageUtil.getMessage("user.password.not.match"));
+            throw new UserPasswordNotMatchException();
         } catch (LockedAccountException e) {
-            code = ResultEnum.USER_ACCOUNT_LOCKED.getCode();
-            msg = ResultEnum.USER_ACCOUNT_LOCKED.getMsg();
-            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, "账户被锁定");
+            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, MessageUtil.getMessage("user.account.locked"));
+            throw new UserAccountLockedException();
         } catch (AuthenticationException exception) {
-            code = ResultEnum.USER_CHECK_ERROR.getCode();
-            msg = ResultEnum.USER_CHECK_ERROR.getMsg();
-            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, "身份认证异常");
+            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, MessageUtil.getMessage("user.authentication.error"));
+            throw new UserException("user.authentication.error", null);
         }
-        return ResultUtil.error(code, msg);
     }
 
     @Override

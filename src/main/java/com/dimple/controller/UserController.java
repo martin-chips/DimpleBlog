@@ -1,5 +1,6 @@
 package com.dimple.controller;
 
+import com.dimple.exception.user.CaptchaException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,4 +19,8 @@ public class UserController {
         return "user/profile";
     }
 
+    @RequestMapping("/exception")
+    public String ss() throws Exception {
+        throw new CaptchaException();
+    }
 }

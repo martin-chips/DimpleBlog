@@ -3,6 +3,8 @@ package com.dimple.dao;
 import com.dimple.bean.LinksDetails;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 /**
  * @ClassName: CustomMapper
  * @Description:
@@ -25,4 +27,5 @@ public interface CustomMapper {
      * @return
      */
     Integer selectUnHandledLinksCount();
+
 }

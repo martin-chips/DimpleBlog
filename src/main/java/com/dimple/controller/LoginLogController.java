@@ -9,14 +9,16 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: LoginLogController
- * @Description: 日志处理Controller
+ * @Description: 登录日志处理Controller
  * @Auther: Dimple
  * @Date: 2018/12/1 12:42
  * @Version: 1.0
@@ -28,8 +30,10 @@ public class LoginLogController {
     LoginLogService loginLogService;
 
     @RequestMapping("/log/loginLog.html")
-    public String loginLog() {
-        return "/log/loginLog-list";
+    public String loginLog(Model model) {
+        Map<String, Integer> map = loginLogService.getDetails();
+        model.addAttribute("details", map);
+        return "log/loginLog-list";
     }
 
     @GetMapping("/log/loginLog.json")
@@ -39,10 +43,13 @@ public class LoginLogController {
                               @RequestParam(value = "address", required = false) String address,
                               @RequestParam(value = "loginName", required = false) String LoginName,
                               @RequestParam(value = "status", required = false) Boolean status,
+                              @RequestParam(value = "osType", required = false) String osType,
+                              @RequestParam(value = "browserType", required = false) String browserType,
                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<LoginLog> loginLogs = loginLogService.getAllLoginLog(address, LoginName, status, startTime, endTime);
+
+        PageHelper.startPage(pageNum, pageSize, "login_time desc");
+        List<LoginLog> loginLogs = loginLogService.getAllLoginLog(address, LoginName, status, startTime, endTime, osType, browserType);
         PageInfo pageInfo = new PageInfo(loginLogs);
         return ResultUtil.success(pageInfo);
     }
@@ -60,4 +67,5 @@ public class LoginLogController {
         Integer integer = loginLogService.deleteLoginLog(ids);
         return ResultUtil.success(integer);
     }
+
 }

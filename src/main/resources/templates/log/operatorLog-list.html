@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head th:include="/common :: common-head"></head>
+<head th:include="common :: common-head"></head>
 
 <body class="gray-bg">
 <!--<div class="col-sm-2">-->
@@ -57,20 +57,21 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            <label>登录地址：</label><input type="text" name="location"/>
+                            <label>操作模块：</label><input type="text" name="location"/>
                         </li>
                         <li>
-                            <label>登录名称：</label><input type="text" name="loginName"/>
+                            <label>操作人员：</label><input type="text" name="loginName"/>
                         </li>
                         <li>
-                            <label>登录状态：</label><select name="status">
-                            <option value="">所有</option>
-                            <option value="true">成功</option>
-                            <option value="false">失败</option>
-                        </select>
+                            <label>操作类型：</label>
+                            <select name="status">
+                                <option value="">所有</option>
+                                <option value="true">成功</option>
+                                <option value="false">失败</option>
+                            </select>
                         </li>
                         <li class="select-time">
-                            <label>登录时间： </label>
+                            <label>操作时间： </label>
                             <input type="text" class="time-input" id="startTime" placeholder="开始时间"
                                    name="startTime"/>
                             <span>-</span>
@@ -89,10 +90,10 @@
         </div>
 
         <div class="btn-group-sm hidden-xs" id="toolbar" role="group" style="margin-top: 10px">
-            <a class="btn btn-danger" onclick="clean()">
+            <a class="btn btn-danger" onclick="$.operate.clean()">
                 <i class="fa fa-trash"></i> 清空
             </a>
-            <a class="btn btn-danger btn-del disabled" onclick="deleteLog()">
+            <a class="btn btn-danger btn-del disabled" onclick="$.operate.deleteAll()">
                 <i class="fa fa-remove"></i> 删除
             </a>
         </div>
@@ -104,7 +105,7 @@
 </div>
 
 
-<div th:include="/common :: common-footer"></div>
+<div th:include="common :: common-footer"></div>
 <script src="/static/js/custom/log/loginLog-temp.js" th:src="@{/js/custom/log/loginLog-temp.js}"></script>
 
 </body>

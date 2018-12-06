@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dimple.dao.OperatorLogMapper" >
-  <resultMap id="BaseResultMap" type="com.dimple.bean.OperatorLog" >
+<mapper namespace="com.dimple.dao.OperateLogMapper" >
+  <resultMap id="BaseResultMap" type="com.dimple.bean.OperateLog" >
     <id column="operId" property="operid" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="operator_type" property="operatorType" jdbcType="VARCHAR" />
+    <result column="operate_type" property="operateType" jdbcType="INTEGER" />
     <result column="method" property="method" jdbcType="VARCHAR" />
-    <result column="channel" property="channel" jdbcType="VARCHAR" />
-    <result column="operator_url" property="operatorUrl" jdbcType="VARCHAR" />
+    <result column="operate_url" property="operateUrl" jdbcType="VARCHAR" />
     <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
-    <result column="operator_ip" property="operatorIp" jdbcType="VARCHAR" />
-    <result column="operator_location" property="operatorLocation" jdbcType="VARCHAR" />
-    <result column="operator_param" property="operatorParam" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="BIT" />
+    <result column="operate_ip" property="operateIp" jdbcType="VARCHAR" />
+    <result column="operate_location" property="operateLocation" jdbcType="VARCHAR" />
+    <result column="operate_param" property="operateParam" jdbcType="VARCHAR" />
+    <result column="operate_status" property="operateStatus" jdbcType="BIT" />
     <result column="error_msg" property="errorMsg" jdbcType="VARCHAR" />
-    <result column="operator_time" property="operatorTime" jdbcType="TIMESTAMP" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,16 +74,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    operId, title, operator_type, method, channel, operator_url, operator_name, operator_ip, 
-    operator_location, operator_param, status, error_msg, operator_time
+    operId, title, operate_type, method, operate_url, operator_name, operate_ip, operate_location, 
+    operate_param, operate_status, error_msg, operate_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.OperatorLogExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.OperateLogExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from operator_log
+    from operate_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,33 +94,33 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from operator_log
+    from operate_log
     where operId = #{operid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from operator_log
+    delete from operate_log
     where operId = #{operid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dimple.bean.OperatorLogExample" >
-    delete from operator_log
+  <delete id="deleteByExample" parameterType="com.dimple.bean.OperateLogExample" >
+    delete from operate_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dimple.bean.OperatorLog" >
-    insert into operator_log (operId, title, operator_type, 
-      method, channel, operator_url, 
-      operator_name, operator_ip, operator_location, 
-      operator_param, status, error_msg, 
-      operator_time)
-    values (#{operid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{operatorType,jdbcType=VARCHAR}, 
-      #{method,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, #{operatorUrl,jdbcType=VARCHAR}, 
-      #{operatorName,jdbcType=VARCHAR}, #{operatorIp,jdbcType=VARCHAR}, #{operatorLocation,jdbcType=VARCHAR}, 
-      #{operatorParam,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{errorMsg,jdbcType=VARCHAR}, 
-      #{operatorTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.dimple.bean.OperateLog" >
+    insert into operate_log (operId, title, operate_type, 
+      method, operate_url, operator_name, 
+      operate_ip, operate_location, operate_param, 
+      operate_status, error_msg, operate_time
+      )
+    values (#{operid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{operateType,jdbcType=INTEGER}, 
+      #{method,jdbcType=VARCHAR}, #{operateUrl,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, 
+      #{operateIp,jdbcType=VARCHAR}, #{operateLocation,jdbcType=VARCHAR}, #{operateParam,jdbcType=VARCHAR}, 
+      #{operateStatus,jdbcType=BIT}, #{errorMsg,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.dimple.bean.OperatorLog" >
-    insert into operator_log
+  <insert id="insertSelective" parameterType="com.dimple.bean.OperateLog" >
+    insert into operate_log
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="operid != null" >
         operId,
@@ -129,38 +128,35 @@
       <if test="title != null" >
         title,
       </if>
-      <if test="operatorType != null" >
-        operator_type,
+      <if test="operateType != null" >
+        operate_type,
       </if>
       <if test="method != null" >
         method,
       </if>
-      <if test="channel != null" >
-        channel,
-      </if>
-      <if test="operatorUrl != null" >
-        operator_url,
+      <if test="operateUrl != null" >
+        operate_url,
       </if>
       <if test="operatorName != null" >
         operator_name,
       </if>
-      <if test="operatorIp != null" >
-        operator_ip,
+      <if test="operateIp != null" >
+        operate_ip,
       </if>
-      <if test="operatorLocation != null" >
-        operator_location,
+      <if test="operateLocation != null" >
+        operate_location,
       </if>
-      <if test="operatorParam != null" >
-        operator_param,
+      <if test="operateParam != null" >
+        operate_param,
       </if>
-      <if test="status != null" >
-        status,
+      <if test="operateStatus != null" >
+        operate_status,
       </if>
       <if test="errorMsg != null" >
         error_msg,
       </if>
-      <if test="operatorTime != null" >
-        operator_time,
+      <if test="operateTime != null" >
+        operate_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -170,49 +166,46 @@
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="operatorType != null" >
-        #{operatorType,jdbcType=VARCHAR},
+      <if test="operateType != null" >
+        #{operateType,jdbcType=INTEGER},
       </if>
       <if test="method != null" >
         #{method,jdbcType=VARCHAR},
       </if>
-      <if test="channel != null" >
-        #{channel,jdbcType=VARCHAR},
-      </if>
-      <if test="operatorUrl != null" >
-        #{operatorUrl,jdbcType=VARCHAR},
+      <if test="operateUrl != null" >
+        #{operateUrl,jdbcType=VARCHAR},
       </if>
       <if test="operatorName != null" >
         #{operatorName,jdbcType=VARCHAR},
       </if>
-      <if test="operatorIp != null" >
-        #{operatorIp,jdbcType=VARCHAR},
+      <if test="operateIp != null" >
+        #{operateIp,jdbcType=VARCHAR},
       </if>
-      <if test="operatorLocation != null" >
-        #{operatorLocation,jdbcType=VARCHAR},
+      <if test="operateLocation != null" >
+        #{operateLocation,jdbcType=VARCHAR},
       </if>
-      <if test="operatorParam != null" >
-        #{operatorParam,jdbcType=VARCHAR},
+      <if test="operateParam != null" >
+        #{operateParam,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
-        #{status,jdbcType=BIT},
+      <if test="operateStatus != null" >
+        #{operateStatus,jdbcType=BIT},
       </if>
       <if test="errorMsg != null" >
         #{errorMsg,jdbcType=VARCHAR},
       </if>
-      <if test="operatorTime != null" >
-        #{operatorTime,jdbcType=TIMESTAMP},
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dimple.bean.OperatorLogExample" resultType="java.lang.Integer" >
-    select count(*) from operator_log
+  <select id="countByExample" parameterType="com.dimple.bean.OperateLogExample" resultType="java.lang.Integer" >
+    select count(*) from operate_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update operator_log
+    update operate_log
     <set >
       <if test="record.operid != null" >
         operId = #{record.operid,jdbcType=INTEGER},
@@ -220,38 +213,35 @@
       <if test="record.title != null" >
         title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.operatorType != null" >
-        operator_type = #{record.operatorType,jdbcType=VARCHAR},
+      <if test="record.operateType != null" >
+        operate_type = #{record.operateType,jdbcType=INTEGER},
       </if>
       <if test="record.method != null" >
         method = #{record.method,jdbcType=VARCHAR},
       </if>
-      <if test="record.channel != null" >
-        channel = #{record.channel,jdbcType=VARCHAR},
-      </if>
-      <if test="record.operatorUrl != null" >
-        operator_url = #{record.operatorUrl,jdbcType=VARCHAR},
+      <if test="record.operateUrl != null" >
+        operate_url = #{record.operateUrl,jdbcType=VARCHAR},
       </if>
       <if test="record.operatorName != null" >
         operator_name = #{record.operatorName,jdbcType=VARCHAR},
       </if>
-      <if test="record.operatorIp != null" >
-        operator_ip = #{record.operatorIp,jdbcType=VARCHAR},
+      <if test="record.operateIp != null" >
+        operate_ip = #{record.operateIp,jdbcType=VARCHAR},
       </if>
-      <if test="record.operatorLocation != null" >
-        operator_location = #{record.operatorLocation,jdbcType=VARCHAR},
+      <if test="record.operateLocation != null" >
+        operate_location = #{record.operateLocation,jdbcType=VARCHAR},
       </if>
-      <if test="record.operatorParam != null" >
-        operator_param = #{record.operatorParam,jdbcType=VARCHAR},
+      <if test="record.operateParam != null" >
+        operate_param = #{record.operateParam,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null" >
-        status = #{record.status,jdbcType=BIT},
+      <if test="record.operateStatus != null" >
+        operate_status = #{record.operateStatus,jdbcType=BIT},
       </if>
       <if test="record.errorMsg != null" >
         error_msg = #{record.errorMsg,jdbcType=VARCHAR},
       </if>
-      <if test="record.operatorTime != null" >
-        operator_time = #{record.operatorTime,jdbcType=TIMESTAMP},
+      <if test="record.operateTime != null" >
+        operate_time = #{record.operateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -259,80 +249,75 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update operator_log
+    update operate_log
     set operId = #{record.operid,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
-      operator_type = #{record.operatorType,jdbcType=VARCHAR},
+      operate_type = #{record.operateType,jdbcType=INTEGER},
       method = #{record.method,jdbcType=VARCHAR},
-      channel = #{record.channel,jdbcType=VARCHAR},
-      operator_url = #{record.operatorUrl,jdbcType=VARCHAR},
+      operate_url = #{record.operateUrl,jdbcType=VARCHAR},
       operator_name = #{record.operatorName,jdbcType=VARCHAR},
-      operator_ip = #{record.operatorIp,jdbcType=VARCHAR},
-      operator_location = #{record.operatorLocation,jdbcType=VARCHAR},
-      operator_param = #{record.operatorParam,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=BIT},
+      operate_ip = #{record.operateIp,jdbcType=VARCHAR},
+      operate_location = #{record.operateLocation,jdbcType=VARCHAR},
+      operate_param = #{record.operateParam,jdbcType=VARCHAR},
+      operate_status = #{record.operateStatus,jdbcType=BIT},
       error_msg = #{record.errorMsg,jdbcType=VARCHAR},
-      operator_time = #{record.operatorTime,jdbcType=TIMESTAMP}
+      operate_time = #{record.operateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dimple.bean.OperatorLog" >
-    update operator_log
+  <update id="updateByPrimaryKeySelective" parameterType="com.dimple.bean.OperateLog" >
+    update operate_log
     <set >
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="operatorType != null" >
-        operator_type = #{operatorType,jdbcType=VARCHAR},
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=INTEGER},
       </if>
       <if test="method != null" >
         method = #{method,jdbcType=VARCHAR},
       </if>
-      <if test="channel != null" >
-        channel = #{channel,jdbcType=VARCHAR},
-      </if>
-      <if test="operatorUrl != null" >
-        operator_url = #{operatorUrl,jdbcType=VARCHAR},
+      <if test="operateUrl != null" >
+        operate_url = #{operateUrl,jdbcType=VARCHAR},
       </if>
       <if test="operatorName != null" >
         operator_name = #{operatorName,jdbcType=VARCHAR},
       </if>
-      <if test="operatorIp != null" >
-        operator_ip = #{operatorIp,jdbcType=VARCHAR},
+      <if test="operateIp != null" >
+        operate_ip = #{operateIp,jdbcType=VARCHAR},
       </if>
-      <if test="operatorLocation != null" >
-        operator_location = #{operatorLocation,jdbcType=VARCHAR},
+      <if test="operateLocation != null" >
+        operate_location = #{operateLocation,jdbcType=VARCHAR},
       </if>
-      <if test="operatorParam != null" >
-        operator_param = #{operatorParam,jdbcType=VARCHAR},
+      <if test="operateParam != null" >
+        operate_param = #{operateParam,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=BIT},
+      <if test="operateStatus != null" >
+        operate_status = #{operateStatus,jdbcType=BIT},
       </if>
       <if test="errorMsg != null" >
         error_msg = #{errorMsg,jdbcType=VARCHAR},
       </if>
-      <if test="operatorTime != null" >
-        operator_time = #{operatorTime,jdbcType=TIMESTAMP},
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where operId = #{operid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dimple.bean.OperatorLog" >
-    update operator_log
+  <update id="updateByPrimaryKey" parameterType="com.dimple.bean.OperateLog" >
+    update operate_log
     set title = #{title,jdbcType=VARCHAR},
-      operator_type = #{operatorType,jdbcType=VARCHAR},
+      operate_type = #{operateType,jdbcType=INTEGER},
       method = #{method,jdbcType=VARCHAR},
-      channel = #{channel,jdbcType=VARCHAR},
-      operator_url = #{operatorUrl,jdbcType=VARCHAR},
+      operate_url = #{operateUrl,jdbcType=VARCHAR},
       operator_name = #{operatorName,jdbcType=VARCHAR},
-      operator_ip = #{operatorIp,jdbcType=VARCHAR},
-      operator_location = #{operatorLocation,jdbcType=VARCHAR},
-      operator_param = #{operatorParam,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
+      operate_ip = #{operateIp,jdbcType=VARCHAR},
+      operate_location = #{operateLocation,jdbcType=VARCHAR},
+      operate_param = #{operateParam,jdbcType=VARCHAR},
+      operate_status = #{operateStatus,jdbcType=BIT},
       error_msg = #{errorMsg,jdbcType=VARCHAR},
-      operator_time = #{operatorTime,jdbcType=TIMESTAMP}
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
     where operId = #{operid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -24,7 +24,7 @@ import java.io.IOException;
  * @Version: 1.0
  */
 @Controller
-public class KaptchaController {
+public class CaptchaController {
 
     @Autowired
     @Qualifier("kaptchaCharacterImage")

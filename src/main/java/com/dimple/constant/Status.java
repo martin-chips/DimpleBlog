@@ -29,7 +29,7 @@ public class Status {
     /**
      * 退出成功
      */
-    public static final Byte LOGOUT = 2;
+    public static final Byte LOGOUT_SUCCESS = 2;
 
     /**
      * 其它

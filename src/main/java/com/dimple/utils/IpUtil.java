@@ -1,5 +1,7 @@
 package com.dimple.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -11,6 +13,7 @@ import java.net.UnknownHostException;
  * @Date: 12/03/18 20:15
  * @Version: 1.0
  */
+@Slf4j
 public class IpUtil {
     public static String getIpAddr(HttpServletRequest request) {
         if (request == null) {
@@ -29,17 +32,14 @@ public class IpUtil {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("X-Real-IP");
         }
-
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
     }
 
     public static boolean internalIp(String ip) {
-        byte[] addr = textToNumericFormatV4(ip);
-        return internalIp(addr) || "127.0.0.1".equals(ip);
+        return "127.0.0.1".equals(ip);
     }
 
     private static boolean internalIp(byte[] addr) {

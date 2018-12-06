@@ -1,8 +1,6 @@
 package com.dimple.controller;
 
-import com.dimple.bean.OperatorLog;
-import com.dimple.framework.annotation.Log;
-import com.dimple.service.OperatorLogService;
+import com.dimple.service.OperateLogService;
 import com.dimple.utils.message.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @ClassName: OperatorLogController
@@ -22,10 +19,10 @@ import java.util.List;
  * @Version: 1.0
  */
 @Controller
-public class OperatorLogController {
+public class OperateLogController {
 
     @Autowired
-    OperatorLogService operatorLogService;
+    OperateLogService operatorLogService;
 
     @RequestMapping("/log/operatorLog.html")
     public String operatorList() {

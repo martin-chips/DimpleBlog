@@ -1,12 +1,9 @@
 package com.dimple.bean;
 
-import lombok.ToString;
-
 import java.io.Serializable;
 import java.util.Date;
 
-@ToString
-public class OperatorLog implements Serializable {
+public class OperateLog implements Serializable {
     /**
      * 操作序号
 
@@ -22,7 +19,7 @@ public class OperatorLog implements Serializable {
      * 操作类型
 
      */
-    private String operatorType;
+    private Integer operateType;
 
     /**
      * 请求的方法
@@ -30,14 +27,9 @@ public class OperatorLog implements Serializable {
     private String method;
 
     /**
-     * 来源渠道
-     */
-    private String channel;
-
-    /**
      * 请求的URL
      */
-    private String operatorUrl;
+    private String operateUrl;
 
     /**
      * 操作人员
@@ -47,22 +39,22 @@ public class OperatorLog implements Serializable {
     /**
      * 操作的IP地址
      */
-    private String operatorIp;
+    private String operateIp;
 
     /**
      * 操作的地点
      */
-    private String operatorLocation;
+    private String operateLocation;
 
     /**
      * 请求的参数
      */
-    private String operatorParam;
+    private String operateParam;
 
     /**
      * 状态（1、true表示正常，0，false表示异常）
      */
-    private Boolean status;
+    private Boolean operateStatus;
 
     /**
      * 错误消息
@@ -72,10 +64,10 @@ public class OperatorLog implements Serializable {
     /**
      * 操作时间
      */
-    private Date operatorTime;
+    private Date operateTime;
 
     /**
-     * operator_log
+     * operate_log
      */
     private static final long serialVersionUID = 1L;
 
@@ -118,21 +110,21 @@ public class OperatorLog implements Serializable {
     /**
      * 操作类型
 
-     * @return operator_type 操作类型
+     * @return operate_type 操作类型
 
      */
-    public String getOperatorType() {
-        return operatorType;
+    public Integer getOperateType() {
+        return operateType;
     }
 
     /**
      * 操作类型
 
-     * @param operatorType 操作类型
+     * @param operateType 操作类型
 
      */
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
+    public void setOperateType(Integer operateType) {
+        this.operateType = operateType;
     }
 
     /**
@@ -152,35 +144,19 @@ public class OperatorLog implements Serializable {
     }
 
     /**
-     * 来源渠道
-     * @return channel 来源渠道
+     * 请求的URL
+     * @return operate_url 请求的URL
      */
-    public String getChannel() {
-        return channel;
-    }
-
-    /**
-     * 来源渠道
-     * @param channel 来源渠道
-     */
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public String getOperateUrl() {
+        return operateUrl;
     }
 
     /**
      * 请求的URL
-     * @return operator_url 请求的URL
+     * @param operateUrl 请求的URL
      */
-    public String getOperatorUrl() {
-        return operatorUrl;
-    }
-
-    /**
-     * 请求的URL
-     * @param operatorUrl 请求的URL
-     */
-    public void setOperatorUrl(String operatorUrl) {
-        this.operatorUrl = operatorUrl;
+    public void setOperateUrl(String operateUrl) {
+        this.operateUrl = operateUrl;
     }
 
     /**
@@ -201,66 +177,66 @@ public class OperatorLog implements Serializable {
 
     /**
      * 操作的IP地址
-     * @return operator_ip 操作的IP地址
+     * @return operate_ip 操作的IP地址
      */
-    public String getOperatorIp() {
-        return operatorIp;
+    public String getOperateIp() {
+        return operateIp;
     }
 
     /**
      * 操作的IP地址
-     * @param operatorIp 操作的IP地址
+     * @param operateIp 操作的IP地址
      */
-    public void setOperatorIp(String operatorIp) {
-        this.operatorIp = operatorIp;
+    public void setOperateIp(String operateIp) {
+        this.operateIp = operateIp;
     }
 
     /**
      * 操作的地点
-     * @return operator_location 操作的地点
+     * @return operate_location 操作的地点
      */
-    public String getOperatorLocation() {
-        return operatorLocation;
+    public String getOperateLocation() {
+        return operateLocation;
     }
 
     /**
      * 操作的地点
-     * @param operatorLocation 操作的地点
+     * @param operateLocation 操作的地点
      */
-    public void setOperatorLocation(String operatorLocation) {
-        this.operatorLocation = operatorLocation;
+    public void setOperateLocation(String operateLocation) {
+        this.operateLocation = operateLocation;
     }
 
     /**
      * 请求的参数
-     * @return operator_param 请求的参数
+     * @return operate_param 请求的参数
      */
-    public String getOperatorParam() {
-        return operatorParam;
+    public String getOperateParam() {
+        return operateParam;
     }
 
     /**
      * 请求的参数
-     * @param operatorParam 请求的参数
+     * @param operateParam 请求的参数
      */
-    public void setOperatorParam(String operatorParam) {
-        this.operatorParam = operatorParam;
+    public void setOperateParam(String operateParam) {
+        this.operateParam = operateParam;
     }
 
     /**
      * 状态（1、true表示正常，0，false表示异常）
-     * @return status 状态（1、true表示正常，0，false表示异常）
+     * @return operate_status 状态（1、true表示正常，0，false表示异常）
      */
-    public Boolean getStatus() {
-        return status;
+    public Boolean getOperateStatus() {
+        return operateStatus;
     }
 
     /**
      * 状态（1、true表示正常，0，false表示异常）
-     * @param status 状态（1、true表示正常，0，false表示异常）
+     * @param operateStatus 状态（1、true表示正常，0，false表示异常）
      */
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setOperateStatus(Boolean operateStatus) {
+        this.operateStatus = operateStatus;
     }
 
     /**
@@ -281,17 +257,17 @@ public class OperatorLog implements Serializable {
 
     /**
      * 操作时间
-     * @return operator_time 操作时间
+     * @return operate_time 操作时间
      */
-    public Date getOperatorTime() {
-        return operatorTime;
+    public Date getOperateTime() {
+        return operateTime;
     }
 
     /**
      * 操作时间
-     * @param operatorTime 操作时间
+     * @param operateTime 操作时间
      */
-    public void setOperatorTime(Date operatorTime) {
-        this.operatorTime = operatorTime;
+    public void setOperateTime(Date operateTime) {
+        this.operateTime = operateTime;
     }
 }

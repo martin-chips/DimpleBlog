@@ -1,11 +1,12 @@
 package com.dimple.framework;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dimple.bean.OperatorLog;
+import com.dimple.bean.OperateLog;
 import com.dimple.bean.User;
 import com.dimple.constant.Status;
 import com.dimple.framework.annotation.Log;
-import com.dimple.service.OperatorLogService;
+import com.dimple.service.OperateLogService;
+import com.dimple.utils.IpUtil;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.ShiroUtil;
 import com.dimple.utils.async.factory.AsyncLog;
@@ -40,7 +41,7 @@ import java.util.Map;
 public class LogAspect {
 
     @Autowired
-    OperatorLogService operatorLogService;
+    OperateLogService operateLogService;
 
     @Autowired
     AsyncLog asyncLog;
@@ -90,47 +91,46 @@ public class LogAspect {
         //获取当前用户
         User user = ShiroUtil.getUser();
         //日志
-        OperatorLog operatorLog = new OperatorLog();
+        OperateLog operateLog = new OperateLog();
         //请求的地址
-        String ip = ShiroUtil.getIp();
-        operatorLog.setOperatorIp(ip);
+        String ip = IpUtil.getIpAddr(ServletUtil.getRequest());
+        operateLog.setOperateIp(ip);
         //设置请求的地址
-        operatorLog.setOperatorUrl(ServletUtil.getRequest().getRequestURI());
+        operateLog.setOperateUrl(ServletUtil.getRequest().getRequestURI());
         //设置操作的人员
         if (user != null) {
-            operatorLog.setOperatorName(user.getUserLoginId());
+            operateLog.setOperatorName(user.getUserLoginId());
         }
         //设置是否异常
         if (exception != null) {
-            operatorLog.setStatus(Status.FAILURE);
-            operatorLog.setErrorMsg(StringUtils.substring(exception.getMessage(), 0, 2000));
+            operateLog.setOperateStatus(Status.FAILURE);
+            operateLog.setErrorMsg(StringUtils.substring(exception.getMessage(), 0, 2000));
         } else {
-            operatorLog.setStatus(Status.SUCCESS);
+            operateLog.setOperateStatus(Status.SUCCESS);
         }
         //设置方法名称
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
-        operatorLog.setMethod(className + "." + methodName + "()");
+        operateLog.setMethod(className + "." + methodName + "()");
         //处理注解上的参数
-        setControllerMethodDescription(operatorLog, annotationLog);
-        asyncLog.recordOperateLog(operatorLog);
+        setControllerMethodDescription(operateLog, annotationLog);
+        asyncLog.recordOperateLog(operateLog);
     }
 
     /**
      * 将Controller注解中的参数拿到，设置到Log对象中去
      *
-     * @param operatorLog   log对象
+     * @param operateLog    log对象
      * @param annotationLog controller上注解标注的对象
      */
-    private void setControllerMethodDescription(OperatorLog operatorLog, Log annotationLog) {
-        operatorLog.setOperatorType(annotationLog.action());
-        operatorLog.setTitle(annotationLog.title());
-        operatorLog.setChannel(annotationLog.channel());
+    private void setControllerMethodDescription(OperateLog operateLog, Log annotationLog) {
+        operateLog.setOperateType(annotationLog.operateType().getType());
+        operateLog.setTitle(annotationLog.title());
         //设置参数保存（比如密码这些就可以不用显示直接设置为false）
         if (annotationLog.isSaveRequestData()) {
             Map<String, String[]> parameterMap = ServletUtil.getRequest().getParameterMap();
             String params = JSONObject.toJSONString(parameterMap);
-            operatorLog.setOperatorParam(StringUtils.substring(params, 0, 255));
+            operateLog.setOperateParam(StringUtils.substring(params, 0, 255));
         }
     }
 

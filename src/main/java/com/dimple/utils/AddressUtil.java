@@ -1,14 +1,15 @@
 package com.dimple.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.aspectj.weaver.ast.Var;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.*;
+import java.net.*;
 
 /**
  * @ClassName: AddressUtil
@@ -25,57 +26,88 @@ public class AddressUtil {
     /**
      * 获取查询结果
      *
-     * @param content
-     * @param encoding
+     * @param url   像指定的URl发送POST请求
+     * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return
      */
-    private static String sendPost(String content, String encoding) {
-        URL url = null;
-        HttpURLConnection connection = null;
+    private static String sendPost(String url, String param) {
+        PrintWriter out = null;
+        BufferedReader in = null;
+        StringBuilder result = new StringBuilder();
         try {
-            url = new URL(IP_URL);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(2000);
-            connection.setReadTimeout(2000);
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
-            connection.setRequestMethod("POST");
-            connection.setUseCaches(false);
-            connection.connect();
-            DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-            out.writeBytes(content);
+            String urlNameString = url + "?" + param;
+            log.info("sendPost - {}", urlNameString);
+            URL realUrl = new URL(urlNameString);
+            URLConnection conn = realUrl.openConnection();
+            conn.setRequestProperty("accept", "*/*");
+            conn.setRequestProperty("connection", "Keep-Alive");
+            conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            conn.setRequestProperty("Accept-Charset", "utf-8");
+            conn.setRequestProperty("contentType", "utf-8");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            out = new PrintWriter(conn.getOutputStream());
+            out.print(param);
             out.flush();
-            out.close();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), encoding));
-            StringBuffer buffer = new StringBuffer();
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line);
+            in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result.append(line);
             }
-            reader.close();
-            return buffer.toString();
+            log.info("recv - {}", result);
+        } catch (ConnectException e) {
+            log.error("调用sendPost ConnectException, url=" + url + ",param=" + param, e);
+        } catch (SocketTimeoutException e) {
+            log.error("调用sendPost SocketTimeoutException, url=" + url + ",param=" + param, e);
         } catch (IOException e) {
-            log.error("温馨提醒：您的主机已经断网，请您检查主机的网络连接");
-            log.error("根据IP获取所在位置----------错误消息：" + e.getMessage());
+            log.error("调用sendPost IOException, url=" + url + ",param=" + param, e);
+        } catch (Exception e) {
+            log.error("调用sendPost Exception, url=" + url + ",param=" + param, e);
         } finally {
-            if (connection != null) {
-                connection.disconnect();
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                log.error("调用in.close Exception, url=" + url + ",param=" + param, e);
             }
         }
-        return null;
+        return result.toString();
     }
 
     public static String getRealAddressByIP(String ip) {
-        String address = "";
+        String address = "XX XX";
+        if (IpUtil.internalIp(ip)) {
+            return "内网IP";
+        }
+        String response = sendPost(IP_URL, "ip=" + ip);
+        if (StringUtils.isBlank(response)) {
+            log.error("获取地理位置异常{}", ip);
+            return address;
+        }
+        JsonParser jsonParser = new JsonParser();
+        //使用JsonParser解析Json树
+
+        JsonObject jsonObject = null;
         try {
-            address = sendPost("ip=" + ip, "UTF-8");
-            JSONObject json = JSONObject.parseObject(address);
-            JSONObject object = json.getObject("data", JSONObject.class);
-            String region = object.getString("region");
-            String city = object.getString("city");
-            address = region + " " + city;
+            jsonObject = (JsonObject) jsonParser.parse(response);
+            log.info(jsonObject.toString());
+            String code = jsonObject.get("code").getAsString();
+            //只有成功的时候进行解析
+            if (Integer.parseInt(code) == 0) {
+                JsonObject data = jsonObject.get("data").getAsJsonObject();
+                String country = data.get("country").getAsString();
+                String region = data.get("region").getAsString();
+                String city = data.get("city").getAsString();
+                address = country + " " + region + " " + city;
+            }
         } catch (Exception e) {
-            log.error("根据IP获取所在位置----------错误消息：" + e.getMessage());
+            e.printStackTrace();
+            log.error("解析数据出错！{}", jsonObject);
         }
         return address;
     }

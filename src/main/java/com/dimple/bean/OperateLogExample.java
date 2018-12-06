@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OperatorLogExample {
+public class OperateLogExample {
     /**
-     * operator_log
+     * operate_log
      */
     protected String orderByClause;
 
     /**
-     * operator_log
+     * operate_log
      */
     protected boolean distinct;
 
     /**
-     * operator_log
+     * operate_log
      */
     protected List<Criteria> oredCriteria;
 
-    public OperatorLogExample() {
+    public OperateLogExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -74,7 +74,7 @@ public class OperatorLogExample {
     }
 
     /**
-     * operator_log 2018-12-01
+     * operate_log 2018-12-05
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -247,73 +247,63 @@ public class OperatorLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeIsNull() {
-            addCriterion("operator_type is null");
+        public Criteria andOperateTypeIsNull() {
+            addCriterion("operate_type is null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeIsNotNull() {
-            addCriterion("operator_type is not null");
+        public Criteria andOperateTypeIsNotNull() {
+            addCriterion("operate_type is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeEqualTo(String value) {
-            addCriterion("operator_type =", value, "operatorType");
+        public Criteria andOperateTypeEqualTo(Integer value) {
+            addCriterion("operate_type =", value, "operateType");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeNotEqualTo(String value) {
-            addCriterion("operator_type <>", value, "operatorType");
+        public Criteria andOperateTypeNotEqualTo(Integer value) {
+            addCriterion("operate_type <>", value, "operateType");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeGreaterThan(String value) {
-            addCriterion("operator_type >", value, "operatorType");
+        public Criteria andOperateTypeGreaterThan(Integer value) {
+            addCriterion("operate_type >", value, "operateType");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("operator_type >=", value, "operatorType");
+        public Criteria andOperateTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("operate_type >=", value, "operateType");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeLessThan(String value) {
-            addCriterion("operator_type <", value, "operatorType");
+        public Criteria andOperateTypeLessThan(Integer value) {
+            addCriterion("operate_type <", value, "operateType");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeLessThanOrEqualTo(String value) {
-            addCriterion("operator_type <=", value, "operatorType");
+        public Criteria andOperateTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("operate_type <=", value, "operateType");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeLike(String value) {
-            addCriterion("operator_type like", value, "operatorType");
+        public Criteria andOperateTypeIn(List<Integer> values) {
+            addCriterion("operate_type in", values, "operateType");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeNotLike(String value) {
-            addCriterion("operator_type not like", value, "operatorType");
+        public Criteria andOperateTypeNotIn(List<Integer> values) {
+            addCriterion("operate_type not in", values, "operateType");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeIn(List<String> values) {
-            addCriterion("operator_type in", values, "operatorType");
+        public Criteria andOperateTypeBetween(Integer value1, Integer value2) {
+            addCriterion("operate_type between", value1, value2, "operateType");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTypeNotIn(List<String> values) {
-            addCriterion("operator_type not in", values, "operatorType");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorTypeBetween(String value1, String value2) {
-            addCriterion("operator_type between", value1, value2, "operatorType");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorTypeNotBetween(String value1, String value2) {
-            addCriterion("operator_type not between", value1, value2, "operatorType");
+        public Criteria andOperateTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("operate_type not between", value1, value2, "operateType");
             return (Criteria) this;
         }
 
@@ -387,143 +377,73 @@ public class OperatorLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andChannelIsNull() {
-            addCriterion("channel is null");
+        public Criteria andOperateUrlIsNull() {
+            addCriterion("operate_url is null");
             return (Criteria) this;
         }
 
-        public Criteria andChannelIsNotNull() {
-            addCriterion("channel is not null");
+        public Criteria andOperateUrlIsNotNull() {
+            addCriterion("operate_url is not null");
             return (Criteria) this;
         }
 
-        public Criteria andChannelEqualTo(String value) {
-            addCriterion("channel =", value, "channel");
+        public Criteria andOperateUrlEqualTo(String value) {
+            addCriterion("operate_url =", value, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelNotEqualTo(String value) {
-            addCriterion("channel <>", value, "channel");
+        public Criteria andOperateUrlNotEqualTo(String value) {
+            addCriterion("operate_url <>", value, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelGreaterThan(String value) {
-            addCriterion("channel >", value, "channel");
+        public Criteria andOperateUrlGreaterThan(String value) {
+            addCriterion("operate_url >", value, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelGreaterThanOrEqualTo(String value) {
-            addCriterion("channel >=", value, "channel");
+        public Criteria andOperateUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("operate_url >=", value, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelLessThan(String value) {
-            addCriterion("channel <", value, "channel");
+        public Criteria andOperateUrlLessThan(String value) {
+            addCriterion("operate_url <", value, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelLessThanOrEqualTo(String value) {
-            addCriterion("channel <=", value, "channel");
+        public Criteria andOperateUrlLessThanOrEqualTo(String value) {
+            addCriterion("operate_url <=", value, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelLike(String value) {
-            addCriterion("channel like", value, "channel");
+        public Criteria andOperateUrlLike(String value) {
+            addCriterion("operate_url like", value, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelNotLike(String value) {
-            addCriterion("channel not like", value, "channel");
+        public Criteria andOperateUrlNotLike(String value) {
+            addCriterion("operate_url not like", value, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelIn(List<String> values) {
-            addCriterion("channel in", values, "channel");
+        public Criteria andOperateUrlIn(List<String> values) {
+            addCriterion("operate_url in", values, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelNotIn(List<String> values) {
-            addCriterion("channel not in", values, "channel");
+        public Criteria andOperateUrlNotIn(List<String> values) {
+            addCriterion("operate_url not in", values, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelBetween(String value1, String value2) {
-            addCriterion("channel between", value1, value2, "channel");
+        public Criteria andOperateUrlBetween(String value1, String value2) {
+            addCriterion("operate_url between", value1, value2, "operateUrl");
             return (Criteria) this;
         }
 
-        public Criteria andChannelNotBetween(String value1, String value2) {
-            addCriterion("channel not between", value1, value2, "channel");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlIsNull() {
-            addCriterion("operator_url is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlIsNotNull() {
-            addCriterion("operator_url is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlEqualTo(String value) {
-            addCriterion("operator_url =", value, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlNotEqualTo(String value) {
-            addCriterion("operator_url <>", value, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlGreaterThan(String value) {
-            addCriterion("operator_url >", value, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlGreaterThanOrEqualTo(String value) {
-            addCriterion("operator_url >=", value, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlLessThan(String value) {
-            addCriterion("operator_url <", value, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlLessThanOrEqualTo(String value) {
-            addCriterion("operator_url <=", value, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlLike(String value) {
-            addCriterion("operator_url like", value, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlNotLike(String value) {
-            addCriterion("operator_url not like", value, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlIn(List<String> values) {
-            addCriterion("operator_url in", values, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlNotIn(List<String> values) {
-            addCriterion("operator_url not in", values, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlBetween(String value1, String value2) {
-            addCriterion("operator_url between", value1, value2, "operatorUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andOperatorUrlNotBetween(String value1, String value2) {
-            addCriterion("operator_url not between", value1, value2, "operatorUrl");
+        public Criteria andOperateUrlNotBetween(String value1, String value2) {
+            addCriterion("operate_url not between", value1, value2, "operateUrl");
             return (Criteria) this;
         }
 
@@ -597,273 +517,273 @@ public class OperatorLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpIsNull() {
-            addCriterion("operator_ip is null");
+        public Criteria andOperateIpIsNull() {
+            addCriterion("operate_ip is null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpIsNotNull() {
-            addCriterion("operator_ip is not null");
+        public Criteria andOperateIpIsNotNull() {
+            addCriterion("operate_ip is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpEqualTo(String value) {
-            addCriterion("operator_ip =", value, "operatorIp");
+        public Criteria andOperateIpEqualTo(String value) {
+            addCriterion("operate_ip =", value, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpNotEqualTo(String value) {
-            addCriterion("operator_ip <>", value, "operatorIp");
+        public Criteria andOperateIpNotEqualTo(String value) {
+            addCriterion("operate_ip <>", value, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpGreaterThan(String value) {
-            addCriterion("operator_ip >", value, "operatorIp");
+        public Criteria andOperateIpGreaterThan(String value) {
+            addCriterion("operate_ip >", value, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpGreaterThanOrEqualTo(String value) {
-            addCriterion("operator_ip >=", value, "operatorIp");
+        public Criteria andOperateIpGreaterThanOrEqualTo(String value) {
+            addCriterion("operate_ip >=", value, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpLessThan(String value) {
-            addCriterion("operator_ip <", value, "operatorIp");
+        public Criteria andOperateIpLessThan(String value) {
+            addCriterion("operate_ip <", value, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpLessThanOrEqualTo(String value) {
-            addCriterion("operator_ip <=", value, "operatorIp");
+        public Criteria andOperateIpLessThanOrEqualTo(String value) {
+            addCriterion("operate_ip <=", value, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpLike(String value) {
-            addCriterion("operator_ip like", value, "operatorIp");
+        public Criteria andOperateIpLike(String value) {
+            addCriterion("operate_ip like", value, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpNotLike(String value) {
-            addCriterion("operator_ip not like", value, "operatorIp");
+        public Criteria andOperateIpNotLike(String value) {
+            addCriterion("operate_ip not like", value, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpIn(List<String> values) {
-            addCriterion("operator_ip in", values, "operatorIp");
+        public Criteria andOperateIpIn(List<String> values) {
+            addCriterion("operate_ip in", values, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpNotIn(List<String> values) {
-            addCriterion("operator_ip not in", values, "operatorIp");
+        public Criteria andOperateIpNotIn(List<String> values) {
+            addCriterion("operate_ip not in", values, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpBetween(String value1, String value2) {
-            addCriterion("operator_ip between", value1, value2, "operatorIp");
+        public Criteria andOperateIpBetween(String value1, String value2) {
+            addCriterion("operate_ip between", value1, value2, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorIpNotBetween(String value1, String value2) {
-            addCriterion("operator_ip not between", value1, value2, "operatorIp");
+        public Criteria andOperateIpNotBetween(String value1, String value2) {
+            addCriterion("operate_ip not between", value1, value2, "operateIp");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationIsNull() {
-            addCriterion("operator_location is null");
+        public Criteria andOperateLocationIsNull() {
+            addCriterion("operate_location is null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationIsNotNull() {
-            addCriterion("operator_location is not null");
+        public Criteria andOperateLocationIsNotNull() {
+            addCriterion("operate_location is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationEqualTo(String value) {
-            addCriterion("operator_location =", value, "operatorLocation");
+        public Criteria andOperateLocationEqualTo(String value) {
+            addCriterion("operate_location =", value, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationNotEqualTo(String value) {
-            addCriterion("operator_location <>", value, "operatorLocation");
+        public Criteria andOperateLocationNotEqualTo(String value) {
+            addCriterion("operate_location <>", value, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationGreaterThan(String value) {
-            addCriterion("operator_location >", value, "operatorLocation");
+        public Criteria andOperateLocationGreaterThan(String value) {
+            addCriterion("operate_location >", value, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationGreaterThanOrEqualTo(String value) {
-            addCriterion("operator_location >=", value, "operatorLocation");
+        public Criteria andOperateLocationGreaterThanOrEqualTo(String value) {
+            addCriterion("operate_location >=", value, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationLessThan(String value) {
-            addCriterion("operator_location <", value, "operatorLocation");
+        public Criteria andOperateLocationLessThan(String value) {
+            addCriterion("operate_location <", value, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationLessThanOrEqualTo(String value) {
-            addCriterion("operator_location <=", value, "operatorLocation");
+        public Criteria andOperateLocationLessThanOrEqualTo(String value) {
+            addCriterion("operate_location <=", value, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationLike(String value) {
-            addCriterion("operator_location like", value, "operatorLocation");
+        public Criteria andOperateLocationLike(String value) {
+            addCriterion("operate_location like", value, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationNotLike(String value) {
-            addCriterion("operator_location not like", value, "operatorLocation");
+        public Criteria andOperateLocationNotLike(String value) {
+            addCriterion("operate_location not like", value, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationIn(List<String> values) {
-            addCriterion("operator_location in", values, "operatorLocation");
+        public Criteria andOperateLocationIn(List<String> values) {
+            addCriterion("operate_location in", values, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationNotIn(List<String> values) {
-            addCriterion("operator_location not in", values, "operatorLocation");
+        public Criteria andOperateLocationNotIn(List<String> values) {
+            addCriterion("operate_location not in", values, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationBetween(String value1, String value2) {
-            addCriterion("operator_location between", value1, value2, "operatorLocation");
+        public Criteria andOperateLocationBetween(String value1, String value2) {
+            addCriterion("operate_location between", value1, value2, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorLocationNotBetween(String value1, String value2) {
-            addCriterion("operator_location not between", value1, value2, "operatorLocation");
+        public Criteria andOperateLocationNotBetween(String value1, String value2) {
+            addCriterion("operate_location not between", value1, value2, "operateLocation");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamIsNull() {
-            addCriterion("operator_param is null");
+        public Criteria andOperateParamIsNull() {
+            addCriterion("operate_param is null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamIsNotNull() {
-            addCriterion("operator_param is not null");
+        public Criteria andOperateParamIsNotNull() {
+            addCriterion("operate_param is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamEqualTo(String value) {
-            addCriterion("operator_param =", value, "operatorParam");
+        public Criteria andOperateParamEqualTo(String value) {
+            addCriterion("operate_param =", value, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamNotEqualTo(String value) {
-            addCriterion("operator_param <>", value, "operatorParam");
+        public Criteria andOperateParamNotEqualTo(String value) {
+            addCriterion("operate_param <>", value, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamGreaterThan(String value) {
-            addCriterion("operator_param >", value, "operatorParam");
+        public Criteria andOperateParamGreaterThan(String value) {
+            addCriterion("operate_param >", value, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamGreaterThanOrEqualTo(String value) {
-            addCriterion("operator_param >=", value, "operatorParam");
+        public Criteria andOperateParamGreaterThanOrEqualTo(String value) {
+            addCriterion("operate_param >=", value, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamLessThan(String value) {
-            addCriterion("operator_param <", value, "operatorParam");
+        public Criteria andOperateParamLessThan(String value) {
+            addCriterion("operate_param <", value, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamLessThanOrEqualTo(String value) {
-            addCriterion("operator_param <=", value, "operatorParam");
+        public Criteria andOperateParamLessThanOrEqualTo(String value) {
+            addCriterion("operate_param <=", value, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamLike(String value) {
-            addCriterion("operator_param like", value, "operatorParam");
+        public Criteria andOperateParamLike(String value) {
+            addCriterion("operate_param like", value, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamNotLike(String value) {
-            addCriterion("operator_param not like", value, "operatorParam");
+        public Criteria andOperateParamNotLike(String value) {
+            addCriterion("operate_param not like", value, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamIn(List<String> values) {
-            addCriterion("operator_param in", values, "operatorParam");
+        public Criteria andOperateParamIn(List<String> values) {
+            addCriterion("operate_param in", values, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamNotIn(List<String> values) {
-            addCriterion("operator_param not in", values, "operatorParam");
+        public Criteria andOperateParamNotIn(List<String> values) {
+            addCriterion("operate_param not in", values, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamBetween(String value1, String value2) {
-            addCriterion("operator_param between", value1, value2, "operatorParam");
+        public Criteria andOperateParamBetween(String value1, String value2) {
+            addCriterion("operate_param between", value1, value2, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorParamNotBetween(String value1, String value2) {
-            addCriterion("operator_param not between", value1, value2, "operatorParam");
+        public Criteria andOperateParamNotBetween(String value1, String value2) {
+            addCriterion("operate_param not between", value1, value2, "operateParam");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNull() {
-            addCriterion("status is null");
+        public Criteria andOperateStatusIsNull() {
+            addCriterion("operate_status is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNotNull() {
-            addCriterion("status is not null");
+        public Criteria andOperateStatusIsNotNull() {
+            addCriterion("operate_status is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Boolean value) {
-            addCriterion("status =", value, "status");
+        public Criteria andOperateStatusEqualTo(Boolean value) {
+            addCriterion("operate_status =", value, "operateStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Boolean value) {
-            addCriterion("status <>", value, "status");
+        public Criteria andOperateStatusNotEqualTo(Boolean value) {
+            addCriterion("operate_status <>", value, "operateStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Boolean value) {
-            addCriterion("status >", value, "status");
+        public Criteria andOperateStatusGreaterThan(Boolean value) {
+            addCriterion("operate_status >", value, "operateStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("status >=", value, "status");
+        public Criteria andOperateStatusGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("operate_status >=", value, "operateStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Boolean value) {
-            addCriterion("status <", value, "status");
+        public Criteria andOperateStatusLessThan(Boolean value) {
+            addCriterion("operate_status <", value, "operateStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
-            addCriterion("status <=", value, "status");
+        public Criteria andOperateStatusLessThanOrEqualTo(Boolean value) {
+            addCriterion("operate_status <=", value, "operateStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Boolean> values) {
-            addCriterion("status in", values, "status");
+        public Criteria andOperateStatusIn(List<Boolean> values) {
+            addCriterion("operate_status in", values, "operateStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Boolean> values) {
-            addCriterion("status not in", values, "status");
+        public Criteria andOperateStatusNotIn(List<Boolean> values) {
+            addCriterion("operate_status not in", values, "operateStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
-            addCriterion("status between", value1, value2, "status");
+        public Criteria andOperateStatusBetween(Boolean value1, Boolean value2) {
+            addCriterion("operate_status between", value1, value2, "operateStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("status not between", value1, value2, "status");
+        public Criteria andOperateStatusNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("operate_status not between", value1, value2, "operateStatus");
             return (Criteria) this;
         }
 
@@ -937,69 +857,69 @@ public class OperatorLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeIsNull() {
-            addCriterion("operator_time is null");
+        public Criteria andOperateTimeIsNull() {
+            addCriterion("operate_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeIsNotNull() {
-            addCriterion("operator_time is not null");
+        public Criteria andOperateTimeIsNotNull() {
+            addCriterion("operate_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeEqualTo(Date value) {
-            addCriterion("operator_time =", value, "operatorTime");
+        public Criteria andOperateTimeEqualTo(Date value) {
+            addCriterion("operate_time =", value, "operateTime");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeNotEqualTo(Date value) {
-            addCriterion("operator_time <>", value, "operatorTime");
+        public Criteria andOperateTimeNotEqualTo(Date value) {
+            addCriterion("operate_time <>", value, "operateTime");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeGreaterThan(Date value) {
-            addCriterion("operator_time >", value, "operatorTime");
+        public Criteria andOperateTimeGreaterThan(Date value) {
+            addCriterion("operate_time >", value, "operateTime");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("operator_time >=", value, "operatorTime");
+        public Criteria andOperateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("operate_time >=", value, "operateTime");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeLessThan(Date value) {
-            addCriterion("operator_time <", value, "operatorTime");
+        public Criteria andOperateTimeLessThan(Date value) {
+            addCriterion("operate_time <", value, "operateTime");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeLessThanOrEqualTo(Date value) {
-            addCriterion("operator_time <=", value, "operatorTime");
+        public Criteria andOperateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("operate_time <=", value, "operateTime");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeIn(List<Date> values) {
-            addCriterion("operator_time in", values, "operatorTime");
+        public Criteria andOperateTimeIn(List<Date> values) {
+            addCriterion("operate_time in", values, "operateTime");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeNotIn(List<Date> values) {
-            addCriterion("operator_time not in", values, "operatorTime");
+        public Criteria andOperateTimeNotIn(List<Date> values) {
+            addCriterion("operate_time not in", values, "operateTime");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeBetween(Date value1, Date value2) {
-            addCriterion("operator_time between", value1, value2, "operatorTime");
+        public Criteria andOperateTimeBetween(Date value1, Date value2) {
+            addCriterion("operate_time between", value1, value2, "operateTime");
             return (Criteria) this;
         }
 
-        public Criteria andOperatorTimeNotBetween(Date value1, Date value2) {
-            addCriterion("operator_time not between", value1, value2, "operatorTime");
+        public Criteria andOperateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("operate_time not between", value1, value2, "operateTime");
             return (Criteria) this;
         }
     }
 
     /**
-     * operator_log
+     * operate_log
      */
     public static class Criteria extends GeneratedCriteria {
 
@@ -1009,7 +929,7 @@ public class OperatorLogExample {
     }
 
     /**
-     * operator_log 2018-12-01
+     * operate_log 2018-12-05
      */
     public static class Criterion {
         private String condition;

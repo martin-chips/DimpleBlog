@@ -1,8 +1,8 @@
 package com.dimple.service.impl;
 
-import com.dimple.bean.OperatorLog;
-import com.dimple.dao.OperatorLogMapper;
-import com.dimple.service.OperatorLogService;
+import com.dimple.bean.OperateLog;
+import com.dimple.dao.OperateLogMapper;
+import com.dimple.service.OperateLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional
-public class OperatorServiceImpl implements OperatorLogService {
+public class OperateServiceImpl implements OperateLogService {
 
     @Autowired
-    OperatorLogMapper operatorLogMapper;
+    OperateLogMapper operateLogMapper;
 
     @Override
-    public Integer insertOperatorLog(OperatorLog operatorLog) {
-        int i = operatorLogMapper.insertSelective(operatorLog);
+    public Integer insertOperatorLog(OperateLog operateLog) {
+        int i = operateLogMapper.insertSelective(operateLog);
         return i;
     }
 }

@@ -4,6 +4,7 @@ import com.dimple.bean.LoginLog;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: LoginLogService
@@ -24,14 +25,16 @@ public interface LoginLogService {
     /**
      * 获取符合条件的所有的日志
      *
-     * @param address   登录地址
-     * @param loginId   登录名称
-     * @param status    登录的状态
-     * @param startTime 登录的开始时间
-     * @param endTime   登录的截止时间
+     * @param address     登录地址
+     * @param loginId     登录名称
+     * @param status      登录的状态
+     * @param startTime   登录的开始时间
+     * @param endTime     登录的截止时间
+     * @param osType      操作系统类型
+     * @param browserType 浏览器类型
      * @return
      */
-    List<LoginLog> getAllLoginLog(String address, String loginId, Boolean status, Date startTime, Date endTime);
+    List<LoginLog> getAllLoginLog(String address, String loginId, Boolean status, Date startTime, Date endTime, String osType, String browserType);
 
     /**
      * 删除所有的登录日志
@@ -47,4 +50,11 @@ public interface LoginLogService {
      * @return
      */
     Integer deleteLoginLog(Integer ids[]);
+
+    /**
+     * 获取登录日志列表显示的数据
+     *
+     * @return
+     */
+    Map<String, Integer> getDetails();
 }

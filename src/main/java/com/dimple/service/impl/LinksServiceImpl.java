@@ -3,7 +3,7 @@ package com.dimple.service.impl;
 import com.dimple.bean.Links;
 import com.dimple.bean.LinksDetails;
 import com.dimple.bean.LinksExample;
-import com.dimple.constant.LinksSearchCode;
+import com.dimple.enums.LinksSearchCode;
 import com.dimple.dao.CustomMapper;
 import com.dimple.dao.LinksMapper;
 import com.dimple.service.LinksService;

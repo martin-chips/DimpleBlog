@@ -46,7 +46,12 @@ public class User implements Serializable {
     /**
      * 性别（1代表男，0代表女）
      */
-    private Boolean sex;
+    private Byte sex;
+
+    /**
+     * 
+     */
+    private Boolean deleted;
 
     /**
      * user
@@ -185,7 +190,7 @@ public class User implements Serializable {
      * 性别（1代表男，0代表女）
      * @return sex 性别（1代表男，0代表女）
      */
-    public Boolean getSex() {
+    public Byte getSex() {
         return sex;
     }
 
@@ -193,7 +198,23 @@ public class User implements Serializable {
      * 性别（1代表男，0代表女）
      * @param sex 性别（1代表男，0代表女）
      */
-    public void setSex(Boolean sex) {
+    public void setSex(Byte sex) {
         this.sex = sex;
+    }
+
+    /**
+     * 
+     * @return deleted 
+     */
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    /**
+     * 
+     * @param deleted 
+     */
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

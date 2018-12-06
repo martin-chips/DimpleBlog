@@ -1,4 +1,4 @@
-package com.dimple.constant;
+package com.dimple.enums;
 
 /**
  * @ClassName: LinksSearchCode

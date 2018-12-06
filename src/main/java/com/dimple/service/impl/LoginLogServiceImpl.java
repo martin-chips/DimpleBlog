@@ -4,14 +4,15 @@ import com.dimple.bean.LoginLog;
 import com.dimple.bean.LoginLogExample;
 import com.dimple.dao.LoginLogMapper;
 import com.dimple.service.LoginLogService;
-import net.sf.saxon.functions.Count;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: LoginLogServiceImpl
@@ -34,7 +35,7 @@ public class LoginLogServiceImpl implements LoginLogService {
     }
 
     @Override
-    public List<LoginLog> getAllLoginLog(String location, String loginName, Boolean status, Date startTime, Date endTime) {
+    public List<LoginLog> getAllLoginLog(String location, String loginName, Boolean status, Date startTime, Date endTime, String osType, String browserType) {
         LoginLogExample loginLogExample = new LoginLogExample();
         LoginLogExample.Criteria criteria = loginLogExample.createCriteria();
         if (StringUtils.isNotBlank(location)) {
@@ -47,11 +48,17 @@ public class LoginLogServiceImpl implements LoginLogService {
             criteria.andLoginTimeBetween(startTime, endTime);
         } else if (startTime == null && endTime != null) {
             criteria.andLoginTimeLessThanOrEqualTo(endTime);
-        } else if (status != null && endTime == null) {
+        } else if (startTime != null && endTime == null) {
             criteria.andLoginTimeGreaterThanOrEqualTo(startTime);
         }
         if (status != null) {
             criteria.andStatusEqualTo(status);
+        }
+        if (StringUtils.isNotBlank(osType)) {
+            criteria.andOsLike(osType);
+        }
+        if (StringUtils.isNotBlank(browserType)) {
+            criteria.andBrowserLike(browserType);
         }
         List<LoginLog> loginLogs = loginLogMapper.selectByExample(loginLogExample);
         return loginLogs;
@@ -73,5 +80,21 @@ public class LoginLogServiceImpl implements LoginLogService {
             count += loginLogMapper.deleteByPrimaryKey(id);
         }
         return count;
+    }
+
+    @Override
+    public Map<String, Integer> getDetails() {
+        int total = loginLogMapper.countByExample(null);
+        LoginLogExample loginLogExampleForSuccess = new LoginLogExample();
+        loginLogExampleForSuccess.createCriteria().andStatusEqualTo(true);
+        int success = loginLogMapper.countByExample(loginLogExampleForSuccess);
+        LoginLogExample loginLogExampleForFailure = new LoginLogExample();
+        loginLogExampleForFailure.createCriteria().andStatusEqualTo(false);
+        int failure = loginLogMapper.countByExample(loginLogExampleForFailure);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("total", total);
+        map.put("success", success);
+        map.put("failure", failure);
+        return map;
     }
 }

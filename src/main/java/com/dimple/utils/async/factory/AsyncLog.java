@@ -1,18 +1,16 @@
 package com.dimple.utils.async.factory;
 
 import com.dimple.bean.LoginLog;
-import com.dimple.bean.OperatorLog;
+import com.dimple.bean.OperateLog;
 import com.dimple.constant.Status;
 import com.dimple.service.LoginLogService;
-import com.dimple.service.OperatorLogService;
+import com.dimple.service.OperateLogService;
 import com.dimple.utils.*;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.TimerTask;
 
 /**
  * @ClassName: AsyncLog
@@ -27,15 +25,17 @@ public class AsyncLog {
     /**
      * 记录操作日志
      *
-     * @param operatorLog
+     * @param operateLog
      * @return
      */
-    @Async
-    public void recordOperateLog(OperatorLog operatorLog) {
 
-        operatorLog.setOperatorLocation(AddressUtil.getRealAddressByIP(operatorLog.getOperatorIp()));
-        log.info(operatorLog.toString());
-        SpringUtil.getBean(OperatorLogService.class).insertOperatorLog(operatorLog);
+    public void recordOperateLog(OperateLog operateLog) {
+
+        operateLog.setOperateLocation(AddressUtil.getRealAddressByIP(operateLog.getOperateIp()));
+        //设置时间
+        operateLog.setOperateTime(new Date());
+        log.info(operateLog.toString());
+        SpringUtil.getBean(OperateLogService.class).insertOperatorLog(operateLog);
     }
 
     /**
@@ -47,9 +47,8 @@ public class AsyncLog {
      * @param msg     操作信息
      * @return LoginLog对象
      */
-    @Async
     public void recordLoginLog(String loginId, Byte status, String msg, Object... args) {
-        if (Status.LOGIN_SUCCESS == status || Status.LOGOUT == status) {
+        if (Status.LOGIN_SUCCESS == status || Status.LOGOUT_SUCCESS == status) {
             saveLoginLog(loginId, msg, Status.SUCCESS);
         } else {
             saveLoginLog(loginId, msg, Status.FAILURE);
@@ -65,8 +64,8 @@ public class AsyncLog {
         LoginLog loginLog = new LoginLog();
         loginLog.setLoginName(loginName);
         loginLog.setStatus(status);
-        loginLog.setIpAddress(ShiroUtil.getIp());
-        loginLog.setLoginLocation(AddressUtil.getRealAddressByIP(ShiroUtil.getIp()));
+        loginLog.setIpAddress(IpUtil.getIpAddr(ServletUtil.getRequest()));
+        loginLog.setLoginLocation(AddressUtil.getRealAddressByIP(IpUtil.getIpAddr(ServletUtil.getRequest())));
         loginLog.setBrowser(browser);
         loginLog.setOs(os);
         loginLog.setMsg(msg);

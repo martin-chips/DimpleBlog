@@ -1,6 +1,6 @@
 package com.dimple.framework.annotation;
 
-import com.dimple.constant.OperatorType;
+import com.dimple.enums.OperateType;
 
 import java.lang.annotation.*;
 
@@ -16,19 +16,14 @@ import java.lang.annotation.*;
 @Documented
 public @interface Log {
     /**
-     * 模块
+     * 操作的模块（比如友链管理模块）
      */
     String title() default "";
 
     /**
-     * 功能
+     * 操作的类型(比如新增、删除)
      */
-    String action() default "";
-
-    /**
-     * 渠道
-     */
-    String channel()default "";
+    OperateType operateType() default OperateType.OTHER;
 
     /**
      * 是否保存请求的参数

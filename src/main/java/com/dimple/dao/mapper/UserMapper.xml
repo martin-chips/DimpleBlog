@@ -10,7 +10,8 @@
     <result column="locked" property="locked" jdbcType="BIT" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="BIT" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, user_name, user_login_id, password, salt, locked, email, phone, sex
+    user_id, user_name, user_login_id, password, salt, locked, email, phone, sex, deleted
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.UserExample" >
     select
@@ -106,10 +107,12 @@
   <insert id="insert" parameterType="com.dimple.bean.User" >
     insert into user (user_id, user_name, user_login_id, 
       password, salt, locked, 
-      email, phone, sex)
+      email, phone, sex, 
+      deleted)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userLoginId,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{locked,jdbcType=BIT}, 
-      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=BIT})
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
+      #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.User" >
     insert into user
@@ -141,6 +144,9 @@
       <if test="sex != null" >
         sex,
       </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -168,7 +174,10 @@
         #{phone,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
-        #{sex,jdbcType=BIT},
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -206,7 +215,10 @@
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
       <if test="record.sex != null" >
-        sex = #{record.sex,jdbcType=BIT},
+        sex = #{record.sex,jdbcType=TINYINT},
+      </if>
+      <if test="record.deleted != null" >
+        deleted = #{record.deleted,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -223,7 +235,8 @@
       locked = #{record.locked,jdbcType=BIT},
       email = #{record.email,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=BIT}
+      sex = #{record.sex,jdbcType=TINYINT},
+      deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -253,7 +266,10 @@
         phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
-        sex = #{sex,jdbcType=BIT},
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
       </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
@@ -267,7 +283,8 @@
       locked = #{locked,jdbcType=BIT},
       email = #{email,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=BIT}
+      sex = #{sex,jdbcType=TINYINT},
+      deleted = #{deleted,jdbcType=BIT}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

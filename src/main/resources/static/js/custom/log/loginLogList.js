@@ -5,6 +5,22 @@ $(function () {
     initTable();
 });
 
+$(".osType").click(function () {
+    $("#browserType").val("");
+    console.log($(this).attr("osType"));
+    var osType = $(this).attr("osType");
+    $("#osType").val(osType);
+    $.table.search();
+});
+
+$(".browserType").click(function () {
+    $("#osType").val("");
+    console.log($(this).attr("browserType"));
+    var browserType = $(this).attr("browserType");
+    $("#browserType").val(browserType);
+    $.table.search();
+});
+
 function initTable() {
     var option = {
         url: "/log/loginLog.json",
@@ -65,24 +81,4 @@ function initTable() {
     $.table.init(option);
 }
 
-
-function searchCustom(code) {
-    var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : "link-form";
-    var formId = "link-form";
-    var params = $("#bootstrap-table").bootstrapTable('getOptions');
-    params.queryParams = function (params) {
-        var search = {};
-        if (code == null) {
-            $.each($("#" + currentId).serializeArray(), function (i, field) {
-                search[field.name] = field.value;
-            });
-        } else if (code != null) {
-            search["searchCode"] = code;
-        }
-        search.pageSize = params.limit;
-        search.pageNum = params.offset / params.limit + 1;
-        return search;
-    }
-    $("#bootstrap-table").bootstrapTable('refresh', params);
-}
 

@@ -2,7 +2,7 @@ package com.dimple.service;
 
 import com.dimple.bean.Links;
 import com.dimple.bean.LinksDetails;
-import com.dimple.constant.LinksSearchCode;
+import com.dimple.enums.LinksSearchCode;
 import com.dimple.utils.message.Result;
 
 import java.util.Date;
