@@ -1,65 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="renderer" content="webkit">
-
-    <title>Dimple's Blog For Software Engineer</title>
-
-    <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html"/>
-    <![endif]-->
-
-    <!-- 网站图标 -->
-    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-    <link href="/css/animate.css" rel="stylesheet">
-    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
-    <!-- 全局js -->
-    <script src="/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="/js/plugins/layer/layer.min.js"></script>
-
-    <!-- 自定义js -->
-    <script type="text/javascript" src="/js/contabs.js"></script>
-    <script src="/js/plugins/pace/pace.min.js"></script>
-    <script src="/js/fullscreen/jquery.fullscreen.js"></script>
-    <script src="/js/custom/index.js"></script>
-    <!-- 第三方插件 -->
-
-    <style type="text/css">
-        .nav > li:hover .dropdown-menu {
-            display: block;
-        }
-
-        #content-main.max {
-            height: calc(100% - 110px);
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            left: 0px;
-            position: absolute;
-            top: 0px;
-            z-index: 9998;
-            margin: 0;
-        }
-
-        /** 首页样式 */
-        .ax_close_max {
-            position: fixed;
-            top: 5px;
-            left: 5px;
-            z-index: 9999;
-            display: none;
-            color: #ccc;
-        }
-
-    </style>
-</head>
+<head th:include="common :: common-head-index"></head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
 <div id="wrapper">
@@ -120,10 +62,17 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="J_menuItem" href="/chart">
+                    <a href="#">
                         <i class="fa fa fa-bar-chart-o"></i>
                         <span class="nav-label">统计图表</span>
+                        <span class="fa arrow"></span>
                     </a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/server/serverInfo">系统服务监控</a>
+                        </li>
+                        <li><a class="J_menuItem" href="form_wizard.html">黑名单</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#">
@@ -191,14 +140,22 @@
                             class="nav-label">畅言评论</span></a>
                 </li>
                 <li>
-                    <a><i class="fa fa-picture-o"></i> <span class="nav-label">系统配置</span><span
+                    <a><i class="fa fa-picture-o"></i> <span class="nav-label">系统监控</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/gallery/localGallery">SwaggerUI</a>
+                        <li><a class="J_menuItem" href="/swagger.html">SwaggerUI接口</a>
                         </li>
-                        <li><a class="J_menuItem" href="/gallery/qiNiuGallery">系统监控</a>
+                        <li><a class="J_menuItem" href="/druid.html">Druid数据监控</a>
                         </li>
-                        <li><a class="J_menuItem" href="/gallery/qiNiuGallery">系统监控</a>
+                    </ul>
+                </li>
+                <li>
+                    <a><i class="fa fa-picture-o"></i> <span class="nav-label">系统设置</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/swagger.html">用户管理</a>
+                        </li>
+                        <li><a class="J_menuItem" href="/druid.html">角色管理</a>
                         </li>
                     </ul>
                 </li>

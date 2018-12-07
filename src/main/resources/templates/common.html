@@ -35,8 +35,6 @@
     <script th:src="@{/js/layer/layer.min.js}"></script>
     <script th:src="@{/js/layui/layui.js}"></script>
 
-    <script th:src="@{/js/common/common.js}"></script>
-
     <!--BootStrap-Table-->
     <script th:src="@{/js/bootstrap-table/bootstrap-table.min.js}"></script>
     <script th:src="@{/js/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
@@ -48,75 +46,42 @@
     <!--通用UI JS框架-->
     <script th:src="@{/js/custom/common/dimple-blog.js}"></script>
 </div>
+
+
+<!--首页的文件-->
 <head th:fragment="common-head-index">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimple's Blog For Software Engineer</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!--网站图标-->
+    <!--<link rel="shortcut icon" href="favicon.ico">-->
+    <link th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-table/bootstrap-table.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
+    <link th:href="@{/css/common/common.css}" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet">
 
-        <title>Dimple's Blog For Software Engineer</title>
 
-        <!--[if lt IE 9]>
-        <meta http-equiv="refresh" content="0;ie.html"/>
-        <![endif]-->
-
-        <!-- 网站图标 -->
-        <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-        <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-        <link href="/css/animate.css" rel="stylesheet">
-        <link href="/css/style.css?v=4.1.0" rel="stylesheet">
-        <!-- 全局js -->
-        <script src="/js/jquery.min.js?v=2.1.4"></script>
-        <script src="/js/bootstrap.min.js?v=3.3.6"></script>
-        <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-        <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="/js/plugins/layer/layer.min.js"></script>
-        <script src="/js/plugins/pace/pace.min.js"></script>
-        <script src="/js/fullscreen/jquery.fullscreen.js"></script>
-        <script src="/js/custom/index.js"></script>
-        <!-- 第三方插件 -->
-
-        <style type="text/css">
-            .nav > li:hover .dropdown-menu {
-                display: block;
-            }
-
-            #content-main.max {
-                height: calc(100% - 110px);
-                overflow: hidden;
-                width: 100%;
-                height: 100%;
-                left: 0px;
-                position: absolute;
-                top: 0px;
-                z-index: 9998;
-                margin: 0;
-            }
-
-            /** 首页样式 */
-            .ax_close_max {
-                position: fixed;
-                top: 5px;
-                left: 5px;
-                z-index: 9999;
-                display: none;
-                color: #ccc;
-            }
-
-        </style>
-</head>
-<!--通用的脚文件， 主要是JS文件-->
-<div th:fragment="common-footer-index">
-
+    <script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+    <script th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
 
     <!-- jQuery Validation plugin javascript-->
     <script th:src="@{/js/validate/jquery.validate.min.js}"></script>
     <script th:src="@{/js/validate/messages_zh.min.js}"></script>
     <script th:src="@{/js/validate/validate-index.js}"></script>
 
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
     <script th:src="@{/js/layer/layer.min.js}"></script>
     <script th:src="@{/js/layui/layui.js}"></script>
-
-    <script th:src="@{/js/common/common.js}"></script>
 
 
     <!--BootStrap-Table-->
@@ -129,5 +94,7 @@
 
     <!--通用UI JS框架-->
     <script th:src="@{/js/custom/common/dimple-blog.js}"></script>
-</div>
+
+    <script th:src="@{/js/custom/index.js}"></script>
+</head>
 </html>
