@@ -1,6 +1,7 @@
 package com.dimple.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
     /**
@@ -49,9 +50,9 @@ public class User implements Serializable {
     private Byte sex;
 
     /**
-     * 
+     * 创建时间
      */
-    private Boolean deleted;
+    private Date createTime;
 
     /**
      * user
@@ -203,18 +204,18 @@ public class User implements Serializable {
     }
 
     /**
-     * 
-     * @return deleted 
+     * 创建时间
+     * @return create_time 创建时间
      */
-    public Boolean getDeleted() {
-        return deleted;
+    public Date getCreateTime() {
+        return createTime;
     }
 
     /**
-     * 
-     * @param deleted 
+     * 创建时间
+     * @param createTime 创建时间
      */
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

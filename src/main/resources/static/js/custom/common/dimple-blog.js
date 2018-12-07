@@ -465,12 +465,13 @@
                     dataType: dataType,
                     data: data,
                     success: function (result) {
-                        $.operate.ajaxSuccess(result);
+                        $.operate.ajaxSuccessAutoClose(result);
+                        // $.operate.ajaxSuccess(result);
                     }
                 };
-
                 $.ajax(config);
             },
+
             post: function (url, data) {
                 $.operate.submit(url, "post", "json", data);
             },
@@ -580,6 +581,14 @@
                 };
                 $.ajax(config);
             },
+            ajaxSuccessAutoClose: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.msgReload(result.msg, modal_status.SUCCESS);
+                } else {
+                    $.modal.msgReload(result.msg, modal_status.FAIL);
+                }
+                $.modal.closeLoading();
+            },
             // 保存结果弹出msg刷新table表格
             ajaxSuccess: function (result) {
                 if (result.code == web_status.SUCCESS) {
@@ -670,7 +679,6 @@
     });
     /**
      * 通用方法封装处理
-     * Copyright (c) 2018 ruoyi
      */
 
     $(function () {
@@ -682,20 +690,20 @@
                 })
             })
         }
-        // checkbox 事件绑定
-        if ($(".check-box").length > 0) {
-            $(".check-box").iCheck({
-                checkboxClass: 'icheckbox-blue',
-                radioClass: 'iradio-blue',
-            })
-        }
-        // radio 事件绑定
-        if ($(".radio-box").length > 0) {
-            $(".radio-box").iCheck({
-                checkboxClass: 'icheckbox-blue',
-                radioClass: 'iradio-blue',
-            })
-        }
+        // // checkbox 事件绑定
+        // if ($(".check-box").length > 0) {
+        //     $(".check-box").iCheck({
+        //         checkboxClass: 'icheckbox-blue',
+        //         radioClass: 'iradio-blue',
+        //     })
+        // }
+        // // radio 事件绑定
+        // if ($(".radio-box").length > 0) {
+        //     $(".radio-box").iCheck({
+        //         checkboxClass: 'icheckbox-blue',
+        //         radioClass: 'iradio-blue',
+        //     })
+        // }
         // laydate 时间控件绑定
         if ($(".select-time").length > 0) {
             layui.use('laydate', function () {

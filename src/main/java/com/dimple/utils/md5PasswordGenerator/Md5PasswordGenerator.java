@@ -12,7 +12,7 @@ import org.apache.shiro.util.ByteSource;
  */
 public class Md5PasswordGenerator {
     public static String generatorMd5(String password, String salt) {
-        String hashAlgorithmName = "MD5";
+        String hashAlgorithmName = "md5";
         ByteSource saltByteSource = ByteSource.Util.bytes(salt);
         int hashIterations = 2;
         SimpleHash simpleHash = new SimpleHash(hashAlgorithmName, password, saltByteSource, hashIterations);

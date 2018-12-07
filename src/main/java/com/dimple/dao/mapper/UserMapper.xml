@@ -11,7 +11,7 @@
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="TINYINT" />
-    <result column="deleted" property="deleted" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, user_name, user_login_id, password, salt, locked, email, phone, sex, deleted
+    user_id, user_name, user_login_id, password, salt, locked, email, phone, sex, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.UserExample" >
     select
@@ -108,11 +108,11 @@
     insert into user (user_id, user_name, user_login_id, 
       password, salt, locked, 
       email, phone, sex, 
-      deleted)
+      create_time)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userLoginId,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{locked,jdbcType=BIT}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
-      #{deleted,jdbcType=BIT})
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.User" >
     insert into user
@@ -144,8 +144,8 @@
       <if test="sex != null" >
         sex,
       </if>
-      <if test="deleted != null" >
-        deleted,
+      <if test="createTime != null" >
+        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -176,8 +176,8 @@
       <if test="sex != null" >
         #{sex,jdbcType=TINYINT},
       </if>
-      <if test="deleted != null" >
-        #{deleted,jdbcType=BIT},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -217,8 +217,8 @@
       <if test="record.sex != null" >
         sex = #{record.sex,jdbcType=TINYINT},
       </if>
-      <if test="record.deleted != null" >
-        deleted = #{record.deleted,jdbcType=BIT},
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -236,7 +236,7 @@
       email = #{record.email,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=TINYINT},
-      deleted = #{record.deleted,jdbcType=BIT}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -268,8 +268,8 @@
       <if test="sex != null" >
         sex = #{sex,jdbcType=TINYINT},
       </if>
-      <if test="deleted != null" >
-        deleted = #{deleted,jdbcType=BIT},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
@@ -284,7 +284,7 @@
       email = #{email,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=TINYINT},
-      deleted = #{deleted,jdbcType=BIT}
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

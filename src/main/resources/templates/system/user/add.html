@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="common :: common-head"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="userAddForm">
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">登录账号：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="userLoginId" value=""/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">姓名：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="userName" id="userName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">邮箱：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="email" id="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">手机：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="phone" id="phone">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">密码：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="password" name="password" id="password" value="123456">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 默认情况下设置密码为“123456”</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">性别：</label>
+            <div class="col-sm-8">
+                <select id="sex" name="sex" class="form-control m-b">
+                    <option value="1"> 男</option>
+                    <option value="0"> 女</option>
+                    <option value="-1"> 未知</option>
+                </select>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div th:include="/common :: common-footer"></div>
+
+<script>
+    function submitHandler() {
+        insertUser();
+    }
+
+    function insertUser() {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: $("#userAddForm").serializeArray(),
+            url: "/system/user",
+            success: function (data) {
+                if (data != null && data.code == web_status.SUCCESS) {
+                    $.modal.msgReload("添加成功！", modal_status.SUCCESS);
+                } else {
+                    $.modal.msgReload("添加失败！", modal_status.FAIL);
+                }
+            }
+        });
+        return false;
+    }
+</script>
+</body>
+
+</html>
