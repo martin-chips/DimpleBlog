@@ -80,6 +80,11 @@ function initTable() {
                 actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.update(\'' + row.userId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                 actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.userId + '\')"><i class="fa fa-remove"></i>删除</a> ');
                 actions.push('<a class="btn btn-info btn-xs ' + '" href="#" onclick="resetPassword(\'' + row.userId + '\')"><i class="fa fa-key"></i>重置</a>');
+                if (row.locked == false) {
+                    actions.push('<a class="btn btn-info btn-xs " href="#" onclick="changeLocked(' + row.userId + "," + row.locked + ')"><i class="fa fa-key"></i>锁定</a>')
+                } else {
+                    actions.push('<a class="btn btn-info btn-xs " href="#" onclick="changeLocked(' + row.userId + "," + row.locked + ')"><i class="fa fa-key"></i>解锁</a>')
+                }
                 return actions.join('');
             }
         }],
@@ -90,6 +95,11 @@ function initTable() {
 function resetPassword(id) {
     var url = "/system/user/password/" + id;
     $.modal.open("重置密码", url, '800', '300');
+}
+
+function changeLocked(id, locked) {
+    var url = "/system/user/" + id + "/" + locked;
+    $.operate.save(url, "");
 }
 
 

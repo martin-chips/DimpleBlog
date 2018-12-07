@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
+
 /**
  * @ClassName: DefaultExceptionHandler
  * @Description: 统一异常处理
@@ -30,7 +32,7 @@ public class DefaultExceptionHandler {
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public Result handleException(HttpRequestMethodNotSupportedException e) {
         log.error(e.getMessage(), e);
-        return ResultUtil.error(500, "不支持' " + e.getMethod() + "'请求");
+        return ResultUtil.error(500, "不支持\"" + e.getMethod() + "\"请求");
     }
 
     /**
@@ -64,4 +66,9 @@ public class DefaultExceptionHandler {
         return ResultUtil.error(11, e.getMessage());
     }
 
+    @ExceptionHandler(IOException.class)
+    public Result ioException(Exception e) {
+        log.error("IO异常:" + e.getMessage(), e);
+        return ResultUtil.error(11, e.getMessage());
+    }
 }

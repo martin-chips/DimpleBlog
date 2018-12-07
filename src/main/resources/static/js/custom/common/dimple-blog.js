@@ -591,13 +591,13 @@
             },
             // 保存结果弹出msg刷新table表格
             ajaxSuccess: function (result) {
+                $.modal.closeLoading();
                 if (result.code == web_status.SUCCESS) {
                     $.modal.msgSuccess(result.msg);
                     $.table.refresh();
                 } else {
                     $.modal.alertError(result.msg);
                 }
-                $.modal.closeLoading();
             },
             // 成功结果提示msg（父窗体全局更新）
             saveSuccess: function (result) {
@@ -612,13 +612,9 @@
             successCallback: function (result) {
                 if (result.code == web_status.SUCCESS) {
                     if (window.parent.$("#bootstrap-table").length > 0) {
-                        $.modal.close();
                         window.parent.$.modal.msgSuccess(result.msg);
                         window.parent.$.table.refresh();
-                    } else if (window.parent.$("#bootstrap-tree-table").length > 0) {
                         $.modal.close();
-                        window.parent.$.modal.msgSuccess(result.msg);
-                        window.parent.$.treeTable.refresh();
                     } else {
                         $.modal.msgReload("保存成功,正在刷新数据请稍候……", modal_status.SUCCESS);
                     }

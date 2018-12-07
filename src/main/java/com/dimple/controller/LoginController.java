@@ -29,6 +29,7 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public Result login1(String loginId, String password) throws Exception {
+
         Result result = loginService.login(loginId, password);
         return result;
     }

@@ -9,6 +9,7 @@ import com.dimple.utils.md5PasswordGenerator.Md5PasswordGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import oshi.util.StringUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -103,10 +104,13 @@ public class UserServiceImpl implements UserService {
             return -1;
         }
         User userDB = userMapper.selectByPrimaryKey(user.getUserId());
-        if (userDB != null) {
-            return userMapper.updateByPrimaryKeySelective(user);
+        if (userDB == null) {
+            return -1;
         }
-        return -1;
+        if (StringUtils.isNotBlank(user.getPassword())) {
+            user.setPassword(Md5PasswordGenerator.generatorMd5(user.getPassword(), userDB.getSalt()));
+        }
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
@@ -129,5 +133,16 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.selectByPrimaryKey(id);
         return user;
+    }
+
+    @Override
+    public Integer changeLocked(Integer id, Boolean locked) {
+        User user = userMapper.selectByPrimaryKey(id);
+        if (user == null) {
+            return -1;
+        }
+        user.setLocked(!locked);
+        int i = userMapper.updateByPrimaryKey(user);
+        return i;
     }
 }

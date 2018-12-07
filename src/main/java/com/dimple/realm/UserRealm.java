@@ -3,6 +3,8 @@ package com.dimple.realm;
 import com.dimple.bean.Permission;
 import com.dimple.bean.Role;
 import com.dimple.bean.User;
+import com.dimple.exception.user.UserAccountLockedException;
+import com.dimple.exception.user.UserAccountNotExistsException;
 import com.dimple.service.PermissionService;
 import com.dimple.service.RoleService;
 import com.dimple.service.UserService;
@@ -74,8 +76,13 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String loginId = (String) token.getPrincipal();
         User userDB = userService.findByUserLoginId(loginId);
+
+
         if (userDB == null) {
-            return null;
+            throw new UserAccountNotExistsException();
+        }
+        if (userDB.getLocked() == true) {
+            throw new UserAccountLockedException();
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(
                 userDB,

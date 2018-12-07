@@ -16,7 +16,7 @@ import java.util.List;
  */
 @CacheConfig(cacheNames = "user")
 public interface UserService {
-    @Cacheable(key = "'loginId'.concat(#loginId)")
+//    @Cacheable(key = "'loginId'.concat(#loginId)")
     User findByUserLoginId(String loginId);
 
     /**
@@ -69,4 +69,13 @@ public interface UserService {
      * @return
      */
     User getUserById(Integer id);
+
+    /**
+     * 更改用户的状态
+     *
+     * @param id
+     * @param locked
+     * @return
+     */
+    Integer changeLocked(Integer id, Boolean locked);
 }

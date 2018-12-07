@@ -6,6 +6,7 @@ import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -65,7 +66,7 @@ public class UserController {
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
             @RequestParam(value = "loginId", required = false) String loginId,
             @RequestParam(value = "phone", required = false) String phone,
-            @RequestParam(value = "status", required = false) Boolean locked,
+            @RequestParam(value = "locked", required = false) Boolean locked,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
 
@@ -93,6 +94,13 @@ public class UserController {
     @ResponseBody
     public Result updateUser(User user) {
         Integer i = userService.updateUserInfo(user);
+        return ResultUtil.success(i);
+    }
+
+    @PutMapping("/system/user/{id}/{locked}")
+    @ResponseBody
+    public Result changeLocked(@PathVariable Integer id, @PathVariable Boolean locked) {
+        Integer i = userService.changeLocked(id, locked);
         return ResultUtil.success(i);
     }
 
