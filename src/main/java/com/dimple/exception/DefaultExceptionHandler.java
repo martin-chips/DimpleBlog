@@ -1,5 +1,6 @@
 package com.dimple.exception;
 
+import com.dimple.exception.user.UserException;
 import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -52,8 +53,15 @@ public class DefaultExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public Result systemException(Exception e) {
-        log.error("服务器错误" + e.getMessage(), e);
+        log.error("服务器错误:" + e.getMessage(), e);
         return ResultUtil.error(11, "服务器错误");
+    }
+
+
+    @ExceptionHandler(UserException.class)
+    public Result userException(Exception e) {
+        log.error("用户认证异常:" + e.getMessage(), e);
+        return ResultUtil.error(11, e.getMessage());
     }
 
 }

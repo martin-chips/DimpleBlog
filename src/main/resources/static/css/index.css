@@ -1,0 +1,27 @@
+
+.nav > li:hover .dropdown-menu {
+    display: block;
+}
+
+#content-main.max {
+    height: calc(100% - 110px);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    z-index: 9998;
+    margin: 0;
+}
+
+/** 首页样式 */
+.ax_close_max {
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    z-index: 9999;
+    display: none;
+    color: #ccc;
+}
+

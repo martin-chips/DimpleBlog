@@ -53,7 +53,7 @@ public class KaptchaConfig {
         properties.setProperty("kaptcha.border", "yes");
         properties.setProperty("kaptcha.border.color", "105,179,90");
         properties.setProperty("kaptcha.textproducer.font.color", "blue");
-        properties.setProperty("kaptcha.image.width", "160");
+        properties.setProperty("kaptcha.image.width", "180");
         properties.setProperty("kaptcha.image.height", "60");
         properties.setProperty("kaptcha.textproducer.font.size", "38");
         properties.setProperty("kaptcha.session.key", "kaptchaCodeMath");

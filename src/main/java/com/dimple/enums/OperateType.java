@@ -18,30 +18,30 @@ public enum OperateType {
     /**
      * 其它
      */
-    OTHER(0),
+    OTHER(0, "其他"),
 
     /**
      * 新增
      */
-    INSERT(1),
+    INSERT(1, "新增"),
 
     /**
      * 更新
      */
-    UPDATE(2),
+    UPDATE(2, "更新"),
 
     /**
      * 删除
      */
-    DELETE(3),
+    DELETE(3, "删除"),
 
     /**
      * 清空
      */
-    CLEAN(4);
-
+    CLEAN(4, "清空");
 
     private Integer type;
+    private String name;
 }
 
 

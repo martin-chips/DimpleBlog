@@ -8,7 +8,7 @@ public class OperateLog implements Serializable {
      * 操作序号
 
      */
-    private Integer operid;
+    private Integer operateId;
 
     /**
      * 操作模块名称
@@ -74,21 +74,21 @@ public class OperateLog implements Serializable {
     /**
      * 操作序号
 
-     * @return operId 操作序号
+     * @return operate_id 操作序号
 
      */
-    public Integer getOperid() {
-        return operid;
+    public Integer getOperateId() {
+        return operateId;
     }
 
     /**
      * 操作序号
 
-     * @param operid 操作序号
+     * @param operateId 操作序号
 
      */
-    public void setOperid(Integer operid) {
-        this.operid = operid;
+    public void setOperateId(Integer operateId) {
+        this.operateId = operateId;
     }
 
     /**

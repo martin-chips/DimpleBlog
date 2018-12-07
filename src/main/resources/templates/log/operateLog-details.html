@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="common :: common-head"></head>
+
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m-t" id="signupForm">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">操作模块：</label>
+            <div class="form-control-static"
+                 th:text="${operateLog.title} + ' / ' +${@parse.getOperateTypeName(operateLog.operateType)}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">登录信息：</label>
+            <div class="form-control-static"
+                 th:text="${operateLog.operatorName} + ' / '  + ${operateLog.operateIp}+ ' / ' + ${operateLog.operateLocation}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">请求地址：</label>
+            <div class="form-control-static" th:text="${operateLog.operateUrl}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">操作方法：</label>
+            <div class="form-control-static" th:text="${operateLog.method}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">请求参数：</label>
+            <div class="form-control-static">
+                <pre id="operParam"></pre>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">状态：</label>
+            <div class="form-control-static"
+                 th:class="${operateLog.operateStatus == true ? 'label label-primary' : 'label label-danger'}"
+                 th:text="${operateLog.operateStatus == true ? '正常' : '异常'}">
+            </div>
+        </div>
+        <div class="form-group" th:style="'display:' + ${operateLog.operateStatus == true ? 'none' : 'block'}">
+            <label class="col-sm-2 control-label">异常信息：</label>
+            <div class="form-control-static" th:text="${operateLog.errorMsg}">
+            </div>
+        </div>
+    </form>
+    <div th:include="common :: common-footer"></div>
+</div>
+<script th:inline="javascript">
+    $(function () {
+        var text = [[${operateLog.operateParam}]];
+        var result = JSON.stringify(JSON.parse(text), null, 2);
+        console.log(result);
+        $("#operParam").html(result);
+    });
+</script>
+</body>
+
+</html>

@@ -36,19 +36,17 @@ public class LoginServiceImpl implements LoginService {
         String kaptchaExpected = (String) ServletUtil.getRequest().getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         //验证码校验
         if (StringUtils.isBlank(ServletUtil.getRequest().getParameter("kaptcha")) || !kaptchaExpected.equals(kaptcha)) {
-            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, "验证码错误");
+            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, MessageUtil.getMessage("user.captcha.error"));
             throw new CaptchaException();
         }
         //账号和密码为空校验
         if (StringUtils.isBlank(loginId) || StringUtils.isBlank(password)) {
-            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, "账号不存在");
+            asyncLog.recordLoginLog(loginId, Status.LOGIN_FAILURE, MessageUtil.getMessage("user.not.exists"));
             throw new UserAccountNotExistsException();
         }
         //获取Subject对象
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginId, password);
-        String msg = "";
-        Integer code = null;
         try {
             currentUser.login(usernamePasswordToken);
             asyncLog.recordLoginLog(loginId, Status.LOGOUT_SUCCESS, MessageUtil.getMessage("user.login.success"));

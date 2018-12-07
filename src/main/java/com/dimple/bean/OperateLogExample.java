@@ -74,7 +74,7 @@ public class OperateLogExample {
     }
 
     /**
-     * operate_log 2018-12-05
+     * operate_log 2018-12-06
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -117,63 +117,63 @@ public class OperateLogExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andOperidIsNull() {
-            addCriterion("operId is null");
+        public Criteria andOperateIdIsNull() {
+            addCriterion("operate_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andOperidIsNotNull() {
-            addCriterion("operId is not null");
+        public Criteria andOperateIdIsNotNull() {
+            addCriterion("operate_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOperidEqualTo(Integer value) {
-            addCriterion("operId =", value, "operid");
+        public Criteria andOperateIdEqualTo(Integer value) {
+            addCriterion("operate_id =", value, "operateId");
             return (Criteria) this;
         }
 
-        public Criteria andOperidNotEqualTo(Integer value) {
-            addCriterion("operId <>", value, "operid");
+        public Criteria andOperateIdNotEqualTo(Integer value) {
+            addCriterion("operate_id <>", value, "operateId");
             return (Criteria) this;
         }
 
-        public Criteria andOperidGreaterThan(Integer value) {
-            addCriterion("operId >", value, "operid");
+        public Criteria andOperateIdGreaterThan(Integer value) {
+            addCriterion("operate_id >", value, "operateId");
             return (Criteria) this;
         }
 
-        public Criteria andOperidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("operId >=", value, "operid");
+        public Criteria andOperateIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("operate_id >=", value, "operateId");
             return (Criteria) this;
         }
 
-        public Criteria andOperidLessThan(Integer value) {
-            addCriterion("operId <", value, "operid");
+        public Criteria andOperateIdLessThan(Integer value) {
+            addCriterion("operate_id <", value, "operateId");
             return (Criteria) this;
         }
 
-        public Criteria andOperidLessThanOrEqualTo(Integer value) {
-            addCriterion("operId <=", value, "operid");
+        public Criteria andOperateIdLessThanOrEqualTo(Integer value) {
+            addCriterion("operate_id <=", value, "operateId");
             return (Criteria) this;
         }
 
-        public Criteria andOperidIn(List<Integer> values) {
-            addCriterion("operId in", values, "operid");
+        public Criteria andOperateIdIn(List<Integer> values) {
+            addCriterion("operate_id in", values, "operateId");
             return (Criteria) this;
         }
 
-        public Criteria andOperidNotIn(List<Integer> values) {
-            addCriterion("operId not in", values, "operid");
+        public Criteria andOperateIdNotIn(List<Integer> values) {
+            addCriterion("operate_id not in", values, "operateId");
             return (Criteria) this;
         }
 
-        public Criteria andOperidBetween(Integer value1, Integer value2) {
-            addCriterion("operId between", value1, value2, "operid");
+        public Criteria andOperateIdBetween(Integer value1, Integer value2) {
+            addCriterion("operate_id between", value1, value2, "operateId");
             return (Criteria) this;
         }
 
-        public Criteria andOperidNotBetween(Integer value1, Integer value2) {
-            addCriterion("operId not between", value1, value2, "operid");
+        public Criteria andOperateIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("operate_id not between", value1, value2, "operateId");
             return (Criteria) this;
         }
 
@@ -929,7 +929,7 @@ public class OperateLogExample {
     }
 
     /**
-     * operate_log 2018-12-05
+     * operate_log 2018-12-06
      */
     public static class Criterion {
         private String condition;

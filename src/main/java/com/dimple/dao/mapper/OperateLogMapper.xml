@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dimple.dao.OperateLogMapper" >
   <resultMap id="BaseResultMap" type="com.dimple.bean.OperateLog" >
-    <id column="operId" property="operid" jdbcType="INTEGER" />
+    <id column="operate_id" property="operateId" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="operate_type" property="operateType" jdbcType="INTEGER" />
     <result column="method" property="method" jdbcType="VARCHAR" />
@@ -74,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    operId, title, operate_type, method, operate_url, operator_name, operate_ip, operate_location, 
-    operate_param, operate_status, error_msg, operate_time
+    operate_id, title, operate_type, method, operate_url, operator_name, operate_ip, 
+    operate_location, operate_param, operate_status, error_msg, operate_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.OperateLogExample" >
     select
@@ -95,11 +95,11 @@
     select 
     <include refid="Base_Column_List" />
     from operate_log
-    where operId = #{operid,jdbcType=INTEGER}
+    where operate_id = #{operateId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from operate_log
-    where operId = #{operid,jdbcType=INTEGER}
+    where operate_id = #{operateId,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.dimple.bean.OperateLogExample" >
     delete from operate_log
@@ -108,12 +108,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dimple.bean.OperateLog" >
-    insert into operate_log (operId, title, operate_type, 
+    insert into operate_log (operate_id, title, operate_type, 
       method, operate_url, operator_name, 
       operate_ip, operate_location, operate_param, 
       operate_status, error_msg, operate_time
       )
-    values (#{operid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{operateType,jdbcType=INTEGER}, 
+    values (#{operateId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{operateType,jdbcType=INTEGER}, 
       #{method,jdbcType=VARCHAR}, #{operateUrl,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, 
       #{operateIp,jdbcType=VARCHAR}, #{operateLocation,jdbcType=VARCHAR}, #{operateParam,jdbcType=VARCHAR}, 
       #{operateStatus,jdbcType=BIT}, #{errorMsg,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}
@@ -122,8 +122,8 @@
   <insert id="insertSelective" parameterType="com.dimple.bean.OperateLog" >
     insert into operate_log
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="operid != null" >
-        operId,
+      <if test="operateId != null" >
+        operate_id,
       </if>
       <if test="title != null" >
         title,
@@ -160,8 +160,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="operid != null" >
-        #{operid,jdbcType=INTEGER},
+      <if test="operateId != null" >
+        #{operateId,jdbcType=INTEGER},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
@@ -207,8 +207,8 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update operate_log
     <set >
-      <if test="record.operid != null" >
-        operId = #{record.operid,jdbcType=INTEGER},
+      <if test="record.operateId != null" >
+        operate_id = #{record.operateId,jdbcType=INTEGER},
       </if>
       <if test="record.title != null" >
         title = #{record.title,jdbcType=VARCHAR},
@@ -250,7 +250,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update operate_log
-    set operId = #{record.operid,jdbcType=INTEGER},
+    set operate_id = #{record.operateId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       operate_type = #{record.operateType,jdbcType=INTEGER},
       method = #{record.method,jdbcType=VARCHAR},
@@ -303,7 +303,7 @@
         operate_time = #{operateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where operId = #{operid,jdbcType=INTEGER}
+    where operate_id = #{operateId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dimple.bean.OperateLog" >
     update operate_log
@@ -318,6 +318,6 @@
       operate_status = #{operateStatus,jdbcType=BIT},
       error_msg = #{errorMsg,jdbcType=VARCHAR},
       operate_time = #{operateTime,jdbcType=TIMESTAMP}
-    where operId = #{operid,jdbcType=INTEGER}
+    where operate_id = #{operateId,jdbcType=INTEGER}
   </update>
 </mapper>

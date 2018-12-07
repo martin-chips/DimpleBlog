@@ -8,6 +8,7 @@ import com.dimple.service.OperateLogService;
 import com.dimple.utils.*;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -47,7 +48,8 @@ public class AsyncLog {
      * @param msg     操作信息
      * @return LoginLog对象
      */
-    public void recordLoginLog(String loginId, Byte status, String msg, Object... args) {
+
+    public static void recordLoginLog(String loginId, Byte status, String msg, Object... args) {
         if (Status.LOGIN_SUCCESS == status || Status.LOGOUT_SUCCESS == status) {
             saveLoginLog(loginId, msg, Status.SUCCESS);
         } else {

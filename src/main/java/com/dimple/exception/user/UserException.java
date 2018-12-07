@@ -4,7 +4,7 @@ import com.dimple.exception.BaseException;
 
 /**
  * @ClassName: UserException
- * @Description:
+ * @Description: 用户异常基础异常，设置module
  * @Auther: Owenb
  * @Date: 12/06/18 14:16
  * @Version: 1.0

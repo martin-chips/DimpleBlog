@@ -1,28 +1,36 @@
 package com.dimple.config;
 
+import com.dimple.filter.LogoutFilter;
 import com.dimple.realm.UserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
 /**
  * @ClassName: ShiroConfig
- * @Description:
+ * @Description: Shiro配置信息
  * @Auther: Owenb
  * @Date: 11/19/18 19:21
  * @Version: 1.0
  */
 @Configuration
 public class ShiroConfig {
+
+
 
     @Bean("shiroFilter")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager) {
@@ -44,6 +52,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/auth", "anon");
         filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        Map<String, Filter> filters = new LinkedHashMap<>();
+
+        // 注销成功，则跳转到指定页面
+        filters.put("logout", logoutFilter());
+        shiroFilterFactoryBean.setFilters(filters);
+
         return shiroFilterFactoryBean;
     }
 
@@ -60,6 +74,11 @@ public class ShiroConfig {
         return hashedCredentialsMatcher;
     }
 
+    /**
+     * 自定义的Realm
+     *
+     * @return
+     */
     @Bean
     public UserRealm getUserRealm() {
         UserRealm userRealm = new UserRealm();
@@ -67,10 +86,16 @@ public class ShiroConfig {
         return userRealm;
     }
 
+    /**
+     * 安全管理器
+     *
+     * @return
+     */
     @Bean
     public SecurityManager getSecurityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(getUserRealm());
+        securityManager.setRememberMeManager(rememberMeManager());
         return securityManager;
     }
 
@@ -101,4 +126,37 @@ public class ShiroConfig {
         //r.setWarnLogCategory("example.MvcLogger");     // No default
         return simpleMappingExceptionResolver;
     }
+
+    /**
+     * 记住我
+     *
+     * @return
+     */
+    public CookieRememberMeManager rememberMeManager() {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        cookieRememberMeManager.setCipherKey(Base64.decode("fCq+/xW488hMTCD+cmJ3aQ=="));
+        return cookieRememberMeManager;
+    }
+
+    /**
+     * cookie 属性设置
+     */
+    public SimpleCookie rememberMeCookie() {
+        SimpleCookie cookie = new SimpleCookie("rememberMe");
+        cookie.setDomain("");
+        cookie.setPath("/");
+        //设置只允许HTTP
+        cookie.setHttpOnly(true);
+        //设置30天的过期时间
+        cookie.setMaxAge(30 * 24 * 60 * 60);
+        return cookie;
+    }
+
+    public LogoutFilter logoutFilter() {
+        LogoutFilter logoutFilter = new LogoutFilter();
+        logoutFilter.setLoginUrl("/login.html");
+        return logoutFilter;
+    }
+
 }

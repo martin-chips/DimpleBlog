@@ -27,6 +27,7 @@ function initTable() {
         deleteUrl: "/log/loginLog/{id}",
         cleanUrl: "/log/loginLog",
         sortName: "createTime",
+        detailUrl: "/log/loginLog/{id}",
         sortOrder: "desc",
         modalName: "登录日志",
         search: false,
