@@ -3,6 +3,7 @@ package com.dimple.service;
 import com.dimple.bean.Permission;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: PermissionService
@@ -18,4 +19,19 @@ public interface PermissionService {
      * @return 权限列表
      */
     List<Permission> findByRoleId(Integer roleId);
+
+    /**
+     * 获取权限列表树
+     *
+     * @return
+     */
+    List<Map<String, Object>> getPermissionTree();
+
+    /**
+     * 根据Role的id获取对应的权限树
+     *
+     * @param roleId
+     * @return
+     */
+    List<Map<String, Object>> getPermissionTreeByRoleId(Integer roleId);
 }

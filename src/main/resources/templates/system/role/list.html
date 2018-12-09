@@ -55,70 +55,66 @@
 <!--</div>-->
 <div class="container-div ui-layout-center col-sm-12 animated fadeInRight">
 
-    <div class="row">
+    <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="role-form">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                角色名称：<input type="text" name="roleName"/>
+                            </li>
+                            <li>
+                                描述：<input type="text" name="description"/>
+                            </li>
+                            <li>
+                                角色状态：<select name="locked">
+                                <option value="">所有</option>
+                                <option value="true">正常</option>
+                                <option value="false">锁定</option>
+                            </select>
+                            </li>
+                            <li class="select-time">
+                                <label>创建时间： </label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间"
+                                       name="startTime"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间"
+                                       name="endTime"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                        class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.table.resetFormRefresh()"><i
+                                        class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
 
-        <div class="container-div ui-layout-center">
-            <div class="row">
-                <div class="col-sm-12 search-collapse">
-                    <form id="user-form">
-                        <input type="hidden" id="deptId" name="deptId">
-                        <div class="select-list">
-                            <ul>
-                                <li>
-                                    登录名称：<input type="text" name="loginId"/>
-                                </li>
-                                <li>
-                                    手机号码：<input type="text" name="phone"/>
-                                </li>
-                                <li>
-                                    用户状态：<select name="locked">
-                                    <option value="">所有</option>
-                                    <option value="true"> 锁定</option>
-                                    <option value="false"> 未锁定</option>
-                                </select>
-                                </li>
-                                <li class="select-time">
-                                    <label>创建时间： </label>
-                                    <input type="text" class="time-input" id="startTime" placeholder="开始时间"
-                                           name="startTime"/>
-                                    <span>-</span>
-                                    <input type="text" class="time-input" id="endTime" placeholder="结束时间"
-                                           name="endTime"/>
-                                </li>
-                                <li>
-                                    <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
-                                            class="fa fa-search"></i>&nbsp;搜索</a>
-                                    <a class="btn btn-warning btn-rounded btn-sm"
-                                       onclick="$.table.resetFormRefresh()"><i
-                                            class="fa fa-refresh"></i>&nbsp;重置</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </form>
-                </div>
+            <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()">
+                    <i class="fa fa-plus"></i> 新增
+                </a>
+                <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+            </div>
 
-                <div class="btn-group-sm hidden-xs" id="toolbar" role="group" style="margin-top: 10px">
-                    <a class="btn btn-success" onclick="$.operate.add()">
-                        <i class="fa fa-plus"></i> 新增
-                    </a>
-                    <a class="btn btn-primary btn-edit disabled" onclick="$.operate.update()">
-                        <i class="fa fa-edit"></i> 修改
-                    </a>
-                    <a class="btn btn-danger btn-del disabled" onclick="$.operate.deleteAll()">
-                        <i class="fa fa-remove"></i> 删除
-                    </a>
-                </div>
-
-                <div class="col-sm-12 select-table table-striped ">
-                    <table id="bootstrap-table" data-mobile-responsive="true"></table>
-                </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table" data-mobile-responsive="true"></table>
             </div>
         </div>
-
-        <div th:include="/common :: common-footer"></div>
-        <script src="/static/js/custom/system/user/user-list.js"
-                th:src="@{/js/custom/system/user/user-list.js}"></script>
     </div>
+
+    <div th:include="/common :: common-footer"></div>
+    <script src="/static/js/custom/system/role/list.js"
+            th:src="@{/js/custom/system/role/list.js}"></script>
+</div>
 </div>
 </body>
 

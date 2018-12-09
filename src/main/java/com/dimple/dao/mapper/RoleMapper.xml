@@ -3,8 +3,10 @@
 <mapper namespace="com.dimple.dao.RoleMapper" >
   <resultMap id="BaseResultMap" type="com.dimple.bean.Role" >
     <id column="role_id" property="roleId" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="locked" property="locked" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    role_id, name, description
+    role_id, role_name, description, locked, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.RoleExample" >
     select
@@ -98,10 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dimple.bean.Role" >
-    insert into role (role_id, name, description
-      )
-    values (#{roleId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
-      )
+    insert into role (role_id, role_name, description, 
+      locked, create_time)
+    values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{locked,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.Role" >
     insert into role
@@ -109,22 +111,34 @@
       <if test="roleId != null" >
         role_id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="roleName != null" >
+        role_name,
       </if>
       <if test="description != null" >
         description,
+      </if>
+      <if test="locked != null" >
+        locked,
+      </if>
+      <if test="createTime != null" >
+        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
         #{roleId,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null" >
+        #{locked,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -140,11 +154,17 @@
       <if test="record.roleId != null" >
         role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.roleName != null" >
+        role_name = #{record.roleName,jdbcType=VARCHAR},
       </if>
       <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locked != null" >
+        locked = #{record.locked,jdbcType=BIT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -154,8 +174,10 @@
   <update id="updateByExample" parameterType="map" >
     update role
     set role_id = #{record.roleId,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR}
+      role_name = #{record.roleName,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      locked = #{record.locked,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -163,19 +185,27 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.dimple.bean.Role" >
     update role
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null" >
+        locked = #{locked,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where role_id = #{roleId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dimple.bean.Role" >
     update role
-    set name = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR}
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      locked = #{locked,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where role_id = #{roleId,jdbcType=INTEGER}
   </update>
 </mapper>

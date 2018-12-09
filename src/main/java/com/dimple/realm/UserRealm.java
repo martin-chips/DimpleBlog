@@ -5,14 +5,12 @@ import com.dimple.bean.Role;
 import com.dimple.bean.User;
 import com.dimple.exception.user.UserAccountLockedException;
 import com.dimple.exception.user.UserAccountNotExistsException;
+import com.dimple.exception.user.UserException;
 import com.dimple.service.PermissionService;
 import com.dimple.service.RoleService;
 import com.dimple.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -51,13 +49,12 @@ public class UserRealm extends AuthorizingRealm {
      * @return
      */
     @Override
-
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         User user = (User) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         List<Role> roles = roleService.findByUserId(user.getUserId());
         for (Role role : roles) {
-            info.addRole(role.getName());
+            info.addRole(role.getRoleName());
             for (Permission permission : permissionService.findByRoleId(role.getRoleId())) {
                 info.addStringPermission(permission.getName());
             }
@@ -73,16 +70,16 @@ public class UserRealm extends AuthorizingRealm {
      * @throws AuthenticationException
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws UserException {
         String loginId = (String) token.getPrincipal();
         User userDB = userService.findByUserLoginId(loginId);
 
 
         if (userDB == null) {
-            throw new UserAccountNotExistsException();
+            throw new UnknownAccountException();
         }
         if (userDB.getLocked() == true) {
-            throw new UserAccountLockedException();
+            throw new LockedAccountException();
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(
                 userDB,

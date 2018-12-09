@@ -9,14 +9,19 @@ public class Permission implements Serializable {
     private Integer permissionId;
 
     /**
-     * 权限的名称，如：user:update
+     * 权限的名称：如友链增加
+     */
+    private String title;
+
+    /**
+     * 权限的名称，如：system:link:insert
      */
     private String name;
 
     /**
-     * 权限的显示名称，如：用户更新
+     * 父级权限ID
      */
-    private String description;
+    private Integer pId;
 
     /**
      * permission
@@ -40,34 +45,50 @@ public class Permission implements Serializable {
     }
 
     /**
-     * 权限的名称，如：user:update
-     * @return name 权限的名称，如：user:update
+     * 权限的名称：如友链增加
+     * @return title 权限的名称：如友链增加
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * 权限的名称：如友链增加
+     * @param title 权限的名称：如友链增加
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * 权限的名称，如：system:link:insert
+     * @return name 权限的名称，如：system:link:insert
      */
     public String getName() {
         return name;
     }
 
     /**
-     * 权限的名称，如：user:update
-     * @param name 权限的名称，如：user:update
+     * 权限的名称，如：system:link:insert
+     * @param name 权限的名称，如：system:link:insert
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * 权限的显示名称，如：用户更新
-     * @return description 权限的显示名称，如：用户更新
+     * 父级权限ID
+     * @return p_id 父级权限ID
      */
-    public String getDescription() {
-        return description;
+    public Integer getpId() {
+        return pId;
     }
 
     /**
-     * 权限的显示名称，如：用户更新
-     * @param description 权限的显示名称，如：用户更新
+     * 父级权限ID
+     * @param pId 父级权限ID
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setpId(Integer pId) {
+        this.pId = pId;
     }
 }

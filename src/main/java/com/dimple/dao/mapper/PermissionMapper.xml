@@ -3,8 +3,9 @@
 <mapper namespace="com.dimple.dao.PermissionMapper" >
   <resultMap id="BaseResultMap" type="com.dimple.bean.Permission" >
     <id column="permission_id" property="permissionId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="p_id" property="pId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    permission_id, name, description
+    permission_id, title, name, p_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.PermissionExample" >
     select
@@ -98,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dimple.bean.Permission" >
-    insert into permission (permission_id, name, description
-      )
-    values (#{permissionId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
-      )
+    insert into permission (permission_id, title, name, 
+      p_id)
+    values (#{permissionId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{pId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.Permission" >
     insert into permission
@@ -109,22 +110,28 @@
       <if test="permissionId != null" >
         permission_id,
       </if>
+      <if test="title != null" >
+        title,
+      </if>
       <if test="name != null" >
         name,
       </if>
-      <if test="description != null" >
-        description,
+      <if test="pId != null" >
+        p_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="permissionId != null" >
         #{permissionId,jdbcType=INTEGER},
       </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
+      <if test="pId != null" >
+        #{pId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -140,11 +147,14 @@
       <if test="record.permissionId != null" >
         permission_id = #{record.permissionId,jdbcType=INTEGER},
       </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.description != null" >
-        description = #{record.description,jdbcType=VARCHAR},
+      <if test="record.pId != null" >
+        p_id = #{record.pId,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -154,8 +164,9 @@
   <update id="updateByExample" parameterType="map" >
     update permission
     set permission_id = #{record.permissionId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR}
+      p_id = #{record.pId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -163,19 +174,23 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.dimple.bean.Permission" >
     update permission
     <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="description != null" >
-        description = #{description,jdbcType=VARCHAR},
+      <if test="pId != null" >
+        p_id = #{pId,jdbcType=INTEGER},
       </if>
     </set>
     where permission_id = #{permissionId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dimple.bean.Permission" >
     update permission
-    set name = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR}
+    set title = #{title,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      p_id = #{pId,jdbcType=INTEGER}
     where permission_id = #{permissionId,jdbcType=INTEGER}
   </update>
 </mapper>

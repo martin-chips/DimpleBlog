@@ -51,24 +51,25 @@ public class Server {
     }
 
     private List<SystemFile> setSystemFileInfo(OperatingSystem operatingSystem) {
-        FileSystem fileSystem = operatingSystem.getFileSystem();
-        List<SystemFile> systemFiles = new ArrayList<>();
-        OSFileStore[] fsArray = fileSystem.getFileStores();
-        for (OSFileStore fs : fsArray) {
-            long free = fs.getUsableSpace();
-            long total = fs.getTotalSpace();
-            long used = total - free;
-            SystemFile systemFile = new SystemFile();
-            systemFile.setDirName(fs.getMount());
-            systemFile.setSysTypeName(fs.getType());
-            systemFile.setTypeName(fs.getName());
-            systemFile.setTotal(convertFileSize(total));
-            systemFile.setFree(convertFileSize(free));
-            systemFile.setUsed(convertFileSize(used));
-            systemFile.setUsage(used / total);
-            systemFiles.add(systemFile);
-        }
-        return systemFiles;
+//        FileSystem fileSystem = operatingSystem.getFileSystem();
+//        List<SystemFile> systemFiles = new ArrayList<>();
+//        OSFileStore[] fsArray = fileSystem.getFileStores();
+//        for (OSFileStore fs : fsArray) {
+//            long free = fs.getUsableSpace();
+//            long total = fs.getTotalSpace();
+//            long used = total - free;
+//            SystemFile systemFile = new SystemFile();
+//            systemFile.setDirName(fs.getMount());
+//            systemFile.setSysTypeName(fs.getType());
+//            systemFile.setTypeName(fs.getName());
+//            systemFile.setTotal(convertFileSize(total));
+//            systemFile.setFree(convertFileSize(free));
+//            systemFile.setUsed(convertFileSize(used));
+//            systemFile.setUsage(used / total);
+//            systemFiles.add(systemFile);
+//        }
+//        return systemFiles;
+        return null;
     }
 
     /**

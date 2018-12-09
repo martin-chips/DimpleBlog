@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.io.IOException;
 
@@ -69,6 +70,12 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(IOException.class)
     public Result ioException(Exception e) {
         log.error("IO异常:" + e.getMessage(), e);
+        return ResultUtil.error(11, e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public Result methodArgumentTypeMismatchException(Exception e) {
+        log.error("参数转换异常：" + e.getMessage(), e);
         return ResultUtil.error(11, e.getMessage());
     }
 }

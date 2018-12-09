@@ -1,6 +1,7 @@
 package com.dimple.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Role implements Serializable {
     /**
@@ -11,12 +12,22 @@ public class Role implements Serializable {
     /**
      * 角色的名称，如：admin
      */
-    private String name;
+    private String roleName;
 
     /**
      * 角色的描述，如：管理员
      */
     private String description;
+
+    /**
+     * 角色状态（1表示停用，0表示未停用）
+     */
+    private Boolean locked;
+
+    /**
+     * 
+     */
+    private Date createTime;
 
     /**
      * role
@@ -41,18 +52,18 @@ public class Role implements Serializable {
 
     /**
      * 角色的名称，如：admin
-     * @return name 角色的名称，如：admin
+     * @return role_name 角色的名称，如：admin
      */
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 
     /**
      * 角色的名称，如：admin
-     * @param name 角色的名称，如：admin
+     * @param roleName 角色的名称，如：admin
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     /**
@@ -69,5 +80,37 @@ public class Role implements Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * 角色状态（1表示停用，0表示未停用）
+     * @return locked 角色状态（1表示停用，0表示未停用）
+     */
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    /**
+     * 角色状态（1表示停用，0表示未停用）
+     * @param locked 角色状态（1表示停用，0表示未停用）
+     */
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    /**
+     * 
+     * @return create_time 
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * 
+     * @param createTime 
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

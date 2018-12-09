@@ -30,7 +30,7 @@ public class BlogController {
     /**
      * 定义的返回视图的前缀
      */
-    private static String PREFIX = "/blogManager/";
+    private static String PREFIX = "blogManager/";
 
     //统一页面返回
     @GetMapping("/{uri}")
