@@ -102,11 +102,14 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<Permission> getPermissionAll(String title, Integer type) {
+    public List<Permission> getPermissionAll(String title, Integer type, Boolean status) {
         PermissionExample permissionExample = new PermissionExample();
         PermissionExample.Criteria criteria = permissionExample.createCriteria();
         if (StringUtils.isNotBlank(title)) {
             criteria.andTitleLike(title);
+        }
+        if (status != null) {
+            criteria.andStatusEqualTo(status);
         }
         if (type != null) {
             criteria.andTypeEqualTo(type);

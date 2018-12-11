@@ -78,8 +78,9 @@ public class PermissionController {
     @GetMapping("/system/permission.json")
     @ResponseBody
     public Result getPermissionList(@RequestParam(value = "title", required = false) String title,
+                                    @RequestParam(value = "status", required = false) Boolean status,
                                     @RequestParam(value = "type", required = false) Integer type) {
-        List<Permission> permissions = permissionService.getPermissionAll(title, type);
+        List<Permission> permissions = permissionService.getPermissionAll(title, type,status);
         return ResultUtil.success(permissions);
     }
 

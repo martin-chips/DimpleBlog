@@ -3,7 +3,9 @@
 
 
 <head th:include="common :: common-head"></head>
+<style>
 
+</style>
 
 <body class="gray-bg">
 <div class="col-sm-2">
@@ -107,7 +109,7 @@
 </div>
 
 <div th:include="common :: common-footer"></div>
-<script src="/js/custom/links/list.js"></script>
+<script src="/static/js/custom/links/list.js" th:src="@{/js/custom/links/list.js}"></script>
 
 </body>
 

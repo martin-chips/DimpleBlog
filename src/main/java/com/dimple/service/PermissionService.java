@@ -40,9 +40,10 @@ public interface PermissionService {
      *
      * @param title
      * @param type
+     * @param status
      * @return
      */
-    List<Permission> getPermissionAll(String title, Integer type);
+    List<Permission> getPermissionAll(String title, Integer type, Boolean status);
 
     /**
      * 删除Permission

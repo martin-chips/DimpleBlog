@@ -3,11 +3,11 @@ package com.dimple.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Category implements Serializable {
+public class Archives implements Serializable {
     /**
      * 分类的id
      */
-    private Integer categoryId;
+    private Integer archivesId;
 
     /**
      * 分类的名称
@@ -25,24 +25,34 @@ public class Category implements Serializable {
     private Date updateTime;
 
     /**
-     * category
+     * 其类别下的博客数量
+     */
+    private Integer count;
+
+    /**
+     * 描述
+     */
+    private String description;
+
+    /**
+     * archives
      */
     private static final long serialVersionUID = 1L;
 
     /**
      * 分类的id
-     * @return category_id 分类的id
+     * @return archives_id 分类的id
      */
-    public Integer getCategoryId() {
-        return categoryId;
+    public Integer getArchivesId() {
+        return archivesId;
     }
 
     /**
      * 分类的id
-     * @param categoryId 分类的id
+     * @param archivesId 分类的id
      */
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setArchivesId(Integer archivesId) {
+        this.archivesId = archivesId;
     }
 
     /**
@@ -91,5 +101,37 @@ public class Category implements Serializable {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    /**
+     * 其类别下的博客数量
+     * @return count 其类别下的博客数量
+     */
+    public Integer getCount() {
+        return count;
+    }
+
+    /**
+     * 其类别下的博客数量
+     * @param count 其类别下的博客数量
+     */
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    /**
+     * 描述
+     * @return description 描述
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 描述
+     * @param description 描述
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

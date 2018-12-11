@@ -60,12 +60,20 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            菜单名称：<input type="text" name="menuName"/>
+                            权限名称：<input type="text" name="title"/>
                         </li>
                         <li>
-                            菜单状态：<select name="visible">
+                            权限状态：<select name="status">
                             <option value="">所有</option>
-                            <option></option>
+                            <option value="true">启用</option>
+                            <option value="false">停用</option>
+                        </select>
+                        <li>
+                            类别：<select name="type">
+                            <option value="">所有</option>
+                            <option value="1">目录</option>
+                            <option value="2">菜单</option>
+                            <option value="3">按钮</option>
                         </select>
                         </li>
                         <li>

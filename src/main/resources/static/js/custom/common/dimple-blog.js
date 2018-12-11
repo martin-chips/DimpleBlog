@@ -635,7 +635,7 @@
                     url: options.url,                                   // 请求后台的URL（*）
                     ajaxParams: {},                                     // 请求数据的ajax的data属性
                     expandColumn: _expandColumn,                        // 在哪一列上面显示展开按钮
-                    striped: _striped,                                  // 是否显示行间隔色
+                    striped: _striped,                                     // 是否显示行间隔色
                     bordered: true,                                     // 是否显示边框
                     toolbar: '#toolbar',                                // 指定工作栏
                     showRefresh: $.common.visible(options.showRefresh), // 是否显示刷新按钮
@@ -715,6 +715,7 @@
                 $.modal.confirm("确定删除该条" + $.table._options.modalName + "信息吗？", function () {
                     var url = $.common.isEmpty(id) ? $.table._options.deleteUrl : $.table._options.deleteUrl.replace("{id}", id);
                     var data = {"ids": id};
+                    console.log(url)
                     $.operate.submit(url, "delete", "json", data);
                 });
             },
@@ -746,8 +747,6 @@
             //修改信息
             update: function (id) {
                 var url = "/404.html";
-                console.log(id)
-                console.log($.table._options.updateUrl)
                 if ($.common.isNotEmpty(id)) {
                     url = $.table._options.updateUrl.replace("{id}", id);
                 } else {
@@ -833,7 +832,7 @@
                 $.modal.closeLoading();
             },
             // 工具栏表格树修改
-            editTree: function() {
+            editTree: function () {
                 var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];
                 if ($.common.isEmpty(row)) {
                     $.modal.alertWarning("请至少选择一条记录");
@@ -1010,45 +1009,6 @@
             expandFlag = expandFlag ? false : true;
         })
     });
-
-    /** 创建选项卡 */
-    function createMenuItem(dataUrl, menuName) {
-        dataIndex = $.common.random(1, 100),
-            flag = true;
-        if (dataUrl == undefined || $.trim(dataUrl).length == 0) return false;
-        var topWindow = $(window.parent.document);
-        // 选项卡菜单已存在
-        $('.menuTab', topWindow).each(function () {
-            if ($(this).data('id') == dataUrl) {
-                if (!$(this).hasClass('active')) {
-                    $(this).addClass('active').siblings('.menuTab').removeClass('active');
-                    $('.page-tabs-content').animate({marginLeft: ""}, "fast");
-                    // 显示tab对应的内容区
-                    $('.mainContent .RuoYi_iframe', topWindow).each(function () {
-                        if ($(this).data('id') == dataUrl) {
-                            $(this).show().siblings('.RuoYi_iframe').hide();
-                            return false;
-                        }
-                    });
-                }
-                flag = false;
-                return false;
-            }
-        });
-        // 选项卡菜单不存在
-        if (flag) {
-            var str = '<a href="javascript:;" class="active menuTab" data-id="' + dataUrl + '">' + menuName + ' <i class="fa fa-times-circle"></i></a>';
-            $('.menuTab', topWindow).removeClass('active');
-
-            // 添加选项卡对应的iframe
-            var str1 = '<iframe class="RuoYi_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
-            $('.mainContent', topWindow).find('iframe.RuoYi_iframe').hide().parents('.mainContent').append(str1);
-
-            // 添加选项卡
-            $('.menuTabs .page-tabs-content', topWindow).append(str);
-        }
-        return false;
-    }
 
     /** 设置全局ajax处理 */
     $.ajaxSetup({

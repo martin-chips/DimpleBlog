@@ -104,8 +104,7 @@ function deletePermission(id) {
                                         $.modal.msgError(result.msg);
                                     }
                                 }
-                            })
-
+                            });
                         });
                     }
                 } else {

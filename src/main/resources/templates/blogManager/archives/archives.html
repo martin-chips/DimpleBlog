@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head th:include="common :: common-head"></head>
+
+
+<body class="gray-bg">
+
+<div class="container-div ui-layout-center col-sm-12 animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content mailbox-content">
+                    <div class="file-manager">
+                        <a class="btn btn-block btn-primary compose-mail">编辑博客</a>
+                        <div class="space-25"></div>
+                        <h5>文件夹</h5>
+                        <ul class="folder-list m-b-md" style="padding: 0">
+                            <li>
+                                <a> <i class="fa fa-inbox "></i> 已发布 <span
+                                        class="label label-warning pull-right">16</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a> <i class="fa fa-file-text-o"></i> 草稿箱 <span
+                                        class="label label-danger pull-right">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a> <i class="fa fa-trash-o"></i> 垃圾箱</a>
+                            </li>
+                        </ul>
+                        <h5>分类</h5>
+                        <ul class="category-list" style="padding: 0">
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-navy"></i> 工作</a>
+                            </li>
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-danger"></i> 文档</a>
+                            </li>
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-primary"></i> 社交</a>
+                            </li>
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-info"></i> 广告</a>
+                            </li>
+                            <li>
+                                <a href="mail_compose.html#"> <i class="fa fa-circle text-warning"></i> 客户端</a>
+                            </li>
+                        </ul>
+
+                        <h5 class="tag-title">标签</h5>
+                        <ul class="tag-list" style="padding: 0">
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 朋友</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 工作</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 家庭</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 孩子</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 假期</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 音乐</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 照片</a>
+                            </li>
+                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 电影</a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 animated fadeInRight">
+            <div class="container-div">
+                <div class="row">
+
+                    <div class="col-sm-12 search-collapse">
+                        <form id="role-form">
+                            <div class="select-list">
+                                <ul>
+                                    <li>
+                                        名称：<input type="text" name="title"/>
+                                    </li>
+                                    <li>
+                                        描述：<input type="text" name="description"/>
+                                    </li>
+                                    </li>
+                                    <li class="select-time">
+                                        <label>创建时间： </label>
+                                        <input type="text" class="time-input" id="startTime" placeholder="开始时间"
+                                               name="startTime"/>
+                                        <span>-</span>
+                                        <input type="text" class="time-input" id="endTime" placeholder="结束时间"
+                                               name="endTime"/>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                                class="fa fa-search"></i>&nbsp;搜索</a>
+                                        <a class="btn btn-warning btn-rounded btn-sm"
+                                           onclick="$.table.resetFormRefresh()"><i
+                                                class="fa fa-refresh"></i>&nbsp;重置</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+                        <a class="btn btn-success" onclick="$.operate.add()">
+                            <i class="fa fa-plus"></i> 新增
+                        </a>
+                        <a class="btn btn-primary btn-edit disabled" onclick="$.operate.update()">
+                            <i class="fa fa-edit"></i> 修改
+                        </a>
+                        <a class="btn btn-danger btn-del disabled" onclick="$.operate.deleteAll()">
+                            <i class="fa fa-remove"></i> 删除
+                        </a>
+                    </div>
+
+                    <div class="col-sm-12 select-table table-striped">
+                        <table id="bootstrap-table" data-mobile-responsive="true"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="common :: common-footer"></div>
+    <script src="/static/js/custom/blogManager/archives/list.js"
+            th:src="@{/js/custom/blogManager/archives/list.js}"></script>
+</div>
+
+</body>
+
+</html>

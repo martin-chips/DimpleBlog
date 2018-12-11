@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dimple.dao.CategoryMapper" >
-  <resultMap id="BaseResultMap" type="com.dimple.bean.Category" >
-    <id column="category_id" property="categoryId" jdbcType="INTEGER" />
+<mapper namespace="com.dimple.dao.ArchivesMapper" >
+  <resultMap id="BaseResultMap" type="com.dimple.bean.Archives" >
+    <id column="archives_id" property="archivesId" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    category_id, title, create_time, update_time
+    archives_id, title, create_time, update_time, count, description
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.CategoryExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.ArchivesExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from category
+    from archives
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,30 +87,32 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from category
-    where category_id = #{categoryId,jdbcType=INTEGER}
+    from archives
+    where archives_id = #{archivesId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from category
-    where category_id = #{categoryId,jdbcType=INTEGER}
+    delete from archives
+    where archives_id = #{archivesId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dimple.bean.CategoryExample" >
-    delete from category
+  <delete id="deleteByExample" parameterType="com.dimple.bean.ArchivesExample" >
+    delete from archives
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dimple.bean.Category" >
-    insert into category (category_id, title, create_time, 
-      update_time)
-    values (#{categoryId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.dimple.bean.Archives" >
+    insert into archives (archives_id, title, create_time, 
+      update_time, count, description
+      )
+    values (#{archivesId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{count,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.dimple.bean.Category" >
-    insert into category
+  <insert id="insertSelective" parameterType="com.dimple.bean.Archives" >
+    insert into archives
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="categoryId != null" >
-        category_id,
+      <if test="archivesId != null" >
+        archives_id,
       </if>
       <if test="title != null" >
         title,
@@ -119,10 +123,16 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="categoryId != null" >
-        #{categoryId,jdbcType=INTEGER},
+      <if test="archivesId != null" >
+        #{archivesId,jdbcType=INTEGER},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
@@ -133,19 +143,25 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dimple.bean.CategoryExample" resultType="java.lang.Integer" >
-    select count(*) from category
+  <select id="countByExample" parameterType="com.dimple.bean.ArchivesExample" resultType="java.lang.Integer" >
+    select count(*) from archives
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update category
+    update archives
     <set >
-      <if test="record.categoryId != null" >
-        category_id = #{record.categoryId,jdbcType=INTEGER},
+      <if test="record.archivesId != null" >
+        archives_id = #{record.archivesId,jdbcType=INTEGER},
       </if>
       <if test="record.title != null" >
         title = #{record.title,jdbcType=VARCHAR},
@@ -156,23 +172,31 @@
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update category
-    set category_id = #{record.categoryId,jdbcType=INTEGER},
+    update archives
+    set archives_id = #{record.archivesId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      count = #{record.count,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dimple.bean.Category" >
-    update category
+  <update id="updateByPrimaryKeySelective" parameterType="com.dimple.bean.Archives" >
+    update archives
     <set >
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
@@ -183,14 +207,22 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
     </set>
-    where category_id = #{categoryId,jdbcType=INTEGER}
+    where archives_id = #{archivesId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dimple.bean.Category" >
-    update category
+  <update id="updateByPrimaryKey" parameterType="com.dimple.bean.Archives" >
+    update archives
     set title = #{title,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where category_id = #{categoryId,jdbcType=INTEGER}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      count = #{count,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR}
+    where archives_id = #{archivesId,jdbcType=INTEGER}
   </update>
 </mapper>
