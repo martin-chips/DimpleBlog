@@ -63,7 +63,7 @@
     </form>
 </div>
 </body>
-<div th:include="/common :: common-footer"></div>
+<div th:include="common :: common-footer"></div>
 
 <script>
 
@@ -74,7 +74,6 @@
     }
 
     function updateUser() {
-
         $.ajax({
             url: "/system/user",
             type: "put",
@@ -89,7 +88,6 @@
             }
         })
     }
-
 </script>
 </div>
 </html>

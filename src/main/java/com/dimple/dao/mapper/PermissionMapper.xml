@@ -6,6 +6,10 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="p_id" property="pId" jdbcType="INTEGER" />
+    <result column="request_url" property="requestUrl" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    permission_id, title, name, p_id
+    permission_id, title, name, p_id, request_url, type, icon, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.PermissionExample" >
     select
@@ -100,9 +104,11 @@
   </delete>
   <insert id="insert" parameterType="com.dimple.bean.Permission" >
     insert into permission (permission_id, title, name, 
-      p_id)
+      p_id, request_url, type, 
+      icon, status)
     values (#{permissionId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{pId,jdbcType=INTEGER})
+      #{pId,jdbcType=INTEGER}, #{requestUrl,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{icon,jdbcType=VARCHAR}, #{status,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.Permission" >
     insert into permission
@@ -119,6 +125,18 @@
       <if test="pId != null" >
         p_id,
       </if>
+      <if test="requestUrl != null" >
+        request_url,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="permissionId != null" >
@@ -132,6 +150,18 @@
       </if>
       <if test="pId != null" >
         #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="requestUrl != null" >
+        #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -156,6 +186,18 @@
       <if test="record.pId != null" >
         p_id = #{record.pId,jdbcType=INTEGER},
       </if>
+      <if test="record.requestUrl != null" >
+        request_url = #{record.requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.icon != null" >
+        icon = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +208,11 @@
     set permission_id = #{record.permissionId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
-      p_id = #{record.pId,jdbcType=INTEGER}
+      p_id = #{record.pId,jdbcType=INTEGER},
+      request_url = #{record.requestUrl,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      icon = #{record.icon,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +229,18 @@
       <if test="pId != null" >
         p_id = #{pId,jdbcType=INTEGER},
       </if>
+      <if test="requestUrl != null" >
+        request_url = #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
     </set>
     where permission_id = #{permissionId,jdbcType=INTEGER}
   </update>
@@ -190,7 +248,11 @@
     update permission
     set title = #{title,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      p_id = #{pId,jdbcType=INTEGER}
+      p_id = #{pId,jdbcType=INTEGER},
+      request_url = #{requestUrl,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT}
     where permission_id = #{permissionId,jdbcType=INTEGER}
   </update>
 </mapper>

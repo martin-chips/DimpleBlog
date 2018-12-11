@@ -24,6 +24,26 @@ public class Permission implements Serializable {
     private Integer pId;
 
     /**
+     * 请求地址
+     */
+    private String requestUrl;
+
+    /**
+     * 类型（1为目录，2为菜单，3为按钮）
+     */
+    private Integer type;
+
+    /**
+     * 显示的图标
+     */
+    private String icon;
+
+    /**
+     * 显示或者隐藏，1表示启用，0表示停用
+     */
+    private Boolean status;
+
+    /**
      * permission
      */
     private static final long serialVersionUID = 1L;
@@ -90,5 +110,69 @@ public class Permission implements Serializable {
      */
     public void setpId(Integer pId) {
         this.pId = pId;
+    }
+
+    /**
+     * 请求地址
+     * @return request_url 请求地址
+     */
+    public String getRequestUrl() {
+        return requestUrl;
+    }
+
+    /**
+     * 请求地址
+     * @param requestUrl 请求地址
+     */
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
+    }
+
+    /**
+     * 类型（1为目录，2为菜单，3为按钮）
+     * @return type 类型（1为目录，2为菜单，3为按钮）
+     */
+    public Integer getType() {
+        return type;
+    }
+
+    /**
+     * 类型（1为目录，2为菜单，3为按钮）
+     * @param type 类型（1为目录，2为菜单，3为按钮）
+     */
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    /**
+     * 显示的图标
+     * @return icon 显示的图标
+     */
+    public String getIcon() {
+        return icon;
+    }
+
+    /**
+     * 显示的图标
+     * @param icon 显示的图标
+     */
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    /**
+     * 显示或者隐藏，1表示显示，0表示隐藏
+     * @return status 显示或者隐藏，1表示显示，0表示隐藏
+     */
+    public Boolean getStatus() {
+        return status;
+    }
+
+    /**
+     * 显示或者隐藏，1表示显示，0表示隐藏
+     * @param status 显示或者隐藏，1表示显示，0表示隐藏
+     */
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

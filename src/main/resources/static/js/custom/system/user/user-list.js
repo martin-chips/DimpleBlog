@@ -99,7 +99,7 @@ function resetPassword(id) {
 
 function changeLocked(id, locked) {
     var url = "/system/user/" + id + "/" + locked;
-    $.operate.save(url, "");
+    $.operate.submit(url, "put", "json", "");
 }
 
 

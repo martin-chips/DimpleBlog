@@ -1,6 +1,7 @@
 (function ($) {
     $.extend({
-
+        _treeTable: {},
+        _tree: {},
         table: {
             _options: {},
             _params: {},
@@ -618,6 +619,47 @@
                 $._tree.expandAll(true);
             }
         },
+        // 表格树封装处理
+        treeTable: {
+            _option: {},
+            // 初始化表格
+            init: function (options) {
+                $.table._option = options;
+                $.table.init(options)
+                _striped = $.common.isEmpty(options.striped) ? false : options.striped;
+                _expandColumn = $.common.isEmpty(options.expandColumn) ? '1' : options.expandColumn;
+                var treeTable = $('#bootstrap-tree-table').bootstrapTreeTable({
+                    code: options.code,                                 // 用于设置父子关系
+                    parentCode: options.parentCode,                     // 用于设置父子关系
+                    type: 'get',                                        // 请求方式（*）
+                    url: options.url,                                   // 请求后台的URL（*）
+                    ajaxParams: {},                                     // 请求数据的ajax的data属性
+                    expandColumn: _expandColumn,                        // 在哪一列上面显示展开按钮
+                    striped: _striped,                                  // 是否显示行间隔色
+                    bordered: true,                                     // 是否显示边框
+                    toolbar: '#toolbar',                                // 指定工作栏
+                    showRefresh: $.common.visible(options.showRefresh), // 是否显示刷新按钮
+                    showColumns: $.common.visible(options.showColumns), // 是否显示隐藏某列下拉框
+                    expandAll: $.common.visible(options.expandAll),     // 是否全部展开
+                    expandFirst: $.common.visible(options.expandFirst), // 是否默认第一级展开--expandAll为false时生效
+                    columns: options.columns
+                });
+                $._treeTable = treeTable;
+            },
+            // 条件查询
+            search: function (formId) {
+                var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
+                var params = {};
+                $.each($("#" + currentId).serializeArray(), function (i, field) {
+                    params[field.name] = field.value;
+                });
+                $._treeTable.bootstrapTreeTable('refresh', params);
+            },
+            // 刷新
+            refresh: function () {
+                $._treeTable.bootstrapTreeTable('refresh');
+            },
+        },
         //操作封装处理
         operate: {
             //提交数据
@@ -697,12 +739,15 @@
             },
             // 添加信息
             add: function (id) {
+                console.log(id)
                 var url = $.common.isEmpty(id) ? $.table._options.addUrl : $.table._options.addUrl.replace("{id}", id);
                 $.modal.open("添加" + $.table._options.modalName, url);
             },
             //修改信息
             update: function (id) {
                 var url = "/404.html";
+                console.log(id)
+                console.log($.table._options.updateUrl)
                 if ($.common.isNotEmpty(id)) {
                     url = $.table._options.updateUrl.replace("{id}", id);
                 } else {
@@ -786,7 +831,17 @@
                     $.modal.alertError(result.msg);
                 }
                 $.modal.closeLoading();
-            }
+            },
+            // 工具栏表格树修改
+            editTree: function() {
+                var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];
+                if ($.common.isEmpty(row)) {
+                    $.modal.alertWarning("请至少选择一条记录");
+                    return;
+                }
+                var url = $.table._option.updateUrl.replace("{id}", row[$.table._option.uniqueId]);
+                $.modal.open("修改" + $.table._option.modalName, url);
+            },
         },
         //校验封装处理
         validate: {
@@ -840,7 +895,6 @@
     /**
      * 通用方法封装处理
      */
-
     $(function () {
         // select2复选框事件绑定
         if ($.fn.select2 !== undefined) {
@@ -944,13 +998,14 @@
             $('#toolbar .btn-edit').toggleClass('disabled', ids.length != 1);
             ;
         });
-        // tree表格树 展开/折叠
+        // tree表格树
+        // 展开 / 折叠
         var expandFlag = false;
         $("#expandAllBtn").click(function () {
             if (expandFlag) {
-                $('#bootstrap-table').bootstrapTreeTable('expandAll');
+                $('#bootstrap-tree-table').bootstrapTreeTable('expandAll');
             } else {
-                $('#bootstrap-table').bootstrapTreeTable('collapseAll');
+                $('#bootstrap-tree-table').bootstrapTreeTable('collapseAll');
             }
             expandFlag = expandFlag ? false : true;
         })

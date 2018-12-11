@@ -1,11 +1,11 @@
 package com.dimple.service.impl;
 
-import com.dimple.bean.Permission;
-import com.dimple.bean.RolePermission;
-import com.dimple.bean.RolePermissionExample;
+import com.dimple.bean.*;
 import com.dimple.dao.PermissionMapper;
+import com.dimple.dao.RoleMapper;
 import com.dimple.dao.RolePermissionMapper;
 import com.dimple.service.PermissionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,8 @@ public class PermissionServiceImpl implements PermissionService {
     @Autowired
     RolePermissionMapper rolePermissionMapper;
 
+    @Autowired
+    RoleMapper roleMapper;
 
     @Override
     public List<Permission> findByRoleId(Integer roleId) {
@@ -87,13 +89,115 @@ public class PermissionServiceImpl implements PermissionService {
         RolePermissionExample rolePermissionExample = new RolePermissionExample();
         RolePermissionExample.Criteria criteria = rolePermissionExample.createCriteria();
         criteria.andRoleIdEqualTo(roleId);
+        //获取RoleID对应的RolePermission关联表
         List<RolePermission> rolePermissions = rolePermissionMapper.selectByExample(rolePermissionExample);
         List<Integer> ids = new LinkedList<>();
         for (RolePermission rolePermission : rolePermissions) {
+            //获取permissionId
             Integer permissionId = rolePermission.getPermissionId();
             Permission permission = permissionMapper.selectByPrimaryKey(permissionId);
             ids.add(permission.getPermissionId());
         }
         return handPermissionTree(permissionMapper.selectByExample(null), ids);
+    }
+
+    @Override
+    public List<Permission> getPermissionAll(String title, Integer type) {
+        PermissionExample permissionExample = new PermissionExample();
+        PermissionExample.Criteria criteria = permissionExample.createCriteria();
+        if (StringUtils.isNotBlank(title)) {
+            criteria.andTitleLike(title);
+        }
+        if (type != null) {
+            criteria.andTypeEqualTo(type);
+        }
+        List<Permission> permissions = permissionMapper.selectByExample(permissionExample);
+        return permissions;
+    }
+
+    @Override
+    public int deletePermission(Integer id) {
+        int i = permissionMapper.deleteByPrimaryKey(id);
+        return i;
+    }
+
+    @Override
+    public Permission getPermissionById(Integer id) {
+        if (id == null) {
+            return null;
+        }
+        Permission permission = permissionMapper.selectByPrimaryKey(id);
+        return permission;
+    }
+
+    @Override
+    public String getPermissionPName(Integer id) {
+        if (id == null) {
+            return null;
+        }
+        Permission permission = permissionMapper.selectByPrimaryKey(id);
+        if (permission == null) {
+            return null;
+        }
+        Permission permissionP = permissionMapper.selectByPrimaryKey(permission.getpId());
+        return permissionP == null ? "主目录" : permissionP.getTitle();
+    }
+
+    @Override
+    public int updatePermission(Permission permission) {
+        if (permission.getPermissionId() == null) {
+            return -1;
+        }
+        int i = permissionMapper.updateByPrimaryKey(permission);
+        return i;
+    }
+
+    @Override
+    public Integer insertPermission(Permission permission) {
+        if (StringUtils.isBlank(permission.getTitle())) {
+            return -1;
+        }
+        int i = permissionMapper.insert(permission);
+        return i;
+    }
+
+    @Override
+    public List<String> getPermissionRelation(Integer permissionId) {
+        List<Role> roleByPermissionRelation = getRoleByPermissionRelation(permissionId);
+        if (roleByPermissionRelation == null || roleByPermissionRelation.size() == 0) {
+            return null;
+        }
+        List<String> roleNames = new LinkedList<>();
+        for (Role role : roleByPermissionRelation) {
+            roleNames.add(role.getRoleName());
+        }
+        return roleNames;
+    }
+
+    /**
+     * 根据Permission的id来获取与之相关的role的信息
+     *
+     * @param permissionId
+     * @return
+     */
+    private List<Role> getRoleByPermissionRelation(Integer permissionId) {
+        if (permissionId == null) {
+            return null;
+        }
+        RolePermissionExample rolePermissionExample = new RolePermissionExample();
+        RolePermissionExample.Criteria criteria = rolePermissionExample.createCriteria();
+        criteria.andPermissionIdEqualTo(permissionId);
+        List<RolePermission> rolePermissions = rolePermissionMapper.selectByExample(rolePermissionExample);
+        //获取到和当前的permission相关的role的id
+        if (rolePermissions == null || rolePermissions.size() == 0) {
+            return null;
+        }
+        List<Role> roleName = new LinkedList<>();
+        for (RolePermission rolePermission : rolePermissions) {
+            Integer roleId = rolePermission.getRoleId();
+            Role role = roleMapper.selectByPrimaryKey(roleId);
+            roleName.add(role);
+        }
+        return roleName;
     }
 }
