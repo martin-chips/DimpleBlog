@@ -13,24 +13,8 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content mailbox-content">
                     <div class="file-manager">
-                        <a class="btn btn-block btn-primary compose-mail">编辑博客</a>
+                        <a class="btn btn-block btn-primary compose-mail">类别管理</a>
                         <div class="space-25"></div>
-                        <h5>文件夹</h5>
-                        <ul class="folder-list m-b-md" style="padding: 0">
-                            <li>
-                                <a> <i class="fa fa-inbox "></i> 已发布 <span
-                                        class="label label-warning pull-right">16</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a> <i class="fa fa-file-text-o"></i> 草稿箱 <span
-                                        class="label label-danger pull-right">2</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a> <i class="fa fa-trash-o"></i> 垃圾箱</a>
-                            </li>
-                        </ul>
                         <h5>分类</h5>
                         <ul class="category-list" style="padding: 0">
                             <li>
@@ -47,26 +31,6 @@
                             </li>
                             <li>
                                 <a href="mail_compose.html#"> <i class="fa fa-circle text-warning"></i> 客户端</a>
-                            </li>
-                        </ul>
-
-                        <h5 class="tag-title">标签</h5>
-                        <ul class="tag-list" style="padding: 0">
-                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 朋友</a>
-                            </li>
-                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 工作</a>
-                            </li>
-                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 家庭</a>
-                            </li>
-                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 孩子</a>
-                            </li>
-                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 假期</a>
-                            </li>
-                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 音乐</a>
-                            </li>
-                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 照片</a>
-                            </li>
-                            <li><a href="mail_compose.html"><i class="fa fa-tag"></i> 电影</a>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
@@ -130,8 +94,8 @@
     </div>
 
     <div th:include="common :: common-footer"></div>
-    <script src="/static/js/custom/blogManager/archives/list.js"
-            th:src="@{/js/custom/blogManager/archives/list.js}"></script>
+    <script src="/static/js/custom/blogManager/category/list.js"
+            th:src="@{/js/custom/blogManager/category/list.js}"></script>
 </div>
 
 </body>

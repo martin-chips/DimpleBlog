@@ -3,11 +3,11 @@ package com.dimple.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Archives implements Serializable {
+public class Category implements Serializable {
     /**
      * 分类的id
      */
-    private Integer archivesId;
+    private Integer categoryId;
 
     /**
      * 分类的名称
@@ -35,24 +35,24 @@ public class Archives implements Serializable {
     private String description;
 
     /**
-     * archives
+     * category
      */
     private static final long serialVersionUID = 1L;
 
     /**
      * 分类的id
-     * @return archives_id 分类的id
+     * @return category_id 分类的id
      */
-    public Integer getArchivesId() {
-        return archivesId;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
     /**
      * 分类的id
-     * @param archivesId 分类的id
+     * @param categoryId 分类的id
      */
-    public void setArchivesId(Integer archivesId) {
-        this.archivesId = archivesId;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     /**

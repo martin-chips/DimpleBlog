@@ -7,20 +7,20 @@ $(function () {
 
 function initTable() {
     var option = {
-        url: "/blog/archives.json",
-        deleteUrl: "/blog/archives/{id}",
-        updateUrl: "/blog/archives/{id}.html",
-        addUrl: "/blog/archives/add.html",
+        url: "/blog/category.json",
+        deleteUrl: "/blog/category/{id}",
+        updateUrl: "/blog/category/{id}.html",
+        addUrl: "/blog/category/add.html",
         sortName: "createTime",
         sortOrder: "desc",
-        modalName: "归档",
+        modalName: "分类",
         search: false,
-        uniqueId: "archivesId",//唯一标识
+        uniqueId: "categoryId",//唯一标识
         showExport: false,
         columns: [{
             checkbox: true
         }, {
-            field: 'archivesId',
+            field: 'categoryId',
             title: '归档ID',
             align: 'center',
         }, {
@@ -55,8 +55,8 @@ function initTable() {
             align: 'center',
             formatter: function (value, row, index) {
                 var actions = [];
-                actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.update(\'' + row.archivesId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.archivesId + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.update(\'' + row.categoryId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.categoryId + '\')"><i class="fa fa-remove"></i>删除</a> ');
                 return actions.join('');
             }
         }

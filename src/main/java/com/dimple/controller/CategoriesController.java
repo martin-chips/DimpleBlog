@@ -1,8 +1,7 @@
 package com.dimple.controller;
 
-import com.dimple.bean.Archives;
-import com.dimple.enums.LinksSearchCode;
-import com.dimple.service.ArchivesService;
+import com.dimple.bean.Category;
+import com.dimple.service.CategoryService;
 import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
@@ -10,7 +9,6 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,37 +16,37 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @ClassName: Archives
+ * @ClassName: CategoriesController
  * @Description: 博客类别
  * @Auther: Dimple
  * @Date: 2018/12/11 19:29
  * @Version: 1.0
  */
 @Controller
-public class ArchivesController {
+public class CategoriesController {
 
     @Autowired
-    ArchivesService archivesService;
+    CategoryService categoryService;
 
     /**
      * 跳转到归档页面
      *
      * @return
      */
-    @GetMapping("/blog/archive.html")
-    public String archivesPage() {
-        return "blogManager/archives/archives";
+    @GetMapping("/blog/category.html")
+    public String categoryPage() {
+        return "blogManager/category/category";
     }
 
-    @GetMapping("/blog/archives/{id}.html")
-    public String archivesUpdatePage(@PathVariable Integer id, Model model) {
-        model.addAttribute("archives", archivesService.selectBlogArchivesByArchivesId(id));
-        return "blogManager/archives/update";
+    @GetMapping("/blog/category/{id}.html")
+    public String categoryUpdatePage(@PathVariable Integer id, Model model) {
+        model.addAttribute("category", categoryService.selectBlogCategoryByCategoryId(id));
+        return "blogManager/category/update";
     }
 
-    @GetMapping("/blog/archives/add.html")
-    public String archivesAddPage() {
-        return "blogManager/archives/add";
+    @GetMapping("/blog/category/add.html")
+    public String categoryAddPage() {
+        return "blogManager/category/add";
     }
 
     /**
@@ -56,38 +54,38 @@ public class ArchivesController {
      *
      * @return
      */
-    @GetMapping("/blog/archives.json")
+    @GetMapping("/blog/category.json")
     @ResponseBody
-    public Result getAllBlogArchives(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+    public Result getAllBlogcategory(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime,
                                      @RequestParam(value = "description", required = false) String description,
                                      @RequestParam(value = "title", required = false) String title) {
         PageHelper.startPage(pageNum, pageSize, "update_time desc");
-        List<Archives> allBlogArchives = archivesService.getAllBlogArchives(startTime, endTime, description, title);
-        PageInfo pageInfo = new PageInfo(allBlogArchives);
+        List<Category> allBlogCategory = categoryService.getAllBlogCategory(startTime, endTime, description, title);
+        PageInfo pageInfo = new PageInfo(allBlogCategory);
         return ResultUtil.success(pageInfo);
     }
 
-    @PostMapping("/blog/archives")
+    @PostMapping("/blog/category")
     @ResponseBody
-    public Result insertBlogArchives(Archives archives) {
-        int i = archivesService.insertBlogArchives(archives);
+    public Result insertBlogCategory(Category category) {
+        int i = categoryService.insertBlogCategory(category);
         return ResultUtil.success(i);
     }
 
-    @PutMapping("/blog/archives")
+    @PutMapping("/blog/category")
     @ResponseBody
-    public Result updateBlogArchives(Archives archives) {
-        int i = archivesService.updateBlogArchives(archives);
+    public Result updateBlogCategory(Category category) {
+        int i = categoryService.updateBlogCategory(category);
         return ResultUtil.success(i);
     }
 
-    @DeleteMapping("/blog/archives/{ids}")
+    @DeleteMapping("/blog/category/{ids}")
     @ResponseBody
-    public Result deleteBlogArchives(@PathVariable Integer[] ids) {
-        int i = archivesService.deleteBlogArchives(ids);
+    public Result deleteBlogCategory(@PathVariable Integer[] ids) {
+        int i = categoryService.deleteBlogCategory(ids);
         return ResultUtil.success(i);
     }
 

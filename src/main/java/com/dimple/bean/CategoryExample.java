@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ArchivesExample {
+public class CategoryExample {
     /**
-     * archives
+     * category
      */
     protected String orderByClause;
 
     /**
-     * archives
+     * category
      */
     protected boolean distinct;
 
     /**
-     * archives
+     * category
      */
     protected List<Criteria> oredCriteria;
 
-    public ArchivesExample() {
+    public CategoryExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -74,7 +74,7 @@ public class ArchivesExample {
     }
 
     /**
-     * archives 2018-12-11
+     * category 2018-12-12
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -117,63 +117,63 @@ public class ArchivesExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andArchivesIdIsNull() {
-            addCriterion("archives_id is null");
+        public Criteria andCategoryIdIsNull() {
+            addCriterion("category_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdIsNotNull() {
-            addCriterion("archives_id is not null");
+        public Criteria andCategoryIdIsNotNull() {
+            addCriterion("category_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdEqualTo(Integer value) {
-            addCriterion("archives_id =", value, "archivesId");
+        public Criteria andCategoryIdEqualTo(Integer value) {
+            addCriterion("category_id =", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdNotEqualTo(Integer value) {
-            addCriterion("archives_id <>", value, "archivesId");
+        public Criteria andCategoryIdNotEqualTo(Integer value) {
+            addCriterion("category_id <>", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdGreaterThan(Integer value) {
-            addCriterion("archives_id >", value, "archivesId");
+        public Criteria andCategoryIdGreaterThan(Integer value) {
+            addCriterion("category_id >", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("archives_id >=", value, "archivesId");
+        public Criteria andCategoryIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("category_id >=", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdLessThan(Integer value) {
-            addCriterion("archives_id <", value, "archivesId");
+        public Criteria andCategoryIdLessThan(Integer value) {
+            addCriterion("category_id <", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdLessThanOrEqualTo(Integer value) {
-            addCriterion("archives_id <=", value, "archivesId");
+        public Criteria andCategoryIdLessThanOrEqualTo(Integer value) {
+            addCriterion("category_id <=", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdIn(List<Integer> values) {
-            addCriterion("archives_id in", values, "archivesId");
+        public Criteria andCategoryIdIn(List<Integer> values) {
+            addCriterion("category_id in", values, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdNotIn(List<Integer> values) {
-            addCriterion("archives_id not in", values, "archivesId");
+        public Criteria andCategoryIdNotIn(List<Integer> values) {
+            addCriterion("category_id not in", values, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdBetween(Integer value1, Integer value2) {
-            addCriterion("archives_id between", value1, value2, "archivesId");
+        public Criteria andCategoryIdBetween(Integer value1, Integer value2) {
+            addCriterion("category_id between", value1, value2, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andArchivesIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("archives_id not between", value1, value2, "archivesId");
+        public Criteria andCategoryIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("category_id not between", value1, value2, "categoryId");
             return (Criteria) this;
         }
 
@@ -499,7 +499,7 @@ public class ArchivesExample {
     }
 
     /**
-     * archives
+     * category
      */
     public static class Criteria extends GeneratedCriteria {
 
@@ -509,7 +509,7 @@ public class ArchivesExample {
     }
 
     /**
-     * archives 2018-12-11
+     * category 2018-12-12
      */
     public static class Criterion {
         private String condition;
