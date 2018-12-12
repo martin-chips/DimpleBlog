@@ -1,0 +1,117 @@
+@charset "utf-8";
+@media screen and (min-width: 1024px) and (max-width: 1199px) {
+.navbox { width: 96% }
+#starlist li a { padding: 0 10px; }
+#starlist li.menu:before { right: 0 }
+.zhuanti li { width: 27% }
+.searchbox { width: 96% }
+.box, article { width: 96% }
+.fader .slide img { height: 320px }
+.links li { width: 100%; text-align: left }
+.jianzhan li section { margin: 0 5px; }
+.jianzhan li:nth-child(1) { width: 30% }
+.jianzhan li:nth-child(3) { width: 36.3% }
+}
+@media screen and (max-width: 1023px) {
+/*header*/
+header { position: fixed; z-index: 999 }
+nav { width: 100%; height: auto; background: rgba(0,0,0,0.5); margin-top: 18px; position: fixed; z-index: 999; top: 42px; }
+.searchico { position: absolute; top: 6px; right: 10px; }
+.search { width: 80% }
+.navbox { width: 100% }
+.searchbox { width: 100%; position: fixed; top: 50px; z-index: 99; background: rgba(0,0,0,.8); }
+.logo { margin-left: 0; line-height: 56px;    float: none;    text-align: center;    margin-right: 0px; }
+#mnavh { overflow: hidden; position: absolute; }
+#mnavh { display: block; }
+#starlist { display: none; width: 100%;/* top: 30px; */ }
+#starlist li { width: 55%; text-align: center; background: #12b7de; float: none; display: block; font-weight: bold; }
+#starlist li:last-child { padding-bottom: 100% }
+#starlist li a { color: #fff; display: block; width: 100%; text-align: center; float: none; padding: 0; background: #12b7de; border-bottom: #49ccea 1px solid; }
+#starlist ul.sub { display: block; position: inherit; left: inherit; top: inherit; }
+#starlist ul.sub li { width: 100% }
+#starlist ul.sub li:last-child { padding-bottom: 0; border-bottom: #49ccea 1px solid; }
+#starlist ul.sub li a { color: #fff; font-weight: normal; border-bottom: none; }
+#starlist ul.sub li a:hover, #starlist li:hover a, #starlist #selected { color: #fff; }
+.menu span { display: block; width: 50px; height: 50px; background: #12b7de; opacity: 0.5; position: absolute; top: 0; right: 0; border-left: #49ccea 1px solid; }
+.menu:before { right: 20px; }
+/**/
+.box, article { width: 96% }
+article { padding-top: 80px; }
+.lbox { width: 100% }
+.rbox { display: none }
+.qq_join li section { margin: 0 10px }
+.jianzhan li section { margin: 0 5px; }
+.jianzhan li:nth-child(1) { width: 30% }
+.jianzhan li:nth-child(3) { width: 36.3% }
+.zhuanti li { width: 27%; }
+}
+ @media only screen and (max-width: 768px) {
+.zhuanti li { padding: 15px; }
+.bplist a img { width: 96% }
+.xinlu li a { padding: 5px; margin: 0 5px; }
+.myblog li { width: 33.3%; }
+.qq_join li section { margin: 0 5px; padding: 5px; }
+.qq_join li p { margin: 10px 0; font-size: 12px }
+.endnav p:last-child { text-align: center; margin-top: 20px; }
+.site_tj li { width: 20% }
+.hnav a { font-size: 12px }
+.muban li section { margin: 0 5px; height: 260px; overflow: hidden }
+.zhuanti li { width: 27.6%; padding: 8px }
+}
+ @media only screen and (max-width: 480px) {
+.headline { width: 100% }
+.headline ul { height: auto; padding-bottom: 10px; overflow: hidden }
+.headline ul li { width: 49%; float: left; }
+.headline ul li:last-child { float: right }
+.headline ul li span { padding: 0 20px }
+.banbox { width: 100% }
+.fader { height: 200px; }
+.newspic { width: 100%; height: auto }
+.newspic li { width: 49%; float: left }
+.newspic li:last-child { float: right }
+.newspic li a { height: 100% }
+.newslist { float: none; width: 100% }
+.zhuanti ul { padding: 0 }
+.zhuanti li { width: 44%; padding: 8px; }
+.zhuanti ul:before { left: 0; }
+.zhuanti ul:after { bottom: 0 }
+.ad { padding: 5px }
+.blogtitle { font-size: 16px }
+.bplist { height: 60px }
+.bplist a img { height: 100% }
+a.viewmore { position: static; margin-top: 20px; text-align: center }
+.blogpic { width: 100px; margin-right: 10px; height: 76px; }
+.blogtext { margin-top: 15px }
+.lanmu h1 { font-size: 18px; }
+.top_pic { width: 100%; float: none; margin-bottom: 10px }
+.top_box { float: none; width: 100%; }
+.liucheng li, .jianzhan li:nth-child(1), .jianzhan li:nth-child(3) { width: 100%; }
+.muban li section { height: auto }
+.site_tj li { width: 50% }
+.about { padding: 20px }
+.ab_box p:last-child { width: 100%; clear: both; padding-top: 10px }
+.ly_button { float: none; display: block; }
+.xinlu li { width: 50% }
+.myblog li, .xiangsi li { width: 50% }
+.qq_join li { width: 50%; margin-bottom: 20px }
+.wxbox ul { overflow: hidden; text-align: center }
+.wxbox li { float: none; display: inline-block }
+.wxbox { float: none }
+.endnav { width: 100%; overflow: hidden; margin-top: 20px }
+.endnav p { margin: 0 10px }
+.price_info img { position: static }
+.free li { width: 100%; margin-bottom: 10px }
+.newspic span { padding: 0 8px; }
+.hnav { float: none; width: 100%; clear: both; display: block; overflow: hidden; }
+.ztpic { height: 60px; }
+.zhuanti li b { -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 2; font-size: 14px; height: 42px; line-height: 24px; white-space: inherit; }
+.bloginfo { width: 100% }
+.imgscale img { height: 100%; max-width: 100%; }
+.blogpic i { display: none }
+.fader .slide img { height: 200px; }
+.otherlink li{width:100%}
+.tab_buttons { overflow-x: auto;}
+.tab_buttons ul { width: 600px;overflow-x: scroll;}
+.tab_buttons li {margin-right: 30px;width: auto;}
+.newscurrent a:after{width:100%}
+}

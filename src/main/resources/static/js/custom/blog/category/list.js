@@ -21,11 +21,11 @@ function initTable() {
             checkbox: true
         }, {
             field: 'categoryId',
-            title: '归档ID',
+            title: '类别ID',
             align: 'center',
         }, {
             field: 'title',
-            title: '归档名称',
+            title: '类别',
             align: 'center',
         }, {
             field: 'description',
@@ -47,7 +47,7 @@ function initTable() {
             }
         }, {
             field: 'count',
-            title: '数量',
+            title: '文章数量',
             align: 'center',
         }, {
             field: 'operate',

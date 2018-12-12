@@ -34,19 +34,21 @@ public class CategoriesController {
      * @return
      */
     @GetMapping("/blog/category.html")
-    public String categoryPage() {
-        return "blogManager/category/category";
+    public String categoryPage(Model model) {
+        List<Category> allBlogCategory = categoryService.getAllBlogCategory();
+        model.addAttribute("categories", allBlogCategory);
+        return "blog/category/category";
     }
 
     @GetMapping("/blog/category/{id}.html")
     public String categoryUpdatePage(@PathVariable Integer id, Model model) {
         model.addAttribute("category", categoryService.selectBlogCategoryByCategoryId(id));
-        return "blogManager/category/update";
+        return "blog/category/update";
     }
 
     @GetMapping("/blog/category/add.html")
     public String categoryAddPage() {
-        return "blogManager/category/add";
+        return "blog/category/add";
     }
 
     /**
@@ -88,5 +90,4 @@ public class CategoriesController {
         int i = categoryService.deleteBlogCategory(ids);
         return ResultUtil.success(i);
     }
-
 }

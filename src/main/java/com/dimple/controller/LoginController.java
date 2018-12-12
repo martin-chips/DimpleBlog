@@ -45,7 +45,7 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping({"/index.html", "/"})
+    @RequestMapping({"/index.html"})
     public String index(Model model) {
         model.addAttribute("unhandledLinksCount", linksService.getUnHandledLinksCount());
         return "index";

@@ -23,7 +23,7 @@
                     method: _method,                                    //请求方式(*)
                     undefinedText: "未知",                                //当数据为undefined显示的字符
                     cache: false,                                       //是否使用缓存
-                    striped: _striped,                                  //设置行间隔色
+                    striped: false,                                  //设置行间隔色
                     sortStable: true,                                   // 设置为 true 将获得稳定的排序
                     sortName: _sortName,                                // 排序列名称
                     sortOrder: _sortOrder,                              // 排序方式  asc 或者 desc
@@ -740,7 +740,6 @@
             },
             // 添加信息
             add: function (id) {
-                console.log(id)
                 var url = $.common.isEmpty(id) ? $.table._options.addUrl : $.table._options.addUrl.replace("{id}", id);
                 $.modal.open("添加" + $.table._options.modalName, url);
             },

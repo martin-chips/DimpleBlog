@@ -1,10 +1,19 @@
 package com.dimple.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.dimple.bean.Blog;
+import com.dimple.service.BlogService;
 import com.dimple.utils.QiNiuUtils;
+import com.dimple.utils.message.Result;
+import com.dimple.utils.message.ResultUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qiniu.util.StringMap;
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -23,19 +32,82 @@ import java.util.*;
  * @Version: 1.0
  */
 @Controller
-@RequestMapping("/blog")
 @Api("博客管理接口测试模块")
 public class BlogController {
 
-    /**
-     * 定义的返回视图的前缀
-     */
-    private static String PREFIX = "blogManager/";
+    @Autowired
+    BlogService blogService;
 
-    //统一页面返回
-    @GetMapping("/{uri}")
-    public String returnPage(@PathVariable("uri") String uri) {
-        return PREFIX + uri;
+    @GetMapping("/blog/editBlog.html")
+    public String returnPage() {
+        return "blog/editBlog";
+    }
+
+    @GetMapping("/blog/blogList.html")
+    public String blogListPage(Model model) {
+        return "blog/list/blog";
+    }
+
+    @GetMapping("/blog/blogList/{id}")
+    public String blogUpdatePage(@PathVariable Integer id, Model model) {
+        model.addAttribute("blog", blogService.selectBlogById(id));
+        return "blog/list/update";
+    }
+
+    /**
+     * 删除blog
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/blog/blogList/{id}")
+    @ResponseBody
+    public Result deleteBlog(@PathVariable Integer id) {
+        int i = blogService.deleteBlog(id);
+        return ResultUtil.success(i);
+    }
+
+    /**
+     * 更换Blog的状态
+     *
+     * @param id
+     * @param status
+     * @return
+     */
+    @DeleteMapping("/blog/blogList/{status}/{id}")
+    @ResponseBody
+    public Result changeBlogStatus(@PathVariable Integer id, @PathVariable Integer status) {
+        int i = blogService.changeBlogStatus(id, status);
+        return ResultUtil.success(i);
+    }
+
+    @PutMapping("/blog/blogList")
+    @ResponseBody
+    public Result updateBlog(Blog blog) {
+        int i = blogService.updateBlog(blog);
+        return ResultUtil.success(i);
+    }
+
+    @PostMapping("/blog/blogList")
+    @ResponseBody
+    public Result insertBlog(Blog blog) {
+        int i = blogService.addBlog(blog);
+        return ResultUtil.success(i);
+    }
+
+    @GetMapping("/blog/blogList.json")
+    @ResponseBody
+    public Result getAllBlog(
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+            @RequestParam(value = "title", defaultValue = "", required = false) String title,
+            @RequestParam(value = "status", required = false) Integer status,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
+        PageHelper.startPage(pageNum, pageSize, "create_time desc");
+        List<Blog> blogs = (List<Blog>) blogService.selectAllBlog(title, startTime, endTime, status);
+        PageInfo pageInfo = new PageInfo(blogs);
+        return ResultUtil.success(pageInfo);
     }
 
 

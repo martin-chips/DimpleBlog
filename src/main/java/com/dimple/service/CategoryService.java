@@ -13,7 +13,15 @@ import java.util.List;
  * @Version: 1.0
  */
 public interface CategoryService {
+
     List<Category> getAllBlogCategory(Date startTime, Date endTime, String description, String title);
+
+    /**
+     * 获取所有的分类类别
+     *
+     * @return
+     */
+    List<Category> getAllBlogCategory();
 
     /**
      * 新增归档

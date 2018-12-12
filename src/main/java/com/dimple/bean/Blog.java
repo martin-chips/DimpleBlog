@@ -7,7 +7,7 @@ public class Blog implements Serializable {
     /**
      * 博客的主键
      */
-    private Integer articleId;
+    private Integer blogId;
 
     /**
      * 博客所属分类
@@ -25,11 +25,6 @@ public class Blog implements Serializable {
     private String summary;
 
     /**
-     * 内容
-     */
-    private String content;
-
-    /**
      * 创建时间
      */
     private Date createTime;
@@ -37,7 +32,7 @@ public class Blog implements Serializable {
     /**
      * 状态，1表示已发表，2表示在草稿箱，3表示在垃圾箱
      */
-    private Byte status;
+    private Integer status;
 
     /**
      * 是否推荐
@@ -57,12 +52,17 @@ public class Blog implements Serializable {
     /**
      * 置顶量
      */
-    private Byte up;
+    private Integer weigt;
 
     /**
      * 更新时间
      */
     private Date updateTime;
+
+    /**
+     * 内容
+     */
+    private String content;
 
     /**
      * blog
@@ -71,18 +71,18 @@ public class Blog implements Serializable {
 
     /**
      * 博客的主键
-     * @return article_id 博客的主键
+     * @return blog_id 博客的主键
      */
-    public Integer getArticleId() {
-        return articleId;
+    public Integer getBlogId() {
+        return blogId;
     }
 
     /**
      * 博客的主键
-     * @param articleId 博客的主键
+     * @param blogId 博客的主键
      */
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
+    public void setBlogId(Integer blogId) {
+        this.blogId = blogId;
     }
 
     /**
@@ -134,22 +134,6 @@ public class Blog implements Serializable {
     }
 
     /**
-     * 内容
-     * @return content 内容
-     */
-    public String getContent() {
-        return content;
-    }
-
-    /**
-     * 内容
-     * @param content 内容
-     */
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    /**
      * 创建时间
      * @return create_time 创建时间
      */
@@ -169,7 +153,7 @@ public class Blog implements Serializable {
      * 状态，1表示已发表，2表示在草稿箱，3表示在垃圾箱
      * @return status 状态，1表示已发表，2表示在草稿箱，3表示在垃圾箱
      */
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -177,7 +161,7 @@ public class Blog implements Serializable {
      * 状态，1表示已发表，2表示在草稿箱，3表示在垃圾箱
      * @param status 状态，1表示已发表，2表示在草稿箱，3表示在垃圾箱
      */
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -231,18 +215,18 @@ public class Blog implements Serializable {
 
     /**
      * 置顶量
-     * @return up 置顶量
+     * @return weigt 置顶量
      */
-    public Byte getUp() {
-        return up;
+    public Integer getWeigt() {
+        return weigt;
     }
 
     /**
      * 置顶量
-     * @param up 置顶量
+     * @param weigt 置顶量
      */
-    public void setUp(Byte up) {
-        this.up = up;
+    public void setWeigt(Integer weigt) {
+        this.weigt = weigt;
     }
 
     /**
@@ -259,5 +243,21 @@ public class Blog implements Serializable {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    /**
+     * 内容
+     * @return content 内容
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * 内容
+     * @param content 内容
+     */
+    public void setContent(String content) {
+        this.content = content;
     }
 }

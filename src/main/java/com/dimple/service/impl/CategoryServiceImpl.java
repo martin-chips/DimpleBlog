@@ -45,6 +45,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> getAllBlogCategory() {
+        return categoryMapper.selectByExample(null);
+    }
+
+    @Override
     public int insertBlogCategory(Category category) {
         if (category == null || StringUtils.isBlank(category.getTitle())) {
             return -1;

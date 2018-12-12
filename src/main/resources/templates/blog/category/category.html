@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 
 <head th:include="common :: common-head"></head>
@@ -15,39 +15,45 @@
                     <div class="file-manager">
                         <a class="btn btn-block btn-primary compose-mail">类别管理</a>
                         <div class="space-25"></div>
-                        <h5>分类</h5>
-                        <ul class="category-list" style="padding: 0">
-                            <li>
-                                <a href="mail_compose.html#"> <i class="fa fa-circle text-navy"></i> 工作</a>
-                            </li>
-                            <li>
-                                <a href="mail_compose.html#"> <i class="fa fa-circle text-danger"></i> 文档</a>
-                            </li>
-                            <li>
-                                <a href="mail_compose.html#"> <i class="fa fa-circle text-primary"></i> 社交</a>
-                            </li>
-                            <li>
-                                <a href="mail_compose.html#"> <i class="fa fa-circle text-info"></i> 广告</a>
-                            </li>
-                            <li>
-                                <a href="mail_compose.html#"> <i class="fa fa-circle text-warning"></i> 客户端</a>
+                        <ul class="folder-list m-b-md" style="padding: 0">
+                            <li th:each="category : ${categories}">
+                                <a> <i class="fa fa-inbox "></i><span th:text="${category.title}"></span>
+                                    <span class="label label-warning pull-right" th:text="${category.count}"></span>
+                                </a>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
+
+            <form class="form-horizontal m" id="archivesAddForm">
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label ">类别：</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" name="title" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label ">描述：</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" type="text" name="description" value=""></textarea>
+                        </div>
+                    </div>
+                    <a class="btn btn-block btn-info compose-mail">提交</a>
+                </div>
+            </form>
         </div>
         <div class="col-sm-9 animated fadeInRight">
             <div class="container-div">
                 <div class="row">
-
                     <div class="col-sm-12 search-collapse">
                         <form id="role-form">
                             <div class="select-list">
                                 <ul>
                                     <li>
-                                        名称：<input type="text" name="title"/>
+                                        类别：<input type="text" name="title"/>
                                     </li>
                                     <li>
                                         描述：<input type="text" name="description"/>
@@ -94,8 +100,8 @@
     </div>
 
     <div th:include="common :: common-footer"></div>
-    <script src="/static/js/custom/blogManager/category/list.js"
-            th:src="@{/js/custom/blogManager/category/list.js}"></script>
+    <script src="/static/js/custom/blog/category/list.js"
+            th:src="@{/js/custom/blog/category/list.js}"></script>
 </div>
 
 </body>
