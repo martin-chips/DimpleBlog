@@ -3,8 +3,8 @@
 <head th:include="common :: common-head"></head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="archivesAddForm">
-        <input type="hidden" name="archivesId" th:value="${category.categoryId}">
+    <form class="form-horizontal m" id="categoryAddForm">
+        <input type="hidden" name="categoryId" th:value="${category.categoryId}">
         <div class="form-group">
             <label class="col-sm-3 control-label ">类别：</label>
             <div class="col-sm-8">
@@ -44,8 +44,8 @@
         $.ajax({
             type: "put",
             dataType: "json",
-            data: $("#archivesAddForm").serialize(),
-            url: "/blog/archives",
+            data: $("#categoryAddForm").serialize(),
+            url: "/blog/category",
             success: function (data) {
                 if (data != null && data.code == web_status.SUCCESS) {
                     $.modal.msgReload(data.msg, modal_status.SUCCESS);

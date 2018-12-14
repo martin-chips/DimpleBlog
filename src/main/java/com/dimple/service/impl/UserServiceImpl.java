@@ -5,11 +5,10 @@ import com.dimple.bean.UserExample;
 import com.dimple.dao.UserMapper;
 import com.dimple.exception.user.UserAccountNotExistsException;
 import com.dimple.service.UserService;
-import com.dimple.utils.md5PasswordGenerator.Md5PasswordGenerator;
+import com.dimple.utils.md5PasswordGenerator.Md5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import oshi.util.StringUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -108,7 +107,7 @@ public class UserServiceImpl implements UserService {
             return -1;
         }
         if (StringUtils.isNotBlank(user.getPassword())) {
-            user.setPassword(Md5PasswordGenerator.generatorMd5(user.getPassword(), userDB.getSalt()));
+            user.setPassword(Md5Util.generatorMd5(user.getPassword(), userDB.getSalt()));
         }
         return userMapper.updateByPrimaryKeySelective(user);
     }
@@ -122,7 +121,7 @@ public class UserServiceImpl implements UserService {
         user.setLocked(false);
         //设置盐
         user.setSalt(UUID.randomUUID().toString().substring(0, 8));
-        user.setPassword(Md5PasswordGenerator.generatorMd5(user.getPassword(), user.getSalt()));
+        user.setPassword(Md5Util.generatorMd5(user.getPassword(), user.getSalt()));
         return userMapper.insert(user);
     }
 

@@ -1,64 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="common :: front-head"></head>
 
-<head>
-    <meta charset="utf-8">
-    <title>首页-杨青青个人博客模板主题《今夕何夕》</title>
-    <meta name="keywords" content="blog"/>
-    <meta name="description" content="blog"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/front/css/base.css" th:href="@{/front/css/base.css}" rel="stylesheet">
-    <link href="/static/front/css/m.css" th:href="@{/front/css/m.css}" rel="stylesheet">
-    <script src="/front/js/jquery-1.8.3.min.js" th:href="@{front/js/jquery-1.8.3.min.js}"></script>
-    <script src="/front/js/comm.js" th:href="@{/front/js/comm.js}"></script>
-    <!--[if lt IE 9]>
-    <script src="/front/js/modernizr.js"></script>
-    <![endif]-->
-</head>
 
 <body>
-<!--top begin-->
-<header id="header">
-    <div class="navbox">
-        <h2 id="mnavh"><span class="navicon"></span></h2>
-        <div class="logo"><a href="http://www.bianxiaofeng.com">Dimple的个人博客</a></div>
-        <nav>
-            <ul id="starlist">
-                <li><a href="index.html">网站首页</a></li>
-                <li><a href="list.html">技术博客</a></li>
-                <li class="menu"><a href="list2.html">资源分享</a>
-                    <ul class="sub">
-                        <li><a href="/6">软件分享</a></li>
-                        <li><a href="/7">资料分享</a></li>
-                    </ul>
-                    <span></span>
-                </li>
-                <li><a href="list3.html">随心吐槽</a></li>
-                <li><a href="about.html">关于我</a></li>
-                <li><a href="about.html">留言</a></li>
-                <li><a href="about.html">登陆</a></li>
-            </ul>
-        </nav>
-        <div class="searchico"></div>
-    </div>
-</header>
-<div class="searchbox">
-    <!-- 搜索框 -->
-    <div class="search">
-        <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
-            <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);"
-                   onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}"
-                   onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}"
-                   type="text">
-            <input name="show" value="title" type="hidden">
-            <input name="tempid" value="1" type="hidden">
-            <input name="tbname" value="news" type="hidden">
-            <input name="Submit" class="input_submit" value="搜索" type="submit">
-        </form>
-    </div>
-    <div class="searchclose"></div>
-</div>
-<!--top end-->
+
+<div th:include="common :: front-header"></div>
+
 <article>
     <!--lbox begin-->
     <div class="lbox">
@@ -99,10 +47,10 @@
                 <ul>
                     <!-- 此处分类可以后端生成 -->
                     <li class="newscurrent"><a href="javascrpt::">个人博客</a></li>
-                    <li><a href="javascrpt::">Java技术</a></li>
+                    <li><a href="javascrpt::">Java基础</a></li>
                     <li><a href="javascrpt::">SpringBoot</a></li>
-                    <li><a href="javascrpt::">我的博客</a></li>
-                    <li><a href="javascrpt::">前端技术</a></li>
+                    <li><a href="javascrpt::">Spring家族</a></li>
+                    <li><a href="javascrpt::">其他框架</a></li>
                 </ul>
             </div>
             <div class="newstab">
@@ -253,7 +201,7 @@
         <!--tab_box end-->
         <div class="zhuanti whitebg">
             <h2 class="htitle"><span class="hnav"><a href="/">原创模板</a><a href="/">古典</a><a href="/">清新</a><a
-                    href="/">低调</a></span>点赞排行</h2>
+                    href="/">低调</a></span>大家在看</h2>
             <ul>
                 <!-- 可以后端生成 -->
                 <li><i class="ztpic"><a href="/" target="_blank"><img src="/front/images/1.jpg"></a></i> <b>个人博客模板《今夕何夕》-响应式个人...</b><span>个人博客模板《今夕何夕》，宽屏响应式个人博客模板，采用冷色系为主，固定导航栏和侧边栏，无缝滚动图片...</span><a
@@ -270,7 +218,7 @@
                         href="" target="_blank" class="readmore">文章阅读</a></li>
             </ul>
         </div>
-        <div class="ad whitebg"><img src="images/longad.jpg"></div>
+        <div class="ad whitebg"><img src="/front/images/longad.jpg"></div>
         <div class="whitebg bloglist">
             <h2 class="htitle">最新博文</h2>
             <ul>
@@ -278,9 +226,9 @@
                 <li>
                     <h3 class="blogtitle"><a href="/" target="_blank"><b>【顶】</b>别让这些闹心的套路，毁了你的网页设计!</a></h3>
                     <span class="bplist"><a href="/"> <img src="/front/images/b02.jpg" alt=""></a> <a href="/"><img
-                            src="images/b03.jpg"
+                            src="/front/images/b03.jpg"
                             alt=""></a> <a href="/"><img src="/front/images/b04.jpg" alt=""> </a><a href="/"><img
-                            src="images/b05.jpg"
+                            src="/front/images/b05.jpg"
                             alt=""> </a></span>
                     <p class="blogtext">如图，要实现上图效果，我采用如下方法：1、首先在数据库模型，增加字段，分别是图片2，图片3。2、增加标签模板，用if，else if
                         来判断，输出。思路已打开，样式调用就可以多样化啦！... </p>
@@ -504,28 +452,6 @@
         </div>
     </div>
 </article>
-<footer>
-    <div class="box">
-        <div class="wxbox">
-            <ul>
-                <li><img src="/front/images/wxgzh.jpg"><span>微信公众号</span></li>
-                <li><img src="/front/images/wx.png"><span>我的微信</span></li>
-            </ul>
-        </div>
-        <div class="endnav">
-            <p><b>站点声明：</b></p>
-            <p>1、本站个人博客模板，均为杨青青本人设计，个人可以使用，但是未经许可不得用于任何商业目的。</p>
-            <p>2、所有文章未经授权禁止转载、摘编、复制或建立镜像，如有违反，追究法律责任。举报邮箱：<a
-                    href="" target="_blank">dacesmiling@qq.com</a></p>
-            <p>Copyright © <a href="http://www.yangqq.com" target="_blank">www.yangqq.com</a> All Rights Reserved.
-                备案号：<a
-                        href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备11002373号-1</a></p>
-        </div>
-    </div>
-    <a href="#">
-        <div class="top"></div>
-    </a>
-</footer>
+<div th:include="common :: front-footer"></div>
 </body>
-
 </html>

@@ -31,7 +31,6 @@ import java.util.Properties;
 public class ShiroConfig {
 
 
-
     @Bean("shiroFilter")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -48,6 +47,13 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/generateKaptcha", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/html/**", "anon");
+        //首页不拦截
+        filterChainDefinitionMap.put("/", "anon");
+        //前端界面不拦截
+        filterChainDefinitionMap.put("/front/**", "anon");
+        filterChainDefinitionMap.put("/about.html", "anon");
+        filterChainDefinitionMap.put("technology.html", "anon");
+        //退出
         filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/auth", "anon");
         filterChainDefinitionMap.put("/**", "authc");

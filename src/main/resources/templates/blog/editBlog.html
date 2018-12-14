@@ -1,26 +1,12 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Bootstrap3 Markdown编辑器</title>
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="/css/animate.css" rel="stylesheet">
-    <link href="/css/summernote/summernote.css" rel="stylesheet">
-    <link href="/css/summernote/summernote-bs3.css" rel="stylesheet">
-    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
-    <!-- 全局js -->
-    <script src="/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
-    <!-- 自定义js -->
-    <script src="/js/content.js?v=1.0.0"></script>
-    <script src="/js/summernote/summernote.min.js"></script>
-    <script src="/js/summernote/summernote-zh-CN.js"></script>
-    <!--页面JS-->
-    <script src="/js/pagejs/editor.js"></script>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="common :: common-head"></head>
+<link rel="stylesheet" href="/static/plugin/summernote/summernote.css"
+      th:href="@{/plugin/summernote/summernote.css}">
+<link rel="stylesheet" href="/static/plugin/summernote/summernote-bs3.css"
+      th:href="@{/plugin/summernote/summernote-bs3.css}">
+
 
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
@@ -39,7 +25,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a> <i class="fa fa-file-text-o"></i> 草稿箱 <span class="label label-danger pull-right">2</span>
+                                <a> <i class="fa fa-file-text-o"></i> 草稿箱 <span
+                                        class="label label-danger pull-right">2</span>
                                 </a>
                             </li>
                             <li>
@@ -148,16 +135,14 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5>编辑区</h5>
-                            </div>
-                            <div class="ibox-content no-padding">
-                                <div id="summernote">
-                                </div>
-                            </div>
+                        <div class="ibox-title">
+                            <h5>编辑区</h5>
+                        </div>
+                        <div class="ibox-content no-padding">
+                            <div id="summernote" class="summernote"></div>
                         </div>
                     </div>
+
                 </div>
                 <div class="mail-body text-right tooltip-demo">
                     <a id="send" class="btn btn-sm btn-primary" data-toggle="tooltip"
@@ -165,8 +150,17 @@
                        title="Send"><i class="fa fa-reply"></i> 发布</a>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+
+<div th:include="common :: common-footer"></div>
+<script src="/static/plugin/summernote/summernote.js" th:src="@{/plugin/summernote/summernote.js}"></script>
+
+<script src="/static/plugin/summernote/lang/summernote-zh-CN.js"
+        th:src="@{/plugin/summernote/lang/summernote-zh-CN.js}"></script>
+<!--页面JS-->
+<script src="/static/js/custom/blog/edit/editor.js" th:src="@{/js/custom/blog/edit/editor.js}"></script>
 </body>
 </html>

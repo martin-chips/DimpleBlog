@@ -3,14 +3,17 @@ package com.dimple.controller;
 import com.dimple.utils.message.Result;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * @ClassName: FrontController
- * @Description:前端请求的Controller
+ * @Description: 前端请求的Controller
  * @Auther: Owenb
  * @Date: 12/12/18 17:00
  * @Version: 1.0
@@ -23,13 +26,13 @@ public class FrontController {
      * @return
      */
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
         return "front/index";
     }
 
     @RequestMapping("/{url}")
     public String toPage(@PathVariable String url) {
-        return "";
+        return "front/"+url;
     }
 
     /**
@@ -43,4 +46,7 @@ public class FrontController {
     public Result getBusinessCard() {
         return null;
     }
+
+
+
 }

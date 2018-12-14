@@ -1,8 +1,12 @@
 package com.dimple.config;
 
 import com.dimple.interceptor.RequestInterceptor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,7 +22,17 @@ import javax.annotation.Resources;
  * @Version: 1.0
  */
 @Configuration
+@Slf4j
 public class WebAppConfigurerCustom implements WebMvcConfigurer {
+
+    @Value("${dimple.ImgUploadDir.windows}")
+    String imgDirWindows;
+
+
+    @Value("${dimple.ImgUploadDir.linux}")
+    String imgDirLinux;
+
+
     /**
      * 配置上传文件资源映射
      *
@@ -26,7 +40,15 @@ public class WebAppConfigurerCustom implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/image/**").addResourceLocations("file:D:/tempfile/");
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.startsWith("windows")) {
+            log.info("当前图片上传的路径为： " + "file:" + imgDirWindows);
+            registry.addResourceHandler("/images/**").addResourceLocations("file:" + imgDirWindows);
+        } else {
+            log.info("当前图片上传的路径为： " + imgDirLinux);
+            registry.addResourceHandler("/images/**").addResourceLocations(imgDirLinux);
+        }
     }
 
     @Autowired
