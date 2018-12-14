@@ -677,7 +677,6 @@
                 };
                 $.ajax(config);
             },
-
             post: function (url, data) {
                 $.operate.submit(url, "post", "json", data);
             },

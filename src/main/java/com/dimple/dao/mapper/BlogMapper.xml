@@ -11,8 +11,9 @@
     <result column="support" property="support" jdbcType="BIT" />
     <result column="tags" property="tags" jdbcType="VARCHAR" />
     <result column="click" property="click" jdbcType="INTEGER" />
-    <result column="weigt" property="weigt" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="header_url" property="headerUrl" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.dimple.bean.Blog" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -77,7 +78,7 @@
   </sql>
   <sql id="Base_Column_List" >
     blog_id, category_id, title, summary, create_time, status, support, tags, click, 
-    weigt, update_time
+    weight, update_time, header_url
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -133,12 +134,14 @@
   <insert id="insert" parameterType="com.dimple.bean.Blog" >
     insert into blog (blog_id, category_id, title, 
       summary, create_time, status, 
-      support, tags, click, weigt, 
-      update_time, content)
+      support, tags, click, weight, 
+      update_time, header_url, content
+      )
     values (#{blogId,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
       #{summary,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
-      #{support,jdbcType=BIT}, #{tags,jdbcType=VARCHAR}, #{click,jdbcType=INTEGER}, #{weigt,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+      #{support,jdbcType=BIT}, #{tags,jdbcType=VARCHAR}, #{click,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{headerUrl,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.Blog" >
     insert into blog
@@ -170,11 +173,14 @@
       <if test="click != null" >
         click,
       </if>
-      <if test="weigt != null" >
-        weigt,
+      <if test="weight != null" >
+        weight,
       </if>
       <if test="updateTime != null" >
         update_time,
+      </if>
+      <if test="headerUrl != null" >
+        header_url,
       </if>
       <if test="content != null" >
         content,
@@ -208,11 +214,14 @@
       <if test="click != null" >
         #{click,jdbcType=INTEGER},
       </if>
-      <if test="weigt != null" >
-        #{weigt,jdbcType=INTEGER},
+      <if test="weight != null" >
+        #{weight,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="headerUrl != null" >
+        #{headerUrl,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -255,11 +264,14 @@
       <if test="record.click != null" >
         click = #{record.click,jdbcType=INTEGER},
       </if>
-      <if test="record.weigt != null" >
-        weigt = #{record.weigt,jdbcType=INTEGER},
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=INTEGER},
       </if>
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.headerUrl != null" >
+        header_url = #{record.headerUrl,jdbcType=VARCHAR},
       </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -280,8 +292,9 @@
       support = #{record.support,jdbcType=BIT},
       tags = #{record.tags,jdbcType=VARCHAR},
       click = #{record.click,jdbcType=INTEGER},
-      weigt = #{record.weigt,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      header_url = #{record.headerUrl,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -298,8 +311,9 @@
       support = #{record.support,jdbcType=BIT},
       tags = #{record.tags,jdbcType=VARCHAR},
       click = #{record.click,jdbcType=INTEGER},
-      weigt = #{record.weigt,jdbcType=INTEGER},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      weight = #{record.weight,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      header_url = #{record.headerUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -331,11 +345,14 @@
       <if test="click != null" >
         click = #{click,jdbcType=INTEGER},
       </if>
-      <if test="weigt != null" >
-        weigt = #{weigt,jdbcType=INTEGER},
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="headerUrl != null" >
+        header_url = #{headerUrl,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
@@ -353,8 +370,9 @@
       support = #{support,jdbcType=BIT},
       tags = #{tags,jdbcType=VARCHAR},
       click = #{click,jdbcType=INTEGER},
-      weigt = #{weigt,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
+      header_url = #{headerUrl,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where blog_id = #{blogId,jdbcType=INTEGER}
   </update>
@@ -368,8 +386,9 @@
       support = #{support,jdbcType=BIT},
       tags = #{tags,jdbcType=VARCHAR},
       click = #{click,jdbcType=INTEGER},
-      weigt = #{weigt,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      weight = #{weight,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      header_url = #{headerUrl,jdbcType=VARCHAR}
     where blog_id = #{blogId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
+import java.util.*;
 
 /**
  * @ClassName: FileUploadUtil
@@ -114,6 +115,30 @@ public class FileOperateUtil {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 获取文件目录中所有的图片文件
+     *
+     * @return
+     */
+    public List<String> getAllImageUrl() {
+        File file = new File(IMG_DIR);
+        FilenameFilter filenameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                if (allowImgFormat.contains(FilenameUtils.getExtension(dir.getName()).toLowerCase())) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        String[] list = file.list(filenameFilter);
+        List<String> imageList = new LinkedList<>();
+        for (String s : list) {
+            imageList.add("/images/" + s);
+        }
+        return imageList;
     }
 
     /**

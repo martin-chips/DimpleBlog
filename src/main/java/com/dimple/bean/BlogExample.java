@@ -74,7 +74,7 @@ public class BlogExample {
     }
 
     /**
-     * blog 2018-12-12
+     * blog 2018-12-14
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -687,63 +687,63 @@ public class BlogExample {
             return (Criteria) this;
         }
 
-        public Criteria andWeigtIsNull() {
-            addCriterion("weigt is null");
+        public Criteria andWeightIsNull() {
+            addCriterion("weight is null");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtIsNotNull() {
-            addCriterion("weigt is not null");
+        public Criteria andWeightIsNotNull() {
+            addCriterion("weight is not null");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtEqualTo(Integer value) {
-            addCriterion("weigt =", value, "weigt");
+        public Criteria andWeightEqualTo(Integer value) {
+            addCriterion("weight =", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtNotEqualTo(Integer value) {
-            addCriterion("weigt <>", value, "weigt");
+        public Criteria andWeightNotEqualTo(Integer value) {
+            addCriterion("weight <>", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtGreaterThan(Integer value) {
-            addCriterion("weigt >", value, "weigt");
+        public Criteria andWeightGreaterThan(Integer value) {
+            addCriterion("weight >", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtGreaterThanOrEqualTo(Integer value) {
-            addCriterion("weigt >=", value, "weigt");
+        public Criteria andWeightGreaterThanOrEqualTo(Integer value) {
+            addCriterion("weight >=", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtLessThan(Integer value) {
-            addCriterion("weigt <", value, "weigt");
+        public Criteria andWeightLessThan(Integer value) {
+            addCriterion("weight <", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtLessThanOrEqualTo(Integer value) {
-            addCriterion("weigt <=", value, "weigt");
+        public Criteria andWeightLessThanOrEqualTo(Integer value) {
+            addCriterion("weight <=", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtIn(List<Integer> values) {
-            addCriterion("weigt in", values, "weigt");
+        public Criteria andWeightIn(List<Integer> values) {
+            addCriterion("weight in", values, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtNotIn(List<Integer> values) {
-            addCriterion("weigt not in", values, "weigt");
+        public Criteria andWeightNotIn(List<Integer> values) {
+            addCriterion("weight not in", values, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtBetween(Integer value1, Integer value2) {
-            addCriterion("weigt between", value1, value2, "weigt");
+        public Criteria andWeightBetween(Integer value1, Integer value2) {
+            addCriterion("weight between", value1, value2, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeigtNotBetween(Integer value1, Integer value2) {
-            addCriterion("weigt not between", value1, value2, "weigt");
+        public Criteria andWeightNotBetween(Integer value1, Integer value2) {
+            addCriterion("weight not between", value1, value2, "weight");
             return (Criteria) this;
         }
 
@@ -806,6 +806,76 @@ public class BlogExample {
             addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andHeaderUrlIsNull() {
+            addCriterion("header_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlIsNotNull() {
+            addCriterion("header_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlEqualTo(String value) {
+            addCriterion("header_url =", value, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlNotEqualTo(String value) {
+            addCriterion("header_url <>", value, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlGreaterThan(String value) {
+            addCriterion("header_url >", value, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("header_url >=", value, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlLessThan(String value) {
+            addCriterion("header_url <", value, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlLessThanOrEqualTo(String value) {
+            addCriterion("header_url <=", value, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlLike(String value) {
+            addCriterion("header_url like", value, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlNotLike(String value) {
+            addCriterion("header_url not like", value, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlIn(List<String> values) {
+            addCriterion("header_url in", values, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlNotIn(List<String> values) {
+            addCriterion("header_url not in", values, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlBetween(String value1, String value2) {
+            addCriterion("header_url between", value1, value2, "headerUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeaderUrlNotBetween(String value1, String value2) {
+            addCriterion("header_url not between", value1, value2, "headerUrl");
+            return (Criteria) this;
+        }
     }
 
     /**
@@ -819,7 +889,7 @@ public class BlogExample {
     }
 
     /**
-     * blog 2018-12-12
+     * blog 2018-12-14
      */
     public static class Criterion {
         private String condition;

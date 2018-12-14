@@ -2,8 +2,10 @@ package com.dimple.service;
 
 import com.dimple.bean.Blog;
 
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: BlogService
@@ -16,11 +18,11 @@ public interface BlogService {
     /**
      * 获得所有的Blog信息
      *
-     * @return
      * @param title
      * @param startTime
      * @param endTime
      * @param status
+     * @return
      */
     List<Blog> selectAllBlog(String title, Date startTime, Date endTime, Integer status);
 
@@ -64,4 +66,11 @@ public interface BlogService {
      * @return
      */
     Blog selectBlogById(Integer id);
+
+    /**
+     * 获取博客状态的统计（有多少是已经发布了的，有多少是已经在草稿箱，有多少是在垃圾箱）
+     *
+     * @return
+     */
+    Map<String, Integer> selectCountOfBlogStatus();
 }

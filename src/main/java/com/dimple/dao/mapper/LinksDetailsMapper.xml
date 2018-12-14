@@ -14,5 +14,11 @@
         from links
         where status = 0;
     </select>
+    <select id="getAllBolgStatusCount" resultType="java.util.Map">
+        SELECT
+        (select count(*)from blog where `status`=1) as publish,
+        (select count(*) from blog where `status` =2) as drafts,
+        (select count(*) from blog where `status`=3)as dustbin
+    </select>
 
 </mapper>

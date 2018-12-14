@@ -14,6 +14,7 @@ import java.util.Map;
  */
 @Repository
 public interface CustomMapper {
+
     /**
      * 查询友链的概览
      *
@@ -28,4 +29,10 @@ public interface CustomMapper {
      */
     Integer selectUnHandledLinksCount();
 
+    /**
+     * 获取博客状态类型的数量统计
+     *
+     * @return
+     */
+    Map<String, Integer> getAllBolgStatusCount();
 }

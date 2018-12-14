@@ -52,12 +52,17 @@ public class Blog implements Serializable {
     /**
      * 置顶量
      */
-    private Integer weigt;
+    private Integer weight;
 
     /**
      * 更新时间
      */
     private Date updateTime;
+
+    /**
+     * 头像地址
+     */
+    private String headerUrl;
 
     /**
      * 内容
@@ -215,18 +220,18 @@ public class Blog implements Serializable {
 
     /**
      * 置顶量
-     * @return weigt 置顶量
+     * @return weight 置顶量
      */
-    public Integer getWeigt() {
-        return weigt;
+    public Integer getWeight() {
+        return weight;
     }
 
     /**
      * 置顶量
-     * @param weigt 置顶量
+     * @param weight 置顶量
      */
-    public void setWeigt(Integer weigt) {
-        this.weigt = weigt;
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
     /**
@@ -243,6 +248,22 @@ public class Blog implements Serializable {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    /**
+     * 头像地址
+     * @return header_url 头像地址
+     */
+    public String getHeaderUrl() {
+        return headerUrl;
+    }
+
+    /**
+     * 头像地址
+     * @param headerUrl 头像地址
+     */
+    public void setHeaderUrl(String headerUrl) {
+        this.headerUrl = headerUrl;
     }
 
     /**

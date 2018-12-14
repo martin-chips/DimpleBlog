@@ -2,7 +2,9 @@ package com.dimple.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.dimple.bean.Blog;
+import com.dimple.bean.Category;
 import com.dimple.service.BlogService;
+import com.dimple.service.CategoryService;
 import com.dimple.utils.FileOperateUtil;
 import com.dimple.utils.QiNiuUtils;
 import com.dimple.utils.message.Result;
@@ -43,9 +45,14 @@ public class BlogController {
     BlogService blogService;
     @Autowired
     FileOperateUtil fileOperateUtil;
+    @Autowired
+    CategoryService categoryService;
 
     @GetMapping("/blog/editBlog.html")
-    public String returnPage() {
+    public String returnPage(Model model) {
+        //添加对应在已发布、草稿箱、垃圾箱的数量
+        model.addAttribute("count", blogService.selectCountOfBlogStatus());
+        model.addAttribute("categories", categoryService.getAllBlogCategory());
         return "blog/editBlog";
     }
 
@@ -58,6 +65,11 @@ public class BlogController {
     public String blogUpdatePage(@PathVariable Integer id, Model model) {
         model.addAttribute("blog", blogService.selectBlogById(id));
         return "blog/list/update";
+    }
+
+    @GetMapping("/blog/imageUploadPage")
+    public String imageUploadPage() {
+        return "blog/imageUpload";
     }
 
     /**
@@ -234,6 +246,19 @@ public class BlogController {
         return success;
     }
 
+    @ApiOperation("获取博客状态的分类信息")
+    @GetMapping("/blog/count")
+    @ResponseBody
+    public Result getBlogStatusCount() {
+        Map<String, Integer> map = blogService.selectCountOfBlogStatus();
+        return ResultUtil.success(map);
+    }
 
-
+    @ApiOperation("获取服务器上已经存在的图片数据")
+    @GetMapping("/blog/image")
+    @ResponseBody
+    public Result getImagesUpload() {
+        List<String> allImageUrl = fileOperateUtil.getAllImageUrl();
+        return ResultUtil.success(allImageUrl);
+    }
 }

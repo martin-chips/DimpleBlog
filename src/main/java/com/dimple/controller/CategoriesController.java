@@ -6,6 +6,8 @@ import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import java.util.List;
  * @Version: 1.0
  */
 @Controller
+@Api("博客类别")
 public class CategoriesController {
 
     @Autowired
@@ -51,11 +54,7 @@ public class CategoriesController {
         return "blog/category/add";
     }
 
-    /**
-     * 获取所有的归档数据
-     *
-     * @return
-     */
+    @ApiOperation("有条件的获取所有的分类数据")
     @GetMapping("/blog/category.json")
     @ResponseBody
     public Result getAllBlogcategory(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -70,6 +69,15 @@ public class CategoriesController {
         return ResultUtil.success(pageInfo);
     }
 
+    @ApiOperation("无条件获取所有的分类数据")
+    @GetMapping("/blog/category")
+    @ResponseBody
+    public Result getAllBlogCategoris() {
+        return ResultUtil.success(categoryService.getAllBlogCategory());
+    }
+
+
+    @ApiOperation("新增分类")
     @PostMapping("/blog/category")
     @ResponseBody
     public Result insertBlogCategory(Category category) {
@@ -77,6 +85,7 @@ public class CategoriesController {
         return ResultUtil.success(i);
     }
 
+    @ApiOperation("修改分类")
     @PutMapping("/blog/category")
     @ResponseBody
     public Result updateBlogCategory(Category category) {
@@ -84,6 +93,7 @@ public class CategoriesController {
         return ResultUtil.success(i);
     }
 
+    @ApiOperation("删除分类")
     @DeleteMapping("/blog/category/{ids}")
     @ResponseBody
     public Result deleteBlogCategory(@PathVariable Integer[] ids) {

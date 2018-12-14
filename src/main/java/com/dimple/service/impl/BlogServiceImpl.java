@@ -3,6 +3,7 @@ package com.dimple.service.impl;
 import com.dimple.bean.Blog;
 import com.dimple.bean.BlogExample;
 import com.dimple.dao.BlogMapper;
+import com.dimple.dao.CustomMapper;
 import com.dimple.enums.BlogStatus;
 import com.dimple.service.BlogService;
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: BlogServiceImpl
@@ -23,6 +25,9 @@ import java.util.List;
 public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogMapper blogMapper;
+
+    @Autowired
+    CustomMapper customMapper;
 
     @Override
     public List<Blog> selectAllBlog(String title, Date startTime, Date endTime, Integer status) {
@@ -95,5 +100,11 @@ public class BlogServiceImpl implements BlogService {
             return null;
         }
         return blogMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Map<String, Integer> selectCountOfBlogStatus() {
+        Map<String, Integer> allBolgStatusCount = customMapper.getAllBolgStatusCount();
+        return allBolgStatusCount;
     }
 }
