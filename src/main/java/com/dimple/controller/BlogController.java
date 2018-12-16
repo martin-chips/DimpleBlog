@@ -2,7 +2,6 @@ package com.dimple.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.dimple.bean.Blog;
-import com.dimple.bean.Category;
 import com.dimple.service.BlogService;
 import com.dimple.service.CategoryService;
 import com.dimple.utils.FileOperateUtil;
@@ -97,7 +96,7 @@ public class BlogController {
     @PostMapping("/api/blog")
     @ResponseBody
     public Result insertBlog(Blog blog) {
-        int i = blogService.addBlog(blog);
+        int i = blogService.insertBlog(blog);
         return ResultUtil.success(i);
     }
 

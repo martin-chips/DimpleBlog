@@ -32,7 +32,7 @@ public interface BlogService {
      * @param blog
      * @return
      */
-    int addBlog(Blog blog);
+    int insertBlog(Blog blog);
 
     /**
      * 删除Blog

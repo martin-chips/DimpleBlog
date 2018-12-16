@@ -6,6 +6,7 @@ import com.dimple.dao.BlogMapper;
 import com.dimple.dao.CustomMapper;
 import com.dimple.enums.BlogStatus;
 import com.dimple.service.BlogService;
+import com.dimple.utils.FileOperateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     CustomMapper customMapper;
 
+    @Autowired
+    FileOperateUtil fileOperateUtil;
+
     @Override
     public List<Blog> selectAllBlog(String title, Date startTime, Date endTime, Integer status) {
         BlogExample blogExample = new BlogExample();
@@ -51,15 +55,23 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public int addBlog(Blog blog) {
+    public int insertBlog(Blog blog) {
         if (blog == null || StringUtils.isBlank(blog.getTitle()) || StringUtils.isBlank(blog.getContent())) {
             return -1;
         }
         blog.setCreateTime(new Date());
+        //设置摘要
+        blog.setSummary(blog.getContent().substring(0, blog.getContent().length() < 150 ? blog.getContent().length() : 150));
+        blog.setClick(0);
+        blog.setSupport(false);
+        blog.setWeight(0);
+        blog.setUpdateTime(new Date());
         if (blog.getStatus() == null) {
             //设置为已发表状态
             blog.setStatus(BlogStatus.PUBLISHED.PUBLISHED.getCode());
         }
+        //设置博客headerUrl的链接地址（只设置名字）
+        blog.setHeaderUrl(fileOperateUtil.getImgName(blog.getHeaderUrl()));
         int i = blogMapper.insert(blog);
         return i;
     }

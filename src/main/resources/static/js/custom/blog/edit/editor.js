@@ -2,20 +2,25 @@ $(function () {
     //加载分类数据
     loadCategory();
     initSummernote();
-});
 
-
-$("#publishBlog").click(function () {
-    var data = getData();
-    $.ajax({
-        url: "/blog",
-        type: "post",
-        success: function () {
-
-        }
+    $("#draft").click(function () {
+        var data = getData();
+        data.status = 2;
+        console.log(data);
+        $.operate.post("/api/blog", data);
+    });
+    $("#publishBlog").click(function () {
+        var data = getData();
+        console.log(data);
+        $.operate.post("/api/blog", data);
     });
 
+    $("#giveUp").click(function () {
+        $("#blogEdit")[0].reset();
+
+    });
 });
+
 
 //获取表单数据
 function getData() {
@@ -23,7 +28,7 @@ function getData() {
     var title = $("input[name='title']").val();
     var summary = $("input[name='summary']").val();
     var tags = $("input[name='tags']").val();
-    var categoryId = $("input[name='categoryId']").val();
+    var categoryId = $("#categorySelect").val();
     var content = $("#summernote").summernote("code");
     var data = {
         headerUrl: headerUrl,
@@ -36,6 +41,16 @@ function getData() {
     return data;
 }
 
+/**
+ * 存为草稿
+ */
+function draft() {
+
+}
+
+/**
+ * 上传图片
+ */
 function uploadImage() {
     var title = "上传图片";
     var url = "/page/imageUploadPage";

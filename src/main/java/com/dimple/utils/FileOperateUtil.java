@@ -147,6 +147,20 @@ public class FileOperateUtil {
     }
 
     /**
+     * 根据图片的URl获取其真实的名字
+     *
+     * @param url 图片的URl
+     * @return
+     */
+    public String getImgName(String url) {
+        if (StringUtils.isBlank(url)) {
+            return null;
+        }
+        int i = url.lastIndexOf("/");
+        return url.substring(i + 1);
+    }
+
+    /**
      * 生成文件名
      *
      * @param fileName  原始的名称
