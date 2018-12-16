@@ -71,7 +71,7 @@ CodeMirror.defineMode("gfm", function(config, modeConfig) {
         stream.next();
         return null;
       }
-      // Check if space. If so, links can be formatted later on
+      // Check if space. If so, link can be formatted later on
       if (stream.eatSpace()) {
         state.ateSpace = true;
         return null;

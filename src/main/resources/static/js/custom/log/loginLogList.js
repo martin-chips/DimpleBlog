@@ -23,11 +23,11 @@ $(".browserType").click(function () {
 
 function initTable() {
     var option = {
-        url: "/log/loginLog.json",
-        deleteUrl: "/log/loginLog/{id}",
-        cleanUrl: "/log/loginLog",
+        url: "/api/loginLog",
+        deleteUrl: "/page/loginLog/{id}",
+        cleanUrl: "/api/loginLog",
         sortName: "createTime",
-        detailUrl: "/log/loginLog/{id}",
+        detailUrl: "/page/loginLog/{id}",
         sortOrder: "desc",
         modalName: "登录日志",
         search: false,

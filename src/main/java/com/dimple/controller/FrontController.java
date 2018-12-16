@@ -30,10 +30,6 @@ public class FrontController {
         return "front/index";
     }
 
-    @RequestMapping("/{url}")
-    public String toPage(@PathVariable String url) {
-        return "front/"+url;
-    }
 
     /**
      * 获取个人名片信息

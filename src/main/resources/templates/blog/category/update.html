@@ -20,7 +20,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label ">创建时间：</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" name="" th:value="${category.createTime}"
+                <input class="form-control" type="text" name="" th:value="*{#dates.format(category.createTime,'yyyy-MM-dd HH:mm:ss')}"
                        readonly="true"/>
             </div>
         </div>
@@ -45,7 +45,7 @@
             type: "put",
             dataType: "json",
             data: $("#categoryAddForm").serialize(),
-            url: "/blog/category",
+            url: "/api/category",
             success: function (data) {
                 if (data != null && data.code == web_status.SUCCESS) {
                     $.modal.msgReload(data.msg, modal_status.SUCCESS);

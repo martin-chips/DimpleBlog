@@ -75,7 +75,7 @@
 
     function updateUser() {
         $.ajax({
-            url: "/system/user",
+            url: "/api/user",
             type: "put",
             data: $("#userUpdateForm").serializeArray(),
             dataType: "json",

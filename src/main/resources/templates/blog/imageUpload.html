@@ -6,7 +6,18 @@
       th:href="@{/plugin/webUploader/webuploader.css}">
 <link rel="stylesheet" href="/static/plugin/webUploader/webuploader-custom.css"
       th:href="@{/plugin/webUploader/webuploader-custom.css}">
-
+<link rel="stylesheet" href="/static/plugin/image-picker/image-picker.css"
+      th:href="@{/plugin/image-picker/image-picker.css}">
+<style>
+    .lala {
+        object-fit: contain;
+        /*width: 150px;*/
+        margin-bottom: 5px;
+        width: 250px;
+        height: 150px;
+        border: 5px solid black;
+    }
+</style>
 
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeIn">
@@ -43,10 +54,14 @@
         </div>
         <!--从网络位置进行选择-->
         <div class="ibox float-e-margins">
-            <div class="ibox-content" id="imageView">
 
+            <div class="page-container">
+                <div class="ibox-content" id="imageView">
+                    <p>或者您也可以在此处选择</p>
+                </div>
             </div>
         </div>
+        <input value="111" type="hidden" id="yyyy">
     </div>
 </div>
 <div th:include="common :: common-footer"></div>
@@ -55,26 +70,48 @@
         th:src="@{/plugin/webUploader/webuploader.nolog.js}"></script>
 <script src="/static/plugin/webUploader/webuploader-custom.js"
         th:src="@{/plugin/webUploader/webuploader-custom.js}"></script>
+<script src="/static/plugin/image-picker/image-picker.min.js"
+        th:src="@{/plugin/image-picker/image-picker.min.js}"></script>
+
 <script>
     $(function () {
+        loadImage();
+    });
+
+    function submitHandler() {
+        return $(".image-picker").val();
+    }
+
+    function closeLocal() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭当前页
+    }
+
+
+    function loadImage() {
         $.ajax({
-            url: "/blog/image",
+            url: "/api/image",
             type: "get",
             dataType: "json",
             success: function (data) {
                 if (data.code == web_status.SUCCESS) {
                     var imagesUrl = data.data;
-                    console.log(imagesUrl);
+                    var select = $("<select class='image-picker'></select>");
                     for (var i = 0; i < imagesUrl.length; i++) {
-                        var img = $("<img>");
-                        img.attr("src",imagesUrl[i]);
-                        $("#imageView").append(img);
+                        var option = $("<option></option>");
+                        option.attr("data-img-src", imagesUrl[i]);
+                        option.attr("value", imagesUrl[i]);
+                        option.addClass("file");
+                        select.append(option);
                     }
+                    $("#imageView").append(select);
+                    $("select").imagepicker();
                 }
             }
         })
-    });
+    }
 </script>
+
 </body>
 
 </html>

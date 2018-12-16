@@ -7,10 +7,10 @@ $(function () {
 
 function initTable() {
     var option = {
-        url: "/links/unhandled/list.json",
-        addUrl: "/links/add.html",
-        updateUrl: "/links/{id}.html",
-        deleteUrl: "/links/{id}",
+        url: "/api/linkUnhandled",
+        addUrl: "/page/linkAdd.html",
+        updateUrl: "/page/link/{id}.html",
+        deleteUrl: "/api/link/{id}",
         sortName: "createTime",
         sortOrder: "desc",
         modalName: "未处理友链",
@@ -108,7 +108,7 @@ function updateLinkStatus(linkId) {
         $.modal.alertWarning("请至少选择一条记录");
         return;
     }
-    var url = "/links/unhandled/" + linkId;
+    var url = "/api/linkUnhandled/" + linkId;
     var type = "PUT";
     $.operate.submit(url, "put", "json", "");
 }

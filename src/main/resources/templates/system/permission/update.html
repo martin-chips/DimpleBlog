@@ -75,7 +75,6 @@
 <div th:include="common :: common-footer"></div>
 <script src="/static/plugin/iCheck/icheck.min.js" th:src="@{/plugin/iCheck/icheck.min.js}"></script>
 <script>
-    var prefix = "system/menu";
     $(document).ready(function () {
         // radio 事件绑定
         if ($(".radio-box").length > 0) {
@@ -133,7 +132,7 @@
     function submitHandler() {
         if ($.validate.form()) {
             $.ajax({
-                url: "/system/permission",
+                url: "/api/permission",
                 type: "PUT",
                 dataType: "JSON",
                 data: $("#permissionUpdateForm").serialize(),
@@ -190,7 +189,7 @@
     function selectMenuTree() {
         var menuId = $("#treeId").val();
         if (menuId > 0) {
-            var url = "/selectMenuTree/" + menuId;
+            var url = "/api/selectMenuTree/" + menuId;
             $.modal.open("选择菜单", url, '380', '380');
         } else {
             $.modal.alertError("主菜单不能选择");

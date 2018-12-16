@@ -29,14 +29,14 @@ public class LoginLogController {
     @Autowired
     LoginLogService loginLogService;
 
-    @RequestMapping("/log/loginLog.html")
+    @RequestMapping("/page/loginLog.html")
     public String loginLog(Model model) {
         Map<String, Integer> map = loginLogService.getDetails();
         model.addAttribute("details", map);
         return "log/loginLog-list";
     }
 
-    @GetMapping("/log/loginLog.json")
+    @GetMapping("/api/loginLog")
     @ResponseBody
     public Result getLoginLog(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                               @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -54,14 +54,14 @@ public class LoginLogController {
         return ResultUtil.success(pageInfo);
     }
 
-    @DeleteMapping("/log/loginLog")
+    @DeleteMapping("/api/loginLog")
     @ResponseBody
     public Result cleanLoginLog() {
         Integer integer = loginLogService.cleanLoginLog();
         return ResultUtil.success(integer);
     }
 
-    @DeleteMapping("/log/loginLog/{ids}")
+    @DeleteMapping("/api/loginLog/{ids}")
     @ResponseBody
     public Result deleteLoginLog(@PathVariable Integer ids[]) {
         Integer integer = loginLogService.deleteLoginLog(ids);

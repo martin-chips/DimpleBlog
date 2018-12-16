@@ -161,7 +161,7 @@ a.viewmore { display: block; right: 10px; bottom: 20px; position: absolute; padd
 .avatar { position: relative; float: left; width: 30px; height: 30px; border-radius: 100%; padding: 2px; display: block; background: -webkit-linear-gradient(bottom left, rgba(0,153,255,.9), rgba(42,228,197,.7)); background: -o-linear-gradient(bottom left, rgba(0,153,255,.9), rgba(42,228,197,.7)); background: linear-gradient(to top right, rgba(0,153,255,.9), rgba(42,228,197,.7)); }
 .avatar img { width: 100%; border-radius: 50%; }
 .avatar::after { content: ""; position: absolute; background: url(../images/v.png) no-repeat; background-size: 12px; width: 12px; height: 12px; right: 0; bottom: 0 }
-/*links*/
+/*link*/
 .sqlink { float: right; margin-right: 10px; font-size: 14px }
 .sqlink a { color: #666 }
 .sqlink a:hover { color: #000; text-decoration: underline }

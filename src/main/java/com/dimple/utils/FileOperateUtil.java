@@ -75,6 +75,11 @@ public class FileOperateUtil {
         }
         //生成随机名字
         String fileName = generateFileName(originalFilename, extension);
+        //判断路径是否存在，不存在就建立一个文件夹
+        File tempFile = new File(IMG_DIR);
+        if (!tempFile.exists()) {
+            tempFile.mkdirs();
+        }
         InputStream inputStream = null;
         OutputStream outputStream = null;
         try {

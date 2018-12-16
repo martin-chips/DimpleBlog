@@ -50,7 +50,7 @@
             type: "POST",
             dataType: "json",
             data: $("#roleAddForm").serializeArray(),
-            url: "/system/role",
+            url: "/api/role",
             success: function (data) {
                 if (data != null && data.code == web_status.SUCCESS) {
                     $.modal.msgReload("添加成功！", modal_status.SUCCESS);
@@ -63,7 +63,7 @@
     }
 
     $(function () {
-        var url = "/system/permission/permissionTree";
+        var url = "/api/permissionTree";
         var options = {
             id: "permissionTree",
             url: url,

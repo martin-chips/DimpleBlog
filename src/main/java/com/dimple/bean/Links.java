@@ -55,7 +55,7 @@ public class Links implements Serializable {
     private Boolean available;
 
     /**
-     * links
+     * link
      */
     private static final long serialVersionUID = 1L;
 

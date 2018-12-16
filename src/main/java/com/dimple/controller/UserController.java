@@ -6,6 +6,7 @@ import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiOperation;
 import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,24 +30,24 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/personInfo")
+    @RequestMapping("/page/personInfo")
     public String userProfile() {
         return "user/profile";
     }
 
-    @GetMapping("/system/user/{id}")
+    @GetMapping("/page/user/{id}")
     public String userUpdatePage(@PathVariable Integer id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "system/user/update";
     }
 
-    @GetMapping("/system/user/add.html")
+    @GetMapping("/page/userAdd.html")
     public String userAddPage() {
         return "system/user/add";
     }
 
-    @GetMapping("/system/user/password/{id}")
+    @GetMapping("/page/user/password/{id}")
     public String resetUserPassword(@PathVariable Integer id, Model model) {
         User userById = userService.getUserById(id);
         model.addAttribute("loginId", userById.getUserLoginId());
@@ -54,12 +55,13 @@ public class UserController {
         return "system/user/resetPassword";
     }
 
-    @GetMapping("/system/user.html")
+    @GetMapping("/page/user.html")
     public String userListPage() {
         return "system/user/list";
     }
 
-    @GetMapping("/system/user.json")
+    @ApiOperation("获取User信息")
+    @GetMapping("/api/user")
     @ResponseBody
     public Result getUsers(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -76,28 +78,32 @@ public class UserController {
         return ResultUtil.success(pageInfo);
     }
 
-    @DeleteMapping("/system/user/{ids}")
+    @ApiOperation("删除User")
+    @DeleteMapping("/api/user/{ids}")
     @ResponseBody
     public Result deleteUser(@PathVariable Integer ids[]) {
         Integer i = userService.deleteUser(ids);
         return ResultUtil.success(i);
     }
 
-    @PostMapping("/system/user")
+    @ApiOperation("新增User")
+    @PostMapping("/api/user")
     @ResponseBody
     public Result insertUser(User user) {
         Integer i = userService.insertUser(user);
         return ResultUtil.success(i);
     }
 
-    @PutMapping("/system/user")
+    @ApiOperation("修改User信息")
+    @PutMapping("/api/user")
     @ResponseBody
     public Result updateUser(User user) {
         Integer i = userService.updateUserInfo(user);
         return ResultUtil.success(i);
     }
 
-    @PutMapping("/system/user/{id}/{locked}")
+    @ApiOperation("切换User的状态")
+    @PutMapping("/api/user/{id}/{locked}")
     @ResponseBody
     public Result changeLocked(@PathVariable Integer id, @PathVariable Boolean locked) {
         Integer i = userService.changeLocked(id, locked);

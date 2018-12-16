@@ -7,15 +7,15 @@ $(function () {
 
 function initTable() {
     var option = {
-        url: "/system/role.json",
-        deleteUrl: "/system/role/{id}",
-        updateUrl: "/system/role/{id}",
-        addUrl: "/system/role/add.html",
+        url: "/api/role",
+        deleteUrl: "/api/role/{id}",
+        updateUrl: "/page/role/{id}.html",
+        addUrl: "/page/roleAdd.html",
         sortName: "createTime",
         sortOrder: "desc",
         modalName: "用户记录",
         search: false,
-        uniqueId: "userId",//唯一标识
+        uniqueId: "roleId",//唯一标识
         showExport: false,
         columns: [{
             checkbox: true
@@ -71,7 +71,7 @@ function initTable() {
 
 function initTree() {
     var option = {
-        url: "/system/permission/permissionTree",
+        url: "/api/permission/permissionTree",
         id: "permissionTree"
     }
     $.tree.init(option);
@@ -82,7 +82,8 @@ function changeLocked(id, locked) {
     if (locked == null) {
         locked == false;
     }
-    var url = "/system/role/" + id + "/" + locked;
+    var url = "/api/role/" + id + "/" + locked;
+    //todo 此处点击后会刷新整个页面
     $.operate.save(url, "");
 }
 

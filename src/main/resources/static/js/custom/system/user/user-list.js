@@ -7,12 +7,11 @@ $(function () {
 
 function initTable() {
     var option = {
-        url: "/system/user.json",
-        deleteUrl: "/system/user/{id}",
-        updateUrl: "/system/user/{id}",
-        addUrl: "/system/user/add.html",
+        url: "/api/user",
+        deleteUrl: "/api/user/{id}",
+        updateUrl: "/page/user/{id}",
+        addUrl: "/page/userAdd.html",
         sortName: "createTime",
-        detailUrl: "/log/loginLog/{id}",
         sortOrder: "desc",
         modalName: "用户记录",
         search: false,
@@ -93,12 +92,12 @@ function initTable() {
 }
 
 function resetPassword(id) {
-    var url = "/system/user/password/" + id;
+    var url = "/page/user/password/" + id;
     $.modal.open("重置密码", url, '800', '300');
 }
 
 function changeLocked(id, locked) {
-    var url = "/system/user/" + id + "/" + locked;
+    var url = "/api/user/" + id + "/" + locked;
     $.operate.submit(url, "put", "json", "");
 }
 

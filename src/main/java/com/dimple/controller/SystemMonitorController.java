@@ -19,7 +19,7 @@ public class SystemMonitorController {
      */
     @RequestMapping("/swagger.html")
     public String swaggerPage() {
-        return "redirect:swagger-ui.html";
+        return "redirect:/swagger-ui.html";
     }
 
     @RequestMapping("/druid.html")

@@ -32,13 +32,19 @@ public class OperateLogController {
     @Autowired
     OperateLogService operatorLogService;
 
-    @RequestMapping("/log/operatorLog.html")
+    @RequestMapping("/page/operatorLog.html")
     public String operatorList() {
         return "log/operatorLog-list";
     }
 
+    @GetMapping("/page/operateLog/{id}")
+    public String getDetailsOperateLog(@PathVariable("id") Integer id, Model model) {
+        OperateLog operateLog = operatorLogService.getDetailsOperateLog(id);
+        model.addAttribute("operateLog", operateLog);
+        return "log/operateLog-details";
+    }
 
-    @GetMapping("/log/operateLog.json")
+    @GetMapping("/api/operateLog")
     @ResponseBody
     public Result getAllOperateLog(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                    @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -53,27 +59,21 @@ public class OperateLogController {
         return ResultUtil.success(pageInfo);
     }
 
-    @DeleteMapping("/log/operateLog/{ids}")
+    @DeleteMapping("/api/operateLog/{ids}")
     @ResponseBody
     public Result deleteLoginLog(@PathVariable Integer ids[]) {
         Integer integer = operatorLogService.deleteOperateLog(ids);
         return ResultUtil.success(integer);
     }
 
-    @DeleteMapping("/log/operateLog")
+    @DeleteMapping("/api/operateLog")
     public Result cleanAllOperateLog() {
         Integer count = operatorLogService.cleanOperateLog();
         return ResultUtil.success(count);
     }
 
-    @GetMapping("/log/operateLog/{id}")
-    public String getDetailsOperateLog(@PathVariable("id") Integer id, Model model) {
-        OperateLog operateLog = operatorLogService.getDetailsOperateLog(id);
-        model.addAttribute("operateLog", operateLog);
-        return "log/operateLog-details";
-    }
 
-    @GetMapping("/log/operateLog/operateType")
+    @GetMapping("/api/operateLog/operateType")
     @ResponseBody
     public Result getAllOperateType() {
         Map<Integer, String> operateType = operatorLogService.getOperateType();

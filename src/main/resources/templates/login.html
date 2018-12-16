@@ -11,7 +11,7 @@
         </div>
         <h3>Dimple's Blog Manager System</h3>
 
-        <form class="m-t"  id="loginForm">
+        <form class="m-t" id="loginForm">
             <div class="form-group">
                 <input type="text" name="loginId" class="form-control" placeholder="用户名" value="admin">
             </div>
@@ -19,9 +19,9 @@
                 <input type="password" name="password" class="form-control" placeholder="密码" value="123456">
             </div>
             <div class="row">
-                <div class="col-sm-6" >
+                <div class="col-sm-6">
                     <a href="javascript:void(0);" title="点击更换验证码">
-                        <img th:src="@{/generateKaptcha}" onclick="this.src='/generateKaptcha'" class="captchaImg"
+                        <img th:src="@{/api/kaptcha}" onclick="this.src='/api/kaptcha'" class="captchaImg"
                              width="85%"/>
                     </a>
                 </div>
@@ -29,7 +29,7 @@
                     <input type="text" name="kaptcha" class="form-control captcha" placeholder="验证码" maxlength="5">
                 </div>
             </div>
-            <input class="i-checks" type="checkbox" name="rememberme" />&nbsp;&nbsp;记住我
+            <input class="i-checks" type="checkbox" name="rememberme"/>&nbsp;&nbsp;记住我
             <button type="submit" class="btn btn-primary block full-width m-b" id="loginBtn"
                     data-loading="正在验证登录，请稍候...">登 录
             </button>

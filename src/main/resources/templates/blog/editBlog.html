@@ -19,7 +19,6 @@
                         <div class="space-25"></div>
                         <h5>概览</h5>
                         <ul class="folder-list m-b-md" style="padding: 0">
-
                             <li>
                                 <a> <i class="fa fa-inbox "></i> 已发布 <span
                                         class="label label-info pull-right">
@@ -68,26 +67,27 @@
                                 <div class="col-lg-3">
                                     <label class="control-label">封面</label>
                                     <img src="../../img/p_big3.jpg" width="100%" onclick="uploadImage()" height="150px"
-                                         id="header" name/>
+                                         id="header" name="headerUrl"/>
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">标题</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" name="title">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">摘要</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control">
-                                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 留空则默认为博文前150字节为博文的摘要</span>
+                                            <span class="help-block m-b-none"><i class="fa fa-info-circle"
+                                                                                 name="summary"></i> 留空则默认为博文前150字节为博文的摘要</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">标签</label>
                                         <div class="col-sm-10">
-                                            <input id="firstname" name="firstname" class="form-control" type="text">
+                                            <input  name="tags" class="form-control" type="text">
                                             <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 多个标签之间使用";"分隔</span>
                                         </div>
                                     </div>
@@ -113,9 +113,9 @@
                         </div>
                     </div>
                     <div class="mail-body text-right tooltip-demo">
-                        <a id="send" class="btn btn-sm btn-primary" data-toggle="tooltip"
+                        <a  class="btn btn-sm btn-primary" data-toggle="tooltip"
                            data-placement="top"
-                           title="Send"><i class="fa fa-reply"></i> 发布</a>
+                           title="Send" id="publishBlog"><i class="fa fa-reply"></i> 发布</a>
                     </div>
                 </form>
             </div>

@@ -2,10 +2,13 @@ package com.dimple.controller;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.imageio.ImageIO;
@@ -24,6 +27,7 @@ import java.io.IOException;
  * @Version: 1.0
  */
 @Controller
+@Api("验证码Controller")
 public class CaptchaController {
 
     @Autowired
@@ -39,14 +43,8 @@ public class CaptchaController {
     @Value("${kaptcha.type}")
     private String kaptchaType = null;
 
-    /**
-     * 生成验证码
-     *
-     * @param request
-     * @param response
-     * @throws Exception
-     */
-    @RequestMapping("/generateKaptcha")
+    @ApiOperation("生成验证码")
+    @GetMapping("/api/kaptcha")
     public void defaultKaptcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ServletOutputStream servletOutputStream = null;
         try {

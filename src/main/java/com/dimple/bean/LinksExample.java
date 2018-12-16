@@ -6,17 +6,17 @@ import java.util.List;
 
 public class LinksExample {
     /**
-     * links
+     * link
      */
     protected String orderByClause;
 
     /**
-     * links
+     * link
      */
     protected boolean distinct;
 
     /**
-     * links
+     * link
      */
     protected List<Criteria> oredCriteria;
 
@@ -74,7 +74,7 @@ public class LinksExample {
     }
 
     /**
-     * links 2018-11-23
+     * link 2018-11-23
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -749,7 +749,7 @@ public class LinksExample {
     }
 
     /**
-     * links
+     * link
      */
     public static class Criteria extends GeneratedCriteria {
 
@@ -759,7 +759,7 @@ public class LinksExample {
     }
 
     /**
-     * links 2018-11-23
+     * link 2018-11-23
      */
     public static class Criterion {
         private String condition;

@@ -48,7 +48,7 @@ public class BlogController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("/blog/editBlog.html")
+    @GetMapping("/page/editBlog.html")
     public String returnPage(Model model) {
         //添加对应在已发布、草稿箱、垃圾箱的数量
         model.addAttribute("count", blogService.selectCountOfBlogStatus());
@@ -56,64 +56,53 @@ public class BlogController {
         return "blog/editBlog";
     }
 
-    @GetMapping("/blog/blogList.html")
+    @GetMapping("/page/blogList.html")
     public String blogListPage(Model model) {
         return "blog/list/blog";
     }
 
-    @GetMapping("/blog/blogList/{id}")
+    @GetMapping("/page/blogList/{id}.html")
     public String blogUpdatePage(@PathVariable Integer id, Model model) {
         model.addAttribute("blog", blogService.selectBlogById(id));
         return "blog/list/update";
     }
 
-    @GetMapping("/blog/imageUploadPage")
-    public String imageUploadPage() {
-        return "blog/imageUpload";
-    }
 
-    /**
-     * 删除blog
-     *
-     * @param id
-     * @return
-     */
-    @DeleteMapping("/blog/blogList/{id}")
+
+    @ApiOperation("删除博客")
+    @DeleteMapping("/api/blog/{id}")
     @ResponseBody
     public Result deleteBlog(@PathVariable Integer id) {
         int i = blogService.deleteBlog(id);
         return ResultUtil.success(i);
     }
 
-    /**
-     * 更换Blog的状态
-     *
-     * @param id
-     * @param status
-     * @return
-     */
-    @DeleteMapping("/blog/blogList/{status}/{id}")
+    @ApiOperation("更新博客的状态")
+    @DeleteMapping("/api/blog/{status}/{id}")
     @ResponseBody
     public Result changeBlogStatus(@PathVariable Integer id, @PathVariable Integer status) {
         int i = blogService.changeBlogStatus(id, status);
         return ResultUtil.success(i);
     }
 
-    @PutMapping("/blog/blogList")
+    @ApiOperation("更新博客")
+    @PutMapping("/api/blog")
     @ResponseBody
     public Result updateBlog(Blog blog) {
         int i = blogService.updateBlog(blog);
         return ResultUtil.success(i);
     }
 
-    @PostMapping("/blog/blogList")
+    @ApiOperation("新增博客")
+    @PostMapping("/api/blog")
     @ResponseBody
     public Result insertBlog(Blog blog) {
         int i = blogService.addBlog(blog);
         return ResultUtil.success(i);
     }
 
-    @GetMapping("/blog/blogList.json")
+    @ApiOperation("获取博客的列表信息")
+    @GetMapping("/api/blog")
     @ResponseBody
     public Result getAllBlog(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -225,40 +214,14 @@ public class BlogController {
         }
     }
 
-    @ApiOperation("SummerNote编辑器中上传图片接口")
-    @RequestMapping(value = "/image", method = RequestMethod.POST)
-    @ResponseBody
-    public String uploadImage(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
-        String url = null;
-        if (!file.isEmpty()) {
-            url = fileOperateUtil.imgUpload(file);
-        }
-        System.out.println(url);
-        return url;
-    }
 
-    @ApiOperation("SummerNote编辑器中删除图片同步删除服务器图片")
-    @DeleteMapping("/image")
-    @ResponseBody
-    public Boolean deleteImage(String fileUrl) {
-        log.info("删除图片{}", fileUrl);
-        Boolean success = fileOperateUtil.deleteImgByUrl(fileUrl);
-        return success;
-    }
 
     @ApiOperation("获取博客状态的分类信息")
-    @GetMapping("/blog/count")
+    @GetMapping("/api/blog/count")
     @ResponseBody
     public Result getBlogStatusCount() {
         Map<String, Integer> map = blogService.selectCountOfBlogStatus();
         return ResultUtil.success(map);
     }
 
-    @ApiOperation("获取服务器上已经存在的图片数据")
-    @GetMapping("/blog/image")
-    @ResponseBody
-    public Result getImagesUpload() {
-        List<String> allImageUrl = fileOperateUtil.getAllImageUrl();
-        return ResultUtil.success(allImageUrl);
-    }
 }

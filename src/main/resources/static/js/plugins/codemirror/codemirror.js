@@ -5086,7 +5086,7 @@
   // lines may point to the same marker when it spans across lines.
   // The spans will have null for their from/to properties when the
   // marker continues beyond the start/end of the line. Markers have
-  // links back to the lines they currently touch.
+  // link back to the lines they currently touch.
 
   var TextMarker = CodeMirror.TextMarker = function(doc, type) {
     this.lines = [];
@@ -6189,7 +6189,7 @@
   // node, and is the document object itself (meaning it has
   // additional methods and properties).
   //
-  // All nodes have parent links. The tree is used both to go from
+  // All nodes have parent link. The tree is used both to go from
   // line numbers to line objects, and to go from objects to numbers.
   // It also indexes by height, and is used to convert between height
   // and line object, and to find the total height of the document.
@@ -6755,7 +6755,7 @@
   }
 
   // Given a line object, find its line number by walking up through
-  // its parent links.
+  // its parent link.
   function lineNo(line) {
     if (line.parent == null) return null;
     var cur = line.parent, no = indexOf(cur.lines, line);

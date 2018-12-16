@@ -114,13 +114,15 @@
     <link th:href="@{/css/animate.css}" rel="stylesheet">
     <link th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
     <link th:href="@{/css/common/common.css}" rel="stylesheet">
+    <link th:href="@{/plugin/sweetalert/sweetalert.css}" rel="stylesheet">
+
 </head>
 <!--============================================后台通用的脚文件， 主要是JS文件=====================================-->
 <div th:fragment="common-footer">
     <script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
     <script th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
     <!--自定义JS-->
-    <script th:src="@{/js/content.js?v=1.0.0}"></script>
+    <script th:src="@{/js/content.js}"></script>
     <!-- jQuery Validation plugin javascript-->
     <script th:src="@{/js/validate/jquery.validate.min.js}"></script>
     <script th:src="@{/js/validate/messages_zh.min.js}"></script>
@@ -137,6 +139,7 @@
     <script th:src="@{/js/blockUI/jquery.blockUI.js}"></script>
     <!--通用UI JS框架-->
     <script th:src="@{/js/custom/common/dimple-blog.js}"></script>
+    <script th:src="@{/plugin/sweetalert/sweetalert.min.js}"></script>
 </div>
 
 

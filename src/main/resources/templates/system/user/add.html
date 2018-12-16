@@ -60,7 +60,7 @@
             type: "POST",
             dataType: "json",
             data: $("#userAddForm").serializeArray(),
-            url: "/system/user",
+            url: "/api/user",
             success: function (data) {
                 if (data != null && data.code == web_status.SUCCESS) {
                     $.modal.msgReload("添加成功！", modal_status.SUCCESS);

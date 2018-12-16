@@ -45,19 +45,19 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="/blog/editBlog.html">编辑文章</a>
+                            <a class="J_menuItem" href="/page/editBlog.html">编辑文章</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="/blog/category.html">类别管理</a>
+                            <a class="J_menuItem" href="/page/category.html">类别管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="/blog/blogList.html">文章列表</a>
+                            <a class="J_menuItem" href="/page/blogList.html">文章列表</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="/draftBox">草稿箱</a>
+                            <a class="J_menuItem" href="/page/draftBox">草稿箱</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="/recycleBin">回收站</a>
+                            <a class="J_menuItem" href="/page/recycleBin">回收站</a>
                         </li>
                     </ul>
                 </li>
@@ -91,9 +91,9 @@
                     <a class="J_menuItem"><i class="fa fa-flask"></i> <span class="nav-label">操作日志</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/links/list.html">访问日志</a></li>
-                        <li><a class="J_menuItem" href="/log/operatorLog.html">操作日志</a></li>
-                        <li><a class="J_menuItem" href="/log/loginLog.html">登录日志</a></li>
+                        <li><a class="J_menuItem" href="/page/linkList.html">访问日志</a></li>
+                        <li><a class="J_menuItem" href="/page/operatorLog.html">操作日志</a></li>
+                        <li><a class="J_menuItem" href="/page/loginLog.html">登录日志</a></li>
                     </ul>
                 </li>
                 <li>
@@ -106,11 +106,11 @@
                         <span th:if=" ${unhandledLinksCount==0}" class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/links/unhandled/list.html">未处理消息 <span
+                        <li><a class="J_menuItem" href="/page/linkUnhandled.html">未处理消息 <span
                                 th:if=" ${unhandledLinksCount>0}" class="label label-warning pull-right">
                             <div th:text="${unhandledLinksCount}"></div>
                         </span></a></li>
-                        <li><a class="J_menuItem" href="/links/list.html">友链列表</a></li>
+                        <li><a class="J_menuItem" href="/page/linkList.html">友链列表</a></li>
                     </ul>
                 </li>
                 <li>
@@ -143,7 +143,7 @@
                     <a><i class="fa fa-picture-o"></i> <span class="nav-label">系统监控</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/swagger.html">SwaggerUI接口</a>
+                        <li><a class="J_menuItem" href="swagger.html">SwaggerUI接口</a>
                         </li>
                         <li><a class="J_menuItem" href="/druid.html">Druid数据监控</a>
                         </li>
@@ -153,11 +153,11 @@
                     <a><i class="fa fa-picture-o"></i> <span class="nav-label">系统设置</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/system/user.html">用户管理</a>
+                        <li><a class="J_menuItem" href="/page/user.html">用户管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="/system/role.html">角色管理</a>
+                        <li><a class="J_menuItem" href="/page/role.html">角色管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="/system/permission/permission.html">权限管理</a>
+                        <li><a class="J_menuItem" href="/page/permission.html">权限管理</a>
                         </li>
                     </ul>
                 </li>
@@ -165,11 +165,11 @@
                     <a><i class="fa fa-picture-o"></i> <span class="nav-label">前台页面设置</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/system/user.html">签名档设置</a>
+                        <li><a class="J_menuItem" href="/page/user.html">签名档设置</a>
                         </li>
-                        <li><a class="J_menuItem" href="/system/role.html">角色管理</a>
+                        <li><a class="J_menuItem" href="/page/role.html">角色管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="/system/permission/permission.html">权限管理</a>
+                        <li><a class="J_menuItem" href="/page/permission.html">权限管理</a>
                         </li>
                     </ul>
                 </li>

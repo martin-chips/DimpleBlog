@@ -55,28 +55,28 @@
      "[variable-2 * []] foo]", // Invalid; must have space or x between []
      "[variable-2 * [ ]]bar]", // Invalid; must have space after ]
      "[variable-2 * [x]]hello]", // Invalid; must have space after ]
-     "[variable-2 * ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style links
+     "[variable-2 * ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style link
      "    [variable-3 * ][property [x]]][variable-3  foo]"); // Valid; can be nested
 
   MT("taskListPlus",
      "[variable-2 + []] foo]", // Invalid; must have space or x between []
      "[variable-2 + [ ]]bar]", // Invalid; must have space after ]
      "[variable-2 + [x]]hello]", // Invalid; must have space after ]
-     "[variable-2 + ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style links
+     "[variable-2 + ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style link
      "    [variable-3 + ][property [x]]][variable-3  foo]"); // Valid; can be nested
 
   MT("taskListDash",
      "[variable-2 - []] foo]", // Invalid; must have space or x between []
      "[variable-2 - [ ]]bar]", // Invalid; must have space after ]
      "[variable-2 - [x]]hello]", // Invalid; must have space after ]
-     "[variable-2 - ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style links
+     "[variable-2 - ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style link
      "    [variable-3 - ][property [x]]][variable-3  foo]"); // Valid; can be nested
 
   MT("taskListNumber",
      "[variable-2 1. []] foo]", // Invalid; must have space or x between []
      "[variable-2 2. [ ]]bar]", // Invalid; must have space after ]
      "[variable-2 3. [x]]hello]", // Invalid; must have space after ]
-     "[variable-2 4. ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style links
+     "[variable-2 4. ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style link
      "    [variable-3 1. ][property [x]]][variable-3  foo]"); // Valid; can be nested
 
   MT("SHA",

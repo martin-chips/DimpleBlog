@@ -24,8 +24,8 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">创建时间：</label>
             <div class="col-sm-8">
-                <input id="remark" name="createTime" class="form-control" type="time" readonly="true"
-                       th:value="${role.createTime}">
+                <input id="remark" name="createTime" class="form-control" readonly="true"
+                       th:value="*{#dates.format(role.createTime,'yyyy-MM-dd HH:mm:ss')}">
             </div>
         </div>
         <div class="form-group">
@@ -56,7 +56,7 @@
 <script>
     $(function () {
 
-        var url = "/system/permission/permissionTree/" + $("#roleId").val();
+        var url = "/api/permissionTree/" + $("#roleId").val();
         var options = {
             id: "permissionTree",
             url: url,
@@ -72,7 +72,7 @@
 
     function updateRole() {
         $.ajax({
-            url: "/system/role",
+            url: "/api/role",
             type: "put",
             data: {
                 roleId: $("#roleId").val(),

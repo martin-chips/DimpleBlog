@@ -7,9 +7,9 @@ $(function () {
 
 function initTable() {
     var option = {
-        url: "/blog/blogList.json",
-        deleteUrl: "/blog/blogList/{id}",
-        updateUrl: "/blog/blogList/{id}.html",
+        url: "/blog",
+        deleteUrl: "/api/blog/{id}",
+        updateUrl: "/page/blog/{id}.html",
         addUrl: "",
         detailUrl: "",
         sortName: "createTime",

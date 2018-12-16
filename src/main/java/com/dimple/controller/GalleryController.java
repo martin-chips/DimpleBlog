@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/gallery")
 public class GalleryController {
-    @RequestMapping("/localGallery")
+    @RequestMapping("/page/localGallery.html")
     public String toLocalGallery() {
         return "gallery/localGallery";
     }

@@ -24,10 +24,10 @@ $(".browserType").click(function () {
 function initTable() {
 
     var option = {
-            url: "/log/operateLog.json",
-            deleteUrl: "/log/operateLog/{id}",
-            cleanUrl: "/log/operateLog",
-            detailUrl: "/log/operateLog/{id}",
+            url: "/api/operateLog",
+            deleteUrl: "/api/operateLog/{id}",
+            cleanUrl: "/api/operateLog",
+            detailUrl: "/api/operateLog/{id}",
             sortName: "createTime",
             sortOrder: "desc",
             modalName: "操作日志",
@@ -47,7 +47,7 @@ function initTable() {
                 formatter: function (value, row, index) {
                     var actions = [];
                     if (value == 1) {
-                        actions.push("<span class='badge badge-danger" + "'>" +"新增"+ "</span>");
+                        actions.push("<span class='badge badge-danger" + "'>" + "新增" + "</span>");
                     }
                     return actions.join('');
                 }

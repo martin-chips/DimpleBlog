@@ -5,11 +5,11 @@ $(function () {
             uniqueId: "permissionId",
             expandAll: false,
             expandFirst: true,
-            url: "/system/permission.json",
-            addUrl: "/system/permission/add/{id}.html",
-            createUrl: "/system/permission/{id}.html",
-            updateUrl: "/system/permission/update/{id}.html",
-            removeUrl: "/remove/{id}",
+            url: "/api/permission",
+            addUrl: "/page/permissionAdd/{id}.html",
+            createUrl: "/page/permission/{id}.html",
+            updateUrl: "/page/permissionUpdate/{id}.html",
+            removeUrl: "/api/remove/{id}",
             modalName: "权限",
             columns: [{
                 field: 'selectItem',
@@ -84,7 +84,7 @@ function deletePermission(id) {
     $.modal.confirm("确定删除该条" + $.table._option.modalName + "信息吗？", function () {
         $.ajax({
             type: 'delete',
-            url: "/system/permission/" + id + "/validate",
+            url: "/api/permission/" + id + "/validate",
             success: function (result) {
                 if (result.code == web_status.SUCCESS) {
                     if (result.data == null) {

@@ -25,8 +25,8 @@ import java.util.List;
  * @Version: 1.0
  */
 @Controller
-@Api("博客类别")
-public class CategoriesController {
+@Api("博客类别Controller")
+public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
@@ -36,26 +36,26 @@ public class CategoriesController {
      *
      * @return
      */
-    @GetMapping("/blog/category.html")
+    @GetMapping("/page/category.html")
     public String categoryPage(Model model) {
         List<Category> allBlogCategory = categoryService.getAllBlogCategory();
         model.addAttribute("categories", allBlogCategory);
         return "blog/category/category";
     }
 
-    @GetMapping("/blog/category/{id}.html")
+    @GetMapping("/page/category/{id}.html")
     public String categoryUpdatePage(@PathVariable Integer id, Model model) {
         model.addAttribute("category", categoryService.selectBlogCategoryByCategoryId(id));
         return "blog/category/update";
     }
 
-    @GetMapping("/blog/category/add.html")
+    @GetMapping("/page/categoryAdd.html")
     public String categoryAddPage() {
         return "blog/category/add";
     }
 
     @ApiOperation("有条件的获取所有的分类数据")
-    @GetMapping("/blog/category.json")
+    @GetMapping("/api/category")
     @ResponseBody
     public Result getAllBlogcategory(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -70,7 +70,7 @@ public class CategoriesController {
     }
 
     @ApiOperation("无条件获取所有的分类数据")
-    @GetMapping("/blog/category")
+    @GetMapping("/api/categoryNoCondition")
     @ResponseBody
     public Result getAllBlogCategoris() {
         return ResultUtil.success(categoryService.getAllBlogCategory());
@@ -78,7 +78,7 @@ public class CategoriesController {
 
 
     @ApiOperation("新增分类")
-    @PostMapping("/blog/category")
+    @PostMapping("/api/category")
     @ResponseBody
     public Result insertBlogCategory(Category category) {
         int i = categoryService.insertBlogCategory(category);
@@ -86,7 +86,7 @@ public class CategoriesController {
     }
 
     @ApiOperation("修改分类")
-    @PutMapping("/blog/category")
+    @PutMapping("/api/category")
     @ResponseBody
     public Result updateBlogCategory(Category category) {
         int i = categoryService.updateBlogCategory(category);
@@ -94,7 +94,7 @@ public class CategoriesController {
     }
 
     @ApiOperation("删除分类")
-    @DeleteMapping("/blog/category/{ids}")
+    @DeleteMapping("/api/category/{ids}")
     @ResponseBody
     public Result deleteBlogCategory(@PathVariable Integer[] ids) {
         int i = categoryService.deleteBlogCategory(ids);

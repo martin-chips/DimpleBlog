@@ -7,10 +7,10 @@ $(function () {
 
 function initTable() {
     var option = {
-        url: "/blog/category.json",
-        deleteUrl: "/blog/category/{id}",
-        updateUrl: "/blog/category/{id}.html",
-        addUrl: "/blog/category/add.html",
+        url: "/api/category",
+        deleteUrl: "/api/category/{id}",
+        updateUrl: "/page/category/{id}.html",
+        addUrl: "/page/categoryAdd.html",
         sortName: "createTime",
         sortOrder: "desc",
         modalName: "分类",

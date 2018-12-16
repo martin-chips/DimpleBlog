@@ -7,9 +7,11 @@ $(function () {
         $("#display").val(isChecked);
     };
 });
+
 function submitHandler() {
     addLinks();
 }
+
 //link 提交按钮点击事件
 function addLinks() {
     $.ajax({
@@ -17,7 +19,7 @@ function addLinks() {
         async: false,
         dataType: "json",
         data: $("#addLinksForm").serializeArray(),
-        url: "/links",
+        url: "/api/link",
         success: function (data) {
             if (data != null && data.code == 200) {
                 parent.layer.msg('添加成功！', {icon: 1});

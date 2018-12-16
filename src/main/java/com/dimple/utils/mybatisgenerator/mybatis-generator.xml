@@ -38,7 +38,7 @@
         <!--<table tableName="category">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <!--<table tableName="links">-->
+        <!--<table tableName="link">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
         <!--<table tableName="permission">-->

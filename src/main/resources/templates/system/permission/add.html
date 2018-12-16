@@ -129,7 +129,7 @@
     function submitHandler() {
         if ($.validate.form()) {
             $.ajax({
-                url: "/system/permission",
+                url: "/api/permission",
                 type: "POST",
                 dataType: "JSON",
                 data: $("#permissionAddForm").serialize(),

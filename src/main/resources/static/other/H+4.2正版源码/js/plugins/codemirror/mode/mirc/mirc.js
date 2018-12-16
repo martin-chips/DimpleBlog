@@ -67,7 +67,7 @@ CodeMirror.defineMode("mirc", function() {
                             "flushini font fopen fseek fsend fserve fullname fwrite ghide gload gmove " +
                             "gopts goto gplay gpoint gqreq groups gshow gsize gstop gtalk gunload hadd " +
                             "halt haltdef hdec hdel help hfree hinc hload hmake hop hsave ial ialclear " +
-                            "ialmark identd if ignore iline inc invite iuser join kick linesep links list " +
+                            "ialmark identd if ignore iline inc invite iuser join kick linesep link list " +
                             "load loadbuf localinfo log mdi me menubar mkdir mnick mode msg nick noop notice " +
                             "notify omsg onotice part partall pdcc perform play playctrl pop protect pvoice " +
                             "qme qmsg query queryn quit raw reload remini remote remove rename renwin " +

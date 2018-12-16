@@ -7,6 +7,8 @@ import com.dimple.utils.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -28,24 +30,25 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
-    @RequestMapping("/system/role.html")
+    @RequestMapping("/page/role.html")
     public String rolePage() {
         return "system/role/list";
     }
 
-    @GetMapping("/system/role/{id}")
+    @GetMapping("/page/role/{id}.html")
     public String roleUpdatePage(@PathVariable Integer id, Model model) {
         Role byUserId = roleService.getRoleByRoleId(id);
         model.addAttribute("role", byUserId);
         return "system/role/update";
     }
 
-    @GetMapping("/system/role/add.html")
+    @GetMapping("/page/roleAdd.html")
     public String roleAdd() {
         return "system/role/add";
     }
 
-    @GetMapping("/system/role.json")
+    @ApiOperation("获取角色信息")
+    @GetMapping("/api/role")
     @ResponseBody
     public Result roleList(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -61,7 +64,8 @@ public class RoleController {
         return ResultUtil.success(pageInfo);
     }
 
-    @PutMapping("/system/role")
+    @ApiOperation("修改角色信息")
+    @PutMapping("/api/role")
     @ResponseBody
     public Result updateRole(Integer roleId, String roleName, String description, Boolean locked, Integer permissionIds[]) {
         Role role = new Role();
@@ -69,25 +73,28 @@ public class RoleController {
         role.setRoleId(roleId);
         role.setDescription(description);
         role.setRoleName(roleName);
-        int i = roleService.updateRole(role,permissionIds);
+        int i = roleService.updateRole(role, permissionIds);
         return ResultUtil.success(i);
     }
 
-    @DeleteMapping("/system/role/{ids}")
+    @ApiOperation("删除角色")
+    @DeleteMapping("/api/role/{ids}")
     @ResponseBody
     public Result deleteRole(@PathVariable Integer ids[]) {
         int i = roleService.deleteRole(ids);
         return ResultUtil.success(i);
     }
 
-    @PostMapping("/system/role")
+    @ApiOperation("新增角色")
+    @PostMapping("/api/role")
     @ResponseBody
     public Result insertRole(Role role) {
         int i = roleService.insertRole(role);
         return ResultUtil.success(i);
     }
 
-    @PutMapping("/system/role/{id}/{locked}")
+    @ApiOperation("更改角色的状态")
+    @PutMapping("/api/role/{id}/{locked}")
     @ResponseBody
     public Result changeLocked(@PathVariable Integer id, @PathVariable Boolean locked) {
         Integer i = roleService.changeRoleLocked(id, locked);

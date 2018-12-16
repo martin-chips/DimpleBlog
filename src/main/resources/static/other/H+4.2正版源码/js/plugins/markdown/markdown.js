@@ -911,7 +911,7 @@ Markdown.dialects.Gruber.inline = {
 
         consumed += m[ 0 ].length;
 
-        // [links][] uses links as its reference
+        // [link][] uses link as its reference
         attrs = { ref: ( m[ 1 ] || String(children) ).toLowerCase(),  original: orig.substr( 0, consumed ) };
 
         link = [ "link_ref", attrs ].concat( children );

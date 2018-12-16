@@ -1,4 +1,3 @@
-
 $(function () {
     //Switchery按钮初始化
     var elem = document.querySelector('.js-switch');
@@ -8,6 +7,7 @@ $(function () {
         $("#display").val(isChecked);
     };
 });
+
 function submitHandler() {
     if ($.validateCustom.form("updateLinksFrom")) {
         updateLinks();
@@ -19,7 +19,7 @@ function updateLinks() {
         type: "PUT",
         dataType: "json",
         data: $("#updateLinksFrom").serializeArray(),
-        url: "/links",
+        url: "/api/link",
         success: function (data) {
             if (data != null && data.code == web_status.SUCCESS) {
                 $.modal.msgReload("修改成功！", modal_status.SUCCESS);

@@ -5,6 +5,8 @@ import com.dimple.bean.Role;
 import com.dimple.service.PermissionService;
 import com.dimple.utils.message.Result;
 import com.dimple.utils.message.ResultUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,23 +26,25 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Controller
+@Api("权限管理")
 public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
-    @GetMapping("/system/permission/permission.html")
+    @GetMapping("/page/permission.html")
     public String permissionPage() {
         return "system/permission/permission";
     }
 
-    @GetMapping("/system/permission/add/{id}.html")
+    @GetMapping("/page/permissionAdd/{id}.html")
     public String permissionAddPage(@PathVariable Integer id, Model model) {
         model.addAttribute("pTitle", permissionService.getPermissionPName(id));
         model.addAttribute("pId", id);
         return "system/permission/add";
     }
 
-    @GetMapping("/system/permission/update/{id}.html")
+
+    @GetMapping("/page/permissionUpdate/{id}.html")
     public String permissionUpdatePage(@PathVariable Integer id, Model model) {
         Permission permission = permissionService.getPermissionById(id);
         String pName = permissionService.getPermissionPName(id);
@@ -49,48 +53,34 @@ public class PermissionController {
         return "system/permission/update";
     }
 
-
-    @GetMapping("/system/permission/permissionTree")
+    @ApiOperation("获取权限树")
+    @GetMapping("/api/permissionTree")
     @ResponseBody
     public Result getPermissionTree() {
         List<Map<String, Object>> tree = permissionService.getPermissionTree();
         return ResultUtil.success(tree);
     }
 
-    /**
-     * 根据Role的id获取其对应的权限树
-     *
-     * @param roleId
-     * @return
-     */
-    @GetMapping("/system/permission/permissionTree/{roleId}")
+    @ApiOperation("根据RolerId获取权限树")
+    @GetMapping("/api/permissionTree/{roleId}")
     @ResponseBody
     public Result getPermissionTreeByRoleId(@PathVariable Integer roleId) {
         List<Map<String, Object>> tree = permissionService.getPermissionTreeByRoleId(roleId);
         return ResultUtil.success(tree);
     }
 
-    /**
-     * 获取permission的表的数据
-     *
-     * @return
-     */
-    @GetMapping("/system/permission.json")
+    @ApiOperation("获取权限的数据")
+    @GetMapping("/api/permission")
     @ResponseBody
     public Result getPermissionList(@RequestParam(value = "title", required = false) String title,
                                     @RequestParam(value = "status", required = false) Boolean status,
                                     @RequestParam(value = "type", required = false) Integer type) {
-        List<Permission> permissions = permissionService.getPermissionAll(title, type,status);
+        List<Permission> permissions = permissionService.getPermissionAll(title, type, status);
         return ResultUtil.success(permissions);
     }
 
-    /**
-     * 为删除的时候做铺垫，如果先进行关联查询，然后返回关联查询结果
-     *
-     * @param permissionId
-     * @return
-     */
-    @DeleteMapping("/system/permission/{id}/validate")
+    @ApiOperation("删除权限前的验证")
+    @DeleteMapping("/api/permission/{id}/validate")
     @ResponseBody
     public Result deletePermissionValidate(@PathVariable("id") Integer permissionId) {
         List<String> roleNames = permissionService.getPermissionRelation(permissionId);
@@ -103,22 +93,24 @@ public class PermissionController {
         return ResultUtil.success(roleNames.toString());
     }
 
-    @DeleteMapping("/system/permission/{id}")
+    @ApiOperation("根据权限ID删除权限信息")
+    @DeleteMapping("/api/permission/{id}")
     @ResponseBody
     public Result deletePermission(@PathVariable Integer id) {
-        //todo 删除的时候需要判断是否有关联信息，如果有关联信息，需要进行反馈
         int i = permissionService.deletePermission(id);
         return ResultUtil.success(i);
     }
 
-    @PutMapping("/system/permission")
+    @ApiOperation("修改权限信息")
+    @PutMapping("/api/permission")
     @ResponseBody
     public Result updatePermission(Permission permission) {
         int i = permissionService.updatePermission(permission);
         return ResultUtil.success();
     }
 
-    @PostMapping("/system/permission")
+    @ApiOperation("新增权限")
+    @PostMapping("/api/permission")
     @ResponseBody
     public Result insertPermission(Permission permission) {
         Integer integer = permissionService.insertPermission(permission);

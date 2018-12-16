@@ -27,7 +27,7 @@ import java.util.Properties;
  * @Date: 11/19/18 19:21
  * @Version: 1.0
  */
-@Configuration
+//@Configuration
 public class ShiroConfig {
 
 
@@ -44,7 +44,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/fonts/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
         //加入验证码不拦截
-        filterChainDefinitionMap.put("/generateKaptcha", "anon");
+        filterChainDefinitionMap.put("/api/kaptcha", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/html/**", "anon");
         //首页不拦截
