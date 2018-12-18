@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head th:include="common :: common-head"></head>
 
@@ -61,27 +61,27 @@
             <div class="col-sm-9 animated fadeInRight">
                 <div class="row">
                     <div class="col-sm-12 images">
-                        <div class="file-box">
-                            <div class="file-box">
-                                <div class="file">
-                                    <a href="file_manager.html#">
-                                        <span class="corner"></span>
 
-                                        <div class="image">
-                                            <img alt="image" class="img-responsive" src="img/p1.jpg">
-                                        </div>
-                                        <div class="file-name">
-                                            Italy street.jpg
-                                            <br/>
-                                            <small>添加时间：2014-10-13</small>
-                                        </div>
-                                    </a>
+                        <div class="file-box" th:each="image:${images}">
+                            <div class="file">
+                                <a>
+                                    <span class="corner"></span>
 
-                                </div>
+                                    <div class="image">
+                                        <img alt="image" class="img-responsive" src="img/p1.jpg"
+                                             th:src="${'/images/'+image.key}">
+                                    </div>
+                                    <div class="file-name">
+                                        <div th:text="${image.key.substring(0,4)+'···'+image.key.substring(22)}"></div>
+                                        <br/>
+                                        <small th:text="${'添加时间 : '+#dates.format(image.value,'yyyy-MM-dd')}">
+                                            添加时间：2014-10-13
+                                        </small>
+                                    </div>
+
+                                </a>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -92,70 +92,10 @@
 <div th:include="common :: common-footer"></div>
 <script>
     $(document).ready(function () {
-        loadImage();
-
-        // $('.fancybox').fancybox({
-        //     openEffect: 'none',
-        //     closeEffect: 'none'
-        // });
+        $('.file-box').each(function () {
+            animationHover(this, 'pulse');
+        });
     });
-
-    $('.file-box').each(function () {
-        animationHover(this, 'pulse');
-    });
-    $(".file-box").bind("hover", function () {
-        var element = $(this);
-        var animation = "pulse";
-        element.hover(
-            function () {
-                element.addClass('animated ' + animation);
-            },
-            function () {
-                //动画完成之前移除class
-                window.setTimeout(function () {
-                    element.removeClass('animated ' + animation);
-                }, 2000);
-            });
-    });
-
-    function loadImage() {
-        $.ajax({
-            url: "/blog/image",
-            type: "get",
-            dataType: "json",
-            success: function (data) {
-                if (data.code == web_status.SUCCESS) {
-                    var $images = $(".images");
-                    var imagesUrl = data.data;
-                    for (var i = 0; i < imagesUrl.length; i++) {
-                        var fileBox = $("<div class='file-box'></div>");
-                        var a = $("<a></a>");
-                        var file = $("<div class='file'></div>");
-                        var corner = $("<span class='corner'></span>");
-                        var image = $("<div class='image'></div>");
-                        var img = $("<img class='img-responsive' alt='ssss  '>");
-                        img.attr("src", imagesUrl[i])
-                        var fileName = $("<div class='file-name'></div>");
-                        var br = $("<br>");
-                        var time = $("<small></small>");
-                        fileName.append("jjj");
-                        fileName.append(br);
-                        fileName.append(time);
-                        image.append(img);
-                        a.append(corner);
-                        a.append(image);
-                        a.append(fileName);
-                        file.append(a);
-                        fileBox.append(file);
-                        var last = $("<div class='file-box'></div>");
-                        last.append(fileBox);
-                        $images.append(last);
-                    }
-                }
-            }
-        })
-    }
-
 </script>
 
 </body>

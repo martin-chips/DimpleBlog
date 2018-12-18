@@ -6,20 +6,74 @@ $(function () {
     $("#draft").click(function () {
         var data = getData();
         data.status = 2;
-        console.log(data);
-        $.operate.post("/api/blog", data);
+        postBlog(data);
     });
     $("#publishBlog").click(function () {
         var data = getData();
-        console.log(data);
-        $.operate.post("/api/blog", data);
+        postBlog(data);
+
     });
 
     $("#giveUp").click(function () {
-        $("#blogEdit")[0].reset();
+        Swal({
+            title: '确定要放弃吗？',
+            text: "注意，这个操作不可逆！",
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: '是，删除它',
+            cancelButtonText: "容我三思", animation: false,
+            customClass: 'animated bounce'
+
+        }).then(function (isConfirm) {
+            if (!isConfirm.value) {
+                return;
+            }
+            cleanForm();
+
+            Swal(
+                '已完成',
+                '世界安静了',
+                'success'
+            );
+
+        });
 
     });
 });
+
+function postBlog(data) {
+    $.ajax({
+        url: "/api/blog",
+        data: data,
+        type: "POST",
+        dataType: "json",
+        success: function (result) {
+            if (result.code == web_status.SUCCESS) {
+                Swal({
+                    type: 'success',
+                    title: '博文已成功发送到服务器',
+                    showConfirmButton: true,
+                });
+                //清空表单数据
+                cleanForm();
+            } else {
+                $.modal.msgError(result.msg);
+            }
+        }
+
+    })
+}
+
+//清空表单数据
+function cleanForm() {
+    var title = $("input[name='title']").val("");
+    var summary = $("input[name='summary']").val("");
+    var tags = $("input[name='tags']").val("");
+    var categoryId = $("#categorySelect").val("");
+    var content = $("#summernote").summernote("code", "");
+}
 
 
 //获取表单数据
@@ -133,8 +187,9 @@ var $summernote;
 
 //调用富文本编辑
 function initSummernote() {
+    var height = $(window).height() / 1.5;
     $summernote = $('#summernote').summernote({
-        height: 300,
+        height: height,
         minHeight: null,
         lang: 'zh-CN',
         maxHeight: null,
@@ -147,8 +202,8 @@ function initSummernote() {
                 },
                 onMediaDelete: function (target) {
                     var imgSrc = target.context.currentSrc;
-                    console.log(imgSrc);
                     $.ajax({
+
                         data: {
                             fileUrl: imgSrc
                         },
@@ -179,7 +234,7 @@ function sendFile($summernote, file) {
         success: function (result) {
             if (result.code == web_status.SUCCESS) {
                 $summernote.summernote('insertImage', result.data, function ($image) {
-                    $image.attr('src', data);
+                    $image.attr('src', result.data);
                 });
             } else {
                 $.modal.alertError(result.msg);

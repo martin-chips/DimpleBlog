@@ -3,11 +3,11 @@ package com.dimple.utils;
 import org.springframework.context.MessageSource;
 
 /**
- * @ClassName: MessageUtil
- * @Description:
- * @Auther: Owenb
- * @Date: 12/06/18 14:19
- * @Version: 1.0
+ * @author : Owenb
+ * @version : 1.0
+ * @class : MessageUtil
+ * @description :
+ * @date : 12/06/18 14:19
  */
 public class MessageUtil {
     public static String getMessage(String code, Object... args) {

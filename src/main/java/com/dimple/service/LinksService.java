@@ -2,8 +2,8 @@ package com.dimple.service;
 
 import com.dimple.bean.Links;
 import com.dimple.bean.LinksDetails;
-import com.dimple.enums.LinksSearchCode;
-import com.dimple.utils.message.Result;
+import com.dimple.framework.enums.LinksSearchCode;
+import com.dimple.framework.message.Result;
 
 import java.util.Date;
 import java.util.List;

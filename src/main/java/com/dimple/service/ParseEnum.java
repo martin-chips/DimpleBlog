@@ -1,6 +1,5 @@
 package com.dimple.service;
 
-import com.dimple.enums.OperateType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -8,11 +8,11 @@ import org.apache.shiro.subject.Subject;
 import java.security.Security;
 
 /**
- * @ClassName: ShiroUtil
- * @Description: Shiro 的工具类
- * @Auther: Owenb
- * @Date: 11/29/18 10:54
- * @Version: 1.0
+ * @author : Owenb
+ * @version : 1.0
+ * @class : ShiroUtil
+ * @description : Shiro 的工具类
+ * @date : 11/29/18 10:54
  */
 public class ShiroUtil {
     /**
@@ -49,14 +49,6 @@ public class ShiroUtil {
         return (User) getSubject().getPrincipal();
     }
 
-    /**
-     * 获取IP地址
-     *
-     * @return IP地址字符串
-     */
-    public static String getIp() {
-        return getSubject().getSession().getHost();
-    }
 
     /**
      * 返回SessionId

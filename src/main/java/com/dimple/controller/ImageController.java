@@ -1,8 +1,8 @@
 package com.dimple.controller;
 
 import com.dimple.utils.FileOperateUtil;
-import com.dimple.utils.message.Result;
-import com.dimple.utils.message.ResultUtil;
+import com.dimple.framework.message.Result;
+import com.dimple.framework.message.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -40,7 +39,7 @@ public class ImageController {
     @ApiOperation("SummerNote编辑器中上传图片接口")
     @RequestMapping(value = "/api/summernote/image", method = RequestMethod.POST)
     @ResponseBody
-    public Result uploadImageSummernote(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
+    public Result uploadImageSummernote( @RequestParam("file") MultipartFile file) throws Exception {
         return ResultUtil.success(fileOperateUtil.imgUpload(file));
     }
 

@@ -3,7 +3,7 @@ package com.dimple.service.impl;
 import com.dimple.bean.OperateLog;
 import com.dimple.bean.OperateLogExample;
 import com.dimple.dao.OperateLogMapper;
-import com.dimple.enums.OperateType;
+import com.dimple.framework.enums.OperateType;
 import com.dimple.service.OperateLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

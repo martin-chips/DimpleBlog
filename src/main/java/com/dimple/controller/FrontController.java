@@ -2,8 +2,8 @@ package com.dimple.controller;
 
 import com.dimple.bean.Blog;
 import com.dimple.service.FrontService;
-import com.dimple.utils.message.Result;
-import com.dimple.utils.message.ResultUtil;
+import com.dimple.framework.message.Result;
+import com.dimple.framework.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @ClassName: FrontController

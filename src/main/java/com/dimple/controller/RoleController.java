@@ -2,12 +2,10 @@ package com.dimple.controller;
 
 import com.dimple.bean.Role;
 import com.dimple.service.RoleService;
-import com.dimple.utils.message.Result;
-import com.dimple.utils.message.ResultUtil;
+import com.dimple.framework.message.Result;
+import com.dimple.framework.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

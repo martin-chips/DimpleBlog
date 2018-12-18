@@ -2,12 +2,11 @@ package com.dimple.controller;
 
 import com.dimple.bean.User;
 import com.dimple.service.UserService;
-import com.dimple.utils.message.Result;
-import com.dimple.utils.message.ResultUtil;
+import com.dimple.framework.message.Result;
+import com.dimple.framework.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
-import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;

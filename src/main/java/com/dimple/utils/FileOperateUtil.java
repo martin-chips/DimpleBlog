@@ -1,9 +1,8 @@
 package com.dimple.utils;
 
-import com.dimple.exception.file.FileNotExistException;
-import com.dimple.exception.file.FileNameLengthOutOfLimitException;
-import com.dimple.exception.file.FileTypeMisMatchException;
-import com.dimple.utils.md5PasswordGenerator.Md5Util;
+import com.dimple.framework.exception.file.FileNotExistException;
+import com.dimple.framework.exception.file.FileNameLengthOutOfLimitException;
+import com.dimple.framework.exception.file.FileTypeMisMatchException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -18,11 +17,11 @@ import java.io.*;
 import java.util.*;
 
 /**
- * @ClassName: FileUploadUtil
- * @Description: 文件操作工具类
- * @Auther: Owenb
- * @Date: 12/13/18 13:51
- * @Version: 1.0
+ * @author : Dimple
+ * @class: FileUploadUtil
+ * @description : 文件操作工具类
+ * @date: 12/13/18 13:51
+ * @version: 1.0
  */
 @Component
 public class FileOperateUtil {
@@ -105,6 +104,28 @@ public class FileOperateUtil {
     }
 
     /**
+     * 获取图片名称以及上传的时间
+     *
+     * @return
+     */
+    public Map<String, Date> selectImagesNameAndModifyTime() {
+        Map<String, Date> result = new HashMap<>();
+        File file = new File(IMG_DIR);
+        if (!file.exists()) {
+            return null;
+        }
+        File[] files = getFilesOrderByModifyTime();
+        for (File temp : files) {
+            long l = temp.lastModified();
+            Date date = new Date(l);
+//            String name = temp.getName().length() < 9 ? temp.getName() : temp.getName().substring(0, 5) + temp.getName().substring(temp.getName().lastIndexOf("/"));
+            result.put(temp.getName(), date);
+        }
+        return result;
+    }
+
+
+    /**
      * 根据URL对图片进行删除
      *
      * @param url
@@ -117,6 +138,9 @@ public class FileOperateUtil {
         int i = url.lastIndexOf("/");
         String uri = url.substring(i + 1);
         File file = new File(IMG_DIR + uri);
+        if (!file.exists()) {
+            return false;
+        }
         try {
             FileUtils.forceDelete(file);
         } catch (IOException e) {
@@ -133,15 +157,6 @@ public class FileOperateUtil {
      */
     public List<String> getAllImageUrl() {
         File file = new File(IMG_DIR);
-        FilenameFilter filenameFilter = new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                if (allowImgFormat.contains(FilenameUtils.getExtension(dir.getName()).toLowerCase())) {
-                    return true;
-                }
-                return false;
-            }
-        };
         String[] list = file.list(filenameFilter);
         List<String> imageList = new LinkedList<>();
         for (String s : list) {
@@ -150,17 +165,22 @@ public class FileOperateUtil {
         return imageList;
     }
 
+    /**
+     * 获取所有的图片并按照创建时间排序
+     *
+     * @return
+     */
     public List<String> getAllImageOrderByCreateTime() {
+        File[] files = getFilesOrderByModifyTime();
+        List<String> nameList = new LinkedList<>();
+        for (int i = files.length - 1; i >= 0; i--) {
+            nameList.add("/images/" + files[i].getName());
+        }
+        return nameList;
+    }
+
+    private File[] getFilesOrderByModifyTime() {
         File file = new File(IMG_DIR);
-        FilenameFilter filenameFilter = new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                if (allowImgFormat.contains(FilenameUtils.getExtension(dir.getName()).toLowerCase())) {
-                    return true;
-                }
-                return false;
-            }
-        };
         File[] files = file.listFiles(filenameFilter);
         Arrays.sort(files, new Comparator<File>() {
             @Override
@@ -174,11 +194,7 @@ public class FileOperateUtil {
                     return -1;
             }
         });
-        List<String> nameList = new LinkedList<>();
-        for (int i = files.length - 1; i >= 0; i--) {
-            nameList.add("/images/" + files[i].getName());
-        }
-        return nameList;
+        return files;
     }
 
     /**
@@ -238,5 +254,18 @@ public class FileOperateUtil {
         }
         return desc;
     }
+
+    /**
+     * 文件名称过滤器
+     */
+    private FilenameFilter filenameFilter = new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+            if (allowImgFormat.contains(FilenameUtils.getExtension(dir.getName()).toLowerCase())) {
+                return true;
+            }
+            return false;
+        }
+    };
 
 }

@@ -2,11 +2,10 @@ package com.dimple.service.impl;
 
 import com.dimple.bean.Blog;
 import com.dimple.bean.BlogExample;
-import com.dimple.bean.Category;
 import com.dimple.dao.BlogMapper;
 import com.dimple.dao.CategoryMapper;
 import com.dimple.dao.CustomMapper;
-import com.dimple.enums.BlogStatus;
+import com.dimple.framework.enums.BlogStatus;
 import com.dimple.service.BlogService;
 import com.dimple.utils.FileOperateUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -66,7 +65,9 @@ public class BlogServiceImpl implements BlogService {
         }
         blog.setCreateTime(new Date());
         //设置摘要
-        blog.setSummary(blog.getContent().substring(0, blog.getContent().length() < 150 ? blog.getContent().length() : 150));
+        if (StringUtils.isBlank(blog.getSummary())) {
+            blog.setSummary(blog.getContent().substring(0, blog.getContent().length() < 150 ? blog.getContent().length() : 150));
+        }
         blog.setClick(0);
         blog.setSupport(false);
         blog.setWeight(0);
@@ -123,5 +124,14 @@ public class BlogServiceImpl implements BlogService {
     public Map<String, Integer> selectCountOfBlogStatus() {
         Map<String, Integer> allBolgStatusCount = customMapper.getAllBolgStatusCount();
         return allBolgStatusCount;
+    }
+
+    @Override
+    public Blog selectBlogByIdBlobs(Integer id) {
+        if (id == null) {
+            return null;
+        }
+        Blog blog = blogMapper.selectByPrimaryKey(id);
+        return blog;
     }
 }

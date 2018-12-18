@@ -12,11 +12,11 @@ import java.io.*;
 import java.net.*;
 
 /**
- * @ClassName: AddressUtil
- * @Description: 根据IP地址获取详细的地理位置信息，使用淘宝API接口
- * @Auther: Owenb
- * @Date: 11/29/18 11:01
- * @Version: 1.0
+ * @author : Owenb
+ * @version : 1.0
+ * @class : AddressUtil
+ * @description : 根据IP地址获取详细的地理位置信息，使用淘宝API接口
+ * @date : 11/29/18 11:01
  */
 @Slf4j
 public class AddressUtil {
@@ -91,7 +91,6 @@ public class AddressUtil {
         }
         JsonParser jsonParser = new JsonParser();
         //使用JsonParser解析Json树
-
         JsonObject jsonObject = null;
         try {
             jsonObject = (JsonObject) jsonParser.parse(response);

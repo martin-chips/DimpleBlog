@@ -2,12 +2,12 @@ package com.dimple.controller;
 
 import com.dimple.bean.Links;
 import com.dimple.bean.LinksDetails;
-import com.dimple.enums.LinksSearchCode;
-import com.dimple.enums.OperateType;
-import com.dimple.framework.annotation.Log;
+import com.dimple.framework.enums.LinksSearchCode;
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.service.LinksService;
-import com.dimple.utils.message.Result;
-import com.dimple.utils.message.ResultUtil;
+import com.dimple.framework.message.Result;
+import com.dimple.framework.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;

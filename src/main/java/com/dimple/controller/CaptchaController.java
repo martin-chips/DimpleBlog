@@ -45,7 +45,7 @@ public class CaptchaController {
 
     @ApiOperation("生成验证码")
     @GetMapping("/api/kaptcha")
-    public void defaultKaptcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void defaultKaptcha(HttpServletRequest request, HttpServletResponse response) {
         ServletOutputStream servletOutputStream = null;
         try {
             HttpSession session = request.getSession();

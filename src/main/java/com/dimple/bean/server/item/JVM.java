@@ -44,14 +44,14 @@ public class JVM {
      * JDK启动时间
      */
     public String getStartTime() {
-        return DateUtil.parseDateToStr(DateUtil.YYYY_MM_DD_HH_MM_SS, DateUtil.getServerStartDate());
+        return DateUtil.dateToString(DateUtil.getServerStartDate(), DateUtil.DATETIME_FORMAT);
     }
 
     /**
      * JDK运行时间
      */
     public String getRunTime() {
-        return DateUtil.getDatePoor(DateUtil.getNowDate(), DateUtil.getServerStartDate());
+        return DateUtil.getDatePoor(DateUtil.getDateNow(), DateUtil.getServerStartDate());
     }
 
     /**

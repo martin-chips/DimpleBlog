@@ -1,7 +1,7 @@
 package com.dimple.service;
 
 import com.dimple.bean.OperateLog;
-import com.dimple.enums.OperateType;
+import com.dimple.framework.enums.OperateType;
 
 import java.util.Date;
 import java.util.List;

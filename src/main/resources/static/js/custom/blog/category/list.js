@@ -46,8 +46,8 @@ function initTable() {
                 return $.common.dateFormat(value);
             }
         }, {
-            field: 'count',
-            title: '文章数量',
+            field: 'weight',
+            title: '权重',
             align: 'center',
         }, {
             field: 'operate',

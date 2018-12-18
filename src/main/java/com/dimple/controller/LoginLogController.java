@@ -2,8 +2,8 @@ package com.dimple.controller;
 
 import com.dimple.bean.LoginLog;
 import com.dimple.service.LoginLogService;
-import com.dimple.utils.message.Result;
-import com.dimple.utils.message.ResultUtil;
+import com.dimple.framework.message.Result;
+import com.dimple.framework.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;

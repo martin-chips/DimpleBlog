@@ -2,7 +2,7 @@ package com.dimple.controller;
 
 import com.dimple.service.LinksService;
 import com.dimple.service.LoginService;
-import com.dimple.utils.message.Result;
+import com.dimple.framework.message.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

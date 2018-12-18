@@ -55,22 +55,30 @@ public interface BlogService {
      *
      * @param id     博客的id
      * @param status 将要切换的状态（1表示发布，2表示草稿箱，3表示回收站）
-     * @return
+     * @return 受影响的行数
      */
     int changeBlogStatus(Integer id, Integer status);
 
     /**
      * 根据Blog的Id获取Blog信息
      *
-     * @param id
-     * @return
+     * @param id Blog的ID
+     * @return 该Id对应的博客
      */
     Blog selectBlogById(Integer id);
 
     /**
      * 获取博客状态的统计（有多少是已经发布了的，有多少是已经在草稿箱，有多少是在垃圾箱）
      *
-     * @return
+     * @return Map
      */
     Map<String, Integer> selectCountOfBlogStatus();
+
+    /**
+     * 根据Blog的Id获取博客的详细信息（包括content）
+     *
+     * @param id
+     * @return
+     */
+    Blog selectBlogByIdBlobs(Integer id);
 }

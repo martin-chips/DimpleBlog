@@ -96,8 +96,8 @@ public class Server {
     private System setSystemInfo() {
         System system = new System();
         Properties properties = java.lang.System.getProperties();
-        system.setComputerIp(IpUtil.getHostIp());
-        system.setComputerName(IpUtil.getHostName());
+        system.setComputerIp(IpUtil.getLocalHostAddress());
+        system.setComputerName(IpUtil.getLocalHostName());
         system.setOsName(properties.getProperty("os.name"));
         system.setOsArch(properties.getProperty("os.arch"));
         system.setProjectDir(properties.getProperty("user.dir"));

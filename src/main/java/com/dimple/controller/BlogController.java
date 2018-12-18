@@ -6,8 +6,8 @@ import com.dimple.service.BlogService;
 import com.dimple.service.CategoryService;
 import com.dimple.utils.FileOperateUtil;
 import com.dimple.utils.QiNiuUtils;
-import com.dimple.utils.message.Result;
-import com.dimple.utils.message.ResultUtil;
+import com.dimple.framework.message.Result;
+import com.dimple.framework.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.qiniu.util.StringMap;
@@ -29,11 +29,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * @ClassName: BlogController
- * @Description:
- * @Auther: Owenb
- * @Date: 11/20/18 14:27
- * @Version: 1.0
+ * @author : Dimple
+ * @version : 1.0
+ * @class : BlogController
+ * @description :
+ * @date: 11/20/18 14:27
  */
 @Controller
 @Api("博客管理接口测试模块")
@@ -62,7 +62,7 @@ public class BlogController {
 
     @GetMapping("/page/blogList/{id}.html")
     public String blogUpdatePage(@PathVariable Integer id, Model model) {
-        model.addAttribute("blog", blogService.selectBlogById(id));
+        model.addAttribute("blog", blogService.selectBlogByIdBlobs(id));
         return "blog/list/update";
     }
 

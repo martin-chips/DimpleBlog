@@ -5,11 +5,11 @@ import com.google.code.kaptcha.text.impl.DefaultTextCreator;
 import java.util.Random;
 
 /**
- * @ClassName: KaptchaMathCreater
- * @Description: 数值验证码生成器
- * @Auther: Owenb
- * @Date: 11/30/18 10:58
- * @Version: 1.0
+ * @author Dimple
+ * @version : 1.0
+ * @class : KaptchaMathCreater
+ * @description : 数值验证码生成器
+ * @date : 11/30/18 10:58
  */
 public class KaptchaMathCreater extends DefaultTextCreator {
 

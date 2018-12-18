@@ -1,6 +1,6 @@
 package com.dimple.service;
 
-import com.dimple.utils.message.Result;
+import com.dimple.framework.message.Result;
 
 /**
  * @ClassName: LoginService
