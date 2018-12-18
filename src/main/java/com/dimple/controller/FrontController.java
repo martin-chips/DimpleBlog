@@ -1,15 +1,21 @@
 package com.dimple.controller;
 
+import com.dimple.bean.Blog;
+import com.dimple.service.FrontService;
 import com.dimple.utils.message.Result;
-import org.reactivestreams.Publisher;
+import com.dimple.utils.message.ResultUtil;
+import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @ClassName: FrontController
@@ -20,6 +26,11 @@ import java.util.List;
  */
 @Controller
 public class FrontController {
+
+
+    @Autowired
+    FrontService frontService;
+
     /**
      * 跳转到首页
      *
@@ -27,6 +38,10 @@ public class FrontController {
      */
     @RequestMapping("/")
     public String index(Model model) {
+        Map<String, List<Blog>> map = frontService.getCategoryInfo();
+        model.addAttribute("categories", frontService.getCategoryName());
+        model.addAttribute("blogs", frontService.getBlogsInfo());
+        model.addAttribute("peopleSee", frontService.getBlogsPeopleSee());
         return "front/index";
     }
 
@@ -44,5 +59,21 @@ public class FrontController {
     }
 
 
+    @GetMapping("/api/test")
+    @ResponseBody
+    public Object test() {
+        List<Blog> blogsPeopleSee = frontService.getBlogsPeopleSee();
+        return blogsPeopleSee;
+    }
+
+
+    @GetMapping("/api/front/newestBlog")
+    @ResponseBody
+    public Result getNewestBlog(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Map<String, Object>> blogs = frontService.getNewestBlog();
+        return ResultUtil.success(blogs);
+    }
 
 }

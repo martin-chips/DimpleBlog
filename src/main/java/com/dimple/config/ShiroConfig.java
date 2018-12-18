@@ -27,7 +27,7 @@ import java.util.Properties;
  * @Date: 11/19/18 19:21
  * @Version: 1.0
  */
-//@Configuration
+@Configuration
 public class ShiroConfig {
 
 
@@ -35,9 +35,9 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        shiroFilterFactoryBean.setLoginUrl("/login.html");
-        shiroFilterFactoryBean.setSuccessUrl("/index.html");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setLoginUrl("/page/login.html");
+        shiroFilterFactoryBean.setSuccessUrl("/page/index.html");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/page/403");
         //拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/css/**", "anon");

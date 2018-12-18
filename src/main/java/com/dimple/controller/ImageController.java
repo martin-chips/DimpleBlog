@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,6 +30,8 @@ public class ImageController {
     @Autowired
     FileOperateUtil fileOperateUtil;
 
+    @ApiIgnore
+    @ApiOperation("跳转到上传图片界面")
     @GetMapping("/page/imageUploadPage")
     public String imageUploadPage() {
         return "blog/imageUpload";
@@ -37,25 +40,15 @@ public class ImageController {
     @ApiOperation("SummerNote编辑器中上传图片接口")
     @RequestMapping(value = "/api/summernote/image", method = RequestMethod.POST)
     @ResponseBody
-    public String uploadImageSummernote(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
-        String url = null;
-        if (!file.isEmpty()) {
-            url = fileOperateUtil.imgUpload(file);
-        }
-        System.out.println(url);
-        return url;
+    public Result uploadImageSummernote(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
+        return ResultUtil.success(fileOperateUtil.imgUpload(file));
     }
 
-    @ApiOperation("上传文件")
+    @ApiOperation("上传图片文件")
     @RequestMapping(value = "/api/image", method = RequestMethod.POST)
     @ResponseBody
-    public String uploadImage(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
-        String url = null;
-        if (!file.isEmpty()) {
-            url = fileOperateUtil.imgUpload(file);
-        }
-        System.out.println(url);
-        return url;
+    public Result uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
+        return ResultUtil.success(fileOperateUtil.imgUpload(file));
     }
 
 
@@ -73,7 +66,7 @@ public class ImageController {
     @GetMapping("/api/image")
     @ResponseBody
     public Result getImagesUpload() {
-        List<String> allImageUrl = fileOperateUtil.getAllImageUrl();
+        List<String> allImageUrl = fileOperateUtil.getAllImageOrderByCreateTime();
         return ResultUtil.success(allImageUrl);
     }
 }

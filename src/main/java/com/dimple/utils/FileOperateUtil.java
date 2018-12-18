@@ -1,5 +1,6 @@
 package com.dimple.utils;
 
+import com.dimple.exception.file.FileNotExistException;
 import com.dimple.exception.file.FileNameLengthOutOfLimitException;
 import com.dimple.exception.file.FileTypeMisMatchException;
 import com.dimple.utils.md5PasswordGenerator.Md5Util;
@@ -60,7 +61,10 @@ public class FileOperateUtil {
      * @throws FileNameLengthOutOfLimitException
      * @throws FileTypeMisMatchException
      */
-    public String imgUpload(MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthOutOfLimitException, FileTypeMisMatchException {
+    public String imgUpload(MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthOutOfLimitException, FileTypeMisMatchException, FileNotExistException {
+        if (file.isEmpty()) {
+            throw new FileNotExistException("file can not be null!");
+        }
         //文件长度校验
         int fileNameLength = file.getOriginalFilename().length();
         if (fileNameLength > FileOperateUtil.DEFAULT_FILE_NAME_LENGTH) {
@@ -144,6 +148,37 @@ public class FileOperateUtil {
             imageList.add("/images/" + s);
         }
         return imageList;
+    }
+
+    public List<String> getAllImageOrderByCreateTime() {
+        File file = new File(IMG_DIR);
+        FilenameFilter filenameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                if (allowImgFormat.contains(FilenameUtils.getExtension(dir.getName()).toLowerCase())) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        File[] files = file.listFiles(filenameFilter);
+        Arrays.sort(files, new Comparator<File>() {
+            @Override
+            public int compare(File file1, File file2) {
+                long diff = file1.lastModified() - file2.lastModified();
+                if (diff > 0)
+                    return 1;
+                else if (diff == 0)
+                    return 0;
+                else
+                    return -1;
+            }
+        });
+        List<String> nameList = new LinkedList<>();
+        for (int i = files.length - 1; i >= 0; i--) {
+            nameList.add("/images/" + files[i].getName());
+        }
+        return nameList;
     }
 
     /**

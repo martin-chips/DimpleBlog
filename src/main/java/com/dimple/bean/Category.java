@@ -25,9 +25,9 @@ public class Category implements Serializable {
     private Date updateTime;
 
     /**
-     * 其类别下的博客数量
+     * 分类是否推荐（前台首页界面展示）
      */
-    private Integer count;
+    private Integer weight;
 
     /**
      * 描述
@@ -104,19 +104,19 @@ public class Category implements Serializable {
     }
 
     /**
-     * 其类别下的博客数量
-     * @return count 其类别下的博客数量
+     * 分类是否推荐（前台首页界面展示）
+     * @return weight 分类是否推荐（前台首页界面展示）
      */
-    public Integer getCount() {
-        return count;
+    public Integer getWeight() {
+        return weight;
     }
 
     /**
-     * 其类别下的博客数量
-     * @param count 其类别下的博客数量
+     * 分类是否推荐（前台首页界面展示）
+     * @param weight 分类是否推荐（前台首页界面展示）
      */
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
     /**

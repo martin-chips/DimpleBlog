@@ -55,7 +55,7 @@ function uploadImage() {
     var title = "上传图片";
     var url = "/page/imageUploadPage";
     var width = $(window).width() / 1.5;
-    var height = $(window).height() / 1.5;
+    var height = $(window).height() / 1.2;
     //如果是移动端，就使用自适应大小弹窗
     if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
         width = 'auto';
@@ -156,7 +156,7 @@ function initSummernote() {
                         url: "/api/summernote/image",
                         dataType: "json",
                         success: function (data) {
-                            console.log(data);
+                            // console.log(data);
                         }
                     });
                 }
@@ -176,11 +176,14 @@ function sendFile($summernote, file) {
         contentType: false,
         processData: false,
         type: 'POST',
-        success: function (data) {
-            console.log(data);
-            $summernote.summernote('insertImage', data, function ($image) {
-                $image.attr('src', data);
-            });
+        success: function (result) {
+            if (result.code == web_status.SUCCESS) {
+                $summernote.summernote('insertImage', result.data, function ($image) {
+                    $image.attr('src', data);
+                });
+            } else {
+                $.modal.alertError(result.msg);
+            }
         }
     });
 }

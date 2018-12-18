@@ -356,7 +356,8 @@ about
 .con_text a { color: #09C;word-break: break-all; }
 .con_text a:hover { text-decoration: underline }
 .con_text p { margin: 15px 0; }
-.con_text img { display: block; max-width: 100% !important; height:!important;
+.con_text img { display: block; max-width: 100% !important;
+    height: 100%;!important;
 margin: auto }
 .price_info ul { padding-top: 15px; position: relative; overflow: hidden }
 .price_info p { margin-bottom: 5px }

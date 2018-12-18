@@ -35,4 +35,6 @@ public interface CustomMapper {
      * @return
      */
     Map<String, Integer> getAllBolgStatusCount();
+
+//    Map<String, String>
 }

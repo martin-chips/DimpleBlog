@@ -2,7 +2,9 @@ package com.dimple.service.impl;
 
 import com.dimple.bean.Blog;
 import com.dimple.bean.BlogExample;
+import com.dimple.bean.Category;
 import com.dimple.dao.BlogMapper;
+import com.dimple.dao.CategoryMapper;
 import com.dimple.dao.CustomMapper;
 import com.dimple.enums.BlogStatus;
 import com.dimple.service.BlogService;
@@ -32,6 +34,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     FileOperateUtil fileOperateUtil;
+
+    @Autowired
+    CategoryMapper categoryMapper;
 
     @Override
     public List<Blog> selectAllBlog(String title, Date startTime, Date endTime, Integer status) {

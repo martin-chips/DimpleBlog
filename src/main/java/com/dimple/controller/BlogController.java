@@ -67,7 +67,6 @@ public class BlogController {
     }
 
 
-
     @ApiOperation("删除博客")
     @DeleteMapping("/api/blog/{id}")
     @ResponseBody
@@ -111,7 +110,7 @@ public class BlogController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
         PageHelper.startPage(pageNum, pageSize, "create_time desc");
-        List<Blog> blogs = (List<Blog>) blogService.selectAllBlog(title, startTime, endTime, status);
+        List<Blog> blogs = blogService.selectAllBlog(title, startTime, endTime, status);
         PageInfo pageInfo = new PageInfo(blogs);
         return ResultUtil.success(pageInfo);
     }
@@ -212,7 +211,6 @@ public class BlogController {
             return null;
         }
     }
-
 
 
     @ApiOperation("获取博客状态的分类信息")

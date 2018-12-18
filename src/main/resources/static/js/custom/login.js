@@ -17,7 +17,7 @@ $(function () {
             },
             success: function (data) {
                 if (data.code == 200) {
-                    location.href = '/index.html';
+                    location.href = '/page/index.html';
                 } else {
                     $.modal.closeLoading();
                     $(".captchaImg").click();

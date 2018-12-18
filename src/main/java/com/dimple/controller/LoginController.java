@@ -34,7 +34,7 @@ public class LoginController {
         return result;
     }
 
-    @RequestMapping("/login.html")
+    @RequestMapping("/page/login.html")
     public String toLogin() {
         return "login";
     }
@@ -45,7 +45,7 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping({"/index.html"})
+    @RequestMapping({"/page/index.html"})
     public String index(Model model) {
         model.addAttribute("unhandledLinksCount", linksService.getUnHandledLinksCount());
         return "index";

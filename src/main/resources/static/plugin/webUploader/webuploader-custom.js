@@ -211,21 +211,21 @@ jQuery(function () {
             } else {
                 $wrap.css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (~~((file.rotation / 90) % 4 + 4) % 4) + ')');
                 // use jquery animate to rotation
-                // $({
-                //     rotation: rotation
-                // }).animate({
-                //     rotation: file.rotation
-                // }, {
-                //     easing: 'linear',
-                //     step: function( now ) {
-                //         now = now * Math.PI / 180;
+                $({
+                    rotation: rotation
+                }).animate({
+                    rotation: file.rotation
+                }, {
+                    easing: 'linear',
+                    step: function (now) {
+                        now = now * Math.PI / 180;
 
-                //         var cos = Math.cos( now ),
-                //             sin = Math.sin( now );
+                        var cos = Math.cos(now),
+                            sin = Math.sin(now);
 
-                //         $wrap.css( 'filter', "progid:DXImageTransform.Microsoft.Matrix(M11=" + cos + ",M12=" + (-sin) + ",M21=" + sin + ",M22=" + cos + ",SizingMethod='auto expand')");
-                //     }
-                // });
+                        $wrap.css('filter', "progid:DXImageTransform.Microsoft.Matrix(M11=" + cos + ",M12=" + (-sin) + ",M21=" + sin + ",M22=" + cos + ",SizingMethod='auto expand')");
+                    }
+                });
             }
 
 
@@ -260,6 +260,15 @@ jQuery(function () {
         spans.eq(1).css('width', Math.round(percent * 100) + '%');
         updateStatus();
     }
+
+    uploader.on('uploadSuccess', function (file, json) {
+        //
+        // // $("#imgUrl").val(json.data);
+        // console.log($(".image-picker").val());
+        // $(".image-picker").val(json.data);
+        // console.log($(".image-picker").val());
+        $("select").imagepicker();
+    });
 
     function updateStatus() {
         var text = '', stats;
@@ -334,6 +343,7 @@ jQuery(function () {
 
                 stats = uploader.getStats();
                 if (stats.successNum && !stats.uploadFailNum) {
+
                     setState('finish');
                     return;
                 }
@@ -342,12 +352,14 @@ jQuery(function () {
                 stats = uploader.getStats();
                 if (stats.successNum) {
                     swal({
-                        title: "太帅了",
-                        text: "图片已经被Dimple君扔到了服务器",
-                        type: "success"
+
+                        type: 'success',
+                        title: '图片已经被Dimple君扔到了服务器',
+                        showConfirmButton: false,
+                        timer: 1500
                     });
                     //需要关闭当前窗口，并且将当前的URL放到
-                    $("select").empty();
+                    $("#imgSelect").empty();
                     loadImage();
                 } else {
                     swal({

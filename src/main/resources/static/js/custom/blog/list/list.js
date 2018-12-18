@@ -7,7 +7,7 @@ $(function () {
 
 function initTable() {
     var option = {
-        url: "/blog",
+        url: "/api/blog",
         deleteUrl: "/api/blog/{id}",
         updateUrl: "/page/blog/{id}.html",
         addUrl: "",

@@ -6,7 +6,7 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="INTEGER" />
     <result column="description" property="description" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    category_id, title, create_time, update_time, count, description
+    category_id, title, create_time, update_time, weight, description
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dimple.bean.CategoryExample" >
     select
@@ -102,10 +102,10 @@
   </delete>
   <insert id="insert" parameterType="com.dimple.bean.Category" >
     insert into category (category_id, title, create_time, 
-      update_time, count, description
+      update_time, weight, description
       )
     values (#{categoryId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{count,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}
+      #{updateTime,jdbcType=TIMESTAMP}, #{weight,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.dimple.bean.Category" >
@@ -123,8 +123,8 @@
       <if test="updateTime != null" >
         update_time,
       </if>
-      <if test="count != null" >
-        count,
+      <if test="weight != null" >
+        weight,
       </if>
       <if test="description != null" >
         description,
@@ -143,8 +143,8 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="count != null" >
-        #{count,jdbcType=INTEGER},
+      <if test="weight != null" >
+        #{weight,jdbcType=INTEGER},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
@@ -172,8 +172,8 @@
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.count != null" >
-        count = #{record.count,jdbcType=INTEGER},
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=INTEGER},
       </if>
       <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
@@ -189,7 +189,7 @@
       title = #{record.title,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      count = #{record.count,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=INTEGER},
       description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -207,8 +207,8 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="count != null" >
-        count = #{count,jdbcType=INTEGER},
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=INTEGER},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
@@ -221,7 +221,7 @@
     set title = #{title,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      count = #{count,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR}
     where category_id = #{categoryId,jdbcType=INTEGER}
   </update>
