@@ -35,6 +35,11 @@ public class Category implements Serializable {
     private String description;
 
     /**
+     * 首页推荐
+     */
+    private Boolean support;
+
+    /**
      * category
      */
     private static final long serialVersionUID = 1L;
@@ -133,5 +138,21 @@ public class Category implements Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * 首页推荐
+     * @return support 首页推荐
+     */
+    public Boolean getSupport() {
+        return support;
+    }
+
+    /**
+     * 首页推荐
+     * @param support 首页推荐
+     */
+    public void setSupport(Boolean support) {
+        this.support = support;
     }
 }

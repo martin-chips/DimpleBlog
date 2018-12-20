@@ -70,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public int deleteBlogCategory(Integer categoryId[]) {
+    public int deleteBlogCategory(Integer[] categoryId) {
         if (categoryId == null || categoryId.length == 0) {
             return -1;
         }
@@ -88,5 +88,21 @@ public class CategoryServiceImpl implements CategoryService {
         }
         Category category = categoryMapper.selectByPrimaryKey(archivesId);
         return category;
+    }
+
+    @Override
+    public int updateCategorySupport(Integer[] ids, Boolean status) {
+        if (ids == null || ids.length == 0 || status == null) {
+            return -1;
+        }
+        int count = 0;
+        for (Integer id : ids) {
+            Category category = categoryMapper.selectByPrimaryKey(id);
+            if (category != null) {
+                category.setSupport(!status);
+                count += categoryMapper.updateByPrimaryKey(category);
+            }
+        }
+        return count;
     }
 }

@@ -45,7 +45,7 @@ public interface CategoryService {
      * @param categoryId
      * @return
      */
-    int deleteBlogCategory(Integer categoryId[]);
+    int deleteBlogCategory(Integer[] categoryId);
 
     /**
      * 根据ID获取归档信息
@@ -54,4 +54,13 @@ public interface CategoryService {
      * @return
      */
     Category selectBlogCategoryByCategoryId(Integer categoryId);
+
+    /**
+     * 更新分类是是否上推荐
+     *
+     * @param ids
+     * @param status 该分类当前的状态，修改的时候会修改为其反状态
+     * @return
+     */
+    int updateCategorySupport(Integer[] ids, Boolean status);
 }

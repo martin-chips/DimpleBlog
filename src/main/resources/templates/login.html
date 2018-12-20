@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="common :: common-head"></head>
-<link rel="stylesheet" th:href="@{/css/login.css}" href="/static/css/login.css">
+<link rel="stylesheet" th:href="@{/css/login.css}" href="/static/css/login.css"/>
 <!--TODO 验证码验证-->
 <body class="gray-bg">
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
         <div>
-            <h5> class="logo-name">Dimple's Blog 后台管理系统</h5>
+            <h5 class="logo-name">Dimple</h5>
         </div>
         <h3>Dimple's Blog Manager System</h3>
 
@@ -41,9 +41,8 @@
         </form>
     </div>
 </div>
+</body>
 
 <div th:include="common :: common-footer"></div>
 <script src="/static/js/custom/login.js" th:src="@{/js/custom/login.js}"></script>
-</body>
-
 </html>

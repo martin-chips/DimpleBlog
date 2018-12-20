@@ -2,7 +2,6 @@ package com.dimple.service;
 
 import com.dimple.bean.Blog;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,7 @@ public interface BlogService {
      * @param status 将要切换的状态（1表示发布，2表示草稿箱，3表示回收站）
      * @return 受影响的行数
      */
-    int changeBlogStatus(Integer id, Integer status);
+    int changeBlogStatus(Integer[] id, Integer status);
 
     /**
      * 根据Blog的Id获取Blog信息
@@ -81,4 +80,13 @@ public interface BlogService {
      * @return
      */
     Blog selectBlogByIdBlobs(Integer id);
+
+    /**
+     * 是否推荐博客
+     *
+     * @param ids    博客的ID
+     * @param status 博客的当前的状态
+     * @return
+     */
+    int supportBlog(Integer[] ids, Boolean status);
 }

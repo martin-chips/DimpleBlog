@@ -74,7 +74,7 @@ public class CategoryExample {
     }
 
     /**
-     * category 2018-12-17
+     * category 2018-12-19
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -496,6 +496,66 @@ public class CategoryExample {
             addCriterion("description not between", value1, value2, "description");
             return (Criteria) this;
         }
+
+        public Criteria andSupportIsNull() {
+            addCriterion("support is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportIsNotNull() {
+            addCriterion("support is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportEqualTo(Boolean value) {
+            addCriterion("support =", value, "support");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportNotEqualTo(Boolean value) {
+            addCriterion("support <>", value, "support");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportGreaterThan(Boolean value) {
+            addCriterion("support >", value, "support");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("support >=", value, "support");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportLessThan(Boolean value) {
+            addCriterion("support <", value, "support");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportLessThanOrEqualTo(Boolean value) {
+            addCriterion("support <=", value, "support");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportIn(List<Boolean> values) {
+            addCriterion("support in", values, "support");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportNotIn(List<Boolean> values) {
+            addCriterion("support not in", values, "support");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportBetween(Boolean value1, Boolean value2) {
+            addCriterion("support between", value1, value2, "support");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupportNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("support not between", value1, value2, "support");
+            return (Criteria) this;
+        }
     }
 
     /**
@@ -509,7 +569,7 @@ public class CategoryExample {
     }
 
     /**
-     * category 2018-12-17
+     * category 2018-12-19
      */
     public static class Criterion {
         private String condition;

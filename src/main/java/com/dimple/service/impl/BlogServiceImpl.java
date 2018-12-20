@@ -8,9 +8,11 @@ import com.dimple.dao.CustomMapper;
 import com.dimple.framework.enums.BlogStatus;
 import com.dimple.service.BlogService;
 import com.dimple.utils.FileOperateUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -24,6 +26,8 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Service
+@Slf4j
+@Transactional
 public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogMapper blogMapper;
@@ -102,14 +106,17 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public int changeBlogStatus(Integer id, Integer status) {
-        if (id == null || status == null) {
+    public int changeBlogStatus(Integer[] ids, Integer status) {
+        if (ids == null || ids.length == 0 || status == null) {
             return -1;
         }
-        Blog blog = blogMapper.selectByPrimaryKey(id);
-        blog.setStatus(status);
-        blogMapper.updateByPrimaryKeySelective(blog);
-        return 0;
+        int count = 0;
+        for (Integer id : ids) {
+            Blog blog = blogMapper.selectByPrimaryKey(id);
+            blog.setStatus(status);
+            count += blogMapper.updateByPrimaryKeySelective(blog);
+        }
+        return count;
     }
 
     @Override
@@ -133,5 +140,22 @@ public class BlogServiceImpl implements BlogService {
         }
         Blog blog = blogMapper.selectByPrimaryKey(id);
         return blog;
+    }
+
+    @Override
+    public int supportBlog(Integer[] ids, Boolean status) {
+        if (ids == null || ids.length == 0 || status == null) {
+            return -1;
+        }
+        int count = 0;
+        for (Integer id : ids) {
+            Blog blog = blogMapper.selectByPrimaryKey(id);
+            if (blog != null) {
+                blog.setSupport(!status);
+                count += blogMapper.updateByPrimaryKey(blog);
+            }
+        }
+        log.info("改变推荐Id为{}的状态从{}到{}", ids, status, !status);
+        return count;
     }
 }

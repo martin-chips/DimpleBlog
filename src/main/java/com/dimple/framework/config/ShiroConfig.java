@@ -42,18 +42,20 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/fonts/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
         //加入验证码不拦截
         filterChainDefinitionMap.put("/api/kaptcha", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/html/**", "anon");
-        //首页不拦截
-        filterChainDefinitionMap.put("/", "anon");
         //前端界面不拦截
+        filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/front/**", "anon");
         filterChainDefinitionMap.put("/about.html", "anon");
-        filterChainDefinitionMap.put("technology.html", "anon");
+        filterChainDefinitionMap.put("/technology.html", "anon");
+        //前台调用API不拦截
+        filterChainDefinitionMap.put("/punlic/api/**", "anon");
         //退出
         filterChainDefinitionMap.put("/logout", "logout");
+        //授权验证不拦截
         filterChainDefinitionMap.put("/auth", "anon");
         filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

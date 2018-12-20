@@ -100,4 +100,18 @@ public class CategoryController {
         int i = categoryService.deleteBlogCategory(ids);
         return ResultUtil.success(i);
     }
+
+    @ApiOperation("推荐分类上首页")
+    @PutMapping("/api/category/support/{id}/{status}")
+    @ResponseBody
+    public Result supportCategory(@PathVariable(value = "id") Integer[] ids,@PathVariable Boolean status) {
+        int i = categoryService.updateCategorySupport(ids,status);
+        return ResultUtil.success(i);
+    }
+
+
+//    @ApiOperation("获取Category的详细，包含其名称以及")
+//    @GetMapping("/api/categoryDetails")
+//    @ResponseBody
+//    public Result
 }

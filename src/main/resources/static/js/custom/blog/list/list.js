@@ -49,7 +49,7 @@ function initTable() {
                 } else if (value == 2) {
                     return '<span class="badge badge-default">草稿箱</span>';
                 } else if (value) {
-                    return '<span class="badge badge-default">垃圾箱</span>';
+                    return '<span class="badge badge-danger">垃圾箱</span>';
                 }
             }
         }, {
@@ -88,5 +88,101 @@ function initTable() {
     $.table.init(option);
 }
 
+function updateBlog(id) {
+    var url = "/404.html";
+    if ($.common.isNotEmpty(id)) {
+        url = $.table._options.updateUrl.replace("{id}", id);
+    } else {
+        var id = $.common.isEmpty($.table._options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._options.uniqueId);
+        if (id.length == 0) {
+            $.modal.alertWarning("请至少选择一条记录");
+            return;
+        }
+        url = $.table._options.updateUrl.replace("{id}", id);
+    }
+    //如果是移动端，就使用自适应大小弹窗
+    if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+        width = 'auto';
+        height = 'auto';
+    }
+    if ($.common.isEmpty(title)) {
+        title = false;
+    }
+    if ($.common.isEmpty(url)) {
+        url = "/404.html";
+    }
+    if ($.common.isEmpty(width)) {
+        width = 500;
+    }
+    if ($.common.isEmpty(height)) {
+        height = ($(window).height() - 50);
+    }
+    layer.open({
+        type: 2,
+        area: [width + 'px', height + 'px'],
+        fix: false,
+        //不固定
+        maxmin: true,
+        shade: 0.3,
+        title: title,
+        content: url,
+        btn: ['确定', '关闭'],
+        // 弹层外区域关闭
+        shadeClose: true,
+        yes: function (index, layero) {
+            var iframeWin = layero.find('iframe')[0];
+            iframeWin.contentWindow.submitHandler();
+            $.table.refresh();
+        },
+        cancel: function (index) {
+            return true;
+        }
+    });
+}
+
+/**
+ * 是否推荐
+ */
+function support(status) {
+    var supportUrl = "/api/blog/support/{id}/" + status;
+    var rows = $.common.isEmpty($.table._options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._options.uniqueId);
+    if (rows.length == 0) {
+        $.modal.alertWarning("请至少选择一条记录");
+        return;
+    }
+    var msg = "确定要" + (status == true ? "取消推荐" : "推荐") + "这";
+    $.modal.confirm(msg + rows.length + "条数据吗?", function () {
+        var data = {"id": rows.join()};
+        var url = supportUrl.replace("{id}", data.id);
+        $.operate.submit(url, "put", "json", data);
+    });
+}
+
+/**
+ * 改变状态：1表示发布、2表示草稿箱、3表示垃圾箱
+ */
+function changeStatus(status) {
+    console.log(status);
+    var changeStatusUrl = "/api/blog/status/{id}/" + status;
+    var rows = $.common.isEmpty($.table._options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._options.uniqueId);
+    if (rows.length == 0) {
+        $.modal.alertWarning("请至少选择一条记录");
+        return;
+    }
+    var msg = "";
+    if (status == 1) {
+        msg = "确定要发布这" + rows.length + "条数据吗？";
+    } else if (status == 2) {
+        msg = "确定要将这" + rows.length + "条数据移入草稿箱吗？";
+    } else if (status == 3) {
+        msg = "确定要将这" + rows.length + "条数据移入垃圾箱吗？";
+    }
+    $.modal.confirm(msg, function () {
+        var data = {"id": rows.join()};
+        var url = changeStatusUrl.replace("{id}", data.id);
+        console.log(url)
+        $.operate.submit(url, "put", "json", data);
+    });
+}
 
 

@@ -50,8 +50,8 @@ public class KaptchaConfig {
     public DefaultKaptcha getKaptchaBeanMath() {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         Properties properties = new Properties();
-        properties.setProperty("kaptcha.border", "yes");
-        properties.setProperty("kaptcha.border.color", "105,179,90");
+        properties.setProperty("kaptcha.border", "no");
+        properties.setProperty("kaptcha.border.color", "255,251,240");
         properties.setProperty("kaptcha.textproducer.font.color", "blue");
         properties.setProperty("kaptcha.image.width", "180");
         properties.setProperty("kaptcha.image.height", "60");

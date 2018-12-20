@@ -11,7 +11,6 @@ $(function () {
     $("#publishBlog").click(function () {
         var data = getData();
         postBlog(data);
-
     });
 
     $("#giveUp").click(function () {
@@ -42,6 +41,25 @@ $(function () {
 
     });
 });
+var previewFlag = true;
+/**
+ * 编辑或者预览
+ */
+var editOrPreview = function (target) {
+    if (previewFlag) {
+        var markup = $('.summernote').summernote('code');
+        $('.summernote').summernote('destroy');
+        $(target).html("<i class=\"fa fa-pencil\"></i>" + "编辑");
+        previewFlag = false;
+    } else {
+        // $('.summernote').summernote({focus: true});
+        initSummernote();
+        $(target).html("<i class=\"fa fa-pencil\"></i>" + "预览");
+        previewFlag = true;
+    }
+
+};
+
 
 function postBlog(data) {
     $.ajax({

@@ -15,7 +15,7 @@
                         <a class="btn btn-block btn-info compose-mail">修改</a>
                         <div class="space-25"></div>
                         <h5>配置信息</h5>
-                        <input type="hidden" th:value="${blog.blogId}">
+                        <input type="hidden" name="blogId" th:value="${blog.blogId}">
                         <div class="form-group">
                             <label class="control-label">封面:</label>
                             <img src="../../img/p_big3.jpg" width="100%" onclick="uploadImage()" height="150px"
@@ -32,8 +32,8 @@
                         <div class="form-group">
                             <label class=" control-label">摘要:</label>
                             <div class="">
-                                <input type="text" class="form-control" name="summary" placeholder="在这里输入摘要"
-                                       th:value="${blog.summary}">
+                                <textarea type="text" class="form-control" name="summary" placeholder="在这里输入摘要"
+                                          th:text="${blog.summary}"></textarea>
                                 <span class="help-block m-b-none">
                                     <i class="fa fa-info-circle"
                                     ></i> 留空则默认为博文前150字节为博文的摘要</span>
@@ -46,6 +46,14 @@
                                        th:value="${blog.tags}">
                                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 多个标签之间使用";"分隔</span>
 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class=" control-label">权重:</label>
+                            <div class="">
+                                <input name="weight" class="form-control" type="text" placeholder="在这里输入权重" th:value="${blog.weight}">
+                                <span class="help-block m-b-none"><i
+                                        class="fa fa-info-circle"></i> 前台首页展示会以权重作为排序标准</span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -64,6 +72,11 @@
         </div>
         <div class="col-sm-9 animated fadeInRight">
             <div class="mail-box-header">
+                <div class="pull-right tooltip-demo">
+                    <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
+                       onclick="editOrPreview(this)" title="预览"><i class="fa fa-pencil"></i> 预览</a>
+                    <!--<button id="save" class="btn btn-primary" onclick="editOrPreview()" type="button">Save 2</button>-->
+                </div>
                 <h2>
                     博客内容
                 </h2>
@@ -71,19 +84,9 @@
                 <input type="hidden" id="blogCategoryId" th:value="${blog.categoryId}">
             </div>
             <div class="mail-box">
-
                 <div class="mail-body">
                     <div id="summernote" class="summernote"></div>
-                    <div class="clearfix"></div>
                 </div>
-
-
-                <div class="mail-body text-right tooltip-demo">
-                    <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" id="submit"
-                       title="发布到服务器"><i class="fa fa-reply"></i> 确定</a>
-
-                </div>
-                <div class="clearfix"></div>
             </div>
         </div>
     </div>
@@ -102,17 +105,38 @@
         updateBlog();
     }
 
+    //获取表单数据
+    function getData() {
+        var headerUrl = $("#header")[0].src;
+        var title = $("input[name='title']").val();
+        var summary = $("input[name='summary']").val();
+        var blogId = $("input[name='blogId']").val();
+        var tags = $("input[name='tags']").val();
+        var categoryId = $("#categorySelect").val();
+        var content = $("#summernote").summernote("code");
+        var data = {
+            headerUrl: headerUrl,
+            title: title,
+            summary: summary,
+            tags: tags,
+            categoryId: categoryId,
+            content: content,
+            blogId: blogId
+        }
+        return data;
+    }
+
     function updateBlog() {
         $.ajax({
-            url: "/blog/blogList",
+            url: "/api/blog",
             type: "put",
-            data: $("#blogUpdateForm").serializeArray(),
+            data: getData(),
             dataType: "json",
             success: function (data) {
                 if (data != null && data.code == web_status.SUCCESS) {
-                    $.modal.msgReload("修改成功！", modal_status.SUCCESS);
+                    $.modal.msgReload(data.msg, modal_status.SUCCESS);
                 } else {
-                    $.modal.msgReload("修改失败！", modal_status.FAIL);
+                    $.modal.msgReload(data.msg, modal_status.FAIL);
                 }
             }
         })

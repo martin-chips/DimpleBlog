@@ -3,11 +3,26 @@ $(function () {
     initSummernote();
     loadCategory();
     $("#summernote").summernote("code", $("#blogContentInit").val());
-
-
 });
+/**
+ * 编辑或者预览
+ */
+var previewFlag = true;
 
+var editOrPreview = function (target) {
+    if (previewFlag) {
+        var markup = $('.summernote').summernote('code');
+        $('.summernote').summernote('destroy');
+        $(target).html("<i class=\"fa fa-pencil\"></i>" + "编辑");
+        previewFlag = false;
+    } else {
+        // $('.summernote').summernote({focus: true});
+        initSummernote();
+        $(target).html("<i class=\"fa fa-pencil\"></i>" + "预览");
+        previewFlag = true;
+    }
 
+};
 /**
  * 加载分类
  */

@@ -15,10 +15,9 @@
                     <div class="file-manager">
                         <a class="btn btn-block btn-primary compose-mail">类别管理</a>
                         <div class="space-25"></div>
-                        <ul class="folder-list m-b-md" style="padding: 0">
+                        <ul class="folder-list m-b-md" style="padding: 0" id="categoryDetails">
                             <li th:each="category : ${categories}">
                                 <a> <i class="fa fa-inbox "></i><span th:text="${category.title}"></span>
-                                    <!--<span class="label label-warning pull-right" th:text="${category.count}"></span>-->
                                 </a>
                             </li>
                         </ul>
@@ -29,19 +28,24 @@
 
             <form class="form-horizontal m" id="archivesAddForm">
                 <div class="ibox-content">
+                    <p class="small"><i class="fa fa-hand-o-up"></i> 在下方快捷添加分类</p>
+
                     <div class="form-group">
-                        <label class="col-sm-3 control-label ">类别：</label>
+                        <label class="col-sm-3 control-label">类别:</label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="text" name="title" value=""/>
+                            <input type="text" class="form-control" name="password" placeholder="请输入类别">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label ">描述：</label>
+                        <label class="col-sm-3 control-label">描述:</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" type="text" name="description" value=""></textarea>
+
+                            <textarea class="form-control" name="password" placeholder="请输入描述"></textarea>
                         </div>
                     </div>
                     <a class="btn btn-block btn-info compose-mail">提交</a>
+
+
                 </div>
             </form>
         </div>
@@ -89,6 +93,14 @@
                         <a class="btn btn-danger btn-del disabled" onclick="$.operate.deleteAll()">
                             <i class="fa fa-remove"></i> 删除
                         </a>
+                        <a class="btn btn-danger btn-del disabled" onclick="support(false)">
+                            <i class="fa fa-remove"></i> 推荐
+                        </a>
+                        <a class="btn btn-danger btn-del disabled" onclick="support(true)">
+                            <i class="fa fa-remove"></i> 取消推荐
+                        </a>
+
+
                     </div>
 
                     <div class="col-sm-12 select-table table-striped">

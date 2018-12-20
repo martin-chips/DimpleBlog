@@ -24,7 +24,7 @@ $(".browserType").click(function () {
 function initTable() {
     var option = {
         url: "/api/loginLog",
-        deleteUrl: "/page/loginLog/{id}",
+        deleteUrl: "/api/loginLog/{id}",
         cleanUrl: "/api/loginLog",
         sortName: "createTime",
         detailUrl: "/page/loginLog/{id}",
