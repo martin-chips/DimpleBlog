@@ -158,4 +158,15 @@ public class BlogServiceImpl implements BlogService {
         log.info("改变推荐Id为{}的状态从{}到{}", ids, status, !status);
         return count;
     }
+
+    @Override
+    public int selectBlogCountByStatus(BlogStatus blogStatus) {
+        BlogExample blogExample = new BlogExample();
+        if (blogStatus != BlogStatus.ALL) {
+            BlogExample.Criteria criteria = blogExample.createCriteria();
+            criteria.andStatusEqualTo(blogStatus.getCode());
+        }
+        int count = blogMapper.countByExample(blogExample);
+        return count;
+    }
 }

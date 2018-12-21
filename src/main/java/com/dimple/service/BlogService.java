@@ -1,6 +1,7 @@
 package com.dimple.service;
 
 import com.dimple.bean.Blog;
+import com.dimple.framework.enums.BlogStatus;
 
 import java.util.Date;
 import java.util.List;
@@ -89,4 +90,12 @@ public interface BlogService {
      * @return
      */
     int supportBlog(Integer[] ids, Boolean status);
+
+    /**
+     * 获取博客的状态及数量详情页展示
+     *
+     * @param i
+     * @return
+     */
+    int selectBlogCountByStatus(BlogStatus i);
 }

@@ -1,6 +1,5 @@
 package com.dimple.controller;
 
-import com.dimple.bean.Blog;
 import com.dimple.service.FrontService;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
@@ -37,8 +36,7 @@ public class FrontController {
      */
     @RequestMapping("/")
     public String index(Model model) {
-        Map<String, List<Blog>> map = frontService.getCategoryInfo();
-        model.addAttribute("categories", frontService.getCategoryName());
+        model.addAttribute("categories", frontService.selectCategoryNameToDisplay());
         model.addAttribute("blogs", frontService.getBlogsInfo());
         model.addAttribute("peopleSee", frontService.getBlogsPeopleSee());
         return "front/index";
@@ -57,13 +55,6 @@ public class FrontController {
         return null;
     }
 
-
-    @GetMapping("/api/test")
-    @ResponseBody
-    public Object test() {
-        List<Blog> blogsPeopleSee = frontService.getBlogsPeopleSee();
-        return blogsPeopleSee;
-    }
 
 
     @GetMapping("/api/front/newestBlog")

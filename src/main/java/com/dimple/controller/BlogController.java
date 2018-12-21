@@ -1,7 +1,7 @@
 package com.dimple.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.dimple.bean.Blog;
+import com.dimple.framework.enums.BlogStatus;
 import com.dimple.service.BlogService;
 import com.dimple.service.CategoryService;
 import com.dimple.utils.FileOperateUtil;
@@ -11,7 +11,6 @@ import com.dimple.framework.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.qiniu.util.StringMap;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +20,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -58,6 +55,10 @@ public class BlogController {
 
     @GetMapping("/page/blogList.html")
     public String blogListPage(Model model) {
+        model.addAttribute("published", blogService.selectBlogCountByStatus(BlogStatus.PUBLISHED));
+        model.addAttribute("draft", blogService.selectBlogCountByStatus(BlogStatus.DRAFT));
+        model.addAttribute("dustbin", blogService.selectBlogCountByStatus(BlogStatus.DUSTBIN));
+        model.addAttribute("all", blogService.selectBlogCountByStatus(BlogStatus.ALL));
         return "blog/list/blog";
     }
 

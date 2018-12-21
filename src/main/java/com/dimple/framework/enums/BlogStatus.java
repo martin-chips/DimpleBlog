@@ -9,13 +9,20 @@ package com.dimple.framework.enums;
  */
 public enum BlogStatus {
     /**
+     * 所有
+     */
+    ALL(0),
+
+    /**
      * 已发布
      */
     PUBLISHED(1),
+
     /**
      * 草稿箱
      */
     DRAFT(2),
+
     /**
      * 垃圾箱
      */

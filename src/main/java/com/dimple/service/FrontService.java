@@ -22,8 +22,12 @@ public interface FrontService {
      */
     Map<String, List<Blog>> getCategoryInfo();
 
-
-    List<String> getCategoryName();
+    /**
+     * 获取首页展示的Category的名字
+     *
+     * @return
+     */
+    List<String> selectCategoryNameToDisplay();
 
     List<List<Blog>> getBlogsInfo();
 

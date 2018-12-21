@@ -74,7 +74,7 @@ public class FrontServiceImpl implements FrontService {
 
     @Override
     public List<List<Blog>> getBlogsInfo() {
-        List<Category> allCategoryOrderByWeight = getAllCategoryOrderByWeight();
+        List<Category> allCategoryOrderByWeight = selectCategorySupported();
         int count = 0;
         List<List<Blog>> blogList = new ArrayList<>();
         for (Category category : allCategoryOrderByWeight) {
@@ -98,8 +98,8 @@ public class FrontServiceImpl implements FrontService {
     }
 
     @Override
-    public List<String> getCategoryName() {
-        List<Category> categories = getAllCategoryOrderByWeight();
+    public List<String> selectCategoryNameToDisplay() {
+        List<Category> categories = selectCategorySupported();
         List<String> categoryNames = new LinkedList<>();
 
         int i = categories.size() < 5 ? categories.size() : 5;
@@ -109,9 +109,10 @@ public class FrontServiceImpl implements FrontService {
         return categoryNames;
     }
 
-    private List<Category> getAllCategoryOrderByWeight() {
+    private List<Category> selectCategorySupported() {
         CategoryExample categoryExample = new CategoryExample();
-        categoryExample.setOrderByClause("weight desc");
+//        categoryExample.setOrderByClause("weight desc");
+        categoryExample.createCriteria().andSupportEqualTo(true);
         List<Category> categories = categoryMapper.selectByExample(categoryExample);
         return categories;
     }
