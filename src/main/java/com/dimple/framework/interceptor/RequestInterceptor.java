@@ -1,5 +1,7 @@
 package com.dimple.framework.interceptor;
 
+import com.dimple.service.VisitorService;
+import com.dimple.utils.IpUtil;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,22 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @Component
 public class RequestInterceptor implements HandlerInterceptor {
+    @Autowired
+    VisitorService visitorService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String ip = IpUtil.getLocalHostAddress();
+        log.info("当前访问的IP地址是： " + ip);
+        String requestUrl = request.getRequestURI();
+        //使用view来区别是不是前端访问用户
+        if ("/".equals(requestUrl)||requestUrl.contains("view")) {
+            Boolean success = visitorService.checkoutIp(ip);
+            if (success == false) {
+                return false;
+            }
+        }
         return true;
-
     }
 
     @Override

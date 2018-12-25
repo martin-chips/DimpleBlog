@@ -1,16 +1,15 @@
 package com.dimple.controller;
 
+import com.dimple.bean.Blog;
 import com.dimple.service.FrontService;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.github.pagehelper.PageHelper;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -56,7 +55,6 @@ public class FrontController {
     }
 
 
-
     @GetMapping("/api/front/newestBlog")
     @ResponseBody
     public Result getNewestBlog(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -66,4 +64,10 @@ public class FrontController {
         return ResultUtil.success(blogs);
     }
 
+    @ApiOperation("获取博客信息")
+    @GetMapping("/view/{id}.html")
+    public String viewBlogPage(@PathVariable Integer id, Model model) {
+        Blog blog = frontService.getBlog(id);
+        return "front/info";
+    }
 }

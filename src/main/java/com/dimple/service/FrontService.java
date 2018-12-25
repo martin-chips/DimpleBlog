@@ -44,4 +44,12 @@ public interface FrontService {
      * @return
      */
     List<Map<String, Object>> getNewestBlog();
+
+    /**
+     * 根据Blog的Id获取博客
+     *
+     * @param id
+     * @return
+     */
+    Blog getBlog(Integer id);
 }

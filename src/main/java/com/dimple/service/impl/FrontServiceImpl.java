@@ -146,4 +146,13 @@ public class FrontServiceImpl implements FrontService {
         }
         return mapMap;
     }
+
+    @Override
+    public Blog getBlog(Integer id) {
+        if (id == null) {
+            return null;
+        }
+        Blog blog = blogMapper.selectByPrimaryKey(id);
+        return blog;
+    }
 }
