@@ -1,18 +1,26 @@
 package com.dimple.controller;
 
 import com.dimple.bean.Category;
-import com.dimple.service.CategoryService;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.dimple.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.List;
@@ -63,10 +71,9 @@ public class CategoryController {
                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime,
                                      @RequestParam(value = "description", required = false) String description,
                                      @RequestParam(value = "title", required = false) String title) {
-        PageHelper.startPage(pageNum, pageSize, "update_time desc");
-        List<Category> allBlogCategory = categoryService.getAllBlogCategory(startTime, endTime, description, title);
-        PageInfo pageInfo = new PageInfo(allBlogCategory);
-        return ResultUtil.success(pageInfo);
+        Pageable pageable = PageRequest.of(pageNum < 0 ? 0 : pageNum, pageSize, Sort.Direction.DESC, "createTime");
+        Page<Category> allBlogCategory = categoryService.getAllBlogCategory(startTime, endTime, description, title, pageable);
+        return ResultUtil.success(allBlogCategory);
     }
 
     @ApiOperation("无条件获取所有的分类数据")
@@ -81,16 +88,16 @@ public class CategoryController {
     @PostMapping("/api/category")
     @ResponseBody
     public Result insertBlogCategory(Category category) {
-        int i = categoryService.insertBlogCategory(category);
-        return ResultUtil.success(i);
+        Category insertBlogCategory = categoryService.insertBlogCategory(category);
+        return ResultUtil.success(insertBlogCategory);
     }
 
     @ApiOperation("修改分类")
     @PutMapping("/api/category")
     @ResponseBody
     public Result updateBlogCategory(Category category) {
-        int i = categoryService.updateBlogCategory(category);
-        return ResultUtil.success(i);
+        Category updateBlogCategory = categoryService.updateBlogCategory(category);
+        return ResultUtil.success(updateBlogCategory);
     }
 
     @ApiOperation("删除分类")
@@ -104,8 +111,8 @@ public class CategoryController {
     @ApiOperation("推荐分类上首页")
     @PutMapping("/api/category/support/{id}/{status}")
     @ResponseBody
-    public Result supportCategory(@PathVariable(value = "id") Integer[] ids,@PathVariable Boolean status) {
-        int i = categoryService.updateCategorySupport(ids,status);
+    public Result supportCategory(@PathVariable(value = "id") Integer[] ids, @PathVariable Boolean status) {
+        int i = categoryService.updateCategorySupport(ids, status);
         return ResultUtil.success(i);
     }
 

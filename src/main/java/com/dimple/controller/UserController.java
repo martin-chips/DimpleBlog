@@ -1,20 +1,28 @@
 package com.dimple.controller;
 
 import com.dimple.bean.User;
-import com.dimple.service.UserService;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.dimple.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @ClassName: UserController
@@ -71,10 +79,9 @@ public class UserController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
 
-        PageHelper.startPage(pageNum, pageSize, "create_time desc");
-        List<User> users = userService.getAllUsers(phone, locked, startTime, endTime, loginId);
-        PageInfo pageInfo = new PageInfo(users);
-        return ResultUtil.success(pageInfo);
+        Pageable pageable = PageRequest.of(pageNum < 0 ? 0 : pageNum, pageSize, Sort.Direction.DESC, "createTime");
+        Page<User> allUsers = userService.getAllUsers(phone, locked, startTime, endTime, loginId, pageable);
+        return ResultUtil.success(allUsers);
     }
 
     @ApiOperation("删除User")
@@ -89,24 +96,24 @@ public class UserController {
     @PostMapping("/api/user")
     @ResponseBody
     public Result insertUser(User user) {
-        Integer i = userService.insertUser(user);
-        return ResultUtil.success(i);
+        userService.insertUser(user);
+        return ResultUtil.success();
     }
 
     @ApiOperation("修改User信息")
     @PutMapping("/api/user")
     @ResponseBody
     public Result updateUser(User user) {
-        Integer i = userService.updateUserInfo(user);
-        return ResultUtil.success(i);
+        userService.updateUserInfo(user);
+        return ResultUtil.success();
     }
 
     @ApiOperation("切换User的状态")
     @PutMapping("/api/user/{id}/{locked}")
     @ResponseBody
     public Result changeLocked(@PathVariable Integer id, @PathVariable Boolean locked) {
-        Integer i = userService.changeLocked(id, locked);
-        return ResultUtil.success(i);
+        userService.changeLocked(id, locked);
+        return ResultUtil.success();
     }
 
 

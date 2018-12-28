@@ -1,6 +1,8 @@
 package com.dimple.service;
 
 import com.dimple.bean.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
  */
 public interface CategoryService {
 
-    List<Category> getAllBlogCategory(Date startTime, Date endTime, String description, String title);
+    Page<Category> getAllBlogCategory(Date startTime, Date endTime, String description, String title, Pageable pageable);
 
     /**
      * 获取所有的分类类别
@@ -29,7 +31,7 @@ public interface CategoryService {
      * @param category
      * @return
      */
-    int insertBlogCategory(Category category);
+    Category insertBlogCategory(Category category);
 
     /**
      * 更新归档
@@ -37,7 +39,7 @@ public interface CategoryService {
      * @param category
      * @return
      */
-    int updateBlogCategory(Category category);
+    Category updateBlogCategory(Category category);
 
     /**
      * 删除归档

@@ -1,16 +1,21 @@
 package com.dimple.service.impl;
 
 import com.dimple.bean.User;
-import com.dimple.bean.UserExample;
-import com.dimple.dao.UserMapper;
 import com.dimple.framework.exception.user.UserAccountNotExistsException;
+import com.dimple.repository.UserRepository;
 import com.dimple.service.UserService;
 import com.dimple.utils.Md5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,49 +27,38 @@ import java.util.UUID;
  * @Version: 1.0
  */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserMapper userMapper;
+    UserRepository userRepository;
 
     @Override
     public User findByUserLoginId(String loginId) {
-        UserExample userExample = new UserExample();
-        UserExample.Criteria criteria = userExample.createCriteria();
-        criteria.andUserLoginIdEqualTo(loginId);
-        List<User> users = userMapper.selectByExample(userExample);
-        if (users == null || users.size() == 0) {
-            return null;
-        }
-        return users.get(0);
+        return userRepository.findByUserLoginIdEquals(loginId);
     }
 
     @Override
-    public List<User> getAllUsers(String phone, Boolean locked, Date startTime, Date endTime, String loginId) {
-        UserExample userExample = new UserExample();
-        UserExample.Criteria criteria = userExample.createCriteria();
-        if (StringUtils.isNotBlank(phone)) {
-            criteria.andPhoneLike(phone);
-        }
-        if (StringUtils.isNotBlank(loginId)) {
-            criteria.andUserLoginIdLike(loginId);
-        }
-        if (locked != null) {
-            //为1表示已经被锁定
-            if (locked == true) {
-                criteria.andLockedEqualTo(true);
-            } else if (locked == false) {//为0表示没有被锁定
-                criteria.andLockedEqualTo(false);
+    public Page<User> getAllUsers(String phone, Boolean locked, Date startTime, Date endTime, String loginId, Pageable pageable) {
+        return userRepository.findAll((Specification<User>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            if (StringUtils.isNotBlank(phone)) {
+                list.add(criteriaBuilder.like(root.get("phone").as(String.class), "%" + phone + "%"));
             }
-        }
-        if (startTime != null && endTime != null) {
-            criteria.andCreateTimeBetween(startTime, endTime);
-        } else if (startTime == null && endTime != null) {
-            criteria.andCreateTimeLessThanOrEqualTo(endTime);
-        } else if (startTime != null && endTime == null) {
-            criteria.andCreateTimeGreaterThanOrEqualTo(startTime);
-        }
-        List<User> users = userMapper.selectByExample(userExample);
-        return users;
+            if (startTime != null) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("start_time").as(Date.class), startTime));
+            }
+            if (endTime != null) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("end_time").as(Date.class), endTime));
+            }
+            if (StringUtils.isNotBlank(loginId)) {
+                list.add(criteriaBuilder.like(root.get("loginId").as(String.class), loginId));
+            }
+            if (locked != null) {
+                list.add(criteriaBuilder.equal(root.get("locked").as(Boolean.class), locked));
+            }
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
     }
 
     @Override
@@ -74,74 +68,63 @@ public class UserServiceImpl implements UserService {
         }
         int count = 0;
         for (Integer id : ids) {
-            count += userMapper.deleteByPrimaryKey(id);
+            userRepository.deleteById(id);
+            count++;
         }
         return count;
     }
 
     @Override
-    public Integer resetPassword(Integer id, String newPassword) {
+    public User resetPassword(Integer id, String newPassword) {
         if (id == null) {
-            return -1;
+            return null;
         }
-        User user = userMapper.selectByPrimaryKey(id);
+        User user = userRepository.getOne(id);
         if (user == null) {
             throw new UserAccountNotExistsException();
         }
         if (StringUtils.isBlank(newPassword)) {
-            user.setPassword("12345");
+            user.setPassword("123456");
         } else {
             user.setPassword(newPassword);
         }
-        int i = userMapper.updateByPrimaryKeySelective(user);
-        return i;
+        return userRepository.save(user);
     }
 
     @Override
-    public Integer updateUserInfo(User user) {
+    public User updateUserInfo(User user) {
         if (user == null || user.getUserId() == null) {
-            return -1;
+            return null;
         }
-        User userDB = userMapper.selectByPrimaryKey(user.getUserId());
-        if (userDB == null) {
-            return -1;
-        }
-        if (StringUtils.isNotBlank(user.getPassword())) {
-            user.setPassword(Md5Util.generatorMd5(user.getPassword(), userDB.getSalt()));
-        }
-        return userMapper.updateByPrimaryKeySelective(user);
+        return userRepository.save(user);
     }
 
     @Override
-    public Integer insertUser(User user) {
+    public User insertUser(User user) {
         if (user == null || StringUtils.isBlank(user.getPassword()) || StringUtils.isBlank(user.getUserLoginId()) || StringUtils.isBlank(user.getEmail()) || user.getSex() == null || StringUtils.isBlank(user.getUserName())) {
-            return -1;
+            return null;
         }
         user.setCreateTime(new Date());
         user.setLocked(false);
         //设置盐
         user.setSalt(UUID.randomUUID().toString().substring(0, 8));
         user.setPassword(Md5Util.generatorMd5(user.getPassword(), user.getSalt()));
-        return userMapper.insert(user);
+        return userRepository.save(user);
     }
 
     @Override
     public User getUserById(Integer id) {
-        if (id == null) {
-            return null;
-        }
-        User user = userMapper.selectByPrimaryKey(id);
-        return user;
+        return id == null ? null : userRepository.getOne(id);
     }
 
     @Override
-    public Integer changeLocked(Integer id, Boolean locked) {
-        User user = userMapper.selectByPrimaryKey(id);
+    public User changeLocked(Integer id, Boolean locked) {
+        User user = userRepository.getOne(id);
         if (user == null) {
-            return -1;
+            return null;
         }
         user.setLocked(!locked);
-        int i = userMapper.updateByPrimaryKey(user);
-        return i;
+        return userRepository.save(user);
+
     }
 }

@@ -1,20 +1,26 @@
 package com.dimple.service.impl;
 
 import com.dimple.bean.Blog;
-import com.dimple.bean.BlogExample;
-import com.dimple.dao.BlogMapper;
-import com.dimple.dao.CategoryMapper;
-import com.dimple.dao.CustomMapper;
+
+import com.dimple.bean.BlogInfo;
 import com.dimple.framework.enums.BlogStatus;
+import com.dimple.repository.BlogInfoRepository;
+import com.dimple.repository.BlogRepository;
+import com.dimple.repository.CategoryRepository;
 import com.dimple.service.BlogService;
 import com.dimple.utils.FileOperateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,42 +36,46 @@ import java.util.Map;
 @Transactional
 public class BlogServiceImpl implements BlogService {
     @Autowired
-    BlogMapper blogMapper;
+    BlogRepository blogRepository;
 
-    @Autowired
-    CustomMapper customMapper;
 
     @Autowired
     FileOperateUtil fileOperateUtil;
 
     @Autowired
-    CategoryMapper categoryMapper;
+    CategoryRepository categoryRepository;
+
+
+    @Autowired
+    BlogInfoRepository blogInfoRepository;
+
 
     @Override
-    public List<Blog> selectAllBlog(String title, Date startTime, Date endTime, Integer status) {
-        BlogExample blogExample = new BlogExample();
-        BlogExample.Criteria criteria = blogExample.createCriteria();
-        if (startTime != null && endTime != null) {
-            criteria.andCreateTimeBetween(startTime, endTime);
-        } else if (startTime != null) {
-            criteria.andCreateTimeGreaterThanOrEqualTo(startTime);
-        } else if (endTime != null) {
-            criteria.andCreateTimeLessThanOrEqualTo(endTime);
-        }
-        if (StringUtils.isNotBlank(title)) {
-            criteria.andTitleLike(title);
-        }
-        if (status != null) {
-            criteria.andStatusEqualTo(status);
-        }
-        List<Blog> blogs = blogMapper.selectByExample(blogExample);
-        return blogs;
+    public Page<Blog> getAllBlogs(String title, Date startTime, Date endTime, Integer status, Pageable pageable) {
+        Specification<Blog> specification = (Specification<Blog>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            if (StringUtils.isNotBlank(title)) {
+                list.add(criteriaBuilder.like(root.get("title").as(String.class), "%" + title + "%"));
+            }
+            if (startTime != null) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("start_time").as(Date.class), startTime));
+            }
+            if (endTime != null) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("start_time").as(Date.class), endTime));
+            }
+            if (status != null) {
+                list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), status));
+            }
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        };
+        return blogRepository.findAll(specification, pageable);
     }
 
     @Override
-    public int insertBlog(Blog blog) {
+    public Blog insertBlog(Blog blog) {
         if (blog == null || StringUtils.isBlank(blog.getTitle()) || StringUtils.isBlank(blog.getContent())) {
-            return -1;
+            return null;
         }
         blog.setCreateTime(new Date());
         //设置摘要
@@ -75,34 +85,44 @@ public class BlogServiceImpl implements BlogService {
         blog.setClick(0);
         blog.setSupport(false);
         blog.setWeight(0);
+        blog.setCreateTime(new Date());
         blog.setUpdateTime(new Date());
+
         if (blog.getStatus() == null) {
             //设置为已发表状态
             blog.setStatus(BlogStatus.PUBLISHED.PUBLISHED.getCode());
         }
         //设置博客headerUrl的链接地址（只设置名字）
         blog.setHeaderUrl(fileOperateUtil.getImgName(blog.getHeaderUrl()));
-        int i = blogMapper.insert(blog);
-        return i;
+        Blog save = blogRepository.save(blog);
+        //将博客内容同步到blogInfo表中
+        BlogInfo blogInfo = new BlogInfo();
+        blogInfo.setContent(blog.getContent());
+        blogInfo.setBlogId(save.getBlogId());
+        blogInfoRepository.save(blogInfo);
+        return save;
     }
 
 
     @Override
-    public int deleteBlog(Integer blogId) {
+    public void deleteBlog(Integer blogId) {
         if (blogId == null) {
-            return -1;
+            return;
         }
-        int i = blogMapper.deleteByPrimaryKey(blogId);
-        return i;
+        blogRepository.deleteById(blogId);
     }
 
     @Override
-    public int updateBlog(Blog blog) {
+    public Blog updateBlog(Blog blog) {
         if (blog.getBlogId() == null || StringUtils.isBlank(blog.getTitle())) {
-            return -1;
+            return null;
         }
-        int i = blogMapper.updateByPrimaryKeySelective(blog);
-        return i;
+        if (StringUtils.isNotBlank(blog.getTitle())) {
+            blog.setHeaderUrl(fileOperateUtil.getImgName(blog.getHeaderUrl()));
+        }
+        blog.setUpdateTime(new Date());
+        Blog save = blogRepository.save(blog);
+        return save;
     }
 
     @Override
@@ -112,9 +132,10 @@ public class BlogServiceImpl implements BlogService {
         }
         int count = 0;
         for (Integer id : ids) {
-            Blog blog = blogMapper.selectByPrimaryKey(id);
+            Blog blog = blogRepository.getOne(id);
             blog.setStatus(status);
-            count += blogMapper.updateByPrimaryKeySelective(blog);
+            blogRepository.save(blog);
+            count++;
         }
         return count;
     }
@@ -124,12 +145,12 @@ public class BlogServiceImpl implements BlogService {
         if (id == null) {
             return null;
         }
-        return blogMapper.selectByPrimaryKey(id);
+        return blogRepository.getOne(id);
     }
 
     @Override
     public Map<String, Integer> selectCountOfBlogStatus() {
-        Map<String, Integer> allBolgStatusCount = customMapper.getAllBolgStatusCount();
+        Map<String, Integer> allBolgStatusCount = blogRepository.getAllBlogStatusCount();
         return allBolgStatusCount;
     }
 
@@ -138,7 +159,12 @@ public class BlogServiceImpl implements BlogService {
         if (id == null) {
             return null;
         }
-        Blog blog = blogMapper.selectByPrimaryKey(id);
+        Blog blog = blogRepository.getOne(id);
+        if (blog != null && StringUtils.isNotBlank(blog.getHeaderUrl())) {
+            blog.setHeaderUrl("/images/" + blog.getHeaderUrl());
+        }
+        BlogInfo blogInfo = blogInfoRepository.findByBlogId(blog.getBlogId());
+        blog.setContent(blogInfo.getContent());
         return blog;
     }
 
@@ -149,10 +175,10 @@ public class BlogServiceImpl implements BlogService {
         }
         int count = 0;
         for (Integer id : ids) {
-            Blog blog = blogMapper.selectByPrimaryKey(id);
+            Blog blog = blogRepository.getOne(id);
             if (blog != null) {
                 blog.setSupport(!status);
-                count += blogMapper.updateByPrimaryKey(blog);
+                blogRepository.save(blog);
             }
         }
         log.info("改变推荐Id为{}的状态从{}到{}", ids, status, !status);
@@ -161,12 +187,12 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public int selectBlogCountByStatus(BlogStatus blogStatus) {
-        BlogExample blogExample = new BlogExample();
-        if (blogStatus != BlogStatus.ALL) {
-            BlogExample.Criteria criteria = blogExample.createCriteria();
-            criteria.andStatusEqualTo(blogStatus.getCode());
+        Integer count = 0;
+        if (blogStatus == BlogStatus.ALL) {
+            count = Math.toIntExact(blogRepository.count());
+        } else {
+            count = blogRepository.countByStatus(blogStatus.getCode());
         }
-        int count = blogMapper.countByExample(blogExample);
         return count;
     }
 }

@@ -14,6 +14,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @ClassName: LoginServiceImpl
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
  * @Version: 1.0
  */
 @Service
+@Transactional
 public class LoginServiceImpl implements LoginService {
 
     @Autowired

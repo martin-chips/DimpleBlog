@@ -1,73 +1,31 @@
 package com.dimple.bean;
 
-import java.io.Serializable;
+import lombok.Data;
 
-public class RolePermission implements Serializable {
-    /**
-     * 
-     */
-    private Integer id;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Objects;
 
-    /**
-     * 角色的id
-     */
-    private Integer roleId;
-
-    /**
-     * 权限的id
-     */
-    private Integer permissionId;
-
-    /**
-     * role_permission
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 
-     * @return id 
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * 
-     * @param id 
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * 角色的id
-     * @return role_id 角色的id
-     */
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    /**
-     * 角色的id
-     * @param roleId 角色的id
-     */
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    /**
-     * 权限的id
-     * @return permission_id 权限的id
-     */
-    public Integer getPermissionId() {
-        return permissionId;
-    }
-
-    /**
-     * 权限的id
-     * @param permissionId 权限的id
-     */
-    public void setPermissionId(Integer permissionId) {
-        this.permissionId = permissionId;
-    }
+/**
+ * @author : Dimple
+ * @version : 1.0
+ * @class : RolePermission
+ * @description :
+ * @date : 12/26/18 20:54
+ */
+@Entity
+@Table(name = "role_permission", schema = "dimple_blog")
+@Data
+public class RolePermission {
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private int roleId;
+    private int permissionId;
 }

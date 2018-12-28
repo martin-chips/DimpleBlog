@@ -23,12 +23,12 @@
 
         <!--需要修改targetProject-->
 
-        <sqlMapGenerator targetPackage="com.dimple.dao.mapper"
+        <sqlMapGenerator targetPackage="com.dimple.repository.mapper"
                          targetProject="E:\Code\SpringBoot\DimpleBlog\src\main\java"/>
 
         <!--需要修改targetProject-->
         <!--E:\Code\SpringBoot\DimpleBlog\src\main\java\com\dimple\utils\mybatisGenerator\mybatis-generator.xml-->
-        <javaClientGenerator targetPackage="com.dimple.dao"
+        <javaClientGenerator targetPackage="com.dimple.repository"
                              targetProject="E:\Code\SpringBoot\DimpleBlog\src\main\java"
                              type="XMLMAPPER"/>
 

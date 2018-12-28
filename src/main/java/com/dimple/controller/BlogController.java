@@ -2,29 +2,39 @@ package com.dimple.controller;
 
 import com.dimple.bean.Blog;
 import com.dimple.framework.enums.BlogStatus;
+import com.dimple.framework.message.Result;
+import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.BlogService;
 import com.dimple.service.CategoryService;
 import com.dimple.utils.FileOperateUtil;
 import com.dimple.utils.QiNiuUtils;
-import com.dimple.framework.message.Result;
-import com.dimple.framework.message.ResultUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.qiniu.util.StringMap;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author : Dimple
@@ -62,6 +72,7 @@ public class BlogController {
         return "blog/list/blog";
     }
 
+
     @GetMapping("/page/blogList/{id}.html")
     public String blogUpdatePage(@PathVariable Integer id, Model model) {
         model.addAttribute("blog", blogService.selectBlogByIdBlobs(id));
@@ -73,16 +84,16 @@ public class BlogController {
     @DeleteMapping("/api/blog/{id}")
     @ResponseBody
     public Result deleteBlog(@PathVariable Integer id) {
-        int i = blogService.deleteBlog(id);
-        return ResultUtil.success(i);
+        blogService.deleteBlog(id);
+        return ResultUtil.success();
     }
 
     @ApiOperation("更新博客")
     @PutMapping("/api/blog")
     @ResponseBody
     public Result updateBlog(Blog blog) {
-        int i = blogService.updateBlog(blog);
-        return ResultUtil.success(i);
+        Blog updateBlog = blogService.updateBlog(blog);
+        return ResultUtil.success(updateBlog);
     }
 
     @ApiOperation("设置博客是否推荐")
@@ -105,24 +116,23 @@ public class BlogController {
     @PostMapping("/api/blog")
     @ResponseBody
     public Result insertBlog(Blog blog) {
-        int i = blogService.insertBlog(blog);
-        return ResultUtil.success(i);
+        Blog insertBlog = blogService.insertBlog(blog);
+        return ResultUtil.success(insertBlog);
     }
 
     @ApiOperation("获取博客的列表信息")
     @GetMapping("/api/blog")
     @ResponseBody
     public Result getAllBlog(
-            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
             @RequestParam(value = "title", defaultValue = "", required = false) String title,
             @RequestParam(value = "status", required = false) Integer status,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
-        PageHelper.startPage(pageNum, pageSize, "create_time desc");
-        List<Blog> blogs = blogService.selectAllBlog(title, startTime, endTime, status);
-        PageInfo pageInfo = new PageInfo(blogs);
-        return ResultUtil.success(pageInfo);
+        Pageable pageable = PageRequest.of(pageNum < 0 ? 0 : pageNum, pageSize, Sort.Direction.DESC, "createTime");
+        Page<Blog> allBlogs = blogService.getAllBlogs(title, startTime, endTime, status, pageable);
+        return ResultUtil.success(allBlogs);
     }
 
 

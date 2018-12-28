@@ -1,73 +1,31 @@
 package com.dimple.bean;
 
-import java.io.Serializable;
+import lombok.Data;
 
-public class UserRole implements Serializable {
-    /**
-     * 
-     */
-    private Integer id;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Objects;
 
-    /**
-     * 角色id
-     */
-    private Integer roleId;
-
-    /**
-     * 用户id
-     */
-    private Integer userId;
-
-    /**
-     * user_role
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 
-     * @return id 
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * 
-     * @param id 
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * 角色id
-     * @return role_id 角色id
-     */
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    /**
-     * 角色id
-     * @param roleId 角色id
-     */
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    /**
-     * 用户id
-     * @return user_id 用户id
-     */
-    public Integer getUserId() {
-        return userId;
-    }
-
-    /**
-     * 用户id
-     * @param userId 用户id
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+/**
+ * @author : Dimple
+ * @version : 1.0
+ * @class : UserRole
+ * @description :
+ * @date : 12/26/18 20:54
+ */
+@Entity
+@Data
+@Table(name = "user_role", schema = "dimple_blog")
+public class UserRole {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id", nullable = false)
+    private int id;
+    private int roleId;
+    private int userId;
 }

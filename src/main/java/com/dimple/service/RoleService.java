@@ -3,6 +3,8 @@ package com.dimple.service;
 import com.dimple.bean.Role;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
@@ -33,9 +35,10 @@ public interface RoleService {
      * @param locked
      * @param startTime
      * @param endTime
+     * @param pageable
      * @return
      */
-    List<Role> getAllRoles(String roleName, String description, Boolean locked, Date startTime, Date endTime);
+    Page<Role> getAllRoles(String roleName, String description, Boolean locked, Date startTime, Date endTime, Pageable pageable);
 
     /***
      * 更新Role的信息
@@ -43,7 +46,7 @@ public interface RoleService {
      * @param permissionIds
      * @return
      */
-    int updateRole(Role role, Integer[] permissionIds);
+    void updateRole(Role role, Integer[] permissionIds);
 
     /**
      * 删除Role
@@ -59,7 +62,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-    int insertRole(Role role);
+    Role insertRole(Role role);
 
     /**
      * 根据id获取Role
@@ -76,5 +79,5 @@ public interface RoleService {
      * @param locked
      * @return
      */
-    Integer changeRoleLocked(Integer id, Boolean locked);
+    Role changeRoleLocked(Integer id, Boolean locked);
 }

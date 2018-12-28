@@ -21,10 +21,6 @@ function initTable() {
         columns: [{
             checkbox: true
         }, {
-            field: 'blogId',
-            title: '博客标识',
-            align: 'center',
-        }, {
             field: 'title',
             title: '标题',
             align: 'center',

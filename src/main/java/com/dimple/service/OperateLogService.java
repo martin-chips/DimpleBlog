@@ -2,9 +2,10 @@ package com.dimple.service;
 
 import com.dimple.bean.OperateLog;
 import com.dimple.framework.enums.OperateType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,7 +22,7 @@ public interface OperateLogService {
      * @param operateLog 日志记录对象
      * @return sql执行的条数
      */
-    Integer insertOperatorLog(OperateLog operateLog);
+    OperateLog insertOperatorLog(OperateLog operateLog);
 
     /**
      * 查询操作日志记录
@@ -31,9 +32,10 @@ public interface OperateLogService {
      * @param operateType
      * @param startTime
      * @param endTime
+     * @param pageable
      * @return
      */
-    List<OperateLog> getAllOperateLog(String title, String operatorName, OperateType operateType, Date startTime, Date endTime);
+    Page<OperateLog> getAllOperateLog(String title, String operatorName, OperateType operateType, Date startTime, Date endTime, Pageable pageable);
 
     /**
      * 删除操作日志记录
@@ -48,7 +50,7 @@ public interface OperateLogService {
      *
      * @return
      */
-    Integer cleanOperateLog();
+    void cleanOperateLog();
 
     /**
      * 获取某个OperateLog的详细

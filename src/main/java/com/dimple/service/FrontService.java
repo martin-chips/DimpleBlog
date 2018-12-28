@@ -1,6 +1,7 @@
 package com.dimple.service;
 
 import com.dimple.bean.Blog;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -42,8 +43,9 @@ public interface FrontService {
      * 获取最新博文
      *
      * @return
+     * @param pageable
      */
-    List<Map<String, Object>> getNewestBlog();
+    List<Map<String, Object>> getNewestBlog(Pageable pageable);
 
     /**
      * 根据Blog的Id获取博客
@@ -52,4 +54,20 @@ public interface FrontService {
      * @return
      */
     Blog getBlog(Integer id);
+
+    /**
+     * 获取点击次数最高的前8条数据
+     *
+     * @return
+     */
+    List<Blog> getClickBlog();
+
+    /**
+     * 获取置顶推荐的博客
+     *
+     * @return
+     */
+    List<Blog> getSupportBlog();
+
+    Map<String, Object> getBlogOtherInfo(Integer id);
 }

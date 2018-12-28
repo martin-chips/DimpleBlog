@@ -7,12 +7,12 @@
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="permissionAddForm">
-        <input id="treeId" name="pId" type="hidden" th:value="${pId}"/>
+        <input id="treeId" name="pId" type="hidden" th:value="${permission.permissionId}"/>
         <div class="form-group">
             <label class="col-sm-3 control-label ">上级菜单：</label>
             <div class="col-sm-8">
                 <input class="form-control" type="text" onclick="selectMenuTree()"
-                       th:value="${pTitle == null ? '无' : pTitle}" id="treeName"
+                       th:value="${permission.title}" id="treeName"
                        readonly="true"/>
             </div>
         </div>
@@ -184,15 +184,17 @@
 
     /*菜单管理-修改-选择菜单树*/
     function selectMenuTree() {
-        var menuId = $("#treeId").val();
-        if (menuId > 0) {
-            var url = "/system/permission/selectParentPermission/" + menuId;
-            $.modal.open("选择菜单", url, '380', '380');
-        } else {
-            $.modal.alertError("主菜单不能选择");
-        }
+        var treeId = $("#treeId").val();
+        console.log(treeId);
+        var url = "/page/permissionTree/" + treeId;
+        var options = {
+            title: '选择',
+            width: "380",
+            url: url,
+            callBack: doSubmit
+        };
+        $.modal.openOptions(options);
     }
-
 
     function doSubmit(index, layero) {
         var body = layer.getChildFrame('body', index);

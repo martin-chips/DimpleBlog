@@ -1,12 +1,13 @@
 package com.dimple.service;
 
-import com.dimple.bean.Links;
-import com.dimple.bean.LinksDetails;
+import com.dimple.bean.Link;
 import com.dimple.framework.enums.LinksSearchCode;
 import com.dimple.framework.message.Result;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: LinksService
@@ -19,14 +20,13 @@ public interface LinksService {
     /**
      * 获取所有的Links
      *
-     * @param title      友链的标题
-     * @param startTime  查询开始的时间
-     * @param endTime    查询结束的时间
-     * @param display    是否显示
-     * @param searchCode
+     * @param title     友链的标题
+     * @param startTime 查询开始的时间
+     * @param endTime   查询结束的时间
+     * @param display   是否显示
      * @return
      */
-    List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, Boolean display);
+    Page<Link> getAllLinksHandled(String title, Date startTime, Date endTime, Boolean display, Pageable pageable);
 
     /**
      * 更改Links的状态
@@ -59,7 +59,7 @@ public interface LinksService {
      * @param links
      * @return
      */
-    Result addLink(Links links);
+    Result addLink(Link links);
 
     /**
      * 申请友链
@@ -67,7 +67,7 @@ public interface LinksService {
      * @param links
      * @return
      */
-    Result applyLink(Links links);
+    Result applyLink(Link links);
 
     /**
      * 更新友链的信息
@@ -75,14 +75,7 @@ public interface LinksService {
      * @param links
      * @return
      */
-    Result updateLinkInfo(Links links);
-
-    /**
-     * 获取友链列表的详情页面的信息
-     *
-     * @return
-     */
-    LinksDetails getDetails();
+    Result updateLinkInfo(Link links);
 
     /**
      * 获取所有的没有处理的Links
@@ -92,7 +85,7 @@ public interface LinksService {
      * @param title     友链的标题
      * @return
      */
-    List<Links> getAllLinksUnHandled(Date startTime, Date endTime, String title);
+    Page<Link> getAllLinksUnHandled(Date startTime, Date endTime, String title, Pageable pageable);
 
     /**
      * 通过友链的申请
@@ -117,35 +110,47 @@ public interface LinksService {
      * @param endTime
      * @param display
      * @param searchCode
+     * @param pageable
      * @return
      */
-    List<Links> getLinksCondition(String title, Date startTime, Date endTime, Boolean display, LinksSearchCode searchCode);
+    Page<Link> getLinksCondition(String title, Date startTime, Date endTime, Boolean display, LinksSearchCode searchCode, Pageable pageable);
 
     /**
      * 获取所有的友链（包括未处理的和已经处理的了的）
      *
+     * @param pageable
      * @return
      */
-    List<Links> getLinksAll();
+    Page<Link> getLinksAll(Pageable pageable);
 
     /**
      * 获取所有的死链
      *
+     * @param pageable
      * @return
      */
-    List<Links> getLinksDie();
+    Page<Link> getLinksDie(Pageable pageable);
 
     /**
      * 获取所有的已经隐藏的友链
      *
+     * @param pageable
      * @return
      */
-    List<Links> getLinksHide();
+    Page<Link> getLinksHide(Pageable pageable);
 
     /**
      * 获取所有的已经显示的友链
      *
+     * @param pageable
      * @return
      */
-    List<Links> getLinksDisplay();
+    Page<Link> getLinksDisplay(Pageable pageable);
+
+    /**
+     * 获取友链的个数分类的详细信息
+     *
+     * @return
+     */
+    Map<String, Integer> countStatusDetails();
 }

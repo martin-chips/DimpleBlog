@@ -1,15 +1,21 @@
 package com.dimple.controller;
 
 import com.dimple.bean.Blog;
-import com.dimple.service.FrontService;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
-import com.github.pagehelper.PageHelper;
+import com.dimple.service.FrontService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
@@ -38,6 +44,8 @@ public class FrontController {
         model.addAttribute("categories", frontService.selectCategoryNameToDisplay());
         model.addAttribute("blogs", frontService.getBlogsInfo());
         model.addAttribute("peopleSee", frontService.getBlogsPeopleSee());
+        model.addAttribute("clickBlog", frontService.getClickBlog());
+        model.addAttribute("supportBlog", frontService.getSupportBlog());
         return "front/index";
     }
 
@@ -55,19 +63,33 @@ public class FrontController {
     }
 
 
-    @GetMapping("/api/front/newestBlog")
+    @GetMapping("/public/api/front/newestBlog")
     @ResponseBody
     public Result getNewestBlog(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                 @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<Map<String, Object>> blogs = frontService.getNewestBlog();
+        Pageable pageable = PageRequest.of(pageNum < 0 ? 0 : pageNum, pageSize, Sort.Direction.DESC, "createTime");
+        List<Map<String, Object>> blogs = frontService.getNewestBlog(pageable);
         return ResultUtil.success(blogs);
     }
 
     @ApiOperation("获取博客信息")
-    @GetMapping("/view/{id}.html")
+    @GetMapping({"/view/{id}.html", "/view/{id}"})
     public String viewBlogPage(@PathVariable Integer id, Model model) {
         Blog blog = frontService.getBlog(id);
+        model.addAttribute("blog", blog);
+        model.addAttribute("clickBlog", frontService.getClickBlog());
+        model.addAttribute("supportBlog", frontService.getSupportBlog());
+        frontService.getBlogOtherInfo(id);
         return "front/info";
     }
+
+    @ApiOperation("获取点击排行的博客信息")
+    @GetMapping("/public/api/front/clickBlog")
+    @ResponseBody
+    public Result getClickBlog() {
+        List<Blog> clickBlog = frontService.getClickBlog();
+        return ResultUtil.success(clickBlog);
+    }
+
+
 }

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head th:include="common :: front-head"></head>
+<head th:include="front/common :: front-head"></head>
 
 
 <body>
 
-<div th:include="common :: front-header"></div>
+<div th:include="front/common :: front-header"></div>
 
 <article>
     <!--lbox begin-->
@@ -125,47 +125,30 @@
         </div>
         <div class="whitebg paihang">
             <h2 class="htitle">点击排行</h2>
-            <section class="topnews imgscale"><a href="/"><img
-                    src="/front/images/h1.jpg"><span>6条网页设计配色原则,让你秒变配色高手</span></a>
+            <section class="topnews imgscale"><a th:href="'/view/'+${clickBlog[0].blogId}"><img
+                    src="/front/images/h1.jpg" th:src="${clickBlog[0].headerUrl}"><span
+                    th:text="${clickBlog[0].title}"></span></a>
             </section>
             <ul>
-                <li><i></i><a href="/">十条设计原则教你学会如何设计网页布局!</a></li>
-                <li><i></i><a href="/">用js+css3来写一个手机栏目导航</a></li>
-                <li><i></i><a href="/">6条网页设计配色原则,让你秒变配色高手</a></li>
-                <li><i></i><a href="/">三步实现滚动条触动css动画效果</a></li>
-                <li><i></i><a href="/">个人博客，属于我的小世界！</a></li>
-                <li><i></i><a href="/">安静地做一个爱设计的女子</a></li>
-                <li><i></i><a href="/">个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。</a></li>
-                <li><i></i><a href="/">做个人博客如何用帝国cms美化留言增加头像选择</a></li>
+                <li th:each="item:${clickBlog}">
+                    <i></i>
+                    <a th:href="'/view/'+${item.blogId}" th:text="${item.title}">
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="whitebg tuijian">
             <h2 class="htitle">站长推荐</h2>
-            <section class="topnews imgscale"><a href="/"><img
-                    src="/front/images/h2.jpg"><span>6条网页设计配色原则,让你秒变配色高手</span></a>
+            <section class="topnews imgscale"><a th:href="'/view/'+${supportBlog[0].blogId}"><img
+                    src="/front/images/h2.jpg" th:src="${supportBlog[0].headerUrl}"><span
+                    th:text="${supportBlog[0].title}"></span></a>
             </section>
             <ul>
-                <li><a href="/"><i><img src="/front/images/text01.jpg"></i>
-                    <p>十条设计原则教你学会如何设计网页布局!</p>
-                </a></li>
-                <li><a href="/"><i><img src="/front/images/text02.jpg"></i>
-                    <p>用js+css3来写一个手机栏目导航</p>
-                </a></li>
-                <li><a href="/"><i><img src="/front/images/text03.jpg"></i>
-                    <p>6条网页设计配色原则,让你秒变配色高手</p>
-                </a></li>
-                <li><a href="/"><i><img src="/front/images/text04.jpg"></i>
-                    <p>三步实现滚动条触动css动画效果</p>
-                </a></li>
-                <li><a href="/"><i><img src="/front/images/text05.jpg"></i>
-                    <p>个人博客，属于我的小世界！</p>
-                </a></li>
-                <li><a href="/"><i><img src="/front/images/text06.jpg"></i>
-                    <p>安静地做一个爱设计的女子</p>
-                </a></li>
-                <li><a href="/"><i><img src="/front/images/text07.jpg"></i>
-                    <p>个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。</p>
-                </a></li>
+                <li th:each="item:${supportBlog}">
+                    <a th:href="'/view/'+${item.blogId}"></a>
+                    <i><img src="/front/images/text01.jpg" th:src="${item.headerUrl}"> </i>
+                    <p th:text="${item.title}"></p>
+                </li>
             </ul>
         </div>
         <div class="ad whitebg imgscale">
@@ -212,7 +195,7 @@
         </div>
     </div>
 </article>
-<div th:include="common :: front-footer"></div>
+<div th:include="front/common :: front-footer"></div>
 <script src="/static/js/custom/front/index.js" th:src="@{/js/custom/front/index.js}"></script>
 
 </body>

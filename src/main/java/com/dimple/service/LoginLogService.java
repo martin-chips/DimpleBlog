@@ -1,9 +1,10 @@
 package com.dimple.service;
 
 import com.dimple.bean.LoginLog;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,7 +21,7 @@ public interface LoginLogService {
      * @param loginLog 用户登录日志实例
      * @return 受影响的行数
      */
-    Integer insertLoginLog(LoginLog loginLog);
+    LoginLog insertLoginLog(LoginLog loginLog);
 
     /**
      * 获取符合条件的所有的日志
@@ -32,16 +33,17 @@ public interface LoginLogService {
      * @param endTime     登录的截止时间
      * @param osType      操作系统类型
      * @param browserType 浏览器类型
+     * @param pageable
      * @return
      */
-    List<LoginLog> getAllLoginLog(String address, String loginId, Boolean status, Date startTime, Date endTime, String osType, String browserType);
+    Page<LoginLog> getAllLoginLog(String address, String loginId, Boolean status, Date startTime, Date endTime, String osType, String browserType, Pageable pageable);
 
     /**
      * 删除所有的登录日志
      *
      * @return
      */
-    Integer cleanLoginLog();
+    void cleanLoginLog();
 
     /**
      * 删除指定的ID的登录日志

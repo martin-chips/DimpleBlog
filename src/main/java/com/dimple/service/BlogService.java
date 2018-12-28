@@ -2,9 +2,10 @@ package com.dimple.service;
 
 import com.dimple.bean.Blog;
 import com.dimple.framework.enums.BlogStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,9 +23,10 @@ public interface BlogService {
      * @param startTime
      * @param endTime
      * @param status
+     * @param pageable
      * @return
      */
-    List<Blog> selectAllBlog(String title, Date startTime, Date endTime, Integer status);
+    Page<Blog> getAllBlogs(String title, Date startTime, Date endTime, Integer status, Pageable pageable);
 
     /**
      * 新增博客
@@ -32,7 +34,7 @@ public interface BlogService {
      * @param blog
      * @return
      */
-    int insertBlog(Blog blog);
+    Blog insertBlog(Blog blog);
 
     /**
      * 删除Blog
@@ -40,7 +42,7 @@ public interface BlogService {
      * @param blogId
      * @return
      */
-    int deleteBlog(Integer blogId);
+    void deleteBlog(Integer blogId);
 
     /**
      * 更新博客的信息
@@ -48,7 +50,7 @@ public interface BlogService {
      * @param blog
      * @return
      */
-    int updateBlog(Blog blog);
+    Blog updateBlog(Blog blog);
 
     /**
      * 更换博客的状态

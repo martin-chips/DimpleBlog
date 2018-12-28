@@ -5,8 +5,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
-import java.security.Security;
-
 /**
  * @author : Owenb
  * @version : 1.0

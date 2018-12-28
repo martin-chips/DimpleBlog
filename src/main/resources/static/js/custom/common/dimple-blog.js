@@ -51,7 +51,7 @@
                 return {
                     // 传递参数查询参数
                     pageSize: params.limit,
-                    pageNum: params.offset / params.limit + 1,
+                    pageNum: params.offset / params.limit,
                     searchValue: params.search,
                     orderByColumn: params.sort,
                     isAsc: params.order
@@ -61,7 +61,7 @@
             responseHandler: function (result) {
                 if (result.code == web_status.SUCCESS) {
                     //使用PageInfo包装后返回的数据名称为list
-                    return {rows: result.data.list, total: result.data.total};
+                    return {rows: result.data.content, total: result.data.totalElements};
                 } else {
                     $.modal.msgWarning(result.msg);
                     return {rows: [], total: 0};

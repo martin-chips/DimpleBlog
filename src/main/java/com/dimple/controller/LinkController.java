@@ -1,28 +1,36 @@
 package com.dimple.controller;
 
-import com.dimple.bean.Links;
-import com.dimple.bean.LinksDetails;
+import com.dimple.bean.Link;
 import com.dimple.framework.enums.LinksSearchCode;
 import com.dimple.framework.enums.OperateType;
 import com.dimple.framework.log.annotation.Log;
-import com.dimple.service.LinksService;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.dimple.service.LinksService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: LinksController
@@ -33,19 +41,16 @@ import java.util.List;
  */
 @Controller
 @Api(tags = "友链API接口")
-public class LinksController {
+public class LinkController {
 
     @Autowired
     LinksService linksService;
 
-
     @GetMapping("/page/linkList.html")
     @ApiIgnore
-    public ModelAndView linkedListView(ModelAndView modelAndView) {
-        modelAndView.setViewName("link/list");
-        LinksDetails details = linksService.getDetails();
-        modelAndView.addObject("linksDetails", details);
-        return modelAndView;
+    public String linkedListView(Model model) {
+        model.addAttribute("linksDetails", linksService.countStatusDetails());
+        return "link/list";
     }
 
     @GetMapping("/page/linkAdd.html")
@@ -66,7 +71,7 @@ public class LinksController {
     @ResponseBody
     @ApiOperation(value = "查询显示友链列表数据", notes = "返回数据类型JSON")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "1", dataType = "Integer"),
+            @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "0", dataType = "Integer"),
             @ApiImplicitParam(name = "pageSize", value = "当前页码", defaultValue = "10", dataType = "Integer"),
             @ApiImplicitParam(name = "links_title", value = "查询友链的标题", dataType = "String"),
             @ApiImplicitParam(name = "startTime", value = "友链添加开始的时间", dataType = "Date"),
@@ -74,17 +79,16 @@ public class LinksController {
             @ApiImplicitParam(name = "links_display", value = "友链是否显示", dataType = "Boolean"),
     })
     @GetMapping("/api/link")
-    public Result linksList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+    public Result linksList(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                             @RequestParam(value = "links_title", defaultValue = "") String title,
                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime,
                             @RequestParam(value = "searchCode", required = false) LinksSearchCode linksSearchCode,
                             @RequestParam(value = "links_display", required = false) Boolean display) {
-        PageHelper.startPage(pageNum, pageSize, "create_time desc");
-        List<Links> allLinks = linksService.getLinksCondition(title, startTime, endTime, display, linksSearchCode);
-        PageInfo pageInfo = new PageInfo(allLinks);
-        return ResultUtil.success(pageInfo);
+        Pageable pageable = PageRequest.of(pageNum < 0 ? 0 : pageNum, pageSize, Sort.Direction.DESC, "createTime");
+        Page<Link> linksCondition = linksService.getLinksCondition(title, startTime, endTime, display, linksSearchCode, pageable);
+        return ResultUtil.success(linksCondition);
     }
 
     @ApiOperation(value = "切换友链的状态", notes = "")
@@ -110,7 +114,7 @@ public class LinksController {
 
     @PutMapping("/api/link")
     @ResponseBody
-    public Result updateLinksInfo(Links links) {
+    public Result updateLinksInfo(Link links) {
         Result result = linksService.updateLinkInfo(links);
         return result;
     }
@@ -120,7 +124,7 @@ public class LinksController {
     @ApiImplicitParam(name = "link", value = "传入的links的信息，除id以外，其他的必填")
     @PostMapping("/api/link")
     @ResponseBody
-    public Result addLink(Links links) {
+    public Result addLink(Link links) {
         Result result = linksService.addLink(links);
         return result;
     }
@@ -132,17 +136,15 @@ public class LinksController {
     @GetMapping("/page/linkUnhandled.html")
     @ApiOperation(value = "返回未处理友链列表界面", notes = "不可操作")
     @ApiImplicitParam(name = "modelAndView", value = "ModelAndView对象", readOnly = true)
-    public ModelAndView unHandledLinkedListView(ModelAndView modelAndView) {
-        modelAndView.setViewName("link/list-unhandled");
-        LinksDetails details = linksService.getDetails();
-        modelAndView.addObject("linksDetails", details);
-        return modelAndView;
+    public String unHandledLinkedListView(Model model) {
+        model.addAttribute("linksDetails", linksService.countStatusDetails());
+        return "link/list-unhandled";
     }
 
     @ResponseBody
     @ApiOperation(value = "查询未处理友链列表数据", notes = "返回数据类型JSON")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "1", dataType = "Integer"),
+            @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "0", dataType = "Integer"),
             @ApiImplicitParam(name = "pageSize", value = "当前页码", defaultValue = "10", dataType = "Integer"),
             @ApiImplicitParam(name = "links_title", value = "查询友链的标题", dataType = "String"),
             @ApiImplicitParam(name = "startTime", value = "友链添加开始的时间", dataType = "Date"),
@@ -155,10 +157,9 @@ public class LinksController {
                                     @RequestParam(value = "searchCode", required = false) LinksSearchCode linksSearchCode,
                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
-        PageHelper.startPage(pageNum, pageSize, "create_time desc");
-        List<Links> links = linksService.getLinksCondition(title, startTime, endTime, null, linksSearchCode == null ? LinksSearchCode.SEARCH_CODE_UNHANDLED : linksSearchCode);
-        PageInfo pageInfo = new PageInfo(links);
-        return ResultUtil.success(pageInfo);
+        Pageable pageable = PageRequest.of(pageNum < 0 ? 0 : pageNum, pageSize, Sort.Direction.DESC, "createTime");
+        Page<Link> linksCondition = linksService.getLinksCondition(title, startTime, endTime, null, linksSearchCode == null ? LinksSearchCode.SEARCH_CODE_UNHANDLED : linksSearchCode, pageable);
+        return ResultUtil.success(linksCondition);
     }
 
 

@@ -1,18 +1,22 @@
 package com.dimple.service.impl;
 
 import com.dimple.bean.OperateLog;
-import com.dimple.bean.OperateLogExample;
-import com.dimple.dao.OperateLogMapper;
 import com.dimple.framework.enums.OperateType;
+import com.dimple.repository.OperateLogRepository;
 import com.dimple.service.OperateLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,36 +33,36 @@ import java.util.Map;
 public class OperateServiceImpl implements OperateLogService {
 
     @Autowired
-    OperateLogMapper operateLogMapper;
+    OperateLogRepository operateLogRepository;
 
     @Override
-    public Integer insertOperatorLog(OperateLog operateLog) {
-        int i = operateLogMapper.insertSelective(operateLog);
-        return i;
+    public OperateLog insertOperatorLog(OperateLog operateLog) {
+        OperateLog save = operateLogRepository.save(operateLog);
+        return save;
     }
 
     @Override
-    public List<OperateLog> getAllOperateLog(String title, String operatorName, OperateType operateType, Date startTime, Date endTime) {
-        OperateLogExample operateLogExample = new OperateLogExample();
-        OperateLogExample.Criteria criteria = operateLogExample.createCriteria();
-        if (StringUtils.isNotBlank(title)) {
-            criteria.andTitleLike(title);
-        }
-        if (StringUtils.isNotBlank(operatorName)) {
-            criteria.andOperatorNameLike(operatorName);
-        }
-        if (operateType != null) {
-            criteria.andOperateTypeEqualTo(operateType.getType());
-        }
-        if (startTime != null && endTime != null) {
-            criteria.andOperateTimeBetween(startTime, endTime);
-        } else if (startTime == null && endTime != null) {
-            criteria.andOperateTimeLessThanOrEqualTo(endTime);
-        } else if (startTime != null && endTime == null) {
-            criteria.andOperateTimeGreaterThanOrEqualTo(startTime);
-        }
-        List<OperateLog> operateLogs = operateLogMapper.selectByExample(operateLogExample);
-        return operateLogs;
+    public Page<OperateLog> getAllOperateLog(String title, String operatorName, OperateType operateType, Date startTime, Date endTime, Pageable pageable) {
+        return operateLogRepository.findAll((Specification<OperateLog>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            if (StringUtils.isNotBlank(title)) {
+                list.add(criteriaBuilder.like(root.get("title").as(String.class), "%" + title + "%"));
+            }
+            if (StringUtils.isNotBlank(operatorName)) {
+                list.add(criteriaBuilder.like(root.get("operatorName").as(String.class), "%" + operatorName + "%"));
+            }
+            if (startTime != null) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startTime").as(Date.class), startTime));
+            }
+            if (endTime != null) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("startTime").as(Date.class), endTime));
+            }
+            if (operateType != null) {
+                list.add(criteriaBuilder.equal(root.get("operateType").as(Integer.class), operateType.getType()));
+            }
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
     }
 
     @Override
@@ -66,16 +70,16 @@ public class OperateServiceImpl implements OperateLogService {
         int count = 0;
         if (ids != null && ids.length != 0) {
             for (Integer id : ids) {
-                count += operateLogMapper.deleteByPrimaryKey(id);
+                operateLogRepository.deleteById(id);
+                count++;
             }
         }
         return count;
     }
 
     @Override
-    public Integer cleanOperateLog() {
-        int i = operateLogMapper.deleteByExample(null);
-        return i;
+    public void cleanOperateLog() {
+        operateLogRepository.deleteAll();
     }
 
     @Override
@@ -83,7 +87,7 @@ public class OperateServiceImpl implements OperateLogService {
         if (id == null) {
             return null;
         }
-        OperateLog operateLog = operateLogMapper.selectByPrimaryKey(id);
+        OperateLog operateLog = operateLogRepository.getOne(id);
         return operateLog;
     }
 

@@ -51,7 +51,7 @@ public interface PermissionService {
      * @param id
      * @return
      */
-    int deletePermission(Integer id);
+    void deletePermission(Integer id);
 
     /**
      * 根据权限的Id获取权限的详细信息
@@ -75,7 +75,7 @@ public interface PermissionService {
      * @param permission
      * @return
      */
-    int updatePermission(Permission permission);
+    Permission updatePermission(Permission permission);
 
     /**
      * 新增permission
@@ -83,7 +83,7 @@ public interface PermissionService {
      * @param permission
      * @return
      */
-    Integer insertPermission(Permission permission);
+    Permission insertPermission(Permission permission);
 
     /**
      * 根据permissionId查询与之相关的Role的名称

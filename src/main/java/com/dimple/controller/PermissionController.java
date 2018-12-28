@@ -1,16 +1,24 @@
 package com.dimple.controller;
 
 import com.dimple.bean.Permission;
-import com.dimple.service.PermissionService;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
+import com.dimple.service.PermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.persistence.Id;
 import java.util.List;
 import java.util.Map;
 
@@ -28,25 +36,46 @@ public class PermissionController {
     PermissionService permissionService;
 
     @GetMapping("/page/permission.html")
+    @ApiIgnore
     public String permissionPage() {
         return "system/permission/permission";
     }
 
     @GetMapping("/page/permissionAdd/{id}.html")
-    public String permissionAddPage(@PathVariable Integer id, Model model) {
-        model.addAttribute("pTitle", permissionService.getPermissionPName(id));
-        model.addAttribute("pId", id);
+    @ApiIgnore
+    public String permissionAddPage(@PathVariable(value = "id") Integer parentId, Model model) {
+        Permission permission = null;
+        if (parentId == 0) {
+            permission = new Permission();
+            permission.setName("主目录");
+            permission.setPermissionId(0);
+        } else {
+            permission = permissionService.getPermissionById(parentId);
+        }
+        model.addAttribute("permission", permission);
         return "system/permission/add";
     }
 
-
+    @ApiIgnore
     @GetMapping("/page/permissionUpdate/{id}.html")
     public String permissionUpdatePage(@PathVariable Integer id, Model model) {
         Permission permission = permissionService.getPermissionById(id);
-        String pName = permissionService.getPermissionPName(id);
         model.addAttribute("permission", permission);
         model.addAttribute("pTitle", permissionService.getPermissionPName(id));
         return "system/permission/update";
+    }
+
+    @ApiIgnore
+    @GetMapping("/page/permissionTree/{id}")
+    public String getPermissionInfo(@PathVariable Integer id, Model model) {
+        if (id == 0) {
+            Permission permission = new Permission();
+            permission.setPermissionId(0);
+            permission.setTitle("");
+            model.addAttribute("permission", permission);
+        }
+        model.addAttribute("permission", permissionService.getPermissionById(id));
+        return "system/permission/tree";
     }
 
     @ApiOperation("获取权限树")
@@ -93,15 +122,15 @@ public class PermissionController {
     @DeleteMapping("/api/permission/{id}")
     @ResponseBody
     public Result deletePermission(@PathVariable Integer id) {
-        int i = permissionService.deletePermission(id);
-        return ResultUtil.success(i);
+        permissionService.deletePermission(id);
+        return ResultUtil.success();
     }
 
     @ApiOperation("修改权限信息")
     @PutMapping("/api/permission")
     @ResponseBody
     public Result updatePermission(Permission permission) {
-        int i = permissionService.updatePermission(permission);
+        permissionService.updatePermission(permission);
         return ResultUtil.success();
     }
 
@@ -109,7 +138,9 @@ public class PermissionController {
     @PostMapping("/api/permission")
     @ResponseBody
     public Result insertPermission(Permission permission) {
-        Integer integer = permissionService.insertPermission(permission);
-        return ResultUtil.success(integer);
+        permissionService.insertPermission(permission);
+        return ResultUtil.success();
     }
+
+
 }

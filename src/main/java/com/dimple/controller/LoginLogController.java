@@ -1,19 +1,25 @@
 package com.dimple.controller;
 
 import com.dimple.bean.LoginLog;
-import com.dimple.service.LoginLogService;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.dimple.service.LoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,17 +54,17 @@ public class LoginLogController {
                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,
                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "endTime", required = false) Date endTime) {
 
-        PageHelper.startPage(pageNum, pageSize, "login_time desc");
-        List<LoginLog> loginLogs = loginLogService.getAllLoginLog(address, LoginName, status, startTime, endTime, osType, browserType);
-        PageInfo pageInfo = new PageInfo(loginLogs);
-        return ResultUtil.success(pageInfo);
+        Pageable pageable = PageRequest.of(pageNum < 0 ? 0 : pageNum, pageSize, Sort.Direction.DESC, "loginTime");
+        Page<LoginLog> allLoginLog = loginLogService.getAllLoginLog(address, LoginName, status, startTime, endTime, osType, browserType, pageable);
+
+        return ResultUtil.success(allLoginLog);
     }
 
     @DeleteMapping("/api/loginLog")
     @ResponseBody
     public Result cleanLoginLog() {
-        Integer integer = loginLogService.cleanLoginLog();
-        return ResultUtil.success(integer);
+        loginLogService.cleanLoginLog();
+        return ResultUtil.success();
     }
 
     @DeleteMapping("/api/loginLog/{ids}")

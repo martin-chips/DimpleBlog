@@ -1,16 +1,19 @@
 package com.dimple.service.impl;
 
 import com.dimple.bean.LoginLog;
-import com.dimple.bean.LoginLogExample;
-import com.dimple.dao.LoginLogMapper;
+import com.dimple.repository.LoginLogRepository;
 import com.dimple.service.LoginLogService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,49 +28,46 @@ import java.util.Map;
 @Transactional
 public class LoginLogServiceImpl implements LoginLogService {
     @Autowired
-    LoginLogMapper loginLogMapper;
+    LoginLogRepository loginLogRepository;
 
 
     @Override
-    public Integer insertLoginLog(LoginLog loginLog) {
-        int i = loginLogMapper.insertSelective(loginLog);
-        return i;
+    public LoginLog insertLoginLog(LoginLog loginLog) {
+        LoginLog save = loginLogRepository.save(loginLog);
+        return save;
     }
 
     @Override
-    public List<LoginLog> getAllLoginLog(String location, String loginName, Boolean status, Date startTime, Date endTime, String osType, String browserType) {
-        LoginLogExample loginLogExample = new LoginLogExample();
-        LoginLogExample.Criteria criteria = loginLogExample.createCriteria();
-        if (StringUtils.isNotBlank(location)) {
-            criteria.andLoginLocationLike(location);
-        }
-        if (StringUtils.isNotBlank(loginName)) {
-            criteria.andLoginNameLike(loginName);
-        }
-        if (startTime != null && endTime != null) {
-            criteria.andLoginTimeBetween(startTime, endTime);
-        } else if (startTime == null && endTime != null) {
-            criteria.andLoginTimeLessThanOrEqualTo(endTime);
-        } else if (startTime != null && endTime == null) {
-            criteria.andLoginTimeGreaterThanOrEqualTo(startTime);
-        }
-        if (status != null) {
-            criteria.andStatusEqualTo(status);
-        }
-        if (StringUtils.isNotBlank(osType)) {
-            criteria.andOsLike(osType);
-        }
-        if (StringUtils.isNotBlank(browserType)) {
-            criteria.andBrowserLike(browserType);
-        }
-        List<LoginLog> loginLogs = loginLogMapper.selectByExample(loginLogExample);
-        return loginLogs;
+    public Page<LoginLog> getAllLoginLog(String location, String loginName, Boolean status, Date startTime, Date endTime, String osType, String browserType, Pageable pageable) {
+        return loginLogRepository.findAll((Specification<LoginLog>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            if (StringUtils.isNotBlank(location)) {
+                list.add(criteriaBuilder.like(root.get("loginLocation").as(String.class), "%" + location + "%"));
+            }
+            if (StringUtils.isNotBlank(browserType)) {
+                list.add(criteriaBuilder.like(root.get("browser").as(String.class), "%" + browserType + "%"));
+            }
+            if (startTime != null) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startTime").as(Date.class), startTime));
+            }
+            if (endTime != null) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("startTime").as(Date.class), endTime));
+            }
+            if (StringUtils.isNotBlank(loginName)) {
+                list.add(criteriaBuilder.like(root.get("loginName").as(String.class), loginName));
+            }
+            if (StringUtils.isNotBlank(osType)) {
+                list.add(criteriaBuilder.like(root.get("os").as(String.class), osType));
+            }
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
+
     }
 
     @Override
-    public Integer cleanLoginLog() {
-        int i = loginLogMapper.deleteByExample(null);
-        return i;
+    public void cleanLoginLog() {
+        loginLogRepository.deleteAll();
     }
 
     @Override
@@ -77,24 +77,14 @@ public class LoginLogServiceImpl implements LoginLogService {
         }
         Integer count = 0;
         for (Integer id : ids) {
-            count += loginLogMapper.deleteByPrimaryKey(id);
+            loginLogRepository.deleteById(id);
+            count++;
         }
         return count;
     }
 
     @Override
     public Map<String, Integer> getDetails() {
-        int total = loginLogMapper.countByExample(null);
-        LoginLogExample loginLogExampleForSuccess = new LoginLogExample();
-        loginLogExampleForSuccess.createCriteria().andStatusEqualTo(true);
-        int success = loginLogMapper.countByExample(loginLogExampleForSuccess);
-        LoginLogExample loginLogExampleForFailure = new LoginLogExample();
-        loginLogExampleForFailure.createCriteria().andStatusEqualTo(false);
-        int failure = loginLogMapper.countByExample(loginLogExampleForFailure);
-        Map<String, Integer> map = new HashMap<>();
-        map.put("total", total);
-        map.put("success", success);
-        map.put("failure", failure);
-        return map;
+        return loginLogRepository.getStatusCount();
     }
 }

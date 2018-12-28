@@ -1,22 +1,26 @@
 package com.dimple.service.impl;
 
-import com.dimple.bean.Links;
-import com.dimple.bean.LinksDetails;
-import com.dimple.bean.LinksExample;
+import com.dimple.bean.Link;
 import com.dimple.framework.enums.LinksSearchCode;
-import com.dimple.dao.CustomMapper;
-import com.dimple.dao.LinksMapper;
-import com.dimple.service.LinksService;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultEnum;
 import com.dimple.framework.message.ResultUtil;
+import com.dimple.repository.LinkRepository;
+import com.dimple.service.LinksService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: LinksServiceImpl
@@ -28,47 +32,43 @@ import java.util.List;
 @Service
 @Transactional
 public class LinksServiceImpl implements LinksService {
+
     @Autowired
-    LinksMapper linksMapper;
-    @Autowired
-    CustomMapper customMapper;
+    LinkRepository linkRepository;
 
     @Override
-    public List<Links> getAllLinksHandled(String title, Date startTime, Date endTime, Boolean display) {
-
-        LinksExample linksExample = new LinksExample();
-        LinksExample.Criteria criteria = linksExample.createCriteria();
-        //获取已经处理的友链
-        criteria.andStatusEqualTo(true);
-        if (startTime != null && endTime != null) {
-            criteria.andCreateTimeBetween(startTime, endTime);
-        } else if (startTime != null) {
-            criteria.andCreateTimeGreaterThanOrEqualTo(startTime);
-        } else if (endTime != null) {
-            criteria.andCreateTimeLessThanOrEqualTo(endTime);
-        }
-
-        if (StringUtils.isNotBlank(title)) {
-            criteria.andTitleLike("%" + title + "%");
-        }
-        if (display != null) {
-            criteria.andDisplayEqualTo(display);
-        }
-        List<Links> links = linksMapper.selectByExample(linksExample);
-        return links;
+    public Page<Link> getAllLinksHandled(String title, Date startTime, Date endTime, Boolean display, Pageable pageable) {
+        return linkRepository.findAll((Specification<Link>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            if (StringUtils.isNotBlank(title)) {
+                list.add(criteriaBuilder.like(root.get("title").as(String.class), "%" + title + "%"));
+            }
+            if (startTime != null) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startTime").as(Date.class), startTime));
+            }
+            if (endTime != null) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("endTime").as(Date.class), endTime));
+            }
+            if (display != null) {
+                list.add(criteriaBuilder.equal(root.get("display").as(Boolean.class), display));
+            }
+            list.add(criteriaBuilder.equal(root.get("status"), 1));
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
     }
 
     @Override
-    public Result switchLinkStatus(Integer linkId, Boolean status) {
-        if (linkId == null || status == null) {
+    public Result switchLinkStatus(Integer linkId, Boolean display) {
+        if (linkId == null || display == null) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        Links link = linksMapper.selectByPrimaryKey(linkId);
+        Link link = linkRepository.getOne(linkId);
         if (link == null) {
             return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
         }
-        link.setDisplay(!status);
-        linksMapper.updateByPrimaryKey(link);
+        link.setDisplay(!display);
+        linkRepository.save(link);
         return ResultUtil.success();
     }
 
@@ -82,11 +82,12 @@ public class LinksServiceImpl implements LinksService {
         //记录操作的数
         Integer count = 0;
         for (Integer id : ids) {
-            Links link = linksMapper.selectByPrimaryKey(id);
+            Link link = linkRepository.getOne(id);
             if (link == null) {
                 return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
             }
-            count += linksMapper.deleteByPrimaryKey(id);
+            linkRepository.deleteById(id);
+            count++;
         }
         return ResultUtil.success(count);
     }
@@ -96,69 +97,64 @@ public class LinksServiceImpl implements LinksService {
         if (linkId == null) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        Links link = linksMapper.selectByPrimaryKey(linkId);
+        Link link = linkRepository.getOne(linkId);
         return ResultUtil.success(link);
     }
 
     @Override
-    public Result addLink(Links links) {
-        if (links == null || StringUtils.isBlank(links.getTitle()) || StringUtils.isBlank(links.getUrl())) {
+    public Result addLink(Link link) {
+        if (link == null || StringUtils.isBlank(link.getTitle()) || StringUtils.isBlank(link.getUrl())) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        links.setCreateTime(new Date());
-        //设置是否已经处理，默认未处理
-        links.setStatus(false);
-        linksMapper.insert(links);
+        link.setCreateTime(new Date());
+        //设置为已经处理
+        link.setStatus(true);
+        link.setAvailable(true);
+        link.setClick(0);
+        linkRepository.save(link);
         return ResultUtil.success();
     }
 
     @Override
-    public Result applyLink(Links links) {
-        if (links == null || StringUtils.isBlank(links.getTitle()) || StringUtils.isBlank(links.getUrl())) {
+    public Result applyLink(Link link) {
+        if (link == null || StringUtils.isBlank(link.getTitle()) || StringUtils.isBlank(link.getUrl())) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        links.setCreateTime(new Date());
+        link.setCreateTime(new Date());
         //设置是否显示，默认是不显示
-        links.setDisplay(false);
+        link.setDisplay(false);
         //设置是否已经处理，默认未处理
-        links.setStatus(false);
-        linksMapper.insert(links);
+        link.setStatus(false);
+        linkRepository.save(link);
         return ResultUtil.success();
     }
 
     @Override
-    public Result updateLinkInfo(Links links) {
-        if (links == null || links.getLinkId() == null) {
+    public Result updateLinkInfo(Link link) {
+        if (link == null || link.getLinkId() == null) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        int i = linksMapper.updateByPrimaryKeySelective(links);
-        return ResultUtil.success(i);
+        Link save = linkRepository.save(link);
+        return ResultUtil.success(save);
     }
 
     @Override
-    public LinksDetails getDetails() {
-        LinksDetails linksDetails = customMapper.selectLinksDetails();
-        return linksDetails;
-    }
-
-    @Override
-    public List<Links> getAllLinksUnHandled(Date startTime, Date endTime, String title) {
-        LinksExample linksExample = new LinksExample();
-        LinksExample.Criteria criteria = linksExample.createCriteria();
-        //设置查询条件为未处理的
-        criteria.andStatusEqualTo(false);
-        if (startTime != null && endTime != null) {
-            criteria.andCreateTimeBetween(startTime, endTime);
-        } else if (startTime != null) {
-            criteria.andCreateTimeGreaterThanOrEqualTo(startTime);
-        } else if (endTime != null) {
-            criteria.andCreateTimeLessThanOrEqualTo(endTime);
-        }
-        if (StringUtils.isNotBlank(title)) {
-            criteria.andTitleLike("%" + title + "%");
-        }
-        List<Links> links = linksMapper.selectByExample(linksExample);
-        return links;
+    public Page<Link> getAllLinksUnHandled(Date startTime, Date endTime, String title, Pageable pageable) {
+        return linkRepository.findAll((Specification<Link>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            if (StringUtils.isNotBlank(title)) {
+                list.add(criteriaBuilder.like(root.get("title").as(String.class), "%" + title + "%"));
+            }
+            if (startTime != null) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startTime").as(Date.class), startTime));
+            }
+            if (endTime != null) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("endTime").as(Date.class), endTime));
+            }
+            list.add(criteriaBuilder.equal(root.get("status").as(Boolean.class), false));
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
     }
 
     @Override
@@ -166,43 +162,42 @@ public class LinksServiceImpl implements LinksService {
         if (linkId == null) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        Links links = linksMapper.selectByPrimaryKey(linkId);
+        Link links = linkRepository.getOne(linkId);
         if (links == null) {
             return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
         }
         //设置通过友链申请
         links.setStatus(true);
-        int i = linksMapper.updateByPrimaryKey(links);
-        return ResultUtil.success(i);
+        Link save = linkRepository.save(links);
+        return ResultUtil.success(save);
     }
 
     @Override
     public Integer getUnHandledLinksCount() {
-        Integer count = customMapper.selectUnHandledLinksCount();
-        return count;
+        return linkRepository.countLinkUnhandled();
     }
 
     @Override
-    public List<Links> getLinksCondition(String title, Date startTime, Date endTime, Boolean display, LinksSearchCode searchCode) {
+    public Page<Link> getLinksCondition(String title, Date startTime, Date endTime, Boolean display, LinksSearchCode searchCode, Pageable pageable) {
         if (searchCode == null) {
-            return getAllLinksHandled(title, startTime, endTime, display);
+            return getAllLinksHandled(title, startTime, endTime, display, pageable);
         }
-        List<Links> links = null;
+        Page<Link> links = null;
         switch (searchCode) {
             case SEARCH_CODE_ALL:
-                links = getLinksAll();
+                links = getLinksAll(pageable);
                 break;
             case SEARCH_CODE_DIE:
-                links = getLinksDie();
+                links = getLinksDie(pageable);
                 break;
             case SEARCH_CODE_UNHANDLED:
-                links = getAllLinksUnHandled(null, null, null);
+                links = getAllLinksUnHandled(null, null, null, pageable);
                 break;
             case SEARCH_CODE_HIDE:
-                links = getLinksHide();
+                links = getLinksHide(pageable);
                 break;
             case SEARCH_CODE_DISPLAY:
-                links = getLinksDisplay();
+                links = getLinksDisplay(pageable);
                 break;
             default:
                 break;
@@ -211,31 +206,42 @@ public class LinksServiceImpl implements LinksService {
     }
 
     @Override
-    public List<Links> getLinksAll() {
-        return linksMapper.selectByExample(null);
+    public Page<Link> getLinksAll(Pageable pageable) {
+        return linkRepository.findAll(pageable);
     }
 
     @Override
-    public List<Links> getLinksDie() {
-        LinksExample linksExample = new LinksExample();
-        LinksExample.Criteria criteria = linksExample.createCriteria();
-        criteria.andAvailableEqualTo(false);
-        return linksMapper.selectByExample(linksExample);
+    public Page<Link> getLinksDie(Pageable pageable) {
+        return linkRepository.findAll((Specification<Link>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            list.add(criteriaBuilder.equal(root.get("available").as(Boolean.class), false));
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
     }
 
     @Override
-    public List<Links> getLinksHide() {
-        LinksExample linksExample = new LinksExample();
-        LinksExample.Criteria criteria = linksExample.createCriteria();
-        criteria.andDisplayEqualTo(false);
-        return linksMapper.selectByExample(linksExample);
+    public Page<Link> getLinksHide(Pageable pageable) {
+        return linkRepository.findAll((Specification<Link>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            list.add(criteriaBuilder.equal(root.get("display").as(Boolean.class), false));
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
     }
 
     @Override
-    public List<Links> getLinksDisplay() {
-        LinksExample linksExample = new LinksExample();
-        LinksExample.Criteria criteria = linksExample.createCriteria();
-        criteria.andDisplayEqualTo(true);
-        return linksMapper.selectByExample(linksExample);
+    public Page<Link> getLinksDisplay(Pageable pageable) {
+        return linkRepository.findAll((Specification<Link>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            list.add(criteriaBuilder.equal(root.get("display").as(Boolean.class), true));
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
+    }
+
+    @Override
+    public Map<String, Integer> countStatusDetails() {
+        return linkRepository.countStatusDetails();
     }
 }

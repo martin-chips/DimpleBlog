@@ -1,6 +1,7 @@
 var pageNum = 1;
 $(function () {
-     loadNewestBlog();
+    loadNewestBlog();
+    // loadClickBlog();
     //鼠标滚动到页面最底部加载数据
     var documentHeight = [0];
     $(window).bind("scroll", function () {
@@ -19,17 +20,33 @@ $(function () {
 });
 
 /**
+ * 加载点击排行的博客
+ */
+function loadClickBlog() {
+    $.ajax({
+        type: "get",
+        url: "/public/api/front/clickBlog",
+        success: function (result) {
+            console.log(result);
+            if (result.code == 200) {
+                generateClickBlog(result.data);
+            }
+        }
+    });
+}
+
+
+/**
  * 加载最新的博文
  */
 function loadNewestBlog() {
     $.ajax({
         type: "get",
-        url: "/api/front/newestBlog",
+        url: "/public/api/front/newestBlog",
         data: {
             pageNum: pageNum
         },
         success: function (result) {
-            console.log(result);
             if (result.code == 200) {
                 generateNewestBlog(result.data);
                 pageNum++;
@@ -39,12 +56,39 @@ function loadNewestBlog() {
 
 }
 
+// /**
+//  *
+//  * @param data
+//  */
+// function generateClickBlog(data) {
+//     var ranking = $(".paihang");
+//     var section = $("<section></section>");
+//     section.addClass("topnews imgscale");
+//     var sectionHref = $("<a></a>");
+//     sectionHref.attr("href", "/view/" + data[0].blogId);
+//     var sectionHrefImage = $("<img>");
+//     sectionHrefImage.attr("src", data[0].headerUrl);
+//     var span = $("<span></span>");
+//     span.text(data[0].title);
+//
+//     //拼接
+//     sectionHrefImage.append(span);
+//     sectionHref.append(sectionHrefImage);
+//     section.append(sectionHref);
+//     ranking.append(section);
+//     for (var i = 0; i < data.length; i++) {
+//
+//     }
+//
+//
+// }
+
+
 /**
  *
  * @param data
  */
 function generateNewestBlog(data) {
-    console.log(data.length);
     var node = $("#blogNewest");
     for (var i = 0; i < data.length; i++) {
         var item = data[i];//获取data

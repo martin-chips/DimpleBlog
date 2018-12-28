@@ -1,5 +1,6 @@
 package com.dimple.utils;
 
+import com.dimple.bean.Blog;
 import com.dimple.framework.exception.file.FileNotExistException;
 import com.dimple.framework.exception.file.FileNameLengthOutOfLimitException;
 import com.dimple.framework.exception.file.FileTypeMisMatchException;
@@ -268,4 +269,24 @@ public class FileOperateUtil {
         }
     };
 
+
+    public List<Blog> generateWrapBlog(List<Blog> blogs) {
+        if (blogs == null) {
+            return null;
+        }
+        for (Blog blog : blogs) {
+            if (StringUtils.isNotBlank(blog.getHeaderUrl())) {
+                blog.setHeaderUrl("/images/" + blog.getHeaderUrl());
+            }
+        }
+        return blogs;
+    }
+
+    public Blog generateWrapBlog(Blog blog) {
+        if (blog == null || StringUtils.isBlank(blog.getHeaderUrl())) {
+            return blog;
+        }
+        blog.setHeaderUrl("/image/" + blog.getHeaderUrl());
+        return blog;
+    }
 }

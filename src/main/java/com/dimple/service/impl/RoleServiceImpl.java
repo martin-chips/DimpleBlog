@@ -1,14 +1,22 @@
 package com.dimple.service.impl;
 
-import com.dimple.bean.*;
-import com.dimple.dao.RoleMapper;
-import com.dimple.dao.RolePermissionMapper;
-import com.dimple.dao.UserRoleMapper;
+import com.dimple.bean.Role;
+import com.dimple.bean.RolePermission;
+import com.dimple.bean.UserRole;
+import com.dimple.repository.RolePermissionRepository;
+import com.dimple.repository.RoleRepository;
+import com.dimple.repository.UserRepository;
+import com.dimple.repository.UserRoleRepository;
 import com.dimple.service.RoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,81 +29,80 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
+@Transactional
 public class RoleServiceImpl implements RoleService {
     @Autowired
-    RoleMapper roleMapper;
+    UserRepository userRepository;
     @Autowired
-    UserRoleMapper userRoleMapper;
+    RoleRepository roleRepository;
     @Autowired
-    RolePermissionMapper rolePermissionMapper;
+    UserRoleRepository userRoleRepository;
+    @Autowired
+    RolePermissionRepository rolePermissionRepository;
 
     @Override
     public List<Role> findByUserId(Integer id) {
-        UserRoleExample userRoleExample = new UserRoleExample();
-        UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
-        criteria.andUserIdEqualTo(id);
-        List<UserRole> userRoles = userRoleMapper.selectByExample(userRoleExample);
+
+        List<UserRole> userRoles = userRoleRepository.findAllByUserId(id);
         if (userRoles == null || userRoles.size() == 0) {
             return null;
         }
         List<Role> list = new LinkedList<>();
         for (UserRole userRole : userRoles) {
             Integer roleId = userRole.getRoleId();
-            Role role = roleMapper.selectByPrimaryKey(roleId);
+            Role role = roleRepository.getOne(roleId);
             list.add(role);
         }
         return list;
     }
 
     @Override
-    public List<Role> getAllRoles(String roleName, String description, Boolean locked, Date startTime, Date endTime) {
-        RoleExample roleExample = new RoleExample();
-        RoleExample.Criteria criteria = roleExample.createCriteria();
-        if (startTime != null && endTime != null) {
-            criteria.andCreateTimeBetween(startTime, endTime);
-        } else if (startTime == null && endTime != null) {
-            criteria.andCreateTimeLessThanOrEqualTo(endTime);
-        } else if (startTime != null && endTime == null) {
-            criteria.andCreateTimeGreaterThanOrEqualTo(startTime);
-        }
-        if (StringUtils.isNotBlank(roleName)) {
-            criteria.andRoleNameLike(roleName);
-        }
-        if (StringUtils.isNotBlank(description)) {
-            criteria.andDescriptionLike(description);
-        }
-        if (locked != null) {
-            criteria.andLockedEqualTo(locked);
-        }
-        List<Role> roles = roleMapper.selectByExample(roleExample);
-        return roles;
+    public Page<Role> getAllRoles(String roleName, String description, Boolean locked, Date startTime,
+                                  Date endTime, Pageable pageable) {
+        return roleRepository.findAll((Specification<Role>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            if (StringUtils.isNotBlank(roleName)) {
+                list.add(criteriaBuilder.like(root.get("roleName").as(String.class), "%" + roleName + "%"));
+            }
+            if (startTime != null) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startTime").as(Date.class), startTime));
+            }
+            if (endTime != null) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("endTime").as(Date.class), endTime));
+            }
+            if (StringUtils.isNotBlank(description)) {
+                list.add(criteriaBuilder.like(root.get("description").as(String.class), description));
+            }
+            if (locked != null) {
+                list.add(criteriaBuilder.equal(root.get("locked").as(Boolean.class), locked));
+            }
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
     }
 
     @Override
-    public int updateRole(Role role, Integer[] permissionIds) {
+    public void updateRole(Role role, Integer[] permissionIds) {
         if (role == null || role.getRoleId() == null) {
-            return -1;
+            return;
         }
-        Role roleDB = roleMapper.selectByPrimaryKey(role.getRoleId());
+        Role roleDB = roleRepository.getOne(role.getRoleId());
         if (roleDB == null) {
-            return -1;
+            return;
         }
         if (roleDB.getLocked() == null) {
             roleDB.setLocked(true);
         }
-        int i = roleMapper.updateByPrimaryKeySelective(role);
+        Role save = roleRepository.save(roleDB);
         //更新RolePermission表
-        RolePermissionExample rolePermissionExample = new RolePermissionExample();
-        RolePermissionExample.Criteria criteria = rolePermissionExample.createCriteria();
-        criteria.andRoleIdEqualTo(role.getRoleId());
-        rolePermissionMapper.deleteByExample(rolePermissionExample);
+        rolePermissionRepository.deleteAllByRoleId(role.getRoleId());
+
         for (Integer permissionId : permissionIds) {
             RolePermission rolePermission = new RolePermission();
             rolePermission.setRoleId(role.getRoleId());
             rolePermission.setPermissionId(permissionId);
-            rolePermissionMapper.insert(rolePermission);
+            rolePermissionRepository.save(rolePermission);
         }
-        return i;
     }
 
     @Override
@@ -105,39 +112,34 @@ public class RoleServiceImpl implements RoleService {
         }
         int count = 0;
         for (Integer id : ids) {
-            count += roleMapper.deleteByPrimaryKey(id);
+            roleRepository.deleteById(id);
+            count++;
         }
         return count;
     }
 
     @Override
-    public int insertRole(Role role) {
+    public Role insertRole(Role role) {
         if (role == null || StringUtils.isBlank(role.getRoleName())) {
-            return -1;
+            return null;
         }
         role.setCreateTime(new Date());
         role.setLocked(false);
-        int i = roleMapper.insert(role);
-        return i;
+        return roleRepository.save(role);
     }
 
     @Override
     public Role getRoleByRoleId(Integer id) {
-        if (id == null) {
-            return null;
-        }
-        Role role = roleMapper.selectByPrimaryKey(id);
-        return role;
+        return id == null ? null : roleRepository.getOne(id);
     }
 
     @Override
-    public Integer changeRoleLocked(Integer id, Boolean locked) {
-        Role role = roleMapper.selectByPrimaryKey(id);
+    public Role changeRoleLocked(Integer id, Boolean locked) {
+        Role role = roleRepository.getOne(id);
         if (role == null) {
-            return -1;
+            return null;
         }
         role.setLocked(!locked);
-        int i = roleMapper.updateByPrimaryKeySelective(role);
-        return i;
+        return roleRepository.save(role);
     }
 }

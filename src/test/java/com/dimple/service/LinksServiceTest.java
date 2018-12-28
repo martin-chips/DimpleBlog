@@ -21,10 +21,5 @@ public class LinksServiceTest {
     @Autowired
     LinksService linksService;
 
-    @Test
-    public void testGetAllLinksMethod() {
-        System.out.println(linksService.getAllLinksHandled("", new Date(), new Date(), true).toString());
-
-    }
 
 }

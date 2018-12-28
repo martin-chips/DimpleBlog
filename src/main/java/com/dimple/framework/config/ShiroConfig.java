@@ -52,7 +52,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/about.html", "anon");
         filterChainDefinitionMap.put("/technology.html", "anon");
         //前台调用API不拦截
-        filterChainDefinitionMap.put("/punlic/api/**", "anon");
+        filterChainDefinitionMap.put("/public/api/**", "anon");
+        filterChainDefinitionMap.put("/view/**", "anon");
         //退出
         filterChainDefinitionMap.put("/logout", "logout");
         //授权验证不拦截

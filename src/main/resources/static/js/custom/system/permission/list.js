@@ -1,7 +1,7 @@
 $(function () {
     var options = {
             code: "permissionId",
-            parentCode: "pId",
+            parentCode: "pid",
             uniqueId: "permissionId",
             expandAll: false,
             expandFirst: true,

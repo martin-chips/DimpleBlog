@@ -89,45 +89,45 @@
         var type = $('input[name="type"]:checked').val();
         menuVisible(type);
     });
-
-    $("#form-menu-edit").validate({
-        rules: {
-            type: {
-                required: true,
-            },
-            menuName: {
-                required: true,
-                remote: {
-                    url: prefix + "/checkMenuNameUnique",
-                    type: "post",
-                    dataType: "json",
-                    data: {
-                        "menuId": function () {
-                            return $("#menuId").val();
-                        },
-                        "parentId": function () {
-                            return $("input[name='parentId']").val();
-                        },
-                        "menuName": function () {
-                            return $.common.trim($("#menuName").val());
-                        }
-                    },
-                    dataFilter: function (data, type) {
-                        return $.validate.unique(data);
-                    }
-                }
-            },
-            orderNum: {
-                required: true,
-                digits: true
-            },
-        },
-        messages: {
-            "menuName": {
-                remote: "菜单已经存在"
-            }
-        }
-    });
+    //
+    // $("#form-menu-edit").validate({
+    //     rules: {
+    //         type: {
+    //             required: true,
+    //         },
+    //         menuName: {
+    //             required: true,
+    //             remote: {
+    //                 url: prefix + "/checkMenuNameUnique",
+    //                 type: "post",
+    //                 dataType: "json",
+    //                 data: {
+    //                     "menuId": function () {
+    //                         return $("#menuId").val();
+    //                     },
+    //                     "parentId": function () {
+    //                         return $("input[name='parentId']").val();
+    //                     },
+    //                     "menuName": function () {
+    //                         return $.common.trim($("#menuName").val());
+    //                     }
+    //                 },
+    //                 dataFilter: function (data, type) {
+    //                     return $.validate.unique(data);
+    //                 }
+    //             }
+    //         },
+    //         orderNum: {
+    //             required: true,
+    //             digits: true
+    //         },
+    //     },
+    //     messages: {
+    //         "menuName": {
+    //             remote: "菜单已经存在"
+    //         }
+    //     }
+    // });
 
     function submitHandler() {
         if ($.validate.form()) {
@@ -197,19 +197,16 @@
     }
 
     function selectMenuTree() {
-        var menuId = $("#treeId").val();
-        if (menuId > 0) {
-            var url = prefix + "/selectMenuTree/" + menuId;
-            var options = {
-                title: '菜单选择',
-                width: "380",
-                url: url,
-                callBack: doSubmit
-            };
-            $.modal.openOptions(options);
-        } else {
-            $.modal.alertError("主菜单不能选择");
-        }
+        var treeId = $("#treeId").val();
+        console.log(treeId);
+        var url = "/page/permissionTree/" + treeId;
+        var options = {
+            title: '选择',
+            width: "380",
+            url: url,
+            callBack: doSubmit
+        };
+        $.modal.openOptions(options);
     }
 
     function doSubmit(index, layero) {

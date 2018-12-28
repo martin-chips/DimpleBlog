@@ -2,10 +2,10 @@ package com.dimple.service;
 
 import com.dimple.bean.User;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @ClassName: UserService
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @CacheConfig(cacheNames = "user")
 public interface UserService {
-//    @Cacheable(key = "'loginId'.concat(#loginId)")
+    //    @Cacheable(key = "'loginId'.concat(#loginId)")
     User findByUserLoginId(String loginId);
 
     /**
@@ -26,9 +26,10 @@ public interface UserService {
      * @param startTime
      * @param endTime
      * @param loginId
+     * @param pageable
      * @return
      */
-    List<User> getAllUsers(String phone, Boolean locked, Date startTime, Date endTime, String loginId);
+    Page<User> getAllUsers(String phone, Boolean locked, Date startTime, Date endTime, String loginId, Pageable pageable);
 
     /**
      * 根据User的id删除User
@@ -44,7 +45,7 @@ public interface UserService {
      * @param id
      * @return
      */
-    Integer resetPassword(Integer id, String newPassword);
+    User resetPassword(Integer id, String newPassword);
 
     /**
      * 更新用户的信息
@@ -52,7 +53,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    Integer updateUserInfo(User user);
+    User updateUserInfo(User user);
 
     /**
      * 新建一个User
@@ -60,7 +61,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    Integer insertUser(User user);
+    User insertUser(User user);
 
     /**
      * 根据Id获取User对象
@@ -77,5 +78,5 @@ public interface UserService {
      * @param locked
      * @return
      */
-    Integer changeLocked(Integer id, Boolean locked);
+    User changeLocked(Integer id, Boolean locked);
 }
