@@ -24,9 +24,9 @@ public class ParseEnum {
      * @param type
      * @return
      */
-    public String getOperateTypeName(Integer type) {
-        Map<Integer, String> operateType = operateLogService.getOperateType();
-        String typeName = operateType.get(type);
-        return typeName;
-    }
+    // public String getOperateTypeName(Integer type) {
+    //     Map<Integer, String> operateType = operateLogService.getOperateType();
+    //     String typeName = operateType.get(type);
+    //     return typeName;
+    // }
 }

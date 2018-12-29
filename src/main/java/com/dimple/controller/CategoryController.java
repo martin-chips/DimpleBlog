@@ -1,6 +1,8 @@
 package com.dimple.controller;
 
 import com.dimple.bean.Category;
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.CategoryService;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 import java.util.List;
@@ -45,6 +48,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/page/category.html")
+    @ApiIgnore
     public String categoryPage(Model model) {
         List<Category> allBlogCategory = categoryService.getAllBlogCategory();
         model.addAttribute("categories", allBlogCategory);
@@ -52,18 +56,21 @@ public class CategoryController {
     }
 
     @GetMapping("/page/category/{id}.html")
+    @ApiIgnore
     public String categoryUpdatePage(@PathVariable Integer id, Model model) {
         model.addAttribute("category", categoryService.selectBlogCategoryByCategoryId(id));
         return "blog/category/update";
     }
 
     @GetMapping("/page/categoryAdd.html")
+    @ApiIgnore
     public String categoryAddPage() {
         return "blog/category/add";
     }
 
     @ApiOperation("有条件的获取所有的分类数据")
     @GetMapping("/api/category")
+    @Log(title = "博客分类获取", operateType = OperateType.OTHER)
     @ResponseBody
     public Result getAllBlogcategory(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,

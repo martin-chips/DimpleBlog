@@ -80,4 +80,6 @@ public interface RoleService {
      * @return
      */
     Role changeRoleLocked(Integer id, Boolean locked);
+
+    List<Role> getAllRoles();
 }

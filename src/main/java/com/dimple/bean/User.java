@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import java.util.Date;
 import java.util.Objects;
 
@@ -41,4 +42,7 @@ public class User {
     private String phone;
     private Byte sex;
     private Date createTime;
+    @Transient
+    private Integer roleId;
+
 }

@@ -56,6 +56,10 @@
 </div>
 
 <div th:include="common :: common-footer"></div>
+
+<script th:inline="javascript">
+    var data = [[${@direction.getOperateType()}]]
+</script>
 <script src="/static/js/custom/log/operatorLog.js" th:src="@{/js/custom/log/operatorLog.js}"></script>
 </body>
 

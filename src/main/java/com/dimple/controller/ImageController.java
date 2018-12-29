@@ -1,5 +1,7 @@
 package com.dimple.controller;
 
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.utils.FileOperateUtil;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
@@ -38,12 +40,14 @@ public class ImageController {
 
     @ApiOperation("SummerNote编辑器中上传图片接口")
     @RequestMapping(value = "/api/summernote/image", method = RequestMethod.POST)
+    @Log(title = "文件上传", operateType = OperateType.FILE_UPLOAD)
     @ResponseBody
-    public Result uploadImageSummernote( @RequestParam("file") MultipartFile file) throws Exception {
+    public Result uploadImageSummernote(@RequestParam("file") MultipartFile file) throws Exception {
         return ResultUtil.success(fileOperateUtil.imgUpload(file));
     }
 
     @ApiOperation("上传图片文件")
+    @Log(title = "文件上传", operateType = OperateType.FILE_UPLOAD)
     @RequestMapping(value = "/api/image", method = RequestMethod.POST)
     @ResponseBody
     public Result uploadImage(@RequestParam("file") MultipartFile file) throws Exception {

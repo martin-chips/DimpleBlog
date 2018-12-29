@@ -1,5 +1,7 @@
 package com.dimple.controller;
 
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import io.swagger.annotations.Api;
@@ -45,6 +47,7 @@ public class CaptchaController {
 
     @ApiOperation("生成验证码")
     @GetMapping("/api/kaptcha")
+    @Log(title = "验证码", operateType = OperateType.GENERATE_CAPTCHA)
     public void defaultKaptcha(HttpServletRequest request, HttpServletResponse response) {
         ServletOutputStream servletOutputStream = null;
         try {

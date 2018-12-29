@@ -16,4 +16,5 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
 
     List<UserRole> findAllByUserId(Integer id);
 
+    UserRole findByUserId(Integer id);
 }

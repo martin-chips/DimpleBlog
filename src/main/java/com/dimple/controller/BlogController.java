@@ -2,6 +2,8 @@ package com.dimple.controller;
 
 import com.dimple.bean.Blog;
 import com.dimple.framework.enums.BlogStatus;
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.BlogService;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -56,6 +59,7 @@ public class BlogController {
     CategoryService categoryService;
 
     @GetMapping("/page/editBlog.html")
+    @ApiIgnore
     public String returnPage(Model model) {
         //添加对应在已发布、草稿箱、垃圾箱的数量
         model.addAttribute("count", blogService.selectCountOfBlogStatus());
@@ -64,6 +68,7 @@ public class BlogController {
     }
 
     @GetMapping("/page/blogList.html")
+    @ApiIgnore
     public String blogListPage(Model model) {
         model.addAttribute("published", blogService.selectBlogCountByStatus(BlogStatus.PUBLISHED));
         model.addAttribute("draft", blogService.selectBlogCountByStatus(BlogStatus.DRAFT));
@@ -74,6 +79,7 @@ public class BlogController {
 
 
     @GetMapping("/page/blogList/{id}.html")
+    @ApiIgnore
     public String blogUpdatePage(@PathVariable Integer id, Model model) {
         model.addAttribute("blog", blogService.selectBlogByIdBlobs(id));
         return "blog/list/update";
@@ -82,6 +88,7 @@ public class BlogController {
 
     @ApiOperation("删除博客")
     @DeleteMapping("/api/blog/{id}")
+    @Log(title = "博客管理", operateType = OperateType.DELETE)
     @ResponseBody
     public Result deleteBlog(@PathVariable Integer id) {
         blogService.deleteBlog(id);
@@ -89,6 +96,7 @@ public class BlogController {
     }
 
     @ApiOperation("更新博客")
+    @Log(title = "博客管理", operateType = OperateType.UPDATE)
     @PutMapping("/api/blog")
     @ResponseBody
     public Result updateBlog(Blog blog) {
@@ -98,6 +106,7 @@ public class BlogController {
 
     @ApiOperation("设置博客是否推荐")
     @PutMapping("/api/blog/support/{id}/{status}")
+    @Log(title = "博客管理", operateType = OperateType.CHANGE_STATUS)
     @ResponseBody
     public Result supportBlog(@PathVariable(value = "id") Integer[] ids, @PathVariable Boolean status) {
         int i = blogService.supportBlog(ids, status);
@@ -105,6 +114,7 @@ public class BlogController {
     }
 
     @ApiOperation("设置博客状态为已发布、垃圾箱、草稿箱")
+    @Log(title = "博客管理", operateType = OperateType.CHANGE_STATUS)
     @PutMapping("/api/blog/status/{id}/{status}")
     @ResponseBody
     public Result changeStatus(@PathVariable(value = "id") Integer[] ids, @PathVariable Integer status) {
@@ -114,14 +124,16 @@ public class BlogController {
 
     @ApiOperation("新增博客")
     @PostMapping("/api/blog")
+    @Log(title = "博客管理", operateType = OperateType.INSERT)
     @ResponseBody
     public Result insertBlog(Blog blog) {
         Blog insertBlog = blogService.insertBlog(blog);
         return ResultUtil.success(insertBlog);
     }
 
-    @ApiOperation("获取博客的列表信息")
+    @ApiOperation("博客的列表信息获取")
     @GetMapping("/api/blog")
+    @Log(title = "博客管理", operateType = OperateType.SELECT)
     @ResponseBody
     public Result getAllBlog(
             @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
@@ -160,6 +172,7 @@ public class BlogController {
 
     @ApiOperation("获取博客状态的分类信息")
     @GetMapping("/api/blog/count")
+    @Log(title = "博客管理", operateType = OperateType.SELECT)
     @ResponseBody
     public Result getBlogStatusCount() {
         Map<String, Integer> map = blogService.selectCountOfBlogStatus();

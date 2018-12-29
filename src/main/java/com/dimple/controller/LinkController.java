@@ -79,6 +79,7 @@ public class LinkController {
             @ApiImplicitParam(name = "links_display", value = "友链是否显示", dataType = "Boolean"),
     })
     @GetMapping("/api/link")
+    @Log(title = "友情链接", operateType = OperateType.SELECT)
     public Result linksList(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                             @RequestParam(value = "links_title", defaultValue = "") String title,
@@ -98,6 +99,7 @@ public class LinkController {
     })
     @PutMapping("/api/link/{linkId}/{status}")
     @ResponseBody
+    @Log(title = "友情链接", operateType = OperateType.CHANGE_STATUS)
     public Result linkSwitch(@PathVariable("status") Boolean status, @PathVariable("linkId") Integer linkId) {
         Result result = linksService.switchLinkStatus(linkId, status);
         return result;
@@ -106,6 +108,7 @@ public class LinkController {
     @ApiOperation(value = "删除友链", notes = "需要传入的为一个数组")
     @ApiImplicitParam(name = "ids", value = "友链的ID数组，格式为：1,2,3···,也可以传入单个参数如1")
     @DeleteMapping("/api/link/{ids}")
+    @Log(title = "友情链接", operateType = OperateType.DELETE)
     @ResponseBody
     public Result linkDelete(@PathVariable Integer[] ids) {
         Result result = linksService.deleteLinks(ids);
@@ -114,12 +117,13 @@ public class LinkController {
 
     @PutMapping("/api/link")
     @ResponseBody
+    @Log(title = "友情链接", operateType = OperateType.UPDATE)
     public Result updateLinksInfo(Link links) {
         Result result = linksService.updateLinkInfo(links);
         return result;
     }
 
-    @Log(title = "新增友链", operateType = OperateType.INSERT)
+    @Log(title = "友情链接", operateType = OperateType.INSERT)
     @ApiOperation(value = "新增友链")
     @ApiImplicitParam(name = "link", value = "传入的links的信息，除id以外，其他的必填")
     @PostMapping("/api/link")
@@ -135,6 +139,7 @@ public class LinkController {
 
     @GetMapping("/page/linkUnhandled.html")
     @ApiOperation(value = "返回未处理友链列表界面", notes = "不可操作")
+    @ApiIgnore
     @ApiImplicitParam(name = "modelAndView", value = "ModelAndView对象", readOnly = true)
     public String unHandledLinkedListView(Model model) {
         model.addAttribute("linksDetails", linksService.countStatusDetails());
@@ -143,6 +148,7 @@ public class LinkController {
 
     @ResponseBody
     @ApiOperation(value = "查询未处理友链列表数据", notes = "返回数据类型JSON")
+    @Log(title = "友情链接", operateType = OperateType.SELECT)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "0", dataType = "Integer"),
             @ApiImplicitParam(name = "pageSize", value = "当前页码", defaultValue = "10", dataType = "Integer"),
@@ -164,7 +170,7 @@ public class LinkController {
 
 
     @ApiOperation(value = "通过友链的申请", notes = "")
-    @ApiImplicitParam(name = "linkId", value = "需要通过友链申请的友链的ID", required = true, dataType = "Integer")
+    @Log(title = "友情链接", operateType = OperateType.OTHER)
     @PutMapping("/api/linkUnhandled/{linkId}")
     @ResponseBody
     public Result passLinksApply(@PathVariable Integer linkId) {

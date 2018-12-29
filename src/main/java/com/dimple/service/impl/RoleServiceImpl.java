@@ -90,13 +90,12 @@ public class RoleServiceImpl implements RoleService {
         if (roleDB == null) {
             return;
         }
-        if (roleDB.getLocked() == null) {
-            roleDB.setLocked(true);
+        if (role.getLocked() == null) {
+            role.setLocked(true);
         }
-        Role save = roleRepository.save(roleDB);
+        Role save = roleRepository.save(role);
         //更新RolePermission表
         rolePermissionRepository.deleteAllByRoleId(role.getRoleId());
-
         for (Integer permissionId : permissionIds) {
             RolePermission rolePermission = new RolePermission();
             rolePermission.setRoleId(role.getRoleId());
@@ -141,5 +140,10 @@ public class RoleServiceImpl implements RoleService {
         }
         role.setLocked(!locked);
         return roleRepository.save(role);
+    }
+
+    @Override
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
     }
 }

@@ -1,9 +1,12 @@
 package com.dimple.controller;
 
 import com.dimple.bean.LoginLog;
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.LoginLogService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 import java.util.Map;
@@ -30,12 +34,14 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Controller
+@Api("登录日志处理Controller")
 public class LoginLogController {
 
     @Autowired
     LoginLogService loginLogService;
 
     @RequestMapping("/page/loginLog.html")
+    @ApiIgnore
     public String loginLog(Model model) {
         Map<String, Integer> map = loginLogService.getDetails();
         model.addAttribute("details", map);
@@ -43,6 +49,7 @@ public class LoginLogController {
     }
 
     @GetMapping("/api/loginLog")
+    @Log(title = "登录日志", operateType = OperateType.SELECT)
     @ResponseBody
     public Result getLoginLog(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                               @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -61,6 +68,7 @@ public class LoginLogController {
     }
 
     @DeleteMapping("/api/loginLog")
+    @Log(title = "登录日志", operateType = OperateType.CLEAN)
     @ResponseBody
     public Result cleanLoginLog() {
         loginLogService.cleanLoginLog();
@@ -69,6 +77,7 @@ public class LoginLogController {
 
     @DeleteMapping("/api/loginLog/{ids}")
     @ResponseBody
+    @Log(title = "登录日志", operateType = OperateType.DELETE)
     public Result deleteLoginLog(@PathVariable Integer ids[]) {
         Integer integer = loginLogService.deleteLoginLog(ids);
         return ResultUtil.success(integer);

@@ -15,6 +15,22 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 public enum OperateType {
+    FILE_UPLOAD(8, "文件上传"),
+    /**
+     * 切换状态
+     */
+    CHANGE_STATUS(7, "切换状态"),
+
+    /**
+     * 验证码生成
+     */
+    GENERATE_CAPTCHA(6, "验证码生成"),
+
+    /**
+     * 查询
+     */
+    SELECT(5, "查询"),
+
     /**
      * 其它
      */
@@ -38,7 +54,9 @@ public enum OperateType {
     /**
      * 清空
      */
-    CLEAN(4, "清空");
+    CLEAN(4, "清空"),
+    ;
+
 
     private Integer type;
     private String name;

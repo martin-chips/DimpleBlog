@@ -2,7 +2,9 @@ package com.dimple.service.impl;
 
 import com.dimple.bean.User;
 import com.dimple.framework.exception.user.UserAccountNotExistsException;
+import com.dimple.repository.RoleRepository;
 import com.dimple.repository.UserRepository;
+import com.dimple.repository.UserRoleRepository;
 import com.dimple.service.UserService;
 import com.dimple.utils.Md5Util;
 import org.apache.commons.lang3.StringUtils;
@@ -31,6 +33,8 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserRoleRepository userRoleRepository;
 
     @Override
     public User findByUserLoginId(String loginId) {
@@ -114,7 +118,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Integer id) {
-        return id == null ? null : userRepository.getOne(id);
+        if (id == null) {
+            return null;
+        }
+        User userDB = userRepository.getOne(id);
+        if (userDB != null && userRoleRepository.findByUserId(id) != null) {
+            userDB.setRoleId(userRoleRepository.findByUserId(id).getRoleId());
+        }
+        return userDB;
     }
 
     @Override

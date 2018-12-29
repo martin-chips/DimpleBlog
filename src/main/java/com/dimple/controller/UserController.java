@@ -1,9 +1,13 @@
 package com.dimple.controller;
 
 import com.dimple.bean.User;
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
+import com.dimple.service.RoleService;
 import com.dimple.service.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 
@@ -32,29 +37,38 @@ import java.util.Date;
  * @Version: 1.0
  */
 @Controller
+@Api("用户处理Controller")
 public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    RoleService roleService;
 
     @RequestMapping("/page/personInfo")
+    @ApiIgnore
     public String userProfile() {
         return "user/profile";
     }
 
     @GetMapping("/page/user/{id}")
+    @ApiIgnore
     public String userUpdatePage(@PathVariable Integer id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.getAllRoles());
         return "system/user/update";
     }
 
     @GetMapping("/page/userAdd.html")
-    public String userAddPage() {
+    @ApiIgnore
+    public String userAddPage(Model model) {
+        model.addAttribute("roles", roleService.getAllRoles());
         return "system/user/add";
     }
 
     @GetMapping("/page/user/password/{id}")
+    @ApiIgnore
     public String resetUserPassword(@PathVariable Integer id, Model model) {
         User userById = userService.getUserById(id);
         model.addAttribute("loginId", userById.getUserLoginId());
@@ -63,6 +77,7 @@ public class UserController {
     }
 
     @GetMapping("/page/user.html")
+    @ApiIgnore
     public String userListPage() {
         return "system/user/list";
     }
@@ -70,6 +85,7 @@ public class UserController {
     @ApiOperation("获取User信息")
     @GetMapping("/api/user")
     @ResponseBody
+    @Log(title = "用户管理", operateType = OperateType.SELECT)
     public Result getUsers(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -86,6 +102,7 @@ public class UserController {
 
     @ApiOperation("删除User")
     @DeleteMapping("/api/user/{ids}")
+    @Log(title = "用户管理", operateType = OperateType.DELETE)
     @ResponseBody
     public Result deleteUser(@PathVariable Integer ids[]) {
         Integer i = userService.deleteUser(ids);
@@ -94,6 +111,7 @@ public class UserController {
 
     @ApiOperation("新增User")
     @PostMapping("/api/user")
+    @Log(title = "用户管理", operateType = OperateType.INSERT)
     @ResponseBody
     public Result insertUser(User user) {
         userService.insertUser(user);
@@ -102,6 +120,7 @@ public class UserController {
 
     @ApiOperation("修改User信息")
     @PutMapping("/api/user")
+    @Log(title = "用户管理", operateType = OperateType.UPDATE)
     @ResponseBody
     public Result updateUser(User user) {
         userService.updateUserInfo(user);
@@ -110,6 +129,7 @@ public class UserController {
 
     @ApiOperation("切换User的状态")
     @PutMapping("/api/user/{id}/{locked}")
+    @Log(title = "用户管理", operateType = OperateType.CHANGE_STATUS)
     @ResponseBody
     public Result changeLocked(@PathVariable Integer id, @PathVariable Boolean locked) {
         userService.changeLocked(id, locked);

@@ -1,10 +1,12 @@
 package com.dimple.controller;
 
 import com.dimple.service.GalleryService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 import java.util.Map;
@@ -17,12 +19,14 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Controller
+@Api("图库处理Controller")
 public class GalleryController {
 
     @Autowired
     GalleryService galleryService;
 
     @RequestMapping("/page/localGallery.html")
+    @ApiIgnore
     public String toLocalGallery(Model model) {
         Map<String, Date> result = galleryService.selectImagesNameAndModifyTime();
         model.addAttribute("images", result);

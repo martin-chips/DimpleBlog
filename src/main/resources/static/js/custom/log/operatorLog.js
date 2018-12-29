@@ -27,7 +27,7 @@ function initTable() {
             url: "/api/operateLog",
             deleteUrl: "/api/operateLog/{id}",
             cleanUrl: "/api/operateLog",
-            detailUrl: "/api/operateLog/{id}",
+            detailUrl: "/page/operateLog/{id}",
             sortName: "createTime",
             sortOrder: "desc",
             modalName: "操作日志",
@@ -45,14 +45,10 @@ function initTable() {
                 title: '操作类型',
                 align: 'center',
                 formatter: function (value, row, index) {
-                    var actions = [];
-                    if (value == 1) {
-                        actions.push("<span class='badge badge-danger" + "'>" + "新增" + "</span>");
-                    }
-                    return actions.join('');
+                    return $.table.selectDictLabel(data, value);
                 }
             }, {
-                field: 'loginLocation',
+                field: 'operatorName',
                 title: '操作人员',
                 align: 'center',
             }, {

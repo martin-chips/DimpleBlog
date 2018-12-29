@@ -1,4 +1,11 @@
 (function ($) {
+    // radio 事件绑定
+    if ($(".radio-box").length > 0) {
+        $(".radio-box").iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+        })
+    }
     $.extend({
         _treeTable: {},
         _tree: {},
@@ -125,14 +132,14 @@
                 });
             },
             // 回显数据字典
-            selectDictLabel: function (datas, value) {
+            selectDictLabel: function (data, value) {
                 var actions = [];
-                $.each(datas, function (index, dict) {
-                    if (dict.dictValue == value) {
-                        actions.push("<span class='badge badge-" + dict.listClass + "'>" + dict.dictLabel + "</span>");
-                        return false;
+                for (var key in data) {
+                    if (key == value) {
+                        actions.push("<span class='badge badge-" + "'>" + data[key] + "</span>");
+                        break;
                     }
-                });
+                }
                 return actions.join('');
             }
         },

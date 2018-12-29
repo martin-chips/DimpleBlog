@@ -60,10 +60,4 @@ public interface OperateLogService {
      */
     OperateLog getDetailsOperateLog(Integer id);
 
-    /**
-     * 获取所有的操作类型
-     *
-     * @return
-     */
-    Map<Integer, String> getOperateType();
 }

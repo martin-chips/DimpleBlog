@@ -1,9 +1,11 @@
 package com.dimple.controller;
 
 import com.dimple.bean.Blog;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.FrontService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Controller
+@Api("前台请求处理Controller")
 public class FrontController {
 
 

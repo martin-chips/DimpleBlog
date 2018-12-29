@@ -1,6 +1,8 @@
 package com.dimple.controller;
 
 import com.dimple.bean.Permission;
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.PermissionService;
@@ -80,6 +82,7 @@ public class PermissionController {
 
     @ApiOperation("获取权限树")
     @GetMapping("/api/permissionTree")
+    @Log(title = "权限管理", operateType = OperateType.SELECT)
     @ResponseBody
     public Result getPermissionTree() {
         List<Map<String, Object>> tree = permissionService.getPermissionTree();
@@ -88,6 +91,7 @@ public class PermissionController {
 
     @ApiOperation("根据RolerId获取权限树")
     @GetMapping("/api/permissionTree/{roleId}")
+    @Log(title = "权限管理", operateType = OperateType.SELECT)
     @ResponseBody
     public Result getPermissionTreeByRoleId(@PathVariable Integer roleId) {
         List<Map<String, Object>> tree = permissionService.getPermissionTreeByRoleId(roleId);
@@ -96,6 +100,7 @@ public class PermissionController {
 
     @ApiOperation("获取权限的数据")
     @GetMapping("/api/permission")
+    @Log(title = "权限管理", operateType = OperateType.SELECT)
     @ResponseBody
     public Result getPermissionList(@RequestParam(value = "title", required = false) String title,
                                     @RequestParam(value = "status", required = false) Boolean status,
@@ -106,6 +111,7 @@ public class PermissionController {
 
     @ApiOperation("删除权限前的验证")
     @DeleteMapping("/api/permission/{id}/validate")
+    @Log(title = "权限管理", operateType = OperateType.OTHER)
     @ResponseBody
     public Result deletePermissionValidate(@PathVariable("id") Integer permissionId) {
         List<String> roleNames = permissionService.getPermissionRelation(permissionId);
@@ -119,6 +125,7 @@ public class PermissionController {
     }
 
     @ApiOperation("根据权限ID删除权限信息")
+    @Log(title = "权限管理", operateType = OperateType.DELETE)
     @DeleteMapping("/api/permission/{id}")
     @ResponseBody
     public Result deletePermission(@PathVariable Integer id) {
@@ -128,6 +135,7 @@ public class PermissionController {
 
     @ApiOperation("修改权限信息")
     @PutMapping("/api/permission")
+    @Log(title = "权限管理", operateType = OperateType.UPDATE)
     @ResponseBody
     public Result updatePermission(Permission permission) {
         permissionService.updatePermission(permission);
@@ -135,6 +143,7 @@ public class PermissionController {
     }
 
     @ApiOperation("新增权限")
+    @Log(title = "权限管理", operateType = OperateType.INSERT)
     @PostMapping("/api/permission")
     @ResponseBody
     public Result insertPermission(Permission permission) {

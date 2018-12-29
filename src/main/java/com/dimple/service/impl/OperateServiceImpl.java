@@ -91,13 +91,5 @@ public class OperateServiceImpl implements OperateLogService {
         return operateLog;
     }
 
-    @Override
-    public Map<Integer, String> getOperateType() {
-        Map<Integer, String> map = new HashMap<>();
-        OperateType[] operateTypes = OperateType.values();
-        for (OperateType operateType : operateTypes) {
-            map.put(operateType.getType(), operateType.getName());
-        }
-        return map;
-    }
+
 }
