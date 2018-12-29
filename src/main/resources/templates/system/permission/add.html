@@ -71,59 +71,21 @@
 <div th:include="common :: common-footer"></div>
 
 <script>
-    // $(document).ready(function () {
-    //     // radio 事件绑定
-    //     if ($(".radio-box").length > 0) {
-    //         $(".radio-box").iCheck({
-    //             checkboxClass: 'icheckbox-blue',
-    //             radioClass: 'iradio-blue',
-    //         })
-    //     }
-    // });
+    $(document).ready(function () {
+        // radio 事件绑定
+        if ($(".radio-box").length > 0) {
+            $(".radio-box").iCheck({
+                checkboxClass: 'icheckbox-blue',
+                radioClass: 'iradio-blue',
+            })
+        }
+    });
 
     $(function () {
         var type = $('input[name="type"]:checked').val();
         menuVisible(type);
     });
 
-    $("#form-menu-edit").validate({
-        rules: {
-            type: {
-                required: true,
-            },
-            menuName: {
-                required: true,
-                remote: {
-                    url: prefix + "/checkMenuNameUnique",
-                    type: "post",
-                    dataType: "json",
-                    data: {
-                        "menuId": function () {
-                            return $("#menuId").val();
-                        },
-                        "parentId": function () {
-                            return $("input[name='parentId']").val();
-                        },
-                        "menuName": function () {
-                            return $.common.trim($("#menuName").val());
-                        }
-                    },
-                    dataFilter: function (data, type) {
-                        return $.validate.unique(data);
-                    }
-                }
-            },
-            orderNum: {
-                required: true,
-                digits: true
-            },
-        },
-        messages: {
-            "menuName": {
-                remote: "菜单已经存在"
-            }
-        }
-    });
 
     function submitHandler() {
         if ($.validate.form()) {

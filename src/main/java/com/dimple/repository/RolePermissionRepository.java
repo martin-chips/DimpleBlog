@@ -22,4 +22,5 @@ public interface RolePermissionRepository extends JpaRepository<RolePermission, 
 
     void deleteAllByRoleId(Integer id);
 
+
 }

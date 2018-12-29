@@ -129,7 +129,7 @@ public class LogAspect {
         if (annotationLog.isSaveRequestData()) {
             Map<String, String[]> parameterMap = ServletUtil.getRequest().getParameterMap();
             String params = JSONObject.toJSONString(parameterMap);
-            operateLog.setOperateParam(StringUtils.substring(params, 0, 255));
+            operateLog.setOperateParam(StringUtils.substring(params, 0, 3000));
         }
     }
 

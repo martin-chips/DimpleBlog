@@ -9,6 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -204,12 +205,13 @@ public class FileOperateUtil {
      * @param url 图片的URl
      * @return
      */
+    @Deprecated
     public String getImgName(String url) {
         if (StringUtils.isBlank(url)) {
             return null;
         }
-        int i = url.lastIndexOf("/");
-        return url.substring(i + 1);
+        int i = url.lastIndexOf("/images");
+        return url.substring(i);
     }
 
     /**
@@ -270,23 +272,29 @@ public class FileOperateUtil {
     };
 
 
-    public List<Blog> generateWrapBlog(List<Blog> blogs) {
-        if (blogs == null) {
-            return null;
-        }
-        for (Blog blog : blogs) {
-            if (StringUtils.isNotBlank(blog.getHeaderUrl())) {
-                blog.setHeaderUrl("/images/" + blog.getHeaderUrl());
-            }
-        }
-        return blogs;
-    }
-
-    public Blog generateWrapBlog(Blog blog) {
-        if (blog == null || StringUtils.isBlank(blog.getHeaderUrl())) {
-            return blog;
-        }
-        blog.setHeaderUrl("/image/" + blog.getHeaderUrl());
-        return blog;
-    }
+    // public List<Blog> generateWrapBlog(List<Blog> blogs) {
+    //     if (blogs == null) {
+    //         return null;
+    //     }
+    //     //避免对JPA实体进行操作，防止其刷新到数据库
+    //     List<Blog> blogsResult = new LinkedList<>();
+    //     BeanUtils.copyProperties(blogs, blogsResult);
+    //     for (Blog blog : blogsResult) {
+    //         if (StringUtils.isNotBlank(blog.getHeaderUrl())) {
+    //             blog.setHeaderUrl("/images/" + blog.getHeaderUrl());
+    //         }
+    //     }
+    //     return blogsResult;
+    // }
+    //
+    // public Blog generateWrapBlog(Blog blog) {
+    //     if (blog == null || StringUtils.isBlank(blog.getHeaderUrl())) {
+    //         return blog;
+    //     }
+    //     //防止对JPA实体进行操作，刷新到数据库
+    //     Blog blogResult = new Blog();
+    //     BeanUtils.copyProperties(blog, blogResult);
+    //     blogResult.setHeaderUrl("/image/" + blog.getHeaderUrl());
+    //     return blogResult;
+    // }
 }

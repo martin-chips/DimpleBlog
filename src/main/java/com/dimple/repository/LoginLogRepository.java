@@ -22,4 +22,6 @@ public interface LoginLogRepository extends JpaRepository<LoginLog, Integer>, Jp
             "(select count(*) from login_log where status = 1) as success, " +
             "(select count(*) from login_log where status = 0) as failure;", nativeQuery = true)
     Map<String, Integer> getStatusCount();
+
+    LoginLog findByLogId(Integer id);
 }

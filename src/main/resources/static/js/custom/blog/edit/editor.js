@@ -100,6 +100,7 @@ function getData() {
     var title = $("input[name='title']").val();
     var summary = $("input[name='summary']").val();
     var tags = $("input[name='tags']").val();
+    var weight = $("input[name='weight']").val();
     var categoryId = $("#categorySelect").val();
     var content = $("#summernote").summernote("code");
     var data = {
@@ -108,8 +109,10 @@ function getData() {
         summary: summary,
         tags: tags,
         categoryId: categoryId,
+        weight: weight,
         content: content
     }
+    console.log(data);
     return data;
 }
 

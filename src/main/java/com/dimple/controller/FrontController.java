@@ -93,6 +93,4 @@ public class FrontController {
         List<Blog> clickBlog = frontService.getClickBlog();
         return ResultUtil.success(clickBlog);
     }
-
-
 }

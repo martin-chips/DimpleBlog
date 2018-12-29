@@ -2,6 +2,7 @@ package com.dimple.repository;
 
 import com.dimple.bean.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
  * @ClassName: TagRepository
@@ -10,5 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date: 12/28/18 20:21
  * @Version: 1.0
  */
-public interface TagRepository extends JpaRepository<Tag, Integer> {
+public interface TagRepository extends JpaRepository<Tag, Integer>, JpaSpecificationExecutor<Tag> {
+
+    Tag findTagById(Integer id);
+
 }

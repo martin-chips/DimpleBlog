@@ -80,6 +80,7 @@ public class OperateLogController {
 
     @Log(title = "操作日志", operateType = OperateType.CLEAN)
     @DeleteMapping("/api/operateLog")
+    @ResponseBody
     public Result cleanAllOperateLog() {
         operatorLogService.cleanOperateLog();
         return ResultUtil.success();

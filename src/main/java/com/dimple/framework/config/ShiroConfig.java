@@ -42,6 +42,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/fonts/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/iamges/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         //加入验证码不拦截
         filterChainDefinitionMap.put("/api/kaptcha", "anon");
@@ -163,7 +164,7 @@ public class ShiroConfig {
 
     public LogoutFilter logoutFilter() {
         LogoutFilter logoutFilter = new LogoutFilter();
-        logoutFilter.setLoginUrl("/login.html");
+        logoutFilter.setLoginUrl("/");
         return logoutFilter;
     }
 

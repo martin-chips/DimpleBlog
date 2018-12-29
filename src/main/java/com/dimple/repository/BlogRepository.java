@@ -25,12 +25,12 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>, JpaSpecifi
             "and if(:startTime is not null,update_time >= :startTime,1=1)" +
             "and if (:endTime is not null ,update_time <= :endTime,1=1)" +
             "and if(:status is not null ,status=:status,1=1) ", nativeQuery = true)
-    List<Blog> find(@Param("title") String title, Date startTime, Date endTime, Integer status);
+    List<Blog> findAll(@Param("title") String title, Date startTime, Date endTime, Integer status);
 
     @Query(value = "select (select count(*) from blog where status=1)as  publish," +
             "(select count(*) from blog where status=2)as drafts," +
             "(select count(*) from  blog where status=3) as dustbin", nativeQuery = true)
-    Map<String, Integer> getAllBlogStatusCount();
+    Map<String, Integer> findAllBlogStatusCount();
 
     Integer countByStatus(Integer status);
 
@@ -38,5 +38,6 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>, JpaSpecifi
 
     List<Blog> findAllBySupportEquals(Boolean support);
 
+    Blog findByBlogId(Integer id);
 
 }

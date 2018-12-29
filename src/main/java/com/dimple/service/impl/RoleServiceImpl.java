@@ -50,7 +50,7 @@ public class RoleServiceImpl implements RoleService {
         List<Role> list = new LinkedList<>();
         for (UserRole userRole : userRoles) {
             Integer roleId = userRole.getRoleId();
-            Role role = roleRepository.getOne(roleId);
+            Role role = roleRepository.findByRoleId(roleId);
             list.add(role);
         }
         return list;
@@ -86,7 +86,7 @@ public class RoleServiceImpl implements RoleService {
         if (role == null || role.getRoleId() == null) {
             return;
         }
-        Role roleDB = roleRepository.getOne(role.getRoleId());
+        Role roleDB = roleRepository.findByRoleId(role.getRoleId());
         if (roleDB == null) {
             return;
         }
@@ -129,12 +129,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getRoleByRoleId(Integer id) {
-        return id == null ? null : roleRepository.getOne(id);
+        return id == null ? null : roleRepository.findByRoleId(id);
     }
 
     @Override
     public Role changeRoleLocked(Integer id, Boolean locked) {
-        Role role = roleRepository.getOne(id);
+        Role role = roleRepository.findByRoleId(id);
         if (role == null) {
             return null;
         }

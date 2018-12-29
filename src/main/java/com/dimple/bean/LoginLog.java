@@ -29,7 +29,7 @@ public class LoginLog {
     @Id
     @Column(name = "log_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int logId;
+    private Integer logId;
     private String loginName;
     private Boolean status;
     private String ipAddress;

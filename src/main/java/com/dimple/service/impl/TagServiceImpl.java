@@ -49,7 +49,7 @@ public class TagServiceImpl implements TagService {
         if (tag == null) {
             return;
         }
-        Tag one = tagRepository.getOne(tag.getId());
+        Tag one = tagRepository.findTagById(tag.getId());
 
     }
 
@@ -60,6 +60,6 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag selectTagById(Integer id) {
-        return tagRepository.getOne(id);
+        return tagRepository.findTagById(id);
     }
 }

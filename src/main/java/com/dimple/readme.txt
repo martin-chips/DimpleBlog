@@ -66,6 +66,6 @@ l  博主只是一名普通的互联网从业者，不懂修电脑，不会卖�
 1、增加：insertXXX
 2、修改：updateXXX
 3、删除：deleteXXX
-4、查询：selectXXXX（全部）、selectXXXByXXX（单个）
+4、查询：getXXXX（全部）、getXXXByXXX（单个）
 
 

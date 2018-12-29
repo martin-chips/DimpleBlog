@@ -8,6 +8,7 @@ import com.dimple.service.OperateLogService;
 import com.dimple.utils.*;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -28,9 +29,7 @@ public class AsyncLog {
      * @param operateLog
      * @return
      */
-
     public void recordOperateLog(OperateLog operateLog) {
-
         operateLog.setOperateLocation(AddressUtil.getRealAddressByIP(operateLog.getOperateIp()));
         //设置时间
         operateLog.setOperateTime(new Date());
@@ -48,7 +47,7 @@ public class AsyncLog {
      * @return LoginLog对象
      */
 
-    public static void recordLoginLog(String loginId, Byte status, String msg, Object... args) {
+    public void recordLoginLog(String loginId, Byte status, String msg, Object... args) {
         if (Status.LOGIN_SUCCESS == status || Status.LOGOUT_SUCCESS == status) {
             saveLoginLog(loginId, msg, Status.SUCCESS);
         } else {
@@ -56,7 +55,7 @@ public class AsyncLog {
         }
     }
 
-    private static void saveLoginLog(String loginName, String msg, Boolean status) {
+    private void saveLoginLog(String loginName, String msg, Boolean status) {
         UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtil.getRequest().getHeader("User-Agent"));
         //获取操作系统
         String os = userAgent.getOperatingSystem().getName();

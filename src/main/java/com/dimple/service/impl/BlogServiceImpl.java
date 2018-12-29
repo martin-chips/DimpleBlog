@@ -85,9 +85,7 @@ public class BlogServiceImpl implements BlogService {
         blog.setClick(0);
         blog.setSupport(false);
         blog.setWeight(0);
-        blog.setCreateTime(new Date());
         blog.setUpdateTime(new Date());
-
         if (blog.getStatus() == null) {
             //设置为已发表状态
             blog.setStatus(BlogStatus.PUBLISHED.PUBLISHED.getCode());
@@ -97,7 +95,7 @@ public class BlogServiceImpl implements BlogService {
         Blog save = blogRepository.save(blog);
         //将博客内容同步到blogInfo表中
         BlogInfo blogInfo = new BlogInfo();
-        blogInfo.setContent(blog.getContent());
+        blogInfo.setContent(save.getContent());
         blogInfo.setBlogId(save.getBlogId());
         blogInfoRepository.save(blogInfo);
         return save;
@@ -132,7 +130,7 @@ public class BlogServiceImpl implements BlogService {
         }
         int count = 0;
         for (Integer id : ids) {
-            Blog blog = blogRepository.getOne(id);
+            Blog blog = blogRepository.findByBlogId(id);
             blog.setStatus(status);
             blogRepository.save(blog);
             count++;
@@ -145,12 +143,12 @@ public class BlogServiceImpl implements BlogService {
         if (id == null) {
             return null;
         }
-        return blogRepository.getOne(id);
+        return blogRepository.findByBlogId(id);
     }
 
     @Override
     public Map<String, Integer> selectCountOfBlogStatus() {
-        Map<String, Integer> allBolgStatusCount = blogRepository.getAllBlogStatusCount();
+        Map<String, Integer> allBolgStatusCount = blogRepository.findAllBlogStatusCount();
         return allBolgStatusCount;
     }
 
@@ -159,10 +157,7 @@ public class BlogServiceImpl implements BlogService {
         if (id == null) {
             return null;
         }
-        Blog blog = blogRepository.getOne(id);
-        if (blog != null && StringUtils.isNotBlank(blog.getHeaderUrl())) {
-            blog.setHeaderUrl("/images/" + blog.getHeaderUrl());
-        }
+        Blog blog = blogRepository.findByBlogId(id);
         BlogInfo blogInfo = blogInfoRepository.findByBlogId(blog.getBlogId());
         blog.setContent(blogInfo.getContent());
         return blog;
@@ -175,7 +170,7 @@ public class BlogServiceImpl implements BlogService {
         }
         int count = 0;
         for (Integer id : ids) {
-            Blog blog = blogRepository.getOne(id);
+            Blog blog = blogRepository.findByBlogId(id);
             if (blog != null) {
                 blog.setSupport(!status);
                 blogRepository.save(blog);

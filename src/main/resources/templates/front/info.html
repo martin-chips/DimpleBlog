@@ -14,10 +14,15 @@
         <div class="content_box whitebg">
             <h2 class="htitle"><span class="con_nav">您现在的位置是：<a href="/">网站首页</a>><a href="/">博客详情</a></span>博客详情</h2>
             <h1 class="con_tilte" th:text="${blog.title}">个人博客，属于我的小世界！</h1>
-            <p class="bloginfo"><i class="avatar"><img
-                    src="images/avatar.jpg"></i><span>杨青青</span><span>2018-10-28</span><span>【<a
-                    href="/">程序人生</a>】</span><span th:text="${blog.click}+'人已围观'">109990人已围观</span></p>
-            <p class="con_info"><b>简介</b><span th:text="${blog.summary}"></span>
+            <p class="bloginfo"><i class="avatar">
+                <img src="images/avatar.jpg">
+            </i><span>杨青青</span><span>2018-10-28</span>
+                <span>【<a href="/">程序人生</a>】</span>
+                <span th:text="${blog.click}+'人已围观'">109990人已围观</span>
+            </p>
+            <p class="con_info">
+                <b>简介</b>
+                <span th:text="${blog.summary}"></span>
             </p>
             <div class="con_text">
                 <div th:text="${blog.content}">
@@ -34,16 +39,6 @@
             <h2 class="htitle">相关文章</h2>
             <ul class="otherlink">
                 <li><a href="/download/div/2018-04-22/815.html" title="html5个人博客模板《黑色格调》">html5个人博客模板《黑色格调》</a></li>
-                <li><a href="/download/div/2018-04-18/814.html" title="html5个人博客模板主题《清雅》">html5个人博客模板主题《清雅》</a></li>
-                <li><a href="/download/div/2018-03-18/807.html" title="html5个人博客模板《绅士》">html5个人博客模板《绅士》</a></li>
-                <li><a href="/download/div/2018-02-22/798.html" title="html5时尚个人博客模板-技术门户型">html5时尚个人博客模板-技术门户型</a></li>
-                <li><a href="/download/div/2017-09-08/789.html" title="html5个人博客模板主题《心蓝时间轴》">html5个人博客模板主题《心蓝时间轴》</a>
-                </li>
-                <li><a href="/download/div/2017-07-16/785.html" title="古典个人博客模板《江南墨卷》">古典个人博客模板《江南墨卷》</a></li>
-                <li><a href="/download/div/2017-07-13/783.html" title="古典风格-个人博客模板">古典风格-个人博客模板</a></li>
-                <li><a href="/download/div/2015-06-28/748.html" title="个人博客《草根寻梦》—手机版模板">个人博客《草根寻梦》—手机版模板</a></li>
-                <li><a href="/download/div/2015-04-10/746.html" title="【活动作品】柠檬绿兔小白个人博客模板">【活动作品】柠檬绿兔小白个人博客模板</a></li>
-                <li><a href="/jstt/bj/2015-01-09/740.html" title="【匆匆那些年】总结个人博客经历的这四年…">【匆匆那些年】总结个人博客经历的这四年…</a></li>
             </ul>
         </div>
 
@@ -119,11 +114,6 @@
                 </li>
             </ul>
         </div>
-        <div class="ad whitebg imgscale">
-            <ul>
-                <a href="/"><img src="images/ad.jpg"></a>
-            </ul>
-        </div>
         <div class="whitebg cloud">
             <h2 class="htitle">标签云</h2>
             <ul>
@@ -146,24 +136,6 @@
                 <li><a href="/">安静地做一个爱设计的女子</a></li>
                 <li><a href="/">个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。</a></li>
                 <li><a href="/">做个人博客如何用帝国cms美化留言增加头像选择</a></li>
-            </ul>
-        </div>
-        <div class="ad whitebg imgscale">
-            <ul>
-                <a href="/"><img src="images/ad02.jpg"></a>
-            </ul>
-        </div>
-        <div class="whitebg tongji">
-            <h2 class="htitle">站点信息</h2>
-            <ul>
-                <li><b>建站时间</b>：2018-10-24</li>
-                <li><b>网站程序</b>：帝国cms</li>
-                <li><b>主题模板</b>：<a href="http://www.yangqq.com" target="_blank">《今夕何夕》</a></li>
-                <li><b>文章统计</b>：299条</li>
-                <li><b>文章评论</b>：490条</li>
-                <li><b>统计数据</b>：<a href="/">百度统计</a></li>
-                <li><b>微信公众号</b>：扫描二维码，关注我们</li>
-                <img src="images/wxgzh.jpg" class="tongji_gzh">
             </ul>
         </div>
     </div>

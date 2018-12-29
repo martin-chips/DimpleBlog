@@ -80,7 +80,6 @@ public class FrontServiceImpl implements FrontService {
     @Override
     public List<List<Blog>> getBlogsInfo() {
         List<Category> allCategoryOrderByWeight = selectCategorySupported();
-        int count = 0;
         List<List<Blog>> blogList = new ArrayList<>();
         for (Category category : allCategoryOrderByWeight) {
             Integer categoryId = category.getCategoryId();
@@ -153,15 +152,13 @@ public class FrontServiceImpl implements FrontService {
         if (id == null) {
             return null;
         }
-        Blog blog = blogRepository.getOne(id);
-        return fileOperateUtil.generateWrapBlog(blog);
+        return blogRepository.findByBlogId(id);
     }
 
     @Override
     public List<Blog> getClickBlog() {
         Pageable pageable = PageRequest.of(0, 8, Sort.Direction.DESC, "click");
-        List<Blog> blogs = blogRepository.findAll(pageable).getContent();
-        return fileOperateUtil.generateWrapBlog(blogs);
+        return blogRepository.findAll(pageable).getContent();
     }
 
     @Override
@@ -169,7 +166,7 @@ public class FrontServiceImpl implements FrontService {
         List<Blog> blogs = blogRepository.findAllBySupportEquals(true);
         //截取
         List<Blog> result = blogs.size() <= 8 ? blogs : blogs.subList(0, 8);
-        return fileOperateUtil.generateWrapBlog(result);
+        return result;
     }
 
     @Override

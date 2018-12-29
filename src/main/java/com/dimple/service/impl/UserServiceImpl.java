@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
         if (id == null) {
             return null;
         }
-        User user = userRepository.getOne(id);
+        User user = userRepository.findByUserId(id);
         if (user == null) {
             throw new UserAccountNotExistsException();
         }
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
         if (id == null) {
             return null;
         }
-        User userDB = userRepository.getOne(id);
+        User userDB = userRepository.findByUserId(id);
         if (userDB != null && userRoleRepository.findByUserId(id) != null) {
             userDB.setRoleId(userRoleRepository.findByUserId(id).getRoleId());
         }
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User changeLocked(Integer id, Boolean locked) {
-        User user = userRepository.getOne(id);
+        User user = userRepository.findByUserId(id);
         if (user == null) {
             return null;
         }

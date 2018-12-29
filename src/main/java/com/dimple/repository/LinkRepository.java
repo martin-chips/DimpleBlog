@@ -31,4 +31,7 @@ public interface LinkRepository extends JpaRepository<Link, Integer>, JpaSpecifi
             "(select count(*) from link where display=0) as hide," +
             "(select count(*)from link where display=1) as display", nativeQuery = true)
     Map<String, Integer> countStatusDetails();
+
+    Link findByLinkId(Integer id);
+
 }

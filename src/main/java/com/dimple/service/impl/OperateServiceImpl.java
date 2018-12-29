@@ -87,7 +87,7 @@ public class OperateServiceImpl implements OperateLogService {
         if (id == null) {
             return null;
         }
-        OperateLog operateLog = operateLogRepository.getOne(id);
+        OperateLog operateLog = operateLogRepository.findByOperateId(id);
         return operateLog;
     }
 

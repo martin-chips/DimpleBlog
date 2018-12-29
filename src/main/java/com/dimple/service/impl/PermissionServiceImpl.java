@@ -46,7 +46,7 @@ public class PermissionServiceImpl implements PermissionService {
         List<Permission> permissions = new LinkedList<>();
         for (RolePermission rolePermission : rolePermissions) {
             Integer id = rolePermission.getPermissionId();
-            Permission permission = permissionRepository.getOne(id);
+            Permission permission = permissionRepository.findByPermissionId(id);
             permissions.add(permission);
         }
         return permissions;
@@ -99,7 +99,7 @@ public class PermissionServiceImpl implements PermissionService {
         for (RolePermission rolePermission : rolePermissions) {
             //获取permissionId
             Integer permissionId = rolePermission.getPermissionId();
-            Permission permission = permissionRepository.getOne(permissionId);
+            Permission permission = permissionRepository.findByPermissionId(permissionId);
             ids.add(permission.getPermissionId());
         }
         return handPermissionTree(permissionRepository.findAll(), ids);
@@ -130,7 +130,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public Permission getPermissionById(Integer id) {
-        return id == null ? null : permissionRepository.getOne(id);
+        return id == null ? null : permissionRepository.findByPermissionId(id);
     }
 
     @Override
@@ -138,11 +138,11 @@ public class PermissionServiceImpl implements PermissionService {
         if (id == null) {
             return null;
         }
-        Permission permission = permissionRepository.getOne(id);
+        Permission permission = permissionRepository.findByPermissionId(id);
         if (permission == null) {
             return null;
         }
-        Permission permissionP = permissionRepository.getOne(permission.getPId());
+        Permission permissionP = permissionRepository.findByPermissionId(permission.getPId());
         return permissionP == null ? "主目录" : permissionP.getTitle();
     }
 
@@ -193,7 +193,7 @@ public class PermissionServiceImpl implements PermissionService {
         List<Role> roleName = new LinkedList<>();
         for (RolePermission rolePermission : rolePermissions) {
             Integer roleId = rolePermission.getRoleId();
-            Role role = roleRepository.getOne(roleId);
+            Role role = roleRepository.findByRoleId(roleId);
             roleName.add(role);
         }
         return roleName;

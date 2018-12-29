@@ -14,4 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface OperateLogRepository extends JpaRepository<OperateLog, Integer>, JpaSpecificationExecutor<OperateLog> {
+
+    OperateLog findByOperateId(Integer id);
+
 }

@@ -97,7 +97,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (id == null) {
             return null;
         }
-        Category category = categoryRepository.getOne(id);
+        Category category = categoryRepository.findByCategoryId(id);
         return category;
     }
 
@@ -108,7 +108,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         int count = 0;
         for (Integer id : ids) {
-            Category category = categoryRepository.getOne(id);
+            Category category = categoryRepository.findByCategoryId(id);
             if (category != null) {
                 category.setSupport(!support);
                 categoryRepository.save(category);

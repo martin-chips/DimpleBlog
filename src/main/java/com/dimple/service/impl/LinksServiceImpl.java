@@ -7,7 +7,6 @@ import com.dimple.framework.message.ResultEnum;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.repository.LinkRepository;
 import com.dimple.service.LinksService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -63,7 +62,7 @@ public class LinksServiceImpl implements LinksService {
         if (linkId == null || display == null) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        Link link = linkRepository.getOne(linkId);
+        Link link = linkRepository.findByLinkId(linkId);
         if (link == null) {
             return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
         }
@@ -82,7 +81,7 @@ public class LinksServiceImpl implements LinksService {
         //记录操作的数
         Integer count = 0;
         for (Integer id : ids) {
-            Link link = linkRepository.getOne(id);
+            Link link = linkRepository.findByLinkId(id);
             if (link == null) {
                 return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
             }
@@ -97,7 +96,7 @@ public class LinksServiceImpl implements LinksService {
         if (linkId == null) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        Link link = linkRepository.getOne(linkId);
+        Link link = linkRepository.findByLinkId(linkId);
         return ResultUtil.success(link);
     }
 
@@ -162,7 +161,7 @@ public class LinksServiceImpl implements LinksService {
         if (linkId == null) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
-        Link links = linkRepository.getOne(linkId);
+        Link links = linkRepository.findByLinkId(linkId);
         if (links == null) {
             return ResultUtil.error(ResultEnum.LINKS_NOT_FOUND.getCode(), ResultEnum.LINKS_NOT_FOUND.getMsg());
         }
