@@ -1,4 +1,4 @@
-package com.dimple.controller;
+package com.dimple.controller.log;
 
 import com.dimple.framework.enums.OperateType;
 import com.dimple.framework.log.annotation.Log;

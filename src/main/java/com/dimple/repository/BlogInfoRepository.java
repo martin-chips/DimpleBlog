@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
 public interface BlogInfoRepository extends JpaRepository<BlogInfo, Integer> {
 
     BlogInfo findByBlogId(Integer id);
+
 }

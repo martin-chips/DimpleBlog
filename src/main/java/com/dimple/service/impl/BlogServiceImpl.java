@@ -24,6 +24,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static com.dimple.utils.JpaUpdateUtil.copyProperties;
+
 /**
  * @ClassName: BlogServiceImpl
  * @Description:
@@ -115,12 +117,12 @@ public class BlogServiceImpl implements BlogService {
         if (blog.getBlogId() == null || StringUtils.isBlank(blog.getTitle())) {
             return null;
         }
-        if (StringUtils.isNotBlank(blog.getTitle())) {
-            blog.setHeaderUrl(fileOperateUtil.getImgName(blog.getHeaderUrl()));
-        }
+        Blog blogDB = selectBlogById(blog.getBlogId());
+        BlogInfo blogInfo = blogInfoRepository.findByBlogId(blog.getBlogId());
+        blogInfo.setContent(blog.getContent());
+        copyProperties(blogDB, blog);
         blog.setUpdateTime(new Date());
-        Blog save = blogRepository.save(blog);
-        return save;
+        return blogRepository.save(blog);
     }
 
     @Override

@@ -117,7 +117,7 @@ public class LogAspect {
     }
 
     /**
-     * 将Controller注解中的参数拿到，设置到Log对象中去
+     * 将Controller注解中的参数拿到，设置到Log对象
      *
      * @param operateLog    log对象
      * @param annotationLog controller上注解标注的对象
@@ -129,7 +129,8 @@ public class LogAspect {
         if (annotationLog.isSaveRequestData()) {
             Map<String, String[]> parameterMap = ServletUtil.getRequest().getParameterMap();
             String params = JSONObject.toJSONString(parameterMap);
-            operateLog.setOperateParam(StringUtils.substring(params, 0, 3000));
+            //截取参数
+            operateLog.setOperateParam(StringUtils.substring(params, 0, params.length() < 255 ? params.length() : 255));
         }
     }
 

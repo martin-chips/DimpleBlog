@@ -1,4 +1,4 @@
-package com.dimple.controller;
+package com.dimple.controller.blog;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

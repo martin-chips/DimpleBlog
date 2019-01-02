@@ -1,4 +1,4 @@
-package com.dimple.controller;
+package com.dimple.controller.system;
 
 import com.dimple.bean.Role;
 import com.dimple.bean.User;

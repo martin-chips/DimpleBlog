@@ -12,6 +12,10 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content mailbox-content">
                     <div class="file-manager">
+                        <input type="hidden" name="createTime" th:value="${blog.createTime}"/>
+                        <input type="hidden" name="status" th:value="${blog.status}">
+                        <input type="hidden" name="support" th:value="${blog.support}"/>
+                        <input type="hidden" name="click" th:value="${blog.click}"/>
                         <a class="btn btn-block btn-info compose-mail">修改</a>
                         <div class="space-25"></div>
                         <h5>配置信息</h5>
@@ -35,8 +39,7 @@
                                 <textarea type="text" class="form-control" name="summary" placeholder="在这里输入摘要"
                                           th:text="${blog.summary}"></textarea>
                                 <span class="help-block m-b-none">
-                                    <i class="fa fa-info-circle"
-                                    ></i> 留空则默认为博文前150字节为博文的摘要</span>
+                                    <i class="fa fa-info-circle"></i> 留空则默认为博文前150字节为博文的摘要</span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,7 +54,8 @@
                         <div class="form-group">
                             <label class=" control-label">权重:</label>
                             <div class="">
-                                <input name="weight" class="form-control" type="text" placeholder="在这里输入权重" th:value="${blog.weight}">
+                                <input name="weight" class="form-control" type="text" placeholder="在这里输入权重"
+                                       th:value="${blog.weight}">
                                 <span class="help-block m-b-none"><i
                                         class="fa fa-info-circle"></i> 前台首页展示会以权重作为排序标准</span>
                             </div>
@@ -109,11 +113,17 @@
     function getData() {
         var headerUrl = $("#header")[0].src;
         var title = $("input[name='title']").val();
-        var summary = $("input[name='summary']").val();
+        var summary = $("textarea[name='summary']").val();
         var blogId = $("input[name='blogId']").val();
         var tags = $("input[name='tags']").val();
         var categoryId = $("#categorySelect").val();
         var content = $("#summernote").summernote("code");
+        var weight = $("input[name='weight']").val();
+        var click = $("input[name='click']").val();
+        var createTime = $("input[name='createTime']").val();
+        var status = $("input[name='status']").val();
+        var support = $("input[name='support']").val();
+
         var data = {
             headerUrl: headerUrl,
             title: title,
@@ -121,8 +131,14 @@
             tags: tags,
             categoryId: categoryId,
             content: content,
-            blogId: blogId
-        }
+            blogId: blogId,
+            // support: support,
+            // click: click,
+            // weight: weight,
+            // status: status,
+            // createTime: createTime
+        };
+        console.log(data);
         return data;
     }
 

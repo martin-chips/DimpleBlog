@@ -2,6 +2,8 @@ package com.dimple.bean;
 
 import com.dimple.framework.converter.BooleanToIntegerConverter;
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.Basic;
@@ -16,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import java.util.Date;
 
@@ -36,12 +40,14 @@ public class Blog {
     private Integer categoryId;
     private String title;
     private String summary;
+    @Temporal(TemporalType.DATE)
     private Date createTime;
     private Integer status;
     private Boolean support;
     private String tags;
     private Integer click;
     private Integer weight;
+    @Temporal(TemporalType.DATE)
     private Date updateTime;
     private String headerUrl;
     @Transient

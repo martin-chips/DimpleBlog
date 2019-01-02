@@ -12,31 +12,32 @@ import java.util.Set;
  * @author : Dimple
  * @version : 1.0
  * @class : JpaUpdateUtil
- * @description : 解决JPA更新的时候也会将为null的字段同步更新的问题
- * @date : 12/28/18 19:31
+ * @description :
+ * @date : 01/02/19 14:03
  */
+
 public class JpaUpdateUtil {
+
     /**
-     * 我们可以将目标源中需要改变的属性值过滤掉以后，将数据源中的数据复制到目标源中，这样就达到了，只是更新需要改变的属性值，不需要更新的保持不变
-     *
-     * @param target
-     * @param source
+     * @param source 从数据库中查询出来的字段
+     * @param target 需要提交的实体
      */
-    public static void copyNullProperties(Object target, Object source) {
-        BeanUtils.copyProperties(source, target, getNotNullProperties(target));
+    public static void copyProperties(Object source, Object target) {
+        BeanUtils.copyProperties(source, target, getIgnoreProperties(target));
     }
 
-    private static String[] getNotNullProperties(Object target) {
+    private static String[] getIgnoreProperties(Object target) {
         BeanWrapper srcBean = new BeanWrapperImpl(target);
         PropertyDescriptor[] propertyDescriptors = srcBean.getPropertyDescriptors();
-        Set<String> notNullName = new HashSet<>();
+        Set<String> emptyProperties = new HashSet<>();
         for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
-            Object value = srcBean.getPropertyValue(propertyDescriptor.getName());
-            if (value != null) {
-                notNullName.add(propertyDescriptor.getName());
+            Object propertyValue = srcBean.getPropertyValue(propertyDescriptor.getName());
+            if (propertyValue != null) {
+                emptyProperties.add(propertyDescriptor.getName());
             }
         }
-        String[] result = new String[notNullName.size()];
-        return notNullName.toArray(result);
+        String[] result = new String[emptyProperties.size()];
+        return emptyProperties.toArray(result);
     }
+
 }

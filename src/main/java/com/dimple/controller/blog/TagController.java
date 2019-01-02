@@ -1,4 +1,4 @@
-package com.dimple.controller;
+package com.dimple.controller.blog;
 
 import com.dimple.bean.Tag;
 import com.dimple.framework.enums.OperateType;

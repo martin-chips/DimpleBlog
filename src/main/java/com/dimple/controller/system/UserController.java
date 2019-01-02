@@ -1,4 +1,4 @@
-package com.dimple.controller;
+package com.dimple.controller.system;
 
 import com.dimple.bean.User;
 import com.dimple.framework.enums.OperateType;
