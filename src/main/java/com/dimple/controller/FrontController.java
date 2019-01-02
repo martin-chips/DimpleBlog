@@ -1,7 +1,6 @@
 package com.dimple.controller;
 
 import com.dimple.bean.Blog;
-import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.FrontService;
@@ -49,6 +48,7 @@ public class FrontController {
         model.addAttribute("peopleSee", frontService.getBlogsPeopleSee());
         model.addAttribute("clickBlog", frontService.getClickBlog());
         model.addAttribute("supportBlog", frontService.getSupportBlog());
+        model.addAttribute("newestUpdateBlog", frontService.getNewestUpdateBlog());
         return "front/index";
     }
 
@@ -68,7 +68,7 @@ public class FrontController {
 
     @GetMapping("/public/api/front/newestBlog")
     @ResponseBody
-    public Result getNewestBlog(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+    public Result getNewestBlog(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
                                 @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum < 0 ? 0 : pageNum, pageSize, Sort.Direction.DESC, "createTime");
         List<Map<String, Object>> blogs = frontService.getNewestBlog(pageable);
@@ -78,11 +78,14 @@ public class FrontController {
     @ApiOperation("获取博客信息")
     @GetMapping({"/view/{id}.html", "/view/{id}"})
     public String viewBlogPage(@PathVariable Integer id, Model model) {
-        Blog blog = frontService.getBlog(id);
+        Blog blog = frontService.getBlogInfo(id);
         model.addAttribute("blog", blog);
+        if (blog != null && blog.getCategoryId() != null) {
+            model.addAttribute("category", frontService.getCategoryInfoByCategoryId(blog.getCategoryId()));
+        }
         model.addAttribute("clickBlog", frontService.getClickBlog());
         model.addAttribute("supportBlog", frontService.getSupportBlog());
-        frontService.getBlogOtherInfo(id);
+        model.addAttribute("navigation", frontService.getBlogOtherInfo(id));
         return "front/info";
     }
 

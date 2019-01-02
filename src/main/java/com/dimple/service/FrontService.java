@@ -42,8 +42,8 @@ public interface FrontService {
     /**
      * 获取最新博文
      *
-     * @return
      * @param pageable
+     * @return
      */
     List<Map<String, Object>> getNewestBlog(Pageable pageable);
 
@@ -69,5 +69,12 @@ public interface FrontService {
      */
     List<Blog> getSupportBlog();
 
-    Map<String, Object> getBlogOtherInfo(Integer id);
+    Map<String, Blog> getBlogOtherInfo(Integer id);
+
+
+    List<Blog> getNewestUpdateBlog();
+
+    Map<String, String> getCategoryInfoByCategoryId(Integer id);
+
+    Blog getBlogInfo(Integer id);
 }

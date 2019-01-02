@@ -42,8 +42,10 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/fonts/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
-        filterChainDefinitionMap.put("/iamges/**", "anon");
+        filterChainDefinitionMap.put("/images/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/front/**", "anon");
+
         //加入验证码不拦截
         filterChainDefinitionMap.put("/api/kaptcha", "anon");
         filterChainDefinitionMap.put("/html/**", "anon");

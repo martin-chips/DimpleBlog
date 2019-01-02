@@ -2,6 +2,7 @@ package com.dimple.service.impl;
 
 import com.dimple.bean.Blog;
 import com.dimple.bean.Category;
+import com.dimple.repository.BlogInfoRepository;
 import com.dimple.repository.BlogRepository;
 import com.dimple.repository.CategoryRepository;
 import com.dimple.service.FrontService;
@@ -36,6 +37,8 @@ public class FrontServiceImpl implements FrontService {
     CategoryRepository categoryRepository;
     @Autowired
     BlogRepository blogRepository;
+    @Autowired
+    BlogInfoRepository blogInfoRepository;
 
 
     @Autowired
@@ -170,10 +173,38 @@ public class FrontServiceImpl implements FrontService {
     }
 
     @Override
-    public Map<String, Object> getBlogOtherInfo(Integer id) {
+    public Map<String, Blog> getBlogOtherInfo(Integer id) {
         //获取上下一篇
-        // Blog nextBlog = customMapper.getNextBlog(id);
-        // Blog previousBlog = customMapper.getPreviousBlog(id);
-        return null;
+        Blog nextBlog = blogRepository.getNextBlog(id);
+        Blog previousBlog = blogRepository.getPreviousBlog(id);
+        Map<String, Blog> map = new HashMap<>();
+        map.put("nextBlog", nextBlog);
+        map.put("previousBlog", previousBlog);
+        return map;
+    }
+
+    @Override
+    public List<Blog> getNewestUpdateBlog() {
+        return blogRepository.getNewestUpdateBlog();
+    }
+
+    @Override
+    public Map<String, String> getCategoryInfoByCategoryId(Integer id) {
+        if (id == null) {
+            return null;
+        }
+        Map<String, String> map = new HashMap<>();
+        map.put("categoryName", categoryRepository.findByCategoryId(id).getTitle());
+        return map;
+    }
+
+    @Override
+    public Blog getBlogInfo(Integer id) {
+        if (id == null) {
+            return null;
+        }
+        Blog byBlogId = blogRepository.findByBlogId(id);
+        byBlogId.setContent(blogInfoRepository.findByBlogId(id).getContent());
+        return byBlogId;
     }
 }

@@ -202,16 +202,15 @@ public class FileOperateUtil {
     /**
      * 根据图片的URl获取其真实的名字
      *
-     * @param url 图片的URl
-     * @return
+     * @param url 图片的URl 如：http://localhost:8080/images/d0096ec6c83575373e3a21d129ff8fef.jpg
+     * @return /images/d0096ec6c83575373e3a21d129ff8fef.jpg
      */
-    @Deprecated
     public String getImgName(String url) {
-        if (StringUtils.isBlank(url)) {
-            return null;
+        if (StringUtils.isNotBlank(url) && url.contains("/images/")) {
+            int i = url.lastIndexOf("/images/");
+            return url.substring(i);
         }
-        int i = url.lastIndexOf("/images");
-        return url.substring(i);
+        return null;
     }
 
     /**

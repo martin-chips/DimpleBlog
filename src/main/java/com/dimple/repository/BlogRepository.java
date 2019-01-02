@@ -40,4 +40,12 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>, JpaSpecifi
 
     Blog findByBlogId(Integer id);
 
+    @Query(value = "select * from blog order by update_time limit 0,4", nativeQuery = true)
+    List<Blog> getNewestUpdateBlog();
+
+    @Query(value = "select * from blog where blog_id > :id order by blog_id desc limit 0,1;", nativeQuery = true)
+    Blog getNextBlog(Integer id);
+
+    @Query(value = "select * from blog where blog_id < :id order by blog_id limit 0,1;", nativeQuery = true)
+    Blog getPreviousBlog(Integer id);
 }

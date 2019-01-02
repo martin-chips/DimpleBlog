@@ -40,7 +40,6 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogRepository blogRepository;
 
-
     @Autowired
     FileOperateUtil fileOperateUtil;
 
@@ -122,6 +121,8 @@ public class BlogServiceImpl implements BlogService {
         blogInfo.setContent(blog.getContent());
         copyProperties(blogDB, blog);
         blog.setUpdateTime(new Date());
+        //设置头像URL与域名与关
+        blog.setHeaderUrl(fileOperateUtil.getImgName(blog.getHeaderUrl()));
         return blogRepository.save(blog);
     }
 

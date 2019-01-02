@@ -1,4 +1,4 @@
-var pageNum = 1;
+var pageNum = 0;
 $(function () {
     loadNewestBlog();
     // loadClickBlog();

@@ -21,7 +21,7 @@ header::before { background: #000 linear-gradient(to left, #4cd964, #5ac8fa, #00
 .logo { float: left; margin-right: 60px; line-height: 50px; color: #FFF; font-size: 22px }
 .logo a { color: #FFF }
 .logo img { margin-top: 14px; }
-.imgscale img { width: 100%; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; -ms-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; transition: all 0.5s; }
+.imgscale img { width: 100%; height:130px;-moz-transition: all .5s ease; -webkit-transition: all .5s ease; -ms-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; transition: all 0.5s; }
 .imgscale:hover img { transform: scale(1.1); }
 /*nav*/
 nav { float: left; height: 50px; line-height: 50px; text-align: center; }
@@ -154,7 +154,7 @@ a.viewmore { display: block; right: 10px; bottom: 20px; position: absolute; padd
 .bplist a { display: block; float: left; width: 25%; overflow: hidden }
 .bplist a img { border-radius: 3px; width: 200px; height: 140px; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; -ms-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; transition: all 0.5s; }
 .bplist a img:hover { transform: scale(1.05) }
-.blogtext { font-size: 14px; color: #666; overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3; margin-top: 20px }
+.blogtext { font-size: 14px; min-height: 60px; color: #666; overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3; margin-top: 20px }
 .bloginfo { margin-top: 20px; overflow: hidden; color: #999; line-height: 34px; }
 .bloginfo span { margin: 0 5px }
 .bloginfo span a { color: #096 }
