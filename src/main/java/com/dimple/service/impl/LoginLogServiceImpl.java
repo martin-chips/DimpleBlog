@@ -48,10 +48,10 @@ public class LoginLogServiceImpl implements LoginLogService {
                 list.add(criteriaBuilder.like(root.get("browser").as(String.class), "%" + browserType + "%"));
             }
             if (startTime != null) {
-                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startTime").as(Date.class), startTime));
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(Date.class), startTime));
             }
             if (endTime != null) {
-                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("startTime").as(Date.class), endTime));
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("createTime").as(Date.class), endTime));
             }
             if (StringUtils.isNotBlank(loginName)) {
                 list.add(criteriaBuilder.like(root.get("loginName").as(String.class), loginName));

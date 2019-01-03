@@ -59,10 +59,10 @@ public class BlogServiceImpl implements BlogService {
                 list.add(criteriaBuilder.like(root.get("title").as(String.class), "%" + title + "%"));
             }
             if (startTime != null) {
-                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("start_time").as(Date.class), startTime));
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(Date.class), startTime));
             }
             if (endTime != null) {
-                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("start_time").as(Date.class), endTime));
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("createTime").as(Date.class), endTime));
             }
             if (status != null) {
                 list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), status));

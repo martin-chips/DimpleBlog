@@ -1,7 +1,6 @@
 package com.dimple.controller.system;
 
 import com.dimple.bean.Role;
-import com.dimple.bean.User;
 import com.dimple.framework.enums.OperateType;
 import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @ClassName: RoleController
@@ -68,7 +66,7 @@ public class RoleController {
     @Log(title = "角色管理", operateType = OperateType.SELECT)
     @ResponseBody
     public Result roleList(
-            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
             @RequestParam(value = "roleName", required = false) String roleName,
             @RequestParam(value = "description", required = false) String description,

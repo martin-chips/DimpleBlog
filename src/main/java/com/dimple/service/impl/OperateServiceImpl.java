@@ -15,10 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName: OperatorServiceImpl
@@ -52,10 +50,10 @@ public class OperateServiceImpl implements OperateLogService {
                 list.add(criteriaBuilder.like(root.get("operatorName").as(String.class), "%" + operatorName + "%"));
             }
             if (startTime != null) {
-                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startTime").as(Date.class), startTime));
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(Date.class), startTime));
             }
             if (endTime != null) {
-                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("startTime").as(Date.class), endTime));
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("createTime").as(Date.class), endTime));
             }
             if (operateType != null) {
                 list.add(criteriaBuilder.equal(root.get("operateType").as(Integer.class), operateType.getType()));

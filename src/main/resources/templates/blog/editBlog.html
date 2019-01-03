@@ -71,20 +71,16 @@
                 <div class="pull-right tooltip-demo">
                     <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
                        onclick="editOrPreview(this)" title="预览"><i class="fa fa-pencil"></i> 预览</a>
-                    <!--<button id="save" class="btn btn-primary" onclick="editOrPreview()" type="button">Save 2</button>-->
                 </div>
                 <h2>
                     博客内容
                 </h2>
             </div>
             <div class="mail-box">
-
-
                 <div class="mail-body">
                     <div id="summernote" class="summernote"></div>
                     <div class="clearfix"></div>
                 </div>
-
                 <div class="mail-body text-right tooltip-demo">
                     <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" id="publishBlog"
                        title="发布到服务器"><i class="fa fa-reply"></i> 发布</a>
@@ -102,12 +98,9 @@
 
 <div th:include="common :: common-footer"></div>
 <script src="/static/plugin/summernote/summernote.js" th:src="@{/plugin/summernote/summernote.js}"></script>
-
 <script src="/static/plugin/summernote/lang/summernote-zh-CN.js"
         th:src="@{/plugin/summernote/lang/summernote-zh-CN.js}"></script>
 <!--页面JS-->
 <script src="/static/js/custom/blog/edit/editor.js" th:src="@{/js/custom/blog/edit/editor.js}"></script>
-
-
 </body>
 </html>

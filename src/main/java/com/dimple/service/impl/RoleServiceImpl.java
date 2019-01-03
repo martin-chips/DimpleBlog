@@ -65,10 +65,10 @@ public class RoleServiceImpl implements RoleService {
                 list.add(criteriaBuilder.like(root.get("roleName").as(String.class), "%" + roleName + "%"));
             }
             if (startTime != null) {
-                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startTime").as(Date.class), startTime));
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(Date.class), startTime));
             }
             if (endTime != null) {
-                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("endTime").as(Date.class), endTime));
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("createTime").as(Date.class), endTime));
             }
             if (StringUtils.isNotBlank(description)) {
                 list.add(criteriaBuilder.like(root.get("description").as(String.class), description));
