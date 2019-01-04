@@ -77,4 +77,8 @@ public interface FrontService {
     Map<String, String> getCategoryInfoByCategoryId(Integer id);
 
     Blog getBlogInfo(Integer id);
+
+    Object getRotationByPlace(int i);
+
+    String getSignatureByKey(String key);
 }

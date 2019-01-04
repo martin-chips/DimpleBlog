@@ -29,4 +29,7 @@ public class Rotation {
     private String alt;
     private Date createTime;
     private Boolean display;
+    private Integer place;
+    private String url;
+    private Boolean target;
 }

@@ -96,4 +96,22 @@ public class RotationController {
         rotationService.insertRotation(rotation);
         return ResultUtil.success();
     }
+
+
+    @ApiOperation("更新轮播图")
+    @PutMapping("/api/rotation")
+    @ResponseBody
+    public Result updateRotation(Rotation rotation) {
+        rotationService.updateRotation(rotation);
+        return ResultUtil.success();
+    }
+
+
+    @ApiOperation("更改显示位置")
+    @PutMapping("/api/rotation/place/{id}/{place}")
+    @ResponseBody
+    public Result changePlace(@PathVariable("id") Integer[] ids, @PathVariable Integer place) {
+        rotationService.changePlace(ids, place);
+        return ResultUtil.success();
+    }
 }

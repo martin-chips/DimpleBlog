@@ -158,7 +158,6 @@ function support(status) {
  * 改变状态：1表示发布、2表示草稿箱、3表示垃圾箱
  */
 function changeStatus(status) {
-    console.log(status);
     var changeStatusUrl = "/api/blog/status/{id}/" + status;
     var rows = $.common.isEmpty($.table._options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._options.uniqueId);
     if (rows.length == 0) {

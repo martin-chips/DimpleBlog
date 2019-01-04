@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 /**
  * @author : Dimple
  * @version : 1.0
@@ -24,4 +26,6 @@ public interface RotationRepository extends JpaRepository<Rotation, Integer>, Jp
     @Query("from Rotation where id=:id")
     Rotation getById(@Param("id") Integer id);
 
+    @Query("from Rotation where place=:place")
+    List<Rotation> getRotationByPlace(@Param("place") Integer place);
 }

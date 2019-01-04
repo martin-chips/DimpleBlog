@@ -15,15 +15,14 @@
         <div class="banbox">
             <div class="banner">
                 <div id="banner" class="fader">
-                    <!-- 首页的轮播图显示 -->
-                    <li class="slide"><a href="/" target="_blank"><img src="/front/images/1.jpg"></a></li>
-                    <li class="slide"><a href="/" target="_blank"><img src="/front/images/2.jpg"></a></li>
-                    <li class="slide"><a href="/" target="_blank"><img src="/front/images/3.jpg"></a></li>
-                    <li class="slide"><a href="/" target="_blank"><img src="/front/images/4.jpg"></a></li>
-                    <li class="slide"><a href="/" target="_blank"><img src="/front/images/1.jpg"></a></li>
-                    <li class="slide"><a href="/" target="_blank"><img src="/front/images/2.jpg"></a></li>
-                    <li class="slide"><a href="/" target="_blank"><img src="/front/images/3.jpg"></a></li>
-                    <li class="slide"><a href="/" target="_blank"><img src="/front/images/4.jpg"></a></li>
+                    <li class="slide" th:each="rotation:${rotations}">
+                        <a href="/" th:href="${rotation.url}" th:target="${rotation.target==true?'_blank':''}"
+                           th:title="${rotation.title}"
+                           target="_blank">
+                            <img src="/front/images/1.jpg" th:src="${rotation.img}" th:alt="${rotation.alt}">
+                            <span th:text="${rotation.title}"></span>
+                        </a>
+                    </li>
                     <div class="fader_controls">
                         <div class="page prev" data-target="prev"></div>
                         <div class="page next" data-target="next"></div>
@@ -37,12 +36,16 @@
         <!--headline begin-->
         <div class="headline">
             <ul>
-                <li><a href="/" title="为什么说10月24日是程序员的节日？"><img src="/front/images/h1.jpg"
-                                                                alt="为什么说10月24日是程序员的节日？"><span>为什么说10月24日是程序员的节日？</span></a>
+
+                <li th:each="rotationLine:${rotationLines}">
+                    <a th:href="${rotationLine.url}" href="/" title="" th:title="${rotationLine.title}">
+                        <img src="/front/images/h1.jpg" th:src="${rotationLine.img}" alt="${rotationLine.alt}">
+                        <span th:text="${rotationLine.title}"></span>
+                    </a>
                 </li>
-                <li><a href="/" title="个人网站做好了，百度不收录怎么办？来，看看他们怎么做的"><img src="/front/images/h2.jpg"
-                                                                         alt="个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。"><span>个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。</span></a>
-                </li>
+                <!--<li><a href="/" title="个人网站做好了，百度不收录怎么办？来，看看他们怎么做的"><img src="/front/images/h2.jpg"-->
+                <!--alt="个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。"><span>个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。</span></a>-->
+                <!--</li>-->
             </ul>
         </div>
         <!--headline end-->

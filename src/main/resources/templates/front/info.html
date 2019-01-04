@@ -24,7 +24,17 @@
                 <div th:utext="${blog.content}"></div>
             </div>
 
-            <div th:include="front/common :: front-copyright"></div>
+            <section class="wow padding-bot20 animated fadeIn">
+                <div name="版权声明：" data-unique="版权声明："></div>
+                <h3>版权声明：</h3>
+                <p class="text-danger size16">
+                    本文仅用于学习、研究和交流目的，欢迎非商业性质转载。本文链接：<a target="_blank" id="copyrightUrl"></a>。
+
+                </p>
+                <div id="copyright1"></div>
+
+
+            </section>
         </div>
 
         <div class="whitebg">
@@ -136,5 +146,21 @@
     </div>
 </article>
 <head th:include="front/common :: front-footer"></head>
+<script>
+    $(function () {
+        var url = window.location.href;
+        $("#copyrightUrl").attr("href", url);
+        $("#copyrightUrl").text(url);
+        $.ajax({
+            type: "get",
+            url: "/public/api/signature/blog",
+            success: function (data) {
+                if (data.code == 200 && data.data != null) {
+                    $("#copyright1").html(data.data);
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

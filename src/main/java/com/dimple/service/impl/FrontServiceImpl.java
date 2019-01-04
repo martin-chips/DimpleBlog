@@ -2,11 +2,16 @@ package com.dimple.service.impl;
 
 import com.dimple.bean.Blog;
 import com.dimple.bean.Category;
+import com.dimple.bean.Rotation;
+import com.dimple.bean.Signature;
 import com.dimple.repository.BlogInfoRepository;
 import com.dimple.repository.BlogRepository;
 import com.dimple.repository.CategoryRepository;
 import com.dimple.service.FrontService;
+import com.dimple.service.RotationService;
+import com.dimple.service.SettingService;
 import com.dimple.utils.FileOperateUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -39,10 +44,14 @@ public class FrontServiceImpl implements FrontService {
     BlogRepository blogRepository;
     @Autowired
     BlogInfoRepository blogInfoRepository;
-
+    @Autowired
+    RotationService rotationService;
 
     @Autowired
     FileOperateUtil fileOperateUtil;
+
+    @Autowired
+    SettingService settingService;
 
     @Override
     public List<Map<String, Object>> getNewestBlog(Pageable pageable) {
@@ -204,7 +213,28 @@ public class FrontServiceImpl implements FrontService {
             return null;
         }
         Blog byBlogId = blogRepository.findByBlogId(id);
+        if (byBlogId == null) {
+            return null;
+        }
+        //将博客的点击数+1
+        blogRepository.incrementBlogCountById(id);
         byBlogId.setContent(blogInfoRepository.findByBlogId(id).getContent());
+
         return byBlogId;
+
+    }
+
+    @Override
+    public List<Rotation> getRotationByPlace(int i) {
+        return rotationService.getRotationByPlace(i);
+    }
+
+    @Override
+    public String getSignatureByKey(String key) {
+        if (StringUtils.isBlank(key)) {
+            return null;
+        }
+        Signature blogSignature = settingService.getSignatureByKey("blogSignature");
+        return (blogSignature == null || StringUtils.isBlank(blogSignature.getSignatureValue())) ? null : blogSignature.getSignatureValue();
     }
 }

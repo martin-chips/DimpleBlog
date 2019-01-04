@@ -3,6 +3,7 @@ package com.dimple.service.impl;
 import com.dimple.bean.Rotation;
 import com.dimple.repository.RotationRepository;
 import com.dimple.service.RotationService;
+import com.dimple.utils.JpaUpdateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -76,12 +77,18 @@ public class RotationServiceImpl implements RotationService {
             if (rotation.getDisplay() == null) {
                 rotation.setDisplay(true);
             }
+
             rotationRepository.save(rotation);
         }
     }
 
     @Override
     public void updateRotation(Rotation rotation) {
+        if (rotation == null || rotation.getId() == null) {
+            return;
+        }
+        Rotation rotationDB = rotationRepository.getById(rotation.getId());
+        JpaUpdateUtil.copyProperties(rotationDB, rotation);
         rotationRepository.save(rotation);
     }
 
@@ -92,5 +99,28 @@ public class RotationServiceImpl implements RotationService {
             byId.setDisplay(!status);
             rotationRepository.save(byId);
         }
+    }
+
+    @Override
+    public int changePlace(Integer[] ids, Integer place) {
+        if (ids == null || ids.length == 0 || place == null) {
+            return 0;
+        }
+        int count = 0;
+        for (Integer id : ids) {
+            Rotation byId = rotationRepository.getById(id);
+            byId.setPlace(place);
+            rotationRepository.save(byId);
+            count++;
+        }
+        return count;
+    }
+
+    @Override
+    public List<Rotation> getRotationByPlace(Integer i) {
+        if (i == null) {
+            return null;
+        }
+        return rotationRepository.getRotationByPlace(i);
     }
 }

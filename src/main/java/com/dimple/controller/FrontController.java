@@ -49,6 +49,8 @@ public class FrontController {
         model.addAttribute("clickBlog", frontService.getClickBlog());
         model.addAttribute("supportBlog", frontService.getSupportBlog());
         model.addAttribute("newestUpdateBlog", frontService.getNewestUpdateBlog());
+        model.addAttribute("rotations", frontService.getRotationByPlace(1));
+        model.addAttribute("rotationLines", frontService.getRotationByPlace(2));
         return "front/index";
     }
 
@@ -96,4 +98,13 @@ public class FrontController {
         List<Blog> clickBlog = frontService.getClickBlog();
         return ResultUtil.success(clickBlog);
     }
+
+    @ApiOperation("获取版权信息")
+    @GetMapping("/public/api/signature/blog")
+    @ResponseBody
+    public Result getCopyrightMsg() {
+        String blogSignature = frontService.getSignatureByKey("blogSignature");
+        return ResultUtil.success(blogSignature);
+    }
+
 }

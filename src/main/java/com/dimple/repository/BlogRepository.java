@@ -3,6 +3,7 @@ package com.dimple.repository;
 import com.dimple.bean.Blog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -44,8 +45,12 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>, JpaSpecifi
     List<Blog> getNewestUpdateBlog();
 
     @Query(value = "select * from blog where blog_id > :id order by blog_id desc limit 0,1;", nativeQuery = true)
-    Blog getNextBlog(Integer id);
+    Blog getNextBlog(@Param("id") Integer id);
 
     @Query(value = "select * from blog where blog_id < :id order by blog_id limit 0,1;", nativeQuery = true)
-    Blog getPreviousBlog(Integer id);
+    Blog getPreviousBlog(@Param("id") Integer id);
+
+    @Modifying
+    @Query("update Blog set click=click+1 where blogId=:id")
+    void incrementBlogCountById(@Param("id") Integer id);
 }

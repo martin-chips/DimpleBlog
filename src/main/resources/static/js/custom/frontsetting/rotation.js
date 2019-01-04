@@ -24,6 +24,13 @@ function initTable() {
             title: '序号',
             align: 'center',
         }, {
+            field: 'url',
+            title: '链接地址',
+            align: 'center',
+            formatter: function (value, row, index) {
+                return "<a target='_blank' href='" + value + "'>" + value + "</a>"
+            }
+        }, {
             field: 'img',
             title: '图片地址',
             align: 'center',
@@ -35,6 +42,19 @@ function initTable() {
             field: 'alt',
             title: '提示',
             align: 'center',
+        }, {
+            field: 'place',
+            title: '显示位置',
+            align: 'center',
+            formatter: function (value, row, index) {
+                if (value == '1') {
+                    return '<span class="badge badge-info">轮播</span>';
+                } else if (value == '2') {
+                    return '<span class="badge badge-default">时间线</span>';
+                } else {
+                    return '<span class="badge badge-default">未指定</span>';
+                }
+            }
         }, {
             field: 'display',
             title: '状态',
@@ -80,4 +100,24 @@ function changeDisplay(id, display) {
 }
 
 
-
+function changePlace(place) {
+    var url = "/api/rotation/place/{id}/" + place;
+    var rows = $.common.isEmpty($.table._options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._options.uniqueId);
+    if (rows.length == 0) {
+        $.modal.alertWarning("请至少选择一条记录");
+        return;
+    }
+    var msg = "";
+    if (place == 1) {
+        msg = "确定要将这" + rows.length + "条数据设置为轮播吗？";
+    } else if (place == 2) {
+        msg = "确定要将这" + rows.length + "条数据设置为时间线吗？";
+    } else if (place == 0) {
+        msg = "确定要将这" + rows.length + "条数据设置为暂不指定吗？";
+    }
+    $.modal.confirm(msg, function () {
+        var data = {"id": rows.join()};
+        url = url.replace("{id}", data.id);
+        $.operate.submit(url, "put", "json", data);
+    });
+}

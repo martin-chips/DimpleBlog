@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : Dimple
@@ -26,4 +27,8 @@ public interface RotationService {
     void updateRotation(Rotation rotation);
 
     void changeDisplay(Integer id, Boolean status);
+
+    int changePlace(Integer[] ids, Integer place);
+
+    List<Rotation> getRotationByPlace(Integer i);
 }
