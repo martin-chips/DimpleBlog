@@ -7,7 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.sql.Timestamp;
+import java.util.Date;
+
 
 /**
  * @author : Dimple
@@ -26,6 +27,6 @@ public class Rotation {
     private String img;
     private String title;
     private String alt;
-    private Timestamp createTime;
+    private Date createTime;
     private Boolean display;
 }

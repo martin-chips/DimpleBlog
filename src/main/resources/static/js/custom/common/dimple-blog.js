@@ -55,6 +55,16 @@
             },
             // 查询条件
             queryParams: function (params) {
+
+                var data = {
+                    // 传递参数查询参数
+                    pageSize: params.limit,
+                    pageNum: params.offset / params.limit,
+                    searchValue: params.search,
+                    orderByColumn: params.sort,
+                    isAsc: params.order
+                };
+                console.log(data);
                 return {
                     // 传递参数查询参数
                     pageSize: params.limit,
@@ -84,7 +94,7 @@
                         search[field.name] = field.value;
                     });
                     search.pageSize = params.limit;
-                    search.pageNum = params.offset / params.limit + 1;
+                    search.pageNum = params.offset / params.limit;
                     search.searchValue = params.search;
                     search.orderByColumn = params.sort;
                     search.isAsc = params.order;

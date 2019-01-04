@@ -19,7 +19,7 @@ public interface RotationService {
 
     Rotation getRotationById(Integer id);
 
-    void deleteRotationById(Integer id);
+    int deleteRotationById(Integer[] id);
 
     void insertRotation(Rotation rotation);
 

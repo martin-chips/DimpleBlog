@@ -57,13 +57,27 @@ public class RotationServiceImpl implements RotationService {
     }
 
     @Override
-    public void deleteRotationById(Integer id) {
-        rotationRepository.deleteById(id);
+    public int deleteRotationById(Integer[] ids) {
+        if (ids == null || ids.length == 0) {
+            return 0;
+        }
+        int count = 0;
+        for (Integer id : ids) {
+            count++;
+            rotationRepository.deleteById(id);
+        }
+        return count;
     }
 
     @Override
     public void insertRotation(Rotation rotation) {
-        rotationRepository.save(rotation);
+        if (rotation != null && StringUtils.isNotBlank(rotation.getTitle()) && StringUtils.isNotBlank(rotation.getImg())) {
+            rotation.setCreateTime(new Date());
+            if (rotation.getDisplay() == null) {
+                rotation.setDisplay(true);
+            }
+            rotationRepository.save(rotation);
+        }
     }
 
     @Override

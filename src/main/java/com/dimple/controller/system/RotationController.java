@@ -16,7 +16,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,19 +42,19 @@ public class RotationController {
 
     @GetMapping("/page/rotation.html")
     public String indexRotationChartPage(Model model) {
-        return "frontSetting/rotation";
+        return "frontSetting/rotation/rotation";
     }
 
-    @GetMapping("/page/rotationUpdate.html")
-    public String rotationUpdatePage() {
-        return "frontSetting/rotationUpdate";
+    @GetMapping("/page/rotation/{id}.html")
+    public String rotationUpdatePage(@PathVariable Integer id, Model model) {
+        model.addAttribute("rotation", rotationService.getRotationById(id));
+        return "frontSetting/rotation/update";
     }
 
     @GetMapping("/page/rotationAdd.html")
     public String rotationAddPage() {
-        return "frontSetting/rotationAdd";
+        return "frontSetting/rotation/add";
     }
-
 
 
     @ApiOperation("获取所有的数据")
@@ -69,4 +73,27 @@ public class RotationController {
         return ResultUtil.success(allRoles);
     }
 
+
+    @ApiOperation("更改显示状态")
+    @PutMapping("/api/rotation/{id}/{display}")
+    @ResponseBody
+    public Result changeDisplay(@PathVariable Integer id, @PathVariable Boolean display) {
+        rotationService.changeDisplay(id, display);
+        return ResultUtil.success();
+    }
+
+    @ApiOperation("删除轮播图")
+    @DeleteMapping("/api/rotation/{ids}")
+    @ResponseBody
+    public Result deleteRotation(@PathVariable Integer[] ids) {
+        return ResultUtil.success(rotationService.deleteRotationById(ids));
+    }
+
+    @ApiOperation("新增轮播图")
+    @PostMapping("/api/rotation")
+    @ResponseBody
+    public Result createRotation(Rotation rotation) {
+        rotationService.insertRotation(rotation);
+        return ResultUtil.success();
+    }
 }

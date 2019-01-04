@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
@@ -41,7 +42,7 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
-    @RequestMapping("/page/role.html")
+    @RequestMapping(value = "/page/role.html", method = RequestMethod.GET)
     @ApiIgnore
     public String rolePage() {
         return "system/role/list";

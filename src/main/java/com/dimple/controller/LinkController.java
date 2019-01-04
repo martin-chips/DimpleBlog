@@ -30,7 +30,6 @@ import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
-import java.util.Map;
 
 /**
  * @ClassName: LinksController
@@ -70,14 +69,6 @@ public class LinkController {
 
     @ResponseBody
     @ApiOperation(value = "查询显示友链列表数据", notes = "返回数据类型JSON")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "0", dataType = "Integer"),
-            @ApiImplicitParam(name = "pageSize", value = "当前页码", defaultValue = "10", dataType = "Integer"),
-            @ApiImplicitParam(name = "links_title", value = "查询友链的标题", dataType = "String"),
-            @ApiImplicitParam(name = "startTime", value = "友链添加开始的时间", dataType = "Date"),
-            @ApiImplicitParam(name = "endTime", value = "友链添加结束的时间", dataType = "Date"),
-            @ApiImplicitParam(name = "links_display", value = "友链是否显示", dataType = "Boolean"),
-    })
     @GetMapping("/api/link")
     @Log(title = "友情链接", operateType = OperateType.SELECT)
     public Result linksList(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
@@ -93,10 +84,6 @@ public class LinkController {
     }
 
     @ApiOperation(value = "切换友链的状态", notes = "")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "status", value = "当前该友链的状态", dataType = "Boolean"),
-            @ApiImplicitParam(name = "linkId", value = "需要切换友链状态的友链ID", dataType = "Integer")
-    })
     @PutMapping("/api/link/{linkId}/{status}")
     @ResponseBody
     @Log(title = "友情链接", operateType = OperateType.CHANGE_STATUS)
@@ -106,7 +93,6 @@ public class LinkController {
     }
 
     @ApiOperation(value = "删除友链", notes = "需要传入的为一个数组")
-    @ApiImplicitParam(name = "ids", value = "友链的ID数组，格式为：1,2,3···,也可以传入单个参数如1")
     @DeleteMapping("/api/link/{ids}")
     @Log(title = "友情链接", operateType = OperateType.DELETE)
     @ResponseBody
@@ -117,6 +103,7 @@ public class LinkController {
 
     @PutMapping("/api/link")
     @ResponseBody
+    @ApiOperation(value = "更新友链")
     @Log(title = "友情链接", operateType = OperateType.UPDATE)
     public Result updateLinksInfo(Link links) {
         Result result = linksService.updateLinkInfo(links);

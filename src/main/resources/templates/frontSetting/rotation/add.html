@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="common :: common-head"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="rotationAddForm">
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">图片地址：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="imgLocation" name="img">
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" onclick="uploadImage()">图库选择</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" hidden id="preview">
+            <label class="col-sm-3 control-label ">预览：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <img id="previewImg" src="" style="height:auto;width:100%">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">图片描述：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="title">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">提示：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="alt">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>当鼠标移动到图片上显示的字</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3  control-label">显示:</label>
+            <div class="col-sm-8">
+                <label class="radio-box">
+                    <input name="display" type="radio" value="1" checked>显示
+                </label>
+                <label class="radio-box">
+                    <input name="display" type="radio" value="0">隐藏
+                </label>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div th:include="common :: common-footer"></div>
+
+<script>
+
+    /**
+     * 上传图片
+     */
+    function uploadImage() {
+        var title = "上传图片";
+        var url = "/page/imageUploadPage";
+        var width = $(window).width() / 1.2;
+        var height = $(window).height() / 1.2;
+        //如果是移动端，就使用自适应大小弹窗
+        if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+            width = 'auto';
+            height = 'auto';
+        }
+        if ($.common.isEmpty(title)) {
+            title = false;
+        }
+        if ($.common.isEmpty(url)) {
+            url = "/404.html";
+        }
+        if ($.common.isEmpty(width)) {
+            width = 800;
+        }
+        if ($.common.isEmpty(height)) {
+            height = ($(window).height() - 50);
+        }
+        layer.open({
+            type: 2,
+            area: [width + 'px', height + 'px'],
+            fix: false,
+            //不固定
+            maxmin: true,
+            shade: 0.3,
+            title: title,
+            content: url,
+            btn: ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'],
+            // 弹层外区域关闭
+            shadeClose: true,
+            yes: function (index, layero) {
+                var iframeWin = layero.find('iframe')[0];
+                var data = iframeWin.contentWindow.submitHandler();
+                $("#imgLocation").val(data);
+                if (!$.common.isEmpty(data)) {
+                    $("#preview").removeAttrs("hidden");
+                    $("#previewImg").attr("src", data);
+                }
+                iframeWin.contentWindow.closeLocal();
+            },
+            cancel: function (index) {
+                return true;
+            }
+        });
+    }
+
+    function submitHandler() {
+        insertRotation();
+    }
+
+    function insertRotation() {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: $("#rotationAddForm").serializeArray(),
+            url: "/api/rotation",
+            success: function (data) {
+                if (data != null && data.code == web_status.SUCCESS) {
+                    $.modal.msgReload("添加成功！", modal_status.SUCCESS);
+                } else {
+                    $.modal.msgReload("添加失败！", modal_status.FAIL);
+                }
+            }
+        });
+        return false;
+    }
+</script>
+</body>
+
+</html>

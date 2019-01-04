@@ -7,6 +7,7 @@ import com.dimple.framework.message.ResultEnum;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.repository.LinkRepository;
 import com.dimple.service.LinksService;
+import com.dimple.utils.JpaUpdateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -133,6 +134,8 @@ public class LinksServiceImpl implements LinksService {
         if (link == null || link.getLinkId() == null) {
             return ResultUtil.error(ResultEnum.LINKS_PARAM_ERROR.getCode(), ResultEnum.LINKS_PARAM_ERROR.getMsg());
         }
+        Link linkDB = linkRepository.findByLinkId(link.getLinkId());
+        JpaUpdateUtil.copyProperties(linkDB, link);
         Link save = linkRepository.save(link);
         return ResultUtil.success(save);
     }

@@ -8,14 +8,14 @@ $(function () {
 function initTable() {
     var option = {
         url: "/api/rotation",
-        deleteUrl: "/api/user/{id}",
-        updateUrl: "/page/user/{id}",
-        addUrl: "/page/userAdd.html",
+        deleteUrl: "/api/rotation/{id}",
+        updateUrl: "/page/rotation/{id}.html",
+        addUrl: "/page/rotationAdd.html",
         sortName: "createTime",
         sortOrder: "desc",
-        modalName: "用户记录",
+        modalName: "轮播图设置",
         search: false,
-        uniqueId: "userId",//唯一标识
+        uniqueId: "id",//唯一标识
         showExport: false,
         columns: [{
             checkbox: true
@@ -37,13 +37,13 @@ function initTable() {
             align: 'center',
         }, {
             field: 'display',
-            title: '显示',
+            title: '状态',
             align: 'center',
             formatter: function (value, row, index) {
-                if (value == false) {
-                    return '<span class="badge badge-info">否</span>';
-                } else if (value == true) {
-                    return '<span class="badge badge-danger">是</span>';
+                if (value == true) {
+                    return '<span class="badge badge-info">显示</span>';
+                } else if (value == false) {
+                    return '<span class="badge badge-default">隐藏</span>';
                 }
             }
         }, {
@@ -59,12 +59,12 @@ function initTable() {
             align: 'center',
             formatter: function (value, row, index) {
                 var actions = [];
-                actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.update(\'' + row.userId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.userId + '\')"><i class="fa fa-remove"></i>删除</a> ');
-                if (row.locked == false) {
-                    actions.push('<a class="btn btn-info btn-xs " href="#" onclick="changeLocked(' + row.userId + "," + row.locked + ')"><i class="fa fa-key"></i>显示</a>')
+                actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.update(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                if (row.display == false) {
+                    actions.push('<a class="btn btn-info btn-xs " href="#" onclick="changeDisplay(' + row.id + "," + row.display + ')"><i class="fa fa-key"></i>显示</a>')
                 } else {
-                    actions.push('<a class="btn btn-default btn-xs " href="#" onclick="changeLocked(' + row.userId + "," + row.locked + ')"><i class="fa fa-key"></i>隐藏</a>')
+                    actions.push('<a class="btn btn-default btn-xs " href="#" onclick="changeDisplay(' + row.id + "," + row.display + ')"><i class="fa fa-key"></i>隐藏</a>')
                 }
                 return actions.join('');
             }
@@ -73,14 +73,11 @@ function initTable() {
     $.table.init(option);
 }
 
-function resetPassword(id) {
-    var url = "/page/user/password/" + id;
-    $.modal.open("重置密码", url, '800', '300');
-}
 
-function changeLocked(id, locked) {
-    var url = "/api/user/" + id + "/" + locked;
+function changeDisplay(id, display) {
+    var url = "/api/rotation/" + id + "/" + display;
     $.operate.submit(url, "put", "json", "");
 }
+
 
 
