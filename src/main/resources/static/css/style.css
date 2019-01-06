@@ -3434,7 +3434,7 @@ a:focus {
     color: #ffffff;
     background-color: #ffffff;
     height: 1px;
-    margin: 20px 0;
+    margin: 8px;
 }
 
 .hr-line-solid {
@@ -7938,6 +7938,7 @@ body.skin-3 {
         font-size: 12px
     }
 }
+
 .btn-outline {
     color: inherit;
     background-color: transparent;

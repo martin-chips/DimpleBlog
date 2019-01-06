@@ -55,6 +55,52 @@ public class FrontController {
     }
 
 
+    @GetMapping("/leaveComment.html")
+    public String leaveCommentPage() {
+        return "front/leaveComment";
+    }
+
+    @GetMapping("/about.html")
+    public String aboutPage() {
+        return "front/about";
+    }
+
+    @GetMapping("/technology.html")
+    public String technologyPage(Model model) {
+        model.addAttribute("clickBlog", frontService.getClickBlog());
+        model.addAttribute("supportBlog", frontService.getSupportBlog());
+        model.addAttribute("newestUpdateBlog", frontService.getNewestUpdateBlog());
+
+        return "front/technology";
+    }
+
+    @GetMapping("/free.html")
+    public String freePage(Model model) {
+        model.addAttribute("clickBlog", frontService.getClickBlog());
+        model.addAttribute("supportBlog", frontService.getSupportBlog());
+        model.addAttribute("newestUpdateBlog", frontService.getNewestUpdateBlog());
+
+        return "front/free";
+    }
+
+    @GetMapping("/software.html")
+    public String softwarePage(Model model) {
+        model.addAttribute("clickBlog", frontService.getClickBlog());
+        model.addAttribute("supportBlog", frontService.getSupportBlog());
+        model.addAttribute("newestUpdateBlog", frontService.getNewestUpdateBlog());
+
+        return "front/software";
+    }
+
+    @GetMapping("/resource.html")
+    public String sourcePage(Model model) {
+        model.addAttribute("clickBlog", frontService.getClickBlog());
+        model.addAttribute("supportBlog", frontService.getSupportBlog());
+        model.addAttribute("newestUpdateBlog", frontService.getNewestUpdateBlog());
+        return "front/resource";
+    }
+
+
     /**
      * 获取个人名片信息
      * todo 做一个网站资源管理

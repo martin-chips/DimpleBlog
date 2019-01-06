@@ -1,46 +1,34 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head th:include="common :: front-head"></head>
+<head th:include="front/common :: front-head"></head>
 <body>
 
-<div th:include="common :: front-header"></div>
-
-
+<div th:include="front/common :: front-header"></div>
 <article>
-    <div class="whitebg about">
-        <div class="ab_box"><i class="avatar_pic"><img src="/front/images/avatar.jpg"></i>
-            <h3>杨青青</h3>
-            <p>一个80后草根女站长！Web前端设计师、网页设计师。</p>
-            <p>天津智尚互联科技有限公司设计总监，青于蓝网络工作室创始人。</p>
+    <div class="lbox">
+        <div class="whitebg lanmu">
+            <img src="/images/aboutMe.jpg">
+            <h1>关于</h1>
+            <p>个人博客用来做什么？我的个人博客网站它不仅仅是我个人兴趣和爱好，还是我创业的起点。我爱网页设计，我爱写前端代码。它充实了我的生活，实现了我的目标和梦想。</p>
         </div>
-        <h2 class="gd_title">内心独白</h2>
-        <p class="ab_dubai">
-            我叫杨青青，我是一个80后草根女站长！09年入行。我一直潜心研究网页前端技术，一边工作一边积累经验，分享一些个人博客模板，以及网站优化等心得。我入行早，大家也亲切的叫我“青姐”。我的个人博客搜索“个人博客”、“博客”，一直都靠前。最有意思的是，我有三年的时间没有去更新它，依然排在前面。虽然期间有很多的不容易，但是我都没有放弃过。选了这一行
-            ，就深深的喜欢上它。我喜欢一句话“冥冥中该来则来，无处可逃”。我喜欢上了前端设计，喜欢坐在电脑前敲代码，喜欢跟一堆程序员聊天。这辈子，我也逃不出去了，深深的陷了进来。 </p>
-        <span class="ly_button"><a href="http://www.yangqq.com/e/tool/gbook/?bid=1" target="_blank">留言</a></span>
-        <h2 class="gd_title">我的博客</h2>
-        <ul class="myblog">
-            <li><b>创建时间</b>
-                <p>2011年01月12日</p>
-                <p><a href="http://www.bianxiaofeng.com" target="_blank" class="buttons">主页</a></p>
-            </li>
-            <li><b>主题模板</b>
-                <p><a href="http://www.yangqq.com" target="_blank">《今夕何夕》</a></p>
-                <p><a href="/" class="buttons">下载</a></p>
-            </li>
-            <li><b>网站程序</b>
-                <p>Github</p>
-                <p><a href="https://github.com/DimpleFeng/DimpleBlog" target="_blank" class="buttons">详情</a></p>
-            </li>
-            <li><b>服务器商</b>
-                <p>阿里云服务器</p>
-                <a href="/" class="buttons">1888代金券领取</a></li>
-            <li><b>免费空间</b>
-                <p><a href="http://www.4562.com/?u=3CE3E8" target="_blank">金牛云服</a></p>
-                <a href="/" class="buttons">国内主机免费领</a></li>
-        </ul>
+        <div class="post-body" style="opacity: 1; display: block; transform: translateY(0px);">
+
+
+            <hr>
+            <p>少年心事当拿云 </p>
+            <hr>
+            <h1 id="Reputation"><a href="#Reputation" class="headerlink" title="Reputation"></a>Reputation</h1>
+            <p>2016年—2017年：国家励志奖学金<br>2015年—2016年：国家励志奖学金<br>四川省大学生“综合素质A级证书”<br>全国大学生物联网竞赛（TI杯） 一等奖<br>“中星杯”四川省大学生计算机作品赛
+                二等奖<br>中华人民共和国实用新型专利证书<br>中华人民共和国计算机软件著作权<br>……</p>
+            <hr>
+            <h1 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h1>
+            <p>QQ：7265677707<br>WeChat：Dimple_Me<br>Email：bianxiaofeng@sohu.com</p>
+            <hr>
+
+
+        </div>
     </div>
 </article>
-<div th:include="common :: front-footer"></div>
+<div th:include="front/common :: front-footer"></div>
 </body>
 </html>

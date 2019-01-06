@@ -12,28 +12,33 @@
                  th:text="${operateLog.title} + ' / ' +${@direction.selectOperateNameById(operateLog.operateType)}">
             </div>
         </div>
+        <div class="hr-line-dashed"></div>
         <div class="form-group">
             <label class="col-sm-2 control-label">登录信息：</label>
             <div class="form-control-static"
                  th:text="${operateLog.operatorName} + ' / '  + ${operateLog.operateIp}+ ' / ' + ${operateLog.operateLocation}">
             </div>
         </div>
+        <div class="hr-line-dashed"></div>
         <div class="form-group">
             <label class="col-sm-2 control-label">请求地址：</label>
             <div class="form-control-static" th:text="${operateLog.operateUrl}">
             </div>
         </div>
+        <div class="hr-line-dashed"></div>
         <div class="form-group">
             <label class="col-sm-2 control-label">操作方法：</label>
             <div class="form-control-static" th:text="${operateLog.method}">
             </div>
         </div>
+        <div class="hr-line-dashed"></div>
         <div class="form-group">
             <label class="col-sm-2 control-label">请求参数：</label>
             <div class="form-control-static">
                 <pre id="operParam"></pre>
             </div>
         </div>
+        <div class="hr-line-dashed"></div>
         <div class="form-group">
             <label class="col-sm-2 control-label">状态：</label>
             <div class="form-control-static"
@@ -46,6 +51,7 @@
             <div class="form-control-static" th:text="${operateLog.errorMsg}">
             </div>
         </div>
+        <div class="hr-line-dashed"></div>
     </form>
     <div th:include="common :: common-footer"></div>
 </div>

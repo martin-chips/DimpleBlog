@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author : Dimple
  * @version : 1.0
@@ -51,11 +53,21 @@ public class SettingServiceImpl implements SettingService {
     }
 
     @Override
-    public void updateSetting(Setting setting) {
-        if (setting == null || setting.getId() == null || StringUtils.isBlank(setting.getSettingKey()) || StringUtils.isBlank(setting.getSettingValue())) {
+    public void updateSetting(List<Setting> settings) {
+        if (settings == null || settings.size() == 0) {
             return;
         }
-        settingRepository.updateSetting(setting.getId(), setting.getSettingKey(), setting.getSettingValue());
+        for (Setting setting : settings) {
+            if (setting == null || StringUtils.isBlank(setting.getSettingKey()) || StringUtils.isBlank(setting.getSettingValue())) {
+                continue;
+            }
+            Setting settingBySettingKey = settingRepository.getSettingBySettingKey(setting.getSettingKey());
+            if (settingBySettingKey != null) {
+                settingRepository.updateSetting(settingBySettingKey.getId(), setting.getSettingKey(), setting.getSettingValue());
+            } else {
+                settingRepository.createSetting(setting.getSettingKey(), setting.getSettingValue());
+            }
+        }
     }
 
     @Override
@@ -72,5 +84,17 @@ public class SettingServiceImpl implements SettingService {
                 signatureRepository.updateSignature(signature.getId(), signature.getSignatureKey(), signature.getSignatureValue());
             }
         }
+    }
+
+    @Override
+    public List<Setting> getAllSetting() {
+        List<Setting> all = settingRepository.findAll();
+        return all;
+    }
+
+    @Override
+    public String getSettingValueBySettingKey(String settingKey) {
+        Setting settingValueBySettingKey = settingRepository.getSettingValueBySettingKey(settingKey);
+        return settingValueBySettingKey == null ? "" : settingValueBySettingKey.getSettingValue();
     }
 }

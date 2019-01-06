@@ -54,7 +54,7 @@ public class SettingServiceTest {
         // settingService.updateSetting(setting);//Exception
         Setting setting1 = settingService.getSettingBySettingKey("key1");
         setting1.setSettingValue("value11");
-        settingService.updateSetting(setting1);
+//        settingService.updateSetting(setting1);
     }
 
 

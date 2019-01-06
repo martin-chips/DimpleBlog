@@ -255,13 +255,13 @@ footer a { color: #73777a; }
 footer a:hover { color: #00C1DE }
 .top { width: 40px; height: 40px; display: block; background: url(../images/top.png) no-repeat center #000; right: 20px; bottom: 10%; position: fixed }
 /*
-list.html
+technology.html
 */
 .lanmu img { height: 100px; float: left; margin-right: 20px }
 .lanmu h1 { font-size: 22px; margin-bottom: 15px }
 .lanmu p { color: #666 }
 /*
-list2.html
+software.html
 */
 .liucheng ul { overflow: hidden; margin-top: 20px }
 .liucheng li { width: 33.3%; float: left; padding-bottom: 20px }

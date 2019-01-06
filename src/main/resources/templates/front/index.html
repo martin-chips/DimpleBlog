@@ -36,16 +36,12 @@
         <!--headline begin-->
         <div class="headline">
             <ul>
-
                 <li th:each="rotationLine:${rotationLines}">
                     <a th:href="${rotationLine.url}" href="/" title="" th:title="${rotationLine.title}">
                         <img src="/front/images/h1.jpg" th:src="${rotationLine.img}" alt="${rotationLine.alt}">
                         <span th:text="${rotationLine.title}"></span>
                     </a>
                 </li>
-                <!--<li><a href="/" title="个人网站做好了，百度不收录怎么办？来，看看他们怎么做的"><img src="/front/images/h2.jpg"-->
-                <!--alt="个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。"><span>个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。</span></a>-->
-                <!--</li>-->
             </ul>
         </div>
         <!--headline end-->
@@ -123,42 +119,8 @@
                         src="/front/images/wx.png"></i></li>
             </ul>
         </div>
-        <div class="whitebg notice">
-            <h2 class="htitle">最近更新</h2>
-            <ul>
-                <li th:each="blog:${newestUpdateBlog}">
-                    <a th:href="${'/view/'+blog.blogId}" th:text="${blog.title}"></a>
-                </li>
-            </ul>
-        </div>
-        <div class="whitebg paihang">
-            <h2 class="htitle">点击排行</h2>
-            <section class="topnews imgscale"><a th:href="'/view/'+${clickBlog[0].blogId}"><img
-                    src="/front/images/h1.jpg" th:src="${clickBlog[0].headerUrl}"><span
-                    th:text="${clickBlog[0].title}"></span></a>
-            </section>
-            <ul>
-                <li th:each="item:${clickBlog}">
-                    <i></i>
-                    <a th:href="'/view/'+${item.blogId}" th:text="${item.title}">
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="whitebg tuijian">
-            <h2 class="htitle">站长推荐</h2>
-            <section class="topnews imgscale"><a th:href="'/view/'+${supportBlog[0].blogId}"><img
-                    src="/front/images/h2.jpg" th:src="${supportBlog[0].headerUrl}"><span
-                    th:text="${supportBlog[0].title}"></span></a>
-            </section>
-            <ul>
-                <li th:each="item:${supportBlog}">
-                    <a th:href="'/view/'+${item.blogId}"></a>
-                    <i><img src="/front/images/text01.jpg" th:src="${item.headerUrl}"> </i>
-                    <p th:text="${item.title}"></p>
-                </li>
-            </ul>
-        </div>
+
+        <div th:include="front/common :: front-side"></div>
 
         <!--<div class="whitebg wenzi">-->
         <!--<h2 class="htitle">猜你喜欢</h2>-->

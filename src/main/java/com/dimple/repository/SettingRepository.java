@@ -36,4 +36,7 @@ public interface SettingRepository extends JpaRepository<Setting, Integer> {
     @Modifying
     @Query("update Setting set settingKey=:settingKey,settingValue=:settingValue where id=:id")
     void updateSetting(@Param("id") Integer id, @Param("settingKey") String settingKey, @Param("settingValue") String settingValue);
+
+    @Query(value = "from Setting where settingKey=:settingKey")
+    Setting getSettingValueBySettingKey(@Param("settingKey") String settingKey);
 }

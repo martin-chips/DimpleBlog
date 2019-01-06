@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="front/common :: front-head"></head>
+<body>
+<div th:include="front/common :: front-header"></div>
+
+<div class="searchbox">
+    <div class="search">
+        <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+            <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);"
+                   onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}"
+                   onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+            <input name="show" value="title" type="hidden">
+            <input name="tempid" value="1" type="hidden">
+            <input name="tbname" value="news" type="hidden">
+            <input name="Submit" class="input_submit" value="搜索" type="submit">
+        </form>
+    </div>
+    <div class="searchclose"></div>
+</div>
+<!--top end-->
+<article>
+    <!--lbox begin-->
+    <div class="lbox">
+        <div class="whitebg lanmu"><img src="images/lm01.jpg">
+            <h1>技术博客</h1>
+            <p>个人博客日记，记录自己在学习中遇到的问题及解决办法及学习笔记</p>
+        </div>
+        <div class="whitebg bloglist">
+            <h2 class="htitle">最新博文</h2>
+            <ul id="blogNewest">
+
+            </ul>
+
+        </div>
+
+        <!--bloglist end-->
+    </div>
+    <div class="rbox">
+        <div th:include="front/common :: front-side"></div>
+
+        <div class="whitebg cloud">
+            <h2 class="htitle">标签云</h2>
+            <ul>
+                <a href="" target="_blank">个人博客模板</a> <a href="" target="_blank">css动画</a> <a href=""
+                                                                                              target="_blank">布局</a> <a
+                    href="" target="_blank">今夕何夕</a> <a href="" target="_blank">SEO</a> <a href=""
+                                                                                           target="_blank">女程序员</a> <a
+                    href="" target="_blank">小世界</a> <a href="" target="_blank">个人博客</a> <a href=""
+                                                                                           target="_blank">网页设计</a>
+            </ul>
+        </div>
+    </div>
+</article>
+<head th:include="front/common :: front-footer"></head>
+</body>
+
+<script>
+    var pageNum = 0;
+    $(function () {
+        loadNewestBlog();
+        //鼠标滚动到页面最底部加载数据
+        var documentHeight = [0];
+        $(window).bind("scroll", function () {
+            if ($(document).scrollTop() + $(window).height() > $(document).height() - 1) {
+                documentHeight.push($(document).height())
+                if (documentHeight[documentHeight.length - 1] > documentHeight[documentHeight.length - 2]) {
+                    documentHeight[documentHeight.length - 2] = documentHeight[documentHeight.length - 2] + documentHeight[documentHeight.length - 1];
+                    // $(".res-more").css("display","none");
+                    // self.getShareFiles();
+                    loadNewestBlog();
+                }
+            } else {
+                // $(".res-more").css("display","block");
+            }
+        })
+    });
+
+    /**
+     * 加载最新的博文
+     */
+    function loadNewestBlog() {
+        $.ajax({
+            type: "get",
+            url: "/public/api/front/newestBlog",
+            data: {
+                pageNum: pageNum
+            },
+            success: function (result) {
+                if (result.code == 200) {
+                    generateNewestBlog(result.data);
+                    pageNum++;
+                }
+            }
+        });
+
+    }
+
+
+    /**
+     *
+     * @param data
+     */
+    function generateNewestBlog(data) {
+        var node = $("#blogNewest");
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];//获取data
+            var li = $("<li></li>");
+            //第一部分 标题
+            var blogTitle = $("<h3></h3>");
+            blogTitle.addClass('blogtitle');//添加class
+            var blogTitleHref = $("<a target='_blank'></a>");
+            blogTitleHref.attr("href", "/view/" + item.blogId);//设置点击链接
+            blogTitleHref.text(item.title);//设置标题文字
+            //拼接
+            blogTitle.append(blogTitleHref);
+            li.append(blogTitle);
+
+            //第二部分  图片展示
+            var blogPic = $("<span class='blogpic imgscale'></span>");
+            var blogPicI = $("<i></i>");
+            var blogPicIHref = $("<a></a>");
+            blogPicIHref.text(item.categoryName);//设置图片上显示的文字
+            var blogPicHref = $("<a href='' title=''></a>");//设置图片的链接
+            var blogPicImg = $("<img>");
+            blogPicImg.attr("src", item.headUrl);//设置图片地址
+            blogPicI.append(blogPicIHref);
+            blogPic.append(blogPicI);//拼接I标签
+            blogPicHref.append(blogPicImg);
+            blogPic.append(blogPicHref);//拼接a标签
+            li.append(blogPic);
+
+            //第三部分 博客摘要
+            var blogContent = $("<p></p>");
+            blogContent.addClass("blogtext");
+            blogContent.text(item.summary);//设置摘要内容
+            li.append(blogContent);
+
+            //第四部分 博客的信息
+            var blogInfo = $("<p ></p>");
+            blogInfo.addClass("bloginfo");//添加class
+            var avator = $("<i ></i>");
+            avator.addClass("avatar");//添加class
+            var avatorImg = $("<img>");
+            avatorImg.attr("src", "/front/images/avatar.jpg");//设置图片地址
+            avator.append(avatorImg);//拼接
+            //博客作者
+            var author = $("<span></span>");
+            author.text(item.author);
+            //博客日期
+            var time = $("<span></span>");
+            time.text(item.time);
+            //标签
+            var category = $("<span></span>");
+            category.text("【");
+            var categoryHref = $("<a></a>");
+            categoryHref.attr("href", "");//未设置
+            categoryHref.text(item.categoryName);
+            category.append(categoryHref);
+            category.append("】");
+            blogInfo.append(avator);
+            blogInfo.append(author);
+            blogInfo.append(time);
+            blogInfo.append(category);
+            li.append(blogInfo);
+            //阅读更多
+            var readmore = $("<a class='viewmore'>阅读更多</a>");
+            li.append(readmore);
+            node.append(li);
+        }
+
+    }
+</script>
+</html>

@@ -191,7 +191,12 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
-
+        <!--MD转为HTML-->
+        <dependency>
+            <groupId>org.pegdown</groupId>
+            <artifactId>pegdown</artifactId>
+            <version>1.6.0</version>
+        </dependency>
     </dependencies>
 
     <build>

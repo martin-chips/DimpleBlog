@@ -12,8 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author : Dimple
@@ -40,9 +44,30 @@ public class SettingController {
         return "frontSetting/signature";
     }
 
+    /**
+     * String nickName,
+     * String profession,
+     * String location,
+     * String email,
+     * String website,
+     * String myEmail,
+     * String weChart
+     *
+     * @param model
+     * @return
+     */
     @ApiIgnore
     @GetMapping("/page/personCard.html")
     public String toPersonCardPage(Model model) {
+        settingService.getSettingValueBySettingKey("11");
+        model.addAttribute("nickName", settingService.getSettingValueBySettingKey("nickName"));
+        model.addAttribute("profession", settingService.getSettingValueBySettingKey("profession"));
+        model.addAttribute("location", settingService.getSettingValueBySettingKey("location"));
+        model.addAttribute("email", settingService.getSettingValueBySettingKey("email"));
+        model.addAttribute("website", settingService.getSettingValueBySettingKey("website"));
+        model.addAttribute("weChart", settingService.getSettingValueBySettingKey("weChart"));
+        model.addAttribute("myEmail", settingService.getSettingValueBySettingKey("myEmail"));
+        model.addAttribute("qq", settingService.getSettingValueBySettingKey("qq"));
         return "frontSetting/personCard";
     }
 
@@ -63,7 +88,7 @@ public class SettingController {
         if (setting.getId() == null) {
             settingService.createSetting(setting);
         } else {
-            settingService.updateSetting(setting);
+//            settingService.updateSetting(setting);
         }
         return ResultUtil.success();
     }
@@ -76,6 +101,30 @@ public class SettingController {
         return ResultUtil.success(settingBySettingKey);
     }
 
+    @ApiOperation("个人名片更新")
+    @ResponseBody
+    @PutMapping("/api/setting/personCard")
+    public Result setPersonCard(
+            String nickName,
+            String profession,
+            String location,
+            String email,
+            String website,
+            String myEmail,
+            String weChart,
+            String qq) {
+        List<Setting> settings = new LinkedList<>();
+        settings.add(new Setting("nickName", nickName));
+        settings.add(new Setting("profession", profession));
+        settings.add(new Setting("location", location));
+        settings.add(new Setting("email", email));
+        settings.add(new Setting("website", website));
+        settings.add(new Setting("myEmail", myEmail));
+        settings.add(new Setting("weChart", weChart));
+        settings.add(new Setting("qq", qq));
+        settingService.updateSetting(settings);
+        return ResultUtil.success();
+    }
 
 }
 

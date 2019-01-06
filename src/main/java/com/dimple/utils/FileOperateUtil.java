@@ -9,6 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
+import org.pegdown.PegDownProcessor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -271,29 +272,34 @@ public class FileOperateUtil {
     };
 
 
-    // public List<Blog> generateWrapBlog(List<Blog> blogs) {
-    //     if (blogs == null) {
-    //         return null;
-    //     }
-    //     //避免对JPA实体进行操作，防止其刷新到数据库
-    //     List<Blog> blogsResult = new LinkedList<>();
-    //     BeanUtils.copyProperties(blogs, blogsResult);
-    //     for (Blog blog : blogsResult) {
-    //         if (StringUtils.isNotBlank(blog.getHeaderUrl())) {
-    //             blog.setHeaderUrl("/images/" + blog.getHeaderUrl());
-    //         }
-    //     }
-    //     return blogsResult;
-    // }
-    //
-    // public Blog generateWrapBlog(Blog blog) {
-    //     if (blog == null || StringUtils.isBlank(blog.getHeaderUrl())) {
-    //         return blog;
-    //     }
-    //     //防止对JPA实体进行操作，刷新到数据库
-    //     Blog blogResult = new Blog();
-    //     BeanUtils.copyProperties(blog, blogResult);
-    //     blogResult.setHeaderUrl("/image/" + blog.getHeaderUrl());
-    //     return blogResult;
-    // }
+    /**
+     * Md文件上传处理方法，转为String类型的文件
+     *
+     * @param file
+     * @return
+     * @throws FileUploadBase.FileSizeLimitExceededException
+     * @throws FileNameLengthOutOfLimitException
+     * @throws FileTypeMisMatchException
+     * @throws FileNotExistException
+     */
+    public String MdUploadHandler(MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthOutOfLimitException, FileTypeMisMatchException, FileNotExistException, IOException {
+        if (file == null) {
+            throw new FileNotExistException("上传文件不能为空");
+        }
+        String basePath = "D://test";
+
+        String filePath = basePath + "/" + file.getOriginalFilename();
+        File dest = new File(filePath);
+        mkDir(filePath);
+        file.transferTo(dest);
+        return null;
+    }
+
+    private void mkDir(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+    }
+
 }

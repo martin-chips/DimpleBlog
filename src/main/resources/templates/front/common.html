@@ -15,14 +15,52 @@
     <script src="/front/js/modernizr.js"></script>
     <![endif]-->
 </head>
+<div th:fragment="front-side">
 
+    <div class="whitebg notice">
+        <h2 class="htitle">最近更新</h2>
+        <ul>
+            <li th:each="blog:${newestUpdateBlog}">
+                <a th:href="${'/view/'+blog.blogId}" th:text="${blog.title}"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="whitebg paihang">
+        <h2 class="htitle">点击排行</h2>
+        <section class="topnews imgscale"><a th:href="'/view/'+${clickBlog[0].blogId}"><img
+                src="/front/images/h1.jpg" th:src="${clickBlog[0].headerUrl}"><span
+                th:text="${clickBlog[0].title}"></span></a>
+        </section>
+        <ul>
+            <li th:each="item:${clickBlog}">
+                <i></i>
+                <a th:href="'/view/'+${item.blogId}" th:text="${item.title}">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="whitebg tuijian">
+        <h2 class="htitle">站长推荐</h2>
+        <section class="topnews imgscale"><a th:href="'/view/'+${supportBlog[0].blogId}"><img
+                src="/front/images/h2.jpg" th:src="${supportBlog[0].headerUrl}"><span
+                th:text="${supportBlog[0].title}"></span></a>
+        </section>
+        <ul>
+            <li th:each="item:${supportBlog}">
+                <a th:href="'/view/'+${item.blogId}"></a>
+                <i><img src="/front/images/text01.jpg" th:src="${item.headerUrl}"> </i>
+                <p th:text="${item.title}"></p>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <!--====================================================前台界面的尾部=================================================-->
 <div th:fragment="front-footer">
     <footer id="footer" class="footer">
         <div class="footer-inner">
             <div class="copyright">© 2017 – <span itemprop="copyrightYear">2019</span>
-                <i class="fa fa-drupal" aria-hidden="true" ></i>
+                <i class="fa fa-drupal" aria-hidden="true"></i>
                 <span>  </span>
                 <a href="http://www.bianxiaofeng.com"> <span class="author"
                                                              itemprop="copyrightHolder">  Dimple</span></a>
@@ -37,21 +75,21 @@
     <header id="header">
         <div class="navbox">
             <h2 id="mnavh"><span class="navicon"></span></h2>
-            <div class="logo"><a href="http://www.bianxiaofeng.com">Dimple的个人博客</a></div>
+            <div class="logo"><a href="/">Dimple的个人博客</a></div>
             <nav>
                 <ul id="starlist">
-                    <li><a href="index.html">网站首页</a></li>
-                    <li><a href="list.html">技术博客</a></li>
-                    <li class="menu"><a href="list2.html">资源分享</a>
+                    <li><a href="/">网站首页</a></li>
+                    <li><a href="technology.html">技术博客</a></li>
+                    <li class="menu"><a href="#">资源分享</a>
                         <ul class="sub">
-                            <li><a href="/6">软件分享</a></li>
-                            <li><a href="/7">资料分享</a></li>
+                            <li><a href="/software.html">软件分享</a></li>
+                            <li><a href="/resource.html">资料分享</a></li>
                         </ul>
                         <span></span>
                     </li>
-                    <li><a href="list3.html">随心吐槽</a></li>
-                    <li><a href="about.html">关于我</a></li>
-                    <li><a href="about.html">留言</a></li>
+                    <li><a href="/free.html">随心吐槽</a></li>
+                    <li><a href="/about.html">关于我</a></li>
+                    <li><a href="/leaveComment.html">留言</a></li>
                     <li><a href="/page/login.html">登陆</a></li>
                 </ul>
             </nav>
@@ -76,5 +114,6 @@
         <div class="searchclose"></div>
     </div>
     <!--top end-->
+
 </div>
 

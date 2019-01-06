@@ -1,6 +1,7 @@
 package com.dimple.bean;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -21,6 +22,7 @@ import java.util.Objects;
 @Entity
 @Data
 @Table(name = "setting", schema = "dimple_blog")
+@RequiredArgsConstructor
 public class Setting {
     @Id
     @Column(name = "id", nullable = false)
@@ -30,4 +32,8 @@ public class Setting {
     private String settingValue;
     private String note;
 
+    public Setting(String settingKey, String settingValue) {
+        this.settingKey = settingKey;
+        this.settingValue = settingValue;
+    }
 }

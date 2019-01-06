@@ -3,6 +3,8 @@ package com.dimple.service;
 import com.dimple.bean.Setting;
 import com.dimple.bean.Signature;
 
+import java.util.List;
+
 /**
  * @ClassName: SettingService
  * @Description:
@@ -20,10 +22,14 @@ public interface SettingService {
 
     void deleteSettingById(Integer id);
 
-    void updateSetting(Setting setting);
+    void updateSetting(List<Setting> setting);
 
     Signature getSignatureByKey(String key);
 
 
     void insertOrUpdateSignature(Signature signature);
+
+    List<Setting> getAllSetting();
+
+    String getSettingValueBySettingKey(String settingKey);
 }
