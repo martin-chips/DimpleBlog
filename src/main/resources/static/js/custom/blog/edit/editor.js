@@ -172,6 +172,56 @@ function uploadImage() {
     });
 }
 
+/**
+ * 上传Markdown文件
+ */
+function uploadMd() {
+    var title = "上传Markdown文件";
+    var url = "/page/mdTransferHtml.html";
+    var width = $(window).width() / 1.5;
+    var height = $(window).height() / 1.2;
+    //如果是移动端，就使用自适应大小弹窗
+    if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+        width = 'auto';
+        height = 'auto';
+    }
+    if ($.common.isEmpty(title)) {
+        title = false;
+    }
+    if ($.common.isEmpty(url)) {
+        url = "/404.html";
+    }
+    if ($.common.isEmpty(width)) {
+        width = 800;
+    }
+    if ($.common.isEmpty(height)) {
+        height = ($(window).height() - 50);
+    }
+    layer.open({
+        type: 2,
+        area: [width + 'px', height + 'px'],
+        fix: false,
+        //不固定
+        maxmin: true,
+        shade: 0.3,
+        title: title,
+        content: url,
+        btn: ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'],
+        // 弹层外区域关闭
+        shadeClose: true,
+        yes: function (index, layero) {
+            var iframeWin = layero.find('iframe')[0];
+            var data = iframeWin.contentWindow.submitHandler();
+            console.log(data)
+            $("#summernote").summernote("code", data);
+            iframeWin.contentWindow.closeLocal();
+        },
+        cancel: function (index) {
+            return true;
+        }
+    });
+}
+
 function loadCategory() {
     $.ajax({
         type: "get",

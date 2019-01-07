@@ -75,13 +75,56 @@ function initTable() {
                 var actions = [];
                 actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.updateFull(\'' + row.blogId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                 actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.blogId + '\')"><i class="fa fa-remove"></i>删除</a> ');
-                actions.push('<a class="btn btn-warning btn-xs ' + '" href="#" onclick="$.operate.detail(\'' + row.blogId + '\')"><i class="fa fa-search"></i>详细</a>');
+                actions.push('<a class="btn btn-warning btn-xs ' + '" href="#" onclick="detail(\'' + row.blogId + '\')"><i class="fa fa-search"></i>详细</a>');
                 return actions.join('');
             }
         }
         ],
     };
     $.table.init(option);
+}
+
+function detail(id) {
+    var title = "详细";
+    var url = "/view/" + id + ".html";
+    var width = $(window).width() / 1.5;
+    var height = $(window).height() / 1.2;
+    //如果是移动端，就使用自适应大小弹窗
+    if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+        width = 'auto';
+        height = 'auto';
+    }
+    if ($.common.isEmpty(title)) {
+        title = false;
+    }
+    if ($.common.isEmpty(url)) {
+        url = "/404.html";
+    }
+    if ($.common.isEmpty(width)) {
+        width = 800;
+    }
+    if ($.common.isEmpty(height)) {
+        height = ($(window).height() - 50);
+    }
+    layer.open({
+        type: 2,
+        area: [width + 'px', height + 'px'],
+        fix: false,
+        //不固定
+        maxmin: true,
+        shade: 0.3,
+        title: $.table._options.modalName + "详细",
+        content: url,
+        btn: '关闭',
+        // 弹层外区域关闭
+        shadeClose: true,
+        success: function (layer) {
+            layer[0].childNodes[3].childNodes[0].attributes[0].value = 'layui-layer-btn1';
+        },
+        btn1: function (index) {
+            layer.close(index);
+        }
+    });
 }
 
 function updateBlog(id) {

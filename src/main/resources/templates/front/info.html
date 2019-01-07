@@ -16,7 +16,10 @@
                 <span>【<a th:text="${category['categoryName']}">程序人生</a>】</span>
                 <span th:text="${blog.click}+'人已围观'">109990人已围观</span>
             </p>
+            <br/>
+            <div align="center"><img th:src="${blog.headerUrl}"></div>
             <p class="con_info">
+
                 <b>摘要：</b>
                 <span th:text="${blog.summary}"></span>
             </p>

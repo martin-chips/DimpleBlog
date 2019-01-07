@@ -18,12 +18,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
+import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class FileUtil {
      * @return the url of image in qi niu yun stream
      */
     public String uploadImgToQiNiu(MultipartFile file) throws FileNotExistException, FileNameLengthOutOfLimitException, FileUploadBase.FileSizeLimitExceededException {
-        imageFileCheck(file);
+        fileCheck(file);
 
         String imgPath = "";
         String originalFilename = file.getOriginalFilename();
@@ -144,6 +147,56 @@ public class FileUtil {
     }
 
     /**
+     * markdown file transfer to html
+     *
+     * @param file
+     * @return
+     * @throws FileNotExistException
+     * @throws FileUploadBase.FileSizeLimitExceededException
+     * @throws FileNameLengthOutOfLimitException
+     */
+    public String markdownTransferToHtml(MultipartFile file) throws FileNotExistException, FileUploadBase.FileSizeLimitExceededException, FileNameLengthOutOfLimitException {
+        fileCheck(file);
+        String htmlContent = null;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+            String line;
+            String mdContent = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                mdContent += line + "\r\n";
+            }
+            PegDownProcessor pdp = new PegDownProcessor(Integer.MAX_VALUE);
+            htmlContent = pdp.markdownToHtml(mdContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return htmlContent;
+    }
+
+    public String fileUpload(MultipartFile file) throws FileNotExistException {
+        if (file.isEmpty()) {
+            throw new FileNotExistException("file is empty");
+        }
+        String fileName = file.getOriginalFilename();
+        log.info("upload file name {}" + fileName);
+        String extension = FilenameUtils.getExtension(fileName);
+        log.info("the extension {} of file {}", extension, fileName);
+        String filePath = "temp/";
+        File dest = new File(filePath + fileName);
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdirs();
+        }
+        try {
+            file.transferTo(dest);
+            return "成功";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "失败";
+    }
+
+
+    /**
      * http://pkxwyzsng.bkt.clouddn.com\af425c5a8bc777f7c959a59ef54a95ee.jpg
      *
      * @param url
@@ -157,7 +210,7 @@ public class FileUtil {
         return url.substring(i + 1);
     }
 
-    private void imageFileCheck(MultipartFile file) throws FileNotExistException, FileNameLengthOutOfLimitException, FileUploadBase.FileSizeLimitExceededException {
+    private void fileCheck(MultipartFile file) throws FileNotExistException, FileNameLengthOutOfLimitException, FileUploadBase.FileSizeLimitExceededException {
         if (file.isEmpty()) {
             throw new FileNotExistException("file can not be null!");
         }

@@ -1,14 +1,12 @@
 package com.dimple.service.impl;
 
 import com.dimple.bean.Blog;
-
 import com.dimple.bean.BlogInfo;
 import com.dimple.framework.enums.BlogStatus;
 import com.dimple.repository.BlogInfoRepository;
 import com.dimple.repository.BlogRepository;
 import com.dimple.repository.CategoryRepository;
 import com.dimple.service.BlogService;
-import com.dimple.utils.FileOperateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +38,6 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogRepository blogRepository;
 
-    @Autowired
-    FileOperateUtil fileOperateUtil;
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -91,8 +87,6 @@ public class BlogServiceImpl implements BlogService {
             //设置为已发表状态
             blog.setStatus(BlogStatus.PUBLISHED.PUBLISHED.getCode());
         }
-        //设置博客headerUrl的链接地址（只设置名字）
-        blog.setHeaderUrl(fileOperateUtil.getImgName(blog.getHeaderUrl()));
         Blog save = blogRepository.save(blog);
         //将博客内容同步到blogInfo表中
         BlogInfo blogInfo = new BlogInfo();
@@ -122,7 +116,6 @@ public class BlogServiceImpl implements BlogService {
         copyProperties(blogDB, blog);
         blog.setUpdateTime(new Date());
         //设置头像URL与域名与关
-        blog.setHeaderUrl(fileOperateUtil.getImgName(blog.getHeaderUrl()));
         return blogRepository.save(blog);
     }
 
