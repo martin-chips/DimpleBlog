@@ -49,6 +49,8 @@ public class ShiroConfig {
         //加入验证码不拦截
         filterChainDefinitionMap.put("/api/kaptcha", "anon");
         filterChainDefinitionMap.put("/html/**", "anon");
+        //加入plugin下面的不拦截
+        filterChainDefinitionMap.put("/plugin/**", "anon");
         //前端界面不拦截
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/front/**", "anon");

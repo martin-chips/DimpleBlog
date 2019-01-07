@@ -9,8 +9,6 @@ import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.BlogService;
 import com.dimple.service.CategoryService;
 import com.dimple.utils.FileOperateUtil;
-import com.dimple.utils.QiNiuUtils;
-import com.qiniu.util.StringMap;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +27,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author : Dimple
@@ -145,28 +138,6 @@ public class BlogController {
         Pageable pageable = PageRequest.of(pageNum < 0 ? 0 : pageNum, pageSize, Sort.Direction.DESC, "createTime");
         Page<Blog> allBlogs = blogService.getAllBlogs(title, startTime, endTime, status, pageable);
         return ResultUtil.success(allBlogs);
-    }
-
-
-    @PostMapping(value = "/uploadQiNiu")
-    @ResponseBody
-    public Object uploadQiNiu(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        File distFile = null;
-        if (!file.isEmpty()) {
-            try {
-                String path = request.getSession().getServletContext().getRealPath("/upload");
-                String fileName = UUID.randomUUID().toString().replace("-", "") + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-                distFile = new File(path + "/" + fileName);
-                file.transferTo(distFile);
-                StringMap stringMap = QiNiuUtils.upload(fileName, path + "/");
-                return stringMap.map();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                distFile.delete();
-            }
-        }
-        return null;
     }
 
 

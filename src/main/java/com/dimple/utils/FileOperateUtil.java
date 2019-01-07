@@ -1,23 +1,31 @@
 package com.dimple.utils;
 
-import com.dimple.bean.Blog;
-import com.dimple.framework.exception.file.FileNotExistException;
 import com.dimple.framework.exception.file.FileNameLengthOutOfLimitException;
+import com.dimple.framework.exception.file.FileNotExistException;
 import com.dimple.framework.exception.file.FileTypeMisMatchException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
-import org.pegdown.PegDownProcessor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author : Dimple
@@ -69,9 +77,9 @@ public class FileOperateUtil {
         }
         //文件长度校验
         int fileNameLength = file.getOriginalFilename().length();
-        if (fileNameLength > FileOperateUtil.DEFAULT_FILE_NAME_LENGTH) {
-            throw new FileNameLengthOutOfLimitException(file.getOriginalFilename(), fileNameLength, FileOperateUtil.DEFAULT_FILE_NAME_LENGTH);
-        }
+        // if (fileNameLength > FileOperateUtil.DEFAULT_FILE_NAME_LENGTH) {
+        //     throw new FileNameLengthOutOfLimitException(file.getOriginalFilename(), fileNameLength, FileOperateUtil.DEFAULT_FILE_NAME_LENGTH);
+        // }
         checkoutFileSize(file);
         String originalFilename = file.getOriginalFilename();
         //获取扩展名
@@ -290,6 +298,7 @@ public class FileOperateUtil {
 
         String filePath = basePath + "/" + file.getOriginalFilename();
         File dest = new File(filePath);
+
         mkDir(filePath);
         file.transferTo(dest);
         return null;

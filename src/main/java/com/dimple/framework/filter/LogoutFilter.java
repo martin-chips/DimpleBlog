@@ -2,15 +2,14 @@ package com.dimple.framework.filter;
 
 import com.dimple.bean.User;
 import com.dimple.framework.constant.Status;
+import com.dimple.framework.log.AsyncLog;
 import com.dimple.utils.MessageUtil;
 import com.dimple.utils.ShiroUtil;
-import com.dimple.framework.log.AsyncLog;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -25,14 +24,18 @@ import javax.servlet.ServletResponse;
 @Data
 @Slf4j
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
+    private AsyncLog asyncLog;
 
-    @Autowired
-    AsyncLog asyncLog;
+    // @PostConstruct
+    // public void init() {
+    //     asyncLog = new AsyncLog();
+    // }
 
     private String loginUrl;
 
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+        asyncLog = new AsyncLog();
         try {
             //获取当前的对象
             Subject subject = getSubject(request, response);

@@ -5,6 +5,7 @@ import com.dimple.framework.log.annotation.Log;
 import com.dimple.utils.FileOperateUtil;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
+import com.dimple.utils.FileUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,9 @@ public class ImageController {
     @Autowired
     FileOperateUtil fileOperateUtil;
 
+    @Autowired
+    FileUtil fileUtil;
+
     @ApiIgnore
     @ApiOperation("跳转到上传图片界面")
     @GetMapping("/page/imageUploadPage")
@@ -43,7 +47,7 @@ public class ImageController {
     @Log(title = "文件上传", operateType = OperateType.FILE_UPLOAD)
     @ResponseBody
     public Result uploadImageSummernote(@RequestParam("file") MultipartFile file) throws Exception {
-        return ResultUtil.success(fileOperateUtil.imgUpload(file));
+        return ResultUtil.success((fileUtil.uploadImgToQiNiu(file)));
     }
 
     @ApiOperation("上传图片文件")
@@ -51,25 +55,26 @@ public class ImageController {
     @RequestMapping(value = "/api/image", method = RequestMethod.POST)
     @ResponseBody
     public Result uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
-        return ResultUtil.success(fileOperateUtil.imgUpload(file));
+        return ResultUtil.success((fileUtil.uploadImgToQiNiu(file)));
     }
 
 
     @ApiOperation("SummerNote编辑器中删除图片同步删除服务器图片")
     @DeleteMapping("/api/summernote/image")
     @ResponseBody
-    public Boolean deleteImage(String fileUrl) {
+    public Result deleteImage(String fileUrl) {
         log.info("删除图片{}", fileUrl);
-        Boolean success = fileOperateUtil.deleteImgByUrl(fileUrl);
-        return success;
+        fileUtil.deleteImgFromQiNiu(fileUrl);
+        return ResultUtil.success();
     }
 
 
-    @ApiOperation("获取服务器上已经存在的图片数据")
+    @ApiOperation("获取七牛云服务器上的数据")
     @GetMapping("/api/image")
     @ResponseBody
     public Result getImagesUpload() {
-        List<String> allImageUrl = fileOperateUtil.getAllImageOrderByCreateTime();
+        List<String> allImageUrl = fileUtil.getAllImgFromQiNiu();
         return ResultUtil.success(allImageUrl);
     }
+
 }
