@@ -49,37 +49,67 @@
                 </label>
             </div>
         </div>
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label">是否锁定：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<div class="onoffswitch">-->
-        <!--<input type="checkbox" th:checked="${user.locked}"-->
-        <!--class="onoffswitch-checkbox" id="status" name="status">-->
-        <!--<label class="onoffswitch-label" for="status">-->
-        <!--<span class="onoffswitch-inner"></span>-->
-        <!--<span class="onoffswitch-switch"></span>-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label">角色：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<label class="check-box">-->
-        <!--<input name="role" type="checkbox">-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--</div>-->
     </form>
 </div>
 </body>
 <div th:include="common :: common-footer"></div>
 
 <script>
+    $(function () {
+        $("#userUpdateForm").formValidate({
+            rules: {
+                userLoginId: {
+                    required: true,
+                    rangelength: [4, 8]
+                },
+                userName: {
+                    required: true,
+                    rangelength: [2, 8]
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    rangelength: [5, 10]
+                },
+                sex: {
+                    required: true
+                },
+                role: {
+                    required: true
+                }
+            },
+            messages: {
+                "userLoginId": {
+                    required: "请输入登录账号",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的登录账号"
+                },
+                "userName": {
+                    required: "请输入姓名",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的姓名"
+                },
+                "email": {
+                    required: "请输入邮箱",
+                    email: "请正确输入邮箱地址"
+                },
+                "password": {
+                    required: "请输入密码",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的密码"
+                },
+                "sex": {
+                    required: "请选择性别",
+                },
+            },
+        });
+    });
 
     function submitHandler() {
 
-        updateUser();
+        if ($.validate.form()) {
+            updateUser();
+        }
 
     }
 

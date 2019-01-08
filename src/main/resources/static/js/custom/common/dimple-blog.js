@@ -671,7 +671,6 @@
                 $.modal.confirm("确定删除该条" + $.table._options.modalName + "信息吗？", function () {
                     var url = $.common.isEmpty(id) ? $.table._options.deleteUrl : $.table._options.deleteUrl.replace("{id}", id);
                     var data = {"ids": id};
-                    console.log(url)
                     $.operate.submit(url, "delete", "json", data);
                 });
             },

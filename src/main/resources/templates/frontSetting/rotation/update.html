@@ -3,7 +3,7 @@
 <head th:include="common :: common-head"></head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="rotationAddForm">
+    <form class="form-horizontal m" id="rotationUpdateForm">
         <input type="hidden" th:value="${rotation.id}" name="id">
         <div class="form-group">
             <label class="col-sm-3 control-label">链接地址：</label>
@@ -79,6 +79,36 @@
 <div th:include="common :: common-footer"></div>
 
 <script>
+    $(function () {
+        $("#rotationUpdateForm").formValidate({
+            rules: {
+                url: {
+                    required: true,
+                },
+                title: {
+                    required: true,
+                    rangelength: [3, 15]
+                },
+                alt: {
+                    required: true,
+                    rangelength: [3, 15]
+                },
+            },
+            messages: {
+                "url": {
+                    required: "请输入链接地址",
+                },
+                "title": {
+                    required: "请输入描述",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的描述信息"
+                },
+                "alt": {
+                    required: "请输入提示",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的提示信息"
+                },
+            },
+        });
+    });
 
     /**
      * 上传图片
@@ -122,7 +152,7 @@
                 var data = iframeWin.contentWindow.submitHandler();
                 $("#imgLocation").val(data);
                 if (!$.common.isEmpty(data)) {
-                    $("#preview").removeAttrs("hidden");
+                    $("#preview").removeAttr("hidden");
                     $("#previewImg").attr("src", data);
                 }
                 iframeWin.contentWindow.closeLocal();
@@ -134,14 +164,16 @@
     }
 
     function submitHandler() {
-        updateRotation();
+        if ($.validate.form()) {
+            updateRotation();
+        }
     }
 
     function updateRotation() {
         $.ajax({
             type: "PUT",
             dataType: "json",
-            data: $("#rotationAddForm").serializeArray(),
+            data: $("#rotationUpdateForm").serializeArray(),
             url: "/api/rotation",
             success: function (data) {
                 if (data != null && data.code == web_status.SUCCESS) {

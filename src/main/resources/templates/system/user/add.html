@@ -39,6 +39,7 @@
             <label class="col-sm-3 control-label">性别：</label>
             <div class="col-sm-8">
                 <select id="sex" name="sex" class="form-control m-b">
+                    <option value=""> 请选择性别</option>
                     <option value="1"> 男</option>
                     <option value="0"> 女</option>
                     <option value="-1"> 未知</option>
@@ -62,14 +63,59 @@
 <script>
 
     $(function () {
-        // $.ajax({
-        //     url: "api/role/"
-        // });
-
+        $("#userAddForm").formValidate({
+            rules: {
+                userLoginId: {
+                    required: true,
+                    rangelength: [4, 8]
+                },
+                userName: {
+                    required: true,
+                    rangelength: [2, 8]
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    rangelength: [5, 10]
+                },
+                sex: {
+                    required: true
+                },
+                role: {
+                    required: true
+                }
+            },
+            messages: {
+                "userLoginId": {
+                    required: "请输入登录账号",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的登录账号"
+                },
+                "userName": {
+                    required: "请输入姓名",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的姓名"
+                },
+                "email": {
+                    required: "请输入邮箱",
+                    email: "请正确输入邮箱地址"
+                },
+                "password": {
+                    required: "请输入密码",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的密码"
+                },
+                "sex": {
+                    required: "请选择性别",
+                },
+            },
+        });
     });
 
     function submitHandler() {
-        insertUser();
+        if ($.validate.form()) {
+            insertUser();
+        }
     }
 
     function insertUser() {

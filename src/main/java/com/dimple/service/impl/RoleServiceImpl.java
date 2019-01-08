@@ -8,6 +8,7 @@ import com.dimple.repository.RoleRepository;
 import com.dimple.repository.UserRepository;
 import com.dimple.repository.UserRoleRepository;
 import com.dimple.service.RoleService;
+import com.dimple.utils.JpaUpdateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -93,6 +94,7 @@ public class RoleServiceImpl implements RoleService {
         if (role.getLocked() == null) {
             role.setLocked(true);
         }
+        JpaUpdateUtil.copyProperties(roleDB, role);
         Role save = roleRepository.save(role);
         //更新RolePermission表
         rolePermissionRepository.deleteAllByRoleId(role.getRoleId());

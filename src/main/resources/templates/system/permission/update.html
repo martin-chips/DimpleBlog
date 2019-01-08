@@ -83,51 +83,22 @@
                 radioClass: 'iradio-blue',
             })
         }
+        $("#permissionUpdateForm").formValidate({
+            rules: {
+                title: {
+                    required: true
+                },
+            },
+            messages: {
+                "title": "请输入权限名称",
+            },
+        });
     });
 
     $(function () {
         var type = $('input[name="type"]:checked').val();
         menuVisible(type);
     });
-    //
-    // $("#form-menu-edit").validate({
-    //     rules: {
-    //         type: {
-    //             required: true,
-    //         },
-    //         menuName: {
-    //             required: true,
-    //             remote: {
-    //                 url: prefix + "/checkMenuNameUnique",
-    //                 type: "post",
-    //                 dataType: "json",
-    //                 data: {
-    //                     "menuId": function () {
-    //                         return $("#menuId").val();
-    //                     },
-    //                     "parentId": function () {
-    //                         return $("input[name='parentId']").val();
-    //                     },
-    //                     "menuName": function () {
-    //                         return $.common.trim($("#menuName").val());
-    //                     }
-    //                 },
-    //                 dataFilter: function (data, type) {
-    //                     return $.validate.unique(data);
-    //                 }
-    //             }
-    //         },
-    //         orderNum: {
-    //             required: true,
-    //             digits: true
-    //         },
-    //     },
-    //     messages: {
-    //         "menuName": {
-    //             remote: "菜单已经存在"
-    //         }
-    //     }
-    // });
 
     function submitHandler() {
         if ($.validate.form()) {

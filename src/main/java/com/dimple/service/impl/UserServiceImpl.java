@@ -2,10 +2,10 @@ package com.dimple.service.impl;
 
 import com.dimple.bean.User;
 import com.dimple.framework.exception.user.UserAccountNotExistsException;
-import com.dimple.repository.RoleRepository;
 import com.dimple.repository.UserRepository;
 import com.dimple.repository.UserRoleRepository;
 import com.dimple.service.UserService;
+import com.dimple.utils.JpaUpdateUtil;
 import com.dimple.utils.Md5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +100,8 @@ public class UserServiceImpl implements UserService {
         if (user == null || user.getUserId() == null) {
             return null;
         }
+        User UserDB = userRepository.findByUserId(user.getUserId());
+        JpaUpdateUtil.copyProperties(UserDB, user);
         return userRepository.save(user);
     }
 
