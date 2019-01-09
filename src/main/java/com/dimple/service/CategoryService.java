@@ -65,4 +65,7 @@ public interface CategoryService {
      * @return
      */
     int updateCategorySupport(Integer[] ids, Boolean status);
+
+
+    Category getCategoryByTitle(String title);
 }

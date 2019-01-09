@@ -19,9 +19,8 @@
             <br/>
             <div align="center"><img th:src="${blog.headerUrl}"></div>
             <p class="con_info">
-
                 <b>摘要：</b>
-                <span th:text="${blog.summary}"></span>
+                <span th:utext="${blog.summary}"></span>
             </p>
             <div class="con_text">
                 <div th:utext="${blog.content}"></div>

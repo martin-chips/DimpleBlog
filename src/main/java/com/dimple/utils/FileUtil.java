@@ -1,8 +1,11 @@
 package com.dimple.utils;
 
+import com.dimple.bean.Blog;
+import com.dimple.bean.Category;
 import com.dimple.bean.FileUtilSetting;
 import com.dimple.framework.exception.file.FileNameLengthOutOfLimitException;
 import com.dimple.framework.exception.file.FileNotExistException;
+import com.dimple.service.CategoryService;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -27,6 +30,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,6 +49,10 @@ public class FileUtil {
 
     @Autowired
     FileUtilSetting fileUtilSetting;
+
+    @Autowired
+    CategoryService categoryService;
+
 
     /**
      * upload file to qi niu yun bucket
@@ -173,6 +183,59 @@ public class FileUtil {
         return htmlContent;
     }
 
+    public Blog markdownTransferToBlog(MultipartFile file) throws FileNotExistException, FileUploadBase.FileSizeLimitExceededException, FileNameLengthOutOfLimitException {
+        fileCheck(file);
+        String htmlContent = null;
+        Blog blog = new Blog();
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+            String line;
+            String mdContent = "";
+
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains("title:")) {
+                    blog.setTitle(line.substring(7));
+                    continue;
+                }
+                if (line.contains("date")) {
+                    blog.setCreateTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(line.substring(6)));
+                    continue;
+                }
+                if (line.contains("tags")) {
+                    blog.setTags(line.substring(6));
+                    continue;
+                }
+                if (line.contains("photos")) {
+                    blog.setHeaderUrl(line.substring(8));
+                    continue;
+                }
+                if (line.contains("categories")) {
+                    String title = line.substring(11);
+                    Category categoryByTitle = categoryService.getCategoryByTitle(title);
+                    if (categoryByTitle == null) {
+                        Category category = new Category();
+                        category.setSupport(false);
+                        category.setCreateTime(new Date());
+                        category.setWeight(0);
+                        category.setTitle(line.substring(11));
+                        categoryByTitle = categoryService.insertBlogCategory(category);
+                    }
+                    blog.setCategoryId(categoryByTitle.getCategoryId());
+                    continue;
+                }
+                mdContent += line + "\r\n";
+            }
+            PegDownProcessor pdp = new PegDownProcessor(Integer.MAX_VALUE);
+            htmlContent = pdp.markdownToHtml(mdContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        blog.setContent(htmlContent);
+        return blog;
+    }
+
     public String fileUpload(MultipartFile file) throws FileNotExistException {
         if (file.isEmpty()) {
             throw new FileNotExistException("file is empty");
@@ -224,5 +287,11 @@ public class FileUtil {
         }
     }
 
-
+    public static void main(String[] args) {
+        String test = "title: Android Studio 优化";
+        boolean title1 = test.contains("title");
+        System.out.println(title1);
+        String title = test.substring(7);
+        System.out.println(title);
+    }
 }

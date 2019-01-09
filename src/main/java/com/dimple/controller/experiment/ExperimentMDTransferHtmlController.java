@@ -1,11 +1,10 @@
-package com.dimple.controller.blog;
+package com.dimple.controller.experiment;
 
 import com.dimple.framework.exception.file.FileNameLengthOutOfLimitException;
 import com.dimple.framework.exception.file.FileNotExistException;
 import com.dimple.framework.exception.file.FileTypeMisMatchException;
 import com.dimple.framework.message.Result;
-import com.dimple.framework.message.ResultUtil;
-import com.dimple.utils.FileUtil;
+import com.dimple.service.ExperimentMdService;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,26 +15,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * @ClassName: ExperimentController
- * @Description: 实验室功能的Controller MD 转为HTML
- * @Auther: Dimple
- * @Date: 2019/1/5 15:18
- * @Version: 1.0
+ * @author : Dimple
+ * @version : 1.0
+ * @class : ExperimentMDTransferHtmlController
+ * @description :
+ * @date : 01/09/19 12:38
  */
 @Controller
-public class MdTransferHTMLController {
+public class ExperimentMDTransferHtmlController {
 
     @Autowired
-    FileUtil fileUtil;
+    ExperimentMdService experimentMdService;
 
-    @GetMapping("/page/mdTransferHtml.html")
-    public String mdTransferHtmlPage() {
-        return "blog/mdUpload";
+    @GetMapping("/page/experiment/md.html")
+    public String transferMd() {
+        return "experiment/mdTransferHtml";
     }
 
-    @PostMapping("/api/blog/mdUpload")
+    @PostMapping("/api/experiment/mdUpload")
     @ResponseBody
     public Result mdUploadTransferHtml(@RequestParam("file") MultipartFile file) throws FileNameLengthOutOfLimitException, FileUploadBase.FileSizeLimitExceededException, FileTypeMisMatchException, FileNotExistException {
-        return ResultUtil.success(fileUtil.markdownTransferToHtml(file));
+
+        return experimentMdService.handlerMdFile(file);
     }
 }

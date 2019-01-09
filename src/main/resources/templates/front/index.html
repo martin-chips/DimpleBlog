@@ -87,7 +87,7 @@
                     <i class="ztpic"><a href="/" target="_blank"><img
                             src="/front/images/1.jpg" th:src="${blog.headerUrl}"></a></i>
                     <b th:text="${blog.title}"></b><span th:text="${blog.summary}"></span><a
-                        href="" target="_blank" class="readmore">文章阅读</a>
+                        th:href="${'/view/'+blog.blogId}" class="readmore">文章阅读</a>
                 </li>
             </ul>
         </div>

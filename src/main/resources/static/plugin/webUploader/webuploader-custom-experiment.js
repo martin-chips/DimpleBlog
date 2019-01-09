@@ -64,10 +64,10 @@ jQuery(function () {
     uploader = WebUploader.create({
         pick: {
             id: '#filePicker',
-            multiple: false,
+            multiple: true,
             label: '点击选择文件'
         },
-        fileNumLimit: 1,
+        fileNumLimit: 1024,
         dnd: '#uploader .queueList',
         paste:
         document.body,
@@ -87,9 +87,7 @@ jQuery(function () {
             true,
         // server: 'http://webuploader.duapp.com/server/fileupload.php',
         server:
-            '/api/blog/mdUpload',
-        fileNumLimit:
-            300,
+            '/api/experiment/mdUpload',
         fileSizeLimit:
             5 * 1024 * 1024,    // 200 M
         fileSingleSizeLimit:
@@ -112,9 +110,7 @@ jQuery(function () {
             '</li>'),
 
             $btns = $('<div class="file-panel">' +
-                '<span class="cancel">删除</span>' +
-                '<span class="rotateRight">向右旋转</span>' +
-                '<span class="rotateLeft">向左旋转</span></div>').appendTo($li),
+                '<span class="cancel">删除</span>').appendTo($li),
             $prgress = $li.find('p.progress span'),
             $wrap = $li.find('p.imgWrap'),
             $info = $('<p class="error"></p>'),

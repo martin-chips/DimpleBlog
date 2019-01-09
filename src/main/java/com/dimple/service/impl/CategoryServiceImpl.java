@@ -117,4 +117,12 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return count;
     }
+
+    @Override
+    public Category getCategoryByTitle(String title) {
+        if (StringUtils.isBlank(title)) {
+            return null;
+        }
+        return categoryRepository.getByTitle(title);
+    }
 }
