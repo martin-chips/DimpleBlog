@@ -13,6 +13,58 @@ $(function () {
         postBlog(data);
     });
 
+    $(function () {
+        $("#blogAddForm").formValidate({
+            rules: {
+                headerUrl: {
+                    required: true,
+                },
+                title: {
+                    required: true,
+                    rangelength: [2, 15]
+                },
+                summary: {
+                    maxlength: 150
+                },
+                tags: {
+                    required: true,
+                    rangelength: [2, 20]
+                },
+                weight: {
+                    required: true,
+                    number: true
+                },
+                categoryId: {
+                    required: true
+                },
+            },
+            messages: {
+                "headerUrl": {
+                    required: "请选择预览图",
+                },
+                "title": {
+                    required: "请输入标题",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的标题"
+                },
+                "summary": {
+                    maxlength: "最多输入{0}个字符"
+                },
+                "weight": {
+                    required: "请输入权重",
+                    rangelength: "请输入正确格式的权重"
+                },
+                "tags": {
+                    required: "请输入标签",
+                    rangelength: "请输入长度为 {0} 至 {1} 之间的标签"
+                },
+                "categoryId": {
+                    required: "请选择分类",
+                },
+            },
+        });
+    });
+
+
     $("#giveUp").click(function () {
         Swal({
             title: '确定要放弃吗？',
@@ -62,26 +114,28 @@ var editOrPreview = function (target) {
 
 
 function postBlog(data) {
-    $.ajax({
-        url: "/api/blog",
-        data: data,
-        type: "POST",
-        dataType: "json",
-        success: function (result) {
-            if (result.code == web_status.SUCCESS) {
-                Swal({
-                    type: 'success',
-                    title: '博文已成功发送到服务器',
-                    showConfirmButton: true,
-                });
-                //清空表单数据
-                cleanForm();
-            } else {
-                $.modal.msgError(result.msg);
+    if ($.validate.form()) {
+        $.ajax({
+            url: "/api/blog",
+            data: data,
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    Swal({
+                        type: 'success',
+                        title: '博文已成功发送到服务器',
+                        showConfirmButton: true,
+                    });
+                    //清空表单数据
+                    cleanForm();
+                } else {
+                    $.modal.msgError(result.msg);
+                }
             }
-        }
 
-    })
+        })
+    }
 }
 
 //清空表单数据

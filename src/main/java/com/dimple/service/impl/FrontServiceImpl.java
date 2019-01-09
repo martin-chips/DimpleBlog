@@ -85,7 +85,7 @@ public class FrontServiceImpl implements FrontService {
      * @return
      */
     private String getCategoryNameById(Integer categoryId) {
-        Category category = categoryRepository.getOne(categoryId);
+        Category category = categoryRepository.getByCategoryId(categoryId);
         return category == null ? "" : category.getTitle();
     }
 
@@ -203,7 +203,7 @@ public class FrontServiceImpl implements FrontService {
             return null;
         }
         Map<String, String> map = new HashMap<>();
-        map.put("categoryName", categoryRepository.findByCategoryId(id).getTitle());
+        map.put("categoryName", categoryRepository.getByCategoryId(id).getTitle());
         return map;
     }
 

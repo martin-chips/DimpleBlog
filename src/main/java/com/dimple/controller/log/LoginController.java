@@ -1,13 +1,10 @@
 package com.dimple.controller.log;
 
-import com.dimple.framework.enums.OperateType;
-import com.dimple.framework.log.annotation.Log;
+import com.dimple.framework.message.Result;
 import com.dimple.service.LinksService;
 import com.dimple.service.LoginService;
-import com.dimple.framework.message.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,9 +44,5 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping({"/page/index.html"})
-    public String index(Model model) {
-        model.addAttribute("unhandledLinksCount", linksService.getUnHandledLinksCount());
-        return "index";
-    }
+
 }

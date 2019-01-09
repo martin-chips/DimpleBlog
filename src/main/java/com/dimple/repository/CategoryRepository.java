@@ -21,7 +21,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer>, Jp
 
     List<Category> findAllBySupportEquals(Boolean support);
 
-    Category findByCategoryId(Integer id);
+    Category getByCategoryId(Integer id);
 
 
     @Query("from Category where title=:title")
