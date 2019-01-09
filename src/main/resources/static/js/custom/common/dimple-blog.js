@@ -399,7 +399,10 @@
             },
             // 打开遮罩层
             loading: function (message) {
-                $.blockUI({message: '<div class="loaderbox"><div class="loading-activity"></div> ' + message + '</div>'});
+                // $.blockUI({message: '<div class="loaderbox"><div class="loading-activity"></div> ' + message + '</div>'});
+                // message = '<div id="preloader_2"><span></span><span></span><span></span><span></span></div>'
+                // $.blockUI({message: '<div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div></div>\''});
+                $.blockUI({message: '<div id="preloader_2"><span></span><span></span><span></span><span></span></div>'});
             },
             // 关闭遮罩层
             closeLoading: function () {
