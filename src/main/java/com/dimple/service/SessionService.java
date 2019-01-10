@@ -12,7 +12,11 @@ import java.util.List;
  * @date : 01/09/19 20:53
  */
 public interface SessionService {
-    List<UserOnline> getList();
+    List<UserOnline> getOnlineAdminList();
+
+    List<UserOnline> getOnlineNormalList();
+
+    List<UserOnline> getOnlineList();
 
     boolean forceLogout(String sessionId);
 }

@@ -15,8 +15,8 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.IRedisManager;
-import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
@@ -37,7 +37,8 @@ import java.util.Properties;
  */
 @Configuration
 public class ShiroConfig {
-
+    @Autowired
+    IRedisManager redisManager;
 
     @Bean("shiroFilter")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager) {
@@ -159,7 +160,7 @@ public class ShiroConfig {
     @Bean
     public RedisSessionDAO sessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-        redisSessionDAO.setRedisManager(redisManager());
+        redisSessionDAO.setRedisManager(redisManager);
         return redisSessionDAO;
     }
 
@@ -173,10 +174,12 @@ public class ShiroConfig {
         return defaultWebSessionManager;
     }
 
-
-    private IRedisManager redisManager() {
-        return new RedisManager();
-    }
+    //
+    // private IRedisManager redisManager() {
+    //     RedisManager redisManager = new RedisManager();
+    //     redisManager.setHost("47.112.14.207");
+    //     return redisManager;
+    // }
 
 
     /**

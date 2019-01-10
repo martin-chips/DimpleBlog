@@ -27,26 +27,14 @@ public class SessionServiceImpl implements SessionService {
     @Autowired
     SessionDAO sessionDAO;
 
-
     @Override
-    public List<UserOnline> getList() {
+    public List<UserOnline> getOnlineList() {
         List<UserOnline> list = new ArrayList<>();
         //我们可以获取所有有效的Session，通过该Session我们还可以获取到当前用户的Principal信息
         Collection<Session> sessions = sessionDAO.getActiveSessions();
         for (Session session : sessions) {
             UserOnline userOnline = new UserOnline();
-            User user;
-            SimplePrincipalCollection principalCollection;
-
-            if (session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY) == null) {
-                continue;
-            } else {
-                principalCollection = (SimplePrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-                user = (User) principalCollection.getPrimaryPrincipal();
-                userOnline.setUsername(user.getUserName());
-                userOnline.setUserId(user.getUserLoginId());
-            }
-
+            userOnline.setId(session.getId().toString());
             userOnline.setLastAccessTime(session.getLastAccessTime());
             userOnline.setStartTime(session.getStartTimestamp());
             Long timeout = session.getTimeout();
@@ -59,6 +47,71 @@ public class SessionServiceImpl implements SessionService {
             list.add(userOnline);
         }
         return list;
+    }
+
+    @Override
+    public List<UserOnline> getOnlineAdminList() {
+        List<UserOnline> list = new ArrayList<>();
+        //我们可以获取所有有效的Session，通过该Session我们还可以获取到当前用户的Principal信息
+        Collection<Session> sessions = sessionDAO.getActiveSessions();
+        for (Session session : sessions) {
+            UserOnline userOnline = new UserOnline();
+            User user;
+            SimplePrincipalCollection principalCollection;
+            if (session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY) == null) {
+                continue;
+            } else {
+                principalCollection = (SimplePrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+                user = (User) principalCollection.getPrimaryPrincipal();
+                userOnline.setUsername(user.getUserName());
+                userOnline.setUserId(user.getUserLoginId());
+            }
+            //设置属性
+            userOnline.setLastAccessTime(session.getLastAccessTime());
+            userOnline.setStartTime(session.getStartTimestamp());
+            Long timeout = session.getTimeout();
+            if (timeout == 01) {
+                userOnline.setStatus("离线");
+            } else {
+                userOnline.setStatus("在线");
+            }
+            userOnline.setTimeout(timeout);
+            list.add(userOnline);
+        }
+        return list;
+    }
+
+    @Override
+    public List<UserOnline> getOnlineNormalList() {
+        List<UserOnline> list = new ArrayList<>();
+        //我们可以获取所有有效的Session，通过该Session我们还可以获取到当前用户的Principal信息
+        Collection<Session> sessions = sessionDAO.getActiveSessions();
+        for (Session session : sessions) {
+            UserOnline userOnline = new UserOnline();
+            User user;
+            SimplePrincipalCollection principalCollection;
+            if (session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY) != null) {
+                continue;
+            } else {
+                principalCollection = (SimplePrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+                user = (User) principalCollection.getPrimaryPrincipal();
+                userOnline.setUsername(user.getUserName());
+                userOnline.setUserId(user.getUserLoginId());
+            }
+            //设置属性
+            userOnline.setLastAccessTime(session.getLastAccessTime());
+            userOnline.setStartTime(session.getStartTimestamp());
+            Long timeout = session.getTimeout();
+            if (timeout == 01) {
+                userOnline.setStatus("离线");
+            } else {
+                userOnline.setStatus("在线");
+            }
+            userOnline.setTimeout(timeout);
+            list.add(userOnline);
+        }
+        return list;
+
     }
 
     @Override

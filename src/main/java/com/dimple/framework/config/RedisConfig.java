@@ -3,7 +3,10 @@ package com.dimple.framework.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.crazycake.shiro.IRedisManager;
+import org.crazycake.shiro.RedisManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -23,13 +26,6 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 
 
-/**
- * @ClassName: RedisConfig
- * @Description:
- * @Auther: Owenb
- * @Date: 11/19/18 17:08
- * @Version: 1.0
- */
 @Configuration
 @EnableCaching//开启SpringBoot注解
 public class RedisConfig extends CachingConfigurerSupport {
@@ -37,7 +33,22 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Autowired
     LettuceConnectionFactory lettuceConnectionFactory;
 
+    @Value("${spring.redis.host}")
+    private String host;
+
+    @Value("${spring.redis.port}")
+    private String port;
+
+
     Duration timeToLive = Duration.ofSeconds(60);
+
+    @Bean
+    public IRedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(host);
+        redisManager.setPort(Integer.valueOf(port));
+        return redisManager;
+    }
 
     @Bean//在没有指定缓存key的情况下，key的生成策略
     public KeyGenerator getKeyGenerator() {
@@ -73,9 +84,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         return builder.build();
     }
 
-    /**
-     * RedisTemplate配置 在单独使用redisTemplate的时候 重新定义序列化方式
-     */
+
     @Bean
     public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
         // 设置序列化

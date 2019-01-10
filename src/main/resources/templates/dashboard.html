@@ -41,7 +41,7 @@
                     </div>
                     <div class="ibox-content">
                         <h1 class="no-margins" th:text="${draft}">106,120</h1>
-                        <div class="stat-percent font-bold text-navy" >44% <i class="fa fa-level-up"></i></div>
+                        <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
                         <small>草稿箱博客数量</small>
                     </div>
                 </div>
@@ -56,6 +56,60 @@
                         <h1 class="no-margins" th:text="${dustbin}">80,600</h1>
                         <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
                         <small>垃圾箱博客数量</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-success pull-right">总数</span>
+                        <h5>访客</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins" th:text="${all}"></h1>
+                        <div class="stat-percent font-bold text-success">100% <i class="fa fa-bolt"></i></div>
+                        <small>访客总数</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-info pull-right">在线</span>
+                        <h5>访客</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins" th:text="${onlineCount}">275,800</h1>
+                        <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                        <small>在线访客总数</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">昨日</span>
+                        <h5>访客</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins" th:text="${draft}">106,120</h1>
+                        <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                        <small>昨日访客总数</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-danger pull-right">本月</span>
+                        <h5>访客 </h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins" th:text="${dustbin}">80,600</h1>
+                        <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+                        <small>本月访客总数</small>
                     </div>
                 </div>
             </div>

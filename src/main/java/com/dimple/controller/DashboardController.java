@@ -2,6 +2,7 @@ package com.dimple.controller;
 
 import com.dimple.framework.enums.BlogStatus;
 import com.dimple.service.BlogService;
+import com.dimple.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +21,16 @@ public class DashboardController {
     @Autowired
     BlogService blogService;
 
+    @Autowired
+    SessionService sessionService;
+
     @GetMapping("/page/dashboard.html")
     public String dashboardPage(Model model) {
         model.addAttribute("published", blogService.selectBlogCountByStatus(BlogStatus.PUBLISHED));
         model.addAttribute("draft", blogService.selectBlogCountByStatus(BlogStatus.DRAFT));
         model.addAttribute("dustbin", blogService.selectBlogCountByStatus(BlogStatus.DUSTBIN));
         model.addAttribute("all", blogService.selectBlogCountByStatus(BlogStatus.ALL));
+        model.addAttribute("onlineCount", sessionService.getOnlineList().size());
         return "dashboard";
     }
 

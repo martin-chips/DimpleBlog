@@ -29,7 +29,7 @@ public class SessionController {
     @GetMapping("/online/list")
     @ResponseBody
     public Result getOnlineList() {
-        List<UserOnline> list = sessionService.getList();
+        List<UserOnline> list = sessionService.getOnlineList();
         return ResultUtil.success(list);
     }
 
