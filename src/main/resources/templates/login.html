@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="common :: common-head"></head>
+<head th:include="common :: common-head">
+    <meta name="referrer" content="never">
+</head>
 <link rel="stylesheet" th:href="@{/css/login.css}" href="/static/css/login.css"/>
 <!--TODO 验证码验证-->
 <body class="gray-bg">
@@ -11,43 +13,84 @@
         </div>
         <h3>Dimple's Blog Manager System</h3>
 
-        <form class="m-t" id="loginForm">
+        <!--<form class="m-t" id="loginForm">-->
+        <!--<div class="form-group">-->
+        <!--<input type="text" name="loginId" class="form-control" placeholder="用户名" value="admin">-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<input type="password" name="password" class="form-control" placeholder="密码" value="123456">-->
+        <!--</div>-->
+        <!--<div class="input-group">-->
+        <!--<span class="input-group-addon">-->
+        <!--<div class="input-group-addon">-->
+        <!--<a href="javascript:void(0);" title="点击更换验证码">-->
+        <!--<img th:src="@{/public/api/kaptcha}" onclick="this.src='/public/api/kaptcha'" class="captchaImg"-->
+        <!--width="100%"/>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--</span>-->
+        <!--<div class="input-group-addon">-->
+        <!--<input type="text" name="kaptcha" class="form-control captcha" placeholder="验证码" maxlength="5">-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row" style="text-align : left;margin-top: 10px;margin-bottom: 10px">-->
+        <!--<div class="col-sm-12">-->
+        <!--<label class="radio-box">-->
+        <!--<input name="rememberMe" type="checkbox"> 记住我-->
+        <!--</label>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<button type="submit" class="btn btn-primary block full-width m-b" id="loginBtn"-->
+        <!--data-loading="正在验证登录，请稍候...">登 录-->
+        <!--</button>-->
+
+        <!--<p class="text-muted text-center"><a href="login.html#">-->
+        <!--<small>忘记密码了？</small>-->
+        <!--</a> | <a href="register.html">注册一个新账号</a>-->
+        <!--</p>-->
+        <!--</form>-->
+        <form id="loginForm">
             <div class="form-group">
-                <input type="text" name="loginId" class="form-control" placeholder="用户名" value="admin">
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" class="form-control" placeholder="密码" value="123456">
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <a href="javascript:void(0);" title="点击更换验证码">
-                        <img th:src="@{/api/kaptcha}" onclick="this.src='/api/kaptcha'" class="captchaImg"
-                             width="85%"/>
-                    </a>
+                <div class="input-group">
+                    <span class="input-group-addon">账号</span>
+                    <input type="text" name="loginId" class="form-control" placeholder="用户名" value="admin">
                 </div>
-                <div class="col-sm-6">
+                <br/>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">密码</span>
+                    <input type="password" name="password" class="form-control" placeholder="密码" value="123456">
+                </div>
+            </div>
+            <div class="form-group form-horizontal">
+                <label class="input-group-addon control-label " id="captchaOperation">
+                    <a href="javascript:void(0);" title="点击更换验证码">
+                        <img id="checkCode" th:src="@{/public/api/kaptcha}"
+                             onclick="this.src='/public/api/kaptcha?'+Math.random()" class="captchaImg"
+                             width="100%"/>
+                    </a>
+                </label>
+                <div class="input-group-addon">
                     <input type="text" name="kaptcha" class="form-control captcha" placeholder="验证码" maxlength="5">
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="text-align : left;margin-top: 10px;margin-bottom: 10px">
                 <div class="col-sm-12">
                     <label class="radio-box">
                         <input name="rememberMe" type="checkbox"> 记住我
                     </label>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary block full-width m-b" id="loginBtn"
-                    data-loading="正在验证登录，请稍候...">登 录
-            </button>
-
-            <p class="text-muted text-center"><a href="login.html#">
-                <small>忘记密码了？</small>
-            </a> | <a href="register.html">注册一个新账号</a>
-            </p>
+            <div class="form-group">
+                <input class="btn btn-primary btn-block" id="loginBtn" type="submit" value="登　　录"/>
+            </div>
         </form>
     </div>
 </div>
+
 </body>
 
 <div th:include="common :: common-footer"></div>

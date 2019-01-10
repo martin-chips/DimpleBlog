@@ -30,6 +30,12 @@ $(function () {
     });
 });
 
+/**
+ * 更改验证码
+ */
+function changeCaptcha() {
+
+}
 
 function validateForm() {
     console.log("111");

@@ -1,20 +1,29 @@
 package com.dimple.framework.config;
 
 import com.dimple.framework.filter.LogoutFilter;
+import com.dimple.framework.listener.ShiroSessionListener;
 import com.dimple.framework.realm.UserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.SessionListener;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.IRedisManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import javax.servlet.Filter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -105,10 +114,12 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public SecurityManager getSecurityManager() {
+    public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(getUserRealm());
         securityManager.setRememberMeManager(rememberMeManager());
+        // set Session manager
+        securityManager.setSessionManager(sessionManager());
         return securityManager;
     }
 
@@ -141,6 +152,34 @@ public class ShiroConfig {
     }
 
     /**
+     * 配置RedisSessionDao
+     *
+     * @return
+     */
+    @Bean
+    public RedisSessionDAO sessionDAO() {
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        redisSessionDAO.setRedisManager(redisManager());
+        return redisSessionDAO;
+    }
+
+    @Bean
+    public SessionManager sessionManager() {
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        Collection<SessionListener> listeners = new ArrayList<>();
+        listeners.add(new ShiroSessionListener());
+        defaultWebSessionManager.setSessionListeners(listeners);
+        defaultWebSessionManager.setSessionDAO(sessionDAO());
+        return defaultWebSessionManager;
+    }
+
+
+    private IRedisManager redisManager() {
+        return new RedisManager();
+    }
+
+
+    /**
      * 记住我
      *
      * @return
@@ -151,6 +190,7 @@ public class ShiroConfig {
         cookieRememberMeManager.setCipherKey(Base64.decode("fCq+/xW488hMTCD+cmJ3aQ=="));
         return cookieRememberMeManager;
     }
+
 
     /**
      * cookie 属性设置

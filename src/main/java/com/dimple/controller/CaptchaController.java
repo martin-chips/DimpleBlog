@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -46,7 +45,7 @@ public class CaptchaController {
     private String kaptchaType = null;
 
     @ApiOperation("生成验证码")
-    @GetMapping("/api/kaptcha")
+    @GetMapping("/public/api/kaptcha")
     @Log(title = "验证码", operateType = OperateType.GENERATE_CAPTCHA)
     public void defaultKaptcha(HttpServletRequest request, HttpServletResponse response) {
         ServletOutputStream servletOutputStream = null;
@@ -57,6 +56,7 @@ public class CaptchaController {
             response.addHeader("Cache-Control", "post-check=0, pre-check=0");
             response.setHeader("Pragma", "no-cache");
             response.setContentType("image/jpeg");
+            // response.setContentType(mimeType);
 
             String kaptchaStr = null;
             String code = null;

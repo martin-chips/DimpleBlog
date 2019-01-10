@@ -29,7 +29,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         String ip = IpUtil.getLocalHostAddress();
         log.info("当前访问的IP地址是： " + ip);
         String id = request.getSession().getId();
-        System.out.println("当前的id" +  id);
+        System.out.println("当前的id" + id);
         String requestUrl = request.getRequestURI();
         //使用view来区别是不是前端访问用户
         if ("/".equals(requestUrl) || requestUrl.contains("view")) {

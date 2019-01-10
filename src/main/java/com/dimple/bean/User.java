@@ -1,23 +1,15 @@
 package com.dimple.bean;
 
-import com.dimple.framework.converter.BooleanToIntegerConverter;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * @author : Dimple
@@ -28,7 +20,9 @@ import java.util.Objects;
  */
 @Entity
 @Data
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = -4531449501288568149L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)

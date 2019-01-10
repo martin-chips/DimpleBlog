@@ -5,6 +5,7 @@ import com.dimple.service.LinksService;
 import com.dimple.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,13 @@ public class LoginController {
     LoginService loginService;
     @Autowired
     LinksService linksService;
+
+
+    @RequestMapping({"/page/index.html"})
+    public String indexPage(Model model) {
+        model.addAttribute("unhandledLinksCount", linksService.getUnHandledLinksCount());
+        return "index";
+    }
 
     @ResponseBody
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
