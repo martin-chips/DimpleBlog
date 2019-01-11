@@ -2,13 +2,17 @@ package com.dimple.framework.log;
 
 import com.dimple.bean.LoginLog;
 import com.dimple.bean.OperateLog;
+import com.dimple.bean.VisitorLog;
 import com.dimple.framework.constant.Status;
 import com.dimple.service.LoginLogService;
 import com.dimple.service.OperateLogService;
-import com.dimple.utils.*;
+import com.dimple.service.VisitorLogService;
+import com.dimple.utils.AddressUtil;
+import com.dimple.utils.IpUtil;
+import com.dimple.utils.ServletUtil;
+import com.dimple.utils.SpringUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -23,6 +27,7 @@ import java.util.Date;
 @Slf4j
 @Component
 public class AsyncLog {
+
     /**
      * 记录操作日志
      *
@@ -46,13 +51,29 @@ public class AsyncLog {
      * @param msg     操作信息
      * @return LoginLog对象
      */
-
     public void recordLoginLog(String loginId, Byte status, String msg, Object... args) {
         if (Status.LOGIN_SUCCESS == status || Status.LOGOUT_SUCCESS == status) {
             saveLoginLog(loginId, msg, Status.SUCCESS);
         } else {
             saveLoginLog(loginId, msg, Status.FAILURE);
         }
+    }
+
+
+    public void recordVisitorLog(VisitorLog visitorLog) {
+        if (visitorLog == null) {
+            return;
+        }
+        visitorLog.setVisitTime(new Date());
+        visitorLog.setAddress(AddressUtil.getRealAddressByIP(visitorLog.getIp()));
+        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtil.getRequest().getHeader("User-Agent"));
+        //获取操作系统
+        String os = userAgent.getOperatingSystem().getName();
+        //获取浏览器类型
+        String browser = userAgent.getBrowser().getName();
+        visitorLog.setBrowser(browser);
+        visitorLog.setOs(os);
+        SpringUtil.getBean(VisitorLogService.class).insertVisitorLog(visitorLog);
     }
 
     private void saveLoginLog(String loginName, String msg, Boolean status) {

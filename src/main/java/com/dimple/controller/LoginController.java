@@ -1,4 +1,4 @@
-package com.dimple.controller.log;
+package com.dimple.controller;
 
 import com.dimple.framework.message.Result;
 import com.dimple.service.LinksService;
@@ -35,9 +35,9 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public Result login1(String loginId, String password) throws Exception {
+    public Result login1(String loginId, String password, Boolean rememberMe) throws Exception {
 
-        Result result = loginService.login(loginId, password);
+        Result result = loginService.login(loginId, password,rememberMe);
         return result;
     }
 

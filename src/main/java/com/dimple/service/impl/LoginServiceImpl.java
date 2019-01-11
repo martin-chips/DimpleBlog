@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
     AsyncLog asyncLog;
 
     @Override
-    public Result login(String loginId, String password) {
+    public Result login(String loginId, String password, Boolean rememberMe) {
 
         String kaptcha = ServletUtil.getRequest().getParameter("kaptcha");
         //获取kaptcha生成的验证码
@@ -48,7 +48,7 @@ public class LoginServiceImpl implements LoginService {
         }
         //获取Subject对象
         Subject currentUser = SecurityUtils.getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginId, password);
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginId, password, rememberMe);
         try {
             currentUser.login(usernamePasswordToken);
             asyncLog.recordLoginLog(loginId, Status.LOGOUT_SUCCESS, MessageUtil.getMessage("user.login.success"));

@@ -1,11 +1,7 @@
 package com.dimple.framework.log;
 
-import com.alibaba.fastjson.JSONObject;
-import com.dimple.bean.OperateLog;
-import com.dimple.bean.User;
-import com.dimple.framework.constant.Status;
-import com.dimple.framework.log.annotation.Log;
-import com.dimple.service.OperateLogService;
+import com.dimple.bean.VisitorLog;
+import com.dimple.framework.log.annotation.VLog;
 import com.dimple.utils.IpUtil;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.ShiroUtil;
@@ -24,11 +20,12 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * @ClassName: LogAspect
- * @Description:
+ * @ClassName: VisitorAspect
+ * @Description: 访客统计
  * @Auther: Owenb
  * @Date: 11/29/18 10:34
  * @Version: 1.0
@@ -40,16 +37,14 @@ import java.util.Map;
 public class VisitorAspect {
 
     @Autowired
-    OperateLogService operateLogService;
-
-    @Autowired
     AsyncLog asyncLog;
-
+    private Integer result;
+    private String url;
 
     /**
      * 日志记录的切入点
      */
-    @Pointcut("@annotation(com.dimple.framework.log.annotation.Log)")
+    @Pointcut("@annotation(com.dimple.framework.log.annotation.VLog)")
     public void logPointcut() {
 
     }
@@ -83,54 +78,61 @@ public class VisitorAspect {
      */
     @Async
     public void handleLog(JoinPoint joinPoint, Exception exception) {
-        Log annotationLog = getAnnotationLog(joinPoint);
+        VLog annotationLog = getAnnotationLog(joinPoint);
         if (annotationLog == null) {
             return;
         }
-        //获取当前用户
-        User user = ShiroUtil.getUser();
-        //日志
-        OperateLog operateLog = new OperateLog();
-        //请求的地址
+        String sessionId = ShiroUtil.getSessionId();
+        VisitorLog visitorLog = new VisitorLog();
+        visitorLog.setSessionId(sessionId);
+
         String ip = IpUtil.getLocalHostAddress();
-        operateLog.setOperateIp(ip);
-        //设置请求的地址
-        operateLog.setOperateUrl(ServletUtil.getRequest().getRequestURI());
-        //设置操作的人员
-        if (user != null) {
-            operateLog.setOperatorName(user.getUserLoginId());
-        }
-        //设置是否异常
+        visitorLog.setIp(ip);
+
+        String url = ServletUtil.getRequest().getRequestURI();
+
+        visitorLog.setRequireUrl(url);
+        visitorLog.setBlogId(getNumberFromString(url));
+
         if (exception != null) {
-            operateLog.setOperateStatus(Status.FAILURE);
-            operateLog.setErrorMsg(StringUtils.substring(exception.getMessage(), 0, 2000));
+            visitorLog.setStatus(false);
         } else {
-            operateLog.setOperateStatus(Status.SUCCESS);
+            visitorLog.setStatus(true);
         }
-        //设置方法名称
-        String className = joinPoint.getTarget().getClass().getName();
-        String methodName = joinPoint.getSignature().getName();
-        operateLog.setMethod(className + "." + methodName + "()");
-        //处理注解上的参数
-        setControllerMethodDescription(operateLog, annotationLog);
-        asyncLog.recordOperateLog(operateLog);
+
+        setControllerMethodDescription(visitorLog, annotationLog);
+
+
+        asyncLog.recordVisitorLog(visitorLog);
+
+    }
+
+    private Integer getNumberFromString(String s) {
+        if (StringUtils.isBlank(s)) {
+            return null;
+        }
+        String regEx = "[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(s);
+        Integer result = null;
+        try {
+            result = Integer.valueOf(m.replaceAll("").trim());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
      * 将Controller注解中的参数拿到，设置到Log对象中去
      *
-     * @param operateLog    log对象
+     * @param visitorLog    log对象
      * @param annotationLog controller上注解标注的对象
      */
-    private void setControllerMethodDescription(OperateLog operateLog, Log annotationLog) {
-        operateLog.setOperateType(annotationLog.operateType().getType());
-        operateLog.setTitle(annotationLog.title());
-        //设置参数保存（比如密码这些就可以不用显示直接设置为false）
-        if (annotationLog.isSaveRequestData()) {
-            Map<String, String[]> parameterMap = ServletUtil.getRequest().getParameterMap();
-            String params = JSONObject.toJSONString(parameterMap);
-            operateLog.setOperateParam(StringUtils.substring(params, 0, 255));
-        }
+    private void setControllerMethodDescription(VisitorLog visitorLog, VLog annotationLog) {
+        visitorLog.setTitle(annotationLog.title());
+
+        //todo 是否需要设置请求的博客的ID
     }
 
     /**
@@ -139,12 +141,12 @@ public class VisitorAspect {
      * @param joinPoint
      * @return
      */
-    private Log getAnnotationLog(JoinPoint joinPoint) {
+    private VLog getAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         //获取方法
         Method method = methodSignature.getMethod();
         //返回
-        return method == null ? null : method.getAnnotation(Log.class);
+        return method == null ? null : method.getAnnotation(VLog.class);
     }
 }

@@ -3,8 +3,6 @@ package com.dimple.framework.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.crazycake.shiro.IRedisManager;
-import org.crazycake.shiro.RedisManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -22,7 +20,6 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.lang.reflect.Method;
 import java.time.Duration;
 
 
@@ -40,29 +37,19 @@ public class RedisConfig extends CachingConfigurerSupport {
     private String port;
 
 
-    Duration timeToLive = Duration.ofSeconds(60);
+    Duration timeToLive = Duration.ofSeconds(600);
 
-    @Bean
-    public IRedisManager redisManager() {
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost(host);
-        redisManager.setPort(Integer.valueOf(port));
-        return redisManager;
-    }
 
     @Bean//在没有指定缓存key的情况下，key的生成策略
     public KeyGenerator getKeyGenerator() {
-        return new KeyGenerator() {
-            @Override
-            public Object generate(Object target, Method method, Object... objects) {
-                StringBuffer stringBuffer = new StringBuffer();
-                stringBuffer.append(target.getClass().getName());
-                stringBuffer.append(method.getName());
-                for (Object object : objects) {
-                    stringBuffer.append(objects.toString());
-                }
-                return stringBuffer.toString();
+        return (target, method, objects) -> {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(target.getClass().getName());
+            stringBuffer.append(method.getName());
+            for (Object object : objects) {
+                stringBuffer.append(object.toString());
             }
+            return stringBuffer.toString();
         };
     }
 

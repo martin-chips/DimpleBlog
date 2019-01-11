@@ -80,3 +80,15 @@ https://blog.csdn.net/itpinpai/article/details/70177124
 版权所有，欢迎保留原文链接进行转载：)
 
 
+https://github.com/semplon/summernote-ext-codewrapper
+
+
+https://github.com/creativeprogramming/summernote-addclass
+
+
+https://github.com/maiyaporn/summernote-map-plugin
+
+
+代码样式
+xcode  vs rainbow
+

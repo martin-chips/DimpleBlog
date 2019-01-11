@@ -68,8 +68,8 @@
             <div class="form-group form-horizontal">
                 <label class="input-group-addon control-label " id="captchaOperation">
                     <a href="javascript:void(0);" title="点击更换验证码">
-                        <img id="checkCode" th:src="@{/public/api/kaptcha}"
-                             onclick="this.src='/public/api/kaptcha?'+Math.random()" class="captchaImg"
+                        <img th:src="@{/public/api/kaptcha}"
+                             onclick="this.src='/public/api/kaptcha'" class="captchaImg"
                              width="100%"/>
                     </a>
                 </label>
@@ -80,7 +80,7 @@
             <div class="row" style="text-align : left;margin-top: 10px;margin-bottom: 10px">
                 <div class="col-sm-12">
                     <label class="radio-box">
-                        <input name="rememberMe" type="checkbox"> 记住我
+                        <input id="rememberMe" name="rememberMe" type="checkbox"> 记住我
                     </label>
                 </div>
             </div>

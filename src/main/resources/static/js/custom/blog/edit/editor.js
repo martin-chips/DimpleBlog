@@ -319,6 +319,30 @@ function initSummernote() {
         lang: 'zh-CN',
         maxHeight: null,
         focus: true,
+        addclass: {
+            debug: false,
+            classTags: [{
+                title: "Button",
+                "value": "btn btn-success"
+            }, "jumbotron", "lead", "img-rounded", "img-circle",
+                "img-responsive", "btn", "btn btn-success", "btn btn-danger",
+                "text-muted", "text-primary", "text-warning", "text-danger",
+                "text-success", "table-bordered", "table-responsive", "alert",
+                "alert alert-success", "alert alert-info", "alert alert-warning",
+                "alert alert-danger", "visible-sm", "hidden-xs", "hidden-md",
+                "hidden-lg", "hidden-print"]
+        },
+        toolbar: [
+            ['style', ['style', 'addclass', 'clear']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['highlight', ['highlight']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
         //调用图片上传
         callbacks:
             {

@@ -85,4 +85,52 @@ public class UserRealm extends AuthorizingRealm {
         );
         return info;
     }
+
+    /**
+     * 重写，清除授权缓存
+     *
+     * @param principals
+     */
+    @Override
+    protected void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthorizationInfo(principals);
+    }
+
+    /**
+     * 重写，清除认证缓存
+     *
+     * @param principals
+     */
+    @Override
+    protected void clearCachedAuthenticationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthenticationInfo(principals);
+    }
+
+    @Override
+    protected void clearCache(PrincipalCollection principals) {
+        super.clearCache(principals);
+    }
+
+    /**
+     * 清除所有认证信息
+     */
+    public void clearAllCachedAuthenticationInfo() {
+        getAuthenticationCache().clear();
+    }
+
+    /**
+     * 清除所有授权缓存
+     */
+    public void clearAllCachedAuthorizationInfo() {
+        getAuthenticationCache().clear();
+    }
+
+    /**
+     * 清除所有缓存
+     */
+    public void clearAllCache() {
+        clearAllCachedAuthenticationInfo();
+        clearAllCachedAuthorizationInfo();
+    }
+
 }

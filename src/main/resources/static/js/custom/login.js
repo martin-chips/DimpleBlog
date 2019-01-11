@@ -2,10 +2,12 @@
 $(function () {
     $("#loginBtn").click(function () {
         $.modal.loading($("#loginBtn").data("loading"));
-        var loginId = $("input[name='loginId']").val().trim();
-        var password = $("input[name='password']").val().trim();
-        var kaptcha = $("input[name='kaptcha']").val();
-        var rememberMe = $("input[name='rememberme']").is(':checked');
+        let loginId = $("input[name='loginId']").val().trim();
+        let password = $("input[name='password']").val().trim();
+        let kaptcha = $("input[name='kaptcha']").val();
+        let rememberMe = $("input[name='rememberMe']").is(':checked');
+        console.log(rememberMe);
+        console.log($("#rememberMe").val())
         $.ajax({
             type: "post",
             url: "/auth",

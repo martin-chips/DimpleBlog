@@ -1,6 +1,7 @@
 package com.dimple.controller;
 
 import com.dimple.bean.Blog;
+import com.dimple.framework.log.annotation.VLog;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.FrontService;
@@ -124,6 +125,7 @@ public class FrontController {
     }
 
     @ApiOperation("获取博客信息")
+    @VLog(title = "博客")
     @GetMapping({"/view/{id}.html", "/view/{id}"})
     public String viewBlogPage(@PathVariable Integer id, Model model) {
         Blog blog = frontService.getBlogInfo(id);

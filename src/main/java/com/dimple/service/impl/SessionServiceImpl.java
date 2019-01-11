@@ -84,7 +84,7 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public List<UserOnline> getOnlineNormalList() {
         List<UserOnline> list = new ArrayList<>();
-        //我们可以获取所有有效的Session，通过该Session我们还可以获取到当前用户的Principal信息
+        // //我们可以获取所有有效的Session，通过该Session我们还可以获取到当前用户的Principal信息
         Collection<Session> sessions = sessionDAO.getActiveSessions();
         for (Session session : sessions) {
             UserOnline userOnline = new UserOnline();

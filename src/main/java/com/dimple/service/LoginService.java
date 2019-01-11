@@ -15,9 +15,10 @@ public interface LoginService {
      *
      * @param loginId  用户登录的ID
      * @param password 用户的密码
+     * @param rememberMe
      * @return
      */
-    Result login(String loginId, String password);
+    Result login(String loginId, String password, Boolean rememberMe);
 
     /**
      * 退出
