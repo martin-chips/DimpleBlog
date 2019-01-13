@@ -2,6 +2,7 @@ package com.dimple.framework.interceptor;
 
 import com.dimple.service.VisitorLogService;
 import com.dimple.utils.IpUtil;
+import com.dimple.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class RequestInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String ip = IpUtil.getLocalHostAddress();
+        String ip = ShiroUtil.getIp();
         log.info("当前访问的IP地址是： " + ip);
         String id = request.getSession().getId();
         System.out.println("当前的id" + id);

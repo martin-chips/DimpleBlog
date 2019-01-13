@@ -86,7 +86,7 @@ public class VisitorAspect {
         VisitorLog visitorLog = new VisitorLog();
         visitorLog.setSessionId(sessionId);
 
-        String ip = IpUtil.getLocalHostAddress();
+        String ip = ShiroUtil.getIp();
         visitorLog.setIp(ip);
 
         String url = ServletUtil.getRequest().getRequestURI();

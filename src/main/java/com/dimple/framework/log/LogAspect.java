@@ -92,7 +92,7 @@ public class LogAspect {
         //日志
         OperateLog operateLog = new OperateLog();
         //请求的地址
-        String ip = IpUtil.getLocalHostAddress();
+        String ip = IpUtil.getAccessIp();
         operateLog.setOperateIp(ip);
         //设置请求的地址
         operateLog.setOperateUrl(ServletUtil.getRequest().getRequestURI());

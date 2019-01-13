@@ -7,10 +7,7 @@ import com.dimple.framework.constant.Status;
 import com.dimple.service.LoginLogService;
 import com.dimple.service.OperateLogService;
 import com.dimple.service.VisitorLogService;
-import com.dimple.utils.AddressUtil;
-import com.dimple.utils.IpUtil;
-import com.dimple.utils.ServletUtil;
-import com.dimple.utils.SpringUtil;
+import com.dimple.utils.*;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -85,9 +82,9 @@ public class AsyncLog {
         LoginLog loginLog = new LoginLog();
         loginLog.setLoginName(loginName);
         loginLog.setStatus(status);
-        loginLog.setIpAddress(IpUtil.getLocalHostAddress());
+        loginLog.setIpAddress(IpUtil.getAccessIp());
         //设置IP地理位置
-        loginLog.setLoginLocation(AddressUtil.getRealAddressByIP(IpUtil.getLocalHostAddress()));
+        loginLog.setLoginLocation(AddressUtil.getRealAddressByIP(IpUtil.getAccessIp()));
         loginLog.setBrowser(browser);
         loginLog.setOs(os);
         loginLog.setMsg(msg);

@@ -56,4 +56,8 @@ public class ShiroUtil {
     public static String getSessionId() {
         return String.valueOf(getSubject().getSession().getId());
     }
+
+    public static String getIp() {
+        return getSubject().getSession().getHost();
+    }
 }

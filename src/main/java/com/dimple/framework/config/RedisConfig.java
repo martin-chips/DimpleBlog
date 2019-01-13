@@ -30,13 +30,6 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Autowired
     LettuceConnectionFactory lettuceConnectionFactory;
 
-    @Value("${spring.redis.host}")
-    private String host;
-
-    @Value("${spring.redis.port}")
-    private String port;
-
-
     Duration timeToLive = Duration.ofSeconds(600);
 
 

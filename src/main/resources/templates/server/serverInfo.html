@@ -27,7 +27,7 @@
                             <tbody>
                             <tr>
                                 <td>核心数</td>
-                                <td th:text="${server.cpu.getCpuNum()}">0个</td>
+                                <td th:text="${server.cpu.cpuNum}">0个</td>
                             </tr>
                             <tr>
                                 <td>用户使用率</td>
@@ -68,22 +68,22 @@
                             <tbody>
                             <tr>
                                 <td>总内存</td>
-                                <td th:text="${server.memory.total + 'G'}">0GB</td>
+                                <td th:text="${server.mem.total + 'G'}">0GB</td>
                                 <td th:text="${server.jvm.total + 'M'}">0MB</td>
                             </tr>
                             <tr>
                                 <td>已用内存</td>
-                                <td th:text="${server.memory.used + 'G'}">0GB</td>
+                                <td th:text="${server.mem.used + 'G'}">0GB</td>
                                 <td th:text="${server.jvm.used + 'M'}">0MB</td>
                             </tr>
                             <tr>
                                 <td>剩余内存</td>
-                                <td th:text="${server.memory.free + 'G'}">0GB</td>
+                                <td th:text="${server.mem.free + 'G'}">0GB</td>
                                 <td th:text="${server.jvm.free + 'M'}">0MB</td>
                             </tr>
                             <tr>
                                 <td>使用率</td>
-                                <td th:class="${server.memory.used gt 80} ? 'text-danger'">[[${server.memory.usage}]]%</td>
+                                <td th:class="${server.mem.usage gt 80} ? 'text-danger'">[[${server.mem.usage}]]%</td>
                                 <td th:class="${server.jvm.usage gt 80} ? 'text-danger'">[[${server.jvm.usage}]]%</td>
                             </tr>
                             </tbody>
@@ -114,15 +114,15 @@
                                     <tbody>
                                     <tr>
                                         <td>服务器名称</td>
-                                        <td th:text="${server.system.computerName}">Dimple</td>
+                                        <td th:text="${server.sys.computerName}">RuoYi</td>
                                         <td>操作系统</td>
-                                        <td th:text="${server.system.osName}">Linux</td>
+                                        <td th:text="${server.sys.osName}">Linux</td>
                                     </tr>
                                     <tr>
                                         <td>服务器IP</td>
-                                        <td th:text="${server.system.computerIp}">127.0.0.1</td>
+                                        <td th:text="${server.sys.computerIp}">127.0.0.1</td>
                                         <td>系统架构</td>
-                                        <td th:text="${server.system.osArch}">amd64</td>
+                                        <td th:text="${server.sys.osArch}">amd64</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -171,7 +171,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="1">项目路径</td>
-                                        <td colspan="3" th:text="${server.system.projectDir}"></td>
+                                        <td colspan="3" th:text="${server.sys.userDir}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -213,7 +213,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="sysFile : ${server.systemFiles}">
+                                    <tr th:each="sysFile : ${server.sysFiles}">
                                         <td th:text="${sysFile.dirName}">C:\</td>
                                         <td th:text="${sysFile.sysTypeName}">NTFS</td>
                                         <td th:text="${sysFile.typeName}">local</td>

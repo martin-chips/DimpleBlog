@@ -4,12 +4,10 @@ import com.dimple.framework.filter.LogoutFilter;
 import com.dimple.framework.listener.ShiroSessionListener;
 import com.dimple.framework.realm.UserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.session.mgt.SessionManager;
-import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionIdGenerator;
@@ -21,18 +19,23 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import javax.servlet.Filter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @ClassName: ShiroConfig
@@ -43,6 +46,22 @@ import java.util.Properties;
  */
 @Configuration
 public class ShiroConfig {
+
+    @Value("${spring.redis.host}")
+    private String host;
+
+    @Value("${spring.redis.port}")
+    private String port;
+
+
+    @Bean
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(host);
+
+        redisManager.setPort(Integer.valueOf(port));
+        return redisManager;
+    }
 
     @Bean("shiroFilter")
     public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
@@ -102,18 +121,19 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(userRealm());
         securityManager.setRememberMeManager(rememberMeManager());
-        securityManager.setCacheManager(ehCacheManager());
+        securityManager.setCacheManager(redisCacheManager());
+        //配置自定义Session，使用Redis
         securityManager.setSessionManager(sessionManager());
         return securityManager;
     }
 
     /**
      * Shiro 生命周期处理器
-     *
+     * 设置为static解决属性不能注入的问题
      * @return
      */
     @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
 
@@ -125,6 +145,7 @@ public class ShiroConfig {
     @Bean
     public UserRealm userRealm() {
         UserRealm userRealm = new UserRealm();
+        //设置密码匹配器
         userRealm.setCredentialsMatcher(getHashedCredentialsMatcher());
         //设置身份验证缓存，缓存AuthenticationInfo的信息，默认为false
         userRealm.setCachingEnabled(true);
@@ -176,11 +197,15 @@ public class ShiroConfig {
         return formAuthenticationFilter;
     }
 
+
     @Bean
-    public EhCacheManager ehCacheManager() {
-        EhCacheManager ehCacheManager = new EhCacheManager();
-        ehCacheManager.setCacheManagerConfigFile("classpath:config/ehcahe-shiro.xml");
-        return ehCacheManager;
+    public RedisCacheManager redisCacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        redisCacheManager.setPrincipalIdFieldName("userId");
+        //设置用户权限信息的缓存时间
+        redisCacheManager.setExpire(200000);
+        return redisCacheManager;
     }
 
     /**
@@ -229,6 +254,7 @@ public class ShiroConfig {
 
     /**
      * 异常后返回界面
+     * 解决无权限页面不跳转的问题
      *
      * @return
      */
@@ -251,11 +277,12 @@ public class ShiroConfig {
      *
      * @return
      */
-    @Bean
+    @Bean("sessionListener")
     public ShiroSessionListener sessionListener() {
         ShiroSessionListener shiroSessionListener = new ShiroSessionListener();
         return shiroSessionListener;
     }
+
 
     /**
      * 配置SessionId generator
@@ -276,11 +303,10 @@ public class ShiroConfig {
      */
     @Bean
     public SessionDAO sessionDAO() {
-        EnterpriseCacheSessionDAO sessionDAO = new EnterpriseCacheSessionDAO();
-        // sessionDAO.setCacheManager(ehCacheManager());
-        sessionDAO.setActiveSessionsCacheName("shiro-active-session-cache");
-        sessionDAO.setSessionIdGenerator(sessionIdGenerator());
-        return sessionDAO;
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        redisSessionDAO.setRedisManager(redisManager());
+        redisSessionDAO.setExpire(12000);
+        return redisSessionDAO;
     }
 
     /**
@@ -308,7 +334,7 @@ public class ShiroConfig {
         sessionManager.setSessionListeners(listeners);
         sessionManager.setSessionIdCookie(sessionIdCookie());
         sessionManager.setSessionDAO(sessionDAO());
-        sessionManager.setCacheManager(ehCacheManager());
+        sessionManager.setCacheManager(redisCacheManager());
         return sessionManager;
     }
 

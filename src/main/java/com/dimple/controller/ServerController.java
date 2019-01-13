@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ServerController {
 
     @RequestMapping("/server/serverInfo")
-    public String serverInfo(Model model) {
+    public String serverInfo(Model model) throws Exception {
         Server server = new Server();
-        server.init();
+        server.copyTo();
         model.addAttribute("server", server);
         return "server/serverInfo";
     }
