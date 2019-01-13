@@ -10,6 +10,8 @@ import com.dimple.service.VisitorLogService;
 import com.dimple.utils.*;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -22,6 +24,7 @@ import java.util.Date;
  * @Version: 1.0
  */
 @Slf4j
+@EnableAsync
 @Component
 public class AsyncLog {
 
@@ -31,6 +34,7 @@ public class AsyncLog {
      * @param operateLog
      * @return
      */
+    @Async
     public void recordOperateLog(OperateLog operateLog) {
         operateLog.setOperateLocation(AddressUtil.getRealAddressByIP(operateLog.getOperateIp()));
         //设置时间

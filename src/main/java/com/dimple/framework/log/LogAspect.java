@@ -33,9 +33,7 @@ import java.util.Map;
  * @Date: 11/29/18 10:34
  * @Version: 1.0
  */
-@Aspect
 @Component
-@EnableAsync
 @Slf4j
 public class LogAspect {
 
@@ -44,7 +42,6 @@ public class LogAspect {
 
     @Autowired
     AsyncLog asyncLog;
-
 
     /**
      * 日志记录的切入点
@@ -81,7 +78,6 @@ public class LogAspect {
      * @param joinPoint 切入点对象
      * @param exception 异常信息
      */
-    @Async
     public void handleLog(JoinPoint joinPoint, Exception exception) {
         Log annotationLog = getAnnotationLog(joinPoint);
         if (annotationLog == null) {
