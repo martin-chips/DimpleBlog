@@ -1,5 +1,8 @@
 package com.dimple.service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author : Dimple
  * @version : 1.0
@@ -10,6 +13,7 @@ package com.dimple.service;
 public interface DashboardService {
 
 
+    List<Map<String, Integer>> getSpiderPieData();
 
-
+    List<Map<String, Object>> getVisitorData();
 }

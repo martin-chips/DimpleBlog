@@ -3,12 +3,12 @@ package com.dimple.utils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.lang.management.ManagementFactory;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
+import java.util.List;
 
 /**
  * @author : Dimple
@@ -137,5 +137,33 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
         // 计算差多少秒//输出结果
         // long sec = diff % nd % nh % nm / ns;
         return day + "天" + hour + "小时" + min + "分钟";
+    }
+
+    /**
+     * 获取过去的任意时间内的日期数组
+     *
+     * @param intervals
+     * @return
+     */
+    public static List<String> getPastDaysList(int intervals) {
+        List<String> pastDaysList = new ArrayList<>();
+        for (int i = intervals; i > 0; i++) {
+            pastDaysList.add(getPastDate(i));
+        }
+        return pastDaysList;
+    }
+
+    /**
+     * 获取过去的某一天的日期
+     *
+     * @param past
+     * @return
+     */
+    public static String getPastDate(int past) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
+        Date today = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(YYYY_MM_DD);
+        return simpleDateFormat.format(today);
     }
 }

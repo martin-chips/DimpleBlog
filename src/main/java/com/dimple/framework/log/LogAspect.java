@@ -5,11 +5,9 @@ import com.dimple.bean.OperateLog;
 import com.dimple.bean.User;
 import com.dimple.framework.constant.Status;
 import com.dimple.framework.log.annotation.Log;
-import com.dimple.service.OperateLogService;
 import com.dimple.utils.IpUtil;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.ShiroUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -18,9 +16,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -34,14 +29,8 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Component
-@Slf4j
+@Aspect
 public class LogAspect {
-
-    @Autowired
-    OperateLogService operateLogService;
-
-    @Autowired
-    AsyncLog asyncLog;
 
     /**
      * 日志记录的切入点
@@ -109,7 +98,8 @@ public class LogAspect {
         operateLog.setMethod(className + "." + methodName + "()");
         //处理注解上的参数
         setControllerMethodDescription(operateLog, annotationLog);
-        asyncLog.recordOperateLog(operateLog);
+        AsyncManager.getAsyncManager().execute(AsyncHelper.recordOperateLog(operateLog));
+//        asyncLog.recordOperateLog(operateLog);
     }
 
     /**

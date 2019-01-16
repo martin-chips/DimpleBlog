@@ -6,7 +6,7 @@ $(function () {
 });
 
 function initTable() {
-    var option = {
+    let option = {
         url: "/api/blog",
         deleteUrl: "/api/blog/{id}",
         updateUrl: "/page/blogList/{id}.html",
@@ -24,14 +24,17 @@ function initTable() {
             field: 'title',
             title: '标题',
             align: 'center',
+            width: 350,
         }, {
             field: 'tags',
             title: '标签',
             align: 'center',
+            width: 200,
         }, {
             field: 'updateTime',
             title: '最后操作时间',
             align: 'center',
+            width: 180,
             formatter: function (value, row, index) {
                 return $.common.dateFormat(value);
             }
@@ -39,6 +42,7 @@ function initTable() {
             field: 'status',
             title: '状态',
             align: 'center',
+            width: 80,
             formatter: function (value, row, index) {
                 if (value == 1) {
                     return '<span class="badge badge-info">发布</span>';
@@ -50,8 +54,9 @@ function initTable() {
             }
         }, {
             field: 'support',
-            title: '是否推荐',
+            title: '推荐',
             align: 'center',
+            width: 80,
             formatter: function (value, row, index) {
                 if (value == true) {
                     return '<span class="badge badge-info">是</span>';
@@ -62,10 +67,12 @@ function initTable() {
         }, {
             field: 'weight',
             title: '权重',
+            width: 80,
             align: 'center',
         }, {
             field: 'click',
             title: '点击数',
+            width: 80,
             align: 'center',
         }, {
             field: 'operate',

@@ -2,7 +2,6 @@ package com.dimple.framework.log;
 
 import com.dimple.bean.VisitorLog;
 import com.dimple.framework.log.annotation.VLog;
-import com.dimple.utils.IpUtil;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +13,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -32,12 +28,10 @@ import java.util.regex.Pattern;
  */
 @Aspect
 @Component
-@EnableAsync
+
 @Slf4j
 public class VisitorAspect {
 
-    @Autowired
-    AsyncLog asyncLog;
     private Integer result;
     private String url;
 
@@ -76,7 +70,6 @@ public class VisitorAspect {
      * @param joinPoint 切入点对象
      * @param exception 异常信息
      */
-    @Async
     public void handleLog(JoinPoint joinPoint, Exception exception) {
         VLog annotationLog = getAnnotationLog(joinPoint);
         if (annotationLog == null) {
@@ -85,9 +78,6 @@ public class VisitorAspect {
         String sessionId = ShiroUtil.getSessionId();
         VisitorLog visitorLog = new VisitorLog();
         visitorLog.setSessionId(sessionId);
-
-        String ip = ShiroUtil.getIp();
-        visitorLog.setIp(ip);
 
         String url = ServletUtil.getRequest().getRequestURI();
 
@@ -102,8 +92,7 @@ public class VisitorAspect {
 
         setControllerMethodDescription(visitorLog, annotationLog);
 
-
-        asyncLog.recordVisitorLog(visitorLog);
+        AsyncManager.getAsyncManager().execute(AsyncHelper.recordVisitorLog(visitorLog));
 
     }
 
@@ -118,7 +107,7 @@ public class VisitorAspect {
         try {
             result = Integer.valueOf(m.replaceAll("").trim());
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return result;
     }

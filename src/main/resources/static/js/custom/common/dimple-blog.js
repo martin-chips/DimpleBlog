@@ -51,6 +51,13 @@
                     columns: options.columns,                           // 显示列信息（*）
                     responseHandler: $.table.responseHandler,            // 回调函数
                     clickToSelect: true,                                //点击自动勾选复选框
+                    onLoadSuccess: function () {
+                        //鼠标悬停显示全部内容~
+                        $('.bootstrap-table tr td').each(function () {
+                            $(this).attr("title", $(this).text());
+                            $(this).css("cursor", 'pointer');
+                        });
+                    },
                 });
             },
             // 查询条件

@@ -29,6 +29,7 @@ public class VisitorLog {
     private String browser;
     private String os;
     private String ip;
+    private String spider;
     private String requireUrl;
     //请求的模块
     private String title;

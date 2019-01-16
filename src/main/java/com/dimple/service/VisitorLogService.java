@@ -3,6 +3,7 @@ package com.dimple.service;
 import com.dimple.bean.VisitorLog;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: VisitorLogService
@@ -22,5 +23,7 @@ public interface VisitorLogService {
     VisitorLog getVisitorLogDetail(Integer id);
 
     void insertVisitorLog(VisitorLog visitorLog);
+
+    List<Map<String, Integer>> getSpiderCountList();
 
 }

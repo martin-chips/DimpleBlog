@@ -14,6 +14,8 @@ import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
 import java.net.UnknownHostException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -105,6 +107,33 @@ public class Server {
         setJvmInfo();
 
         setSysFiles(si.getOperatingSystem());
+    }
+
+    /**
+     * 获取三个关键数据
+     *
+     * @return
+     * @throws UnknownHostException
+     */
+    public List<Double> copyToMemCpuJvm() throws UnknownHostException {
+        HardwareAbstractionLayer hal = new SystemInfo().getHardware();
+        setCpuInfo(hal.getProcessor());
+        setMemInfo(hal.getMemory());
+        setJvmInfo();
+        //设置数据
+
+        double cpu = (getCpu().getSys() + getCpu().getUsed());
+
+        DecimalFormat format = new DecimalFormat("#.00");
+        cpu = Double.valueOf(format.format(cpu));
+
+        double mem = getMem().getUsage();
+        double jvm = getJvm().getUsage();
+        List<Double> list = new ArrayList<>();
+        list.add(mem);
+        list.add(cpu);
+        list.add(jvm);
+        return list;
     }
 
     /**

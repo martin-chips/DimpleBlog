@@ -2,7 +2,8 @@ package com.dimple.framework.filter;
 
 import com.dimple.bean.User;
 import com.dimple.framework.constant.Status;
-import com.dimple.framework.log.AsyncLog;
+import com.dimple.framework.log.AsyncHelper;
+import com.dimple.framework.log.AsyncManager;
 import com.dimple.utils.MessageUtil;
 import com.dimple.utils.ShiroUtil;
 import lombok.Data;
@@ -24,18 +25,11 @@ import javax.servlet.ServletResponse;
 @Data
 @Slf4j
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
-    private AsyncLog asyncLog;
-
-    // @PostConstruct
-    // public void init() {
-    //     asyncLog = new AsyncLog();
-    // }
 
     private String loginUrl;
 
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        asyncLog = new AsyncLog();
         try {
             //获取当前的对象
             Subject subject = getSubject(request, response);
@@ -46,16 +40,15 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
                 if (user != null) {
                     //获取登录的id
                     String loginId = user.getUserLoginId();
-                    asyncLog.recordLoginLog(loginId, Status.LOGOUT_SUCCESS, MessageUtil.getMessage("user.logout.success"));
+                    AsyncManager.getAsyncManager().execute(AsyncHelper.recordLoginLog(loginId, Status.SUCCESS, MessageUtil.getMessage("user.logout.success")));
+//                    asyncLog.recordLoginLog(loginId, Status.LOGOUT_SUCCESS, MessageUtil.getMessage("user.logout.success"));
                 }
                 subject.logout();
             } catch (SessionException e) {
-                e.printStackTrace();
                 log.error("logout failure", e);
             }
             issueRedirect(request, response, redirectUrl);
         } catch (Exception e) {
-            e.printStackTrace();
             log.error("Encountered session exception during logout.  This can generally safely be ignored.", e);
         }
         return false;

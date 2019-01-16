@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: VisitorLogServiceImpl
@@ -53,6 +54,12 @@ public class VisitorLogServiceImpl implements VisitorLogService {
     @Override
     public void insertVisitorLog(VisitorLog visitorLog) {
         visitorLogRepository.save(visitorLog);
+    }
+
+    @Override
+    public List<Map<String, Integer>> getSpiderCountList() {
+
+        return null;
     }
 
 

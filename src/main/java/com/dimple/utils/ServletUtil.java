@@ -26,6 +26,15 @@ public class ServletUtil {
     }
 
     /**
+     * 获取User-Agent
+     *
+     * @return
+     */
+    public static String getUserAgent() {
+        return getRequestAttributes().getRequest().getHeader("User-Agent");
+    }
+
+    /**
      * 获取response对象
      *
      * @return response对象

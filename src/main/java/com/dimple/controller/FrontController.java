@@ -43,6 +43,7 @@ public class FrontController {
      * @return
      */
     @RequestMapping("/")
+    @VLog(title = "首页")
     public String index(Model model) {
         model.addAttribute("categories", frontService.selectCategoryNameToDisplay());
         model.addAttribute("blogs", frontService.getBlogsInfo());
@@ -57,16 +58,19 @@ public class FrontController {
 
 
     @GetMapping("/leaveComment.html")
+    @VLog(title = "留言")
     public String leaveCommentPage() {
         return "front/leaveComment";
     }
 
     @GetMapping("/about.html")
+    @VLog(title = "关于我")
     public String aboutPage() {
         return "front/about";
     }
 
     @GetMapping("/technology.html")
+    @VLog(title = "技术分享")
     public String technologyPage(Model model) {
         model.addAttribute("clickBlog", frontService.getClickBlog());
         model.addAttribute("supportBlog", frontService.getSupportBlog());
@@ -76,6 +80,7 @@ public class FrontController {
     }
 
     @GetMapping("/free.html")
+    @VLog(title = "随心吐槽")
     public String freePage(Model model) {
         model.addAttribute("clickBlog", frontService.getClickBlog());
         model.addAttribute("supportBlog", frontService.getSupportBlog());
@@ -84,6 +89,7 @@ public class FrontController {
         return "front/free";
     }
 
+    @VLog(title = "软件分享")
     @GetMapping("/software.html")
     public String softwarePage(Model model) {
         model.addAttribute("clickBlog", frontService.getClickBlog());
