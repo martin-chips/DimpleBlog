@@ -84,7 +84,7 @@
             <ul>
                 <!-- 可以后端生成 -->
                 <li th:each="blog:${peopleSee}">
-                    <i class="ztpic"><a href="/" target="_blank"><img
+                    <i class="ztpic"><a href="/" th:href="${'/view/'+blog.blogId}" ><img
                             src="/front/images/1.jpg" th:src="${blog.headerUrl}"></a></i>
                     <b th:text="${blog.title}"></b><span th:text="${blog.summary}"></span><a
                         th:href="${'/view/'+blog.blogId}" class="readmore">文章阅读</a>

@@ -124,7 +124,7 @@
                                     <li>
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-title">
-                                                <span class="label label-success pull-right">在线</span>
+                                                <span class="label label-warning-light pull-right">在线</span>
                                                 <h5>访客</h5>
                                             </div>
                                             <div class="ibox-content">
@@ -143,7 +143,7 @@
                                                 <h5>访客</h5>
                                             </div>
                                             <div class="ibox-content">
-                                                <h1 class="no-margins" th:text="${all}"></h1>
+                                                <h1 class="no-margins" th:text="${localMonthVisitorCount}"></h1>
                                                 <div class="stat-percent font-bold text-success">100% <i
                                                         class="fa fa-bolt"></i></div>
                                                 <small>本月访客数量</small>
@@ -154,11 +154,11 @@
                                     <li>
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-title">
-                                                <span class="label label-success pull-right">历史</span>
+                                                <span class="label label-primary pull-right">历史</span>
                                                 <h5>访客</h5>
                                             </div>
                                             <div class="ibox-content">
-                                                <h1 class="no-margins" th:text="${all}"></h1>
+                                                <h1 class="no-margins" th:text="${historyVisitorCount}"></h1>
                                                 <div class="stat-percent font-bold text-success">100% <i
                                                         class="fa fa-bolt"></i></div>
                                                 <small>历史访客数量</small>

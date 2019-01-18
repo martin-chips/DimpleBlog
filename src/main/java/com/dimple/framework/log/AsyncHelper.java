@@ -2,10 +2,10 @@ package com.dimple.framework.log;
 
 import com.dimple.bean.LoginLog;
 import com.dimple.bean.OperateLog;
-import com.dimple.bean.VisitorLog;
+import com.dimple.bean.Visitor;
 import com.dimple.service.LoginLogService;
 import com.dimple.service.OperateLogService;
-import com.dimple.service.VisitorLogService;
+import com.dimple.service.VisitorService;
 import com.dimple.utils.*;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
@@ -78,7 +78,7 @@ public class AsyncHelper {
     }
 
 
-    public static TimerTask recordVisitorLog(VisitorLog visitorLog) {
+    public static TimerTask recordVisitorLog(Visitor visitor) {
 
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtil.getRequest().getHeader("User-Agent"));
         final String ip = IpUtil.getAccessIp();
@@ -88,18 +88,18 @@ public class AsyncHelper {
         return new TimerTask() {
             @Override
             public void run() {
-                visitorLog.setIp(ip);
-                visitorLog.setVisitTime(new Date());
-                visitorLog.setSpider(spider);
+                visitor.setIp(ip);
+                visitor.setVisitTime(new Date());
+                visitor.setSpider(spider);
                 String address = AddressUtil.getRealAddressByIP(ip);
-                visitorLog.setAddress(address);
+                visitor.setAddress(address);
                 //获取操作系统
                 String os = userAgent.getOperatingSystem().getName();
                 //获取浏览器类型
                 String browser = userAgent.getBrowser().getName();
-                visitorLog.setBrowser(browser);
-                visitorLog.setOs(os);
-                SpringUtil.getBean(VisitorLogService.class).insertVisitorLog(visitorLog);
+                visitor.setBrowser(browser);
+                visitor.setOs(os);
+                SpringUtil.getBean(VisitorService.class).insertVisitorLog(visitor);
             }
         };
     }

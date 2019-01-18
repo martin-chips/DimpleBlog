@@ -147,7 +147,7 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
      */
     public static List<String> getPastDaysList(int intervals) {
         List<String> pastDaysList = new ArrayList<>();
-        for (int i = intervals; i > 0; i++) {
+        for (int i = intervals; i > 0; i--) {
             pastDaysList.add(getPastDate(i));
         }
         return pastDaysList;

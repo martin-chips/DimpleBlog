@@ -7,6 +7,7 @@ import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.BlogService;
 import com.dimple.service.DashboardService;
 import com.dimple.service.SessionService;
+import com.dimple.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,9 @@ public class DashboardController {
     @Autowired
     DashboardService dashboardService;
 
+    @Autowired
+    VisitorService visitorService;
+
     @GetMapping("/page/dashboard.html")
     public String dashboardPage(Model model) {
         model.addAttribute("published", blogService.selectBlogCountByStatus(BlogStatus.PUBLISHED));
@@ -43,6 +47,10 @@ public class DashboardController {
         model.addAttribute("dustbin", blogService.selectBlogCountByStatus(BlogStatus.DUSTBIN));
         model.addAttribute("all", blogService.selectBlogCountByStatus(BlogStatus.ALL));
         model.addAttribute("onlineCount", sessionService.getOnlineList().size());
+        //历史在线人数
+        model.addAttribute("historyVisitorCount", visitorService.getHistoryVisitorCount());
+        //本月访客人数
+        model.addAttribute("localMonthVisitorCount", visitorService.getLocalMonthCount());
         return "dashboard";
     }
 

@@ -170,6 +170,9 @@ public class FileOperateUtil {
         File file = new File(IMG_DIR);
         String[] list = file.list(filenameFilter);
         List<String> imageList = new LinkedList<>();
+        if (imageList == null || imageList.size() == 0) {
+            return null;
+        }
         for (String s : list) {
             imageList.add("/images/" + s);
         }

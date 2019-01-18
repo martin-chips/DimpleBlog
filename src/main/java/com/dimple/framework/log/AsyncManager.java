@@ -1,10 +1,9 @@
 package com.dimple.framework.log;
 
-import com.dimple.utils.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.TimerTask;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,9 +21,9 @@ public class AsyncManager {
     private final int OPERATE_DELAY_TIME = 10;
 
 
-    private static ScheduledExecutorService executorService;
-
     private static AsyncManager asyncManager = new AsyncManager();
+
+    private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(5);
 
     /**
      * 单例模式
@@ -32,7 +31,6 @@ public class AsyncManager {
      * @return
      */
     public static AsyncManager getAsyncManager() {
-        executorService = SpringUtil.getBean("scheduledExecutorService");
         return asyncManager;
     }
 
@@ -42,25 +40,6 @@ public class AsyncManager {
      * @param timerTask
      */
     public void execute(TimerTask timerTask) {
-        executorService.schedule(timerTask, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
-    }
-
-
-    public void shutdownAndAwaitTermination() {
-        log.info("======关闭后台任务线程池======");
-        if (executorService != null && !executorService.isShutdown()) {
-            executorService.shutdown();
-            try {
-                if (!executorService.awaitTermination(120, TimeUnit.SECONDS)) {
-                    executorService.shutdown();
-                    if (!executorService.awaitTermination(120, TimeUnit.SECONDS)) {
-                        log.info("Pool did not terminate");
-                    }
-                }
-            } catch (InterruptedException e) {
-                executorService.shutdown();
-                Thread.currentThread().interrupt();
-            }
-        }
+        executor.schedule(timerTask, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
     }
 }

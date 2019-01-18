@@ -23,7 +23,7 @@ var config = {
     },
     user: { //当前用户信息
         name: '游客',
-        face: 'img/a1.jpg'
+        face: 'img/header.jpg'
     },
 
     //自动回复内置文案，也可动态读取数据库配置

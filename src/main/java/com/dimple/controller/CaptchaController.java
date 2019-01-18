@@ -41,8 +41,9 @@ public class CaptchaController {
     /**
      * 配置文件中配置的验证码的类型
      */
-    @Value("${kaptcha.type}")
-    private String kaptchaType = null;
+    @Value("${dimple.shiro.user.captchaType}")
+    private String kaptchaType;
+
 
     @ApiOperation("生成验证码")
     @GetMapping("/public/api/kaptcha")
@@ -56,11 +57,10 @@ public class CaptchaController {
             response.addHeader("Cache-Control", "post-check=0, pre-check=0");
             response.setHeader("Pragma", "no-cache");
             response.setContentType("image/jpeg");
-            // response.setContentType(mimeType);
 
-            String kaptchaStr = null;
-            String code = null;
-            BufferedImage bi = null;
+            String kaptchaStr;
+            String code;
+            BufferedImage bi;
             if ("math".equals(kaptchaType)) {
                 String capText = kaptchaMathImage.createText();
                 kaptchaStr = capText.substring(0, capText.lastIndexOf("@"));

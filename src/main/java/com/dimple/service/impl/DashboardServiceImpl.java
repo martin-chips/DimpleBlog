@@ -1,6 +1,6 @@
 package com.dimple.service.impl;
 
-import com.dimple.repository.VisitorLogRepository;
+import com.dimple.repository.VisitorRepository;
 import com.dimple.service.DashboardService;
 import com.dimple.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +22,11 @@ import java.util.Map;
 public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
-    VisitorLogRepository visitorLogRepository;
+    VisitorRepository visitorRepository;
 
     @Override
     public List<Map<String, Integer>> getSpiderPieData() {
-        List<Map<String, Integer>> spiderCount = visitorLogRepository.getSpiderCount();
+        List<Map<String, Integer>> spiderCount = visitorRepository.getSpiderCount();
         return spiderCount;
     }
 
@@ -35,7 +35,7 @@ public class DashboardServiceImpl implements DashboardService {
         List<String> pastDaysList = DateUtil.getPastDaysList(7);
         List<Map<String, Object>> result = new ArrayList<>();
         for (String date : pastDaysList) {
-            Integer visitorCountByVisitTime = visitorLogRepository.getVisitorCountByVisitTime(date);
+            Integer visitorCountByVisitTime = visitorRepository.getVisitorCountByVisitTime(date);
             Map<String, Object> item = new HashMap<>();
             item.put("name", date);
             item.put("value", visitorCountByVisitTime);

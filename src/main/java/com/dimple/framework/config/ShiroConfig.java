@@ -22,16 +22,11 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import javax.servlet.Filter;
@@ -47,11 +42,67 @@ import java.util.*;
 @Configuration
 public class ShiroConfig {
 
+
     @Value("${spring.redis.host}")
     private String host;
 
     @Value("${spring.redis.port}")
     private String port;
+
+    //缓存用户信息的时长
+    @Value("${dimple.shiro.redis.expire}")
+    private int redisExpire;
+
+    //登录地址
+    @Value("${dimple.shiro.user.loginUrl}")
+    private String loginUrl;
+
+    //未授权地址
+    @Value("${dimple.shiro.user.unauthUrl}")
+    private String unauthUrl;
+
+    @Value(("${dimple.shiro.user.indexUrl}"))
+    private String indexUrl;
+
+    //RememberCookie的域名
+    @Value("${dimple.shiro.cookie.rememberMeCookie.domain}")
+    private String rememberMeCookieDomain;
+
+    //rememberCookie的访问路径
+    @Value("${dimple.shiro.cookie.rememberMeCookie.path}")
+    private String rememberMeCookiePath;
+
+    //RememberCache只允许Http访问
+    @Value("${dimple.shiro.cookie.rememberMeCookie.httpOnly}")
+    private boolean rememberMeCookieHttpOnly;
+
+    //RememberCookie 过期时间
+    @Value("${dimple.shiro.cookie.rememberMeCookie.maxAge}")
+    private int rememberMeCookieMaxAge;
+
+    //SessionCookie的域名
+    @Value("${dimple.shiro.cookie.sessionCookie.domain}")
+    private String sessionCookieDomain;
+
+    //SessionCookie的访问路径
+    @Value("${dimple.shiro.cookie.sessionCookie.path}")
+    private String sessionCookiePath;
+
+    //SessionCache只允许Http访问
+    @Value("${dimple.shiro.cookie.sessionCookie.httpOnly}")
+    private boolean sessionCookieHttpOnly;
+
+    //SessionCookie 过期时间
+    @Value("${dimple.shiro.cookie.sessionCookie.maxAge}")
+    private int sessionCookieMaxAge;
+
+    //Session的检查时间
+    @Value("${dimple.shiro.session.validationInterval}")
+    private int validationInterval;
+
+    //Session的超时时间
+    @Value("${dimple.shiro.session.expireTime}")
+    private int sessionExpireTime;
 
 
     @Bean
@@ -69,9 +120,9 @@ public class ShiroConfig {
         //设置Shiro核心接口SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        shiroFilterFactoryBean.setLoginUrl("/page/login.html");
-        shiroFilterFactoryBean.setSuccessUrl("/page/index.html");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/page/403");
+        shiroFilterFactoryBean.setLoginUrl(loginUrl);
+        shiroFilterFactoryBean.setSuccessUrl(indexUrl);
+        shiroFilterFactoryBean.setUnauthorizedUrl(unauthUrl);
 
         //拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
@@ -130,6 +181,7 @@ public class ShiroConfig {
     /**
      * Shiro 生命周期处理器
      * 设置为static解决属性不能注入的问题
+     *
      * @return
      */
     @Bean
@@ -158,16 +210,20 @@ public class ShiroConfig {
         return userRealm;
     }
 
-
+    /**
+     * 记住我Cookie
+     *
+     * @return
+     */
     @Bean
     public SimpleCookie rememberMeCookie() {
         //Cookie的名称，对应前端的CheckBox的name=rememberMe
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         //设置为true后只能通过Http访问，JavaScript无法访问
-        simpleCookie.setHttpOnly(true);
-        simpleCookie.setPath("/");
-        //设置cookie生效时间
-        simpleCookie.setMaxAge(30 * 60 * 60);
+        simpleCookie.setHttpOnly(rememberMeCookieHttpOnly);
+        simpleCookie.setPath(rememberMeCookiePath);
+        //设置cookie生效时间(单位天)，setMaxAge的单位为秒
+        simpleCookie.setMaxAge(rememberMeCookieMaxAge * 24 * 60 * 60);
         return simpleCookie;
     }
 
@@ -203,8 +259,8 @@ public class ShiroConfig {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
         redisCacheManager.setPrincipalIdFieldName("userId");
-        //设置用户权限信息的缓存时间
-        redisCacheManager.setExpire(200000);
+        //设置用户权限信息的缓存时间,单位分钟
+        redisCacheManager.setExpire(redisExpire * 60 * 1000);
         return redisCacheManager;
     }
 
@@ -243,7 +299,6 @@ public class ShiroConfig {
      * @param securityManager
      * @return
      */
-
     @Bean
     public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
@@ -259,6 +314,7 @@ public class ShiroConfig {
      * @return
      */
     @Bean
+    //todo 解决下跳转问题
     public SimpleMappingExceptionResolver getSimpleMappingExceptionResolver() {
         SimpleMappingExceptionResolver simpleMappingExceptionResolver = new SimpleMappingExceptionResolver();
         Properties properties = new Properties();
@@ -305,7 +361,8 @@ public class ShiroConfig {
     public SessionDAO sessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         redisSessionDAO.setRedisManager(redisManager());
-        redisSessionDAO.setExpire(12000);
+        //设置session的超时时间
+        redisSessionDAO.setExpire(sessionExpireTime * 60 * 1000);
         return redisSessionDAO;
     }
 
@@ -319,9 +376,10 @@ public class ShiroConfig {
         //设置cookie的名称
         SimpleCookie simpleCookie = new SimpleCookie("sid");
 
-        simpleCookie.setHttpOnly(true);
-        simpleCookie.setPath("/");
-        simpleCookie.setMaxAge(-1);
+        simpleCookie.setHttpOnly(sessionCookieHttpOnly);
+        simpleCookie.setPath(sessionCookiePath);
+//        //设置session cookie的过期时间 单位min
+        simpleCookie.setMaxAge(sessionCookieMaxAge * 60);
         return simpleCookie;
     }
 
@@ -335,6 +393,14 @@ public class ShiroConfig {
         sessionManager.setSessionIdCookie(sessionIdCookie());
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setCacheManager(redisCacheManager());
+        //删除过期的session
+        sessionManager.setDeleteInvalidSessions(true);
+        //设置全局超时时间，单位min
+        sessionManager.setGlobalSessionTimeout(sessionExpireTime * 60 * 1000);
+        //去掉URL后缀的Session
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
+        //设置Session检查时间，单位min
+        sessionManager.setSessionValidationInterval(validationInterval * 60 * 1000);
         return sessionManager;
     }
 

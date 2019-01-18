@@ -208,25 +208,25 @@ $(function () {
     });
 
     // 默认主题
-    $('.s-skin-0').click(function () {
+    $('.s-theme-0').click(function () {
         $("body").removeClass("skin-1");
-        $("body").removeClass("skin-2");
+        $("body").removeClass("theme-2");
         $("body").removeClass("skin-3");
         return false;
     });
 
     // 蓝色主题
-    $('.s-skin-1').click(function () {
-        $("body").removeClass("skin-2");
+    $('.s-theme-1').click(function () {
+        $("body").removeClass("theme-2");
         $("body").removeClass("skin-3");
         $("body").addClass("skin-1");
         return false;
     });
 
     // 黄色主题
-    $('.s-skin-3').click(function () {
+    $('.s-theme-3').click(function () {
         $("body").removeClass("skin-1");
-        $("body").removeClass("skin-2");
+        $("body").removeClass("theme-2");
         $("body").addClass("skin-3");
         return false;
     });

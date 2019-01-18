@@ -8,7 +8,7 @@ $(function () {
     //填充数据到饼图
     fixDataPie();
     //填充数据到仪表盘
-    setInterval(fixDataGauge, 5000);
+    setInterval(fixDataGauge, 15000);
     //填充数据到折线图
     fixDataLine();
 

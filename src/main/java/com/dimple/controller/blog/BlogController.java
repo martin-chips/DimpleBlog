@@ -8,11 +8,14 @@ import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.service.BlogService;
 import com.dimple.service.CategoryService;
+import com.dimple.utils.BaiduPushUtil;
 import com.dimple.utils.FileOperateUtil;
+import com.dimple.utils.IpUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +23,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
@@ -44,12 +41,16 @@ import java.util.Map;
 @Slf4j
 public class BlogController {
 
+    @Value("${dimple.baidu.pushUrl}")
+    String baiduPushUrl;
+
     @Autowired
     BlogService blogService;
     @Autowired
     FileOperateUtil fileOperateUtil;
     @Autowired
     CategoryService categoryService;
+
 
     @GetMapping("/page/editBlog.html")
     @ApiIgnore
@@ -150,4 +151,17 @@ public class BlogController {
         return ResultUtil.success(map);
     }
 
+    @PutMapping("/api/blog/baidu/{id}")
+    @ResponseBody
+    public Result pushBaidu(@PathVariable("id") Integer ids[]) {
+        if (ids == null || ids.length == 0) {
+            return ResultUtil.error(1, "数据异常，请稍后重试！");
+        }
+        String params[] = new String[ids.length];
+        for (int i = 0; i < ids.length; i++) {
+            params[i] = IpUtil.getHostIp() + "/view/" + ids[i];
+        }
+        String post = BaiduPushUtil.Post(baiduPushUrl, params);
+        return ResultUtil.success(post);
+    }
 }

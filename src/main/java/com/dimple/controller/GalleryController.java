@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -31,5 +32,11 @@ public class GalleryController {
         Map<String, Date> result = galleryService.selectImagesNameAndModifyTime();
         model.addAttribute("images", result);
         return "gallery/localGallery";
+    }
+
+    @GetMapping("/page/qiniuyunGallery.html")
+    @ApiIgnore
+    public String toQiniuyunGallery() {
+        return "gallery/qiniuyunGallery";
     }
 }

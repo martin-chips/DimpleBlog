@@ -1,6 +1,6 @@
 package com.dimple.framework.log;
 
-import com.dimple.bean.VisitorLog;
+import com.dimple.bean.Visitor;
 import com.dimple.framework.log.annotation.VLog;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.ShiroUtil;
@@ -76,23 +76,24 @@ public class VisitorAspect {
             return;
         }
         String sessionId = ShiroUtil.getSessionId();
-        VisitorLog visitorLog = new VisitorLog();
-        visitorLog.setSessionId(sessionId);
+        Visitor visitor = new Visitor();
+        visitor.setSessionId(sessionId);
 
         String url = ServletUtil.getRequest().getRequestURI();
 
-        visitorLog.setRequireUrl(url);
-        visitorLog.setBlogId(getNumberFromString(url));
+        visitor.setRequireUrl(url);
+        visitor.setBlogId(getNumberFromString(url));
 
         if (exception != null) {
-            visitorLog.setStatus(false);
+            visitor.setStatus(false);
+            visitor.setErrorMsg(exception.getMessage().substring(0, 2000));
         } else {
-            visitorLog.setStatus(true);
+            visitor.setStatus(true);
         }
 
-        setControllerMethodDescription(visitorLog, annotationLog);
+        setControllerMethodDescription(visitor, annotationLog);
 
-        AsyncManager.getAsyncManager().execute(AsyncHelper.recordVisitorLog(visitorLog));
+        AsyncManager.getAsyncManager().execute(AsyncHelper.recordVisitorLog(visitor));
 
     }
 
@@ -115,11 +116,11 @@ public class VisitorAspect {
     /**
      * 将Controller注解中的参数拿到，设置到Log对象中去
      *
-     * @param visitorLog    log对象
+     * @param visitor    log对象
      * @param annotationLog controller上注解标注的对象
      */
-    private void setControllerMethodDescription(VisitorLog visitorLog, VLog annotationLog) {
-        visitorLog.setTitle(annotationLog.title());
+    private void setControllerMethodDescription(Visitor visitor, VLog annotationLog) {
+        visitor.setTitle(annotationLog.title());
 
         //todo 是否需要设置请求的博客的ID
     }

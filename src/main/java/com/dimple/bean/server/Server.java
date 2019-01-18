@@ -176,7 +176,7 @@ public class Server {
     private void setSysInfo() {
         Properties props = System.getProperties();
         sys.setComputerName(IpUtil.getHostName());
-        sys.setComputerIp(IpUtil.getAccessIp());
+        sys.setComputerIp(IpUtil.getHostIp());
         sys.setOsName(props.getProperty("os.name"));
         sys.setOsArch(props.getProperty("os.arch"));
         sys.setUserDir(props.getProperty("user.dir"));

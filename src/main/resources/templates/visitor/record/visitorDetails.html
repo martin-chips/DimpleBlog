@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="common :: common-head"></head>
+
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m-t" id="signupForm">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">操作模块：</label>
+            <div class="form-control-static"
+                 th:text="${visitor.title}">
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">登录信息：</label>
+            <div class="form-control-static"
+                 th:text="${visitor.ip} + ' / ' +${visitor.address}  +' / '+ ${visitor.os}+ ' / ' + ${visitor.browser}">
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">请求地址：</label>
+            <div class="form-control-static" th:text="${visitor.requireUrl}">
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">访问时间：</label>
+            <div class="form-control-static" th:text="${#dates.format(visitor.visitTime,'yyyy-MM-dd hh:mm:ss')}">
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">状态：</label>
+            <div class="form-control-static"
+                 th:class="${visitor.status == true ? 'label label-primary' : 'label label-danger'}"
+                 th:text="${visitor.status == true ? '正常' : '异常'}">
+            </div>
+        </div>
+        <div class="form-group" th:style="'display:' + ${visitor.status == true ? 'none' : 'block'}">
+            <label class="col-sm-2 control-label">异常信息：</label>
+            <div class="form-control-static" th:text="${visitor.errorMsg}">
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+    </form>
+    <div th:include="common :: common-footer"></div>
+</div>
+</body>
+
+</html>

@@ -41,7 +41,7 @@
                         skin: 'layer-ext-moon'
                     }, function (index, layero) {
                         layero.find('.layui-layer-btn0').attr({
-                            href: 'http://layer.layui.com/skin.html',
+                            href: 'http://layer.layui.com/theme.html',
                             target: '_blank'
                         });
                         parent.layer.close(index);

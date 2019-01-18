@@ -225,9 +225,22 @@ function changeStatus(status) {
     $.modal.confirm(msg, function () {
         var data = {"id": rows.join()};
         var url = changeStatusUrl.replace("{id}", data.id);
-        console.log(url)
         $.operate.submit(url, "put", "json", data);
     });
 }
 
+
+function pushBaidu() {
+    var url = "/api/blog/baidu/{id}";
+    var rows = $.common.isEmpty($.table._options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._options.uniqueId);
+    if (rows.length == 0) {
+        $.modal.alertWarning("请至少选择一条记录");
+        return;
+    }
+    $.modal.confirm("确定主动推送这" + rows.length + "条数据到百度站长平台吗？", function () {
+        var data = {"id": rows.join()};
+        url = url.replace("{id}", data.id);
+        $.operate.submit(url, "put", "json", data);
+    });
+}
 

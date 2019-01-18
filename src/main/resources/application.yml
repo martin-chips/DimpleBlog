@@ -1,0 +1,132 @@
+spring:
+  #数据库配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: dimple
+    password: 123456
+    url: jdbc:mysql://47.112.14.207:3306/dimple_blog?useSSL=true
+    driverClassName: com.mysql.jdbc.Driver
+    #初始连接数
+    initial-size: 5
+    #最小连接池数量
+    min-idle: 10
+    #最大连接池数量
+    max-active: 30
+    #获取连接等待的超时时间
+    max-wait: 60000
+    #间隔多久进行一次检测，关闭需要关闭的空闲连接
+    timeBetweenEvictionRunsMillis: 600000
+    #一个连接在连接池中最小生存的时间
+    minEvictableIdleTimeMillis: 300000
+    #一个连接在连接池中最大生存的时间
+    maxEvictableIdleTimeMillis: 900000
+    connectionProperties: druid.stat.mergeSql=true;
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+
+  #NOSQL 配置
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60
+  #Redis 配置
+  redis:
+    host: 47.112.14.207
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 300
+  #页面配置
+  thymeleaf:
+    #禁止缓存
+    cache: false
+    encoding: UTF-8
+  #JPA 配置
+  jpa:
+    #显示SQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+  servlet:
+    multipart:
+      #上传单个文件的最大值
+      max-file-size: 10
+      #上传文件总的最大值
+      max-request-size: 20
+  main:
+    #解决org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'agentRepository' defined in null: Cannot register bean definition [Root bean: class
+    allow-bean-definition-overriding: true
+  messages:
+    basename: i18n/messages
+#自定义配置
+dimple:
+  #图片文件上传位置指定
+  ImgUploadDir:
+    windows: D:/rentHouse/
+    linux: /home/ubuntu/images
+    #上传图片的类型
+    allowImgFormat: gif,jpg,jpeg,png
+  #七牛云配置
+  qiniuyun:
+    accessKey: tq8X9efPviPasgmoz6kcIzDuE_v4T-UJQXchcWgz
+    secretKey: Yejcd3g3Z_iOmu_jW6hB-euwxqbyqvJkslZzoXrV
+    bucket: uploadtest
+    path: http://pkxwyzsng.bkt.clouddn.com
+    imageMaxSize: 52428800
+    imageMaxNameLength: 200
+  #百度站长Push 的URL
+  baidu:
+    pushUrl: http://data.zz.baidu.com/urls?site=www.bianxiaofeng.com&token=LqRHUkKxK89qudvA
+  #线程连接池配置
+  thread:
+    pool:
+      #线程存活时间，单位S
+      keepAliveSeconds: 2000
+      #线程池维护线程的最大数量
+      maxPoolSize: 100
+      #核心线程最小数量
+      corePoolSize: 10
+  #Shiro 配置
+  shiro:
+    redis:
+      #缓存用户权限信息的时长,单位分钟
+      expire: 5
+    user:
+      #登录地址
+      loginUrl: /page/login.html
+      #无权限地址
+      unauthUrl: /unauth
+      #首页地址（默认跳转到page/index）
+      indexUrl: /page/index.html
+      #验证码类型
+      captchaType: math
+    cookie:
+      rememberMeCookie:
+        #设置Cookie的域名，默认为空为当前的域名
+        domain:
+        #设置Cookie的有效访问路径
+        path: /
+        #设置HttpOnly
+        httpOnly: true
+        #甚至Cookie有效时间，单位天
+        maxAge: 30
+      sessionCookie:
+        #设置Cookie的域名，默认为空为当前的域名
+        domain:
+        #设置Cookie的有效访问路径
+        path: /
+        #设置HttpOnly
+        httpOnly: true
+        #甚至Cookie有效时间，单位min
+        maxAge: 30
+    session:
+      #设置超时时间，单位min
+      expireTime: 30
+      #检查数据路有效性的间隔,单位min
+      validationInterval: 10
+
+server:
+  port: 80

@@ -1,7 +1,6 @@
 package com.dimple.framework.interceptor;
 
-import com.dimple.service.VisitorLogService;
-import com.dimple.utils.IpUtil;
+import com.dimple.service.VisitorService;
 import com.dimple.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class RequestInterceptor implements HandlerInterceptor {
     @Autowired
-    VisitorLogService visitorLogService;
+    VisitorService visitorService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -34,7 +33,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         String requestUrl = request.getRequestURI();
         //使用view来区别是不是前端访问用户
         if ("/".equals(requestUrl) || requestUrl.contains("view")) {
-            Boolean success = visitorLogService.checkoutIp(ip);
+            Boolean success = visitorService.checkoutIp(ip);
             if (success == false) {
                 return false;
             }

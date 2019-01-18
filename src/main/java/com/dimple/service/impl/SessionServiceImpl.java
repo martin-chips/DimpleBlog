@@ -115,9 +115,14 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public boolean forceLogout(String sessionId) {
-        Session session = sessionDAO.readSession(sessionId);
-        sessionDAO.delete(session);
+    public boolean forceLogout(String[] sessionIds) {
+        for (String sessionId : sessionIds) {
+            Session session = sessionDAO.readSession(sessionId);
+            if (session == null) {
+                continue;
+            }
+            sessionDAO.delete(session);
+        }
         return true;
     }
 }

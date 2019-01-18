@@ -3,26 +3,11 @@
 <head th:include="front/common :: front-head"></head>
 <body>
 <div th:include="front/common :: front-header"></div>
-
-<div class="searchbox">
-    <div class="search">
-        <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
-            <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);"
-                   onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}"
-                   onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
-            <input name="show" value="title" type="hidden">
-            <input name="tempid" value="1" type="hidden">
-            <input name="tbname" value="news" type="hidden">
-            <input name="Submit" class="input_submit" value="搜索" type="submit">
-        </form>
-    </div>
-    <div class="searchclose"></div>
-</div>
-<!--top end-->
 <article>
     <!--lbox begin-->
     <div class="lbox">
-        <div class="whitebg lanmu"><img src="images/lm01.jpg">
+        <div class="whitebg lanmu">
+            <img src="/images/technology-head.jpg">
             <h1>技术博客</h1>
             <p>个人博客日记，记录自己在学习中遇到的问题及解决办法及学习笔记</p>
         </div>
@@ -33,24 +18,22 @@
             </ul>
 
         </div>
-
         <!--bloglist end-->
     </div>
     <div class="rbox">
         <div th:include="front/common :: front-side"></div>
-
-        <div class="whitebg cloud">
-            <h2 class="htitle">标签云</h2>
-            <ul>
-                <a href="" target="_blank">个人博客模板</a> <a href="" target="_blank">css动画</a> <a href=""
-                                                                                              target="_blank">布局</a> <a
-                    href="" target="_blank">今夕何夕</a> <a href="" target="_blank">SEO</a> <a href=""
-                                                                                           target="_blank">女程序员</a> <a
-                    href="" target="_blank">小世界</a> <a href="" target="_blank">个人博客</a> <a href=""
-                                                                                           target="_blank">网页设计</a>
-            </ul>
-        </div>
-    </div>
+        <!--<div class="whitebg cloud">-->
+        <!--<h2 class="htitle">标签云</h2>-->
+        <!--<ul>-->
+        <!--<a href="" target="_blank">个人博客模板</a> <a href="" target="_blank">css动画</a> <a href=""-->
+        <!--target="_blank">布局</a> <a-->
+        <!--href="" target="_blank">今夕何夕</a> <a href="" target="_blank">SEO</a> <a href=""-->
+        <!--target="_blank">女程序员</a> <a-->
+        <!--href="" target="_blank">小世界</a> <a href="" target="_blank">个人博客</a> <a href=""-->
+        <!--target="_blank">网页设计</a>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</div>-->
 </article>
 <head th:include="front/common :: front-footer"></head>
 </body>

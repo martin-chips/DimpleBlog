@@ -1,11 +1,14 @@
 $(function () {
 
-    //自定义js
-
-//公共配置
-
-
     $(document).ready(function () {
+
+        $.modal.loading("数据加载中，请稍后...");
+        var currentId = $('.page-tabs-content').find('.active').attr('data-id');
+        var target = $('.J_iframe[data-id="' + currentId + '"]');
+        target.attr('src', '/page/dashboard.html').ready();
+        $('.J_mainContent iframe:visible').load(function () {
+            $.modal.closeLoading();
+        });
 
         // MetsiMenu
         $('#side-menu').metisMenu();
@@ -109,16 +112,18 @@ $(function () {
     function SmoothlyMenu() {
         if (!$('body').hasClass('mini-navbar')) {
             $('#side-menu').hide();
-            setTimeout(
-                function () {
+            $(".sidebar-collapse .logo").removeClass("hide");
+            setTimeout(function () {
                     $('#side-menu').fadeIn(500);
-                }, 100);
+                },
+                100);
         } else if ($('body').hasClass('fixed-sidebar')) {
             $('#side-menu').hide();
-            setTimeout(
-                function () {
+            $(".sidebar-collapse .logo").addClass("hide");
+            setTimeout(function () {
                     $('#side-menu').fadeIn(500);
-                }, 300);
+                },
+                300);
         } else {
             $('#side-menu').removeAttr('style');
         }

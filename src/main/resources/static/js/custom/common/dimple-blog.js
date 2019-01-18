@@ -1,4 +1,5 @@
 (function ($) {
+
     // radio 事件绑定
     if ($(".radio-box").length > 0) {
         $(".radio-box").iCheck({
@@ -221,7 +222,7 @@
                     layer.msg(content, {
                             icon: $.modal.icon(type),
                             time: 1000,
-                            shift: 500
+                            shift: 5
                         }
                     );
                 } else {
@@ -988,6 +989,12 @@
     });
 
 })(jQuery);
+
+layer.config({
+    extend: 'moon/style.css',
+    skin: 'layer-ext-moon'
+});
+
 
 /** 消息状态码 */
 web_status = {

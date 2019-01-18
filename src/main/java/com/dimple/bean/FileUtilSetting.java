@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "setting")
+@ConfigurationProperties(prefix = "dimple.qiniuyun")
 public class FileUtilSetting {
     private String accessKey;
     private String secretKey;
