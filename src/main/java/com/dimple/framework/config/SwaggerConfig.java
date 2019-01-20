@@ -26,7 +26,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
 //                包扫描路径
-                .apis(RequestHandlerSelectors.basePackage("com.dimple.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.dimple.modules"))
                 .paths(PathSelectors.any())
                 .build();
     }

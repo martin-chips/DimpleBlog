@@ -1,5 +1,5 @@
 /*
- * blueimp Gallery JS
+ * blueimp gallery JS
  * https://github.com/blueimp/Gallery
  *
  * Copyright 2013, Sebastian Tschan
@@ -39,7 +39,7 @@
     }
     if (!list || !list.length) {
       this.console.log(
-        'blueimp Gallery: No or empty list provided as first argument.',
+        'blueimp gallery: No or empty list provided as first argument.',
         list
       )
       return
@@ -126,7 +126,7 @@
       closeOnSwipeUpOrDown: true,
       // Emulate touch events on mouse-pointer devices such as desktop browsers:
       emulateTouchEvents: true,
-      // Stop touch events from bubbling up to ancestor elements of the Gallery:
+      // Stop touch events from bubbling up to ancestor elements of the gallery:
       stopTouchEventsPropagation: false,
       // Hide the page scrollbars:
       hidePageScrollbars: true,
@@ -155,12 +155,12 @@
       // greater 0 to override the default transition speed:
       slideshowTransitionSpeed: undefined,
       // The event object for which the default action will be canceled
-      // on Gallery initialization (e.g. the click event to open the Gallery):
+      // on gallery initialization (e.g. the click event to open the gallery):
       event: undefined,
-      // Callback function executed when the Gallery is initialized.
+      // Callback function executed when the gallery is initialized.
       // Is called with the gallery instance as "this" object:
       onopen: undefined,
-      // Callback function executed when the Gallery has been initialized
+      // Callback function executed when the gallery has been initialized
       // and the initialization transition has been completed.
       // Is called with the gallery instance as "this" object:
       onopened: undefined,
@@ -176,10 +176,10 @@
       // Is called with the gallery instance as "this" object and the
       // slide index and slide element as arguments:
       onslidecomplete: undefined,
-      // Callback function executed when the Gallery is about to be closed.
+      // Callback function executed when the gallery is about to be closed.
       // Is called with the gallery instance as "this" object:
       onclose: undefined,
-      // Callback function executed when the Gallery has been closed
+      // Callback function executed when the gallery has been closed
       // and the closing transition has been completed.
       // Is called with the gallery instance as "this" object:
       onclosed: undefined
@@ -424,7 +424,7 @@
         list = Array.prototype.slice.call(list)
       }
       if (!this.list.concat) {
-        // Make a real array out of the Gallery list:
+        // Make a real array out of the gallery list:
         this.list = Array.prototype.slice.call(this.list)
       }
       this.list = this.list.concat(list)
@@ -1350,7 +1350,7 @@
       this.container = $(this.options.container)
       if (!this.container.length) {
         this.console.log(
-          'blueimp Gallery: Widget container not found.',
+          'blueimp gallery: Widget container not found.',
           this.options.container
         )
         return false
@@ -1360,7 +1360,7 @@
         .first()
       if (!this.slidesContainer.length) {
         this.console.log(
-          'blueimp Gallery: Slides container not found.',
+          'blueimp gallery: Slides container not found.',
           this.options.slidesContainer
         )
         return false

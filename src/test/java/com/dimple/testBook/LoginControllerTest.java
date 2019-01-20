@@ -1,6 +1,6 @@
 package com.dimple.testBook;
 
-import com.dimple.controller.LoginController;
+import com.dimple.modules.common.controller.LoginController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

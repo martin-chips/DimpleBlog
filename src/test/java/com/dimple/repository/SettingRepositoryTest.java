@@ -1,6 +1,7 @@
 package com.dimple.repository;
 
-import com.dimple.bean.Setting;
+import com.dimple.modules.frontSetting.bean.Setting;
+import com.dimple.modules.frontSetting.repository.SettingRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8610,8 +8610,8 @@
 	DataTable.settings = [];
 
 	/**
-	 * Object models container, for the various models that DataTables has
-	 * available to it. These models define the objects that are used to hold
+	 * Object modules container, for the various modules that DataTables has
+	 * available to it. These modules define the objects that are used to hold
 	 * the active state and configuration of the table.
 	 *  @namespace
 	 */

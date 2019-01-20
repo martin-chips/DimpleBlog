@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableCaching
 @EnableAsync
-@EnableJpaRepositories(basePackages = {"com.dimple.repository"})
+@EnableJpaRepositories
 @EnableSwagger2
 public class DimpleBlogApplication {
     public static void main(String[] args) {

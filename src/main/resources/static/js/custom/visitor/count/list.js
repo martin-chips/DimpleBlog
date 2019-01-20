@@ -25,14 +25,12 @@ function initTable() {
 
     var option = {
         url: "/api/visitor/count",
-        deleteUrl: "/api/visitor/record/{id}",
-        cleanUrl: "/api/visitor/record",
-        detailUrl: "/page/visitor/record/{id}",
+        deleteUrl: "/api/visitor/count/{id}",
         sortName: "visitTime",
         sortOrder: "desc",
         modalName: "访客记录",
         search: false,
-        uniqueId: "id",//唯一标识
+        uniqueId: "ip",//唯一标识
         showExport: false,
         columns: [{
             checkbox: true
@@ -62,10 +60,25 @@ function initTable() {
             formatter:
                 function (value, row, index) {
                     var actions = [];
-                    actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.detail(\'' + row.id + '\')"><i class="fa fa-search"></i>移入黑名单</a>');
+                    actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="moveBlacklist()"><i class="fa fa-search"></i>移入黑名单</a>');
                     return actions.join('');
                 }
         }],
     };
     $.table.init(option);
+}
+
+function moveBlacklist() {
+
+    var blacklistUrl = "/api/visitor/blacklist/{ip}/";
+    var rows = $.common.isEmpty($.table._options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._options.uniqueId);
+    if (rows.length == 0) {
+        $.modal.alertWarning("请至少选择一条记录");
+        return;
+    }
+    $.modal.confirm("确定要将这" + rows.length + "条IP移入到黑名单吗?", function () {
+        var data = {"id": rows.join()};
+        var url = blacklistUrl.replace("{ip}", data.id);
+        $.operate.submit(url, "post", "json", data);
+    });
 }

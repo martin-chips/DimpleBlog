@@ -1,5 +1,5 @@
 /*
- * blueimp Gallery Vimeo Video Factory JS
+ * blueimp gallery Vimeo Video Factory JS
  * https://github.com/blueimp/Gallery
  *
  * Copyright 2013, Sebastian Tschan

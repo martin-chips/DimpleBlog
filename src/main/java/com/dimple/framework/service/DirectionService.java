@@ -1,6 +1,6 @@
 package com.dimple.framework.service;
 
-import com.dimple.service.DirectionDataService;
+import com.dimple.modules.common.service.DirectionDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

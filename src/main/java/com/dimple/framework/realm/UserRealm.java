@@ -1,12 +1,12 @@
 package com.dimple.framework.realm;
 
-import com.dimple.bean.Permission;
-import com.dimple.bean.Role;
-import com.dimple.bean.User;
+import com.dimple.modules.systemManager.bean.Permission;
+import com.dimple.modules.systemManager.bean.Role;
+import com.dimple.modules.systemManager.bean.User;
 import com.dimple.framework.exception.user.UserException;
-import com.dimple.service.PermissionService;
-import com.dimple.service.RoleService;
-import com.dimple.service.UserService;
+import com.dimple.modules.systemManager.service.PermissionService;
+import com.dimple.modules.systemManager.service.RoleService;
+import com.dimple.modules.systemManager.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

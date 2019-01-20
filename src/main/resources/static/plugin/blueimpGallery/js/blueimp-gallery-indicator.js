@@ -1,5 +1,5 @@
 /*
- * blueimp Gallery Indicator JS
+ * blueimp gallery Indicator JS
  * https://github.com/blueimp/Gallery
  *
  * Copyright 2013, Sebastian Tschan
