@@ -1,6 +1,6 @@
 package com.dimple.utils;
 
-import com.dimple.modules.systemManager.bean.User;
+import com.dimple.modules.endModule.systemManager.bean.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;

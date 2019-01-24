@@ -1,9 +1,9 @@
 package com.dimple.modules.common.service;
 
-import com.dimple.modules.frontSetting.bean.Setting;
-import com.dimple.modules.frontSetting.bean.Signature;
-import com.dimple.modules.frontSetting.repository.SettingRepository;
-import com.dimple.modules.frontSetting.repository.SignatureRepository;
+import com.dimple.modules.endModule.frontSetting.bean.Setting;
+import com.dimple.modules.endModule.frontSetting.bean.Signature;
+import com.dimple.modules.endModule.frontSetting.repository.SettingRepository;
+import com.dimple.modules.endModule.frontSetting.repository.SignatureRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

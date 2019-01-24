@@ -104,10 +104,10 @@
       // Defines if the gallery slides are cleared from the gallery modal,
       // or reused for the next gallery initialization:
       clearSlides: true,
-      // Defines if images should be stretched to fill the available space,
+      // Defines if imgs should be stretched to fill the available space,
       // while maintaining their aspect ratio (will only be enabled for browsers
       // supporting background-size="contain", which excludes IE < 9).
-      // Set to "cover", to make images cover all available space (requires
+      // Set to "cover", to make imgs cover all available space (requires
       // support for background-size="cover", which excludes IE < 9):
       stretchImages: false,
       // Toggle the controls on pressing the Return key:
@@ -989,7 +989,7 @@
           }
           if (!element.parentNode) {
             // Fix for IE7 firing the load event for
-            // cached images before the element could
+            // cached imgs before the element could
             // be added to the DOM:
             return that.setTimeout(callbackWrapper, [event])
           }

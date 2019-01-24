@@ -1,6 +1,6 @@
 package com.dimple.repository;
 
-import com.dimple.modules.blogManager.repository.BlogInfoRepository;
+import com.dimple.modules.endModule.blogManager.repository.BlogInfoRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

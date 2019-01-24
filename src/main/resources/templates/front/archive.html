@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="front/common :: front-head"></head>
+<body>
+<div th:include="front/common :: front-header"></div>
+<article>
+    <!--lbox begin-->
+    <div class="lbox">
+        <div class="whitebg lanmu">
+            <img src="/images/technology-head.jpg">
+            <h1>技术博客</h1>
+            <p>个人博客日记，记录自己在学习中遇到的问题及解决办法及学习笔记</p>
+        </div>
+        <div class="whitebg bloglist">
+            <h2 class="htitle">最新博文</h2>
+            <ul id="blogNewest">
+
+            </ul>
+
+        </div>
+    </div>
+    <div class="rbox">
+        <div th:include="front/common :: front-side"></div>
+    </div>
+</article>
+<div th:include="front/common :: front-footer"></div>
+</body>
+</html>

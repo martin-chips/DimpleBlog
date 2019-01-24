@@ -1,98 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="common :: common-head">
-    <meta name="referrer" content="never">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登录-Dimple博客后台管理</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link href="/static/css/animate.css" th:href="@{/css/animate.css}" rel="stylesheet">
+    <link href="/tatic/css/login.css" th:href="@{/css/login.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/plugin/jquery-validate/jquery.validate.js}"></script>
+    <script th:src="@{/plugin/jquery-validate/additional-methods.js}"></script>
+    <script th:src="@{/plugin/jquery-validate/messages_zh.min.js}"></script>
+    <script th:src="@{/plugin/jquery-validate/common2.js}"></script>
+    <script th:src="@{/js/layer/layer.min.js}"></script>
+    <script th:src="@{/js/layui/layui.js}"></script>
+    <!--遮罩-->
+    <script th:src="@{/js/blockUI/jquery.blockUI.js}"></script>
+    <script src="/static/js/custom/login.js" th:src="@{/js/custom/login.js}"></script>
+    <script th:src="@{/js/custom/common/dimple-blog.js}"></script>
+
 </head>
-<link rel="stylesheet" th:href="@{/css/login.css}" href="/static/css/login.css"/>
-<!--TODO 验证码验证-->
-<body class="gray-bg">
-<div class="middle-box text-center loginscreen  animated fadeInDown">
-    <div>
-        <div>
-            <h5 class="logo-name">Dimple</h5>
+
+<body style="background-color: #efefef">
+<div class="denlu">
+    <div class="auth"><span><i class="fa fa-windows"></i>&nbsp;Dimple Blog 登录</span></div>
+    <form id="loginForm" autocomplete="on">
+        <div class="input-group">
+            <span class="input-label">
+                <i class="fa fa-user"></i>
+            </span>
+            <input type="text" name="loginId" class="input-field" value="admin" placeholder="请输入用户名">
         </div>
-        <h3>Dimple's Blog Manager System</h3>
-
-        <!--<form class="m-t" id="loginForm">-->
-        <!--<div class="form-group">-->
-        <!--<input type="text" name="loginId" class="form-control" placeholder="用户名" value="admin">-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-        <!--<input type="password" name="password" class="form-control" placeholder="密码" value="123456">-->
-        <!--</div>-->
-        <!--<div class="input-group">-->
-        <!--<span class="input-group-addon">-->
-        <!--<div class="input-group-addon">-->
-        <!--<a href="javascript:void(0);" title="点击更换验证码">-->
-        <!--<img th:src="@{/public/api/kaptcha}" onclick="this.src='/public/api/kaptcha'" class="captchaImg"-->
-        <!--width="100%"/>-->
-        <!--</a>-->
-        <!--</div>-->
-        <!--</span>-->
-        <!--<div class="input-group-addon">-->
-        <!--<input type="text" name="kaptcha" class="form-control captcha" placeholder="验证码" maxlength="5">-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="row" style="text-align : left;margin-top: 10px;margin-bottom: 10px">-->
-        <!--<div class="col-sm-12">-->
-        <!--<label class="radio-box">-->
-        <!--<input name="rememberMe" type="checkbox"> 记住我-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!--<button type="submit" class="btn btn-primary block full-width m-b" id="loginBtn"-->
-        <!--data-loading="正在验证登录，请稍候...">登 录-->
-        <!--</button>-->
-
-        <!--<p class="text-muted text-center"><a href="login.html#">-->
-        <!--<small>忘记密码了？</small>-->
-        <!--</a> | <a href="register.html">注册一个新账号</a>-->
-        <!--</p>-->
-        <!--</form>-->
-        <form id="loginForm">
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon">账号</span>
-                    <input type="text" name="loginId" class="form-control" placeholder="用户名" value="admin">
-                </div>
-                <br/>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon">密码</span>
-                    <input type="password" name="password" class="form-control" placeholder="密码" value="123456">
-                </div>
-            </div>
-            <div class="form-group form-horizontal">
-                <label class="input-group-addon control-label " id="captchaOperation">
-                    <a href="javascript:void(0);" title="点击更换验证码">
-                        <img th:src="@{/public/api/kaptcha}"
-                             onclick="this.src='/public/api/kaptcha'" class="captchaImg"
-                             width="100%"/>
-                    </a>
-                </label>
-                <div class="input-group-addon">
-                    <input type="text" name="kaptcha" class="form-control captcha" placeholder="验证码" maxlength="5">
-                </div>
-            </div>
-            <div class="row" style="text-align : left;margin-top: 10px;margin-bottom: 10px">
-                <div class="col-sm-12">
-                    <label class="radio-box">
-                        <input id="rememberMe" name="rememberMe" type="checkbox"> 记住我
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <input class="btn btn-primary btn-block" id="loginBtn" type="submit" value="登　　录"/>
-            </div>
-        </form>
+        <div class="input-group">
+            <span class="input-label"><i class="fa fa-key"></i></span>
+            <input type="password" name="password" class="input-field" value="123456" placeholder="请输入密码">
+        </div>
+        <div class="input-group">
+            <span class="input-label"><i class="fa fa-check"></i></span>
+            <input type="text" name="kaptcha" class="input-field" placeholder="请输入验证码" style="width:40%;">
+            <img th:src="@{/public/api/kaptcha}" onclick="this.src='/public/api/kaptcha?'+Math.random()" title="点击更换验证码"
+                 style="width:45%;height:50px;" id="captcha" class="captchaImg">
+        </div>
+        <div class="input-group">
+            <button type="button" id="loginBtn" class="input-sub">立即登录</button>
+        </div>
+    </form>
+    <div class="foot">
+        <p>Copyright © [www.bianxiaofeng.com] All Rights Reserved</p>
     </div>
 </div>
-
 </body>
-
-<div th:include="common :: common-footer"></div>
-<script src="/static/js/custom/login.js" th:src="@{/js/custom/login.js}"></script>
 </html>

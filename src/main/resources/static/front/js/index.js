@@ -1,5 +1,7 @@
 var pageNum = 0;
 $(function () {
+
+
     loadNewestBlog();
     // loadClickBlog();
     //鼠标滚动到页面最底部加载数据
@@ -9,8 +11,6 @@ $(function () {
             documentHeight.push($(document).height())
             if (documentHeight[documentHeight.length - 1] > documentHeight[documentHeight.length - 2]) {
                 documentHeight[documentHeight.length - 2] = documentHeight[documentHeight.length - 2] + documentHeight[documentHeight.length - 1];
-                // $(".res-more").css("display","none");
-                // self.getShareFiles();
                 loadNewestBlog();
             }
         } else {
@@ -30,6 +30,7 @@ function loadClickBlog() {
             console.log(result);
             if (result.code == 200) {
                 generateClickBlog(result.data);
+
             }
         }
     });
@@ -56,33 +57,6 @@ function loadNewestBlog() {
 
 }
 
-// /**
-//  *
-//  * @param data
-//  */
-// function generateClickBlog(data) {
-//     var ranking = $(".paihang");
-//     var section = $("<section></section>");
-//     section.addClass("topnews imgscale");
-//     var sectionHref = $("<a></a>");
-//     sectionHref.attr("href", "/view/" + data[0].blogId);
-//     var sectionHrefImage = $("<img>");
-//     sectionHrefImage.attr("src", data[0].headerUrl);
-//     var span = $("<span></span>");
-//     span.text(data[0].title);
-//
-//     //拼接
-//     sectionHrefImage.append(span);
-//     sectionHref.append(sectionHrefImage);
-//     section.append(sectionHref);
-//     ranking.append(section);
-//     for (var i = 0; i < data.length; i++) {
-//
-//     }
-//
-//
-// }
-
 
 /**
  *
@@ -92,11 +66,11 @@ function generateNewestBlog(data) {
     var node = $("#blogNewest");
     for (var i = 0; i < data.length; i++) {
         var item = data[i];//获取data
-        var li = $("<li></li>");
+        var li = $("<li data-scroll-reveal='enter bottom over 1s' class='whitebg'></li>");
         //第一部分 标题
         var blogTitle = $("<h3></h3>");
         blogTitle.addClass('blogtitle');//添加class
-        var blogTitleHref = $("<a target='_blank'></a>");
+        var blogTitleHref = $("<a ></a>");
         blogTitleHref.attr("href", "/view/" + item.blogId);//设置点击链接
         blogTitleHref.text(item.title);//设置标题文字
         //拼接
@@ -129,7 +103,7 @@ function generateNewestBlog(data) {
         var avator = $("<i ></i>");
         avator.addClass("avatar");//添加class
         var avatorImg = $("<img>");
-        avatorImg.attr("src", "/front/images/avatar.jpg");//设置图片地址
+        avatorImg.attr("src", "/front/imgs/avatar.jpg");//设置图片地址
         avator.append(avatorImg);//拼接
         //博客作者
         var author = $("<span></span>");
@@ -154,6 +128,7 @@ function generateNewestBlog(data) {
         var readmore = $("<a class='viewmore'>阅读更多</a>");
         li.append(readmore);
         node.append(li);
+
     }
 
 }

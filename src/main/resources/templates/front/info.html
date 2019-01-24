@@ -13,7 +13,7 @@
             <p class="bloginfo"><i class="avatar">
                 <img src="/front/images/avatar.png">
             </i><span>边小丰</span><span th:text="${#dates.format(blog.createTime,'yyyy年MM月dd日')}">2018-10-28</span>
-                <span>【<a th:text="${category['categoryName']}">程序人生</a>】</span>
+                <span>【<a th:text="${category.title}">程序人生</a>】</span>
                 <span th:text="${blog.click}+'人已围观'">109990人已围观</span>
             </p>
             <br/>
@@ -34,10 +34,13 @@
                 <div name="版权声明：" data-unique="版权声明："></div>
                 <h3>版权声明：</h3>
                 <p class="text-danger size16">
-                    本文仅用于学习、研究和交流目的，欢迎非商业性质转载。本文链接：<a target="_blank" id="copyrightUrl"></a>。
-
+                    本文仅用于学习、研究和交流目的，欢迎非商业性质转载。本文链接：<a target="_blank" th:text="${blog.title}"
+                                                      th:href="'/view/'+${blog.blogId}"></a>。
                 </p>
-                <div id="copyright1"></div>
+                <br>
+                <div id="copyright1" th:utext="${signature}">
+
+                </div>
             </section>
         </div>
 
@@ -57,11 +60,12 @@
             </div>
         </div>
 
-
         <div class="whitebg">
             <h2 class="htitle">相关文章</h2>
             <ul class="otherlink">
-                <li><a href="/download/div/2018-04-22/815.html" title="html5个人博客模板《黑色格调》">html5个人博客模板《黑色格调》</a></li>
+                <li th:each="blog:${relatedBlog}">
+                    <a th:href="'/view/'+${blog.blogId}" th:title="${blog.title}" th:text="${blog.title}"></a>
+                </li>
             </ul>
         </div>
         <div class="whitebg gbook">
@@ -124,49 +128,8 @@
                 </li>
             </ul>
         </div>
-        <div class="whitebg tuijian">
-            <h2 class="htitle">站长推荐</h2>
-            <section class="topnews imgscale"><a th:href="'/view/'+${supportBlog[0].blogId}"><img
-                    src="/front/images/h2.jpg" th:src="${supportBlog[0].headerUrl}"><span
-                    th:text="${supportBlog[0].title}"></span></a>
-            </section>
-            <ul>
-                <li th:each="item:${supportBlog}">
-                    <a th:href="'/view/'+${item.blogId}"></a>
-                    <i><img src="/front/images/text01.jpg" th:src="${item.headerUrl}"> </i>
-                    <p th:text="${item.title}"></p>
-                </li>
-            </ul>
-        </div>
-        <div class="whitebg cloud">
-            <h2 class="htitle">标签云</h2>
-            <ul>
-                <a href="" target="_blank">个人博客模板</a> <a href="" target="_blank">css动画</a> <a href=""
-                                                                                              target="_blank">布局</a> <a
-                    href="" target="_blank">今夕何夕</a> <a href="" target="_blank">SEO</a> <a href=""
-                                                                                           target="_blank">女程序员</a> <a
-                    href="" target="_blank">小世界</a> <a href="" target="_blank">个人博客</a> <a href=""
-                                                                                           target="_blank">网页设计</a>
-            </ul>
-        </div>
     </div>
 </article>
 <head th:include="front/common :: front-footer"></head>
-<script>
-    $(function () {
-        var url = window.location.href;
-        $("#copyrightUrl").attr("href", url);
-        $("#copyrightUrl").text(url);
-        $.ajax({
-            type: "get",
-            url: "/public/api/signature/blog",
-            success: function (data) {
-                if (data.code == 200 && data.data != null) {
-                    $("#copyright1").html(data.data);
-                }
-            }
-        });
-    });
-</script>
 </body>
 </html>

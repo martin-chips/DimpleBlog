@@ -1,6 +1,6 @@
 package com.dimple.framework.log;
 
-import com.dimple.modules.visitorManager.bean.Visitor;
+import com.dimple.modules.endModule.visitorManager.bean.Visitor;
 import com.dimple.framework.log.annotation.VLog;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.ShiroUtil;
@@ -86,7 +86,7 @@ public class VisitorAspect {
 
         if (exception != null) {
             visitor.setStatus(false);
-            visitor.setErrorMsg(exception.getMessage().substring(0, 2000));
+            visitor.setErrorMsg(exception.getMessage().length() > 2000 ? exception.getMessage().substring(0, 2000) : exception.getMessage());
         } else {
             visitor.setStatus(true);
         }
@@ -116,7 +116,7 @@ public class VisitorAspect {
     /**
      * 将Controller注解中的参数拿到，设置到Log对象中去
      *
-     * @param visitor    log对象
+     * @param visitor       log对象
      * @param annotationLog controller上注解标注的对象
      */
     private void setControllerMethodDescription(Visitor visitor, VLog annotationLog) {

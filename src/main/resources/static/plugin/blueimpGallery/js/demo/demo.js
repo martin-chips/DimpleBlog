@@ -14,7 +14,7 @@
 $(function () {
   'use strict'
 
-  // Load demo images from flickr:
+  // Load demo imgs from flickr:
   $.ajax({
     url: 'https://api.flickr.com/services/rest/',
     data: {
@@ -28,7 +28,7 @@ $(function () {
     var carouselLinks = []
     var linksContainer = $('#links')
     var baseUrl
-    // Add the demo images as links with thumbnails to the page:
+    // Add the demo imgs as links with thumbnails to the page:
     $.each(result.photos.photo, function (index, photo) {
       baseUrl = 'https://farm' + photo.farm + '.static.flickr.com/' +
       photo.server + '/' + photo.id + '_' + photo.secret

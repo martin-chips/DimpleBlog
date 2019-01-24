@@ -1,7 +1,7 @@
 package com.dimple.modules.common.service;
 
-import com.dimple.modules.frontSetting.bean.Setting;
-import com.dimple.modules.frontSetting.bean.Signature;
+import com.dimple.modules.endModule.frontSetting.bean.Setting;
+import com.dimple.modules.endModule.frontSetting.bean.Signature;
 
 import java.util.List;
 

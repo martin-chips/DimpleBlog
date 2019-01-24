@@ -14,8 +14,8 @@ public class DimpleBlogApplicationTests {
     }
 
     public static void main(String[] args) {
-        String url = "http://localhost:8080/images/sssssss.jpa";
-        int i = url.lastIndexOf("/images");
+        String url = "http://localhost:8080/imgs/sssssss.jpa";
+        int i = url.lastIndexOf("/imgs");
         System.out.println(url.substring(i));
     }
 }

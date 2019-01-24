@@ -1,6 +1,6 @@
 package com.dimple.modules.common.service;
 
-import com.dimple.modules.common.bean.server.UserOnline;
+import com.dimple.modules.endModule.visitorManager.bean.UserOnline;
 
 import java.util.List;
 

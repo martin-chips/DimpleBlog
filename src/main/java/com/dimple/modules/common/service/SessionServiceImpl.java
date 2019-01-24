@@ -1,7 +1,7 @@
 package com.dimple.modules.common.service;
 
-import com.dimple.modules.systemManager.bean.User;
-import com.dimple.modules.common.bean.server.UserOnline;
+import com.dimple.modules.endModule.systemManager.bean.User;
+import com.dimple.modules.endModule.visitorManager.bean.UserOnline;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.SimplePrincipalCollection;

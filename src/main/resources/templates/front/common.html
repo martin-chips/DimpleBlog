@@ -9,54 +9,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/front/css/base.css" th:href="@{/front/css/base.css}" rel="stylesheet">
     <link href="/static/front/css/m.css" th:href="@{/front/css/m.css}" rel="stylesheet">
-    <script src="/front/js/jquery-1.8.3.min.js" th:href="@{front/js/jquery-1.8.3.min.js}"></script>
-    <script src="/front/js/comm.js" th:href="@{/front/js/comm.js}"></script>
+    <script src="/static/front/js/jquery-1.8.3.min.js" th:src="@{/front/js/jquery-1.8.3.min.js}"></script>
+    <script src="/front/js/comm.js" th:src="@{/front/js/comm.js}"></script>
     <!--[if lt IE 9]>
     <script src="/front/js/modernizr.js"></script>
     <![endif]-->
+
 </head>
 <div th:fragment="front-side">
 
     <div class="whitebg notice">
         <h2 class="htitle">最近更新</h2>
-        <ul>
-            <li th:each="blog:${newestUpdateBlog}">
-                <a th:href="${'/view/'+blog.blogId}" th:text="${blog.title}"></a>
-            </li>
+        <ul id="newestUpdateBlog">
         </ul>
     </div>
     <div class="whitebg paihang">
         <h2 class="htitle">点击排行</h2>
-        <section class="topnews imgscale"><a th:href="'/view/'+${clickBlog[0].blogId}"><img
-                src="/front/images/h1.jpg" th:src="${clickBlog[0].headerUrl}"><span
-                th:text="${clickBlog[0].title}"></span></a>
+        <section class="topnews imgscale" id="clickRankingImg">
+
         </section>
-        <ul>
-            <li th:each="item:${clickBlog}">
-                <i></i>
-                <a th:href="'/view/'+${item.blogId}" th:text="${item.title}">
-                </a>
-            </li>
+        <ul id="clickRanking">
+
         </ul>
     </div>
     <div class="whitebg tuijian">
-        <h2 class="htitle">站长推荐</h2>
-        <section class="topnews imgscale"><a th:href="'/view/'+${supportBlog[0].blogId}"><img
-                src="/front/images/h2.jpg" th:src="${supportBlog[0].headerUrl}"><span
-                th:text="${supportBlog[0].title}"></span></a>
+        <h2 class="htitle">猜你喜欢</h2>
+        <section class="topnews imgscale" id="youMayLikeImg">
+
         </section>
-        <ul>
-            <li th:each="item:${supportBlog}">
-                <a th:href="'/view/'+${item.blogId}"></a>
-                <i><img src="/front/images/text01.jpg" th:src="${item.headerUrl}"> </i>
-                <p th:text="${item.title}"></p>
-            </li>
+        <ul id="youMayLike">
         </ul>
     </div>
 </div>
 
 <!--====================================================前台界面的尾部=================================================-->
 <div th:fragment="front-footer">
+    <script color="255,0,255" opacity='0.7' zIndex="-2" count="99" src="/static/front/js/canvas-nest.js"
+            th:src="@{/front/js/canvas-nest.js} "></script>
+    <!--<script src="/front/js/scrollReveal.js"></script>-->
     <footer id="footer" class="footer">
         <div class="footer-inner">
             <div class="copyright">© 2017 – <span itemprop="copyrightYear">2019</span>
@@ -79,7 +69,35 @@
             <nav>
                 <ul id="starlist">
                     <li><a href="/">网站首页</a></li>
-                    <li><a href="/technology.html">技术博客</a></li>
+                    <li class="menu"><a href="/technology.html">技术博客</a>
+                        <ul class="sub blogCategory">
+                            <script>
+                                //获取所有的分类
+                                $(function () {
+                                    $.ajax({
+                                        url: "/public/api/category",
+                                        type: "get",
+                                        success: function (result) {
+                                            if (result.code == 200) {
+                                                var data = result.data;
+                                                $.each(data, function (index, value) {
+                                                    var a = $("<a></a>");
+                                                    a.attr("href", '/public/page/category/' + value.categoryId + ".html");
+                                                    a.attr("alt", value.description);
+                                                    a.text(value.title);
+                                                    var li = $("<li></li>");
+                                                    li.append(a);
+                                                    li.appendTo($(".blogCategory"));
+                                                });
+                                            }
+                                        }
+                                    })
+
+                                });
+                            </script>
+                        </ul>
+                        <span></span>
+                    </li>
                     <li class="menu"><a href="#">资源分享</a>
                         <ul class="sub">
                             <li><a href="/software.html">软件分享</a></li>
@@ -88,6 +106,7 @@
                         <span></span>
                     </li>
                     <li><a href="/free.html">随心吐槽</a></li>
+                    <li><a href="/link.html">友链</a></li>
                     <li><a href="/about.html">关于我</a></li>
                     <li><a href="/leaveComment.html">留言</a></li>
                     <li><a href="/page/index.html" target="_blank">后台管理首页</a></li>

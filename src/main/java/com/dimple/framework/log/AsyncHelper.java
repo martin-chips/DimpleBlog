@@ -1,11 +1,11 @@
 package com.dimple.framework.log;
 
-import com.dimple.modules.logManager.bean.LoginLog;
-import com.dimple.modules.logManager.bean.OperateLog;
-import com.dimple.modules.visitorManager.bean.Visitor;
-import com.dimple.modules.logManager.service.LoginLogService;
-import com.dimple.modules.logManager.service.OperateLogService;
-import com.dimple.modules.visitorManager.service.VisitorService;
+import com.dimple.modules.endModule.logManager.bean.LoginLog;
+import com.dimple.modules.endModule.logManager.bean.OperateLog;
+import com.dimple.modules.endModule.visitorManager.bean.Visitor;
+import com.dimple.modules.endModule.logManager.service.LoginLogService;
+import com.dimple.modules.endModule.logManager.service.OperateLogService;
+import com.dimple.modules.endModule.visitorManager.service.VisitorService;
 import com.dimple.utils.*;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;

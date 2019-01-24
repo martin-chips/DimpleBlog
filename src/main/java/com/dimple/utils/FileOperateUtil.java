@@ -111,7 +111,7 @@ public class FileOperateUtil {
                 e.printStackTrace();
             }
         }
-        return "/images/" + fileName;
+        return "/imgs/" + fileName;
     }
 
     /**
@@ -174,7 +174,7 @@ public class FileOperateUtil {
             return null;
         }
         for (String s : list) {
-            imageList.add("/images/" + s);
+            imageList.add("/imgs/" + s);
         }
         return imageList;
     }
@@ -188,7 +188,7 @@ public class FileOperateUtil {
         File[] files = getFilesOrderByModifyTime();
         List<String> nameList = new LinkedList<>();
         for (int i = files.length - 1; i >= 0; i--) {
-            nameList.add("/images/" + files[i].getName());
+            nameList.add("/imgs/" + files[i].getName());
         }
         return nameList;
     }
@@ -215,11 +215,11 @@ public class FileOperateUtil {
      * 根据图片的URl获取其真实的名字
      *
      * @param url 图片的URl 如：http://localhost:8080/images/d0096ec6c83575373e3a21d129ff8fef.jpg
-     * @return /images/d0096ec6c83575373e3a21d129ff8fef.jpg
+     * @return /imgs/d0096ec6c83575373e3a21d129ff8fef.jpg
      */
     public String getImgName(String url) {
-        if (StringUtils.isNotBlank(url) && url.contains("/images/")) {
-            int i = url.lastIndexOf("/images/");
+        if (StringUtils.isNotBlank(url) && url.contains("/imgs/")) {
+            int i = url.lastIndexOf("/imgs/");
             return url.substring(i);
         }
         return null;

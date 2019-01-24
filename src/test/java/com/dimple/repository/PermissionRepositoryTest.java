@@ -1,7 +1,7 @@
 package com.dimple.repository;
 
-import com.dimple.modules.systemManager.bean.Permission;
-import com.dimple.modules.systemManager.repository.PermissionRepository;
+import com.dimple.modules.endModule.systemManager.bean.Permission;
+import com.dimple.modules.endModule.systemManager.repository.PermissionRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

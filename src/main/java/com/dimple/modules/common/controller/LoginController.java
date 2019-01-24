@@ -1,15 +1,19 @@
 package com.dimple.modules.common.controller;
 
 import com.dimple.framework.message.Result;
-import com.dimple.modules.linkManager.service.LinksService;
 import com.dimple.modules.common.service.LoginService;
+import com.dimple.modules.endModule.linkManager.service.LinksService;
+import com.dimple.utils.ServletUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -37,16 +41,20 @@ public class LoginController {
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public Result login1(String loginId, String password, Boolean rememberMe) throws Exception {
 
-        Result result = loginService.login(loginId, password,rememberMe);
+        Result result = loginService.login(loginId, password, rememberMe);
         return result;
     }
 
-    @RequestMapping("/page/login.html")
-    public String toLogin() {
+    @GetMapping("/page/login.html")
+    public String toLogin(HttpServletRequest request, HttpServletResponse response) {
+        // 如果是Ajax请求，返回Json字符串。
+        if (ServletUtil.isAjaxRequest(request)) {
+            return ServletUtil.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
+        }
         return "login";
     }
 
-    @RequestMapping("/logout.html")
+    @GetMapping("/logout.html")
     public String logout(HttpSession session) {
         loginService.logout();
         return "login";

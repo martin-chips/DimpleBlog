@@ -76,7 +76,7 @@ function initTable() {
             align: 'center',
             formatter: function (value, row, index) {
                 var actions = [];
-                if (row.status == true) {
+                if (row.available == true) {
                     actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.update(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                     actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>删除</a> ');
                     if (row.display == false) {
@@ -84,7 +84,7 @@ function initTable() {
                     } else {
                         actions.push('<a class="btn btn-default btn-xs " href="#" onclick="updateLink(' + row.linkId + "," + row.display + ')"><i class="fa fa-key"></i>隐藏</a>')
                     }
-                } else if (row.status == false) {
+                } else if (row.available == false) {
                     actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.update(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                     actions.push('<a class="btn btn-info btn-xs " href="#" onclick="updateLinkStatus(' + row.linkId + ')"><i class="fa fa-key"></i>通过</a>');
                     actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>拒绝</a> ');
@@ -146,7 +146,7 @@ function searchCustom(code) {
             search["searchCode"] = code;
         }
         search.pageSize = params.limit;
-        search.pageNum = params.offset / params.limit + 1;
+        search.pageNum = params.offset / params.limit ;
         return search;
     }
     $("#bootstrap-table").bootstrapTable('refresh', params);

@@ -2118,7 +2118,7 @@ Simditor = (function(_super) {
   Simditor.prototype.opts = {
     textarea: null,
     placeholder: '',
-    defaultImage: 'images/image.png',
+    defaultImage: 'imgs/image.png',
     params: {},
     upload: false,
     tabIndent: true

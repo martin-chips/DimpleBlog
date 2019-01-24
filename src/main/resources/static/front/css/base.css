@@ -141,6 +141,7 @@ nav { float: left; height: 50px; line-height: 50px; text-align: center; }
 .zhuanti li:hover { background: #fff; box-shadow: #ccc 1px 1px 8px; }
 .zhuanti li:hover img { transform: scale(1.05) }
 /*bloglist*/
+blogs { overflow: hidden; margin-bottom: 20px; padding: 20px; background: #FFF; -webkit-box-shadow: 0 2px 5px 0 rgba(146, 146, 146, .1); -moz-box-shadow: 0 2px 5px 0 rgba(146, 146, 146, .1); box-shadow: 0 2px 5px 0 rgba(146, 146, 146, .1); -webkit-transition: all 0.6s ease; -moz-transition: all 0.6s ease; -o-transition: all 0.6s ease; transition: all 0.6s ease; }
 .bloglist ul { padding: 10px 0 0 }
 .bloglist li { overflow: hidden; margin-bottom: 20px; border-bottom: #eee 1px dashed; padding-bottom: 20px; position: relative; min-height: 120px; }
 .blogtitle { margin: 0 0 10px 0; font-size: 18px; overflow: hidden; }
@@ -309,6 +310,13 @@ daohang.html
 about
 
 */
+.gyw_intro {float: left;font-size: 14px;}
+.gyw_intro h5 {width: 640px;font-weight: bold;margin-top: 10px;float: left;}
+.gyw_intro hr {border: 0.5px dashed #ccc;}
+.bz_about div {margin: 10px 0; width: 95%;float: left;padding: 10px 30px 10px 30px;color: #555; border-left: 4px solid #0cc; background: #f5f5f5;}
+.bz_about .wb_url {margin: 0 20px;}
+.bz_about .wb_url a {color: #1CA368;}
+.gyw_intro span {color: #ff3366;}
 .about { overflow: hidden; background: url(../images/abbg.png) no-repeat right top #fff; padding: 20px 40px }
 .ab_box { overflow: hidden; margin: 20px 0; }
 .ab_box h3 { margin: 10px 0 10px; font-size: 18px; }
@@ -391,3 +399,15 @@ margin: auto }
 .timebox li i:before { content: " "; height: 10px; width: 10px; border: 2px solid #cccaca; background: #fff; position: absolute; top: 4px; left: -26px; border-radius: 50%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -ms-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
 .timebox li:hover i:before { background: #080808 }
 .pagelist.mt20 { margin-top: 20px; }
+/*link.html*/
+.link-list{margin-top:10px;}
+.link-list li{float:left;width:25%}
+.link-list .link-item{padding:0 10px 20px;}
+.link-list li a{display:block;padding:20px;background:#e9eaed;}
+.link-list li img{float:left;width:40px;height:40px;border-radius:100%}
+.link-list li h3{overflow:hidden;padding:10px 15px 9px;height:21px}
+.link-list li p{clear:both;display:-webkit-box;overflow:hidden;margin-top:1rem;height:60px;text-overflow:ellipsis;font-size:13px;-webkit-box-orient:vertical;-webkit-line-clamp:3}
+.blog-list li,.hot-list li a,.icon-search,.lab-list li a,.link-list li a,.muntime-btn a,.nav-list li a,.resource-list li a,.tag a{transition:all .3s ease-in-out;}
+.blog-list li:hover,.lab-list li a:hover,.link-list li a:hover,.resource-list li a:hover{box-shadow:2px 5px 14px #c5c5c5;-webkit-transform:translate3d(0,-3px,0);transform:translate3d(0,-2px,0)}
+@media screen and (max-width:1024px){.link-list li{width:50%}}
+@media screen and (max-width:768px){.link-list li{width:100%}}

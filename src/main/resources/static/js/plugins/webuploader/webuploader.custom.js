@@ -5383,7 +5383,7 @@
                 /**
                  * Detecting vertical squash in loaded image.
                  * Fixes a bug which squash image vertically while drawing into
-                 * canvas for some images.
+                 * canvas for some imgs.
                  */
                 function detectVerticalSquash( img, iw, ih ) {
                     var canvas = document.createElement('canvas'),
@@ -5434,7 +5434,7 @@
 
                 /**
                  * Detect subsampling in loaded image.
-                 * In iOS, larger images than 2M pixels may be
+                 * In iOS, larger imgs than 2M pixels may be
                  * subsampled in rendering.
                  */
                 function detectSubsampling( img ) {

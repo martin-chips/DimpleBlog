@@ -97,61 +97,17 @@ https://blog.csdn.net/u011781521/article/details/80528049
 
 
 
-option = {
-    title: {
-        text: '香港中文大学热议指数',
-        subtext: '微博'
-    },
-    tooltip: {
-        trigger: 'axis'
-    },
-    legend: {
-        data: ['香港中文大学']
-    },
-    toolbox: {
-        show: true,
-        feature: {
-            dataZoom: {
-                yAxisIndex: 'none'
-            },
-            dataView: {
-                readOnly: false
-            },
-            magicType: {
-                type: ['line', 'bar']
-            },
-            restore: {},
-            saveAsImage: {}
-        }
-    },
-    xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: ['2017-9-5', '2017-9-6', '20179-7', '2017-9-8', '2017-9-9', '2017-9-10', '2017-9-11']
-    },
-    yAxis: {
-        type: 'value',
-    },
-    series: [{
-        name: '香港中文大学',
-        type: 'line',
-        data: [156, 323, 150, 176, 100, 150, 100],
-        markPoint: {
-            data: [{
-                    type: 'max',
-                    name: '最大值'
-                },
-                {
-                    type: 'min',
-                    name: '最小值'
-                }
-            ]
-        },
-        markLine: {
-            data: [{
-                type: 'average',
-                name: '平均值'
-            }]
-        }
-    }]
-};
+
+<fieldset style="border:1px dashed #696969;padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;line-height: 2em;color: #A9A9A9">
+<legend align="center" style="color:#FFFFFF;width:360px;text-align:center;background-color:#696969;">小柒开放资源分享平台☆版权声明</legend>
+1、本主题所有言论和图片纯属会员个人观点，与本平台立场无关，不代表本平台赞同其观点和对其真实性负责。<br>
+2、帖子若有内容转载自其他自媒体，不代表本平台赞同其观点和对其真实性负责。<br>
+3、本站所有主题由帖子作者发表，该帖子作者享有相关版权。<br>
+4、其他单位或个人使用、转载或引用本文时必须同时征得该帖子作者的同意。<br>
+5、帖子作者需承担一切因本文发表而直接或间接导致的民事或刑事责任。<br>
+6、不得发布和链接任何有关政治、色情、宗教、迷信、低俗、变态、血腥、暴力以及危害国家安全、诋毁政府形象等违法言论和信息的帖子！<br>
+7、如本帖侵犯到任何版权问题，请立即联系平台管理员，本平台将及时予以删除并致以最深的歉意<br>
+8、本平台管理员和版主有权不事先通知发帖者而删除本文<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本平台管理员联系方式 - QQ:55806839
+</fieldset>

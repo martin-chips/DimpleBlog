@@ -39,10 +39,10 @@ public class WebAppConfigurerCustom implements WebMvcConfigurer {
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.startsWith("windows")) {
             log.info("当前图片上传的路径为： " + "file:" + imgDirWindows);
-            registry.addResourceHandler("/images/**").addResourceLocations("file:" + imgDirWindows);
+            registry.addResourceHandler("/imgs/**").addResourceLocations("file:" + imgDirWindows);
         } else {
             log.info("当前图片上传的路径为： " + imgDirLinux);
-            registry.addResourceHandler("/images/**").addResourceLocations(imgDirLinux);
+            registry.addResourceHandler("/imgs/**").addResourceLocations(imgDirLinux);
         }
     }
 

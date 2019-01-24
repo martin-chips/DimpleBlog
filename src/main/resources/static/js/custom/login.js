@@ -1,13 +1,15 @@
-//todo 做验证
 $(function () {
+    $('.captchaImg').click(function () {
+        var url = "/public/api/kaptcha?time=" + Math.random();
+        $(".captchaImg").attr("src", url);
+    });
+
     $("#loginBtn").click(function () {
-        $.modal.loading($("#loginBtn").data("loading"));
+        $.modal.loading("正在加载中");
         let loginId = $("input[name='loginId']").val().trim();
         let password = $("input[name='password']").val().trim();
         let kaptcha = $("input[name='kaptcha']").val();
         let rememberMe = $("input[name='rememberMe']").is(':checked');
-        console.log(rememberMe);
-        console.log($("#rememberMe").val())
         $.ajax({
             type: "post",
             url: "/auth",

@@ -809,7 +809,7 @@ Markdown.dialects.Gruber.inline = {
 
     "![": function image( text ) {
 
-      // Unlike images, alt text is plain text only. no other elements are
+      // Unlike imgs, alt text is plain text only. no other elements are
       // allowed in there
 
       // ![Alt text](/path/to/img.jpg "Optional title")

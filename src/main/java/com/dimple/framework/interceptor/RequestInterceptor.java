@@ -1,6 +1,6 @@
 package com.dimple.framework.interceptor;
 
-import com.dimple.modules.visitorManager.service.VisitorService;
+import com.dimple.modules.endModule.visitorManager.service.VisitorService;
 import com.dimple.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

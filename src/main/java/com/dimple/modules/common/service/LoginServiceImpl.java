@@ -1,7 +1,11 @@
 package com.dimple.modules.common.service;
 
 import com.dimple.framework.constant.Status;
-import com.dimple.framework.exception.user.*;
+import com.dimple.framework.exception.user.CaptchaException;
+import com.dimple.framework.exception.user.UserAccountLockedException;
+import com.dimple.framework.exception.user.UserAccountNotExistsException;
+import com.dimple.framework.exception.user.UserException;
+import com.dimple.framework.exception.user.UserPasswordNotMatchException;
 import com.dimple.framework.log.AsyncHelper;
 import com.dimple.framework.log.AsyncManager;
 import com.dimple.framework.message.Result;
@@ -10,7 +14,11 @@ import com.dimple.utils.MessageUtil;
 import com.dimple.utils.ServletUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class LoginServiceImpl implements LoginService {
 
-
     @Override
     public Result login(String loginId, String password, Boolean rememberMe) {
-
         String kaptcha = ServletUtil.getRequest().getParameter("kaptcha");
         //获取kaptcha生成的验证码
         String kaptchaExpected = (String) ServletUtil.getRequest().getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
