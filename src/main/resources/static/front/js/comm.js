@@ -168,10 +168,25 @@ function loadYouMayLike() {
                         .appendTo($("#youMayLikeImg"));
                 }
                 $("<li></li>")
-                    .append($("<a></a>").attr("href", "/view/" + item.blogId))
-                    .append($("<i></i>").append($("<img>").attr("src", item.headerUrl)))
-                    .append($("<p></p>").text(item.title))
+                    .append($("<a></a>").attr("href", "/view/" + item.blogId).append($("<i></i>").append($("<img>").attr("src", item.headerUrl)))
+                        .append($("<p></p>").text(item.title)))
                     .appendTo($("#youMayLike"));
+            });
+        }
+    })
+}
+
+/**
+ * 加载Link
+ */
+function loadLink() {
+    $.ajax({
+        url: "/public/api/linkSide",
+    }).done(function (result) {
+        if (result.code == 200 && result.data != null) {
+            console.log(result);
+            $.each(result.data, function (index, item) {
+                $("<li></li>").append($("<a></a>").attr("href", item.url).text(item.title).attr("alt", item.description)).appendTo($("#link"));
             });
         }
     })
@@ -181,5 +196,6 @@ function loadCustomSetting() {
     loadNewestUpdateBlog();
     loadClickRanking();
     loadYouMayLike();
+    loadLink();
 
 }

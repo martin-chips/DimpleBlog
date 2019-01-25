@@ -54,6 +54,8 @@ public class IndexController {
         model.addAttribute("rotationLines", indexService.getRotationByPlace(2));
         //获取推荐博文
         model.addAttribute("supportBlogs", blogService.getSupportBlog());
+        //获取最新博文
+        model.addAttribute("newestBlog", indexService.getNewestBlog(PageRequest.of(0, 10, Sort.Direction.DESC, "createTime")));
         return "front/index";
     }
 

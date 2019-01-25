@@ -13,17 +13,20 @@
     <script src="/front/js/comm.js" th:src="@{/front/js/comm.js}"></script>
     <!--[if lt IE 9]>
     <script src="/front/js/modernizr.js"></script>
+
     <![endif]-->
 
 </head>
 <div th:fragment="front-side">
-
-    <div class="whitebg notice">
+    <div class="whitebg">
+        <div id="calendar" class="calendar"></div>
+    </div>
+    <div class="whitebg notice " data-scroll-reveal="enter bottom over 1s">
         <h2 class="htitle">最近更新</h2>
         <ul id="newestUpdateBlog">
         </ul>
     </div>
-    <div class="whitebg paihang">
+    <div class="whitebg paihang" data-scroll-reveal="enter bottom over 1s">
         <h2 class="htitle">点击排行</h2>
         <section class="topnews imgscale" id="clickRankingImg">
 
@@ -32,12 +35,21 @@
 
         </ul>
     </div>
-    <div class="whitebg tuijian">
+    <div class="whitebg tuijian" data-scroll-reveal="enter bottom over 1s">
         <h2 class="htitle">猜你喜欢</h2>
         <section class="topnews imgscale" id="youMayLikeImg">
 
         </section>
         <ul id="youMayLike">
+        </ul>
+    </div>
+
+    <div class="links whitebg" data-scroll-reveal="enter bottom over 1s">
+        <h2 class="htitle"><span class="sqlink"><a href="/link.html">申请链接</a></span>友情链接</h2>
+        <ul id="link">
+            <li>
+
+            </li>
         </ul>
     </div>
 </div>

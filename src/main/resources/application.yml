@@ -54,7 +54,7 @@ spring:
     #一个连接在连接池中最小生存的时间
     min-evictable-idle-time-millis: 30000
     #一个链接在连接池中最大生存的时间
-    max-evictable-idle-time-millis: 90000
+#    max-evictable-idle-time-millis: 90000
 #自定义配置
 dimple:
   #图片文件上传位置指定
@@ -121,3 +121,6 @@ dimple:
       expireTime: 30
       #检查数据路有效性的间隔,单位min
       validationInterval: 10
+
+server:
+  port: 8081

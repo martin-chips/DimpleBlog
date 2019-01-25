@@ -50,4 +50,7 @@ public class Blog {
     @JoinColumn(name = "blog_id")
     private BlogInfo blogInfo;
 
+    @Transient
+    private String categoryName;
+
 }

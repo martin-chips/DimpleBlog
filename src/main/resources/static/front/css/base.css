@@ -163,12 +163,12 @@ a.viewmore { display: block; right: 10px; bottom: 20px; position: absolute; padd
 .avatar img { width: 100%; border-radius: 50%; }
 .avatar::after { content: ""; position: absolute; background: url(../images/v.png) no-repeat; background-size: 12px; width: 12px; height: 12px; right: 0; bottom: 0 }
 /*link*/
-.sqlink { float: right; margin-right: 10px; font-size: 14px }
+.sqlink { float: right; margin-right: 1px; font-size: 14px }
 .sqlink a { color: #666 }
 .sqlink a:hover { color: #000; text-decoration: underline }
 .links ul { overflow: hidden; margin-top: 20px }
-.links li { display: inline-block; width: 50%; float: left; line-height: 30px; text-align: center }
-.links li a { display: block; }
+.links li { display: inline; width: 100%; float: left; line-height: 30px; text-align: left ;margin-left: 5%}
+.links li a { display: inline; }
 .links li:hover { background: #f7f7f7 }
 /*rbox*/
 .rbox { width: 23.5%; float: right; overflow: hidden; }

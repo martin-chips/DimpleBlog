@@ -114,20 +114,9 @@
     </div>
     <!--lbox end-->
     <div class="rbox">
-        <div class="whitebg paihang">
-            <h2 class="htitle">点击排行</h2>
-            <section class="topnews imgscale"><a th:href="'/view/'+${clickBlog[0].blogId}"><img
-                    src="/front/images/h1.jpg" th:src="${clickBlog[0].headerUrl}"><span
-                    th:text="${clickBlog[0].title}"></span></a>
-            </section>
-            <ul>
-                <li th:each="item:${clickBlog}">
-                    <i></i>
-                    <a th:href="'/view/'+${item.blogId}" th:text="${item.title}">
-                    </a>
-                </li>
-            </ul>
-        </div>
+
+        <div th:include="front/common :: front-side"></div>
+
     </div>
 </article>
 <head th:include="front/common :: front-footer"></head>

@@ -4,6 +4,8 @@ import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.modules.endModule.blogManager.bean.Blog;
 import com.dimple.modules.endModule.blogManager.service.BlogService;
+import com.dimple.modules.endModule.linkManager.bean.Link;
+import com.dimple.modules.endModule.linkManager.service.LinksService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +33,9 @@ public class SideController {
     @Autowired
     BlogService blogService;
 
+    @Autowired
+    LinksService linksService;
+
     @ApiOperation("获取最近更新的博文的信息")
     @GetMapping("/public/api/newestUpdateBlog")
     @ResponseBody
@@ -57,5 +62,13 @@ public class SideController {
         return ResultUtil.success(randomBlogLimit);
     }
 
-//    @ApiOperation("获取友链信息")
+    @ApiOperation("获取友链信息")
+    @GetMapping("/public/api/linkSide")
+    @ResponseBody
+    public Result getLink() {
+        Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "weight");
+        List<Link> links = linksService.getLinksCondition(null, null, null, null, null, pageable).getContent();
+        return ResultUtil.success(links);
+    }
+
 }

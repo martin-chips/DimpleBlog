@@ -83,6 +83,8 @@ public class IndexServiceImpl implements IndexService {
             map.put("blogId", blog.getBlogId());
             map.put("title", blog.getTitle());
             map.put("summary", blog.getSummary());
+            //设置分类的ID
+            map.put("categtoryId", blog.getCategoryId());
             map.put("categoryName", getCategoryNameById(blog.getCategoryId()));
             map.put("headUrl", blog.getHeaderUrl());
             if (blog.getUpdateTime() == null) {

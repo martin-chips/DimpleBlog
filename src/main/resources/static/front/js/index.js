@@ -2,21 +2,21 @@ var pageNum = 0;
 $(function () {
 
 
-    loadNewestBlog();
+    // loadNewestBlog();
     // loadClickBlog();
     //鼠标滚动到页面最底部加载数据
-    var documentHeight = [0];
-    $(window).bind("scroll", function () {
-        if ($(document).scrollTop() + $(window).height() > $(document).height() - 1) {
-            documentHeight.push($(document).height())
-            if (documentHeight[documentHeight.length - 1] > documentHeight[documentHeight.length - 2]) {
-                documentHeight[documentHeight.length - 2] = documentHeight[documentHeight.length - 2] + documentHeight[documentHeight.length - 1];
-                loadNewestBlog();
-            }
-        } else {
-            // $(".res-more").css("display","block");
-        }
-    })
+    // var documentHeight = [0];
+    // $(window).bind("scroll", function () {
+    //     if ($(document).scrollTop() + $(window).height() > $(document).height() - 1) {
+    //         documentHeight.push($(document).height())
+    //         if (documentHeight[documentHeight.length - 1] > documentHeight[documentHeight.length - 2]) {
+    //             documentHeight[documentHeight.length - 2] = documentHeight[documentHeight.length - 2] + documentHeight[documentHeight.length - 1];
+    //             loadNewestBlog();
+    //         }
+    //     } else {
+    //         // $(".res-more").css("display","block");
+    //     }
+    // })
 });
 
 /**

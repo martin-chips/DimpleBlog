@@ -7,9 +7,24 @@
 <article>
     <div class="whitebg lanmu">
         <img src="static/imgs/aboutMe.jpg">
-        <h1>申请友链</h1>
+        <h1>友链列表</h1>
     </div>
 
+
+    <div class="whitebg gbook">
+        <h2 class="htitle"> 友情站点：</h2>
+        <ul class="link-list">
+            <li th:each="link:${links}">
+                <div class="link-item">
+                    <a th:href="${link.url}" target="_blank">
+                        <img th:src="${link.headerUrl}">
+                        <h3 th:text="${link.title}"></h3>
+                        <p th:text="${link.description}"></p>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
     <div class="whitebg gbook">
         <h2 class="htitle"> 申请说明：</h2>
         <p style="margin:10px">
@@ -30,21 +45,6 @@
     </div>
 
     <div class="whitebg gbook">
-        <h2 class="htitle"> 友情站点：</h2>
-        <ul class="link-list">
-            <li th:each="link:${links}">
-                <div class="link-item">
-                    <a th:href="${link.url}" target="_blank">
-                        <img th:src="${link.headerUrl}">
-                        <h3 th:text="${link.title}"></h3>
-                        <p th:text="${link.description}"></p>
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </div>
-
-    <div class="whitebg gbook">
         <h2 class="htitle"> 本站信息：</h2>
         <div class="bz_about">
             <div>
@@ -56,6 +56,33 @@
                 网站联系方式：bianxiaofeng@sohu.com<br>
             </div>
         </div>
+    </div>
+    <div class="whitebg gbook">
+        <h2 class="htitle"> 申请友链：</h2>
+        <form action="##" method="post" id="sublinkform">
+            <div id="comment-author-info">
+                <div class="comment-form-author" style="width: 100%;padding-right: 0">
+                    <label for="author">网站名称（必填）：</label>
+                    <input type="text" name="title" id="sitename" class="commenttext" tabindex="4" required=""
+                           placeholder="木木彡博客">
+                </div>
+                <div class="comment-form-email" style="width: 100%;padding-right: 0">
+                    <label for="email">首页链接（必填）：</label>
+                    <input type="text" name="url" id="indexurl" class="commenttext" tabindex="4" required=""
+                           placeholder="https://www.whongbin.cn">
+                </div>
+                <div class="comment-form-url" style="width: 100%;padding-right: 0">
+                    <label for="url">站点简介：</label>
+                    <textarea id="desc" name="desc" rows="2" tabindex="4"
+                              placeholder="木木彡博客,一个致力于分享,分享心得,分享技术,分享知识点的个人博客"></textarea>
+                </div>
+            </div>
+            <div class="comment-form-submit" style="text-align: right;margin: 10px 0;">
+                <div id="link-tips"></div>
+                <button id="linksubmit" type="submit" tabindex="5">提交申请</button>
+            </div>
+        </form>
+
     </div>
 </article>
 <div th:include="front/common :: front-footer"></div>

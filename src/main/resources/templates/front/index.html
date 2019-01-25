@@ -6,6 +6,7 @@
 
 
 <script src="/static/front/js/index.js" th:src="@{/front/js/index.js}"></script>
+
 <article>
     <!--lbox begin-->
     <div class="lbox">
@@ -74,7 +75,7 @@
         </div>
 
         <div class="zhuanti whitebg">
-            <h2 class="htitle"><span class="hnav"></span>站长推荐</h2>
+            <h2 class="htitle"><span class="hnav"><a href="/">查看更多</a></span>站长推荐</h2>
             <ul>
                 <li th:each="support:${supportBlogs}">
                     <i class="ztpic">
@@ -89,9 +90,27 @@
             </ul>
         </div>
         <div class="whitebg bloglist">
-            <h2 class="htitle">最新博文</h2>
-            <ul id="blogNewest">
-
+            <h2 class="htitle"><span class="hnav"><a href="/">查看更多</a></span>最新博文</h2>
+            <ul>
+                <li data-scroll-reveal="enter bottom over 1s" class=" whitebg" th:each="item:${newestBlog}">
+                    <h3 class="blogtitle">
+                        <a th:href="${'/view/'+item?.blogId}" th:text="${item?.title}"></a>
+                    </h3>
+                    <span class="blogpic imgscale"><i><a href="/" th:text="${item?.categoryName}"></a></i>
+                        <a th:href="${'/view/'+item.blogId}" title="">
+                            <img th:src="${item?.headUrl}"
+                                 alt=""></a></span>
+                    <p class="blogtext " th:text="${item?.summary}"></p>
+                    <p class="bloginfo">
+                        <i class="avatar">
+                            <img src="images/avatar.jpg">
+                        </i>
+                        <span th:text="${item?.author}"></span>
+                        <span th:text="${item?.time}">2018-10-28</span>
+                        <span>【<a href="/" th:text="${item?.categoryName}"></a>】</span>
+                    </p>
+                    <a th:href="${'/view/'+item.blogId}" class="viewmore">阅读更多</a>
+                </li>
             </ul>
         </div>
         <!--bloglist end-->
@@ -120,12 +139,7 @@
 
         <div th:include="front/common :: front-side"></div>
 
-        <div class="links whitebg">
-            <h2 class="htitle"><span class="sqlink"><a href="/">申请链接</a></span>友情链接</h2>
-            <ul>
-                <li><a href="http://www.bianxiaofeng.com" target="_blank">Dimple的个人博客</a></li>
-            </ul>
-        </div>
+
     </div>
 </article>
 
