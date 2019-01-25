@@ -86,7 +86,9 @@ public class VisitorAspect {
 
         if (exception != null) {
             visitor.setStatus(false);
-            visitor.setErrorMsg(exception.getMessage().length() > 2000 ? exception.getMessage().substring(0, 2000) : exception.getMessage());
+            if (exception.getMessage() != null) {
+                visitor.setErrorMsg(exception.getMessage().length() > 2000 ? exception.getMessage().substring(0, 2000) : exception.getMessage());
+            }
         } else {
             visitor.setStatus(true);
         }

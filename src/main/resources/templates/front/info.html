@@ -4,6 +4,13 @@
 <head th:include="front/common :: front-head"></head>
 <body>
 <div th:include="front/common :: front-header"></div>
+<
+<script src="/static/front/plugin/hightlight/highlight.pack.js"
+        th:src="@{/front/plugin/hightlight/highlight.pack.js}"></script>
+<link rel="stylesheet" href="/static/front/plugin/hightlight/xcode.css"
+      th:href="@{/front/plugin/hightlight/xcode.css}"/>
+
+<script>hljs.initHighlightingOnLoad();</script>
 <article>
     <!--lbox begin-->
     <div class="lbox">

@@ -69,18 +69,14 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>, JpaSpecifi
     List<Blog> getRandomBlog(@Param("pageSize") int i);
 
 
-
- /*   @Query(value = "select count(*) as count,ip,os,address,browser from visitor where blacklist = 0 group by ip,os,address,browser order by count desc",
-            countQuery = "select count(distinct (ip))from visitor where blacklist=0", nativeQuery = true)
-    Page<List<Map<String, String>>> getAllVisitorCount(Pageable pageable);
-*/
-
-    //@Query(value = "select b.blog_id, b.category_id,c.title as categoryName,b.title,b.summary, b.create_time,b.update_time,b.tags,b.click,b.header_url from blog as b left join category as c on b.category_id = c.category_id",
-    //        //countQuery = "select count(*) from blog b,category c where b.category_id = c.category_id;",
-    //        nativeQuery = true)
-
-    @Query("select new com.dimple.modules.frontModule.front.domain.BlogDomain(b.blogId,b.categoryId,c.title as categoryTitle,b.title,b.summary,b.createTime,b.tags,b.click,b.updateTime,b.headerUrl) from Blog b left join Category c on Category.categoryId=Blog.categoryId")
-    Page<BlogDomain> getAllBlogDomain(Pageable pageable);
+    /**
+     * 分页获取指定字段的数据
+     *
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select new com.dimple.modules.frontModule.front.domain.BlogDomain(b.blogId,b.categoryId,c.title as categoryTitle,b.title,b.summary,b.createTime,b.tags,b.click,b.updateTime,b.headerUrl) from Blog as b,Category c where b.categoryId=c.categoryId ")
+    Page<BlogDomain> getAllBlogVo(Pageable pageable);
 
 
 }

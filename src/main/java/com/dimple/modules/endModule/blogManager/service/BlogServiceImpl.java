@@ -80,7 +80,7 @@ public class BlogServiceImpl implements BlogService {
         blog.setClick(0);
         blog.setSupport(false);
         blog.setWeight(0);
-        blog.setUpdateTime(new Date());
+        //blog.setUpdateTime(new Date());
         if (blog.getStatus() == null) {
             //设置为已发表状态
             blog.setStatus(BlogStatus.PUBLISHED.PUBLISHED.getCode());

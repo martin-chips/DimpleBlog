@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @className: TechnologyController
@@ -28,14 +28,11 @@ public class TechnologyController {
     @Autowired
     TechnologyService technologyService;
 
-    @GetMapping("/technology.html")
+    @GetMapping({"/technology.html", "/technology/{page}"})
     @VLog(title = "技术分享")
-    public String technologyPage(Model model, @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
-                                 @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNum <= 0 ? 0 : pageNum, pageSize <= 0 ? 10 : pageSize, Sort.Direction.DESC, "createTime");
+    public String technologyPage(Model model, @PathVariable(name = "page", required = false) Integer pageNum) {
+        Pageable pageable = PageRequest.of((pageNum == null || pageNum < 0) ? 0 : pageNum-1, 10, Sort.Direction.DESC, "createTime");
         model.addAttribute("newestBlog", technologyService.getNewestBlog(pageable));
         return "front/technology";
     }
-
-
 }

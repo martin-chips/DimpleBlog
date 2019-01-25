@@ -7,6 +7,7 @@
     <meta name="keywords" content="blog"/>
     <meta name="description" content="blog"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
     <link href="/static/front/css/base.css" th:href="@{/front/css/base.css}" rel="stylesheet">
     <link href="/static/front/css/m.css" th:href="@{/front/css/m.css}" rel="stylesheet">
     <script src="/static/front/js/jquery-1.8.3.min.js" th:src="@{/front/js/jquery-1.8.3.min.js}"></script>
@@ -17,6 +18,8 @@
     <![endif]-->
 
 </head>
+
+
 <div th:fragment="front-side">
     <div class="whitebg">
         <div id="calendar" class="calendar"></div>
@@ -69,6 +72,17 @@
             </div>
         </div>
     </footer>
+    <script src="/static/front/js/scrollReveal.js" th:src="@{/front/js/scrollReveal.js}"></script>
+
+    <script>
+        //检测ie 6789
+        if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))) {
+            window.scrollReveal = new scrollReveal({
+                reset: true
+            });
+        }
+
+    </script>
 </div>
 
 
@@ -80,7 +94,7 @@
             <div class="logo"><a href="/">Dimple的个人博客</a></div>
             <nav>
                 <ul id="starlist">
-                    <li><a href="/">网站首页</a></li>
+                    <li><a href="/"><i class="fa fa-bookmark"></i>&nbsp网站首页</a></li>
                     <li class="menu"><a href="/technology.html">技术博客</a>
                         <ul class="sub blogCategory">
                             <script>
@@ -117,7 +131,7 @@
                         </ul>
                         <span></span>
                     </li>
-                    <li><a href="/free.html">随心吐槽</a></li>
+                    <!--<li><a href="/free.html">随心吐槽</a></li>-->
                     <li><a href="/link.html">友链</a></li>
                     <li><a href="/about.html">关于我</a></li>
                     <li><a href="/leaveComment.html">留言</a></li>

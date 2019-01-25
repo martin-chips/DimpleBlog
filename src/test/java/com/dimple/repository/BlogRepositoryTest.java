@@ -49,7 +49,8 @@ public class BlogRepositoryTest {
      */
     @Test
     public void testGetBlogDomain() {
-        Page<BlogDomain> allBlogDomain = blogRepository.getAllBlogDomain(PageRequest.of(0, 10));
+        Page<BlogDomain> allBlogDomain = blogRepository.getAllBlogVo(PageRequest.of(0, 10));
         Assert.notNull(allBlogDomain, "失败");
     }
+
 }

@@ -10,7 +10,7 @@
 <article>
     <!--lbox begin-->
     <div class="lbox">
-        <div class="banbox">
+        <div class="banbox" data-scroll-reveal="enter bottom over 1s">
             <div class="banner">
                 <div id="banner" class="fader">
                     <li class="slide" th:each="rotation:${rotations}">
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="headline">
+        <div class="headline" data-scroll-reveal="enter bottom over 1s">
             <ul>
                 <li th:each="rotationLine:${rotationLines}">
                     <a th:href="${rotationLine.url}" href="/" title="" th:title="${rotationLine.title}">
@@ -41,7 +41,7 @@
             </ul>
         </div>
         <div class="clearblank"></div>
-        <div class="tab_box whitebg">
+        <div class="tab_box whitebg" data-scroll-reveal="enter bottom over 1s">
             <div class="tab_buttons">
                 <!--设置Nav-->
                 <ul>
@@ -74,8 +74,8 @@
             </div>
         </div>
 
-        <div class="zhuanti whitebg">
-            <h2 class="htitle"><span class="hnav"><a href="/">查看更多</a></span>站长推荐</h2>
+        <div class="zhuanti whitebg" data-scroll-reveal="enter bottom over 1s">
+            <h2 class="htitle"><span class="hnav"><a href="/">查看更多<i class="fa fa-plus-circle"></i></a></span>站长推荐</h2>
             <ul>
                 <li th:each="support:${supportBlogs}">
                     <i class="ztpic">
@@ -90,7 +90,7 @@
             </ul>
         </div>
         <div class="whitebg bloglist">
-            <h2 class="htitle"><span class="hnav"><a href="/">查看更多</a></span>最新博文</h2>
+            <h2 class="htitle"><span class="hnav"><a href="/">查看更多<i class="fa fa-plus-circle"></i></a></span>最新博文</h2>
             <ul>
                 <li data-scroll-reveal="enter bottom over 1s" class=" whitebg" th:each="item:${newestBlog}">
                     <h3 class="blogtitle">
@@ -116,7 +116,7 @@
         <!--bloglist end-->
     </div>
     <div class="rbox">
-        <div class="card">
+        <div class="card" data-scroll-reveal="enter bottom over 1s">
 
             <h2>我的名片</h2>
             <p>网名：Dimple | 裤兜有怪兽</p>
@@ -144,16 +144,7 @@
 </article>
 
 <div th:include="front/common :: front-footer"></div>
-<script src="/static/front/js/scrollReveal.js" th:src="@{/front/js/scrollReveal.js}"></script>
-<script>
-    //检测ie 6789
-    if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))) {
-        window.scrollReveal = new scrollReveal({
-            reset: true
-        });
-    }
 
-</script>
 </body>
 
 </html>

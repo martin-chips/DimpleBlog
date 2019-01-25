@@ -1,5 +1,7 @@
 package com.dimple.modules.frontModule.front.service;
 
+import com.dimple.modules.frontModule.front.domain.BlogDomain;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -12,5 +14,5 @@ import org.springframework.data.domain.Pageable;
 public interface TechnologyService {
 
 
-    Object getNewestBlog(Pageable pageable);
+    Page<BlogDomain> getNewestBlog(Pageable pageable);
 }

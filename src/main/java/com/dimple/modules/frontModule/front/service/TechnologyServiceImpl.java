@@ -1,14 +1,12 @@
 package com.dimple.modules.frontModule.front.service;
 
-import com.dimple.modules.endModule.blogManager.bean.Blog;
 import com.dimple.modules.endModule.blogManager.repository.BlogRepository;
+import com.dimple.modules.frontModule.front.domain.BlogDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @className: TechnologyServiceImpl
@@ -25,12 +23,9 @@ public class TechnologyServiceImpl implements TechnologyService {
     BlogRepository blogRepository;
 
     @Override
-    public Object getNewestBlog(Pageable pageable) {
+    public Page<BlogDomain> getNewestBlog(Pageable pageable) {
 
-        Page<Blog> blogPage = blogRepository.findAll(pageable);
-        List<Blog> content = blogPage.getContent();
-
-
-        return null;
+        Page<BlogDomain> allBlogVo = blogRepository.getAllBlogVo(pageable);
+        return allBlogVo;
     }
 }
