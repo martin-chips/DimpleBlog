@@ -12,6 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author : Dimple
  * @version : 1.0
@@ -53,4 +57,20 @@ public class BlogRepositoryTest {
         Assert.notNull(allBlogDomain, "失败");
     }
 
+    /**
+     * 获取归档下的博客的日期和数量
+     */
+    @Test
+    public void testGetCountAndDate() {
+        List<Map<String, Object>> countAndDate = blogRepository.getDateAndCount();
+        Assert.notEmpty(countAndDate, "数据不能为空");
+        for (Map<String, Object> dateIntegerMap : countAndDate) {
+            String date = (String) dateIntegerMap.get("date");
+            //如果不使用这种方式转换会出现java.math.BigInteger cannot be cast to java.lang.Integer
+            Integer count = Integer.valueOf(dateIntegerMap.get("count").toString());
+            System.out.println(date);
+            System.out.println(count);
+
+        }
+    }
 }

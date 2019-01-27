@@ -108,7 +108,7 @@
                                                 var data = result.data;
                                                 $.each(data, function (index, value) {
                                                     var a = $("<a></a>");
-                                                    a.attr("href", '/public/page/category/' + value.categoryId + ".html");
+                                                    a.attr("href", '/category/' + value.categoryId + ".html");
                                                     a.attr("alt", value.description);
                                                     a.text(value.title);
                                                     var li = $("<li></li>");
@@ -124,14 +124,14 @@
                         </ul>
                         <span></span>
                     </li>
-                    <li class="menu"><a href="#">资源分享</a>
-                        <ul class="sub">
-                            <li><a href="/software.html">软件分享</a></li>
-                            <li><a href="/resource.html">资料分享</a></li>
-                        </ul>
-                        <span></span>
-                    </li>
-                    <!--<li><a href="/free.html">随心吐槽</a></li>-->
+                    <!--<li class="menu"><a href="#">资源分享</a>-->
+                    <!--<ul class="sub">-->
+                    <!--<li><a href="/software.html">软件分享</a></li>-->
+                    <!--<li><a href="/resource.html">资料分享</a></li>-->
+                    <!--</ul>-->
+                    <!--<span></span>-->
+                    <!--</li>-->
+                    <li><a href="/archive.html">归档</a></li>
                     <li><a href="/link.html">友链</a></li>
                     <li><a href="/about.html">关于我</a></li>
                     <li><a href="/leaveComment.html">留言</a></li>

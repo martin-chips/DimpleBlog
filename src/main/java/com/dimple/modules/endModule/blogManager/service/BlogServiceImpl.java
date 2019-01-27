@@ -6,6 +6,8 @@ import com.dimple.modules.endModule.blogManager.bean.BlogInfo;
 import com.dimple.modules.endModule.blogManager.repository.BlogInfoRepository;
 import com.dimple.modules.endModule.blogManager.repository.BlogRepository;
 import com.dimple.modules.endModule.blogManager.repository.CategoryRepository;
+import com.dimple.modules.frontModule.front.domain.Archive;
+import com.dimple.modules.frontModule.front.domain.BlogDomain;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -255,5 +257,31 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> getRandomBlogLimit(int i) {
         return blogRepository.getRandomBlog(i);
+    }
+
+    @Override
+    public List<Archive> getArchive() {
+        List<Map<String, Object>> dateAndCount = blogRepository.getDateAndCount();
+        if (dateAndCount == null) {
+            return null;
+        }
+        List<Archive> archives = new ArrayList<>();
+        for (Map<String, Object> dateIntegerMap : dateAndCount) {
+            Archive archive = new Archive();
+            String date = (String) dateIntegerMap.get("date");
+            archive.setDate(date);
+            List<Map<String, Object>> allByUpdateTime = blogRepository.getAllByUpdateTime(date);
+            archive.setBlogs(allByUpdateTime);
+            //如果不使用这种方式转换会出现java.math.BigInteger cannot be cast to java.lang.Integer
+            Integer count = Integer.valueOf(dateIntegerMap.get("count").toString());
+            archive.setCount(count);
+            archives.add(archive);
+        }
+        return archives;
+    }
+
+    @Override
+    public Page<BlogDomain> getALlBlogByCategoryId(Pageable pageable, int categoryId) {
+        return blogRepository.getAllBlogByCategoryId(pageable, categoryId);
     }
 }

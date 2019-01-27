@@ -24,7 +24,6 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     public Page<BlogDomain> getNewestBlog(Pageable pageable) {
-
         Page<BlogDomain> allBlogVo = blogRepository.getAllBlogVo(pageable);
         return allBlogVo;
     }

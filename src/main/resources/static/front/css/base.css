@@ -393,11 +393,25 @@ margin: auto }
 .timebox { background: url(../images/abbg.png) no-repeat right top #fff; ; padding: 30px }
 .timebox ul { overflow: hidden; }
 .timebox span { position: relative; line-height: 32px; padding-right: 40px; color: #999 }
-.timebox span:after { position: absolute; content: ""; width: 2px; height: 40px; background: #e0dfdf; right: 18px }
 .timebox li { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
 .timebox li i { position: relative; font-style: normal }
 .timebox li i:before { content: " "; height: 10px; width: 10px; border: 2px solid #cccaca; background: #fff; position: absolute; top: 4px; left: -26px; border-radius: 50%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -ms-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
 .timebox li:hover i:before { background: #080808 }
+.archive {margin: 10px;position: relative;padding: 10px 0;}
+.archive h2 {font-size: 150%;}
+.archive li {padding: 8px 0;display: block}
+.archive li a:hover .atitle:after {background: #ff5c43}
+.archive li span {display: inline-block;width: 100px;font-size: 12px;text-indent: 20px}
+.archive li .atitle {display: inline-block;padding: 0 15px;position: relative;width: 550px;white-space: nowrap;text-overflow: ellipsis;}
+.archive li .atitle:after {position: absolute;left: -2px;background: #ccc;height: 8px;width: 8px;border-radius: 6px;top: 8px;content: ""}
+.archive li .atitle:before {position: absolute;left: -4px;background: #fff;height: 12px;width: 12px;border-radius: 6px;top: 6px;content: ""}
+.archive:before {height: 100%;width: 4px;background: #eee;position: absolute;left: 100px;content: "";top: 0}
+.archive-title {position: relative;margin: 10px 0;cursor: pointer}
+.archive-title:hover:after {background: #ff5c43}
+.atitle a:hover{color: #00c1de;}
+/*.archive div a{font-size: 13px}*/
+.archive-title:before {position: absolute;left: 93px;background: #fff;height: 18px;width: 18px;border-radius: 6px;top: 3px;content: ""}
+.archive-title:after {position: absolute;left: 96px;background: #ccc;height: 12px;width: 12px;border-radius: 6px;top: 6px;content: ""}
 .pagelist.mt20 { margin-top: 20px; }
 /*link.html*/
 .link-list{margin-top:10px;}
@@ -411,3 +425,10 @@ margin: auto }
 .blog-list li:hover,.lab-list li a:hover,.link-list li a:hover,.resource-list li a:hover{box-shadow:2px 5px 14px #c5c5c5;-webkit-transform:translate3d(0,-3px,0);transform:translate3d(0,-2px,0)}
 @media screen and (max-width:1024px){.link-list li{width:50%}}
 @media screen and (max-width:768px){.link-list li{width:100%}}
+/*navigation*/
+.lists-navigator ol li.current a {color: #6fa3ef}
+.lists-navigator {margin: 30px 0 35px}
+.lists-navigator ol {margin: 0;padding: 0 10px;list-style: none;text-align: center}
+.lists-navigator ol li {display: inline-block;color: #5f5f5f}
+.lists-navigator ol li a {font-size: 14px;padding: 0 20px;color: #5f5f5f}
+.lists-navigator ol li.current a {color: #6fa3ef}

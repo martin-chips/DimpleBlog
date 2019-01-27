@@ -4,7 +4,7 @@
 <head th:include="front/common :: front-head"></head>
 <body>
 <div th:include="front/common :: front-header"></div>
-<
+
 <script src="/static/front/plugin/hightlight/highlight.pack.js"
         th:src="@{/front/plugin/hightlight/highlight.pack.js}"></script>
 <link rel="stylesheet" href="/static/front/plugin/hightlight/xcode.css"
@@ -38,16 +38,24 @@
             </div>
 
             <section class="wow padding-bot20 animated fadeIn">
-                <div name="版权声明：" data-unique="版权声明："></div>
-                <h3>版权声明：</h3>
-                <p class="text-danger size16">
-                    本文仅用于学习、研究和交流目的，欢迎非商业性质转载。本文链接：<a target="_blank" th:text="${blog.title}"
-                                                      th:href="'/view/'+${blog.blogId}"></a>。
-                </p>
-                <br>
-                <div id="copyright1" th:utext="${signature}">
+                <fieldset
+                        style="border:1px dashed #696969;padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;line-height: 2em;color: #A9A9A9">
+                    <legend align="center"
+                            style="color:#FFFFFF;width:360px;text-align:center;background-color:#696969;">☆版权声明
+                    </legend>
+                    <p class="text-danger size16">
+                        本文仅用于学习、研究和交流目的，欢迎非商业性质转载。本文链接：
+                        <a id="url" target="_blank" th:text="'/view/'+${blog.blogId}"
+                           th:href="'/view/'+${blog.blogId}"></a>。
+                        <script>
+                            $("#url").text(window.location.href);
+                        </script>
+                    <div id="copyright1" th:utext="${signature}">
 
-                </div>
+                    </div>
+                    </p>
+                </fieldset>
+
             </section>
         </div>
 

@@ -9,6 +9,7 @@ import com.dimple.utils.ShiroUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
 
@@ -41,8 +42,12 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
                     //获取登录的id
                     String loginId = user.getUserLoginId();
                     AsyncManager.getAsyncManager().execute(AsyncHelper.recordLoginLog(loginId, Status.SUCCESS, MessageUtil.getMessage("user.logout.success")));
-//                    asyncLog.recordLoginLog(loginId, Status.LOGOUT_SUCCESS, MessageUtil.getMessage("user.logout.success"));
                 }
+                Session session = subject.getSession(false);
+                if (session == null) {
+                    return false;
+                }
+                session.stop();
                 subject.logout();
             } catch (SessionException e) {
                 log.error("logout failure", e);

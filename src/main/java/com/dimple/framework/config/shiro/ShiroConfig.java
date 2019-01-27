@@ -379,11 +379,11 @@ public class ShiroConfig {
     @Bean("sessionIdCookie")
     public SimpleCookie sessionIdCookie() {
         //设置cookie的名称
-        SimpleCookie simpleCookie = new SimpleCookie("sid");
+        SimpleCookie simpleCookie = new SimpleCookie("sessionCookie");
 
         simpleCookie.setHttpOnly(sessionCookieHttpOnly);
         simpleCookie.setPath(sessionCookiePath);
-//        //设置session cookie的过期时间 单位min
+       //设置session cookie的过期时间 单位min
         simpleCookie.setMaxAge(sessionCookieMaxAge * 60);
         return simpleCookie;
     }

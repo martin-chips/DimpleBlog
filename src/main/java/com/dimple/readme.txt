@@ -46,6 +46,10 @@ UI元素——任务清单
 UI元素——加载动画
 UI元素——小部件
 
+业务图表
+
+分类下的博客数量、访问地区统计、访问次数统计、博客浏览量统计
+
 
 本文仅用于学习、研究和交流目的，欢迎非商业性质转载。本文链接：https://masuit.com/1303。
 
@@ -73,6 +77,10 @@ l  博主只是一名普通的互联网从业者，不懂修电脑，不会卖�
 https://blog.csdn.net/itpinpai/article/details/70177124
 
 
+http://www.guan2ye.com/2018/02/01/Spring-boot-shiro-session-cache-ecache-redis-%E5%85%B1%E5%AD%98%E9%85%8D%E7%BD%AE.html
+
+
+https://mrbird.cc/
 
 如果您觉得本文对你有用，不妨帮忙点个赞，或者在评论里给我一句赞美，小小成就都是今后继续为大家编写优质文章的动力，流云拜谢！ 欢迎您持续关注我的博客：)
 作者：流云诸葛
@@ -96,18 +104,3 @@ xcode  vs rainbow
 https://blog.csdn.net/u011781521/article/details/80528049
 
 
-
-
-<fieldset style="border:1px dashed #696969;padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;line-height: 2em;color: #A9A9A9">
-<legend align="center" style="color:#FFFFFF;width:360px;text-align:center;background-color:#696969;">小柒开放资源分享平台☆版权声明</legend>
-1、本主题所有言论和图片纯属会员个人观点，与本平台立场无关，不代表本平台赞同其观点和对其真实性负责。<br>
-2、帖子若有内容转载自其他自媒体，不代表本平台赞同其观点和对其真实性负责。<br>
-3、本站所有主题由帖子作者发表，该帖子作者享有相关版权。<br>
-4、其他单位或个人使用、转载或引用本文时必须同时征得该帖子作者的同意。<br>
-5、帖子作者需承担一切因本文发表而直接或间接导致的民事或刑事责任。<br>
-6、不得发布和链接任何有关政治、色情、宗教、迷信、低俗、变态、血腥、暴力以及危害国家安全、诋毁政府形象等违法言论和信息的帖子！<br>
-7、如本帖侵犯到任何版权问题，请立即联系平台管理员，本平台将及时予以删除并致以最深的歉意<br>
-8、本平台管理员和版主有权不事先通知发帖者而删除本文<br>
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本平台管理员联系方式 - QQ:55806839
-</fieldset>

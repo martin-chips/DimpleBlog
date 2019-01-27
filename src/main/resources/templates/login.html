@@ -19,7 +19,10 @@
     <script th:src="@{/js/blockUI/jquery.blockUI.js}"></script>
     <script src="/static/js/custom/login.js" th:src="@{/js/custom/login.js}"></script>
     <script th:src="@{/js/custom/common/dimple-blog.js}"></script>
-
+    <script language="JavaScript">
+        if (window != top)
+            top.location.href = location.href;
+    </script>
 </head>
 
 <body style="background-color: #efefef">

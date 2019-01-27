@@ -1,5 +1,6 @@
 package com.dimple.modules.common.controller;
 
+import com.dimple.framework.exception.BaseException;
 import com.dimple.framework.message.Result;
 import com.dimple.modules.common.service.LoginService;
 import com.dimple.modules.endModule.linkManager.service.LinksService;
@@ -46,10 +47,11 @@ public class LoginController {
     }
 
     @GetMapping("/page/login.html")
-    public String toLogin(HttpServletRequest request, HttpServletResponse response) {
+    public Object toLogin(HttpServletRequest request, HttpServletResponse response) {
         // 如果是Ajax请求，返回Json字符串。
         if (ServletUtil.isAjaxRequest(request)) {
-            return ServletUtil.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
+            //todo 异常处理
+            throw  new BaseException("登录", "user.not.exists", null, "异常");
         }
         return "login";
     }

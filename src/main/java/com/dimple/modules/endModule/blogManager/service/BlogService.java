@@ -2,6 +2,8 @@ package com.dimple.modules.endModule.blogManager.service;
 
 import com.dimple.modules.endModule.blogManager.bean.Blog;
 import com.dimple.framework.enums.BlogStatus;
+import com.dimple.modules.frontModule.front.domain.Archive;
+import com.dimple.modules.frontModule.front.domain.BlogDomain;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -153,4 +155,11 @@ public interface BlogService {
      * @return
      */
     List<Blog> getRandomBlogLimit(int i);
+
+    /**
+     * 获取归档信息
+     */
+    List<Archive> getArchive();
+
+    Page<BlogDomain> getALlBlogByCategoryId(Pageable pageable, int categoryId);
 }

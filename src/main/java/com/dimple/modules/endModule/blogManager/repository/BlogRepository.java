@@ -78,5 +78,17 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>, JpaSpecifi
     @Query(value = "select new com.dimple.modules.frontModule.front.domain.BlogDomain(b.blogId,b.categoryId,c.title as categoryTitle,b.title,b.summary,b.createTime,b.tags,b.click,b.updateTime,b.headerUrl) from Blog as b,Category c where b.categoryId=c.categoryId ")
     Page<BlogDomain> getAllBlogVo(Pageable pageable);
 
+    /**
+     * 归档信息获取
+     *
+     * @return 年月以及这个年月下的博客数量
+     */
+    @Query(value = "select date_format(create_time, '%Y-%m') as date,count(*) as count from blog group by date_format(create_time,'%Y-%m')order by date_format(create_time, '%Y-%m') desc", nativeQuery = true)
+    List<Map<String, Object>> getDateAndCount();
 
+    @Query(value = "select blog_id,title,summary,create_time from blog where date_format(create_time, '%Y-%m') =:date", nativeQuery = true)
+    List<Map<String, Object>> getAllByUpdateTime(@Param("date") String date);
+
+    @Query(value = "select new com.dimple.modules.frontModule.front.domain.BlogDomain(b.blogId,b.categoryId,c.title as categoryTitle,b.title,b.summary,b.createTime,b.tags,b.click,b.updateTime,b.headerUrl) from Blog as b,Category c where b.categoryId=c.categoryId and c.categoryId=:categoryId ")
+    Page<BlogDomain> getAllBlogByCategoryId(Pageable pageable, @Param("categoryId") int categoryId);
 }

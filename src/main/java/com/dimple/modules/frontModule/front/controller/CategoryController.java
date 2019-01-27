@@ -2,12 +2,17 @@ package com.dimple.modules.frontModule.front.controller;
 
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
-import com.dimple.modules.endModule.blogManager.bean.Blog;
+import com.dimple.modules.endModule.blogManager.bean.Category;
 import com.dimple.modules.endModule.blogManager.service.BlogService;
 import com.dimple.modules.endModule.blogManager.service.CategoryService;
+import com.dimple.modules.frontModule.front.domain.BlogDomain;
 import com.dimple.modules.frontModule.front.domain.CategoryDomain;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,11 +38,14 @@ public class CategoryController {
     CategoryService categoryService;
 
     @ApiOperation("获取id为Category下的博客的信息")
-    @GetMapping("/public/page/category/{id}.html")
+    @GetMapping("/category/{id}.html")
     public String categoriesPublicPage(@PathVariable int id, Model model) {
-        List<Blog> blogs = blogService.getAllBlogByCategoryId(id);
-        model.addAttribute("blogs", blogs);
-        return "front/archive";
+        Pageable pageable = PageRequest.of(0, 100, Sort.Direction.DESC, "createTime");
+        Page<BlogDomain> aLlBlogByCategoryId = blogService.getALlBlogByCategoryId(pageable, id);
+        Category categoryById = categoryService.getCategoryById(id);
+        model.addAttribute("blogs", aLlBlogByCategoryId);
+        model.addAttribute("category", categoryById);
+        return "front/category";
     }
 
 
