@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-
 <head th:include="common :: common-head"></head>
 <link rel="stylesheet" href="/static/plugin/webUploader/webuploader.css"
       th:href="@{/plugin/webUploader/webuploader.css}">
@@ -8,12 +7,9 @@
       th:href="@{/plugin/webUploader/webuploader-custom.css}">
 <link rel="stylesheet" href="/static/plugin/image-picker/image-picker.css"
       th:href="@{/plugin/image-picker/image-picker.css}">
-
-
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeIn">
     <input type="hidden" id="data">
-
     <div class="ibox float-e-margins">
         <div class="ibox-content">
             <div class="panel blank-panel">
@@ -51,19 +47,14 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
 </div>
 <div th:include="common :: common-footer"></div>
-
 <script src="/static/plugin/webUploader/webuploader.nolog.js"
         th:src="@{/plugin/webUploader/webuploader.nolog.js}"></script>
 <script src="/static/plugin/webUploader/webuploader-custom-md.js"

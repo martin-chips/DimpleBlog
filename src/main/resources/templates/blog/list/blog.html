@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-
 <head th:include="common :: common-head"></head>
 <style>
     /**字符串过长 转化为 。。。**/
@@ -103,7 +101,6 @@
                             </div>
                         </form>
                     </div>
-
                     <div class="btn-group-sm hidden-xs" id="toolbar" role="group" style="margin-top: 10px">
                         <a class="btn btn-primary btn-edit disabled" onclick="$.operate.updateFull()">
                             <i class="fa fa-edit"></i> 修改
@@ -130,7 +127,6 @@
                             <i class="fa fa-remove"></i> 推送到百度
                         </a>
                     </div>
-
                     <div class="col-sm-12 select-table table-striped ">
                         <table id="bootstrap-table" data-mobile-responsive="true"></table>
                     </div>
@@ -138,9 +134,9 @@
             </div>
         </div>
     </div>
-    <div th:include="common :: common-footer"></div>
-    <script src="/static/js/custom/blog/list/list.js" th:src="@{/js/custom/blog/list/list.js}"></script>
 </div>
+<div th:include="common :: common-footer"></div>
+<script src="/static/js/custom/blog/list/list.js" th:src="@{/js/custom/blog/list/list.js}"></script>
 </body>
 
 </html>

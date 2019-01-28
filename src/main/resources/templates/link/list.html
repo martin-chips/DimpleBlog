@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-
 <head th:include="common :: common-head"></head>
-<style>
-
-</style>
-
 <body class="gray-bg">
 <div class="col-sm-2">
     <div class="ibox float-e-margins">
@@ -56,9 +50,7 @@
     </div>
 </div>
 <div class="container-div ui-layout-center col-sm-10 animated fadeInRight">
-
     <div class="row">
-
         <div class="col-sm-10 search-collapse ">
             <form id="link-form">
                 <div class="select-list">
@@ -101,16 +93,13 @@
                 <i class="fa fa-remove"></i> 删除
             </a>
         </div>
-
         <div class="col-sm-12 select-table table-striped ">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
     </div>
 </div>
-
 <div th:include="common :: common-footer"></div>
 <script src="/static/js/custom/links/list.js" th:src="@{/js/custom/links/list.js}"></script>
-
 </body>
 
 </html>

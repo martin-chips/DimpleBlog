@@ -8,8 +8,6 @@
       th:href="@{/plugin/webUploader/webuploader-custom.css}">
 <link rel="stylesheet" href="/static/plugin/image-picker/image-picker.css"
       th:href="@{/plugin/image-picker/image-picker.css}">
-
-
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeIn">
     <input type="hidden" id="imgUrl">
@@ -29,7 +27,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="panel-body">
                     <div class="tab-content">
                         <div id="upload" class="tab-pane active">
@@ -56,34 +53,27 @@
                                 </div>
                             </div>
                         </div>
-
                         <div id="onlineGallery" class="tab-pane">
                             <div class="page-container">
                                 <strong>或者您也可以在此处选择</strong>
                                 <div class="" id="imageView">
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
 </div>
 <div th:include="common :: common-footer"></div>
-
 <script src="/static/plugin/webUploader/webuploader.nolog.js"
         th:src="@{/plugin/webUploader/webuploader.nolog.js}"></script>
 <script src="/static/plugin/webUploader/webuploader-custom.js"
         th:src="@{/plugin/webUploader/webuploader-custom.js}"></script>
 <script src="/static/plugin/image-picker/image-picker.min.js"
         th:src="@{/plugin/image-picker/image-picker.min.js}"></script>
-
 <script>
     $(function () {
         loadImage();

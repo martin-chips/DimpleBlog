@@ -8,7 +8,7 @@
 <head th:fragment="common-head">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dimple's Blog For Software Engineer</title>
+    <title>Dimple's Blog 后台管理系统</title>
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
@@ -16,42 +16,47 @@
     <meta name="description" content="">
     <!--网站图标-->
     <!--<link rel="shortcut icon" href="favicon.ico">-->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
-    <link th:href="@{/css/bootstrap-table/bootstrap-table-min.css}" rel="stylesheet">
-    <link rel="stylesheet" href="/static/plugin/bootstrap-treetable/bootstrap-treetable.css"
-          th:href="@{/plugin/bootstrap-treetable/bootstrap-treetable.css}">
-    <link href="/static/css/animate.css" th:href="@{/css/animate.css}" rel="stylesheet">
+    <link href="/static/plugin/bootstrap/bootstrap.min.css" th:href="@{/plugin/bootstrap/bootstrap.min.css}"
+          rel="stylesheet">
+    <link href="/static/plugin/font-awesome/font-awesome.min.css" th:href="@{/plugin/font-awesome/font-awesome.min.css}"
+          rel="stylesheet">
+    <link href="/static/plugin/bootstrap/bootstrap-table/bootstrap-table-min.css"
+          th:href="@{/plugin/bootstrap/bootstrap-table/bootstrap-table-min.css}" rel="stylesheet">
+    <link href="/static/plugin/bootstrap/bootstrap-treetable/bootstrap-treetable.css"
+          th:href="@{/plugin/bootstrap/bootstrap-treetable/bootstrap-treetable.css}" rel="stylesheet">
+    <link href="/static/plugin/animate/animate.css" th:href="@{/plugin/animate/animate.css}" rel="stylesheet">
     <link th:href="@{/css/style.css}" rel="stylesheet">
-    <link th:href="@{/css/common/common.css}" rel="stylesheet">
-    <link th:href="@{/plugin/sweetalert/sweetalert2.css}" rel="stylesheet">
+    <link href="/static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet">
+    <link href="/static/plugin/sweetalert/sweetalert2.css" th:href="@{/plugin/sweetalert/sweetalert2.css}"
+          rel="stylesheet">
 
 </head>
 <!--============================================后台通用的脚文件， 主要是JS文件=====================================-->
 <div th:fragment="common-footer">
-    <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="/static/plugin/jquery/jquery.min.js" th:src="@{/plugin/jquery/jquery.min.js}"></script>
+    <script src="/static/plugin/bootstrap/bootstrap.min.js" th:src="@{/plugin/bootstrap/bootstrap.min.js}"></script>
     <!--自定义JS-->
     <script th:src="@{/js/content.js}"></script>
     <!-- jQuery Validation plugin javascript-->
-
-    <script th:src="@{/plugin/jquery-validate/jquery.validate.js}"></script>
-    <script th:src="@{/plugin/jquery-validate/additional-methods.js}"></script>
-    <script th:src="@{/plugin/jquery-validate/messages_zh.min.js}"></script>
-    <script th:src="@{/plugin/jquery-validate/common2.js}"></script>
-
-
-    <script th:src="@{/js/layer/layer.min.js}"></script>
-    <script th:src="@{/js/layui/layui.js}"></script>
+    <script th:src="@{/plugin/jquery/jquery-validate/jquery.validate.js}"></script>
+    <script th:src="@{/plugin/jquery/jquery-validate/additional-methods.js}"></script>
+    <script th:src="@{/plugin/jquery/jquery-validate/messages_zh.min.js}"></script>
+    <script th:src="@{/plugin/jquery/jquery-validate/common2.js}"></script>
+    <!--Lay 弹出层-->
+    <script src="/static/plugin/layer/layer.min.js" th:src="@{/plugin/layer/layer.min.js}"></script>
+    <script src="/static/plugin/layui/layui.js" th:src="@{/plugin/layui/layui.js}"></script>
     <!--BootStrap-Table-->
-    <script th:src="@{/js/bootstrap-table/bootstrap-table.min.js}"></script>
-    <script src="/static/plugin/bootstrap-treetable/bootstrap-treetable.js"
-            th:src="@{/plugin/bootstrap-treetable/bootstrap-treetable.js}"></script>
-    <script th:src="@{/js/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
-    <script th:src="@{/js/bootstrap-table/bootstrap-table-zh-CN.js}"></script>
+    <script src="/static/plugin/bootstrap/bootstrap-table/bootstrap-table.min.js"
+            th:src="@{/plugin/bootstrap/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script src="/static/plugin/bootstrap/bootstrap-treetable/bootstrap-treetable.js"
+            th:src="@{/plugin/bootstrap/bootstrap-treetable/bootstrap-treetable.js}"></script>
+    <script src="/static/plugin/bootstrap/bootstrap-table/bootstrap-table-mobile.min.js"
+            th:src="@{/plugin/bootstrap/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+    <script src="/static/plugin/bootstrap/bootstrap-table/bootstrap-table-zh-CN.js"
+            th:src="@{/plugin/bootstrap/bootstrap-table/bootstrap-table-zh-CN.js}"></script>
     <!--遮罩-->
-    <script th:src="@{/js/blockUI/jquery.blockUI.js}"></script>
-
+    <script src="/static/plugin/jquery/blockUI/jquery.blockUI.js"
+            th:src="@{/plugin/jquery/blockUI/jquery.blockUI.js}"></script>
     <!--通用UI JS框架-->
     <script src="/static/plugin/iCheck/icheck.min.js" th:src="@{/plugin/iCheck/icheck.min.js}"></script>
     <script th:src="@{/js/custom/common/dimple-blog.js}"></script>
@@ -72,33 +77,27 @@
     <meta name="description" content="">
     <!--网站图标-->
     <!--<link rel="shortcut icon" href="favicon.ico">-->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
-    <link th:href="@{/css/bootstrap-table/bootstrap-table.css}" rel="stylesheet">
-    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link href="/static/plugin/bootstrap/bootstrap.min.css" th:href="@{/plugin/bootstrap/bootstrap.min.css}"
+          rel="stylesheet">
+    <link href="/static/plugin/font-awesome/font-awesome.min.css" th:href="@{/plugin/font-awesome/font-awesome.min.css}"
+          rel="stylesheet">
+    <link href="/static/plugin/animate/animate.css" th:href="@{/plugin/animate/animate.css}" rel="stylesheet">
     <link th:href="@{/css/style.css}" rel="stylesheet">
-    <link th:href="@{/css/common/common.css}" rel="stylesheet">
+    <link href="/static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet">
     <link th:href="@{/css/index.css}" rel="stylesheet">
-    <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <!-- jQuery Validation plugin javascript-->
+    <script src="/static/plugin/jquery/jquery.min.js" th:src="@{/plugin/jquery/jquery.min.js}"></script>
+    <script src="/static/plugin/bootstrap/bootstrap.min.js" th:src="@{/plugin/bootstrap/bootstrap.min.js}"></script>
 
-    <script th:src="@{/plugin/jquery-validate/jquery.validate.js}"></script>
-    <script th:src="@{/plugin/jquery-validate/additional-methods.js}"></script>
-    <script th:src="@{/plugin/jquery-validate/messages_zh.min.js}"></script>
-    <script th:src="@{/plugin/jquery-validate/common2.js}"></script>
-
-    <script th:src="@{/js/fullscreen/jquery.fullscreen.js}"></script>
+    <script src="/static/plugin/jquery/fullscreen/jquery.fullscreen.js"
+            th:src="@{/plugin/jquery/fullscreen/jquery.fullscreen.js}"></script>
     <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script th:src="@{/js/layer/layer.min.js}"></script>
-    <script th:src="@{/js/layui/layui.js}"></script>
-    <!--BootStrap-Table-->
-    <script th:src="@{/js/bootstrap-table/bootstrap-table.min.js}"></script>
-    <script th:src="@{/js/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
-    <script th:src="@{/js/bootstrap-table/bootstrap-table-zh-CN.js}"></script>
+    <script src="/static/plugin/layer/layer.min.js" th:src="@{/plugin/layer/layer.min.js}"></script>
+    <script src="/static/plugin/layui/layui.js" th:src="@{/plugin/layui/layui.js}"></script>
+
     <!--遮罩-->
-    <script th:src="@{/js/blockUI/jquery.blockUI.js}"></script>
+    <script src="/static/plugin/jquery/blockUI/jquery.blockUI.js"
+            th:src="@{/plugin/jquery/blockUI/jquery.blockUI.js}"></script>
     <!--通用UI JS框架-->
     <script th:src="@{/js/custom/common/dimple-blog.js}"></script>
     <script th:src="@{/js/custom/index.js}"></script>

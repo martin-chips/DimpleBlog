@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-
 <head th:include="common :: common-head"></head>
-
 <body class="gray-bg">
-
 <div class="container-div">
     <div class="row">
         <div class="col-sm-12 search-collapse">
@@ -39,7 +36,6 @@
                 </div>
             </form>
         </div>
-
         <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
             <a class="btn btn-danger btn-del disabled" onclick="$.operate.deleteAll()">
                 <i class="fa fa-remove"></i> 删除
@@ -48,19 +44,15 @@
                 <i class="fa fa-trash"></i> 清空
             </a>
         </div>
-
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
     </div>
 </div>
-
 <div th:include="common :: common-footer"></div>
-
 <script th:inline="javascript">
     var data = [[${@direction.getOperateType()}]]
 </script>
 <script src="/static/js/custom/log/operatorLog.js" th:src="@{/js/custom/log/operatorLog.js}"></script>
 </body>
-
 </html>

@@ -1,23 +1,37 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RuoYi - 404</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/css/animate.css" rel="stylesheet"/>
-    <link href="/css/style.css" rel="stylesheet"/>
+    <title>oops - 404</title>
+    <link th:href="@{/css/errorPage/error.css}" rel="stylesheet">
 </head>
-<body class="gray-bg">
-    <div class="middle-box text-center animated fadeInDown">
-        <h1>404</h1>
-        <h3 class="font-bold">找不到网页！</h3>
-        <div class="error-desc">
-                                对不起，您正在寻找的页面已经找到。尝试检查URL的错误，然后按浏览器上的刷新按钮或尝试在我们的应用程序中找到其他内容。
-            <a href="javascript:top.document.location.href='/'" class="btn btn-primary m-t">主页</a>
-        </div>
+<body>
+<div class="not-found parallax">
+    <div class="sky-bg"></div>
+    <div class="wave-7"></div>
+    <div class="wave-6"></div>
+    <a class="wave-island" href="/">
+        <img src="http://res.cloudinary.com/andrewhani/image/upload/v1524501929/404/island.svg" alt="Island">
+    </a>
+    <div class="wave-5"></div>
+    <div class="wave-lost wrp">
+        <span>4</span>
+        <span>0</span>
+        <span>4</span>
     </div>
-    <script src="/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <div class="wave-4"></div>
+    <div class="wave-boat">
+        <img class="boat" src="http://res.cloudinary.com/andrewhani/image/upload/v1524501894/404/boat.svg" alt="Boat">
+    </div>
+    <div class="wave-3"></div>
+    <div class="wave-2"></div>
+    <div class="wave-1"></div>
+    <div class="wave-message">
+        <p>Your're lost</p>
+        <p>Click on the island to return</p>
+    </div>
+</div>
 </body>
+<script th:src="@{/js/errorPage/error.js}"></script>
 </html>

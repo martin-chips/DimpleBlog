@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-
-
 <head th:include="common :: common-head"></head>
-
-
 <body class="gray-bg">
-
 <div class="container-div ui-layout-center col-sm-12 animated fadeInRight">
     <div class="row">
         <div class="col-sm-3">
@@ -25,7 +20,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="col-sm-9 animated fadeInRight">
             <div class="container-div">
@@ -60,7 +54,6 @@
                             </div>
                         </form>
                     </div>
-
                     <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
                         <a class="btn btn-success" onclick="$.operate.add()">
                             <i class="fa fa-plus"></i> 新增
@@ -77,10 +70,7 @@
                         <a class="btn btn-danger btn-del disabled" onclick="support(true)">
                             <i class="fa fa-remove"></i> 取消推荐
                         </a>
-
-
                     </div>
-
                     <div class="col-sm-12 select-table table-striped">
                         <table id="bootstrap-table" data-mobile-responsive="true"></table>
                     </div>
@@ -88,12 +78,9 @@
             </div>
         </div>
     </div>
-
-    <div th:include="common :: common-footer"></div>
-    <script src="/static/js/custom/blog/category/list.js"
-            th:src="@{/js/custom/blog/category/list.js}"></script>
 </div>
-
+<div th:include="common :: common-footer"></div>
+<script src="/static/js/custom/blog/category/list.js"
+        th:src="@{/js/custom/blog/category/list.js}"></script>
 </body>
-
 </html>

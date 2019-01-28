@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-
 <head th:include="common :: common-head"></head>
-
-
 <body class="gray-bg">
-
 <div class="container-div ui-layout-center col-sm-12 animated fadeInRight">
-
     <div class="row">
-
         <div class="container-div ui-layout-center">
             <div class="row">
                 <div class="col-sm-12 search-collapse">
@@ -46,7 +39,6 @@
                         </div>
                     </form>
                 </div>
-
                 <div class="btn-group-sm hidden-xs" id="toolbar" role="group" style="margin-top: 10px">
                     <a class="btn btn-success" onclick="$.operate.add()">
                         <i class="fa fa-plus"></i> 新增
@@ -67,18 +59,15 @@
                         <i class="fa fa-remove"></i> 暂不指定
                     </a>
                 </div>
-
                 <div class="col-sm-12 select-table table-striped ">
                     <table id="bootstrap-table" data-mobile-responsive="true"></table>
                 </div>
             </div>
         </div>
-
         <div th:include="common :: common-footer"></div>
         <script src="/static/js/custom/frontsetting/rotation.js"
                 th:src="@{/js/custom/frontsetting/rotation.js}"></script>
     </div>
 </div>
 </body>
-
 </html>
