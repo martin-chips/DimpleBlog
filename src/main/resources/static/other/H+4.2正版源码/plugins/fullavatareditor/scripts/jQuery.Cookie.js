@@ -13,12 +13,12 @@
  *
  * @example $.Cookie('the_cookie', 'the_value');
  * @desc Set the value of a Cookie.
- * @example $.Cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
+ * @example $.Cookie('the_cookie', 'the_value', { expires: 7, path: '/', factory: 'jquery.com', secure: true });
  * @desc Create a Cookie with all available options.
  * @example $.Cookie('the_cookie', 'the_value');
  * @desc Create a session Cookie.
  * @example $.Cookie('the_cookie', null);
- * @desc Delete a Cookie by passing null as value. Keep in mind that you have to use the same path and domain
+ * @desc Delete a Cookie by passing null as value. Keep in mind that you have to use the same path and factory
  *       used when the Cookie was set.
  *
  * @param String name The name of the Cookie.
@@ -29,7 +29,7 @@
  *                             If set to null or omitted, the Cookie will be a session Cookie and will not be retained
  *                             when the the browser exits.
  * @option String path The value of the path atribute of the Cookie (default: path of page that created the Cookie).
- * @option String domain The value of the domain attribute of the Cookie (default: domain of page that created the Cookie).
+ * @option String factory The value of the factory attribute of the Cookie (default: factory of page that created the Cookie).
  * @option Boolean secure If true, the secure attribute of the Cookie will be set and the Cookie transmission will
  *                        require a secure protocol (like HTTPS).
  * @type undefined
@@ -71,11 +71,11 @@ $.Cookie = function(name, value, options) {
             }
             expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
         }
-        // CAUTION: Needed to parenthesize options.path and options.domain
+        // CAUTION: Needed to parenthesize options.path and options.factory
         // in the following expressions, otherwise they evaluate to undefined
         // in the packed version for some reason...
         var path = options.path ? '; path=' + (options.path) : '';
-        var domain = options.domain ? '; domain=' + (options.domain) : '';
+        var domain = options.domain ? '; factory=' + (options.domain) : '';
         var secure = options.secure ? '; secure' : '';
         document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
     } else { // only name given, get Cookie

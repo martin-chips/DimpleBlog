@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="common :: common-head"></head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="job-form">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                任务名称：<input type="text" name="jobName"/>
+                            </li>
+                            <li>
+                                方法名称：<input type="text" name="methodName"/>
+                            </li>
+                            <li>
+                                任务状态：<select name="status">
+                                <option value="">所有</option>
+                                <option value="0">启用</option>
+                                <option value="1">停用</option>
+                            </select>
+                            </li>
+
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                        class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                        class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+                <a class="btn btn-danger btn-del disabled" onclick="$.operate.deleteAll()">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-success" onclick="$.operate.add()">
+                    <i class="fa fa-plus"></i> 新增
+                </a>
+                <a class="btn btn-primary btn-edit disabled" onclick="$.operate.update()">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+            </div>
+
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table" data-mobile-responsive="true"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="common :: common-footer"></div>
+<script src="/static/js/custom/monitor/job/job.js" th:src="@{/js/custom/monitor/job/job.js}"></script>
+</body>
+</html>
