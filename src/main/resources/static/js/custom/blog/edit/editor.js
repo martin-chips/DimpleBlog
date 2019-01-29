@@ -26,10 +26,10 @@ $(function () {
                 summary: {
                     maxlength: 150
                 },
-                tags: {
-                    required: true,
-                    rangelength: [2, 20]
-                },
+                // tags: {
+                //     required: true,
+                //     rangelength: [2, 20]
+                // },
                 weight: {
                     required: true,
                     number: true
@@ -117,7 +117,7 @@ function postBlog(data) {
     if ($.validate.form()) {
         $.ajax({
             url: "/api/blog",
-            data: data,
+            data:  data,
             type: "POST",
             dataType: "json",
             success: function (result) {
@@ -153,10 +153,12 @@ function getData() {
     var headerUrl = $("#header")[0].src;
     var title = $("input[name='title']").val();
     var summary = $("input[name='summary']").val();
-    var tags = $("input[name='tags']").val();
+    var tags = $("#tags").val();
     var weight = $("input[name='weight']").val();
     var categoryId = $("#categorySelect").val();
     var content = $("#summernote").summernote("code");
+    var tagsArray = new Array();
+    console.log(tags);
     var data = {
         headerUrl: headerUrl,
         title: title,

@@ -5,6 +5,8 @@
       th:href="@{/plugin/summernote/summernote.css}">
 <link rel="stylesheet" href="/static/plugin/summernote/summernote-bs3.css"
       th:href="@{/plugin/summernote/summernote-bs3.css}">
+<link rel="stylesheet" href="/static/plugin/bootstrap/bootstrap-tags-input/bootstrap-tagsinput.css"
+      th:href="@{/plugin/bootstrap/bootstrap-tags-input/bootstrap-tagsinput.css}">
 <body class="white-bg">
 <div class="wrapper wrapper-content">
     <div class="row">
@@ -16,6 +18,8 @@
                         <input type="hidden" name="status" th:value="${blog.status}">
                         <input type="hidden" name="support" th:value="${blog.support}"/>
                         <input type="hidden" name="click" th:value="${blog.click}"/>
+
+                        <input type="hidden" name="tags-hidden" th:value="${blog.tags}"/>
                         <!--<a class="btn btn-block btn-info compose-mail">修改</a>-->
                         <!--<div class="space-25"></div>-->
                         <h5>配置信息</h5>
@@ -51,10 +55,11 @@
                         <div class="form-group">
                             <label class=" control-label">标签:</label>
                             <div class="">
-                                <input name="tags" class="form-control" type="text" placeholder="在这里输入标签"
-                                       th:value="${blog.tags}">
-                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 多个标签之间使用";"分隔</span>
-
+                                <input id="tags" name="tags" class="form-control col-sm-12"
+                                       type="text"
+                                       data-role="tagsinput"
+                                       style=" min-width: 100%;"
+                                       placeholder="按回车确定  ">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -108,6 +113,7 @@
 </div>
 
 </body>
+
 <div th:include="common :: common-footer"></div>
 <script src="/static/plugin/summernote/summernote.js" th:src="@{/plugin/summernote/summernote.js}"></script>
 
@@ -120,6 +126,15 @@
 
 <script src="/static/js/custom/blog/list/update.js"
         th:src="@{/js/custom/blog/list/update.js}"></script>
+<script src="/static/plugin/bootstrap/bootstrap-tags-input/bootstrap-tagsinput.min.js"
+        th:src="@{/plugin/bootstrap/bootstrap-tags-input/bootstrap-tagsinput.min.js}"></script>
+<script th:inline="javascript">
+    var tags = [[${blog.tags}]];
+    $(function () {
+        //添加已有标签
+        $("#tags").tagsinput('add', tags.join(","));
+    });
+</script>
 <script>
     function submitHandler() {
         updateBlog();
@@ -131,7 +146,7 @@
         var title = $("input[name='title']").val();
         var summary = $("textarea[name='summary']").val();
         var blogId = $("input[name='blogId']").val();
-        var tags = $("input[name='tags']").val();
+        var tags = $("#tags").val();
         var categoryId = $("#categorySelect").val();
         var content = $("#summernote").summernote("code");
         var weight = $("input[name='weight']").val();
@@ -148,13 +163,7 @@
             categoryId: categoryId,
             content: content,
             blogId: blogId,
-            // support: support,
-            // click: click,
-            // weight: weight,
-            // status: status,
-            // createTime: createTime
         };
-        console.log(data);
         return data;
     }
 

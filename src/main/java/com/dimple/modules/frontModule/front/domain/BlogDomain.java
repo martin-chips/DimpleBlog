@@ -20,7 +20,6 @@ public class BlogDomain {
     private String summary;
     @Temporal(TemporalType.DATE)
     private Date createTime;
-    private String tags;
     private Integer click;
     @Temporal(TemporalType.DATE)
     private Date updateTime;
@@ -30,14 +29,13 @@ public class BlogDomain {
 
     }
 
-    public BlogDomain(Integer blogId, Integer categoryId, String categoryTitle, String title, String summary, Date createTime, String tags, Integer click, Date updateTime, String headerUrl) {
+    public BlogDomain(Integer blogId, Integer categoryId, String categoryTitle, String title, String summary, Date createTime, Integer click, Date updateTime, String headerUrl) {
         this.blogId = blogId;
         this.categoryId = categoryId;
         this.categoryTitle = categoryTitle;
         this.title = title;
         this.summary = summary;
         this.createTime = createTime;
-        this.tags = tags;
         this.click = click;
         this.updateTime = updateTime;
         this.headerUrl = headerUrl;
@@ -91,13 +89,6 @@ public class BlogDomain {
         this.createTime = createTime;
     }
 
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
 
     public Integer getClick() {
         return click;

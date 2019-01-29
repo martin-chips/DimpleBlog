@@ -201,10 +201,10 @@ public class FileUtil {
                     blog.setCreateTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(line.substring(6)));
                     continue;
                 }
-                if (line.contains("tags")) {
-                    blog.setTags(line.substring(6));
-                    continue;
-                }
+//                if (line.contains("tags")) {
+//                    blog.setTags(line.substring(6));
+//                    continue;
+//                }
                 if (line.contains("photos")) {
                     blog.setHeaderUrl(line.substring(8));
                     continue;

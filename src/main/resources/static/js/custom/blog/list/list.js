@@ -24,17 +24,17 @@ function initTable() {
             field: 'title',
             title: '标题',
             align: 'center',
-            width: 350,
         }, {
-            field: 'tags',
-            title: '标签',
+            field: 'createTime',
+            title: '创建时间',
             align: 'center',
-            width: 200,
+            formatter: function (value, row, index) {
+                return $.common.dateFormat(value);
+            }
         }, {
             field: 'updateTime',
-            title: '最后操作时间',
+            title: '更新时间',
             align: 'center',
-            width: 180,
             formatter: function (value, row, index) {
                 return $.common.dateFormat(value);
             }
@@ -42,7 +42,6 @@ function initTable() {
             field: 'status',
             title: '状态',
             align: 'center',
-            width: 80,
             formatter: function (value, row, index) {
                 if (value == 1) {
                     return '<span class="badge badge-info">发布</span>';
@@ -56,7 +55,6 @@ function initTable() {
             field: 'support',
             title: '推荐',
             align: 'center',
-            width: 80,
             formatter: function (value, row, index) {
                 if (value == true) {
                     return '<span class="badge badge-info">是</span>';
@@ -67,12 +65,10 @@ function initTable() {
         }, {
             field: 'weight',
             title: '权重',
-            width: 80,
             align: 'center',
         }, {
             field: 'click',
             title: '点击数',
-            width: 80,
             align: 'center',
         }, {
             field: 'operate',

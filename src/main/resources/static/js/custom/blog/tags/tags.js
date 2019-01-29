@@ -3,35 +3,49 @@ $(function () {
 });
 
 function initTags() {
-    $.ajax({
-        url: "/api/tags",
-        type: "get",
-        dataType: "json",
-        success: function (result) {
-            console.log(result);
-            if (result.code = web_status.SUCCESS) {
-                var data = result.data;
-                var usedNode = $("#used");
-                var deleteNode = $("#deleted");
-                for (var i = 0; i < data.length; i++) {
-                    var item = data[i];
-                    var classEle = ["warning-element", "success-element", "danger-element", "info-element"];
-                    var element = $("<li></li>");
-                    console.log(classEle[i % 4]);
-                    element.addClass(classEle[i % 4]);
-                    element.append(item.name);
-                    var detail = $("<div></div>");
-                    detail.append("<a href=\"#\" class=\"pull-right btn btn-xs btn-white\">标签</a>");
-                    var time = $("<i></i>");
-                    time.addClass("fa fa-clock-o");
-                    time.append(item.createTime);
-                    detail.append(time);
-                    element.append(detail);
-                    node.append(element);
-                }
-
+    let option = {
+        url: "/api/tag",
+        deleteUrl: "/api/tags/{id}",
+        updateUrl: "/page/blogList/{id}.html",
+        addUrl: "/page/tags/{id}.html",
+        sortName: "createTime",
+        sortOrder: "desc",
+        modalName: "博客",
+        search: false,
+        uniqueId: "blogId",//唯一标识
+        showExport: false,
+        columns: [{
+            checkbox: true
+        }, {
+            field: 'title',
+            title: '标签',
+            align: 'center',
+        }, {
+            field: 'createTime',
+            title: '创建时间',
+            align: 'center',
+            formatter: function (value, row, index) {
+                return $.common.dateFormat(value);
             }
-
+        }, {
+            field: 'count',
+            title: '统计',
+            align: 'center',
+            formatter: function (value, row, index) {
+                return value + "篇";
+            }
+        }, {
+            field: 'operate',
+            title: '操作',
+            align: 'center',
+            formatter: function (value, row, index) {
+                var actions = [];
+                actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.updateFull(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                return actions.join('');
+            }
         }
-    });
+        ],
+    };
+    $.table.init(option);
 }

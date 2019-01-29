@@ -1,8 +1,10 @@
 package com.dimple.modules.endModule.blogManager.service;
 
 import com.dimple.modules.endModule.blogManager.bean.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * @author : Dimple
@@ -19,7 +21,11 @@ public interface TagService {
 
     void updateTag(Tag tag);
 
-    List<Tag> selectTag();
+    Page<Tag> getTag(Pageable pageable, String title, Date startTime, Date endTime);
 
-    Tag selectTagById(Integer id);
+    Tag getTagById(Integer id);
+
+    Tag getTagByTitle(String title);
+
+    String[] getTagTitleByBlogId(Integer id);
 }

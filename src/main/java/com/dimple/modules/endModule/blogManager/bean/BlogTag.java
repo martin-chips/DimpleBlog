@@ -7,22 +7,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.Table;
 
 /**
- * @author : Dimple
- * @version : 1.0
- * @class : TagRepository
- * @description : 标签
- * @date : 12/28/18 20:15
+ * @className: BlogTag
+ * @description:
+ * @auther: Owenb
+ * @date: 01/28/19
+ * @version: 1.0
  */
 @Entity
 @Data
-public class Tag {
+@Table(name = "blog_tag", schema = "dimple_blog", catalog = "")
+public class BlogTag {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String title;
-    private Date createTime;
+    private int id;
+    private Integer blogId;
+    private Integer tagId;
 }

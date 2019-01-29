@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Date;
  */
 @Entity
 @Data
-public class Blog {
+public class Blog implements Serializable {
     @Id
     @Column(name = "blog_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +38,6 @@ public class Blog {
     private Date createTime;
     private Integer status;
     private Boolean support;
-    private String tags;
     private Integer click;
     private Integer weight;
     @Temporal(TemporalType.DATE)
@@ -52,5 +52,6 @@ public class Blog {
 
     @Transient
     private String categoryName;
-
+    @Transient
+    private String[] tags;
 }

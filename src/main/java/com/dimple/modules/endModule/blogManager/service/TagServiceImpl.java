@@ -4,9 +4,15 @@ import com.dimple.modules.endModule.blogManager.bean.Tag;
 import com.dimple.modules.endModule.blogManager.repository.TagRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -53,12 +59,35 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> selectTag() {
-        return tagRepository.findAll();
+    public Page<Tag> getTag(Pageable pageable, String title, Date startTime, Date endTime) {
+        return tagRepository.findAll((Specification<Tag>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            if (StringUtils.isNotBlank(title)) {
+                list.add(criteriaBuilder.like(root.get("title").as(String.class), "%" + title + "%"));
+            }
+            if (startTime != null) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("start_time").as(Date.class), startTime));
+            }
+            if (endTime != null) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("end_time").as(Date.class), endTime));
+            }
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable);
     }
 
     @Override
-    public Tag selectTagById(Integer id) {
+    public Tag getTagById(Integer id) {
         return tagRepository.findTagById(id);
+    }
+
+    @Override
+    public Tag getTagByTitle(String title) {
+        return tagRepository.getTagByTitle(title);
+    }
+
+    @Override
+    public String[] getTagTitleByBlogId(Integer id) {
+        return tagRepository.getTagByBlogId(id);
     }
 }

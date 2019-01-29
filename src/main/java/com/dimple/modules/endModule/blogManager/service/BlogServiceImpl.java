@@ -3,6 +3,7 @@ package com.dimple.modules.endModule.blogManager.service;
 import com.dimple.framework.enums.BlogStatus;
 import com.dimple.modules.endModule.blogManager.bean.Blog;
 import com.dimple.modules.endModule.blogManager.bean.BlogInfo;
+import com.dimple.modules.endModule.blogManager.bean.Tag;
 import com.dimple.modules.endModule.blogManager.repository.BlogInfoRepository;
 import com.dimple.modules.endModule.blogManager.repository.BlogRepository;
 import com.dimple.modules.endModule.blogManager.repository.CategoryRepository;
@@ -20,7 +21,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import static com.dimple.utils.JpaUpdateUtil.copyProperties;
 
@@ -46,6 +52,11 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogInfoRepository blogInfoRepository;
 
+    @Autowired
+    TagService tagService;
+
+    @Autowired
+    BlogTagService blogTagService;
 
     @Override
     public Page<Blog> getAllBlogs(String title, Date startTime, Date endTime, Integer status, Pageable pageable) {
@@ -66,7 +77,8 @@ public class BlogServiceImpl implements BlogService {
             Predicate[] predicates = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(predicates));
         };
-        return blogRepository.findAll(specification, pageable);
+        Page<Blog> all = blogRepository.findAll(specification, pageable);
+        return all;
     }
 
     @Override
@@ -82,18 +94,37 @@ public class BlogServiceImpl implements BlogService {
         blog.setClick(0);
         blog.setSupport(false);
         blog.setWeight(0);
-        //blog.setUpdateTime(new Date());
         if (blog.getStatus() == null) {
             //设置为已发表状态
             blog.setStatus(BlogStatus.PUBLISHED.PUBLISHED.getCode());
         }
-        Blog save = blogRepository.save(blog);
+        Blog blogDB = blogRepository.save(blog);
         //将博客内容同步到blogInfo表中
         BlogInfo blogInfo = new BlogInfo();
-        blogInfo.setContent(save.getContent());
-        blogInfo.setBlogId(save.getBlogId());
+        blogInfo.setContent(blogDB.getContent());
+        blogInfo.setBlogId(blogDB.getBlogId());
+        //设置tags
+        String[] tags = blog.getTags();
+        for (String tag : tags) {
+            Tag tagDB = tagService.getTagByTitle(tag);
+            //判断数据库是否是已经有该Tag了
+            if (tagDB != null) {
+                //设置blog和tag的关系
+                blogTagService.insertBlogTag(blogDB.getBlogId(), tagDB.getId());
+            } else {
+                //说明是新的tag,需要创建tag
+                Tag tempTag = new Tag();
+                tempTag.setTitle(tag);
+                tempTag.setCreateTime(new Date());
+                Tag tagTempDB = tagService.insertTag(tempTag);
+                //设置blog和tag的关系
+                blogTagService.insertBlogTag(blogDB.getBlogId(), tagTempDB.getId());
+            }
+
+        }
+        //保存blog正文内容
         blogInfoRepository.save(blogInfo);
-        return save;
+        return blogDB;
     }
 
 
@@ -114,8 +145,27 @@ public class BlogServiceImpl implements BlogService {
         BlogInfo blogInfo = blogInfoRepository.findByBlogId(blog.getBlogId());
         blogInfo.setContent(blog.getContent());
         copyProperties(blogDB, blog);
+        //设置更新时间
         blog.setUpdateTime(new Date());
-        //设置头像URL与域名与关
+        //删除博文与Tag的所有的关联，重新建立关联
+        blogTagService.deleteByBlogId(blog.getBlogId());
+        //重新建立连接
+        String[] tags = blog.getTags();
+        for (String tag : tags) {
+            //从数据库获取tag
+            Tag tagDB = tagService.getTagByTitle(tag);
+            if (tagDB != null) {
+                //说明是已经存在tag,设置关联关系
+                blogTagService.insertBlogTag(blog.getBlogId(), tagDB.getId());
+            } else {
+                //新建tag
+                Tag tagTemp = new Tag();
+                tagTemp.setCreateTime(new Date());
+                tagTemp.setTitle(tag);
+                Tag tagTempDB = tagService.insertTag(tagTemp);
+                blogTagService.insertBlogTag(blog.getBlogId(), tagTempDB.getId());
+            }
+        }
         return blogRepository.save(blog);
     }
 
@@ -154,8 +204,11 @@ public class BlogServiceImpl implements BlogService {
             return null;
         }
         Blog blog = blogRepository.findByBlogId(id);
+        //设置博客正文信息
         BlogInfo blogInfo = blogInfoRepository.findByBlogId(blog.getBlogId());
         blog.setContent(blogInfo.getContent());
+        //设置博客的标签tag信息
+        blog.setTags(tagService.getTagTitleByBlogId(id));
         return blog;
     }
 
