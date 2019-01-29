@@ -30,11 +30,11 @@ public class OnlineController {
 
     @GetMapping("/page/online.html")
     public String onlineUserPage() {
-        return "";
+        return "monitor/online";
     }
 
     @ApiOperation("在线用户列表")
-    @GetMapping("/api/online/list")
+    @GetMapping("/api/online")
     @ResponseBody
     public Result getOnlineList() {
         List<UserOnline> list = sessionService.getOnlineList();

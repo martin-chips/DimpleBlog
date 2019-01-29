@@ -27,6 +27,8 @@ public class UserOnline implements Serializable {
     //IP
     private String ip;
 
+    private String location;
+
     //状态
     private String status;
 
