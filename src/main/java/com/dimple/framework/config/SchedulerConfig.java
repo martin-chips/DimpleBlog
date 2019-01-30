@@ -1,12 +1,10 @@
 package com.dimple.framework.config;
 
-import org.quartz.Scheduler;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -16,7 +14,7 @@ import java.util.Properties;
  * @date: 01/29/19
  * @version: 1.0
  */
-@Configurable
+@Configuration
 public class SchedulerConfig {
 
     @Bean
@@ -26,7 +24,7 @@ public class SchedulerConfig {
 
         // quartz参数
         Properties prop = new Properties();
-        prop.put("org.quartz.scheduler.instanceName", "scheduler");
+        prop.put("org.quartz.scheduler.instanceName", "DimpleScheduler");
         prop.put("org.quartz.scheduler.instanceId", "AUTO");
         // 线程池配置
         prop.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
@@ -34,11 +32,9 @@ public class SchedulerConfig {
         prop.put("org.quartz.threadPool.threadPriority", "5");
         // JobStore配置
         prop.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX");
+        prop.put("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.StdJDBCDelegate");
         //// 集群配置
         prop.put("org.quartz.jobStore.isClustered", "false");
-        prop.put("org.quartz.jobStore.clusterCheckinInterval", "15000");
-        prop.put("org.quartz.jobStore.maxMisfiresToHandleAtATime", "1");
-        prop.put("org.quartz.jobStore.txIsolationLevelSerializable", "true");
 
         // sqlserver 启用
         //prop.put("org.quartz.jobStore.selectWithLockSQL", "SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME = ?");
@@ -46,11 +42,12 @@ public class SchedulerConfig {
         prop.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
         factory.setQuartzProperties(prop);
 
-        factory.setSchedulerName("scheduler");
+        factory.setSchedulerName("DimpleScheduler");
         // 延时启动
         factory.setStartupDelay(1);
         factory.setApplicationContextSchedulerContextKey("applicationContextKey");
         // 可选，QuartzScheduler
+
         // 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了
         factory.setOverwriteExistingJobs(true);
         // 设置自动启动，默认为true
@@ -58,9 +55,4 @@ public class SchedulerConfig {
         return factory;
     }
 
-    // 创建schedule
-    @Bean(name = "scheduler")
-    public Scheduler scheduler(DataSource dataSource) throws IOException {
-        return schedulerFactoryBean(dataSource).getScheduler();
-    }
 }
