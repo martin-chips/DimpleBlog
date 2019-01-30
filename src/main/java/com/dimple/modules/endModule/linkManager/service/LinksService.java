@@ -1,13 +1,14 @@
 package com.dimple.modules.endModule.linkManager.service;
 
-import com.dimple.modules.frontModule.front.domain.LinkDomain;
-import com.dimple.modules.endModule.linkManager.bean.Link;
 import com.dimple.framework.enums.LinksSearchCode;
 import com.dimple.framework.message.Result;
+import com.dimple.modules.endModule.linkManager.bean.Link;
+import com.dimple.modules.frontModule.front.domain.LinkDomain;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -157,4 +158,20 @@ public interface LinksService {
 
 
     LinkDomain getLinksHanded();
+
+
+    /**
+     * 更改友链的是否是死链
+     *
+     * @param linkId    友链的ID
+     * @param available 要切换的状态
+     */
+    void changeAvailable(Integer linkId, Boolean available);
+
+    List<Link> getAllLink();
+
+    /**
+     * 获取所有的未处理的友链
+     */
+    List<Link> getAllLinkUnhandled();
 }
