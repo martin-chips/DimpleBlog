@@ -1,11 +1,13 @@
 package com.dimple.utils;
 
-import com.dimple.modules.endModule.blogManager.bean.Blog;
-import com.dimple.modules.endModule.blogManager.bean.Category;
-import com.dimple.modules.common.bean.server.FileUtilSetting;
 import com.dimple.framework.exception.file.FileNameLengthOutOfLimitException;
 import com.dimple.framework.exception.file.FileNotExistException;
+import com.dimple.modules.common.bean.server.FileUtilSetting;
+import com.dimple.modules.endModule.blogManager.bean.Blog;
+import com.dimple.modules.endModule.blogManager.bean.Category;
+import com.dimple.modules.endModule.blogManager.service.BlogTagService;
 import com.dimple.modules.endModule.blogManager.service.CategoryService;
+import com.dimple.modules.endModule.blogManager.service.TagService;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -52,6 +54,12 @@ public class FileUtil {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    TagService tagService;
+
+    @Autowired
+    BlogTagService blogTagService;
 
 
     /**
@@ -193,24 +201,37 @@ public class FileUtil {
             String mdContent = "";
 
             while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains("---") || line.contains("password:") || line.contains("top")) {
+                    continue;
+                }
+                //设置标题
                 if (line.contains("title:")) {
-                    blog.setTitle(line.substring(7));
+                    blog.setTitle(line.substring(7).trim());
                     continue;
                 }
-                if (line.contains("date")) {
-                    blog.setCreateTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(line.substring(6)));
+                //设置创建时间
+                if (line.contains("date:")) {
+                    blog.setCreateTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(line.substring(6).trim()));
                     continue;
                 }
-//                if (line.contains("tags")) {
-//                    blog.setTags(line.substring(6));
-//                    continue;
-//                }
-                if (line.contains("photos")) {
-                    blog.setHeaderUrl(line.substring(8));
+                if (line.contains("tags: ")) {
+                    String tags = line.substring(6).trim();
+                    if (tags.contains("[") && tags.contains("]")) {
+                        String substring = tags.substring(1, tags.length() - 1);
+                        String[] split = substring.split(",");
+                        blog.setTags(split);
+                    } else {
+                        blog.setTags(new String[]{tags});
+                    }
                     continue;
                 }
-                if (line.contains("categories")) {
-                    String title = line.substring(11);
+                if (line.contains("photos:")) {
+                    blog.setHeaderUrl(line.substring(8).trim());
+                    continue;
+                }
+                if (line.contains("categories:")) {
+                    String title = line.substring(11).trim();
+                    //检测数据库中是否有相关数据
                     Category categoryByTitle = categoryService.getCategoryByTitle(title);
                     if (categoryByTitle == null) {
                         Category category = new Category();
