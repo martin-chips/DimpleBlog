@@ -1,4 +1,4 @@
-package com.dimple.modules.endModule.controller;
+package com.dimple.modules.endModule.systemMonitor.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -249,4 +249,19 @@ public class LinksServiceImpl implements LinksService {
 
         return null;
     }
+
+    @Override
+    public void changeAvailable(Integer linkId, Boolean available) {
+
+    }
+
+    @Override
+    public List<Link> getAllLink() {
+        return linkRepository.getAllLink();
+    }
+
+    @Override
+    public List<Link> getAllLinkUnhandled() {
+        return linkRepository.getAllByHandleFalse();
+    }
 }

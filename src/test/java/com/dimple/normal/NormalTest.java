@@ -3,6 +3,13 @@ package com.dimple.normal;
 import com.dimple.utils.BaiduPushUtil;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
 /**
  * @author : Dimple
  * @version : 1.0
@@ -31,5 +38,36 @@ public class NormalTest {
         };
         String post = BaiduPushUtil.Post("http://data.zz.baidu.com/urls?site=www.bianxiaofeng.com&token=LqRHUkKxK89qudvA", param);
         System.out.println(post);
+    }
+
+
+    @Test
+    public void getBaiduHTML() {
+        try {
+            URL url = new URL("https://blog.csdn.net/qq_32454537/article/details/80686087");
+            URLConnection URLconnection = url.openConnection();
+            HttpURLConnection httpConnection = (HttpURLConnection) URLconnection;
+            int responseCode = httpConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                System.err.println("成功");
+                InputStream in = httpConnection.getInputStream();
+                InputStreamReader isr = new InputStreamReader(in);
+                BufferedReader bufr = new BufferedReader(isr);
+                String str;
+                while ((str = bufr.readLine()) != null) {
+                    System.out.println(str);
+                    if (str.contains("边小丰")) {
+                        System.out.println("找到了");
+                        break;
+
+                    }
+                }
+                bufr.close();
+            } else {
+                System.err.println("失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

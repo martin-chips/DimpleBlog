@@ -1,4 +1,4 @@
-package com.dimple.modules.endModule.visitorManager.bean;
+package com.dimple.modules.endModule.systemMonitor.bean;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
-package com.dimple.modules.endModule.visitorManager.controller;
+package com.dimple.modules.endModule.systemMonitor.controller;
 
-import com.dimple.modules.endModule.visitorManager.bean.UserOnline;
+import com.dimple.modules.endModule.systemMonitor.bean.UserOnline;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.modules.common.service.SessionService;

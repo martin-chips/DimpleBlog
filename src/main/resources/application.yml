@@ -63,6 +63,7 @@ spring:
 
 #自定义配置
 dimple:
+  localUrl: www.bianxiaofeng.com
   #图片文件上传位置指定
   ImgUploadDir:
     windows: D:/rentHouse/
@@ -127,3 +128,6 @@ dimple:
       expireTime: 30
       #检查数据路有效性的间隔,单位min
       validationInterval: 10
+
+server:
+  port: 80

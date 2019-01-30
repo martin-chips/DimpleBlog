@@ -33,4 +33,13 @@ public interface LinkRepository extends JpaRepository<Link, Integer>, JpaSpecifi
     @Query(value = "select new com.dimple.modules.frontModule.front.domain.LinkDomain(l.linkId,l.title,l.url,l.description,l.headerUrl) from  Link as l where l.display=true ")
     List<LinkDomain> getAllLinkHanded();
 
+    @Query("from Link ")
+    List<Link> getAllLink();
+
+    /**
+     * 获取没有处理的友链
+     *
+     * @return
+     */
+    List<Link> getAllByHandleFalse();
 }

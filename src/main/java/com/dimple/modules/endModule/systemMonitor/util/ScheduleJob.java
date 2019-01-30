@@ -44,13 +44,13 @@ public class ScheduleJob extends QuartzJobBean {
         jobLog.setMethodParams(job.getMethodParams());
         jobLog.setCreateTime(new Date());
 
-        JobLogService jobLogService = (JobLogService) SpringUtil.getBean(JobLogService.class);
+        JobLogService jobLogService = SpringUtil.getBean(JobLogService.class);
 
         long startTime = System.currentTimeMillis();
         try {
             // 执行任务
             log.info("任务开始执行 - 名称：{} 方法：{}", job.getJobName(), job.getMethodName());
-            ScheduleRunnable task = new ScheduleRunnable(job.getJobName(), job.getMethodName(), job.getMethodParams());
+            ScheduleThread task = new ScheduleThread(job.getJobName(), job.getMethodName(), job.getMethodParams());
             Future<?> future = executor.submit(task);
             future.get();
             long times = System.currentTimeMillis() - startTime;

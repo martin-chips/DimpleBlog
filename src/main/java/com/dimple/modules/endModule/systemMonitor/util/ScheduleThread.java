@@ -1,27 +1,27 @@
 package com.dimple.modules.endModule.systemMonitor.util;
 
 import com.dimple.utils.SpringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * @className: ScheduleRunnable
+ * @className: ScheduleThread
  * @description: 执行定时任务
  * @auther: Owenb
  * @date: 01/29/19
  * @version: 1.0
  */
-public class ScheduleRunnable implements Runnable {
-
+@Slf4j
+public class ScheduleThread extends Thread {
 
     private Object target;
     private Method method;
     private String params;
 
-    public ScheduleRunnable(String beanName, String methodName, String params) throws NoSuchMethodException, SecurityException {
+    public ScheduleThread(String beanName, String methodName, String params) throws NoSuchMethodException, SecurityException {
         this.target = SpringUtil.getBean(beanName);
         //设置参数
         this.params = params;
@@ -44,8 +44,9 @@ public class ScheduleRunnable implements Runnable {
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Throwable cause = e.getCause();
+            throw new RuntimeException(cause.getMessage());
         }
     }
 }

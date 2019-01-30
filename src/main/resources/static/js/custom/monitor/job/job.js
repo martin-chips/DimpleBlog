@@ -73,6 +73,9 @@ function initTable() {
                 return $.common.dateFormat(value);
             }
         }, {
+            field: 'description',
+            title: '描述',
+        }, {
             title: '操作',
             align: 'center',
             formatter: function (value, row, index) {
@@ -120,3 +123,4 @@ function start(jobId) {
         $.operate.post("/api/job/" + jobId + "/" + 0);
     });
 }
+
