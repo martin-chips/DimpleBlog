@@ -33,7 +33,7 @@
                 </li>
                 <li>
                     <div class="user-panel">
-                        <a class="menuItem" title="个人中心" th:href="@{/system/user/profile}">
+                        <a class="J_menuItem" title="个人中心" th:href="@{/system/user/profile.html}">
                             <div class="hide" th:text="个人中心"></div>
                             <div class="pull-left image">
                                 <img alt="image" class="img-circle" src="/img/profile_small.jpg"/>
@@ -130,16 +130,16 @@
                         <li><a class="J_menuItem" href="/page/linkList.html">友链列表</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a class="J_menuItem"><i class="fa fa-picture-o"></i> <span
-                            class="nav-label">资源管理</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/localPicture">软件分享</a>
-                        </li>
-                        <li><a class="J_menuItem" href="/qiniuyun">学习资料分享</a>
-                        </li>
-                    </ul>
-                </li>
+                <!--<li>-->
+                    <!--<a class="J_menuItem"><i class="fa fa-picture-o"></i> <span-->
+                            <!--class="nav-label">资源管理</span><span class="fa arrow"></span></a>-->
+                    <!--<ul class="nav nav-second-level">-->
+                        <!--<li><a class="J_menuItem" href="/localPicture">软件分享</a>-->
+                        <!--</li>-->
+                        <!--<li><a class="J_menuItem" href="/qiniuyun">学习资料分享</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
                 <li>
                     <a><i class="fa fa-picture-o"></i> <span class="nav-label">文件管理</span><span
                             class="fa arrow"></span></a>
@@ -224,11 +224,11 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li class="mt5">
-                                <a th:href="@{/system/user/profile}" class="menuItem">
+                                <a th:href="@{/system/user/profile.html}" class="J_menuItem">
                                     <i class="fa fa-user"></i> 个人中心</a>
                             </li>
                             <li>
-                                <a onclick="resetPwd()" class="menuItem">
+                                <a onclick="resetPwd()" class="J_menuItem">
                                     <i class="fa fa-key"></i> 修改密码</a>
                             </li>
                             <li class="divider"></li>

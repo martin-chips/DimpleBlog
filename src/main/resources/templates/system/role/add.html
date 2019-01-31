@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="common :: common-head"></head>
-<link th:href="@{/plugin/jquery-ztree/3.5/css/metro/zTreeStyle.css}"
+<link th:href="@{/plugin/jquery/jquery-ztree/css/metro/zTreeStyle.css}"
       href="/static/plugin/jquery/jquery-ztree/css/metro/zTreeStyle.css" rel="stylesheet"/>
 
 <body class="white-bg">
@@ -41,7 +41,7 @@
     </form>
 </div>
 <div th:include="/common :: common-footer"></div>
-<script th:src="@{/plugin/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+<script th:src="@{/plugin/jquery/jquery-ztree/js/jquery.ztree.all-3.5.js}"></script>
 <script>
     $(function () {
         $("#roleAddForm").formValidate({

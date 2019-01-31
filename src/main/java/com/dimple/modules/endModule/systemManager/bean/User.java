@@ -36,6 +36,8 @@ public class User implements Serializable {
     private String phone;
     private Byte sex;
     private Date createTime;
+    private String group;
+    private Boolean admin;
     @Transient
     private Integer roleId;
 

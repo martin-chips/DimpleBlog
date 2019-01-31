@@ -1,29 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--360浏览器优先以webkit内核解析-->
-    <title>个人信息</title>
-    <link rel="shortcut icon" href="favicon.ico">
-    <!-- 网站图标 -->
-    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-    <link href="/css/animate.css" rel="stylesheet">
-    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
-    <!-- 全局js -->
-    <script src="/js/jquery.min.js?v=2.1.4"></script>
-    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="/js/plugins/layer/layer.min.js"></script>
 
-</head>
+<head th:include="common :: common-head"></head>
 
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
     <div class="row animated fadeInRight">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>个人信息</h5>
@@ -45,18 +28,28 @@
                         <div class="text-center">
                             <img alt="image"
                                  class="img-circle m-t-xs img-responsive" src="/img/profile.jpg">
-                            <div class="m-t-xs font-bold">192.168.10.1</div>
+                            <div class="m-t-xs font-bold" th:text="${ip}"></div>
                         </div>
                     </div>
                     <div class="col-sm-8">
-                        <h3><strong>Administrator</strong></h3>
-                        <p><i class="fa fa-user"></i> 边小丰 / 管理员
+                        <h3><strong th:text="${userType}">Administrator</strong></h3>
+                        <p><i class="fa fa-user"></i> <span th:text="${user.userName}"></span></p>
 
-                        <p><i class="fa fa-phone"></i> 18582872818</p>
-                        <p><i class="fa fa-group"></i> 成都大学 / SYNNEX</p>
-                        <p><i class="fa fa-transgender"></i> 男</p>
-                        <p><i class="fa fa-envelope-o"></i> bianxiaofeng@sohu.com</p>
-                        <p><i class="fa fa-calendar"></i> 2018年11月26日</p>
+                        <p><i class="fa fa-phone"></i>
+                            <span th:text="${user.phone}"></span>
+                        </p>
+                        <p><i class="fa fa-group"></i>
+                            <span th:text="${user.group}"></span>
+                        </p>
+                        <p th:if="${user.sex!=null}"><i class="fa fa-transgender"></i>
+                            <span th:text="${user.sex==1?'男':'女'}"></span>
+                        </p>
+                        <p><i class="fa fa-envelope-o"></i>
+                            <span th:text="${user.email}"></span>
+                        </p>
+                        <p><i class="fa fa-calendar"></i>
+                            <span th:text="${user.createTime}"></span>
+                        </p>
                     </div>
                     <div class="clearfix"></div>
                     </a>
@@ -65,6 +58,7 @@
         </div>
     </div>
 </div>
+<div th:include="common :: common-footer"></div>
 
 <script>
     var userId = 1;
