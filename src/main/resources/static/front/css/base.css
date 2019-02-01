@@ -432,3 +432,4 @@ margin: auto }
 .lists-navigator ol li {display: inline-block;color: #5f5f5f}
 .lists-navigator ol li a {font-size: 14px;padding: 0 20px;color: #5f5f5f}
 .lists-navigator ol li.current a {color: #6fa3ef}
+.font16 {font-size: 16px;}

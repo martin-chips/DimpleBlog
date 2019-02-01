@@ -4,7 +4,7 @@
 <body>
 <div th:include="front/common :: front-header"></div>
 
-
+<link th:href="@{/front/plugin/sweetalert/sweetalert2.css}" rel="stylesheet">
 <script src="/static/front/js/index.js" th:src="@{/front/js/index.js}"></script>
 
 <article>
@@ -75,7 +75,7 @@
         </div>
 
         <div class="zhuanti whitebg" data-scroll-reveal="enter bottom over 1s">
-            <h2 class="htitle"><span class="hnav"><a href="/">查看更多<i class="fa fa-plus-circle"></i></a></span>站长推荐</h2>
+            <h2 class="htitle"><span class="hnav"><a href="/">查看更多</a></span>站长推荐</h2>
             <ul>
                 <li th:each="support:${supportBlogs}">
                     <i class="ztpic">
@@ -90,7 +90,7 @@
             </ul>
         </div>
         <div class="whitebg bloglist">
-            <h2 class="htitle"><span class="hnav"><a href="/">查看更多<i class="fa fa-plus-circle"></i></a></span>最新博文</h2>
+            <h2 class="htitle"><span class="hnav"><a href="/technology.html">查看更多<i class="fa fa-mail-forward>"></i></a></span>最新博文</h2>
             <ul>
                 <li data-scroll-reveal="enter bottom over 1s" class=" whitebg" th:each="item:${newestBlog}">
                     <h3 class="blogtitle">
@@ -124,7 +124,7 @@
             <p>现居：四川省-成都市</p>
             <p>Email：bianxiaofeng@sohu.com</p>
             <ul class="linkmore">
-                <li><a href="http://www.biaoxiaofeng.com" target="_blank" class="iconfont icon-zhuye" title="网站地址"></a>
+                <li><a href="/" target="_blank" class="iconfont icon-zhuye" title="网站地址"></a>
                 </li>
                 <li><a href="bianxiaofeng@sohu.com"
                        target="_blank"
@@ -133,7 +133,7 @@
                        class="iconfont icon---"
                        title="QQ联系我"></a></li>
                 <li id="weixin"><a href="#" target="_blank" class="iconfont icon-weixin" title="添加我的微信"></a><i><img
-                        src="/front/images/wx.png"></i></li>
+                ></i></li>
             </ul>
         </div>
 
@@ -142,9 +142,30 @@
 
     </div>
 </article>
+<script th:src="@{/front/plugin/sweetalert/sweetalert2.min.js}"></script>
 
 <div th:include="front/common :: front-footer"></div>
+<script>
+    $(function () {
+        Swal.fire({
+            title: '<strong>站长提示</strong>',
+            type: 'info',
+            html:
+                '您好，欢迎访问边小丰的个人博客网站！<br><strong>非常抱歉，由于备案问题，原存储在七牛云的图片全部失效，备案正常后会全部恢复正常！感谢您的理解！</strong> <br>' +
+                '本站源码托管在：<a href="https://github.com/DimpleFeng/DimpleBlog">Github<a/> ，' +
+                '如果觉得不错，欢迎fork和star',
+            showCloseButton: true,
+            focusConfirm: false,
+            confirmButtonText:
+                '<i class="fa fa-thumbs-up"></i> Great!',
+            confirmButtonAriaLabel: 'Thumbs up, great!',
+            cancelButtonText:
+                '<i class="fa fa-thumbs-down"></i>',
+            cancelButtonAriaLabel: 'Thumbs down',
+        })
 
+    });
+</script>
 </body>
 
 </html>

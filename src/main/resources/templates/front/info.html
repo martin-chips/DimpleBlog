@@ -59,7 +59,7 @@
             </section>
         </div>
 
-        <div class="whitebg">
+        <div class="whitebg" data-scroll-reveal="enter bottom over 1s">
             <div class="nextinfo">
                 <p th:if="${navigation['previousBlog']!=null}">上一篇：
                     <a th:href="${'/view/'+navigation['previousBlog'].blogId}"
@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <div class="whitebg">
+        <div class="whitebg" data-scroll-reveal="enter bottom over 1s">
             <h2 class="htitle">相关文章</h2>
             <ul class="otherlink">
                 <li th:each="blog:${relatedBlog}">
@@ -83,7 +83,7 @@
                 </li>
             </ul>
         </div>
-        <div class="whitebg gbook">
+        <div class="whitebg gbook" data-scroll-reveal="enter bottom over 1s">
             <h2 class="htitle">文章评论</h2>
             <ul>
                 <!--PC和WAP自适应版-->

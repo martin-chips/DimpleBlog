@@ -7,7 +7,7 @@
     <meta name="keywords" content="blog"/>
     <meta name="description" content="blog"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/plugin/font-awesome/font-awesome.min.css}" rel="stylesheet">
     <link href="/static/front/css/base.css" th:href="@{/front/css/base.css}" rel="stylesheet">
     <link href="/static/front/css/m.css" th:href="@{/front/css/m.css}" rel="stylesheet">
     <script src="/static/front/js/jquery-1.8.3.min.js" th:src="@{/front/js/jquery-1.8.3.min.js}"></script>
@@ -21,9 +21,9 @@
 
 
 <div th:fragment="front-side">
-    <div class="whitebg">
-        <div id="calendar" class="calendar"></div>
-    </div>
+    <!--<div class="whitebg">-->
+    <!--<div id="calendar" class="calendar"></div>-->
+    <!--</div>-->
     <div class="whitebg notice " data-scroll-reveal="enter bottom over 1s">
         <h2 class="htitle">最近更新</h2>
         <ul id="newestUpdateBlog">
@@ -91,11 +91,11 @@
     <header id="header">
         <div class="navbox">
             <h2 id="mnavh"><span class="navicon"></span></h2>
-            <div class="logo"><a href="/">Dimple的个人博客</a></div>
+            <div class="logo"><a href="/">Dimple的个人博客 | <font class="font16">我现在没空，忙着优秀</font></a></div>
             <nav>
                 <ul id="starlist">
-                    <li><a href="/"><i class="fa fa-bookmark"></i>&nbsp网站首页</a></li>
-                    <li class="menu"><a href="/technology.html">技术博客</a>
+                    <li><a href="/"><i class="fa fa-home"></i>&nbsp网站首页</a></li>
+                    <li class="menu"><a href="/technology.html"> <i class="fa fa-spinner"></i>&nbsp技术博客</a>
                         <ul class="sub blogCategory">
                             <script>
                                 //获取所有的分类
@@ -131,14 +131,14 @@
                     <!--</ul>-->
                     <!--<span></span>-->
                     <!--</li>-->
-                    <li><a href="/archive.html">归档</a></li>
-                    <li><a href="/link.html">友链</a></li>
-                    <li><a href="/about.html">关于我</a></li>
-                    <li><a href="/leaveComment.html">留言</a></li>
-                    <li><a href="/page/index.html" target="_blank">后台管理首页</a></li>
+                    <li><a href="/archive.html"><i class="fa fa-folder-open "></i>&nbsp归档</a></li>
+                    <li><a href="/link.html"><i class="fa fa-at"></i>&nbsp友链</a></li>
+                    <li><a href="/about.html"><i class="fa fa-bookmark-o"></i>&nbsp关于我</a></li>
+                    <li><a href="/leaveComment.html"><i class="fa fa-commenting-o"></i>&nbsp留言</a></li>
+                    <li><a href="/page/index.html" target="_blank"><i class="fa fa-sign-in"></i>&nbsp登录</a></li>
                 </ul>
             </nav>
-            <div class="searchico"></div>
+            <!--<div class="searchico"></div>-->
         </div>
     </header>
     <div class="searchbox">

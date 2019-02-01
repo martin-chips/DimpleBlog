@@ -4,6 +4,10 @@
 <head th:include="common :: common-head-index"></head>
 <link href="/static/css/skin-blue.css" th:href="@{/css/skin-blue.css}" rel="stylesheet">
 <body class="fixed-sidebar full-height-layout gray-bg skin-blue" style="overflow:hidden">
+<link th:href="@{/front/plugin/sweetalert/sweetalert2.css}" rel="stylesheet">
+<script th:src="@{/front/plugin/sweetalert/sweetalert2.min.js}"></script>
+
+
 <style type="text/css">
     .nav > li:hover .dropdown-menu {
         display: block;
@@ -54,7 +58,7 @@
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fa fa-columns"></i>
+                        <i class="fa  fa-pencil-square-o"></i>
                         <span class="nav-label">博客管理</span>
                         <span class="fa arrow"></span>
                     </a>
@@ -75,7 +79,7 @@
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fa fa fa-bar-chart-o"></i>
+                        <i class="fa fa-line-chart"></i>
                         <span class="nav-label">统计图表</span>
                         <span class="fa arrow"></span>
                     </a>
@@ -131,14 +135,14 @@
                     </ul>
                 </li>
                 <!--<li>-->
-                    <!--<a class="J_menuItem"><i class="fa fa-picture-o"></i> <span-->
-                            <!--class="nav-label">资源管理</span><span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li><a class="J_menuItem" href="/localPicture">软件分享</a>-->
-                        <!--</li>-->
-                        <!--<li><a class="J_menuItem" href="/qiniuyun">学习资料分享</a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
+                <!--<a class="J_menuItem"><i class="fa fa-picture-o"></i> <span-->
+                <!--class="nav-label">资源管理</span><span class="fa arrow"></span></a>-->
+                <!--<ul class="nav nav-second-level">-->
+                <!--<li><a class="J_menuItem" href="/localPicture">软件分享</a>-->
+                <!--</li>-->
+                <!--<li><a class="J_menuItem" href="/qiniuyun">学习资料分享</a>-->
+                <!--</li>-->
+                <!--</ul>-->
                 <!--</li>-->
                 <li>
                     <a><i class="fa fa-picture-o"></i> <span class="nav-label">文件管理</span><span
@@ -151,11 +155,11 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="J_menuItem" href="http://changyan.kuaizhan.com/"><i class="fa fa-magic"></i> <span
+                    <a class="J_menuItem" href="http://changyan.kuaizhan.com/"><i class="fa fa-comment-o"></i> <span
                             class="nav-label">畅言评论</span></a>
                 </li>
                 <li>
-                    <a><i class="fa fa-picture-o"></i> <span class="nav-label">系统监控</span><span
+                    <a><i class="fa fa-video-camera"></i> <span class="nav-label">系统监控</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/page/online.html">在线用户</a>
@@ -169,7 +173,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a><i class="fa fa-picture-o"></i> <span class="nav-label">系统管理</span><span
+                    <a><i class="fa fa-cogs"></i> <span class="nav-label">系统管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/page/user.html">用户管理</a>
@@ -181,7 +185,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a><i class="fa fa-picture-o"></i> <span class="nav-label">前台页面设置</span><span
+                    <a><i class="fa fa-window-restore"></i> <span class="nav-label">前台页面设置</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/page/signature.html">签名档设置</a>
@@ -193,7 +197,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a><i class="fa fa-picture-o"></i> <span class="nav-label">实验室</span><span
+                    <a><i class="fa fa-magnet"></i> <span class="nav-label">实验室</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/page/experiment/md.html">批量导入MD博文</a>
@@ -284,12 +288,6 @@
     </div>
     <!--右侧部分结束-->
 
-    <script>
-        // $(function () {
-        //     $(".J_iframe").attr("src", "/page/dashboard.html");
-        //
-        // });
-    </script>
 
 </div>
 </body>

@@ -130,6 +130,7 @@ public class ShiroConfig {
 
         //拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        //静态资源不拦截
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/fonts/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
@@ -138,19 +139,26 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/front/**", "anon");
 
-        //加入验证码不拦截
-        filterChainDefinitionMap.put("/api/kaptcha", "anon");
+
         filterChainDefinitionMap.put("/html/**", "anon");
         //加入plugin下面的不拦截
         filterChainDefinitionMap.put("/plugin/**", "anon");
+
         //前端界面不拦截
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/front/**", "anon");
         filterChainDefinitionMap.put("/about.html", "anon");
+        filterChainDefinitionMap.put("/link.html", "anon");
+        filterChainDefinitionMap.put("/archive.html", "anon");
         filterChainDefinitionMap.put("/technology.html", "anon");
+        filterChainDefinitionMap.put("/technology/**", "anon");
+        filterChainDefinitionMap.put("/leaveComment.html", "anon");
+        filterChainDefinitionMap.put("/category/**", "anon");
+        filterChainDefinitionMap.put("/static/**", "anon");
         //前台调用API不拦截
         filterChainDefinitionMap.put("/public/api/**", "anon");
         filterChainDefinitionMap.put("/view/**", "anon");
+
         //退出
         filterChainDefinitionMap.put("/logout", "logout");
         //授权验证不拦截
