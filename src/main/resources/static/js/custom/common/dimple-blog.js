@@ -107,7 +107,7 @@
                 $.post($.table._options.exportUrl, $("#" + currentId).serializeArray(), function (result) {
                     if (result.code == web_status.SUCCESS) {
                         //todo 修改
-                        window.location.href = ctx + "common/download?fileName=" + result.msg + "&delete=" + true;
+                        window.location.href = ctx + "CommonModule/download?fileName=" + result.msg + "&delete=" + true;
                     } else {
                         $.modal.alertError(result.msg);
                     }

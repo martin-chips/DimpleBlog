@@ -1,7 +1,7 @@
 package com.dimple.service;
 
-import com.dimple.modules.endModule.frontSetting.bean.Setting;
-import com.dimple.modules.common.service.SettingService;
+import com.dimple.modules.BackStageModule.FrontSetting.bean.Setting;
+import com.dimple.modules.CommonModule.service.SettingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

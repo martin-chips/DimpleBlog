@@ -1037,7 +1037,7 @@
     }
 
     /**
-     * returns common ancestor node between two nodes.
+     * returns CommonModule ancestor node between two nodes.
      *
      * @param {Node} nodeA
      * @param {Node} nodeB
@@ -7388,7 +7388,7 @@
                 'statusbar': Statusbar,
                 'fullscreen': Fullscreen,
                 'handle': Handle,
-                // FIXME: HintPopover must be front of autolink
+                // FIXME: HintPopover must be FrontDeskModule of autolink
                 //  - Script error about range when Enter key is pressed on hint popover
                 'hintPopover': HintPopover,
                 'autoLink': AutoLink,

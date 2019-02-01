@@ -1,5 +1,5 @@
 /*
- * blueimp gallery Demo JS
+ * blueimp Gallery Demo JS
  * https://github.com/blueimp/Gallery
  *
  * Copyright 2013, Sebastian Tschan
@@ -36,21 +36,21 @@ $(function () {
         .append($('<img>').prop('src', baseUrl + '_s.jpg'))
         .prop('href', baseUrl + '_b.jpg')
         .prop('title', photo.title)
-        .attr('data-gallery', '')
+        .attr('data-Gallery', '')
         .appendTo(linksContainer)
       carouselLinks.push({
         href: baseUrl + '_c.jpg',
         title: photo.title
       })
     })
-    // Initialize the gallery as image carousel:
+    // Initialize the Gallery as image carousel:
     blueimp.Gallery(carouselLinks, {
       container: '#blueimp-image-carousel',
       carousel: true
     })
   })
 
-  // Initialize the gallery as video carousel:
+  // Initialize the Gallery as video carousel:
   blueimp.Gallery([
     {
       title: 'Sintel',

@@ -1,6 +1,6 @@
 package com.dimple.framework.log;
 
-import com.dimple.modules.endModule.visitorManager.bean.Visitor;
+import com.dimple.modules.BackStageModule.VisitorManager.bean.Visitor;
 import com.dimple.framework.log.annotation.VLog;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.ShiroUtil;

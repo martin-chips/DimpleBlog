@@ -117,6 +117,6 @@ CodeMirror.defineMode("commonlisp", function (config) {
   };
 });
 
-CodeMirror.defineMIME("text/x-common-lisp", "commonlisp");
+CodeMirror.defineMIME("text/x-CommonModule-lisp", "commonlisp");
 
 });

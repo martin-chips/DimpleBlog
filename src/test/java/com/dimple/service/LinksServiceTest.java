@@ -1,6 +1,6 @@
 package com.dimple.service;
 
-import com.dimple.modules.endModule.linkManager.service.LinksService;
+import com.dimple.modules.BackStageModule.LinkManager.service.LinksService;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

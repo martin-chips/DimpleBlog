@@ -1,5 +1,5 @@
 /*
- * blueimp gallery Video Factory JS
+ * blueimp Gallery Video Factory JS
  * https://github.com/blueimp/Gallery
  *
  * Copyright 2013, Sebastian Tschan

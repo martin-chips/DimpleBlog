@@ -1,6 +1,6 @@
 package com.dimple.repository;
 
-import com.dimple.modules.endModule.blogManager.repository.TagRepository;
+import com.dimple.modules.BackStageModule.BlogManager.repository.TagRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

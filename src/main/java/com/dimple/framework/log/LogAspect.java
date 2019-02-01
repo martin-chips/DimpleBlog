@@ -1,8 +1,8 @@
 package com.dimple.framework.log;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dimple.modules.endModule.logManager.bean.OperateLog;
-import com.dimple.modules.endModule.systemManager.bean.User;
+import com.dimple.modules.BackStageModule.LogManager.bean.OperateLog;
+import com.dimple.modules.BackStageModule.SystemManager.bean.User;
 import com.dimple.framework.constant.Status;
 import com.dimple.framework.log.annotation.Log;
 import com.dimple.utils.IpUtil;

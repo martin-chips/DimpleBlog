@@ -1,7 +1,7 @@
 package com.dimple.repository;
 
-import com.dimple.modules.frontModule.front.domain.LinkDomain;
-import com.dimple.modules.endModule.linkManager.repository.LinkRepository;
+import com.dimple.modules.FrontDeskModule.domain.LinkDomain;
+import com.dimple.modules.BackStageModule.LinkManager.repository.LinkRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

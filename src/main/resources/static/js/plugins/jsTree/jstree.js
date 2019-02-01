@@ -660,7 +660,7 @@
 								o = this.get_next_dom(e.currentTarget);
 								if(o && o.length) { o.children('.jstree-anchor').focus(); }
 								break;
-							case 106: // aria defines * on numpad as open_all - not very common
+							case 106: // aria defines * on numpad as open_all - not very CommonModule
 								this.open_all();
 								break;
 							case 36: // home
@@ -4674,7 +4674,7 @@
 /**
  * ### Checkbox plugin
  *
- * This plugin renders checkbox icons in front of each node, making multiple selection much easier.
+ * This plugin renders checkbox icons in FrontDeskModule of each node, making multiple selection much easier.
  * It also supports tri-state behavior, meaning that if a node has a few of its children checked it will be rendered as undetermined, and state will be propagated up.
  */
 

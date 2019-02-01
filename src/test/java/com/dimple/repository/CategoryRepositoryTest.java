@@ -1,7 +1,7 @@
 package com.dimple.repository;
 
-import com.dimple.modules.endModule.blogManager.repository.CategoryRepository;
-import com.dimple.modules.frontModule.front.domain.CategoryDomain;
+import com.dimple.modules.BackStageModule.BlogManager.repository.CategoryRepository;
+import com.dimple.modules.FrontDeskModule.domain.CategoryDomain;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,5 @@
 /*
- * blueimp gallery Fullscreen JS
+ * blueimp Gallery Fullscreen JS
  * https://github.com/blueimp/Gallery
  *
  * Copyright 2013, Sebastian Tschan
@@ -24,7 +24,7 @@
   'use strict'
 
   $.extend(Gallery.prototype.options, {
-    // Defines if the gallery should open in fullscreen mode:
+    // Defines if the Gallery should open in fullscreen mode:
     fullScreen: false
   })
 

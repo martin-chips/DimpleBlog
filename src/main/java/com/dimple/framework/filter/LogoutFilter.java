@@ -1,6 +1,6 @@
 package com.dimple.framework.filter;
 
-import com.dimple.modules.endModule.systemManager.bean.User;
+import com.dimple.modules.BackStageModule.SystemManager.bean.User;
 import com.dimple.framework.constant.Status;
 import com.dimple.framework.log.AsyncHelper;
 import com.dimple.framework.log.AsyncManager;

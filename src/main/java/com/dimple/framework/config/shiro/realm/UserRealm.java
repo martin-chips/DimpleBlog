@@ -1,23 +1,23 @@
 package com.dimple.framework.config.shiro.realm;
 
-import com.dimple.modules.endModule.systemManager.bean.Permission;
-import com.dimple.modules.endModule.systemManager.bean.Role;
-import com.dimple.modules.endModule.systemManager.bean.User;
 import com.dimple.framework.exception.user.UserException;
-import com.dimple.modules.endModule.systemManager.service.PermissionService;
-import com.dimple.modules.endModule.systemManager.service.RoleService;
-import com.dimple.modules.endModule.systemManager.service.UserService;
+import com.dimple.modules.BackStageModule.SystemManager.bean.User;
+import com.dimple.modules.BackStageModule.SystemManager.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @ClassName: UserRealm
@@ -31,12 +31,7 @@ public class UserRealm extends AuthorizingRealm {
 
 
     @Autowired
-    @Lazy //就是这里，必须延时加载，根本原因是bean实例化的顺序上，shiro的bean必须要先实例化，否则@Cacheable注解无效，理论上可以用@Order控制顺序
-            UserService userService;
-    @Autowired
-    RoleService roleService;
-    @Autowired
-    PermissionService permissionService;
+    AuthService authService;
 
     /**
      * 授权
@@ -48,12 +43,17 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         User user = (User) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        List<Role> roles = roleService.findByUserId(user.getUserId());
-        for (Role role : roles) {
-            info.addRole(role.getRoleName());
-            for (Permission permission : permissionService.findByRoleId(role.getRoleId())) {
-                info.addStringPermission(permission.getName());
-            }
+        //如果是超级管理员，就授予所有权限
+        if (user.getAdmin()) {
+            info.addRole("admin");
+            info.addStringPermission("*:*:*");
+        } else {
+            //设置角色
+            Set<String> roleNames = authService.getRoleNameByUserId(user.getUserId());
+            info.setRoles(roleNames);
+            //设置权限
+            Set<String> permissions = authService.getPermissionByUserId(user.getUserId());
+            info.setStringPermissions(permissions);
         }
         return info;
     }
@@ -68,9 +68,8 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws UserException {
         String loginId = (String) token.getPrincipal();
-        User userDB = userService.findByUserLoginId(loginId);
-
-
+        //获取User信息
+        User userDB = authService.getUserByLoginId(loginId);
         if (userDB == null) {
             throw new UnknownAccountException();
         }

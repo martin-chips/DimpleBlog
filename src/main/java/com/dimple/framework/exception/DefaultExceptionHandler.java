@@ -3,12 +3,17 @@ package com.dimple.framework.exception;
 import com.dimple.framework.exception.user.UserException;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
+import com.dimple.utils.PermissionUntil;
+import com.dimple.utils.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -58,6 +63,22 @@ public class DefaultExceptionHandler {
         return ResultUtil.error(11, "服务器错误");
     }
 
+    /**
+     * 权限校验失败
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(UnauthorizedException.class)
+    public Object unauthorizedException(Exception e, HttpServletRequest request) {
+        log.error(e.getMessage());
+        //判断下当前用户的访问环境
+        if (ServletUtil.isAjaxRequest(request)) {
+            return ResultUtil.error(11, PermissionUntil.getMsg(e.getMessage()));
+        } else {
+            return new ModelAndView("/common/403");
+        }
+    }
 
     @ExceptionHandler(UserException.class)
     public Result userException(Exception e) {

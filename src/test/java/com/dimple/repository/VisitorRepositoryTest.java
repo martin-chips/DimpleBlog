@@ -1,6 +1,6 @@
 package com.dimple.repository;
 
-import com.dimple.modules.endModule.visitorManager.repository.VisitorRepository;
+import com.dimple.modules.BackStageModule.VisitorManager.repository.VisitorRepository;
 import com.dimple.utils.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;

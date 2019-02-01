@@ -1,5 +1,5 @@
 /*
- * blueimp gallery jQuery plugin
+ * blueimp Gallery jQuery plugin
  * https://github.com/blueimp/Gallery
  *
  * Copyright 2013, Sebastian Tschan
@@ -21,17 +21,17 @@
 })(function ($, Gallery) {
   'use strict'
 
-  // Global click handler to open links with data-gallery attribute
-  // in the gallery lightbox:
-  $(document).on('click', '[data-gallery]', function (event) {
-    // Get the container id from the data-gallery attribute:
-    var id = $(this).data('gallery')
+  // Global click handler to open links with data-Gallery attribute
+  // in the Gallery lightbox:
+  $(document).on('click', '[data-Gallery]', function (event) {
+    // Get the container id from the data-Gallery attribute:
+    var id = $(this).data('Gallery')
     var widget = $(id)
     var container =
       (widget.length && widget) || $(Gallery.prototype.options.container)
     var callbacks = {
       onopen: function () {
-        container.data('gallery', this).trigger('open')
+        container.data('Gallery', this).trigger('open')
       },
       onopened: function () {
         container.trigger('opened')
@@ -49,12 +49,12 @@
         container.trigger('close')
       },
       onclosed: function () {
-        container.trigger('closed').removeData('gallery')
+        container.trigger('closed').removeData('Gallery')
       }
     }
     var options = $.extend(
       // Retrieve custom options from data-attributes
-      // on the gallery widget:
+      // on the Gallery widget:
       container.data(),
       {
         container: container[0],
@@ -63,10 +63,10 @@
       },
       callbacks
     )
-    // Select all links with the same data-gallery attribute:
+    // Select all links with the same data-Gallery attribute:
     var links = $(this)
-      .closest('[data-gallery-group], body')
-      .find('[data-gallery="' + id + '"]')
+      .closest('[data-Gallery-group], body')
+      .find('[data-Gallery="' + id + '"]')
     if (options.filter) {
       links = links.filter(options.filter)
     }

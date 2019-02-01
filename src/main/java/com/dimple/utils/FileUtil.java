@@ -2,12 +2,12 @@ package com.dimple.utils;
 
 import com.dimple.framework.exception.file.FileNameLengthOutOfLimitException;
 import com.dimple.framework.exception.file.FileNotExistException;
-import com.dimple.modules.common.bean.server.FileUtilSetting;
-import com.dimple.modules.endModule.blogManager.bean.Blog;
-import com.dimple.modules.endModule.blogManager.bean.Category;
-import com.dimple.modules.endModule.blogManager.service.BlogTagService;
-import com.dimple.modules.endModule.blogManager.service.CategoryService;
-import com.dimple.modules.endModule.blogManager.service.TagService;
+import com.dimple.modules.CommonModule.bean.server.FileUtilSetting;
+import com.dimple.modules.BackStageModule.BlogManager.bean.Blog;
+import com.dimple.modules.BackStageModule.BlogManager.bean.Category;
+import com.dimple.modules.BackStageModule.BlogManager.service.BlogTagService;
+import com.dimple.modules.BackStageModule.BlogManager.service.CategoryService;
+import com.dimple.modules.BackStageModule.BlogManager.service.TagService;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;

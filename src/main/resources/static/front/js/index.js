@@ -25,7 +25,7 @@ $(function () {
 function loadClickBlog() {
     $.ajax({
         type: "get",
-        url: "/public/api/front/clickBlog",
+        url: "/public/api/FrontDeskModule/clickBlog",
         success: function (result) {
             console.log(result);
             if (result.code == 200) {
@@ -43,7 +43,7 @@ function loadClickBlog() {
 function loadNewestBlog() {
     $.ajax({
         type: "get",
-        url: "/public/api/front/newestBlog",
+        url: "/public/api/FrontDeskModule/newestBlog",
         data: {
             pageNum: pageNum
         },
@@ -103,7 +103,7 @@ function generateNewestBlog(data) {
         var avator = $("<i ></i>");
         avator.addClass("avatar");//添加class
         var avatorImg = $("<img>");
-        avatorImg.attr("src", "/front/imgs/avatar.jpg");//设置图片地址
+        avatorImg.attr("src", "/FrontDeskModule/imgs/avatar.jpg");//设置图片地址
         avator.append(avatorImg);//拼接
         //博客作者
         var author = $("<span></span>");

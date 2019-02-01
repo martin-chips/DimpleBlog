@@ -1,5 +1,5 @@
 /*
- * blueimp gallery Indicator JS
+ * blueimp Gallery Indicator JS
  * https://github.com/blueimp/Gallery
  *
  * Copyright 2013, Sebastian Tschan
@@ -31,7 +31,7 @@
     // The list object property (or data attribute) with the thumbnail URL,
     // used as alternative to a thumbnail child element:
     thumbnailProperty: 'thumbnail',
-    // Defines if the gallery indicators should display a thumbnail:
+    // Defines if the Gallery indicators should display a thumbnail:
     thumbnailIndicators: true
   })
 

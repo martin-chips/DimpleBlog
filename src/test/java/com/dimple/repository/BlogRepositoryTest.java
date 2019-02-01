@@ -1,8 +1,8 @@
 package com.dimple.repository;
 
-import com.dimple.modules.endModule.blogManager.bean.Blog;
-import com.dimple.modules.endModule.blogManager.repository.BlogRepository;
-import com.dimple.modules.frontModule.front.domain.BlogDomain;
+import com.dimple.modules.BackStageModule.BlogManager.bean.Blog;
+import com.dimple.modules.BackStageModule.BlogManager.repository.BlogRepository;
+import com.dimple.modules.FrontDeskModule.domain.BlogDomain;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

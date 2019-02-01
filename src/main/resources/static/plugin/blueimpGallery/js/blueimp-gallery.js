@@ -1,5 +1,5 @@
 /*
- * blueimp gallery JS
+ * blueimp Gallery JS
  * https://github.com/blueimp/Gallery
  *
  * Copyright 2013, Sebastian Tschan
@@ -39,7 +39,7 @@
     }
     if (!list || !list.length) {
       this.console.log(
-        'blueimp gallery: No or empty list provided as first argument.',
+        'blueimp Gallery: No or empty list provided as first argument.',
         list
       )
       return
@@ -52,24 +52,24 @@
 
   $.extend(Gallery.prototype, {
     options: {
-      // The Id, element or querySelector of the gallery widget:
-      container: '#blueimp-gallery',
+      // The Id, element or querySelector of the Gallery widget:
+      container: '#blueimp-Gallery',
       // The tag name, Id, element or querySelector of the slides container:
       slidesContainer: 'div',
       // The tag name, Id, element or querySelector of the title element:
       titleElement: 'h3',
-      // The class to add when the gallery is visible:
-      displayClass: 'blueimp-gallery-display',
-      // The class to add when the gallery controls are visible:
-      controlsClass: 'blueimp-gallery-controls',
-      // The class to add when the gallery only displays one element:
-      singleClass: 'blueimp-gallery-single',
+      // The class to add when the Gallery is visible:
+      displayClass: 'blueimp-Gallery-display',
+      // The class to add when the Gallery controls are visible:
+      controlsClass: 'blueimp-Gallery-controls',
+      // The class to add when the Gallery only displays one element:
+      singleClass: 'blueimp-Gallery-single',
       // The class to add when the left edge has been reached:
-      leftEdgeClass: 'blueimp-gallery-left',
+      leftEdgeClass: 'blueimp-Gallery-left',
       // The class to add when the right edge has been reached:
-      rightEdgeClass: 'blueimp-gallery-right',
+      rightEdgeClass: 'blueimp-Gallery-right',
       // The class to add when the automatic slideshow is active:
-      playingClass: 'blueimp-gallery-playing',
+      playingClass: 'blueimp-Gallery-playing',
       // The class for all slides:
       slideClass: 'slide',
       // The slide class for loading elements:
@@ -98,11 +98,11 @@
       urlProperty: 'href',
       // The list object property (or data attribute) with the object srcset URL(s):
       srcsetProperty: 'urlset',
-      // The gallery listens for transitionend events before triggering the
+      // The Gallery listens for transitionend events before triggering the
       // opened and closed events, unless the following option is set to false:
       displayTransition: true,
-      // Defines if the gallery slides are cleared from the gallery modal,
-      // or reused for the next gallery initialization:
+      // Defines if the Gallery slides are cleared from the Gallery modal,
+      // or reused for the next Gallery initialization:
       clearSlides: true,
       // Defines if imgs should be stretched to fill the available space,
       // while maintaining their aspect ratio (will only be enabled for browsers
@@ -116,17 +116,17 @@
       toggleControlsOnSlideClick: true,
       // Toggle the automatic slideshow interval on pressing the Space key:
       toggleSlideshowOnSpace: true,
-      // Navigate the gallery by pressing left and right on the keyboard:
+      // Navigate the Gallery by pressing left and right on the keyboard:
       enableKeyboardNavigation: true,
-      // Close the gallery on pressing the Esc key:
+      // Close the Gallery on pressing the Esc key:
       closeOnEscape: true,
-      // Close the gallery when clicking on an empty slide area:
+      // Close the Gallery when clicking on an empty slide area:
       closeOnSlideClick: true,
-      // Close the gallery by swiping up or down:
+      // Close the Gallery by swiping up or down:
       closeOnSwipeUpOrDown: true,
       // Emulate touch events on mouse-pointer devices such as desktop browsers:
       emulateTouchEvents: true,
-      // Stop touch events from bubbling up to ancestor elements of the gallery:
+      // Stop touch events from bubbling up to ancestor elements of the Gallery:
       stopTouchEventsPropagation: false,
       // Hide the page scrollbars:
       hidePageScrollbars: true,
@@ -155,33 +155,33 @@
       // greater 0 to override the default transition speed:
       slideshowTransitionSpeed: undefined,
       // The event object for which the default action will be canceled
-      // on gallery initialization (e.g. the click event to open the gallery):
+      // on Gallery initialization (e.g. the click event to open the Gallery):
       event: undefined,
-      // Callback function executed when the gallery is initialized.
-      // Is called with the gallery instance as "this" object:
+      // Callback function executed when the Gallery is initialized.
+      // Is called with the Gallery instance as "this" object:
       onopen: undefined,
-      // Callback function executed when the gallery has been initialized
+      // Callback function executed when the Gallery has been initialized
       // and the initialization transition has been completed.
-      // Is called with the gallery instance as "this" object:
+      // Is called with the Gallery instance as "this" object:
       onopened: undefined,
       // Callback function executed on slide change.
-      // Is called with the gallery instance as "this" object and the
+      // Is called with the Gallery instance as "this" object and the
       // current index and slide as arguments:
       onslide: undefined,
       // Callback function executed after the slide change transition.
-      // Is called with the gallery instance as "this" object and the
+      // Is called with the Gallery instance as "this" object and the
       // current index and slide as arguments:
       onslideend: undefined,
       // Callback function executed on slide content load.
-      // Is called with the gallery instance as "this" object and the
+      // Is called with the Gallery instance as "this" object and the
       // slide index and slide element as arguments:
       onslidecomplete: undefined,
-      // Callback function executed when the gallery is about to be closed.
-      // Is called with the gallery instance as "this" object:
+      // Callback function executed when the Gallery is about to be closed.
+      // Is called with the Gallery instance as "this" object:
       onclose: undefined,
-      // Callback function executed when the gallery has been closed
+      // Callback function executed when the Gallery has been closed
       // and the closing transition has been completed.
-      // Is called with the gallery instance as "this" object:
+      // Is called with the Gallery instance as "this" object:
       onclosed: undefined
     },
 
@@ -424,7 +424,7 @@
         list = Array.prototype.slice.call(list)
       }
       if (!this.list.concat) {
-        // Make a real array out of the gallery list:
+        // Make a real array out of the Gallery list:
         this.list = Array.prototype.slice.call(this.list)
       }
       this.list = this.list.concat(list)
@@ -1350,7 +1350,7 @@
       this.container = $(this.options.container)
       if (!this.container.length) {
         this.console.log(
-          'blueimp gallery: Widget container not found.',
+          'blueimp Gallery: Widget container not found.',
           this.options.container
         )
         return false
@@ -1360,7 +1360,7 @@
         .first()
       if (!this.slidesContainer.length) {
         this.console.log(
-          'blueimp gallery: Slides container not found.',
+          'blueimp Gallery: Slides container not found.',
           this.options.slidesContainer
         )
         return false

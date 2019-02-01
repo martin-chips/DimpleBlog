@@ -100,12 +100,10 @@ body {
 .not-found .wave-message {
     position: absolute;
     bottom: 100px;
-    left: 50%;
-    padding-right: 50%;
     height: auto !important;
     color: #fff;
     font-size: 3rem;
-    text-align: left;
+    text-align: center;
     -webkit-animation: wave-message 1s;
     -moz-animation: wave-message 1s;
     -o-animation: wave-message 1s;

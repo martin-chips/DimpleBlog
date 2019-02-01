@@ -184,7 +184,7 @@ $.extend( $.fn, {
 			$.validator.staticRules( element )
 		), element );
 
-		// Make sure required is at front
+		// Make sure required is at FrontDeskModule
 		if ( data.required ) {
 			param = data.required;
 			delete data.required;

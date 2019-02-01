@@ -374,7 +374,7 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
   client:
     Commands parsed and executed by the client (not the server).
   support:
-    A list of supported syntaxes which are not common, but are supported by more than 1 DBMS.
+    A list of supported syntaxes which are not CommonModule, but are supported by more than 1 DBMS.
     * ODBCdotTable: .tableName
     * zerolessFloat: .1
     * doubleQuote
