@@ -18,7 +18,7 @@
             <h2 class="htitle"><span class="con_nav">您现在的位置是：<a href="/">网站首页</a>><a href="/">博客详情</a></span>博客详情</h2>
             <h1 class="con_tilte" th:text="${blog.title}">个人博客，属于我的小世界！</h1>
             <p class="bloginfo"><i class="avatar">
-                <img src="/front/images/avatar.png">
+                <img src="/static/imgs/avatar.png">
             </i><span>边小丰</span><span th:text="${#dates.format(blog.createTime,'yyyy年MM月dd日')}">2018-10-28</span>
                 <span>【<a th:text="${category.title}">程序人生</a>】</span>
                 <span th:text="${blog.click}+'人已围观'">109990人已围观</span>
@@ -27,7 +27,7 @@
             <div align="center"><img th:src="${blog.headerUrl}"></div>
             <p class="con_info">
                 <b>摘要：</b>
-                <span th:utext="${blog.summary}"></span>
+                <span th:text="${blog.summary}"></span>
             </p>
             <div class="con_text">
                 <div th:utext="${blog.content}"></div>

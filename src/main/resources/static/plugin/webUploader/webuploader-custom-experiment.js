@@ -87,7 +87,7 @@ jQuery(function () {
             true,
         // server: 'http://webuploader.duapp.com/server/fileupload.php',
         server:
-            '/api/Experiment/mdUpload',
+            '/api/experiment/mdUpload',
         fileSizeLimit:
             5 * 1024 * 1024,    // 200 M
         fileSingleSizeLimit:

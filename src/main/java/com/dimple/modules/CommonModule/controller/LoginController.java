@@ -5,6 +5,7 @@ import com.dimple.framework.message.Result;
 import com.dimple.modules.CommonModule.service.LoginService;
 import com.dimple.modules.BackStageModule.LinkManager.service.LinksService;
 import com.dimple.utils.ServletUtil;
+import com.dimple.utils.ShiroUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class LoginController {
 
     @RequestMapping({"/page/index.html"})
     public String indexPage(Model model) {
+        model.addAttribute("user", ShiroUtil.getUser());
         model.addAttribute("unhandledLinksCount", linksService.getUnHandledLinksCount());
         return "index";
     }
@@ -51,7 +53,7 @@ public class LoginController {
         // 如果是Ajax请求，返回Json字符串。
         if (ServletUtil.isAjaxRequest(request)) {
             //todo 异常处理
-            throw  new BaseException("登录", "user.not.exists", null, "异常");
+            throw new BaseException("登录", "user.not.exists", null, "异常");
         }
         return "login";
     }

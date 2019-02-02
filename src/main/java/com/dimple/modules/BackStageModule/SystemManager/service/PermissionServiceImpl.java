@@ -70,9 +70,9 @@ public class PermissionServiceImpl implements PermissionService {
             Map<String, Object> permissionMap = new HashMap<>();
             permissionMap.put("id", permission.getPermissionId());
             permissionMap.put("pId", permission.getPId());
-            permissionMap.put("title", permission.getTitle());
-            // permissionMap.put("name", permission.getTitle() + "<font color=\"#888\">&nbsp;&nbsp;&nbsp;" + permission.getName() + "</font>");
-            permissionMap.put("name", permission.getTitle());
+            permissionMap.put("title", permission.getName());
+             permissionMap.put("name", permission.getTitle() + "<font color=\"#888\">&nbsp;&nbsp;&nbsp;" + permission.getName() + "</font>");
+            //permissionMap.put("name", permission.getTitle());
             if (checkedPermissionId != null && checkedPermissionId.size() != 0) {
                 for (Integer id : checkedPermissionId) {
                     if (permission.getPermissionId() == id) {
@@ -99,7 +99,9 @@ public class PermissionServiceImpl implements PermissionService {
             //获取permissionId
             Integer permissionId = rolePermission.getPermissionId();
             Permission permission = permissionRepository.findByPermissionId(permissionId);
-            ids.add(permission.getPermissionId());
+            if (permission != null) {
+                ids.add(permission.getPermissionId());
+            }
         }
         return handPermissionTree(permissionRepository.findAll(), ids);
     }

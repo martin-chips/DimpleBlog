@@ -7,6 +7,7 @@ import com.dimple.utils.PermissionUntil;
 import com.dimple.utils.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.session.UnknownSessionException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -96,5 +97,12 @@ public class DefaultExceptionHandler {
     public Result methodArgumentTypeMismatchException(Exception e) {
         log.error("参数转换异常：" + e.getMessage(), e);
         return ResultUtil.error(11, e.getMessage());
+    }
+
+
+    @ExceptionHandler(UnknownSessionException.class)
+    public Object unknownSessionException(Exception e) {
+        log.error("Session异常：" + e.getMessage(), e);
+        return new ModelAndView("/common/403");
     }
 }

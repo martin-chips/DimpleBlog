@@ -103,7 +103,7 @@ function generateNewestBlog(data) {
         var avator = $("<i ></i>");
         avator.addClass("avatar");//添加class
         var avatorImg = $("<img>");
-        avatorImg.attr("src", "/FrontDeskModule/imgs/avatar.jpg");//设置图片地址
+        avatorImg.attr("src", "static/front/images/avatar.png");//设置图片地址
         avator.append(avatorImg);//拼接
         //博客作者
         var author = $("<span></span>");

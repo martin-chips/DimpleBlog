@@ -75,7 +75,7 @@ public class BlogController {
         return "blog/editBlog";
     }
 
-    @ApiOperation("博客列表")
+    @ApiOperation("博客列表界面")
     @GetMapping("/page/blogList.html")
     @RequiresPermissions("page:blogList:view")
     @ApiIgnore

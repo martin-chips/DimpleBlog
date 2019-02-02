@@ -103,7 +103,7 @@
                     <p class="blogtext " th:text="${item?.summary}"></p>
                     <p class="bloginfo">
                         <i class="avatar">
-                            <img src="images/avatar.jpg">
+                            <img src="static/imgs/avatar.png">
                         </i>
                         <span th:text="${item?.author}"></span>
                         <span th:text="${item?.time}">2018-10-28</span>
@@ -152,7 +152,7 @@
             type: 'info',
             html:
                 '您好，欢迎访问边小丰的个人博客网站！<br><strong>非常抱歉，由于备案问题，原存储在七牛云的图片全部失效，备案正常后会全部恢复正常！感谢您的理解！</strong> <br>' +
-                '本站源码托管在：<a href="https://github.com/DimpleFeng/DimpleBlog">Github<a/> ，' +
+                '<strong>之前博文采用markdown格式编写，目前采用批量转化的方式迁移，部分博文存在格式错乱，本人正在处理中，请谅解！</strong><br/>本站源码托管在：<a href="https://github.com/DimpleFeng/DimpleBlog">Github<a/> ，' +
                 '如果觉得不错，欢迎fork和star',
             showCloseButton: true,
             focusConfirm: false,

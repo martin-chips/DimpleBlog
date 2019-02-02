@@ -26,6 +26,6 @@ public interface PermissionRepository extends JpaRepository<Permission, Integer>
      * @param roleId
      * @return
      */
-    @Query(value = "select name from permission p,role_permission r where p.permission_id=r.permission_id and r.role_id=:roleId", nativeQuery = true)
+    @Query(value = "select name from permission p,role_permission r where p.permission_id=r.permission_id and r.role_id=:roleId and name is not null and name !=''", nativeQuery = true)
     Set<String> getPermissionNamesByRoleId(Integer roleId);
 }

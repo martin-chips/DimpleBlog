@@ -72,7 +72,7 @@ public class Md5Util {
 
     public static void main(String[] args) {
 //        在此处修改需要生成密文的明文密码和盐
-        String uuid = generatorMd5("123456", "uuid");
+        String uuid = generatorMd5("bxf960805", "dimple");
         System.out.println(uuid);
     }
 }

@@ -246,6 +246,7 @@ public class FileUtil {
                 }
                 mdContent += line + "\r\n";
             }
+            blog.setSummary(mdContent.length() < 150 ? mdContent : mdContent.substring(0, 150));
             PegDownProcessor pdp = new PegDownProcessor(Integer.MAX_VALUE);
             htmlContent = pdp.markdownToHtml(mdContent);
         } catch (IOException e) {

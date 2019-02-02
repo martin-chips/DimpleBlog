@@ -257,6 +257,8 @@ public class BlogServiceImpl implements BlogService {
             return null;
         }
         byBlogId.setContent(blogInfoRepository.findByBlogId(id).getContent());
+        //增加博客访问人数
+        blogRepository.incrementBlogCountById(id);
         return byBlogId;
     }
 

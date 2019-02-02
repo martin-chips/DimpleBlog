@@ -34,6 +34,14 @@ $(document).ready(function () {
 
     loadSpecialEffects();
     loadCustomSetting();
+
+    document.addEventListener("error", function (e) {
+        var elem = e.target;
+        if (elem.tagName.toLowerCase() == "img") {
+            elem.src = "/static/imgs/image-load-error.jpg";
+        }
+    }, true);
+
 });
 
 function loadSpecialEffects() {
@@ -197,5 +205,4 @@ function loadCustomSetting() {
     loadClickRanking();
     loadYouMayLike();
     loadLink();
-
 }
