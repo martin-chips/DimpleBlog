@@ -10,7 +10,7 @@
 <article>
     <!--lbox begin-->
     <div class="lbox">
-        <div class="banbox" data-scroll-reveal="enter bottom over 1s">
+        <div class="banbox" data-scroll-reveal="enter top and move 50px over 0.6s">
             <div class="banner">
                 <div id="banner" class="fader">
                     <li class="slide" th:each="rotation:${rotations}">
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="headline" data-scroll-reveal="enter bottom over 1s">
+        <div class="headline" data-scroll-reveal="enter top and move 50px over 0.6s">
             <ul>
                 <li th:each="rotationLine:${rotationLines}">
                     <a th:href="${rotationLine.url}" href="/" title="" th:title="${rotationLine.title}">
@@ -41,7 +41,7 @@
             </ul>
         </div>
         <div class="clearblank"></div>
-        <div class="tab_box whitebg" data-scroll-reveal="enter bottom over 1s">
+        <div class="tab_box whitebg" data-scroll-reveal="enter top and move 50px over 0.6s">
             <div class="tab_buttons">
                 <!--设置Nav-->
                 <ul>
@@ -74,7 +74,7 @@
             </div>
         </div>
 
-        <div class="zhuanti whitebg" data-scroll-reveal="enter bottom over 1s">
+        <div class="zhuanti whitebg" data-scroll-reveal="enter top and move 50px over 0.6s">
             <h2 class="htitle"><span class="hnav"><a href="/">查看更多</a></span>站长推荐</h2>
             <ul>
                 <li th:each="support:${supportBlogs}">
@@ -92,7 +92,7 @@
         <div class="whitebg bloglist">
             <h2 class="htitle"><span class="hnav"><a href="/technology.html">查看更多<i class="fa fa-mail-forward>"></i></a></span>最新博文</h2>
             <ul>
-                <li data-scroll-reveal="enter bottom over 1s" class=" whitebg" th:each="item:${newestBlog}">
+                <li data-scroll-reveal="enter top and move 50px over 0.6s" class=" whitebg" th:each="item:${newestBlog}">
                     <h3 class="blogtitle">
                         <a th:href="${'/view/'+item?.blogId}" th:text="${item?.title}"></a>
                     </h3>
@@ -116,30 +116,7 @@
         <!--bloglist end-->
     </div>
     <div class="rbox">
-        <div class="card" data-scroll-reveal="enter bottom over 1s">
-
-            <h2>我的名片</h2>
-            <p>网名：Dimple | 裤兜有怪兽</p>
-            <p>职业：Java开发工程师</p>
-            <p>现居：四川省-成都市</p>
-            <p>Email：bianxiaofeng@sohu.com</p>
-            <ul class="linkmore">
-                <li><a href="/" target="_blank" class="iconfont icon-zhuye" title="网站地址"></a>
-                </li>
-                <li><a href="bianxiaofeng@sohu.com"
-                       target="_blank"
-                       class="iconfont icon-youxiang" title="我的邮箱"></a></li>
-                <li><a href="http://wpa.qq.com/msgrd?v=3&uin=726567707&site=qq&menu=yes" target="_blank"
-                       class="iconfont icon---"
-                       title="QQ联系我"></a></li>
-                <li id="weixin"><a href="#" target="_blank" class="iconfont icon-weixin" title="添加我的微信"></a><i><img
-                ></i></li>
-            </ul>
-        </div>
-
         <div th:include="front/common :: front-side"></div>
-
-
     </div>
 </article>
 <script th:src="@{/front/plugin/sweetalert/sweetalert2.min.js}"></script>

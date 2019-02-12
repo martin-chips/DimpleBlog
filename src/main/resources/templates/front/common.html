@@ -22,7 +22,28 @@
 
 
 <div th:fragment="front-side">
-    <div class="whitebg paihang" data-scroll-reveal="enter bottom over 1s">
+
+    <div class="card" data-scroll-reveal=" enter from the left after 0.2s">
+
+        <h2>我的名片</h2>
+        <p>网名：Dimple | 裤兜有怪兽</p>
+        <p>职业：Java开发工程师</p>
+        <p>现居：四川省-成都市</p>
+        <p>Email：bianxiaofeng@sohu.com</p>
+        <ul class="linkmore">
+            <li><a href="/" target="_blank" class="iconfont icon-zhuye" title="网站地址"></a>
+            </li>
+            <li><a href="bianxiaofeng@sohu.com"
+                   target="_blank"
+                   class="iconfont icon-youxiang" title="我的邮箱"></a></li>
+            <li><a href="http://wpa.qq.com/msgrd?v=3&uin=726567707&site=qq&menu=yes" target="_blank"
+                   class="iconfont icon---"
+                   title="QQ联系我"></a></li>
+            <li id="weixin"><a href="#" target="_blank" class="iconfont icon-weixin" title="添加我的微信"></a><i><img
+            ></i></li>
+        </ul>
+    </div>
+    <div class="whitebg paihang" data-scroll-reveal=" enter from the left after 0.2s">
         <h2 class="htitle">每日一句</h2>
         <div id="one" class=" imgscale"></div>
         <!--<span id="jinrishici-sentence">正在加载今日诗词....</span>-->
@@ -42,12 +63,12 @@
             });
         </script>
     </div>
-    <div class="whitebg notice " data-scroll-reveal="enter bottom over 1s">
+    <div class="whitebg notice " data-scroll-reveal=" enter from the left after 0.2s">
         <h2 class="htitle">最近更新</h2>
         <ul id="newestUpdateBlog">
         </ul>
     </div>
-    <div class="whitebg paihang" data-scroll-reveal="enter bottom over 1s">
+    <div class="whitebg paihang" data-scroll-reveal=" enter from the left after 0.2s">
         <h2 class="htitle">点击排行</h2>
         <section class="topnews imgscale" id="clickRankingImg">
 
@@ -56,7 +77,7 @@
 
         </ul>
     </div>
-    <div class="whitebg tuijian" data-scroll-reveal="enter bottom over 1s">
+    <div class="whitebg tuijian" data-scroll-reveal=" enter from the left after 0.2s">
         <h2 class="htitle">猜你喜欢</h2>
         <section class="topnews imgscale" id="youMayLikeImg">
 
@@ -65,7 +86,7 @@
         </ul>
     </div>
 
-    <div class="links whitebg" data-scroll-reveal="enter bottom over 1s">
+    <div class="links whitebg" data-scroll-reveal=" enter from the left after 0.2s">
         <h2 class="htitle"><span class="sqlink"><a href="/link.html">申请链接</a></span>友情链接</h2>
         <ul id="link">
             <li>

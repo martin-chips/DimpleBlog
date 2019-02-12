@@ -1,8 +1,11 @@
+
 # DimpleBlog
 
 #### 介绍
 
 `Dimple Blog`是基于SpringBoot2搭建的个人博客系统。系统使用的技术不完全列举如下：
+
+##### Server端使用技术
 
 |序号  | 技术名称  |说明|链接地址 |
 |--|--|--|--|
@@ -21,29 +24,88 @@
 |13|oshi-core|系统监控插件|[oshii](https://github.com/oshi/oshi)
 |14|druid|数据库连接池|[druid](http://druid.io/)
 |15|pegdown|markdown转为HTML工具|[pegdown](https://github.com/sirthias/pegdown/)
+#### 前端页面技术
+|序号  | 技术名称  |说明|链接地址 |
+|--|--|--|--|
+|1| animate.css| 特效样式|[animate](https://daneden.github.io/animate.css/) |
+|2|blueimpGallery|图片浏览框架|[blueimpGallery](http://blueimp.github.io/Gallery/)|
+|3|bootstrap大家族|前端样式|包括：[bootstrap-fileinput-4.5.2](http://blueimp.github.io/Gallery/);  [Bootstrap Table](https://bootstrap-table.com/)；[bootstrap-tagsinput](http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/)；bootstrap-treetable；|
+| 4| echarts|图表| [echarts](https://echarts.baidu.com/)
+| 5|font-awesome|字体库|[font-awesome](fontawesome.dashgame.com/)
+| 6| iCheck |美观的选择input|[iCheck ](https://xdsoft.net/jquery-plugins/icheck/)
+| 7| image-picker|图片选择器|[image-picker](https://ionicframework.com/docs/native/image-picker/)
+| 8|jquery |没说的| 
+| 9| layer|优秀的前端弹出层|[Layer](http://layer.layui.com/)
+| 10| layui|经典模块化前端框架|[layui](https://www.layui.com/)
+|11|summernote|编辑器[summernote](https://summernote.org/)
+|12|sweetalert|好看的提示框架|[sweetalert](https://sweetalert.bootcss.com/)
+|13|webUploader|文件上传框架|[webUploader](http://fex.baidu.com/webuploader/)
+|14|blockUI|遮罩层|[druid](http://malsup.com/jquery/block/)
+|15|fullscreen|全屏|[fullscreen](https://fullscreenmedia.co/)
+
 ### 体验链接地址
 
-目前 www.bianxiaofeng.com 域名备案尚未完成，目前只能通过IP地址访问。  
-
-[边小丰的个人博客](http://47.112.14.207/)
+[边小丰的个人博客](http://www.bianxiaofeng.com/)
 
 管理员账号：`admin` ,管理员密码： `123456`
+
 ### 图片展示
 
-    note： 请手动忽略图片中的有些图片链接不显示（因为我造的假数据，有些图片失效是正常的）
+#### 项目目录结构
 
-![后台界面](https://s2.ax1x.com/2019/01/25/km46jH.png)
+[![kdqkOP.png](https://s2.ax1x.com/2019/02/12/kdqkOP.png)](https://imgchr.com/i/kdqkOP)
 
-![前台界面](https://s2.ax1x.com/2019/01/25/km5lqA.md.png)[![knkl9K.png](https://s2.ax1x.com/2019/01/25/knkl9K.png)](https://imgchr.com/i/knkl9K)
-
-[![knkMh6.png](https://s2.ax1x.com/2019/01/25/knkMh6.png)](https://imgchr.com/i/knkMh6)
-
-[![knk3cD.png](https://s2.ax1x.com/2019/01/25/knk3cD.png)](https://imgchr.com/i/knk3cD)
-
-[![knk11O.png](https://s2.ax1x.com/2019/01/25/knk11O.png)](https://imgchr.com/i/knk11O)
-
-[![knkKtx.png](https://s2.ax1x.com/2019/01/25/knkKtx.png)](https://imgchr.com/i/knkKtx)
-
+#### 前台
+##### 首页
+![kdqVw8.md.png](https://s2.ax1x.com/2019/02/12/kdqVw8.md.png)
+##### 博客详情
+![kdqZTS.md.png](https://s2.ax1x.com/2019/02/12/kdqZTS.md.png)
+##### 博客分类
+![kdqmFg.md.png](https://s2.ax1x.com/2019/02/12/kdqmFg.md.png)
+##### 项目归档
+![kdqEef.md.png](https://s2.ax1x.com/2019/02/12/kdqEef.md.png)
+##### 友链列表
+![kdqnYQ.md.png](https://s2.ax1x.com/2019/02/12/kdqnYQ.md.png)
+##### 关于我
+![kdqMSs.md.png](https://s2.ax1x.com/2019/02/12/kdqMSs.md.png)
+##### 留言板
+![kdq1O0.md.png](https://s2.ax1x.com/2019/02/12/kdq1O0.md.png)
+#### 后台（仅列举部分）
+##### 登录界面
+![kdqQln.md.png](https://s2.ax1x.com/2019/02/12/kdqQln.md.png)
+##### 
+##### 后台首页
+![kdLbb6.png](https://s2.ax1x.com/2019/02/12/kdLbb6.png)
+##### 编辑博客界面
+![kdL58J.png](https://s2.ax1x.com/2019/02/12/kdL58J.png)
+##### 博客列表
+![kdLovR.png](https://s2.ax1x.com/2019/02/12/kdLovR.png)
+##### 系统信息图表
+![kdLI29.png](https://s2.ax1x.com/2019/02/12/kdLI29.png)
+##### 访客记录
+![kdL4C4.png](https://s2.ax1x.com/2019/02/12/kdL4C4.png)
+##### 登录日志
+![kdL7K1.png](https://s2.ax1x.com/2019/02/12/kdL7K1.png)
+##### 友链列表
+![kdLHDx.png](https://s2.ax1x.com/2019/02/12/kdLHDx.png)
+##### 七牛云图库
+![kdOCrt.png](https://s2.ax1x.com/2019/02/12/kdOCrt.png)
+##### 定时任务
+![kdLOUO.png](https://s2.ax1x.com/2019/02/12/kdLOUO.png)
+##### Druid
+![kdLLVK.png](https://s2.ax1x.com/2019/02/12/kdLLVK.png)
+##### Swagger
+![kdLX5D.png](https://s2.ax1x.com/2019/02/12/kdLX5D.png)
+##### 用户管理
+![kdLvPe.png](https://s2.ax1x.com/2019/02/12/kdLvPe.png)
+##### 角色管理
+![kdLx8H.png](https://s2.ax1x.com/2019/02/12/kdLx8H.png)
+##### 权限管理
+![kdO9KI.png](https://s2.ax1x.com/2019/02/12/kdO9KI.png)
+##### 首页设置
+![kdLz2d.png](https://s2.ax1x.com/2019/02/12/kdLz2d.png)
+##### 实验室功能
+![kdOSxA.png](https://s2.ax1x.com/2019/02/12/kdOSxA.png)
 
 #### 软件架构
 

@@ -15,7 +15,7 @@
             <div th:each="archive:${archives}" >
                 <h2 class="archive-title" th:text="${archive.date}"></h2>
                 <ul>
-                    <li th:each="item:${archive.blogs}" data-scroll-reveal="enter bottom over 1s">
+                    <li th:each="item:${archive.blogs}" data-scroll-reveal="enter top and move 50px over 0.6s">
                         <span th:text="${#dates.format(item['create_time'],'yyyy-MM-dd')}"></span>
                         <div class="atitle">
                             <a th:href="${'/view/'+item['blog_id']}" target="_blank"
