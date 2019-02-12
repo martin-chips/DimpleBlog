@@ -6,6 +6,7 @@
     <title>首页-Dimple's Blog</title>
     <meta name="keywords" content="blog"/>
     <meta name="description" content="blog"/>
+    <link rel="icon" type="image/x-icon" href="static/imgs/favicon.ico" th:href="@{/imgs/favicon.ico}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/plugin/font-awesome/font-awesome.min.css}" rel="stylesheet">
     <link href="/static/front/css/base.css" th:href="@{/front/css/base.css}" rel="stylesheet">
@@ -21,9 +22,26 @@
 
 
 <div th:fragment="front-side">
-    <!--<div class="whitebg">-->
-    <!--<div id="calendar" class="calendar"></div>-->
-    <!--</div>-->
+    <div class="whitebg paihang" data-scroll-reveal="enter bottom over 1s">
+        <h2 class="htitle">每日一句</h2>
+        <div id="one" class=" imgscale"></div>
+        <!--<span id="jinrishici-sentence">正在加载今日诗词....</span>-->
+        <!--<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>-->
+        <script>
+            $.ajax({
+                type: "get",
+                url: "http://api.bzqll.com/one/day",
+            }).success(function (result) {
+                console.log(result);
+                if (result != null) {
+                    $("<a></a>")
+                        .append($("<img>").attr("src", result.pic))
+                        .append($("<span></span>").text(result.text))
+                        .appendTo($("#one"));
+                }
+            });
+        </script>
+    </div>
     <div class="whitebg notice " data-scroll-reveal="enter bottom over 1s">
         <h2 class="htitle">最近更新</h2>
         <ul id="newestUpdateBlog">
@@ -71,7 +89,7 @@
                     <span class="author" itemprop="copyrightHolder">  Dimple</span>
                 </a>
                 <span>  </span>
-                <p>蜀ICP备  19004343</p>
+                <p>蜀ICP备 19004343</p>
             </div>
         </div>
     </footer>

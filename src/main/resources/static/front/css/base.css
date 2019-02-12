@@ -433,3 +433,8 @@ margin: auto }
 .lists-navigator ol li a {font-size: 14px;padding: 0 20px;color: #5f5f5f}
 .lists-navigator ol li.current a {color: #6fa3ef}
 .font16 {font-size: 16px;}
+/*Custom*/
+.normalImg{width: 100%;height: auto}
+/* actGotop */
+.totop{position:fixed;right:25px;bottom:25px;display:block;width:26px;height:62px;background:url(/static/imgs/rocket.png) no-repeat 0 0;-webkit-transition: all 0.2s ease-in-out;}
+.totop:hover{background:url(/static/imgs/rocket.png) no-repeat 0 -62px;}

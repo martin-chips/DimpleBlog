@@ -53,14 +53,13 @@ spring:
     #一个连接在连接池中最小生存的时间
     min-evictable-idle-time-millis: 30000
     #一个链接在连接池中最大生存的时间
-#    max-evictable-idle-time-millis: 90000
+    #    max-evictable-idle-time-millis: 90000
     ##是否缓存preparedStatement，也就是PSCache,PSCache对支持游标的数据库性能提升巨大，比如说oracle,在mysql下建议关闭。
     pool-prepared-statements: false
     #要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
     max-open-prepared-statements: -1
     username: dimple
     password: 123456
-
 #自定义配置
 dimple:
   localUrl: www.bianxiaofeng.com
@@ -74,8 +73,8 @@ dimple:
   qiniuyun:
     accessKey: tq8X9efPviPasgmoz6kcIzDuE_v4T-UJQXchcWgz
     secretKey: Yejcd3g3Z_iOmu_jW6hB-euwxqbyqvJkslZzoXrV
-    bucket: uploadtest
-    path: http://pkxwyzsng.bkt.clouddn.com
+    bucket: images
+    path: http://images.bianxiaofeng.com
     imageMaxSize: 52428800
     imageMaxNameLength: 200
   #百度站长Push 的URL

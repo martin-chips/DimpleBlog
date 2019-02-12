@@ -73,6 +73,7 @@ public class PermissionController {
     @ApiIgnore
     @GetMapping("/page/permissionTree/{id}")
     @RequiresPermissions("page:permissionTree:view")
+    @Log(title = "权限管理", operateType = OperateType.SELECT)
     public String getPermissionInfo(@PathVariable Integer id, Model model) {
         if (id == 0) {
             Permission permission = new Permission();

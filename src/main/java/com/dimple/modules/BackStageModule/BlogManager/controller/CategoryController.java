@@ -74,7 +74,7 @@ public class CategoryController {
     @ApiOperation("有条件的获取所有的分类数据")
     @GetMapping("/api/category")
     @RequiresPermissions("BlogManager:category:view")
-    @Log(title = "博客分类获取", operateType = OperateType.OTHER)
+    @Log(title = "博客分类", operateType = OperateType.SELECT)
     @ResponseBody
     public Result getAllBlogcategory(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -88,6 +88,7 @@ public class CategoryController {
     }
 
     @ApiOperation("无条件获取所有的分类数据")
+    @Log(title = "博客分类", operateType = OperateType.SELECT)
     @GetMapping("/api/categoryNoCondition")
     @RequiresPermissions("BlogManager:category:view")
     @ResponseBody
@@ -98,6 +99,7 @@ public class CategoryController {
 
     @ApiOperation("新增分类")
     @PostMapping("/api/category")
+    @Log(title = "博客分类", operateType = OperateType.INSERT)
     @RequiresPermissions("BlogManager:category:insert")
     @ResponseBody
     public Result insertBlogCategory(Category category) {
@@ -108,6 +110,7 @@ public class CategoryController {
     @ApiOperation("修改分类")
     @PutMapping("/api/category")
     @RequiresPermissions("BlogManager:category:update")
+    @Log(title = "博客分类", operateType = OperateType.UPDATE)
     @ResponseBody
     public Result updateBlogCategory(Category category) {
         Category updateBlogCategory = categoryService.updateBlogCategory(category);
@@ -117,6 +120,7 @@ public class CategoryController {
     @ApiOperation("删除分类")
     @DeleteMapping("/api/category/{ids}")
     @RequiresPermissions("BlogManager:category:delete")
+    @Log(title = "博客分类", operateType = OperateType.DELETE)
     @ResponseBody
     public Result deleteBlogCategory(@PathVariable Integer[] ids) {
         int i = categoryService.deleteBlogCategory(ids);
@@ -125,6 +129,7 @@ public class CategoryController {
 
     @ApiOperation("推荐分类上首页")
     @PutMapping("/api/category/support/{id}/{status}")
+    @Log(title = "博客分类", operateType = OperateType.CHANGE_STATUS)
     @ResponseBody
     @RequiresPermissions("blogManager:category:support")
     public Result supportCategory(@PathVariable(value = "id") Integer[] ids, @PathVariable Boolean status) {

@@ -179,6 +179,7 @@ public class BlogController {
     @ApiOperation("将博客推荐到百度站长平台")
     @PutMapping("/api/blog/baidu/{id}")
     @RequiresPermissions("blogManager:blog:push")
+    @Log(title = "博客管理", operateType = OperateType.POSH_BAIDU)
     @ResponseBody
     public Result pushBaidu(@PathVariable("id") Integer ids[]) {
         if (ids == null || ids.length == 0) {

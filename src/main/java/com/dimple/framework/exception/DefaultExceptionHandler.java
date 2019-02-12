@@ -77,7 +77,7 @@ public class DefaultExceptionHandler {
         if (ServletUtil.isAjaxRequest(request)) {
             return ResultUtil.error(11, PermissionUntil.getMsg(e.getMessage()));
         } else {
-            return new ModelAndView("/common/403");
+            return new ModelAndView("common/403");
         }
     }
 
@@ -103,6 +103,6 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(UnknownSessionException.class)
     public Object unknownSessionException(Exception e) {
         log.error("Session异常：" + e.getMessage(), e);
-        return new ModelAndView("/common/403");
+        return new ModelAndView("common/500");
     }
 }

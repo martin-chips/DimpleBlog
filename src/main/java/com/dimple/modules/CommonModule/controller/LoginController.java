@@ -2,8 +2,8 @@ package com.dimple.modules.CommonModule.controller;
 
 import com.dimple.framework.exception.BaseException;
 import com.dimple.framework.message.Result;
-import com.dimple.modules.CommonModule.service.LoginService;
 import com.dimple.modules.BackStageModule.LinkManager.service.LinksService;
+import com.dimple.modules.CommonModule.service.LoginService;
 import com.dimple.utils.ServletUtil;
 import com.dimple.utils.ShiroUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +35,7 @@ public class LoginController {
 
 
     @RequestMapping({"/page/index.html"})
+    @ApiIgnore
     public String indexPage(Model model) {
         model.addAttribute("user", ShiroUtil.getUser());
         model.addAttribute("unhandledLinksCount", linksService.getUnHandledLinksCount());
@@ -49,6 +51,7 @@ public class LoginController {
     }
 
     @GetMapping("/page/login.html")
+    @ApiIgnore
     public Object toLogin(HttpServletRequest request, HttpServletResponse response) {
         // 如果是Ajax请求，返回Json字符串。
         if (ServletUtil.isAjaxRequest(request)) {
@@ -59,6 +62,7 @@ public class LoginController {
     }
 
     @GetMapping("/logout.html")
+    @ApiIgnore
     public String logout(HttpSession session) {
         loginService.logout();
         return "login";

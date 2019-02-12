@@ -1,5 +1,7 @@
 package com.dimple.modules.BackStageModule.SystemMonitor.controller;
 
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.modules.BackStageModule.SystemMonitor.bean.Job;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @className: JobController
@@ -37,6 +40,7 @@ public class JobController {
     JobService jobService;
 
     @GetMapping("/page/job.html")
+    @ApiIgnore
     @RequiresPermissions("page:job:view")
     public String jobListPage() {
         return "monitor/job/job";
@@ -44,12 +48,14 @@ public class JobController {
 
 
     @GetMapping("/page/job/add.html")
+    @ApiIgnore
     @RequiresPermissions("page:jobAdd:view")
     public String jobAddPage() {
         return "monitor/job/add";
     }
 
     @GetMapping("/page/job/{id}.html")
+    @ApiIgnore
     @RequiresPermissions("page:jobDetail:view")
     public String jobDetailPage(@PathVariable Long id, Model model) {
         model.addAttribute("job", jobService.getJobById(id));
@@ -57,6 +63,7 @@ public class JobController {
     }
 
     @RequiresPermissions("page:jobUpdate:view")
+    @ApiIgnore
     @GetMapping("/page/job/update/{id}.html")
     public String jobUpdatePage(@PathVariable Long id, Model model) {
         model.addAttribute("job", jobService.getJobById(id));
@@ -64,6 +71,7 @@ public class JobController {
     }
 
     @ApiOperation("新增任务")
+    @Log(title = "作业管理", operateType = OperateType.INSERT)
     @RequiresPermissions("SystemMonitor:job:insert")
     @ResponseBody
     @PostMapping("/api/job")
@@ -74,6 +82,7 @@ public class JobController {
 
     @ApiOperation("获取任务列表")
     @RequiresPermissions("SystemMonitor:job:query")
+    @Log(title = "作业管理", operateType = OperateType.SELECT)
     @GetMapping("/api/job")
     @ResponseBody
     public Result jobList(
@@ -90,7 +99,7 @@ public class JobController {
 
     @ApiOperation("校验cron表达式是否有效")
     @GetMapping("/api/job/cronExprValidate")
-
+    @Log(title = "作业管理", operateType = OperateType.OTHER)
     @ResponseBody
     public Boolean cronExpressionValidate(String expression) {
         return jobService.checkCronExpression(expression);
@@ -99,6 +108,7 @@ public class JobController {
     @ApiOperation("删除定时任务")
     @DeleteMapping("/api/job/{ids}")
     @RequiresPermissions("SystemMonitor:job:delete")
+    @Log(title = "作业管理", operateType = OperateType.DELETE)
     @ResponseBody
     public Result deleteCronJob(@PathVariable Long[] ids) {
         jobService.deleteJobById(ids);
@@ -106,6 +116,7 @@ public class JobController {
     }
 
     @ApiOperation("立即运行定时任务")
+    @Log(title = "作业管理", operateType = OperateType.OTHER)
     @ResponseBody
     @RequiresPermissions("SystemMonitor:jobRun:update")
     @PostMapping("/api/job/start/{id}")
@@ -117,7 +128,7 @@ public class JobController {
     @ApiOperation("切换定时任务的状态")
     @ResponseBody
     @RequiresPermissions("SystemMonitor:jobStatus:update")
-
+    @Log(title = "作业管理", operateType = OperateType.CHANGE_STATUS)
     @PostMapping("/api/job/{id}/{status}")
     public Result changeStatus(@PathVariable Long id, @PathVariable Integer status) {
         jobService.changStatus(id, status);
@@ -125,6 +136,7 @@ public class JobController {
     }
 
     @ApiOperation("更新任务信息")
+    @Log(title = "作业管理", operateType = OperateType.UPDATE)
     @PutMapping("/api/job")
     @RequiresPermissions("SystemMonitor:job:update")
     @ResponseBody

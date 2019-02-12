@@ -1,5 +1,7 @@
 package com.dimple.modules.BackStageModule.LogManager.controller;
 
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
 import com.dimple.modules.BackStageModule.LogManager.bean.JobLog;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 
@@ -37,12 +40,14 @@ public class JobLogController {
     JobLogService jobLogService;
 
     @GetMapping("/page/jobLog.html")
+    @ApiIgnore
     @RequiresPermissions("page:jobLog:view")
     public String jobLogPage() {
         return "log/jobLog/jobLog";
     }
 
     @GetMapping("/page/jobLog/{id}.html")
+    @ApiIgnore
     @RequiresPermissions("page:jobLogDetail:view")
     public String jobLogDetail(@PathVariable Long id, Model model) {
         model.addAttribute("jobLog", jobLogService.getJobLogById(id));
@@ -52,6 +57,7 @@ public class JobLogController {
 
     @GetMapping("/api/jobLog")
     @RequiresPermissions("logManager:jobLog:query")
+    @Log(title = "作业日志", operateType = OperateType.SELECT)
     @ResponseBody
     public Result jobLogList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                              @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -66,6 +72,7 @@ public class JobLogController {
     }
 
     @DeleteMapping("/api/jobLog/{id}")
+    @Log(title = "作业日志", operateType = OperateType.DELETE)
     @RequiresPermissions("logManager:jobLog:delete")
     @ResponseBody
     public Result deleteJobLogById(@PathVariable Long id[]) {
@@ -76,6 +83,7 @@ public class JobLogController {
 
     @DeleteMapping("/api/jobLog")
     @RequiresPermissions("logManager:jobLog:delete")
+    @Log(title = "作业日志", operateType = OperateType.DELETE)
     @ResponseBody
     public Result cleanJobLog() {
         jobLogService.cleanJobLog();

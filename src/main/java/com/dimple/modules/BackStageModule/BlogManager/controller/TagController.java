@@ -81,6 +81,7 @@ public class TagController {
 
     @GetMapping("/api/tag/{id}")
     @ApiOperation("获取某一个标签的信息")
+    @Log(title = "标签管理", operateType = OperateType.SELECT)
     @RequiresPermissions("blogManager:tags:view")
     public Result getTagById(@PathVariable Integer id) {
         return ResultUtil.success(tagService.getTagById(id));

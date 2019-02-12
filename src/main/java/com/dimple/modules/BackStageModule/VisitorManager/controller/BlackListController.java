@@ -1,9 +1,11 @@
 package com.dimple.modules.BackStageModule.VisitorManager.controller;
 
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
-import com.dimple.modules.BackStageModule.VisitorManager.service.BlackListService;
 import com.dimple.modules.BackStageModule.VisitorManager.bean.Blacklist;
+import com.dimple.modules.BackStageModule.VisitorManager.service.BlackListService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 
@@ -36,6 +39,7 @@ public class BlackListController {
     BlackListService blackListService;
 
     @GetMapping("/page/blacklist.html")
+    @ApiIgnore
     public String blacklistPage() {
         return "visitor/blacklist/list";
     }
@@ -43,6 +47,7 @@ public class BlackListController {
 
     @ApiOperation("将IP地址添加到黑名单")
     @PostMapping("/api/visitor/blacklist/{ips}")
+    @Log(title = "黑名单", operateType = OperateType.INSERT)
     @ResponseBody
     public Result visitBlacklist(@PathVariable String ips[]) {
         blackListService.insertBlackList(ips);
@@ -50,6 +55,7 @@ public class BlackListController {
     }
 
     @DeleteMapping("/api/visitor/blacklist/{ids}")
+    @Log(title = "黑名单", operateType = OperateType.DELETE)
     @ResponseBody
     public Result deleteBlacklist(@PathVariable Integer[] ids) {
         blackListService.deleteBlackList(ids);
@@ -58,6 +64,7 @@ public class BlackListController {
 
     @GetMapping("/api/visitor/blacklist")
     @ResponseBody
+    @Log(title = "黑名单", operateType = OperateType.SELECT)
     public Result blacklistList(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
                                 @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "startTime", required = false) Date startTime,

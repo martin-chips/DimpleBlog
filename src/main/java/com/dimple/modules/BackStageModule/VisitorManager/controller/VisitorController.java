@@ -1,9 +1,11 @@
 package com.dimple.modules.BackStageModule.VisitorManager.controller;
 
-import com.dimple.modules.BackStageModule.VisitorManager.bean.Visitor;
-import com.dimple.modules.BackStageModule.VisitorManager.service.VisitorService;
+import com.dimple.framework.enums.OperateType;
+import com.dimple.framework.log.annotation.Log;
 import com.dimple.framework.message.Result;
 import com.dimple.framework.message.ResultUtil;
+import com.dimple.modules.BackStageModule.VisitorManager.bean.Visitor;
+import com.dimple.modules.BackStageModule.VisitorManager.service.VisitorService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +15,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 import java.util.List;
@@ -32,12 +39,14 @@ public class VisitorController {
     VisitorService visitorService;
 
     @GetMapping("/page/visitor/record/list.html")
+    @ApiIgnore
     @RequiresPermissions("page:visitorRecord:view")
     public String visitorListPage() {
         return "visitor/record/visitorList";
     }
 
     @GetMapping("/page/visitor/record/{id}")
+    @ApiIgnore
     @RequiresPermissions("page:visitorRecordDetail:view")
     public String getVisitorLogInfo(@PathVariable Integer id, Model model) {
         Visitor visitorById = visitorService.getVisitorLogById(id);
@@ -46,6 +55,7 @@ public class VisitorController {
     }
 
     @GetMapping("/page/visitor/count/list.html")
+    @ApiIgnore
     @RequiresPermissions("page:visitorCount:view")
     public String visitorCountListPage() {
         return "visitor/count/list";
@@ -53,6 +63,7 @@ public class VisitorController {
 
 
     @GetMapping("/api/visitor/record")
+    @Log(title = "访客管理", operateType = OperateType.SELECT)
     @RequiresPermissions("page:visitorRecord:query")
     @ResponseBody
     public Result visitorList(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
@@ -66,6 +77,7 @@ public class VisitorController {
     }
 
     @DeleteMapping("/api/visitor/record/{ids}")
+    @Log(title = "访客管理", operateType = OperateType.DELETE)
     @RequiresPermissions("page:visitorRecord:delete")
     @ResponseBody
     public Result deleteVisitorLog(@PathVariable Integer[] ids) {
@@ -74,6 +86,7 @@ public class VisitorController {
     }
 
     @DeleteMapping("/api/visitor/record")
+    @Log(title = "访客管理", operateType = OperateType.DELETE)
     @RequiresPermissions("page:visitorRecord:delete")
     @ResponseBody
     public Result cleanVisitorLog() {
@@ -82,6 +95,7 @@ public class VisitorController {
     }
 
     @GetMapping("/api/visitor/count")
+    @Log(title = "访客管理", operateType = OperateType.SELECT)
     @RequiresPermissions("page:visitorCount:query")
     @ResponseBody
     public Result getVisitorCount(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,

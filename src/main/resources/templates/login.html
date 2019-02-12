@@ -8,6 +8,7 @@
     <link href="/static/plugin/font-awesome/font-awesome.min.css" th:href="@{/plugin/font-awesome/font-awesome.min.css}"
           rel="stylesheet">
     <link href="/static/plugin/animate/animate.css" th:href="@{/plugin/animate/animate.css}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="static/imgs/favicon.ico" th:href="@{/imgs/favicon.ico}">
 
     <link href="/tatic/css/login.css" th:href="@{/css/login.css}" rel="stylesheet">
     <script src="/static/plugin/jquery/jquery.min.js" th:src="@{/plugin/jquery/jquery.min.js}"></script>
@@ -32,17 +33,17 @@
 
 <body style="background-color: #efefef">
 <div class="denlu">
-    <div class="auth"><span><i class="fa fa-windows"></i>&nbsp;Dimple Blog 登录</span></div>
+    <div class="auth"><span><i class="fa fa-windows"></i>&nbsp;Dimple Blog 后台登录</span></div>
     <form id="loginForm" autocomplete="on">
         <div class="input-group">
             <span class="input-label">
                 <i class="fa fa-user"></i>
             </span>
-            <input type="text" name="loginId" class="input-field" value="admin" placeholder="请输入用户名">
+            <input type="text" name="loginId" class="input-field"  placeholder="请输入用户名">
         </div>
         <div class="input-group">
             <span class="input-label"><i class="fa fa-key"></i></span>
-            <input type="password" name="password" class="input-field" value="123456" placeholder="请输入密码">
+            <input type="password" name="password" class="input-field"  placeholder="请输入密码">
         </div>
         <div class="input-group">
             <span class="input-label"><i class="fa fa-check"></i></span>
@@ -51,7 +52,7 @@
                  style="width:45%;height:50px;" id="captcha" class="captchaImg">
         </div>
         <div class="input-group">
-            <button type="button" id="loginBtn" class="input-sub">立即登录</button>
+            <button type="submit" id="loginBtn" class="input-sub">立即登录</button>
         </div>
     </form>
     <div class="foot">

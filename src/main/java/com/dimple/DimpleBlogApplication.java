@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//@SpringBootApplication
-//@EnableCaching
-//@EnableAsync
-//@EnableJpaRepositories
-//@EnableSwagger2
+@SpringBootApplication
+@EnableCaching
+@EnableAsync
+@EnableJpaRepositories
+@EnableSwagger2
 public class DimpleBlogApplication {
     public static void main(String[] args) {
         SpringApplication.run(DimpleBlogApplication.class, args);

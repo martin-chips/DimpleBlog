@@ -54,6 +54,7 @@ public class LinkController {
     }
 
     @GetMapping("/page/linkAdd.html")
+    @ApiIgnore
     @RequiresPermissions("page:linkListInsert:view")
     public String toLinksAdd() {
         return "link/add";

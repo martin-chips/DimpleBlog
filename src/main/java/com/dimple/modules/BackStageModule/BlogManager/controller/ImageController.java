@@ -61,6 +61,7 @@ public class ImageController {
 
     @ApiOperation("SummerNote编辑器中删除图片同步删除服务器图片")
     @DeleteMapping("/api/summernote/image")
+    @Log(title = "文件上传", operateType = OperateType.DELETE)
     @ResponseBody
     public Result deleteImage(String fileUrl) {
         log.info("删除图片{}", fileUrl);
@@ -71,6 +72,7 @@ public class ImageController {
 
     @ApiOperation("获取七牛云服务器上的数据")
     @GetMapping("/api/image")
+    @Log(title = "文件上传", operateType = OperateType.SELECT)
     @ResponseBody
     public Result getImagesUpload() {
         List<String> allImageUrl = fileUtil.getAllImgFromQiNiu();

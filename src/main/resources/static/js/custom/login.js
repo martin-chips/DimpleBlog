@@ -1,8 +1,4 @@
 $(function () {
-    $('.captchaImg').click(function () {
-        var url = "/public/api/kaptcha?time=" + Math.random();
-        $(".captchaImg").attr("src", url);
-    });
 
     $("#loginBtn").click(function () {
         $.modal.loading("正在加载中");

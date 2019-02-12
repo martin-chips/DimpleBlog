@@ -1,9 +1,7 @@
 package com.dimple.framework.enums;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @ClassName: OperateType
@@ -15,6 +13,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 public enum OperateType {
+    /**
+     * 推动到百度站长平台
+     */
+    POSH_BAIDU(9, "推送到百度站长平台"),
+    /**
+     * 上传文件
+     */
     FILE_UPLOAD(8, "文件上传"),
     /**
      * 切换状态
@@ -55,6 +60,7 @@ public enum OperateType {
      * 清空
      */
     CLEAN(4, "清空"),
+
     ;
 
 
