@@ -21,10 +21,10 @@ $(function () {
                 },
                 title: {
                     required: true,
-                    rangelength: [2, 15]
+                    rangelength: [2, 45]
                 },
                 summary: {
-                    maxlength: 150
+                    maxlength: 200
                 },
                 // tags: {
                 //     required: true,

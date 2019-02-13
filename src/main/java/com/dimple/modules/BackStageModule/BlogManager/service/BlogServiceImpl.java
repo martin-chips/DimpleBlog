@@ -286,6 +286,7 @@ public class BlogServiceImpl implements BlogService {
         Specification<Blog> specification = (Specification<Blog>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> list = new LinkedList<>();
             list.add(criteriaBuilder.equal(root.get("categoryId").as(Integer.class), categoryId));
+            list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), 1));
             Predicate[] predicates = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(predicates));
         };
@@ -306,7 +307,12 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Blog> getAllBlogByPageable(Pageable pageable) {
-        return blogRepository.findAll(pageable).getContent();
+        return blogRepository.findAll((Specification<Blog>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new LinkedList<>();
+            list.add(criteriaBuilder.lessThanOrEqualTo(root.get("status").as(Integer.class), 1));
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(predicates));
+        }, pageable).getContent();
     }
 
     @Override

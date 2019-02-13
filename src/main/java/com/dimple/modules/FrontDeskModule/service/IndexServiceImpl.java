@@ -4,6 +4,7 @@ import com.dimple.modules.BackStageModule.BlogManager.bean.Blog;
 import com.dimple.modules.BackStageModule.BlogManager.bean.Category;
 import com.dimple.modules.BackStageModule.BlogManager.repository.BlogRepository;
 import com.dimple.modules.BackStageModule.BlogManager.repository.CategoryRepository;
+import com.dimple.modules.BackStageModule.BlogManager.service.BlogService;
 import com.dimple.modules.BackStageModule.FrontSetting.service.RotationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +37,9 @@ public class IndexServiceImpl implements IndexService {
 
     @Autowired
     RotationService rotationService;
+
+    @Autowired
+    BlogService blogService;
 
     @Override
     public List<String> getCategorySupportName() {
@@ -74,7 +78,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public List<Map<String, Object>> getNewestBlog(Pageable pageable) {
-        List<Blog> blogs = blogRepository.findAll(pageable).getContent();
+        List<Blog> blogs = blogService.getAllBlogByPageable(pageable);
         //将List集合转为Map
         //使用LinkedhashMap保证有序
         List<Map<String, Object>> resultList = new LinkedList<>();

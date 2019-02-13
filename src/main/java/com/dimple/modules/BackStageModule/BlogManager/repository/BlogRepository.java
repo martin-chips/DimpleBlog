@@ -47,10 +47,10 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>, JpaSpecifi
     @Query(value = "select * from blog order by update_time limit 0,4", nativeQuery = true)
     List<Blog> getNewestUpdateBlog();
 
-    @Query(value = "select * from blog where blog_id > :id order by blog_id desc limit 0,1;", nativeQuery = true)
+    @Query(value = "select * from blog where blog_id > :id and status=1 order by blog_id desc limit 0,1;", nativeQuery = true)
     Blog getNextBlog(@Param("id") Integer id);
 
-    @Query(value = "select * from blog where blog_id < :id order by blog_id limit 0,1;", nativeQuery = true)
+    @Query(value = "select * from blog where blog_id < :id  and status=1 order by blog_id limit 0,1;", nativeQuery = true)
     Blog getPreviousBlog(@Param("id") Integer id);
 
     @Modifying
@@ -65,7 +65,7 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>, JpaSpecifi
      * @param i 需要获取的博客的数量
      * @return
      */
-    @Query(value = "select * from blog order by rand() limit :pageSize", nativeQuery = true)
+    @Query(value = "select * from blog order by rand() limit :pageSize where status=1", nativeQuery = true)
     List<Blog> getRandomBlog(@Param("pageSize") int i);
 
 
@@ -75,7 +75,7 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>, JpaSpecifi
      * @param pageable
      * @return
      */
-    @Query(value = "select new com.dimple.modules.FrontDeskModule.domain.BlogDomain(b.blogId,b.categoryId,c.title as categoryTitle,b.title,b.summary,b.createTime,b.click,b.updateTime,b.headerUrl) from Blog as b,Category c where b.categoryId=c.categoryId ")
+    @Query(value = "select new com.dimple.modules.FrontDeskModule.domain.BlogDomain(b.blogId,b.categoryId,c.title as categoryTitle,b.title,b.summary,b.createTime,b.click,b.updateTime,b.headerUrl) from Blog as b,Category c  where b.categoryId=c.categoryId")
     Page<BlogDomain> getAllBlogVo(Pageable pageable);
 
     /**

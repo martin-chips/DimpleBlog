@@ -1,5 +1,7 @@
 package com.dimple.modules.FrontDeskModule.domain;
 
+import lombok.Data;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -11,7 +13,7 @@ import java.util.Date;
  * @date: 01/25/19
  * @version: 1.0
  */
-
+@Data
 public class BlogDomain {
     private Integer blogId;
     private Integer categoryId;
@@ -41,76 +43,5 @@ public class BlogDomain {
         this.headerUrl = headerUrl;
     }
 
-    public Integer getBlogId() {
-        return blogId;
-    }
 
-    public void setBlogId(Integer blogId) {
-        this.blogId = blogId;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getCategoryTitle() {
-        return categoryTitle;
-    }
-
-    public void setCategoryTitle(String categoryTitle) {
-        this.categoryTitle = categoryTitle;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-
-    public Integer getClick() {
-        return click;
-    }
-
-    public void setClick(Integer click) {
-        this.click = click;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getHeaderUrl() {
-        return headerUrl;
-    }
-
-    public void setHeaderUrl(String headerUrl) {
-        this.headerUrl = headerUrl;
-    }
 }

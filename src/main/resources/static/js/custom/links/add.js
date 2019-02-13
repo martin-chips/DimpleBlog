@@ -10,11 +10,11 @@ $(function () {
         rules: {
             title: {
                 required: true,
-                rangelength: [3, 15]
+                rangelength: [3, 80]
             },
             description: {
                 required: true,
-                rangelength: [3, 30]
+                rangelength: [3, 80]
             },
             url: {
                 required: true,

@@ -9,7 +9,7 @@
         th:src="@{/front/plugin/hightlight/highlight.pack.js}"></script>
 <link rel="stylesheet" href="/static/front/plugin/hightlight/xcode.css"
       th:href="@{/front/plugin/hightlight/xcode.css}"/>
-
+<link href="/static/front/css/info.css" th:href="@{/front/css/info.css}" rel="stylesheet">
 <script>hljs.initHighlightingOnLoad();</script>
 <article>
     <!--lbox begin-->
@@ -78,6 +78,7 @@
         <div class="whitebg" data-scroll-reveal="enter top and move 50px over 0.6s">
             <h2 class="htitle">相关文章</h2>
             <ul class="otherlink">
+                <p th:if="${relatedBlog==null||relatedBlog.size()==0}">无</p>
                 <li th:each="blog:${relatedBlog}">
                     <a th:href="'/view/'+${blog.blogId}" th:title="${blog.title}" th:text="${blog.title}"></a>
                 </li>
