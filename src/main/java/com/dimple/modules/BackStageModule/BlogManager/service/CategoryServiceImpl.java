@@ -127,8 +127,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDomain> getSupportCategories() {
-        return categoryRepository.getAllBySupport(true);
+    public List<CategoryDomain> getSupportCategoryOrderByWeight() {
+        return categoryRepository.getAllBySupportOrderByWeightDesc(true);
     }
 
     @Override

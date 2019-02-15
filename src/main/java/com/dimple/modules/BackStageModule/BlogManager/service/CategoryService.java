@@ -70,7 +70,7 @@ public interface CategoryService {
 
     Category getCategoryByTitle(String title);
 
-    List<CategoryDomain> getSupportCategories();
+    List<CategoryDomain> getSupportCategoryOrderByWeight();
 
     /**
      * 根据Id获取Category的信息

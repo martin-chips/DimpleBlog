@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="/static/front/plugin/hightlight/xcode.css"
       th:href="@{/front/plugin/hightlight/xcode.css}"/>
 <link href="/static/front/css/info.css" th:href="@{/front/css/info.css}" rel="stylesheet">
+<link href="/static/front/css/jquery.autoMenu.css" th:href="@{/front/css/jquery.autoMenu.css}" rel="stylesheet">
 <script>hljs.initHighlightingOnLoad();</script>
 <article>
     <!--lbox begin-->
@@ -18,45 +19,91 @@
             <h2 class="htitle"><span class="con_nav">您现在的位置是：<a href="/">网站首页</a>><a href="/">博客详情</a></span>博客详情</h2>
             <h1 class="con_tilte" th:text="${blog.title}">个人博客，属于我的小世界！</h1>
             <p class="bloginfo"><i class="avatar">
-                <img  src="/static/imgs/avatar.png">
+                <img src="/static/imgs/avatar.png">
             </i><span>边小丰</span><span th:text="${#dates.format(blog.createTime,'yyyy年MM月dd日')}">2018-10-28</span>
-                <span>【<a th:text="${category.title}">程序人生</a>】</span>
+                <span>【<a th:href="'/category/'+${category.categoryId}+'.html'" href=""
+                          th:text="${category.title}">程序人生</a>】</span>
                 <span th:text="${blog.click}+'人已围观'">109990人已围观</span>
             </p>
             <br/>
-            <div align="center"><img  class="normalImg" th:src="${blog.headerUrl}"></div>
+            <div align="center"><img class="normalImg" th:src="${blog.headerUrl}"></div>
             <p class="con_info">
                 <b>摘要：</b>
                 <span th:text="${blog.summary}"></span>
             </p>
             <div class="con_text">
                 <div th:utext="${blog.content}"></div>
-                <div id="cyEmoji" role="cylabs" data-use="emoji"></div>
-                <script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
-                <script type="text/javascript" charset="utf-8"
-                        src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cytpwz0ka"></script>
+                <br>
+                <p style="font-weight:  bold;font-size: 16px;text-align:  center;color: #ddd;text-indent: 0;">__EOF__
+                    <br>
             </div>
+            <style>
+                .a_custom:visited {
+                    color: #2daebf;
+                    text-decoration: none;
+                }
+
+                .a_custom:link {
+                    color: #2daebf;
+                    text-decoration: none;
+                }
+
+                .a_custom {
+                    outline: 0;
+                    color: #2daebf;
+                }
+            </style>
 
             <section class="wow padding-bot20 animated fadeIn">
-                <fieldset
-                        style="border:1px dashed #696969;padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;line-height: 2em;color: #A9A9A9">
-                    <legend align="center"
-                            style="color:#FFFFFF;width:360px;text-align:center;background-color:#696969;">☆版权声明
-                    </legend>
-                    <p class="text-danger size16">
-                        本文仅用于学习、研究和交流目的，欢迎非商业性质转载。本文链接：
-                        <a id="url" target="_blank" th:text="'/view/'+${blog.blogId}"
-                           th:href="'/view/'+${blog.blogId}"></a>。
-                        <script>
-                            $("#url").text(window.location.href);
-                        </script>
-                    <div id="copyright1" th:utext="${signature}">
+                <p style="font-family: Microsoft YaHei,微软雅黑,MicrosoftJhengHei,华文细黑,STHeiti,MingLiu;font-size: 14px;background: hsl(220, 23%, 98%)!important;padding: 17px;border: 1px solid hsl(220, 16%, 94%)!important;border-radius: 3px;color: #414857;text-indent: 0;">
+                    <span style="font-weight: bold; white-space:nowrap;">作　　者</span>：<strong><span
+                        style="font-size: 12px; color: red;"><a class="a_custom" href="http://www.bianxiaofeng.com"
+                                                                target="_blank">Dimple</a></span></strong>
+                    <br><span style="font-weight: bold; white-space:nowrap;">出　　处</span>：<a id="url" class="a_custom"
+                                                                                            target="_blank"
+                                                                                            th:text="'/view/'+${blog.blogId}"></a>
+                    <script>
+                        $("#url").text(window.location.href);
+                        $("#url").attr("href", window.location.href);
+                    </script>
+                    <br>
+                    <span
+                            style="font-weight: bold; white-space:nowrap;">版权声明</span>：署名 - 非商业性使用 - 禁止演绎，<a
+                        class="a_custom" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" alt="协议普通文本"
+                        title="协议普通文本"
+                        target="_blank">协议普通文本</a> | <a
+                        class="a_custom" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" alt="协议法律文本"
+                        title="协议法律文本"
+                        target="_blank">协议法律文本</a>。
+                    <br>
+                    <span style="font-weight: bold; white-space:nowrap;">声援博主</span>：如果您觉得文章对您有帮助，可以点击下方的<strong><span
+                        style="color: #ff0000; font-size: 12pt;">【<a id="post-up" onclick="votePost(9132439,'Digg')"
+                                                                     href="javascript:void(0);">鼓掌</a>】</span></strong>一下。您的鼓励是博主的最大动力！如有疑问请留言！<br>
+                </p>
+                <!--<fieldset-->
+                <!--style="border:1px dashed #696969;padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;line-height: 2em;color: #A9A9A9">-->
+                <!--<legend align="center"-->
+                <!--style="color:#FFFFFF;width:360px;text-align:center;background-color:#696969;">☆版权声明-->
+                <!--</legend>-->
+                <!--<p class="text-danger size16">-->
+                <!--本文仅用于学习、研究和交流目的，欢迎非商业性质转载。本文链接：-->
+                <!--<a id="url" target="_blank" th:text="'/view/'+${blog.blogId}"-->
+                <!--th:href="'/view/'+${blog.blogId}"></a>。-->
+                <!--<script>-->
+                <!--$("#url").text(window.location.href);-->
+                <!--</script>-->
+                <!--<div id="copyright1" th:utext="${signature}">-->
 
-                    </div>
-                    </p>
-                </fieldset>
+                <!--</div>-->
+                <!--</p>-->
+                <!--</fieldset>-->
 
             </section>
+            <br>
+            <div id="cyEmoji" role="cylabs" data-use="emoji"></div>
+            <script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+            <script type="text/javascript" charset="utf-8"
+                    src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cytpwz0ka"></script>
         </div>
 
         <div class="whitebg" data-scroll-reveal="enter top and move 50px over 0.6s">
@@ -136,5 +183,12 @@
     </div>
 </article>
 <head th:include="front/common :: front-footer"></head>
-</body>
-</html>
+
+<script src="/static/front/js/jquery.autoMenu.js" th:src="@{/front/js/jquery.autoMenu.js}"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#autoMenu').autoMenu();
+    })
+    < /body>
+    < /html>

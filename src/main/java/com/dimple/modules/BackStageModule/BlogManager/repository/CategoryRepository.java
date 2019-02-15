@@ -28,5 +28,12 @@ public interface CategoryRepository extends JpaRepository<Category, Integer>, Jp
     @Query("from Category where title=:title")
     Category getByTitle(@Param("title") String title);
 
-    List<CategoryDomain> getAllBySupport(Boolean support);
+    List<CategoryDomain> getAllBySupportOrderByWeightDesc(Boolean support);
+
+    /**
+     * 根据Category的权重排序
+     * @return
+     */
+    @Query(value = "select * from  category where support =1 order by weight desc ",nativeQuery = true)
+    List<Category> findALlCategorySupportedOrderByWeightDesc();
 }

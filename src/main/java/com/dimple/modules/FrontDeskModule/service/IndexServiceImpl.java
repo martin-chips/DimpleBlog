@@ -28,7 +28,6 @@ import java.util.*;
 @Service
 @Transactional
 public class IndexServiceImpl implements IndexService {
-
     @Autowired
     CategoryRepository categoryRepository;
 
@@ -43,9 +42,9 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public List<String> getCategorySupportName() {
-        List<Category> categories = categoryRepository.findAllBySupportEquals(true);
+        List<Category> categories = categoryRepository.findALlCategorySupportedOrderByWeightDesc();
         List<String> categoryNames = new LinkedList<>();
-        int i = categories.size() < 5 ? categories.size() : 5;
+        int i = categories.size() < 10 ? categories.size() : 10;
         for (int j = 0; j < i; j++) {
             categoryNames.add(categories.get(j).getTitle());
         }
@@ -54,14 +53,16 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public List<List<Blog>> getBlogsInfo() {
-        List<Category> allCategoryOrderByWeight = categoryRepository.findAllBySupportEquals(true);
+        List<Category> allCategoryOrderByWeight = categoryRepository.findALlCategorySupportedOrderByWeightDesc();
         List<List<Blog>> blogList = new ArrayList<>();
         for (Category category : allCategoryOrderByWeight) {
+            //设置其博文显示
             Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "weight");
             Integer categoryId = category.getCategoryId();
             Specification<Blog> specification = (Specification<Blog>) (root, criteriaQuery, criteriaBuilder) -> {
                 List<Predicate> list = new LinkedList<>();
                 list.add(criteriaBuilder.equal(root.get("categoryId").as(Integer.class), categoryId));
+                list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), 1));
                 Predicate[] predicates = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(predicates));
             };

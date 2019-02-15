@@ -52,7 +52,7 @@ public class CategoryController {
     @GetMapping("/public/api/category")
     @ResponseBody
     public Result getCategories() {
-        List<CategoryDomain> categoryDomains = categoryService.getSupportCategories();
+        List<CategoryDomain> categoryDomains = categoryService.getSupportCategoryOrderByWeight();
         return ResultUtil.success(categoryDomains);
     }
 }

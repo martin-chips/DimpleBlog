@@ -6,7 +6,27 @@
 
 <link th:href="@{/front/plugin/sweetalert/sweetalert2.css}" rel="stylesheet">
 <script src="/static/front/js/index.js" th:src="@{/front/js/index.js}"></script>
-
+<script>
+    $(function () {
+        if (window.name == "") {
+            Swal.fire({
+                title: '<strong>提示</strong>',
+                type: 'info',
+                html:
+                    '您好，欢迎访问边小丰的个人博客网站！<br><strong>非常抱歉，由于备案问题，原存储在七牛云的图片全部失效，备案正常后会全部恢复正常！' +
+                    '之前博文采用markdown格式编写，目前采用批量转化的方式迁移，部分博文存在格式错乱的问题，本人正在处理中，请谅解！</strong><br/>',
+                footer: '本站源码托管在：<a href="https://github.com/DimpleFeng/DimpleBlog">Github<a/> ，如果觉得不错，欢迎fork和star',
+                showCloseButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                showCancelButton: true,
+                confirmButtonText: '<a href="https://github.com/DimpleFeng/DimpleBlog" target="_blank">前往GitHub看看&rarr;</a>',
+                cancelButtonText: '<i class="fa fa-thumbs-up"></i>不再提示',
+            });
+        }
+        window.name = "bianxiaofeng";
+    });
+</script>
 <article>
     <!--lbox begin-->
     <div class="lbox">
@@ -90,9 +110,11 @@
             </ul>
         </div>
         <div class="whitebg bloglist">
-            <h2 class="htitle"><span class="hnav"><a href="/technology.html">查看更多<i class="fa fa-mail-forward>"></i></a></span>最新博文</h2>
+            <h2 class="htitle"><span class="hnav"><a href="/technology.html">查看更多<i class="fa fa-mail-forward>"></i></a></span>最新博文
+            </h2>
             <ul>
-                <li data-scroll-reveal="enter top and move 50px over 0.6s" class=" whitebg" th:each="item:${newestBlog}">
+                <li data-scroll-reveal="enter top and move 50px over 0.6s" class=" whitebg"
+                    th:each="item:${newestBlog}">
                     <h3 class="blogtitle">
                         <a th:href="${'/view/'+item?.blogId}" th:text="${item?.title}"></a>
                     </h3>
@@ -122,27 +144,6 @@
 <script th:src="@{/front/plugin/sweetalert/sweetalert2.min.js}"></script>
 
 <div th:include="front/common :: front-footer"></div>
-<script>
-    $(function () {
-        Swal.fire({
-            title: '<strong>站长提示</strong>',
-            type: 'info',
-            html:
-                '您好，欢迎访问边小丰的个人博客网站！<br><strong>非常抱歉，由于备案问题，原存储在七牛云的图片全部失效，备案正常后会全部恢复正常！感谢您的理解！</strong> <br>' +
-                '<strong>之前博文采用markdown格式编写，目前采用批量转化的方式迁移，部分博文存在格式错乱，本人正在处理中，请谅解！</strong><br/>本站源码托管在：<a href="https://github.com/DimpleFeng/DimpleBlog">Github<a/> ，' +
-                '如果觉得不错，欢迎fork和star',
-            showCloseButton: true,
-            focusConfirm: false,
-            confirmButtonText:
-                '<i class="fa fa-thumbs-up"></i> Great!',
-            confirmButtonAriaLabel: 'Thumbs up, great!',
-            cancelButtonText:
-                '<i class="fa fa-thumbs-down"></i>',
-            cancelButtonAriaLabel: 'Thumbs down',
-        })
-
-    });
-</script>
 </body>
 
 </html>

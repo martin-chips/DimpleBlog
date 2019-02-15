@@ -15,6 +15,7 @@
         <div class="whitebg bloglist">
             <h2 class="htitle">博文列表</h2>
             <ul>
+                <p th:if="${blogs==null||blogs.content.size()==0}">无</p>
                 <li data-scroll-reveal="enter top and move 50px over 0.6s" class=" whitebg" th:each="item:${blogs}">
                     <h3 class="blogtitle">
                         <a th:href="${'/view/'+item?.blogId}" th:text="${item?.title}"></a>

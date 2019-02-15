@@ -1,0 +1,108 @@
+@charset "utf-8";
+/*reset*/
+body, div, ul, p, h1, h2, h3, h4, ol, dl, dd, dt, form, input, textarea, select, strong, em {
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:focus{outline:none;}
+
+/*-------main---------*/
+.autoMenu{
+	position: fixed;
+	bottom: 10%;
+	right: 5%;
+	z-index: 1;
+	text-align: left;
+}
+.autoMenu ul{
+	line-height: 2;
+	overflow-y: auto; 
+	background: #fff;
+	-webkit-box-shadow:0 0 10px #CCC;  
+  -moz-box-shadow:0 0 10px #CCC;  
+  box-shadow:0 0 10px #CCC;
+}
+.autoMenu ul>li.sub{
+	padding-left: 20px;
+}
+.autoMenu ul>li>a{
+	color: #399c9c;
+}
+.autoMenu ul>li.active>a{
+	color: #ff5370;
+}
+
+.btn-box{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    position: relative;
+}
+.icon-plus-sign{
+	display: inline-block;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	border:4px solid #91ba61;
+	background: #91ba61;
+	position: absolute;
+	top:3px;
+	left:3px;
+}
+.icon-plus-sign:before,.icon-plus-sign:after{
+	content: '';
+	display: inline-block;
+	width: 3px;
+	height: 20px;
+	background: #fff;
+	border-radius: 1px;
+	position: absolute;
+	top:3px;
+	left:11.5px;
+}
+.icon-plus-sign:after{
+	-webkit-transform:rotate(90deg);
+}
+.icon-minus-sign{
+	display: inline-block;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	border:4px solid #ff5370;
+	background: #ff5370;
+	position: absolute;
+	top:3px;
+	left:3px;
+}
+.icon-minus-sign:before{
+	content: '';
+	display: inline-block;
+	width: 20px;
+	height: 3px;
+	background: #fff;
+	border-radius: 1px;
+	position: absolute;
+	left:3px;
+	top:11.5px;
+}

@@ -81,6 +81,8 @@ public class DefaultExceptionHandler {
         }
     }
 
+
+
     @ExceptionHandler(UserException.class)
     public Result userException(Exception e) {
         log.error("用户认证异常:" + e.getMessage(), e);

@@ -27,7 +27,7 @@ public class CategoryRepositoryTest {
 
     @Test
     public void testGetSupportCategory() {
-        List<CategoryDomain> allBySupport = categoryRepository.getAllBySupport(true);
+        List<CategoryDomain> allBySupport = categoryRepository.getAllBySupportOrderByWeightDesc(true);
         Assert.notNull(allBySupport, "allBySupport is null");
     }
 }
