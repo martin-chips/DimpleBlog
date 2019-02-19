@@ -14,7 +14,7 @@ spring:
   #页面配置
   thymeleaf:
     #禁止缓存
-    cache: true
+    cache: false
     encoding: UTF-8
   #JPA 配置
   jpa:

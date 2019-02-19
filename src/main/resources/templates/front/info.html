@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/static/front/plugin/hightlight/xcode.css"
       th:href="@{/front/plugin/hightlight/xcode.css}"/>
 <link href="/static/front/css/info.css" th:href="@{/front/css/info.css}" rel="stylesheet">
-<link href="/static/front/css/jquery.autoMenu.css" th:href="@{/front/css/jquery.autoMenu.css}" rel="stylesheet">
+<!--<link href="/static/front/css/jquery.autoMenu.css" th:href="@{/front/css/jquery.autoMenu.css}" rel="stylesheet">-->
 <script>hljs.initHighlightingOnLoad();</script>
 <article>
     <!--lbox begin-->
@@ -80,23 +80,6 @@
                         style="color: #ff0000; font-size: 12pt;">【<a id="post-up" onclick="votePost(9132439,'Digg')"
                                                                      href="javascript:void(0);">鼓掌</a>】</span></strong>一下。您的鼓励是博主的最大动力！如有疑问请留言！<br>
                 </p>
-                <!--<fieldset-->
-                <!--style="border:1px dashed #696969;padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;line-height: 2em;color: #A9A9A9">-->
-                <!--<legend align="center"-->
-                <!--style="color:#FFFFFF;width:360px;text-align:center;background-color:#696969;">☆版权声明-->
-                <!--</legend>-->
-                <!--<p class="text-danger size16">-->
-                <!--本文仅用于学习、研究和交流目的，欢迎非商业性质转载。本文链接：-->
-                <!--<a id="url" target="_blank" th:text="'/view/'+${blog.blogId}"-->
-                <!--th:href="'/view/'+${blog.blogId}"></a>。-->
-                <!--<script>-->
-                <!--$("#url").text(window.location.href);-->
-                <!--</script>-->
-                <!--<div id="copyright1" th:utext="${signature}">-->
-
-                <!--</div>-->
-                <!--</p>-->
-                <!--</fieldset>-->
 
             </section>
             <br>
@@ -131,15 +114,15 @@
                 </li>
             </ul>
         </div>
-        <div class="whitebg gbook" data-scroll-reveal="enter top and move 50px over 0.6s">
+        <div class="whitebg gbook" data-scroll-reveal="enter bottom over 1s">
             <h2 class="htitle">文章评论</h2>
             <ul>
                 <!--PC和WAP自适应版-->
                 <div id="SOHUCS" th:sid="${blog.blogId}"></div>
                 <script type="text/javascript">
                     (function () {
-                        var appid = 'cytpwz0ka';
-                        var conf = 'prod_70f542c4f56cbde240eca5288c5c2e12';
+                        var appid = 'cyu583FnA';
+                        var conf = 'prod_e133a229a25f70b06b142787fad1386b';
                         var width = window.innerWidth || document.documentElement.clientWidth;
                         if (width < 960) {
                             window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
@@ -184,7 +167,7 @@
 </article>
 <head th:include="front/common :: front-footer"></head>
 
-<script src="/static/front/js/jquery.autoMenu.js" th:src="@{/front/js/jquery.autoMenu.js}"></script>
+<!--<script src="/static/front/js/jquery.autoMenu.js" th:src="@{/front/js/jquery.autoMenu.js}"></script>-->
 
 <script type="text/javascript">
     $(function () {
