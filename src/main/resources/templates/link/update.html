@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="common :: common-head"></head>
+<!--IOS风格切换插件-->
+<link href="/static/css/switchery/switchery.css" th:href="@{/css/switchery/switchery.css}" rel="stylesheet">
+<body>
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <form class="form-horizontal m-t" id="updateLinksFrom">
+            <input type="hidden" name="linkId" th:value="${linkInfo.data.linkId}">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">名称：</label>
+                <div class="col-sm-8">
+                    <input id="linkTitle" name="title" th:value="${linkInfo.data.title}" type="text"
+                           class="form-control" lay-verify="required|phone|number">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">描述：</label>
+                <div class="col-sm-8">
+                    <input id="linkDescription" th:value="${linkInfo.data.description}" type="text" class="form-control"
+                           name="description" required=""
+                           aria-required="true">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">链接地址：</label>
+                <div class="col-sm-8">
+                    <input id="linkUrl" th:value="${linkInfo.data.url}" class="form-control" name="url" required=""
+                           lay-verify="url">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">网站图标地址：</label>
+                <div class="col-sm-8">
+                    <input id="linkHeaderUrl" class="form-control" name="headerUrl" required="" th:value="${linkInfo.data.headerUrl}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">是否显示：</label>
+                <div class="col-sm-8">
+                    <input type="checkbox" class="js-switch" th:checked="${linkInfo.data.display}"/>
+                    <input id="display" type="hidden" name="display" th:value="${linkInfo.data.display}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">权重：</label>
+                <div class="col-sm-8">
+                    <input id="linkWeight" th:value="${linkInfo.data.weight}" class="form-control" name="weight">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:include="common :: common-footer"></div>
+<script src="/static/js/switchery/switchery.js" th:src="@{/js/switchery/switchery.js}"></script>
+<script src="/static/js/custom/links/update.js" th:src="@{/js/custom/links/update.js}"></script>
+</body>
+</html>

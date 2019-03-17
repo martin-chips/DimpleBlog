@@ -79,6 +79,12 @@
             #{blogId}
         </foreach>
     </update>
+    <update id="updateBlogSupportByIds">
+        update bg_blog set support=#{support} where blog_id in
+        <foreach collection="array" item="blogId" open="(" separator="," close=")">
+            #{blogId}
+        </foreach>
+    </update>
 
     <delete id="deleteBlogById">
         delete from bg_blog where blog_id=#{blogId}

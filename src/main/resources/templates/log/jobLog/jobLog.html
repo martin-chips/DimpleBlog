@@ -59,7 +59,7 @@
 	<script th:inline="javascript">
 		var detailFlag = [[${@permission.hasPermi('monitor:job:detail')}]];
 		var datas = [[${@dict.getType('sys_common_status')}]];
-		var prefix = ctx + "monitor/jobLog";
+		var prefix = ctx + "log/jobLog";
 
 		$(function() {
 		    var options = {

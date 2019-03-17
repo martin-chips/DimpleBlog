@@ -1,6 +1,6 @@
 
 # DimpleBlog
-
+# 重要通知： 本系统重构中，代码不稳定，请谨慎fork
 #### 介绍
 
 `Dimple Blog`是基于SpringBoot2搭建的个人博客系统。系统使用的技术不完全列举如下：

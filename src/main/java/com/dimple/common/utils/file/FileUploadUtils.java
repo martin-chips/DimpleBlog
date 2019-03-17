@@ -1,15 +1,15 @@
 package com.dimple.common.utils.file;
 
-import java.io.File;
-import java.io.IOException;
-
-import com.dimple.framework.config.QiniuyunConfig;
-import org.springframework.web.multipart.MultipartFile;
 import com.dimple.common.exception.file.FileNameLengthLimitExceededException;
 import com.dimple.common.exception.file.FileSizeLimitExceededException;
 import com.dimple.common.utils.DateUtils;
 import com.dimple.common.utils.Md5Utils;
 import com.dimple.framework.config.SystemConfig;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @className: FileUploadUtils
@@ -18,6 +18,7 @@ import com.dimple.framework.config.SystemConfig;
  * @Date: 2019/3/13
  * @Version: 1.1
  */
+@Slf4j
 public class FileUploadUtils {
     /**
      * 默认大小 50M
@@ -39,7 +40,6 @@ public class FileUploadUtils {
      */
     public static final String IMAGE_JPG_EXTENSION = ".jpg";
 
-    public static QiniuyunConfig QINIUYUN_CONFIG = SystemConfig.getQiniuyunConfig();
 
     private static int counter = 0;
 
@@ -131,7 +131,7 @@ public class FileUploadUtils {
     /**
      * 编码文件名
      */
-    private static final String encodingFilename(String filename) {
+    public static final String encodingFilename(String filename) {
         filename = filename.replace("_", " ");
         filename = Md5Utils.hash(filename + System.nanoTime() + counter++);
         return filename;
@@ -151,14 +151,5 @@ public class FileUploadUtils {
         }
     }
 
-    /**
-     * 上传图片到七牛云服务器
-     *
-     * @param file 需要上传的文件
-     * @return 上传后的文件地址
-     */
-    public static String uploadImgToQiniuyun(MultipartFile file) {
-        System.out.println(QINIUYUN_CONFIG.toString());
-        return "";
-    }
+
 }

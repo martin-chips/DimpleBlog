@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "dimple.qiniuyun")
-public class QiniuyunConfig {
+public class QiNiuConfig {
     private String accessKey;
     private String secretKey;
     private String bucket;

@@ -1,9 +1,9 @@
-package com.dimple.project.monitor.server.domain;
-
-import java.lang.management.ManagementFactory;
+package com.dimple.project.chart.server.domain;
 
 import com.dimple.common.utils.Arith;
 import com.dimple.common.utils.DateUtils;
+
+import java.lang.management.ManagementFactory;
 
 /**
  * @className: Jvm

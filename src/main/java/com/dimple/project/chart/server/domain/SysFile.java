@@ -1,4 +1,4 @@
-package com.dimple.project.monitor.server.domain;
+package com.dimple.project.chart.server.domain;
 
 /**
  * @className: SysFile

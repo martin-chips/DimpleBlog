@@ -1,9 +1,4 @@
-package com.dimple.project.monitor.server.domain;
-
-import java.net.UnknownHostException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
+package com.dimple.project.chart.server.domain;
 
 import com.dimple.common.utils.Arith;
 import com.dimple.common.utils.IpUtils;
@@ -16,6 +11,11 @@ import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
+
+import java.net.UnknownHostException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * @className: Server

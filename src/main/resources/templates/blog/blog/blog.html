@@ -54,6 +54,18 @@
             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="blog:blog:export">
                 <i class="fa fa-download"></i> 导出
             </a>
+            <a class="btn btn-default btn-del disabled" onclick="changeStatus(1)">
+                <i class="fa fa-remove"></i> 发布
+            </a>
+            <a class="btn btn-warning btn-del disabled" onclick="changeStatus(2)">
+                <i class="fa fa-remove"></i> 草稿箱
+            </a>
+            <a class="btn btn-danger btn-del disabled" onclick="changeStatus(3)">
+                <i class="fa fa-remove"></i> 垃圾箱
+            </a>
+            <a class="btn btn-primary btn-del disabled" onclick="pushBaidu()">
+                <i class="fa fa-remove"></i> 推送到百度
+            </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
@@ -121,6 +133,12 @@
         };
         $.table.init(options);
     });
+
+    function support(status) {
+        $.modal.confirm("确定要取消推荐这些博文吗？", function () {
+            $.operate.post(prefix + "/changeStatus", {"userId": userId, "status": 1});
+        })
+    }
 
     function detail(id) {
         var title = "详细";

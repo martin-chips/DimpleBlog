@@ -1,6 +1,5 @@
 package com.dimple.framework.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -34,20 +33,6 @@ public class SystemConfig {
      * 获取地址开关
      */
     private static boolean addressEnabled;
-
-    /**
-     *qiniuyun
-     */
-    @Autowired
-    private static QiniuyunConfig qiniuyunConfig;
-
-    public static QiniuyunConfig getQiniuyunConfig() {
-        return qiniuyunConfig;
-    }
-
-    public void setQiniuyunConfig(QiniuyunConfig qiniuyunConfig) {
-        this.qiniuyunConfig = qiniuyunConfig;
-    }
 
     public String getName() {
         return name;
