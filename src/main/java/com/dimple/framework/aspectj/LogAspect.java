@@ -1,19 +1,5 @@
 package com.dimple.framework.aspectj;
 
-import java.lang.reflect.Method;
-import java.util.Map;
-
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.StringUtils;
@@ -24,6 +10,18 @@ import com.dimple.framework.manager.AsyncManager;
 import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.project.log.operlog.domain.OperLog;
 import com.dimple.project.system.user.domain.User;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * @className: LogAspect
@@ -131,7 +129,6 @@ public class LogAspect {
      * 获取请求的参数，放到log中
      *
      * @param operLog
-     * @param request
      */
     private void setRequestValue(OperLog operLog) {
         Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();

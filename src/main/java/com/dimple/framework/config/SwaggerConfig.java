@@ -38,7 +38,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 // 指定当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.dimple.project.tool.swagger"))
+                .apis(RequestHandlerSelectors.basePackage("com.dimple.project.*"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();

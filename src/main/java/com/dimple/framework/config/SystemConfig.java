@@ -35,6 +35,9 @@ public class SystemConfig {
      */
     private static boolean addressEnabled;
 
+    /**
+     *qiniuyun
+     */
     @Autowired
     private static QiniuyunConfig qiniuyunConfig;
 
