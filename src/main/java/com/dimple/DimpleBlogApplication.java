@@ -1,19 +1,22 @@
 package com.dimple;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.scheduling.annotation.EnableAsync;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication
-@EnableCaching
-@EnableAsync
-@EnableJpaRepositories
-@EnableSwagger2
+/**
+ * @className: DimpleBlogApplication
+ * @description: 启动程序
+ * @auther: Dimple
+ * @Date: 2019/3/13
+ * @Version: 1.1
+ */
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@MapperScan("com.dimple.project.*.*.mapper")
 public class DimpleBlogApplication {
     public static void main(String[] args) {
+        // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(DimpleBlogApplication.class, args);
     }
 }

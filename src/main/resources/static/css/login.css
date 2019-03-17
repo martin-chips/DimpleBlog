@@ -1,147 +1,147 @@
-* {
-    margin: 0;
-    padding: 0;
-    word-wrap: break-word;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
+html {
+	height:100%
 }
-
-body {
-    background: #fff;
-    color: #4d4d4d;
-    font-size: 14px;
-    font-family: '微软雅黑', 'Microsoft YaHei', 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', 'Hiragino Sans GB', serif;
+body.signin {
+	height:auto;
+	background:url(../img/login-background.jpg) no-repeat center fixed;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	background-size:cover;
+	color:rgba(255,255,255,.95)
 }
-
-ul {
-    margin: 0;
-    padding: 0;
+.signinpanel {
+	width:750px;
+	margin:10% auto 0
 }
-
-input, select, textarea, button {
-    outline: none;
-    font-family: inherit;
+.signinpanel .logopanel {
+	float:none;
+	width:auto;
+	padding:0;
+	background:0 0
 }
-
-textarea {
-    resize: none;
-    min-height: 100px;
+.signinpanel .signin-info ul {
+	list-style:none;
+	padding:0;
+	margin:20px 0
 }
-
-/***********------------------------------login------------------------------------**********/
-.denlu {
-    width: 30%;
-    padding: 40px 50px;
-    z-index: 999;
-    background: #fff;
-    margin: 200px auto 0;
+.signinpanel .form-control {
+	display:block;
+	margin-top:15px
 }
-
-.denlu .auth {
-    font-style: normal;
-    display: block;
-    padding: 5px;
-    overflow: hidden;
-    clear: both;
-    zoom: 1;
+.signinpanel .uname {
+	background:#fff url(../img/user.png) no-repeat 95% center;
+	color:#333
 }
-
-.denlu .auth span {
-    display: block;
-    font-size: 20px;
-    line-height: 30px;
-    color: #00b8bf;
+.signinpanel .pword {
+	background:#fff url(../img/locked.png) no-repeat 95% center;
+	color:#333
 }
-
-.denlu .auth span i {
-    color: #00b8bf;
+.signinpanel .code {
+    background: #fff no-repeat 95% center;color:#333; margin:0 0 15px 0;
 }
-
-.denlu .input-group {
-    overflow: hidden;
-    clear: both;
-    zoom: 1;
+.signinpanel .btn {
+	margin-top:15px
+}
+.signinpanel form {
+	background:rgba(255,255,255,.2);
+	border:1px solid rgba(255,255,255,.3);
+	-moz-box-shadow:0 3px 0 rgba(12,12,12,.03);
+	-webkit-box-shadow:0 3px 0 rgba(12,12,12,.03);
+	box-shadow:0 3px 0 rgba(12,12,12,.03);
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	padding:30px
+}
+.signup-footer {
+	border-top:solid 1px rgba(255,255,255,.3);
+	margin:20px 0;
+	padding-top:15px
+}
+@media screen and (max-width:768px) {
+	.signinpanel,.signuppanel {
+	margin:0 auto;
+	width:420px!important;
+	padding:20px
+}
+.signinpanel form {
+	margin-top:20px
+}
+.signup-footer,.signuppanel .form-control {
+	margin-bottom:10px
+}
+.signup-footer .pull-left,.signup-footer .pull-right {
+	float:none!important;
+	text-align:center
+}
+.signinpanel .signin-info ul {
+	display:none
+}
+}@media screen and (max-width:320px) {
+	.signinpanel,.signuppanel {
+	margin:0 20px;
+	width:auto
+}
+}
+/*
+登录界面check样式
+*/
+.checkbox-custom {
     position: relative;
-    margin: 25px 0;
-    border: 1px solid #00b8bf;
+    padding: 0 15px 0 25px;
+    margin-bottom: 7px;
+    display: inline-block;
 }
-
-.denlu .input-group .input-label {
-    width: 50px;
-    display: block;
-    height: 50px;
+/*
+将初始的checkbox的样式改变
+*/
+.checkbox-custom input[type="checkbox"] {
+    opacity: 0; /*将初始的checkbox隐藏起来*/
     position: absolute;
+    cursor: pointer;
+    z-index: 2;
+    margin: -6px 0 0 0;
+    top: 50%;
+    left: 3px;
+}
+/*
+设计新的checkbox，位置
+*/
+.checkbox-custom label:before {
+    content: '';
+    position: absolute;
+    top: 50%;
     left: 0;
-    text-align: center;
-    line-height: 50px;
+    margin-top: -9px;
+    width: 18px;
+    height: 17px;
+    display: inline-block;
+    border-radius: 2px;
+    border: 1px solid #bbb;
+    background: #fff;
 }
-
-input:-webkit-autofill {
-    box-shadow: 0 0 0px 1000px white inset;
-}
-
-input::-webkit-input-placeholder {
-    color: #00b8bf;
-}
-
-.denlu .input-group .input-label i {
-    font-size: 18px;
-    color: #00b8bf;
-}
-
-.denlu .input-group .input-field {
-    width: 246px;
-    color: #00b8bf;
-    background: transparent;
-    padding: 5px 0;
-    height: 50px;
-    line-height: 50px;
-    border: 0 none;
-    margin-left: 50px;
-    outline: none;
-}
-
-.denlu .input-group .input-sub {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    letter-spacing: 10px;
-    cursor: pointer;
-    background: #00b8bf;
-    border: none;
-    color: #fff;
-}
-
-.denlu #captcha {
+/*
+点击初始的checkbox，将新的checkbox关联起来
+*/
+.checkbox-custom input[type="checkbox"]:checked +label:after {
     position: absolute;
-    right: 0;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    content: "\e013";
+    top: 42%;
+    left: 3px;
+    margin-top: -5px;
+    font-size: 11px;
+    line-height: 1;
+    width: 16px;
+    height: 16px;
+    color: #333;
+}
+.checkbox-custom label {
     cursor: pointer;
-    border-left: 1px solid #00b8bf;
-}
-
-.denlu .foot p {
-    text-align: center;
-    color: #37588B;
-}
-
-@media (min-width: 980px) and (max-width: 1200px) {
-    .denlu {
-        width: 40%;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 979px) {
-    .denlu {
-        width: 60%;
-    }
-}
-
-@media (max-width: 767px) {
-    .denlu {
-        width: 100%;
-        padding: 20px;
-        margin: auto;
-    }
+    line-height: 1.2;
+    font-weight: normal; /*改变了rememberme的字体*/
+    margin-bottom: 0;
+    text-align: left;
 }

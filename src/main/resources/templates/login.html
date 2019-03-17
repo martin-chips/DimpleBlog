@@ -2,62 +2,78 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>登录-Dimple博客后台管理</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link href="/static/plugin/font-awesome/font-awesome.min.css" th:href="@{/plugin/font-awesome/font-awesome.min.css}"
-          rel="stylesheet">
-    <link href="/static/plugin/animate/animate.css" th:href="@{/plugin/animate/animate.css}" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="static/imgs/favicon.ico" th:href="@{/imgs/favicon.ico}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <link href="/tatic/css/login.css" th:href="@{/css/login.css}" rel="stylesheet">
-    <script src="/static/plugin/jquery/jquery.min.js" th:src="@{/plugin/jquery/jquery.min.js}"></script>
-
-    <script th:src="@{/plugin/jquery/jquery-validate/jquery.validate.js}"></script>
-    <script th:src="@{/plugin/jquery/jquery-validate/additional-methods.js}"></script>
-    <script th:src="@{/plugin/jquery/jquery-validate/messages_zh.min.js}"></script>
-    <script th:src="@{/plugin/jquery/jquery-validate/common2.js}"></script>
-
-    <script src="/static/plugin/layer/layer.min.js" th:src="@{/plugin/layer/layer.min.js}"></script>
-    <script src="/static/plugin/layui/layui.js" th:src="@{/plugin/layui/layui.js}"></script>
-    <!--遮罩-->
-    <script src="/static/plugin/jquery/blockUI/jquery.blockUI.js"
-            th:src="@{/plugin/jquery/blockUI/jquery.blockUI.js}"></script>
-    <script src="/static/js/custom/login.js" th:src="@{/js/custom/login.js}"></script>
-    <script th:src="@{/js/custom/common/dimple-blog.js}"></script>
-    <script language="JavaScript">
-        if (window != top)
-            top.location.href = location.href;
+    <title>高校学生评优评奖管理系统登录</title>
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link href="../static/css/login.min.css" th:href="@{/css/login.min.css}" rel="stylesheet"/>
+    <link href="../static/dimple/css/ui.css" th:href="@{/dimple/css/ui.css?v=3.2.0}" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>
+    <style type="text/css">label.error {
+        position: inherit;
+    }</style>
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location
+        }
+        ;
     </script>
 </head>
 
-<body style="background-color: #efefef">
-<div class="denlu">
-    <div class="auth"><span><i class="fa fa-windows"></i>&nbsp;Dimple Blog 后台登录</span></div>
-    <form id="loginForm" autocomplete="on">
-        <div class="input-group">
-            <span class="input-label">
-                <i class="fa fa-user"></i>
-            </span>
-            <input type="text" name="loginId" class="input-field"  placeholder="请输入用户名">
+<body class="signin">
+
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-7">
         </div>
-        <div class="input-group">
-            <span class="input-label"><i class="fa fa-key"></i></span>
-            <input type="password" name="password" class="input-field"  placeholder="请输入密码">
+        <div class="col-sm-5">
+            <form id="signupForm">
+                <h4 class="no-margins">登录：</h4>
+                <input type="text" name="username" class="form-control uname" placeholder="用户名" value="admin"/>
+                <input type="password" name="password" class="form-control pword" placeholder="密码" value="admin123"/>
+                <div class="row m-t" th:if="${captchaEnabled==true}">
+                    <div class="col-xs-6">
+                        <input type="text" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5"
+                               autocomplete="off">
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="javascript:void(0);" title="点击更换验证码">
+                            <img th:src="@{captcha/captchaImage(type=${captchaType})}" class="imgcode" width="85%"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="checkbox-custom" th:classappend="${captchaEnabled==false} ? 'm-t'">
+                    <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label>
+                </div>
+                <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
+            </form>
         </div>
-        <div class="input-group">
-            <span class="input-label"><i class="fa fa-check"></i></span>
-            <input type="text" name="kaptcha" class="input-field" placeholder="请输入验证码" style="width:40%;">
-            <img th:src="@{/public/api/kaptcha}" onclick="this.src='/public/api/kaptcha?'+Math.random()" title="点击更换验证码"
-                 style="width:45%;height:50px;" id="captcha" class="captchaImg">
+    </div>
+    <div class="signup-footer">
+        <div class="pull-left">
+            &copy; 2019 All Rights Reserved. Dimple <br>
+            <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">蜀ICP备 19004343</a><br>
         </div>
-        <div class="input-group">
-            <button type="submit" id="loginBtn" class="input-sub">立即登录</button>
-        </div>
-    </form>
-    <div class="foot">
-        <p>Copyright © [www.bianxiaofeng.com] All Rights Reserved</p>
     </div>
 </div>
+<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+<!-- 全局js -->
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- 验证插件 -->
+<script src="../static/ajax/libs/validate/jquery.validate.min.js"
+        th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<script src="../static/ajax/libs/validate/messages_zh.min.js"
+        th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+<script src="../static/ajax/libs/layer/layer.min.js" th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script src="../static/ajax/libs/blockUI/jquery.blockUI.js" th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script src="http://tajs.qq.com/stats?sId=62048022"></script>
+<script src="../static/dimple/js/ui.js" th:src="@{/dimple/js/ui.js?v=3.2.0}"></script>
+<script src="../static/dimple/login.js" th:src="@{/dimple/login.js}"></script>
 </body>
 </html>

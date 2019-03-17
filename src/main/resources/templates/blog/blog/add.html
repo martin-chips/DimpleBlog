@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link rel="stylesheet" href="/static/ajax/libs/summernote/summernote.css"
+      th:href="@{/ajax/libs/summernote/summernote.css}">
+<link rel="stylesheet" href="/static/ajax/libs/summernote/summernote-bs3.css"
+      th:href="@{/ajax/libs/summernote/summernote-bs3.css}">
+<link rel="stylesheet" href="/static/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.css"
+      th:href="@{/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.css}">
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content mailbox-content">
+                    <div class="file-manager">
+                        <form id="blogAddForm">
+                            <h3>配置信息</h3>
+                            <div class="form-group">
+                                <label class="control-label">封面:</label>
+                                <img src="/static/imgs/image-load-error.jpg" width="100%" onclick="uploadImage()"
+                                     height="150px"
+                                     id="header" name="headerImg"/>
+                            </div>
+                            <div class="form-group">
+                                <label class=" control-label">标题:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" name="title" placeholder="在这里输入标题">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" control-label">摘要:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" name="summary" placeholder="在这里输入摘要">
+                                    <span class="help-block m-b-none">
+                                    <i class="fa fa-info-circle"
+                                    ></i> 留空则默认为博文前150字节为博文的摘要</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" control-label">标签:</label>
+                                <div class="">
+                                    <input id="tags" name="tags" class="form-control col-sm-12" data-role="tagsinput"
+                                           type="text"
+                                           style=" min-width: 100%;"
+                                           placeholder="按回车确定  ">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" control-label">权重:</label>
+                                <div class="">
+                                    <input name="weight" class="form-control" type="text" placeholder="在这里输入权重">
+                                    <span class="help-block m-b-none"><i
+                                            class="fa fa-info-circle"></i> 前台首页展示会以权重作为排序标准</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" control-label">分类:</label>
+                                <div class="">
+                                    <div class="input-group" style="width: 100%">
+                                        <select name="categoryId" class="form-control m-b">
+                                            <option th:each="category : ${categories}"
+                                                    th:text="${category.categoryTitle}"
+                                                    th:value="${category.categoryId}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 animated fadeInRight">
+            <div class="mail-box-header">
+                <div class="pull-right tooltip-demo">
+                    <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
+                       onclick="editOrPreview(this)" title="预览"><i class="fa fa-pencil"></i> 预览</a>
+                    <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
+                       onclick="uploadMd()" title="上传MD文件"><i class="fa fa-pencil"></i> 上传</a>
+                </div>
+                <h2>
+                    博客内容
+                </h2>
+            </div>
+            <div class="mail-box">
+                <div class="mail-body">
+                    <div id="summernote" class="summernote"></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="mail-body text-right tooltip-demo">
+                    <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" id="publishBlog"
+                       title="发布到服务器"><i class="fa fa-reply"></i> 发布</a>
+                    <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" id="giveUp"
+                       title="丢弃当前内容并清空输入框"><i class="fa fa-times"></i> 放弃</a>
+                    <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" id="draft"
+                       title="保存到草稿箱"><i class="fa fa-pencil"></i> 保存</a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script src="/static/ajax/libs/summernote/summernote.min.js"
+        th:src="@{/ajax/libs/summernote/summernote.min.js}"></script>
+<script src="/static/ajax/libs/summernote/summernote.js"
+        th:src="@{/ajax/libs/summernote/summernote.js}"></script>
+<script src="/static/ajax/libs/summernote/summernote-ext-highlignt.js"
+        th:src="@{/ajax/libs/summernote/summernote-ext-highlignt.js}"></script>
+<script src="/static/ajax/libs/summernote/summernote-add-class.js"
+        th:src="@{/ajax/libs/summernote/summernote-add-class.js}"></script>
+<script src="/static/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.min.js"
+        th:src="@{/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.min.js}"></script>
+<script>
+
+    $(function () {
+        //初始化summernote
+        initSummernote();
+
+    });
+    var $summernote;
+
+    //调用富文本编辑
+    function initSummernote() {
+        var height = $(window).height() / 1.5;
+        $summernote = $('#summernote').summernote({
+            height: height,
+            minHeight: null,
+            lang: 'zh-CN',
+            maxHeight: null,
+            focus: true,
+            addclass: {
+                debug: false,
+                classTags: [{
+                    title: "Button",
+                    "value": "btn btn-success"
+                }, "jumbotron", "lead", "img-rounded", "img-circle",
+                    "img-responsive", "btn", "btn btn-success", "btn btn-danger",
+                    "text-muted", "text-primary", "text-warning", "text-danger",
+                    "text-success", "table-bordered", "table-responsive", "alert",
+                    "alert alert-success", "alert alert-info", "alert alert-warning",
+                    "alert alert-danger", "visible-sm", "hidden-xs", "hidden-md",
+                    "hidden-lg", "hidden-print"]
+            },
+            toolbar: [
+                ['style', ['style', 'addclass', 'clear']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['highlight', ['highlight']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            //调用图片上传
+            callbacks:
+                {
+                    onImageUpload: function (files) {
+                        sendFile($summernote, files[0]);
+                    },
+                    onMediaDelete: function (target) {
+                        var imgSrc = target.context.currentSrc;
+                        $.ajax({
+                            data: {
+                                fileUrl: imgSrc
+                            },
+                            type: "DELETE",
+                            url: "/api/summernote/image",
+                            dataType: "json",
+                            success: function (data) {
+                            }
+                        });
+                    }
+                }
+        });
+    }
+
+    //ajax上传图片
+    function sendFile($summernote, file) {
+        var formData = new FormData();
+        formData.append("file", file);
+        $.ajax({
+            url: "/api/summernote/image",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    $summernote.summernote('insertImage', result.data, function ($image) {
+                        $image.attr('src', result.data);
+                    });
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

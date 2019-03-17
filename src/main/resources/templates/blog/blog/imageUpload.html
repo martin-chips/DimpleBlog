@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="common :: common-head"></head>
+<link rel="stylesheet" href="/static/plugin/webUploader/webuploader.css"
+      th:href="@{/plugin/webUploader/webuploader.css}">
+<link rel="stylesheet" href="/static/plugin/webUploader/webuploader-custom.css"
+      th:href="@{/plugin/webUploader/webuploader-custom.css}">
+<link rel="stylesheet" href="/static/plugin/image-picker/image-picker.css"
+      th:href="@{/plugin/image-picker/image-picker.css}">
+<style>
+    img {
+        padding: 5px;
+        background-size: cover;
+        background-position: center;
+        width: 400px;
+        height: 200px;
+        border: 5px solid #ddd;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeIn">
+    <input type="hidden" id="imgUrl">
+    <!--加载选项卡-->
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="panel blank-panel">
+                <div class="panel-heading">
+                    <div class="panel-options">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#upload"><i
+                                    class="fa fa-laptop"></i> 本地上传</a>
+                            </li>
+                            <li class=""><a data-toggle="tab" href="#onlineGallery"><i
+                                    class="fa fa-desktop"></i>在线图库</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div id="upload" class="tab-pane active">
+                            <div class="page-container">
+                                <strong>您可以尝试文件拖拽，使用QQ截屏工具，然后激活窗口后粘贴，或者点击添加图片按钮，来上传图片.</strong>
+                                <div id="uploader" class="wu-example">
+                                    <div class="queueList">
+                                        <div id="dndArea" class="placeholder">
+                                            <div id="filePicker"></div>
+                                            <p>或将照片拖到这里，单次最多可选300张</p>
+                                        </div>
+                                    </div>
+                                    <div class="statusBar" style="display:none;">
+                                        <div class="progress">
+                                            <span class="text">0%</span>
+                                            <span class="percentage"></span>
+                                        </div>
+                                        <div class="info"></div>
+                                        <div class="btns">
+                                            <div id="filePicker2"></div>
+                                            <div class="uploadBtn">开始上传</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="onlineGallery" class="tab-pane">
+                            <div class="page-container">
+                                <strong>或者您也可以在此处选择</strong>
+                                <div class="" id="imageView">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:include="common :: common-footer"></div>
+
+<script src="/static/plugin/webUploader/webuploader.nolog.js"
+        th:src="@{/plugin/webUploader/webuploader.nolog.js}"></script>
+<script src="/static/plugin/webUploader/webuploader-custom.js"
+        th:src="@{/plugin/webUploader/webuploader-custom.js}"></script>
+<script src="/static/plugin/image-picker/image-picker.min.js"
+        th:src="@{/plugin/image-picker/image-picker.min.js}"></script>
+
+<script>
+    $(function () {
+        loadImage();
+    });
+
+    function submitHandler() {
+        return $(".image-picker").val();
+    }
+
+    function closeLocal() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭当前页
+    }
+
+
+    function loadImage() {
+        $.ajax({
+            url: "/api/image",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                if (data.code == web_status.SUCCESS) {
+                    var imagesUrl = data.data;
+                    var select = $("<select class='image-picker' id='imgSelect'></select>");
+                    for (var i = 0; i < imagesUrl.length; i++) {
+                        var option = $("<option></option>");
+                        option.attr("data-img-src", imagesUrl[i]);
+                        option.attr("value", imagesUrl[i]);
+                        option.addClass("file");
+                        select.append(option);
+                    }
+                    $("#imageView").append(select);
+                    $("select").imagepicker();
+                }
+            }
+        })
+    }
+</script>
+
+</body>
+
+</html>

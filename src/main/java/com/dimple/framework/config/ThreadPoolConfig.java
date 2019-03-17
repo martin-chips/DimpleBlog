@@ -1,20 +1,20 @@
 package com.dimple.framework.config;
 
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
+
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
-
 /**
  * @className: ThreadPoolConfig
- * @description:
- * @auther: Owenb
- * @date: 01/29/19
- * @version: 1.0
+ * @description: 线程池配置
+ * @auther: Dimple
+ * @Date: 2019/3/13
+ * @Version: 1.1
  */
 @Configuration
 public class ThreadPoolConfig {

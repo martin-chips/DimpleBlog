@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dimple.project.blog.blog.mapper.BlogMapper">
+    <!--基本的blog信息-->
+    <resultMap id="BaseResultMap" type="com.dimple.project.blog.blog.domain.Blog">
+        <id column="blog_id" property="blogId" jdbcType="INTEGER"/>
+        <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="weight" property="weight" jdbcType="INTEGER"/>
+        <result column="support" property="support" jdbcType="CHAR"/>
+        <result column="click" property="click" jdbcType="INTEGER"/>
+        <result column="header_img" property="headerImg" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="CHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!--带博客正文的博客信息-->
+    <resultMap id="ResultMapWithBLOBs" type="com.dimple.project.blog.blog.domain.Blog" extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <sql id="selectBlogVo">
+        select blog_id, category_id, title, summary, status,
+        weight, support, click, header_img, type,
+        create_by, create_time, update_by, update_time
+        from bg_blog
+    </sql>
+
+    <insert id="insertBlog">
+        insert into bg_blog(
+        <if test="blogId != null and blogId != 0">blog_id,</if>
+        <if test="categoryId != null and categoryId != ''">category_id,</if>
+        <if test="title != null and title != ''">title,</if>
+        <if test="summary != null and summary != ''">summary,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="weight != null and weight != ''">weight,</if>
+        <if test="support != null and support != ''">support,</if>
+        <if test="headerImg != null and headerImg != ''">header_img,</if>
+        <if test="content != null and content != ''">content,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="blogId != null and blogId != 0">#{blogId},</if>
+        <if test="categoryId != null and categoryId != ''">#{categoryId},</if>
+        <if test="title != null and title != ''">#{title},</if>
+        <if test="summary != null and summary != ''">#{summary},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="weight != null and weight != ''">#{weight},</if>
+        <if test="support != null and support != ''">#{support},</if>
+        <if test="headerImg != null and headerImg != ''">#{headerImg},</if>
+        <if test="content != null and content != ''">#{content},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+    <update id="updateBlog">
+        update bg_blog
+        <set>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="summary != null and summary != ''">summary = #{summary},</if>
+            <if test="categoryId != null and categoryId != ''">category_id = #{categoryId},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="weight != null and weight != ''">weight = #{weight},</if>
+            <if test="support != null and support != ''">support = #{support},</if>
+            <if test="headerImg != null and headerImg != ''">header_img = #{headerImg},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where blog_id = #{blogId}
+    </update>
+    <update id="updateBlogStatusById">
+        update bg_blog set status=#{status} where blog_id in
+        <foreach collection="array" item="blogId" open="(" separator="," close=")">
+            #{blogId}
+        </foreach>
+    </update>
+
+    <delete id="deleteBlogById">
+        delete from bg_blog where blog_id=#{blogId}
+    </delete>
+
+    <delete id="deleteBlogByIds">
+        delete from bg_blog where blog_id in
+        <foreach collection="array" item="blogId" open="(" separator="," close=")">
+            #{blogId}
+        </foreach>
+    </delete>
+
+    <select id="selectBlogList" resultType="com.dimple.project.blog.blog.domain.Blog">
+        select blog_id, title, status, weight, support, click, type,
+        create_time, update_time
+        from bg_blog
+        <where>
+            <if test="title!=null and title!=''">
+                and title like concat('%',#{title},'%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="type != null and type != ''">
+                AND type = #{type}
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectBlogById" resultType="com.dimple.project.blog.blog.domain.Blog">
+         select blog_id, category_id, title, summary, status,
+        weight, support, header_img,
+        create_by, create_time, update_by, update_time
+        from bg_blog where blog_id=#{blogId}
+    </select>
+
+
+</mapper>

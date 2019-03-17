@@ -8,5 +8,5 @@ _/____/____/____/_/__/____/___/__/____(___ _
                          /
                         /
 Spring Boot Version: ${spring-boot.version}
-Project Version: V1.0
+Project Version: V1.1
 ____________________________________________

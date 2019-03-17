@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dimple.project.blog.category.mapper.CategoryMapper">
+
+    <sql id="selectCategoryVo">
+        select category_id, category_title, weight,
+        description, create_by, create_time, update_by, update_time
+        from
+        bg_category
+    </sql>
+
+    <insert id="insertCategory">
+        insert into bg_category(
+        <if test="categoryTitle != null and categoryTitle != 0">category_title,</if>
+        <if test="weight != null and weight != ''">weight,</if>
+        <if test="description != null and description != ''">description,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="categoryTitle != null and categoryTitle != 0">#{categoryTitle},</if>
+        <if test="weight != null and weight != ''">#{weight},</if>
+        <if test="description != null and description != ''">#{description},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+    <update id="updateCategory">
+        update bg_category
+        <set>
+            <if test="categoryTitle != null and categoryTitle != ''">category_title = #{categoryTitle},</if>
+            <if test="weight != null and weight != ''">weight = #{weight},</if>
+            <if test="description != null and description != ''">description = #{description},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where user_id = #{userId}
+    </update>
+    <delete id="deleteCategoryByIds">
+        delete from bg_category where category_id in
+        <foreach collection="array" item="categoryId" open="(" separator="," close=")">
+            #{categoryId}
+        </foreach>
+    </delete>
+    <select id="selectCategoryList" resultType="com.dimple.project.blog.category.domain.Category">
+        <include refid="selectCategoryVo"/>
+        <where>
+            <if test="categoryTitle != null and categoryTitle != ''">
+                AND category_title like concat('%', #{categoryTitle}, '%')
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    <select id="selectCategoryById" resultType="com.dimple.project.blog.category.domain.Category">
+        <include refid="selectCategoryVo"/>
+        where category_id=#{categoryId}
+    </select>
+
+
+</mapper>

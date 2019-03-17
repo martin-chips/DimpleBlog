@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.log.visitorLog.mapper.VisitLogMapper">
+
+    <sql id="selectVisitLogVo">
+        select id, ip_addr, location, browser, os, status,spider, title, create_by, create_time
+        from
+        bg_visit_log
+    </sql>
+
+    <delete id="cleanVisitLog">
+          delete from bg_visit_log
+    </delete>
+
+    <delete id="deleteVisitLogByIds">
+        delete from bg_visit_log where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectVisitLogList" resultType="com.dimple.project.log.visitorLog.domain.VisitLog">
+        <include refid="selectVisitLogVo"/>
+        <where>
+            <if test="title !=null and title !=''">
+                and title like concat('%',#{title},'%')
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(oper_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(oper_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    <select id="selectVisitLogById" resultType="com.dimple.project.log.visitorLog.domain.VisitLog">
+        select id, ip_addr, location, browser, os, spider, request_url, error_msg, title, create_by, create_time, status
+        from bg_visit_log where id =#{visitId};
+    </select>
+
+
+</mapper>
