@@ -1,13 +1,61 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
+<style>
+    .linksDetails li {
+        margin-top: 10px;
+    }
+</style>
 <body class="gray-bg">
+<div class="ui-layout-west">
+    <div class="main-content">
+        <div class="box box-main">
+            <div class="box-header">
+                <div class="box-title">
+                    <i class="fa icon-grid"></i> 博客概览
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新列表"><i
+                            class="fa fa-refresh"></i></button>
+                </div>
+            </div>
+            <div class="ui-layout-content">
+                <ul class="folder-list m-b-md linksDetails" style="padding: 0">
+                    <li>
+                        <a> <i class="fa fa-inbox "></i> 所有
+                            <span class="label label-success pull-right">123 </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a> <i class="fa fa-tags "></i> 已发布
+                            <span class="label  label-default  pull-right">123</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a> <i class="fa fa-chain-broken "></i> 草稿箱
+                            <span class="label label-warning pull-right">123</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a> <i class="fa fa-indent "></i> 垃圾箱
+                            <span class="label label-danger  pull-right"> 123</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="container-div">
+<div class="container-div ui-layout-center">
     <div class="row">
         <div class="col-sm-12 search-collapse">
-            <form id="config-form">
+            <form id="user-form">
+                <input type="hidden" id="deptId" name="deptId">
+                <input type="hidden" id="parentId" name="parentId">
                 <div class="select-list">
                     <ul>
                         <li>
@@ -40,7 +88,7 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="blog:blog:add">
+            <a class="btn btn-success" onclick="addBlog()" shiro:hasPermission="blog:blog:add">
                 <i class="fa fa-plus"></i> 新增
             </a>
             <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
@@ -67,18 +115,32 @@
                 <i class="fa fa-remove"></i> 推送到百度
             </a>
         </div>
+
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
     </div>
 </div>
+
 <div th:include="include :: footer"></div>
+<script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
 <script th:inline="javascript">
     var editFlag = [[${@permission.hasPermi('blog:blog:edit')}]];
     var removeFlag = [[${@permission.hasPermi('blog:blog:remove')}]];
     var datas = [[${@dict.getType('sys_yes_no')}]];
     var prefix = ctx + "blog/blog";
+
+    function addBlog() {
+        var url = ctx + 'blog/blog/add';
+        createMenuItem(url, "新增博文");
+    }
+
     $(function () {
+        var panehHidden = false;
+        if ($(this).width() < 769) {
+            panehHidden = true;
+        }
+        $('body').layout({initClosed: panehHidden, west__size: 185});
         var options = {
             url: prefix + "/list",
             createUrl: prefix + "/add",
@@ -184,4 +246,5 @@
     }
 </script>
 </body>
+
 </html>

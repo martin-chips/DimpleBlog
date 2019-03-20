@@ -1,108 +1,121 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
 <link rel="stylesheet" href="/static/ajax/libs/summernote/summernote.css"
       th:href="@{/ajax/libs/summernote/summernote.css}">
 <link rel="stylesheet" href="/static/ajax/libs/summernote/summernote-bs3.css"
       th:href="@{/ajax/libs/summernote/summernote-bs3.css}">
 <link rel="stylesheet" href="/static/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.css"
       th:href="@{/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.css}">
+<style>
+    .linksDetails li {
+        margin-top: 10px;
+    }
+</style>
 <body class="gray-bg">
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content mailbox-content">
-                    <div class="file-manager">
-                        <form id="blogAddForm">
-                            <h3>配置信息</h3>
-                            <div class="form-group">
-                                <label class="control-label">封面:</label>
-                                <img src="/static/imgs/image-load-error.jpg" width="100%" onclick="uploadImage()"
-                                     height="150px"
-                                     id="header" name="headerImg"/>
-                            </div>
-                            <div class="form-group">
-                                <label class=" control-label">标题:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" name="title" placeholder="在这里输入标题">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class=" control-label">摘要:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" name="summary" placeholder="在这里输入摘要">
-                                    <span class="help-block m-b-none">
+<div class="ui-layout-west">
+    <div class="main-content">
+        <div class="box box-main">
+            <div class="box-header">
+                <div class="box-title">
+                    <i class="fa icon-grid"></i> 博客概览
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新列表"><i
+                            class="fa fa-refresh"></i></button>
+                </div>
+            </div>
+            <div class="ui-layout-content">
+                <div class="form-group">
+                    <label class="control-label">封面:</label>
+                    <img src="/static/imgs/image-load-error.jpg" width="100%" onclick="uploadImage()"
+                         height="150px"
+                         id="header" name="headerImg"/>
+                </div>
+                <div class="form-group">
+                    <label class=" control-label">标题:</label>
+                    <div class="">
+                        <input type="text" class="form-control" name="title" placeholder="在这里输入标题">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" control-label">摘要:</label>
+                    <div class="">
+                        <input type="text" class="form-control" name="summary" placeholder="在这里输入摘要">
+                        <span class="help-block m-b-none">
                                     <i class="fa fa-info-circle"
                                     ></i> 留空则默认为博文前150字节为博文的摘要</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class=" control-label">标签:</label>
-                                <div class="">
-                                    <input id="tags" name="tags" class="form-control col-sm-12" data-role="tagsinput"
-                                           type="text"
-                                           style=" min-width: 100%;"
-                                           placeholder="按回车确定  ">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class=" control-label">权重:</label>
-                                <div class="">
-                                    <input name="weight" class="form-control" type="text" placeholder="在这里输入权重">
-                                    <span class="help-block m-b-none"><i
-                                            class="fa fa-info-circle"></i> 前台首页展示会以权重作为排序标准</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class=" control-label">分类:</label>
-                                <div class="">
-                                    <div class="input-group" style="width: 100%">
-                                        <select name="categoryId" class="form-control m-b">
-                                            <option th:each="category : ${categories}"
-                                                    th:text="${category.categoryTitle}"
-                                                    th:value="${category.categoryId}">
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" control-label">标签:</label>
+                    <div class="">
+                        <input id="tags" name="tags" class="form-control col-sm-12" data-role="tagsinput"
+                               type="text"
+                               style=" min-width: 100%;"
+                               placeholder="按回车确定  ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" control-label">权重:</label>
+                    <div class="">
+                        <input name="weight" class="form-control" type="text" placeholder="在这里输入权重">
+                        <span class="help-block m-b-none"><i
+                                class="fa fa-info-circle"></i> 前台首页展示会以权重作为排序标准</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" control-label">分类:</label>
+                    <div class="">
+                        <div class="input-group" style="width: 100%">
+                            <select name="categoryId" class="form-control m-b">
+                                <option th:each="category : ${categories}"
+                                        th:text="${category.categoryTitle}"
+                                        th:value="${category.categoryId}">
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 animated fadeInRight">
-            <div class="mail-box-header">
-                <div class="pull-right tooltip-demo">
-                    <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
-                       onclick="editOrPreview(this)" title="预览"><i class="fa fa-pencil"></i> 预览</a>
-                    <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
-                       onclick="uploadMd()" title="上传MD文件"><i class="fa fa-pencil"></i> 上传</a>
-                </div>
-                <h2>
-                    博客内容
-                </h2>
+    </div>
+</div>
+
+<div class="container-div ui-layout-center">
+    <div class="row">
+        <div class="mail-box-header">
+            <div class="pull-right tooltip-demo">
+                <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
+                   onclick="editOrPreview(this)" title="预览"><i class="fa fa-pencil"></i> 预览</a>
+                <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
+                   onclick="uploadMd()" title="上传MD文件"><i class="fa fa-pencil"></i> 上传</a>
             </div>
-            <div class="mail-box">
-                <div class="mail-body">
-                    <div id="summernote" class="summernote"></div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="mail-body text-right tooltip-demo">
-                    <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" id="publishBlog"
-                       title="发布到服务器"><i class="fa fa-reply"></i> 发布</a>
-                    <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" id="giveUp"
-                       title="丢弃当前内容并清空输入框"><i class="fa fa-times"></i> 放弃</a>
-                    <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" id="draft"
-                       title="保存到草稿箱"><i class="fa fa-pencil"></i> 保存</a>
-                </div>
+            <h2>
+                博客内容
+            </h2>
+        </div>
+        <div class="mail-box">
+            <div class="mail-body">
+                <div id="summernote" class="summernote"></div>
                 <div class="clearfix"></div>
             </div>
+            <div class="mail-body text-right tooltip-demo">
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                        class="fa fa-check"></i>保 存
+                </button>&nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="close()"><i
+                        class="fa fa-reply-all"></i>关 闭
+                </button>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 </div>
+
 <div th:include="include :: footer"></div>
 <script src="/static/ajax/libs/summernote/summernote.min.js"
         th:src="@{/ajax/libs/summernote/summernote.min.js}"></script>
@@ -114,18 +127,47 @@
         th:src="@{/ajax/libs/summernote/summernote-add-class.js}"></script>
 <script src="/static/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.min.js"
         th:src="@{/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.min.js}"></script>
+<script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
 <script>
+    // 关闭当前
+    function close() {
+        window.close();
+    }
 
     $(function () {
+        var panehHidden = false;
+        if ($(this).width() < 769) {
+            panehHidden = true;
+        }
+        $('body').layout({initClosed: panehHidden, west__size: 350});
         //初始化summernote
         initSummernote();
-
     });
+
+
     var $summernote;
+    var previewFlag = true;
+    /**
+     * 编辑或者预览
+     */
+    var editOrPreview = function (target) {
+        if (previewFlag) {
+            var markup = $('.summernote').summernote('code');
+            $('.summernote').summernote('destroy');
+            $(target).html("<i class=\"fa fa-pencil\"></i>" + "编辑");
+            previewFlag = false;
+        } else {
+            // $('.summernote').summernote({focus: true});
+            initSummernote();
+            $(target).html("<i class=\"fa fa-book\"></i>" + "预览");
+            previewFlag = true;
+        }
+
+    };
 
     //调用富文本编辑
     function initSummernote() {
-        var height = $(window).height() / 1.5;
+        var height = $(window).height() / 1.8;
         $summernote = $('#summernote').summernote({
             height: height,
             minHeight: null,
@@ -201,7 +243,7 @@
             }
         });
     }
-
 </script>
 </body>
+
 </html>

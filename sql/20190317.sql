@@ -238,7 +238,7 @@ insert into sys_menu values('1049', '任务查询', '110', '1', '#',  'F', '0', 
 insert into sys_menu values('1050', '任务新增', '110', '2', '#',  'F', '0', 'monitor:job:add',                 '#', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '');
 insert into sys_menu values('1051', '任务修改', '110', '3', '#',  'F', '0', 'monitor:job:edit',                '#', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '');
 insert into sys_menu values('1052', '任务删除', '110', '4', '#',  'F', '0', 'monitor:job:remove',              '#', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '');
-insert into sys_menu values('1053', '状态修改', '110', '5', '#',  'F', '0', 'monitor:job:changeStatus',        '#', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '');
+insert into sys_menu values('1053', '状态修改', '110', '5', '#',  'F', '0', 'monitor:job:changeDisplay',        '#', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '');
 insert into sys_menu values('1054', '任务详细', '110', '6', '#',  'F', '0', 'monitor:job:detail',              '#', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '');
 insert into sys_menu values('1055', '任务导出', '110', '7', '#',  'F', '0', 'monitor:job:export',              '#', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '');
 -- 代码生成按钮

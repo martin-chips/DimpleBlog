@@ -83,7 +83,7 @@ public class JobController extends BaseController {
      * 任务调度状态修改
      */
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
-    @RequiresPermissions("monitor:job:changeStatus")
+    @RequiresPermissions("monitor:job:changeDisplay")
     @PostMapping("/changeStatus")
     @ResponseBody
     public AjaxResult changeStatus(Job job) throws SchedulerException {
@@ -94,7 +94,7 @@ public class JobController extends BaseController {
      * 任务调度立即执行一次
      */
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
-    @RequiresPermissions("monitor:job:changeStatus")
+    @RequiresPermissions("monitor:job:changeDisplay")
     @PostMapping("/run")
     @ResponseBody
     public AjaxResult run(Job job) throws SchedulerException {

@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @Version: 1.1
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@MapperScan("com.dimple.project.*.*.mapper")
+@MapperScan("com.dimple.project.**.mapper")
 public class DimpleBlogApplication {
     public static void main(String[] args) {
         // System.setProperty("spring.devtools.restart.enabled", "false");
