@@ -607,6 +607,23 @@
             post: function (url, data) {
                 $.operate.submit(url, "post", "json", data);
             },
+            //自定义POST请求
+            postM: function (url, data) {
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            $.modal.alertSuccess(result.msg);
+                        } else {
+                            $.model.alertError(result.msg);
+                        }
+                    }
+                };
+                $.ajax(config);
+            },
             // get请求传输
             get: function (url) {
                 $.operate.submit(url, "get", "json", "");
@@ -646,7 +663,7 @@
                         $.operate.get(url);
                     } else {
                         var data = {"ids": id};
-                        $.operate.submit(url, "post", "json", data);
+                        $.operate.submit(url, "delete", "json", data);
                     }
                 });
 
@@ -661,7 +678,7 @@
                 $.modal.confirm("确认要删除选中的" + rows.length + "条数据吗?", function () {
                     var url = $.table._option.removeUrl;
                     var data = {"ids": rows.join()};
-                    $.operate.submit(url, "post", "json", data);
+                    $.operate.submit(url, "delete", "json", data);
                 });
             },
             // 清空信息
@@ -774,6 +791,8 @@
                 } else if (result.code == web_status.SUCCESS && $.table._option.type == table_type.bootstrapTreeTable) {
                     $.modal.msgSuccess(result.msg);
                     $.treeTable.refresh();
+                } else if (result.code == web_status.SUCCESS) {
+                    $.modal.msgSuccess(result.msg);
                 } else {
                     $.modal.alertError(result.msg);
                 }
@@ -827,7 +846,7 @@
                     $.modal.alertError(result.msg);
                 }
                 $.modal.closeLoading();
-            }
+            },
         },
         // 校验封装处理
         validate: {

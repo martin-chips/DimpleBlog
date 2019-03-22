@@ -104,7 +104,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="mail-body text-right tooltip-demo">
-                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                <button type="button" class="btn btn-sm btn-primary" onclick="postBlog()"><i
                         class="fa fa-check"></i>保 存
                 </button>&nbsp;
                 <button type="button" class="btn btn-sm btn-danger" onclick="close()"><i
@@ -242,6 +242,49 @@
                 }
             }
         });
+    }
+
+
+    //获取表单数据
+    function getData() {
+        var headerUrl = $("#header")[0].src;
+        var title = $("input[name='title']").val();
+        var summary = $("input[name='summary']").val();
+        var tags = $("#tags").val();
+        var weight = $("input[name='weight']").val();
+        var categoryId = $("select[name='categoryId']").val();
+        var content = $("#summernote").summernote("code");
+        var tagsArray = new Array();
+        console.log(tags);
+        var data = {
+            headerUrl: headerUrl,
+            title: title,
+            summary: summary,
+            tags: tags,
+            categoryId: categoryId,
+            weight: weight,
+            content: content
+        }
+        console.log(data);
+        return data;
+    }
+
+    function postBlog() {
+        var data = getData();
+        $.operate.post("/blog/blog/add",data)
+        // $.ajax({
+        //     url: "/blog/blog/add",
+        //     data: data,
+        //     type: "POST",
+        //     dataType: "json",
+        //     success: function (result) {
+        //         if (result.code == web_status.SUCCESS) {
+        //             $.modal.
+        //         }
+        //     }
+        // });
+
+
     }
 </script>
 </body>

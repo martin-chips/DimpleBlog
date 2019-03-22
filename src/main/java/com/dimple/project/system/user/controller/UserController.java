@@ -146,7 +146,7 @@ public class UserController extends BaseController {
 
     @RequiresPermissions("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
         try {

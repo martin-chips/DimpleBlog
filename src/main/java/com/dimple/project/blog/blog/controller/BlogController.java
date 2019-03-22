@@ -58,8 +58,10 @@ public class BlogController extends BaseController {
     @Log(title = "博客管理", businessType = BusinessType.INSERT)
     @RequiresPermissions("blog:blog:add")
     @PostMapping("/add")
+    @ResponseBody
     public AjaxResult addSave(Blog blog) {
-        return toAjax(blogService.insertBlog(blog));
+        int i = blogService.insertBlog(blog);
+        return toAjax(i);
     }
 
     @GetMapping("/edit/{blogId}")

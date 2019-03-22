@@ -196,17 +196,17 @@ var log = {
 };
 
 /** 设置全局ajax处理 */
-$.ajaxSetup({
-    complete: function (XMLHttpRequest, textStatus) {
-        if (textStatus == 'timeout') {
-            $.modal.alertWarning("服务器超时，请稍后再试！");
-            $.modal.closeLoading();
-        } else if (textStatus == "parsererror") {
-            $.modal.alertWarning("服务器错误，请联系管理员！");
-            $.modal.closeLoading();
-        }
-    }
-});
+// $.ajaxSetup({
+//     complete: function (XMLHttpRequest, textStatus) {
+//         if (textStatus == 'timeout') {
+//             $.modal.alertWarning("服务器超时，请稍后再试！");
+//             $.modal.closeLoading();
+//         } else if (textStatus == "parsererror") {
+//             $.modal.alertWarning("服务器错误，请联系管理员！");
+//             $.modal.closeLoading();
+//         }
+//     }
+// });
 layer.config({
     extend: 'moon/style.css',
     skin: 'layer-ext-moon'

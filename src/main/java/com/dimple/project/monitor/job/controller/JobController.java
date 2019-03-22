@@ -1,17 +1,5 @@
 package com.dimple.project.monitor.job.controller;
 
-import java.util.List;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.dimple.common.exception.job.TaskException;
 import com.dimple.common.utils.poi.ExcelUtil;
 import com.dimple.framework.aspectj.lang.annotation.Log;
@@ -21,6 +9,14 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.monitor.job.domain.Job;
 import com.dimple.project.monitor.job.service.IJobService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @className: JobController
@@ -64,7 +60,7 @@ public class JobController extends BaseController {
 
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
     @RequiresPermissions("monitor:job:remove")
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) throws SchedulerException {
         jobService.deleteJobByIds(ids);

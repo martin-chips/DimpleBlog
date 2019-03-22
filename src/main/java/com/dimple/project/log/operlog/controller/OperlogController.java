@@ -1,16 +1,5 @@
 package com.dimple.project.log.operlog.controller;
 
-import java.util.List;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.dimple.common.utils.poi.ExcelUtil;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
@@ -19,6 +8,13 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.log.operlog.domain.OperLog;
 import com.dimple.project.log.operlog.service.IOperLogService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @className: OperlogController
@@ -61,7 +57,7 @@ public class OperlogController extends BaseController {
     }
 
     @RequiresPermissions("log:operlog:remove")
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
         return toAjax(operLogService.deleteOperLogByIds(ids));

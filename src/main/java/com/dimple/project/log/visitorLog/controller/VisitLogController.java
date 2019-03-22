@@ -45,7 +45,7 @@ public class VisitLogController extends BaseController {
 
     @RequiresPermissions("log:visitLog:remove")
     @Log(title = "访问日志", businessType = BusinessType.DELETE)
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(Integer[] ids) {
         return toAjax(visitLogService.deleteVisitLogByIds(ids));
