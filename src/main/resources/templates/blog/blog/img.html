@@ -2,18 +2,18 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head th:include="include :: header"></head>
-<link rel="stylesheet" href="/static/plugin/webUploader/webuploader.css"
-      th:href="@{/plugin/webUploader/webuploader.css}">
-<link rel="stylesheet" href="/static/plugin/webUploader/webuploader-custom.css"
-      th:href="@{/plugin/webUploader/webuploader-custom.css}">
-<link rel="stylesheet" href="/static/plugin/image-picker/image-picker.css"
-      th:href="@{/plugin/image-picker/image-picker.css}">
+<link rel="stylesheet" href="/static/ajax/libs/webUploader/webuploader.css"
+      th:href="@{/ajax/libs/webUploader/webuploader.css}">
+<link rel="stylesheet" href="/static/ajax/libs/webUploader/webuploader-custom.css"
+      th:href="@{/ajax/libs/webUploader/webuploader-custom.css}">
+<link rel="stylesheet" href="/static/ajax/libs/image-picker/image-picker.css"
+      th:href="@{/ajax/libs/image-picker/image-picker.css}">
 <style>
     img {
         padding: 5px;
         background-size: cover;
         background-position: center;
-        width: 400px;
+        width: 300px;
         height: 200px;
         border: 5px solid #ddd;
     }
@@ -81,8 +81,12 @@
 </div>
 <div th:include="include :: footer"></div>
 
-<script src="/static/plugin/webUploader/webuploader.nolog.js"
-        th:src="@{/plugin/webUploader/webuploader.nolog.js}"></script>
+<script src="/static/ajax/libs/webUploader/webuploader.nolog.js"
+        th:src="@{/ajax/libs/webUploader/webuploader.nolog.js}"></script>
+<script src="/static/ajax/libs/webUploader/webuploader-custom.js"
+        th:src="@{/ajax/libs/webUploader/webuploader-custom.js}"></script>
+<script src="/static/ajax/libs/image-picker/image-picker.min.js"
+        th:src="@{/ajax/libs/image-picker/image-picker.min.js}"></script>
 <script>
     $(function () {
         loadImage();
@@ -100,12 +104,13 @@
 
     function loadImage() {
         $.ajax({
-            url: "/api/image",
+            url: "/qiniu/image/list",
             type: "get",
             dataType: "json",
             success: function (data) {
+                console.log(data)
                 if (data.code == web_status.SUCCESS) {
-                    var imagesUrl = data.data;
+                    var imagesUrl = data.list;
                     var select = $("<select class='image-picker' id='imgSelect'></select>");
                     for (var i = 0; i < imagesUrl.length; i++) {
                         var option = $("<option></option>");
