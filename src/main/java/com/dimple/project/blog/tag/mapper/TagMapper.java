@@ -1,6 +1,7 @@
 package com.dimple.project.blog.tag.mapper;
 
 import com.dimple.project.blog.tag.domain.Tag;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -51,4 +52,20 @@ public interface TagMapper {
      * @return 受影响的行数
      */
     int updateTag(Tag tag);
+
+    /**
+     * 根据tag的标题查找tag
+     *
+     * @param tag 需要查找的tag的标题
+     * @return 查找到的tag实体
+     */
+    Tag selectTagByTagTitle(String tag);
+
+    /**
+     * 根据tag的的title获取id集合
+     *
+     * @param tagTitles 需要获取的tag的String类型的数组
+     * @return 符合条件的tag的List
+     */
+    List<Integer> selectTagIdsByTagTitles(@Param("tagTitles") String[] tagTitles);
 }

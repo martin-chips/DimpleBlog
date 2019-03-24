@@ -7,6 +7,7 @@ import com.dimple.project.blog.tag.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,5 +47,25 @@ public class TagServiceImpl implements TagService {
     @Override
     public int deleteTagByIds(Integer[] ids) {
         return tagMapper.deleteTagByIds(ids);
+    }
+
+    @Override
+    public List<Integer> insertTags(String[] tagTitles) {
+        List<Integer> tagIds = new ArrayList<>();
+        for (String tagTitle : tagTitles) {
+            if (tagMapper.selectTagByTagTitle(tagTitle) == null) {
+                Tag tag = new Tag();
+                tag.setTagTitle(tagTitle);
+                tag.setCreateBy(ShiroUtils.getLoginName());
+                tagMapper.insertTag(tag);
+                tagIds.add(tag.getTagId());
+            }
+        }
+        return tagIds;
+    }
+
+    @Override
+    public List<Integer> selectTagIdsByTagTitles(String[] tags) {
+        return tagMapper.selectTagIdsByTagTitles(tags);
     }
 }

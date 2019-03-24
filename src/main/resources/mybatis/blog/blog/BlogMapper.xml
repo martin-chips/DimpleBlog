@@ -30,7 +30,7 @@
         from bg_blog
     </sql>
 
-    <insert id="insertBlog">
+    <insert id="insertBlog" useGeneratedKeys="true" keyProperty="blogId">
         insert into bg_blog(
         <if test="blogId != null and blogId != 0">blog_id,</if>
         <if test="categoryId != null and categoryId != ''">category_id,</if>
@@ -73,17 +73,16 @@
         </set>
         where blog_id = #{blogId}
     </update>
-    <update id="updateBlogStatusById">
+
+    <update id="updateBlogStatusByIds">
         update bg_blog set status=#{status} where blog_id in
-        <foreach collection="array" item="blogId" open="(" separator="," close=")">
+        <foreach collection="blogIds" item="blogId" open="(" separator="," close=")">
             #{blogId}
         </foreach>
     </update>
-    <update id="updateBlogSupportByIds">
-        update bg_blog set support=#{support} where blog_id in
-        <foreach collection="array" item="blogId" open="(" separator="," close=")">
-            #{blogId}
-        </foreach>
+
+    <update id="updateBlogSupportById">
+        update bg_blog set support=#{support} where blog_id =#{blogId}
     </update>
 
     <delete id="deleteBlogById">
@@ -108,6 +107,9 @@
             <if test="status != null and status != ''">
                 AND status = #{status}
             </if>
+            <if test="support != null and support != ''">
+                AND support = #{support}
+            </if>
             <if test="type != null and type != ''">
                 AND type = #{type}
             </if>
@@ -126,6 +128,15 @@
         weight, support, header_img,
         create_by, create_time, update_by, update_time
         from bg_blog where blog_id=#{blogId}
+    </select>
+
+    <select id="selectBlogCountByStatus" resultType="java.lang.Integer">
+        select count(*) from bg_blog
+        <where>
+            <if test="_parameter  !=0">
+                and status=#{status}
+            </if>
+        </where>
     </select>
 
 

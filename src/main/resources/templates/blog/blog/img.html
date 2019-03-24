@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head th:include="common :: common-head"></head>
+<head th:include="include :: header"></head>
 <link rel="stylesheet" href="/static/plugin/webUploader/webuploader.css"
       th:href="@{/plugin/webUploader/webuploader.css}">
 <link rel="stylesheet" href="/static/plugin/webUploader/webuploader-custom.css"
@@ -32,7 +32,7 @@
                                     class="fa fa-laptop"></i> 本地上传</a>
                             </li>
                             <li class=""><a data-toggle="tab" href="#onlineGallery"><i
-                                    class="fa fa-desktop"></i>在线图库</a>
+                                    class="fa fa-desktop"></i> 七牛云图库</a>
                             </li>
                         </ul>
                     </div>
@@ -79,15 +79,10 @@
     </div>
 </div>
 </div>
-<div th:include="common :: common-footer"></div>
+<div th:include="include :: footer"></div>
 
 <script src="/static/plugin/webUploader/webuploader.nolog.js"
         th:src="@{/plugin/webUploader/webuploader.nolog.js}"></script>
-<script src="/static/plugin/webUploader/webuploader-custom.js"
-        th:src="@{/plugin/webUploader/webuploader-custom.js}"></script>
-<script src="/static/plugin/image-picker/image-picker.min.js"
-        th:src="@{/plugin/image-picker/image-picker.min.js}"></script>
-
 <script>
     $(function () {
         loadImage();

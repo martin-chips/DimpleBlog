@@ -47,11 +47,11 @@ public interface BlogService {
     /**
      * 切换support状态
      *
-     * @param blogIds 需要切换状态的blog的id
+     * @param blogId 需要切换状态的blog的id
      * @param support 需要切换的support状态
      * @return 受影响的行数
      */
-    int updateBlogSupportById(String blogIds, String support);
+    int updateBlogSupportById(Integer blogId, String support);
 
     /**
      * 切换博客的状态
@@ -69,4 +69,12 @@ public interface BlogService {
      * @return 受影响的行数
      */
     int deleteBlogById(Integer[] ids);
+
+    /**
+     * 根据Blog的状态统计数量
+     *
+     * @param status 需要统计的blog的状态
+     * @return 该状态下的blog数量
+     */
+    int selectBlogCountByStatus(int status);
 }

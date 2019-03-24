@@ -51,4 +51,20 @@ public interface TagService {
      * @return 受影响的行数
      */
     int deleteTagByIds(Integer[] ids);
+
+    /**
+     * 批量添加tags
+     *
+     * @param tags 需要添加的tag的数组
+     * @return 新加入的blog的id
+     */
+    List<Integer> insertTags(String[] tags);
+
+    /**
+     * 根据tag的title数组获取tag的id集合
+     *
+     * @param tags 需要获取id集合的tag的String数组
+     * @return 获取到的id集合
+     */
+    List<Integer> selectTagIdsByTagTitles(String[] tags);
 }

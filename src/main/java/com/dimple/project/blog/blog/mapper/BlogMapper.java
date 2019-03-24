@@ -67,14 +67,22 @@ public interface BlogMapper {
      * @param status  需要切换到的状态
      * @return 受影响的额行数
      */
-    int updateBlogStatusById(@Param("blogIds") String blogIds, @Param("status") String status);
+    int updateBlogStatusByIds(@Param("blogIds") Integer[] blogIds, @Param("status") String status);
 
     /**
      * 切换blog的support状态
      *
-     * @param blogIds 需要切换状态的id
+     * @param blogId 需要切换状态的id
      * @param support 需要切换的状态
      * @return 受影响的行数
      */
-    int updateBlogSupportByIds(@Param("blogIds") String blogIds, @Param("support") String support);
+    int updateBlogSupportById(@Param("blogId")Integer blogId, @Param("support") String support);
+
+    /**
+     * 根据Blog的状态统计数量
+     *
+     * @param status 需要查询的blog的状态
+     * @return 该状态下的数量
+     */
+    int selectBlogCountByStatus(int status);
 }

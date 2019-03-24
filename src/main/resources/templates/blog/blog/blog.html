@@ -24,24 +24,27 @@
             </div>
             <div class="ui-layout-content">
                 <ul class="folder-list m-b-md linksDetails" style="padding: 0">
-                    <li>
+                    <li class="condition">
                         <a> <i class="fa fa-inbox "></i> 所有
-                            <span class="label label-success pull-right">123 </span>
+                            <span class="label label-success pull-right"
+                                  th:text="${total}">123 </span>
                         </a>
                     </li>
-                    <li>
+                    <li class="condition" val="1">
                         <a> <i class="fa fa-tags "></i> 已发布
-                            <span class="label  label-default  pull-right">123</span>
+                            <span class="label  label-default  pull-right "
+                                  th:text="${published}">123</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="condition" val="2">
                         <a> <i class="fa fa-chain-broken "></i> 草稿箱
-                            <span class="label label-warning pull-right">123</span>
+                            <span class="label label-warning pull-right " th:text="${draft}">123</span>
                         </a>
                     </li>
-                    <li>
+                    <li class=" condition" val="3">
                         <a> <i class="fa fa-indent "></i> 垃圾箱
-                            <span class="label label-danger  pull-right"> 123</span>
+                            <span class="label label-danger  pull-right "
+                                  th:text="${garbage}"> 123</span>
                         </a>
                     </li>
                 </ul>
@@ -53,16 +56,24 @@
 <div class="container-div ui-layout-center">
     <div class="row">
         <div class="col-sm-12 search-collapse">
-            <form id="user-form">
-                <input type="hidden" id="deptId" name="deptId">
+            <form id="blog-form">
                 <input type="hidden" id="parentId" name="parentId">
                 <div class="select-list">
                     <ul>
                         <li>
-                            博客标题：<input type="text" name="configName"/>
+                            博客标题：<input type="text" name="title"/>
                         </li>
                         <li>
-                            博客状态：<select name="configType" th:with="type=${@dict.getType('blog_blog_status')}">
+                            博客状态：<select id="blogStatus" name="status"
+                                         th:with="type=${@dict.getType('blog_blog_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            推荐：<select id="blogSupport" name="support"
+                                         th:with="type=${@dict.getType('blog_blog_support')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -88,7 +99,8 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="addBlog()" shiro:hasPermission="blog:blog:add">
+            <a class="btn btn-success" onclick="createMenuItem('/blog/blog/add','新增博文')"
+               shiro:hasPermission="blog:blog:add">
                 <i class="fa fa-plus"></i> 新增
             </a>
             <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
@@ -115,7 +127,6 @@
                 <i class="fa fa-remove"></i> 推送到百度
             </a>
         </div>
-
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
@@ -127,13 +138,24 @@
 <script th:inline="javascript">
     var editFlag = [[${@permission.hasPermi('blog:blog:edit')}]];
     var removeFlag = [[${@permission.hasPermi('blog:blog:remove')}]];
-    var datas = [[${@dict.getType('sys_yes_no')}]];
+    var datas = [[${@dict.getType('blog_blog_status')}]];
+    var support = [[${@dict.getType('blog_blog_support')}]];
     var prefix = ctx + "blog/blog";
 
-    function addBlog() {
-        var url = ctx + 'blog/blog/add';
-        createMenuItem(url, "新增博文");
+    function changeStatus(status) {
+        var data = {"blogIds": $.table.getSelectIds()};
+        $.operate.put($.table._option.changeStatusUrl + "/" + status, data);
     }
+
+    function changeSupport(support) {
+        var data = {"blogIds": $.table.getSelectIds()};
+        $.operate.put($.table._option.changeSupportUrl + "/" + status, data);
+    }
+
+    $(".condition").click(function () {
+        $("#blogStatus").val($(this).attr("val"));
+        $.table.search();
+    });
 
     $(function () {
         var panehHidden = false;
@@ -141,14 +163,18 @@
             panehHidden = true;
         }
         $('body').layout({initClosed: panehHidden, west__size: 185});
+
         var options = {
             url: prefix + "/list",
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
+            changeStatusUrl: prefix + "/status",
+            changeSupportUrl: prefix + "/support",
             sortName: "createTime",
             sortOrder: "desc",
+            uniqueId: "blogId",
             modalName: "博客",
             columns: [{
                 checkbox: true
@@ -166,13 +192,16 @@
                 title: '创建时间'
             }, {
                 field: 'status',
-                title: '状态'
+                title: '状态',
+                formatter: function (value, row, index) {
+                    return $.table.selectDictLabel(datas, value);
+                }
             }, {
                 field: 'support',
                 title: '推荐',
                 align: 'center',
                 formatter: function (value, row, index) {
-                    return $.table.selectDictLabel(datas, value);
+                    return statusTools(value, row);
                 }
             }, {
                 field: 'weight',
@@ -196,9 +225,25 @@
         $.table.init(options);
     });
 
-    function support(status) {
-        $.modal.confirm("确定要取消推荐这些博文吗？", function () {
-            $.operate.post(prefix + "/changeStatus", {"userId": userId, "status": 1});
+    function statusTools(value, row) {
+        if (value == "0") {
+            return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.blogId + '\')"></i> ';
+        } else {
+            return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.blogId + '\')"></i> ';
+        }
+    }
+
+    /* 博客推荐-停用 */
+    function disable(blogId) {
+        $.modal.confirm("确认要取消推荐该博文吗？", function () {
+            $.operate.put($.table._option.changeSupportUrl+"/0", {"blogId": blogId});
+        })
+    }
+
+    /* 博客推荐-启用 */
+    function enable(blogId) {
+        $.modal.confirm("确认要推荐该博文吗？", function () {
+            $.operate.put($.table._option.changeSupportUrl+"/1", {"blogId": blogId});
         })
     }
 

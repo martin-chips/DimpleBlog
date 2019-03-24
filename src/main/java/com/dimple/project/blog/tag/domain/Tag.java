@@ -3,9 +3,6 @@ package com.dimple.project.blog.tag.domain;
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
  * @className: Tag
  * @description: 标签
@@ -25,12 +22,4 @@ public class Tag extends BaseEntity {
      * 标签内容
      */
     private String tagTitle;
-
-    private String createBy;
-
-    private Date createTime;
-
-    private String updateBy;
-
-    private Date updateTime;
 }

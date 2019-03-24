@@ -1,5 +1,6 @@
 package com.dimple.project.blog.blog.controller;
 
+import com.dimple.common.constant.BlogConstants;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
@@ -36,8 +37,17 @@ public class BlogController extends BaseController {
 
     @RequiresPermissions("blog:blog:view")
     @GetMapping()
-    public String blog() {
+    public String blog(Model model) {
+        model.addAttribute("total", blogService.selectBlogCountByStatus(BlogConstants.BLOG_TOTAL));
+        model.addAttribute("published", blogService.selectBlogCountByStatus(BlogConstants.BLOG_PUBLISHED));
+        model.addAttribute("draft", blogService.selectBlogCountByStatus(BlogConstants.BLOG_DRAFT));
+        model.addAttribute("garbage", blogService.selectBlogCountByStatus(BlogConstants.BLOG_GARBAGE));
         return "blog/blog/blog";
+    }
+
+    @GetMapping("/img")
+    public String img() {
+        return "/blog/blog/img";
     }
 
     @GetMapping("/list")
@@ -83,12 +93,12 @@ public class BlogController extends BaseController {
     @RequiresPermissions("blog:blog:support")
     @Log(title = "博客管理", businessType = BusinessType.UPDATE)
     @ResponseBody
-    public AjaxResult supportSave(String blogIds, @PathVariable String support) {
-        return toAjax(blogService.updateBlogSupportById(blogIds, support));
+    public AjaxResult supportSave(Integer blogId, @PathVariable String support) {
+        return toAjax(blogService.updateBlogSupportById(blogId, support));
     }
 
     @PutMapping("/status/{status}")
-    @RequiresPermissions("blog:blog:support")
+    @RequiresPermissions("blog:blog:status")
     @Log(title = "博客管理", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult statusSave(String blogIds, @PathVariable String status) {

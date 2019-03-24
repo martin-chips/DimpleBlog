@@ -1,9 +1,6 @@
 package com.dimple.project.blog.blog.domain;
 
-import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * @className: BlogTag
@@ -13,8 +10,7 @@ import java.io.Serializable;
  * @Version: 1.1
  */
 @Data
-public class BlogTag extends BaseEntity {
+public class BlogTag {
     private Integer blogId;
     private Integer tagId;
-
 }

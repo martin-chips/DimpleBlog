@@ -74,6 +74,15 @@
                     onLoadSuccess: $.table.onLoadSuccess,               // 当所有数据被加载时触发处理函数
                 });
             },
+            //获取当前表格的被选中的id
+            getSelectIds: function () {
+                var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+                if (rows.length == 0) {
+                    $.modal.alertWarning("请至少选择一条记录");
+                    return;
+                }
+                return rows.join();
+            },
             // 查询条件
             queryParams: function (params) {
                 return {
@@ -627,6 +636,10 @@
             // get请求传输
             get: function (url) {
                 $.operate.submit(url, "get", "json", "");
+            },
+            //put传输请求
+            put: function (url, data) {
+                $.operate.submit(url, "put", "json", data);
             },
             // 详细信息
             detail: function (id, width, height) {
