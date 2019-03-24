@@ -2,6 +2,8 @@ package com.dimple.project.blog.blog.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @className: BlogTagMapper
  * @description:
@@ -25,4 +27,12 @@ public interface BlogTagMapper {
      * @param blogId
      */
     void deleteBlogTagByBlogId(Integer blogId);
+
+    /**
+     * 根据blog的id获取tag的id集合
+     *
+     * @param blogId
+     * @return tag的id list
+     */
+    List<Integer> selectTagIdsByBlogId(Integer blogId);
 }

@@ -3,9 +3,6 @@ package com.dimple.project.blog.category.domain;
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
  * @className: Category
  * @description: 分类
@@ -18,7 +15,9 @@ public class Category extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     private Integer categoryId;
-
+    /**
+     * 分类的名称
+     */
     private String categoryTitle;
 
     /**
@@ -30,9 +29,8 @@ public class Category extends BaseEntity {
      * 描述
      */
     private String description;
-
-    private String createBy;
-    private Date createTime;
-    private String updateBy;
-    private Date updateTime;
+    /**
+     * 是否推荐，0表示不推荐，1表示推荐
+     */
+    private String support;
 }

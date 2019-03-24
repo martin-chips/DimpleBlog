@@ -72,11 +72,11 @@ public interface BlogMapper {
     /**
      * 切换blog的support状态
      *
-     * @param blogId 需要切换状态的id
+     * @param blogId  需要切换状态的id
      * @param support 需要切换的状态
      * @return 受影响的行数
      */
-    int updateBlogSupportById(@Param("blogId")Integer blogId, @Param("support") String support);
+    int updateBlogSupportById(@Param("blogId") Integer blogId, @Param("support") String support);
 
     /**
      * 根据Blog的状态统计数量
@@ -85,4 +85,12 @@ public interface BlogMapper {
      * @return 该状态下的数量
      */
     int selectBlogCountByStatus(int status);
+
+    /**
+     * 获取博客的所有数据
+     *
+     * @param blogId
+     * @return
+     */
+    Blog selectBlogWithTextById(Integer blogId);
 }

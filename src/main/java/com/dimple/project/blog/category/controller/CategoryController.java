@@ -4,9 +4,7 @@ import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
-import com.dimple.framework.web.domain.BaseEntity;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.blog.blog.domain.Blog;
 import com.dimple.project.blog.category.domain.Category;
 import com.dimple.project.blog.category.service.CategoryService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -32,10 +30,10 @@ public class CategoryController extends BaseController {
     CategoryService categoryService;
 
 
-    @RequiresPermissions("blog:blog:view")
+    @RequiresPermissions("blog:category:view")
     @GetMapping()
-    public String blog() {
-        return "blog/blog/blog";
+    public String category() {
+        return "blog/category/category";
     }
 
     @GetMapping("/list")
@@ -53,7 +51,7 @@ public class CategoryController extends BaseController {
     }
 
     @Log(title = "分类管理", businessType = BusinessType.INSERT)
-    @RequiresPermissions("blog:blog:add")
+    @RequiresPermissions("blog:category:add")
     @PostMapping("/add")
     public AjaxResult addSave(Category category) {
         return toAjax(categoryService.insertCategory(category));
@@ -79,5 +77,13 @@ public class CategoryController extends BaseController {
     @ResponseBody
     public AjaxResult remove(Integer ids[]) {
         return toAjax(categoryService.deleteCategoryByIds(ids));
+    }
+
+    @PutMapping("/support/{support}")
+    @RequiresPermissions("blog:category:support")
+    @Log(title = "分类管理", businessType = BusinessType.UPDATE)
+    @ResponseBody
+    public AjaxResult supportSave(Integer categoryId, @PathVariable String support) {
+        return toAjax(categoryService.updateCategorySupportById(categoryId, support));
     }
 }

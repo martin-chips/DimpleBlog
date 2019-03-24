@@ -86,7 +86,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public int updateBlogStatusById(String blogIds, String status) {
-        return blogMapper.updateBlogStatusByIds(Convert.toIntArray(blogIds),status);
+        return blogMapper.updateBlogStatusByIds(Convert.toIntArray(blogIds), status);
     }
 
     @Override
@@ -99,4 +99,17 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectBlogCountByStatus(status);
     }
 
+    @Override
+    public Blog selectBlogWithTextAndTagsById(Integer blogId) {
+        Blog blog = blogMapper.selectBlogWithTextById(blogId);
+        List<Integer> tagIds = blogTagMapper.selectTagIdsByBlogId(blogId);
+        if (tagIds != null && tagIds.size() != 0) {
+            String[] tags = new String[tagIds.size()];
+            for (int i = 0; i < tagIds.size(); i++) {
+                tags[i] = tagService.selectTagById(tagIds.get(i)).getTagTitle();
+            }
+            blog.setTags(tags);
+        }
+        return blog;
+    }
 }

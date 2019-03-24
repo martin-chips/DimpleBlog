@@ -48,4 +48,9 @@ public class CategoryImpl implements CategoryService {
     public int deleteCategoryByIds(Integer[] ids) {
         return categoryMapper.deleteCategoryByIds(ids);
     }
+
+    @Override
+    public int updateCategorySupportById(Integer categoryId, String support) {
+        return categoryMapper.updateCategorySupportById(categoryId,support);
+    }
 }

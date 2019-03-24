@@ -11,4 +11,8 @@
         delete from bg_blog_tag where blog_id =#{id}
     </delete>
 
+    <select id="selectTagIdsByBlogId" resultType="java.lang.Integer">
+        select tag_id from bg_blog_tag where blog_id=#{blogId}
+    </select>
+
 </mapper>

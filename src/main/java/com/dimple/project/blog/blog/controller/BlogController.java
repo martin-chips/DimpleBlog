@@ -76,8 +76,8 @@ public class BlogController extends BaseController {
 
     @GetMapping("/edit/{blogId}")
     public String edit(@PathVariable Integer blogId, Model model) {
-        model.addAttribute("blog", blogService.selectBlogById(blogId));
-        model.addAttribute("categories", categoryService.selectCategoryList(null));
+        model.addAttribute("blog", blogService.selectBlogWithTextAndTagsById(blogId));
+        model.addAttribute("categories", categoryService.selectCategoryList(new Category()));
         return "/blog/blog/edit";
     }
 

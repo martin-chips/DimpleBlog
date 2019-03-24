@@ -47,7 +47,7 @@ public interface BlogService {
     /**
      * 切换support状态
      *
-     * @param blogId 需要切换状态的blog的id
+     * @param blogId  需要切换状态的blog的id
      * @param support 需要切换的support状态
      * @return 受影响的行数
      */
@@ -77,4 +77,12 @@ public interface BlogService {
      * @return 该状态下的blog数量
      */
     int selectBlogCountByStatus(int status);
+
+    /**
+     * 根据Blog的id获取blog信息，包括tag
+     *
+     * @param blogId 需要获取信息的blog的id
+     * @return Blog实体类
+     */
+    Blog selectBlogWithTextAndTagsById(Integer blogId);
 }

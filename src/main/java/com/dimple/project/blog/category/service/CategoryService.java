@@ -45,4 +45,13 @@ public interface CategoryService {
      * @return 受影响的行数
      */
     int deleteCategoryByIds(Integer[] ids);
+
+    /**
+     * 更新分类的推荐状态
+     *
+     * @param categoryId 需要更新的分类的id
+     * @param support    需要切换到的状态
+     * @return 受影响的行数
+     */
+    int updateCategorySupportById(Integer categoryId, String support);
 }

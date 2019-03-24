@@ -138,6 +138,12 @@
             </if>
         </where>
     </select>
+    <select id="selectBlogWithTextById" resultType="com.dimple.project.blog.blog.domain.Blog">
+          select blog_id, category_id, title, summary, status,
+        weight, support, click, header_img, type,content,
+        create_by, create_time, update_by, update_time
+        from bg_blog where blog_id=#{blogId}
+    </select>
 
 
 </mapper>

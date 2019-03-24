@@ -1,6 +1,7 @@
 package com.dimple.project.blog.category.mapper;
 
 import com.dimple.project.blog.category.domain.Category;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -51,4 +52,13 @@ public interface CategoryMapper {
      * @return 受影响的行数
      */
     int deleteCategoryByIds(Integer[] ids);
+
+    /**
+     * 根据id更新推荐状态
+     *
+     * @param categoryId 需要更新的id
+     * @param support    需要切换的状态
+     * @return 受影响的行数
+     */
+    int updateCategorySupportById(@Param("categoryId") Integer categoryId, @Param("support") String support);
 }
