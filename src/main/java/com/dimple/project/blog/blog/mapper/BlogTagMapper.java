@@ -35,4 +35,21 @@ public interface BlogTagMapper {
      * @return tag的id list
      */
     List<Integer> selectTagIdsByBlogId(Integer blogId);
+
+    /**
+     * 根据tag的id删除tag
+     *
+     * @param ids 需要删除的tag的id
+     * @return 受影响的行
+     */
+    int deleteBlogTagByTagIds(Integer[] ids);
+
+    /**
+     * 根据tag的id查找与之相关的blog的数量
+     *
+     * @param tagId 需要查找的tag的id
+     * @return 数量
+     */
+    int selectBlogTagCountByTagId(Integer tagId);
+
 }

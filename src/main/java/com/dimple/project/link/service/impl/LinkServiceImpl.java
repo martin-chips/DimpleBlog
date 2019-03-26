@@ -8,7 +8,9 @@ import com.dimple.project.link.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @className: LinkServiceImpl
@@ -58,6 +60,17 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public int passLink(String ids) {
         return linkMapper.changeProcessed(Convert.toIntArray(ids));
+    }
+
+    @Override
+    public Map<String, Integer> selectLinkCount() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("total", linkMapper.selectLinkCount());
+        map.put("display", linkMapper.selectLinkCountByDisplay(1));
+        map.put("hide", linkMapper.selectLinkCountByDisplay(0));
+        map.put("die", linkMapper.selectLinkCountByAvailable(0));
+        map.put("unhandled", linkMapper.selectLinkCountByProcessed(0));
+        return map;
     }
 
 }

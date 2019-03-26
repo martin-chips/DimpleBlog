@@ -11,8 +11,18 @@
         delete from bg_blog_tag where blog_id =#{id}
     </delete>
 
+    <delete id="deleteBlogTagByTagIds">
+        delete from bg_blog_tag where tag_id in
+        <foreach collection="array" close=")" open="(" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
     <select id="selectTagIdsByBlogId" resultType="java.lang.Integer">
         select tag_id from bg_blog_tag where blog_id=#{blogId}
+    </select>
+    <select id="selectBlogTagCountByTagId" resultType="java.lang.Integer">
+        select count(*) from bg_blog_tag where tag_id=#{tagId}
     </select>
 
 </mapper>

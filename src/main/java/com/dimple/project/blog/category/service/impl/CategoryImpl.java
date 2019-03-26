@@ -1,5 +1,6 @@
 package com.dimple.project.blog.category.service.impl;
 
+import com.dimple.common.constant.CategoryConstants;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.project.blog.category.domain.Category;
 import com.dimple.project.blog.category.mapper.CategoryMapper;
@@ -51,6 +52,12 @@ public class CategoryImpl implements CategoryService {
 
     @Override
     public int updateCategorySupportById(Integer categoryId, String support) {
-        return categoryMapper.updateCategorySupportById(categoryId,support);
+        return categoryMapper.updateCategorySupportById(categoryId, support);
+    }
+
+    @Override
+    public String checkCategoryTitleUnique(String title) {
+        Category category = categoryMapper.selectCategoryByCategoryTitle(title);
+        return category == null ? CategoryConstants.CATEGORY_TITLE_UNIQUE : CategoryConstants.CATEGORY_TITLE_NOT_UNIQUE;
     }
 }

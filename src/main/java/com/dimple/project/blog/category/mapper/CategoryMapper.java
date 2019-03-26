@@ -61,4 +61,12 @@ public interface CategoryMapper {
      * @return 受影响的行数
      */
     int updateCategorySupportById(@Param("categoryId") Integer categoryId, @Param("support") String support);
+
+    /**
+     * 根据title获取category实体
+     *
+     * @param title 需要的category的标题
+     * @return category实体
+     */
+    Category selectCategoryByCategoryTitle(String title);
 }

@@ -18,25 +18,15 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>归属部门：</label>
-                        <div class="col-sm-8">
-                            <div class="input-group">
-                            	<input name="deptName" onclick="selectDeptTree()" id="treeName" type="text" placeholder="请选择归属部门" class="form-control" required>
-                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
                         <label class="col-sm-4 control-label"><span style="color: red; ">*</span>手机号码：</label>
                         <div class="col-sm-8">
                             <input name="phonenumber" autocomplete="off" placeholder="请输入手机号码" class="form-control" type="text" maxlength="11" required>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label"><span style="color: red; ">*</span>邮箱：</label>
@@ -45,8 +35,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label"><span style="color: red; ">*</span>登录账号：</label>
@@ -55,6 +43,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label"><span style="color: red; ">*</span>登录密码：</label>
@@ -63,20 +54,21 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">用户性别：</label>
                         <div class="col-sm-8">
                             <div class="input-group" style="width: 100%">
                                 <select name="sex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}">
-				                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-				                </select>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">用户状态：</label>
@@ -91,30 +83,20 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-            	<div class="col-sm-12">
+
+                <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-xs-2 control-label">岗位：</label>
-                        <div class="col-xs-4">
-                            <select id="post" class="form-control select2-hidden-accessible" multiple="">
-								<option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}" th:disabled="${post.status == '1'}"></option>
-							</select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-            	<div class="col-sm-12">
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">角色：</label>
-                        <div class="col-xs-10">
+                        <label class="col-xs-4 control-label">角色：</label>
+                        <div class="col-xs-8">
                             <label th:each="role:${roles}" class="check-box">
-								<input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}">
-							</label>
+                                <input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}">
+                            </label>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+
             </div>
             <h4 class="form-header h4">其他信息</h4>
             <div class="row">
@@ -218,34 +200,10 @@
 	        	var postIds = $.form.selectSelects("post");
 	        	data.push({"name": "status", "value": status});
 	        	data.push({"name": "roleIds", "value": roleIds});
-	        	data.push({"name": "postIds", "value": postIds});
 	        	$.operate.saveTab(prefix + "/add", data);
 	        }
 	    }
-         
-        /*用户管理-新增-选择部门树*/
-        function selectDeptTree() {
-        	var treeId = $("#treeId").val();
-        	var deptId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
-        	var url = ctx + "system/dept/selectDeptTree/" + deptId;
-			var options = {
-				title: '选择部门',
-				width: "380",
-				url: ctx + "system/dept/selectDeptTree/" + deptId,
-				callBack: doSubmit
-			};
-			$.modal.openOptions(options);
-		}
-		
-		function doSubmit(index, layero){
-			var tree = layero.find("iframe")[0].contentWindow.$._tree;
-			if ($.tree.notAllowParents(tree)) {
-				var body = layer.getChildFrame('body', index);
-    			$("#treeId").val(body.find('#treeId').val());
-    			$("#treeName").val(body.find('#treeName').val());
-    			layer.close(index);
-			}
-		}
+
     </script>
 </body>
 </html>

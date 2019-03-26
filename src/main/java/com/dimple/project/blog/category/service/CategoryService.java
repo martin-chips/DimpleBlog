@@ -54,4 +54,12 @@ public interface CategoryService {
      * @return 受影响的行数
      */
     int updateCategorySupportById(Integer categoryId, String support);
+
+    /**
+     * 校验分类名称是否唯一
+     *
+     * @param title 分类名称
+     * @return 结果
+     */
+    String checkCategoryTitleUnique(String title);
 }

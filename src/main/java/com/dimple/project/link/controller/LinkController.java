@@ -31,8 +31,9 @@ public class LinkController extends BaseController {
 
     @RequiresPermissions("link:link:view")
     @GetMapping()
-    public String link() {
-        return "link/link/link";
+    public String link(Model model) {
+        model.addAttribute("map", linkService.selectLinkCount());
+        return "link/link";
     }
 
     @RequiresPermissions("link:link:list")
@@ -46,7 +47,7 @@ public class LinkController extends BaseController {
 
     @GetMapping("/add")
     public String add() {
-        return "link/link/add";
+        return "link/add";
     }
 
     @PostMapping("/add")
@@ -59,7 +60,7 @@ public class LinkController extends BaseController {
     @GetMapping("/edit/{linkId}")
     public String edit(@PathVariable Integer linkId, Model model) {
         model.addAttribute("link", linkService.selectLinkById(linkId));
-        return "link/link/edit";
+        return "link/edit";
     }
 
     @PutMapping("/edit")

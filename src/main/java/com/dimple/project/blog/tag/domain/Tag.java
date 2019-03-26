@@ -22,4 +22,8 @@ public class Tag extends BaseEntity {
      * 标签内容
      */
     private String tagTitle;
+    /**
+     * 关联的博客个数
+     */
+    private int count;
 }

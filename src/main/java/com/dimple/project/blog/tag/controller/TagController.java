@@ -7,7 +7,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.tag.domain.Tag;
 import com.dimple.project.blog.tag.service.TagService;
-import io.swagger.models.auth.In;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,7 +60,7 @@ public class TagController extends BaseController {
     @GetMapping("/edit/{tagId}")
     public String edit(@PathVariable Integer tagId, Model model) {
         model.addAttribute("tag", tagService.selectTagById(tagId));
-        return "/blog/tag/edit";
+        return "blog/tag/edit";
     }
 
 
@@ -81,4 +80,10 @@ public class TagController extends BaseController {
         return toAjax(tagService.deleteTagByIds(ids));
     }
 
+
+    @PostMapping("/checkTagTitleUnique")
+    @ResponseBody
+    public String checkCategoryTitleUnique(String title) {
+        return tagService.checkTagTitleUnique(title);
+    }
 }

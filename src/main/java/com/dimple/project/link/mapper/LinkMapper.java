@@ -69,4 +69,35 @@ public interface LinkMapper {
      * @return 受影响的行数
      */
     int changeProcessed(Integer[] ids);
+
+    /**
+     * 根据display获取count统计
+     *
+     * @param dispaly dispaly状态
+     * @return num
+     */
+    int selectLinkCountByDisplay(int dispaly);
+
+    /**
+     * 获取友链的可用或者不可用的count
+     *
+     * @param available 可用的status
+     * @return num
+     */
+    int selectLinkCountByAvailable(int available);
+
+    /**
+     * 获取处理未处理的状态的count
+     *
+     * @param processed 处理的状态
+     * @return num
+     */
+    int selectLinkCountByProcessed(int processed);
+
+    /**
+     * 获取所有的链接个数
+     *
+     * @return num
+     */
+    int selectLinkCount();
 }

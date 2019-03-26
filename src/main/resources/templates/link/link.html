@@ -25,26 +25,32 @@
             <div class="ui-layout-content">
                 <ul class="folder-list m-b-md linksDetails" style="padding: 0">
                     <li class="condition">
-                        <a> <i class="fa fa-inbox "></i> 所有
+                        <a> <i class="fa fa-inbox "></i> 所有友链
                             <span class="label label-success pull-right"
-                                  th:text="${total}">123 </span>
+                                  th:text="${map['total']}">123 </span>
                         </a>
                     </li>
                     <li class="condition" val="1">
-                        <a> <i class="fa fa-tags "></i> 已发布
-                            <span class="label  label-default  pull-right "
-                                  th:text="${published}">123</span>
+                        <a> <i class="fa fa-tags "></i> 死链
+                            <span class="label  label-default  pull-right"
+                                  th:text="${map['die']}">123</span>
                         </a>
                     </li>
                     <li class="condition" val="2">
-                        <a> <i class="fa fa-chain-broken "></i> 草稿箱
-                            <span class="label label-warning pull-right " th:text="${draft}">123</span>
+                        <a> <i class="fa fa-chain-broken "></i> 未处理友链
+                            <span class="label label-warning pull-right " th:text="${map['unhandled']}">123</span>
                         </a>
                     </li>
                     <li class=" condition" val="3">
-                        <a> <i class="fa fa-indent "></i> 垃圾箱
+                        <a> <i class="fa fa-indent "></i> 已隐藏友链
                             <span class="label label-danger  pull-right "
-                                  th:text="${garbage}"> 123</span>
+                                  th:text="${map['hide']}"> 123</span>
+                        </a>
+                    </li>
+                    <li class=" condition" val="3">
+                        <a> <i class="fa fa-indent "></i> 已显示友链
+                            <span class="label label-danger  pull-right "
+                                  th:text="${map['display']}"> 123</span>
                         </a>
                     </li>
                 </ul>
@@ -61,19 +67,11 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            博客标题：<input type="text" name="title"/>
+                            友链名称：：<input type="text" name="title"/>
                         </li>
                         <li>
                             博客状态：<select id="blogStatus" name="status"
                                          th:with="type=${@dict.getType('blog_blog_status')}">
-                            <option value="">所有</option>
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-                                    th:value="${dict.dictValue}"></option>
-                        </select>
-                        </li>
-                        <li>
-                            推荐：<select id="blogSupport" name="support"
-                                         th:with="type=${@dict.getType('blog_blog_support')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -99,7 +97,7 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="createMenuItem('/blog/blog/add','新增博文')"
+            <a class="btn btn-success" onclick="createMenuItem('/link/link/add','新增友链')"
                shiro:hasPermission="blog:blog:add">
                 <i class="fa fa-plus"></i> 新增
             </a>
@@ -113,18 +111,6 @@
             </a>
             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="blog:blog:export">
                 <i class="fa fa-download"></i> 导出
-            </a>
-            <a class="btn btn-default btn-del disabled" onclick="changeStatus(1)">
-                <i class="fa fa-remove"></i> 发布
-            </a>
-            <a class="btn btn-warning btn-del disabled" onclick="changeStatus(2)">
-                <i class="fa fa-remove"></i> 草稿箱
-            </a>
-            <a class="btn btn-danger btn-del disabled" onclick="changeStatus(3)">
-                <i class="fa fa-remove"></i> 垃圾箱
-            </a>
-            <a class="btn btn-primary btn-del disabled" onclick="pushBaidu()">
-                <i class="fa fa-remove"></i> 推送到百度
             </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
@@ -236,14 +222,14 @@
     /* 博客推荐-停用 */
     function disable(blogId) {
         $.modal.confirm("确认要取消推荐该博文吗？", function () {
-            $.operate.put($.table._option.changeSupportUrl+"/0", {"blogId": blogId});
+            $.operate.put($.table._option.changeSupportUrl + "/0", {"blogId": blogId});
         })
     }
 
     /* 博客推荐-启用 */
     function enable(blogId) {
         $.modal.confirm("确认要推荐该博文吗？", function () {
-            $.operate.put($.table._option.changeSupportUrl+"/1", {"blogId": blogId});
+            $.operate.put($.table._option.changeSupportUrl + "/1", {"blogId": blogId});
         })
     }
 

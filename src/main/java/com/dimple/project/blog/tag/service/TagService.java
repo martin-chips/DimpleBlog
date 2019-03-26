@@ -67,4 +67,12 @@ public interface TagService {
      * @return 获取到的id集合
      */
     List<Integer> selectTagIdsByTagTitles(String[] tags);
+
+    /**
+     * 检验tag的title是否是唯一
+     *
+     * @param title 需要检验的tag的title
+     * @return 是否唯一
+     */
+    String checkTagTitleUnique(String title);
 }

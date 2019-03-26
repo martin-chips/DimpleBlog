@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head th:include="common :: common-head">
-</head>
-<!--IOS风格切换插件-->
-<link href="/static/css/switchery/switchery.css" th:href="@{/css/switchery/switchery.css}" rel="stylesheet">
+<head th:include="include :: header"></head>
 <body>
 <div class="ibox float-e-margins">
     <div class="ibox-content">
@@ -33,14 +30,25 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">网站图标地址：</label>
                 <div class="col-sm-8">
-                    <input id="linkHeaderUrl" class="form-control" name="headerUrl" required="">
+                    <input id="linkHeaderUrl" class="form-control" name="headerImg" required="">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">是否显示：</label>
+                <label class="col-sm-3 control-label">负责人联系方式：</label>
                 <div class="col-sm-8">
-                    <input type="checkbox" class="js-switch" checked/>
-                    <input id="display" type="hidden" name="display" value="true">
+                    <input id="linkEmail" class="form-control" name="email" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">推荐：</label>
+                <div class="col-sm-8">
+                    <div class="onoffswitch">
+                        <input type="checkbox" th:checked="false" class="onoffswitch-checkbox" id="display">
+                        <label class="onoffswitch-label" for="display">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -52,8 +60,64 @@
         </form>
     </div>
 </div>
-<div th:include="common :: common-footer"></div>
-<script src="/static/js/switchery/switchery.js" th:src="@{/js/switchery/switchery.js}"></script>
-<script src="/static/js/custom/links/add.js" th:src="@{/js/custom/links/add.js}"></script>
+<div th:include="include :: footer"></div>
+
+<script type="text/javascript">
+    var prefix = ctx + "blog/category";
+
+    $("#categoryAddForm").formValidate({
+        rules: {
+            categoryTitle: {
+                required: true,
+                rangelength: [2, 15],
+                remote: {
+                    url: prefix + "/checkCategoryTitleUnique",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        title: function () {
+                            return $.common.trim($("#categoryTitle").val());
+                        }
+                    },
+                    dataFilter: function (data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            },
+            description: {
+                required: true,
+                rangelength: [2, 80]
+            },
+            weight: {
+                required: true,
+                number: true
+            },
+        },
+        messages: {
+            "categoryTitle": {
+                required: "请输入标题",
+                rangelength: "请输入长度为 {0} 至 {1} 之间的标题",
+                remote: "标题已存在"
+            },
+            "description": {
+                required: "请输入标题",
+                rangelength: "请输入长度为 {0} 至 {1} 之间的标题"
+            },
+            "weight": {
+                required: "请输入权重",
+                rangelength: "请输入正确格式的权重"
+            },
+        },
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            var support = $("input[id='support']").is(':checked') == true ? 1 : 0;
+            var data = $('#categoryAddForm').serializeArray();
+            data.push({"name": "support", "value": support})
+            $.operate.saveTab(prefix + "/add", data);
+        }
+    }
+</script>
 </body>
 </html>

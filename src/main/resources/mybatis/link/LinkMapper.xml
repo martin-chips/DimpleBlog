@@ -95,5 +95,19 @@
         bg_link
     </select>
 
+    <select id="selectLinkCountByDisplay" resultType="java.lang.Integer">
+        select count(*) from bg_link where display=#{dispaly}
+    </select>
+
+    <select id="selectLinkCountByAvailable" resultType="java.lang.Integer">
+      select count(*) from bg_link where available=#{available}
+    </select>
+    <select id="selectLinkCountByProcessed" resultType="java.lang.Integer">
+        select count(*) from bg_link where processed=#{processed}
+    </select>
+    <select id="selectLinkCount" resultType="java.lang.Integer">
+        select count(*) from bg_link
+    </select>
+
 
 </mapper>

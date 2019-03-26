@@ -53,6 +53,7 @@ public class CategoryController extends BaseController {
     @Log(title = "分类管理", businessType = BusinessType.INSERT)
     @RequiresPermissions("blog:category:add")
     @PostMapping("/add")
+    @ResponseBody
     public AjaxResult addSave(Category category) {
         return toAjax(categoryService.insertCategory(category));
     }
@@ -60,7 +61,7 @@ public class CategoryController extends BaseController {
     @GetMapping("/edit/{categoryId}")
     public String edit(@PathVariable Integer categoryId, Model model) {
         model.addAttribute("category", categoryService.selectCategoryById(categoryId));
-        return "/blog/category/edit";
+        return "blog/category/edit";
     }
 
     @PutMapping("/edit")
@@ -86,4 +87,11 @@ public class CategoryController extends BaseController {
     public AjaxResult supportSave(Integer categoryId, @PathVariable String support) {
         return toAjax(categoryService.updateCategorySupportById(categoryId, support));
     }
+
+    @PostMapping("/checkCategoryTitleUnique")
+    @ResponseBody
+    public String checkCategoryTitleUnique(String title) {
+        return categoryService.checkCategoryTitleUnique(title);
+    }
+
 }

@@ -104,10 +104,10 @@
                 <div class="clearfix"></div>
             </div>
             <div class="mail-body text-right tooltip-demo">
-                <button type="button" class="btn btn-sm btn-primary" onclick="postBlog()"><i
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
                         class="fa fa-check"></i>保 存
                 </button>&nbsp;
-                <button type="button" class="btn btn-sm btn-danger" onclick="close()"><i
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
                         class="fa fa-reply-all"></i>关 闭
                 </button>
             </div>
@@ -253,10 +253,10 @@
         return data;
     }
 
-    function postBlog() {
+    function submitHandler() {
         if ($.validate.form()) {
             var data = getData();
-            $.operate.post("/blog/blog/add", data)
+            $.operate.saveTab("/blog/blog/add", data);
         }
     }
 </script>

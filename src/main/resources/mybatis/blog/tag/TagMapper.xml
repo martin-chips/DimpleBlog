@@ -34,7 +34,7 @@
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()
         </set>
-        where role_id = #{roleId}
+        where tag_id = #{tagId}
     </update>
 
     <delete id="deleteTagByIds">

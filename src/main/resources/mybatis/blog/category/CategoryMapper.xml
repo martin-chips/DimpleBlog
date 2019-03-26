@@ -3,7 +3,7 @@
 <mapper namespace="com.dimple.project.blog.category.mapper.CategoryMapper">
 
     <sql id="selectCategoryVo">
-        select category_id, category_title, weight,
+        select category_id, category_title, weight,support,
         description, create_by, create_time, update_by, update_time
         from
         bg_category
@@ -11,15 +11,17 @@
 
     <insert id="insertCategory">
         insert into bg_category(
-        <if test="categoryTitle != null and categoryTitle != 0">category_title,</if>
+        <if test="categoryTitle != null and categoryTitle != ''">category_title,</if>
         <if test="weight != null and weight != ''">weight,</if>
         <if test="description != null and description != ''">description,</if>
+        <if test="support != null and support != ''">support,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         )values(
-        <if test="categoryTitle != null and categoryTitle != 0">#{categoryTitle},</if>
+        <if test="categoryTitle != null and categoryTitle != ''">#{categoryTitle},</if>
         <if test="weight != null and weight != ''">#{weight},</if>
         <if test="description != null and description != ''">#{description},</if>
+        <if test="support != null and support != ''">#{support},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )
@@ -35,6 +37,9 @@
         </set>
         where user_id = #{userId}
     </update>
+    <update id="updateCategorySupportById">
+        update bg_category set support=#{support} where category_id=#{categoryId}
+    </update>
     <delete id="deleteCategoryByIds">
         delete from bg_category where category_id in
         <foreach collection="array" item="categoryId" open="(" separator="," close=")">
@@ -47,6 +52,9 @@
             <if test="categoryTitle != null and categoryTitle != ''">
                 AND category_title like concat('%', #{categoryTitle}, '%')
             </if>
+            <if test="support != null and support != ''">
+                AND support=#{support}
+            </if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
@@ -58,6 +66,10 @@
     <select id="selectCategoryById" resultType="com.dimple.project.blog.category.domain.Category">
         <include refid="selectCategoryVo"/>
         where category_id=#{categoryId}
+    </select>
+    <select id="selectCategoryByCategoryTitle" resultType="com.dimple.project.blog.category.domain.Category">
+        <include refid="selectCategoryVo"/>
+        where category_title=#{title}
     </select>
 
 

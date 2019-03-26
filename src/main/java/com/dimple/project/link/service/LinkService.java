@@ -3,6 +3,7 @@ package com.dimple.project.link.service;
 import com.dimple.project.link.domain.Link;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @className: LinkService
@@ -68,4 +69,11 @@ public interface LinkService {
      * @return 受影响的行数
      */
     int passLink(String ids);
+
+    /**
+     * 获取所有的count统计
+     *
+     * @return
+     */
+    Map<String, Integer> selectLinkCount();
 }
