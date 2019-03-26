@@ -68,7 +68,7 @@ public interface LinkMapper {
      * @param ids 需要通过的友链的id
      * @return 受影响的行数
      */
-    int changeProcessed(Integer[] ids);
+    int processedLinkByIds(Integer[] ids);
 
     /**
      * 根据display获取count统计

@@ -35,7 +35,7 @@
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()
         </set>
-        where user_id = #{userId}
+        where category_id = #{categoryId}
     </update>
     <update id="updateCategorySupportById">
         update bg_category set support=#{support} where category_id=#{categoryId}

@@ -48,7 +48,7 @@
             #{linkId}
         </foreach>
     </update>
-    <update id="changeProcessed">
+    <update id="processedLinkByIds">
         update bg_link set processed= 1 where link_id in
         <foreach item="linkId" collection="array" open="(" separator="," close=")">
             #{linkId}

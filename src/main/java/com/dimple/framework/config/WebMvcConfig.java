@@ -1,7 +1,7 @@
 package com.dimple.framework.config;
 
-import java.util.Locale;
-
+import com.dimple.framework.web.filter.RequestInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -10,15 +10,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.util.Locale;
+
 /**
- * @className: I18nConfig
+ * @className: WebMvcConfig
  * @description: 资源文件配置加载
  * @auther: Dimple
  * @Date: 2019/3/13
  * @Version: 1.1
  */
 @Configuration
-public class I18nConfig implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
+    @Autowired
+    RequestInterceptor requestInterceptor;
+
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
@@ -38,5 +43,6 @@ public class I18nConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+        registry.addInterceptor(requestInterceptor).addPathPatterns("/**");
     }
 }

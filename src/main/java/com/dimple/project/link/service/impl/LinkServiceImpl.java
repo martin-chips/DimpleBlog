@@ -1,5 +1,6 @@
 package com.dimple.project.link.service.impl;
 
+import com.dimple.common.constant.LinkConstants;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.common.utils.text.Convert;
 import com.dimple.project.link.domain.Link;
@@ -33,6 +34,8 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public int insertLink(Link link) {
         link.setCreateBy(ShiroUtils.getLoginName());
+        //设置为已经处理
+        link.setProcessed(LinkConstants.LINK_PROCESSED);
         return linkMapper.insertLink(link);
     }
 
@@ -58,8 +61,8 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public int passLink(String ids) {
-        return linkMapper.changeProcessed(Convert.toIntArray(ids));
+    public int processedLinkByIds(String ids) {
+        return linkMapper.processedLinkByIds(Convert.toIntArray(ids));
     }
 
     @Override

@@ -40,4 +40,11 @@ public interface VisitLogService {
      * 清空访问日志
      */
     void cleanVisitLog();
+
+    /**
+     * 新增访问记录
+     *
+     * @param visitLog
+     */
+    void insertVisitLog(VisitLog visitLog);
 }

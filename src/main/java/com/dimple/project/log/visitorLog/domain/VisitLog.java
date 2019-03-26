@@ -4,7 +4,7 @@ import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 
 /**
- * @className: VisitLog
+ * @className: VLog
  * @description:
  * @auther: Dimple
  * @Date: 2019/3/16
@@ -48,5 +48,5 @@ public class VisitLog extends BaseEntity {
     /**
      * 访问状态
      */
-    private String status;
+    private Integer status;
 }

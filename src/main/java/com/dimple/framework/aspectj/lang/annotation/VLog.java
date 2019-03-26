@@ -6,7 +6,7 @@ import com.dimple.framework.aspectj.lang.enums.OperatorType;
 import java.lang.annotation.*;
 
 /**
- * @className: VisitLog
+ * @className: VLog
  * @description: 自定义访问日志注解
  * @auther: Dimple
  * @Date: 2019/3/13
@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface VisitLog {
+public @interface VLog {
     /**
      * 请求的模块
      */

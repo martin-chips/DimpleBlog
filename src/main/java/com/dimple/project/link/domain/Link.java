@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class Link extends BaseEntity {
 
-    private Integer id;
+    private Integer linkId;
     private String title;
     private String description;
     private String headerImg;
@@ -23,5 +23,6 @@ public class Link extends BaseEntity {
     private Integer processed;
     private Integer display;
     private String email;
+    private String url;
 
 }

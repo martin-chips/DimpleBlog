@@ -1,9 +1,5 @@
 package com.dimple.framework.manager.factory;
 
-import java.util.TimerTask;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.AddressUtils;
 import com.dimple.common.utils.LogUtils;
@@ -12,12 +8,17 @@ import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.common.utils.spring.SpringUtils;
 import com.dimple.project.log.logininfor.domain.Logininfor;
 import com.dimple.project.log.logininfor.service.LogininforServiceImpl;
+import com.dimple.project.log.operlog.domain.OperLog;
+import com.dimple.project.log.operlog.service.IOperLogService;
+import com.dimple.project.log.visitorLog.domain.VisitLog;
+import com.dimple.project.log.visitorLog.service.VisitLogService;
 import com.dimple.project.monitor.online.domain.OnlineSession;
 import com.dimple.project.monitor.online.domain.UserOnline;
 import com.dimple.project.monitor.online.service.IUserOnlineService;
-import com.dimple.project.log.operlog.domain.OperLog;
-import com.dimple.project.log.operlog.service.IOperLogService;
 import eu.bitwalker.useragentutils.UserAgent;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.TimerTask;
 
 /**
  * @className: AsyncFactory
@@ -26,8 +27,8 @@ import eu.bitwalker.useragentutils.UserAgent;
  * @Date: 2019/3/13
  * @Version: 1.1
  */
+@Slf4j
 public class AsyncFactory {
-    private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");
 
     /**
      * 同步session到数据库
@@ -96,7 +97,7 @@ public class AsyncFactory {
                 s.append(LogUtils.getBlock(status));
                 s.append(LogUtils.getBlock(message));
                 // 打印信息到日志
-                sys_user_logger.info(s.toString(), args);
+                log.info(s.toString(), args);
                 // 获取客户端操作系统
                 String os = userAgent.getOperatingSystem().getName();
                 // 获取客户端浏览器
@@ -117,6 +118,21 @@ public class AsyncFactory {
                 }
                 // 插入数据
                 SpringUtils.getBean(LogininforServiceImpl.class).insertLogininfor(logininfor);
+            }
+        };
+    }
+
+    public static TimerTask recordVisitLog(VisitLog visitLog) {
+        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        //获取爬虫类型
+//        final String spider = SpiderUtil.parseUserAgent(ServletUtil.getUserAgent());
+        return new TimerTask() {
+            @Override
+            public void run() {
+                visitLog.setOs(userAgent.getOperatingSystem().getName());
+                visitLog.setBrowser(userAgent.getBrowser().getName());
+                visitLog.setLocation(AddressUtils.getRealAddressByIP(visitLog.getIpAddr()));
+                SpringUtils.getBean(VisitLogService.class).insertVisitLog(visitLog);
             }
         };
     }

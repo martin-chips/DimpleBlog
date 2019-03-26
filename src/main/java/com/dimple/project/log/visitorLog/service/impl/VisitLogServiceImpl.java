@@ -39,4 +39,9 @@ public class VisitLogServiceImpl implements VisitLogService {
     public void cleanVisitLog() {
         visitLogMapper.cleanVisitLog();
     }
+
+    @Override
+    public void insertVisitLog(VisitLog visitLog) {
+        visitLogMapper.insertVisitLog(visitLog);
+    }
 }

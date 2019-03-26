@@ -5,17 +5,43 @@
 <mapper namespace="com.dimple.project.log.visitorLog.mapper.VisitLogMapper">
 
     <sql id="selectVisitLogVo">
-        select id, ip_addr, location, browser, os, status,spider, title, create_by, create_time
+        select visit_id, ip_addr, location, browser, os, status,spider, title, create_by, create_time
         from
         bg_visit_log
     </sql>
+
+    <insert id="insertVisitLog">
+        insert into bg_visit_log(
+        <if test="ipAddr!=null and ipAddr!=''">ip_addr,</if>
+        <if test="location!=null and location!=''">location,</if>
+        <if test="browser!=null and browser!=''">browser,</if>
+        <if test="os!=null and os!=''">os,</if>
+        <if test="requestUrl!=null and requestUrl!=''">request_url,</if>
+        <if test="errorMsg!=null and errorMsg!=''">error_msg,</if>
+        <if test="spider!=null and spider!=''">spider,</if>
+        <if test="title!=null and title!=''">title,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time)
+        values (
+        <if test="ipAddr!=null and ipAddr!=''">#{ipAddr},</if>
+        <if test="location!=null and location!=''">#{location},</if>
+        <if test="browser!=null and browser!=''">#{browser},</if>
+        <if test="os!=null and os!=''">#{os},</if>
+        <if test="requestUrl!=null and requestUrl!=''">#{requestUrl},</if>
+        <if test="errorMsg!=null and errorMsg!=''">#{errorMsg},</if>
+        <if test="spider!=null and spider!=''">#{spider},</if>
+        <if test="title!=null and title!=''">#{title},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
 
     <delete id="cleanVisitLog">
           delete from bg_visit_log
     </delete>
 
     <delete id="deleteVisitLogByIds">
-        delete from bg_visit_log where id in
+        delete from bg_visit_log where visit_id in
         <foreach collection="array" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -36,8 +62,8 @@
         </where>
     </select>
     <select id="selectVisitLogById" resultType="com.dimple.project.log.visitorLog.domain.VisitLog">
-        select id, ip_addr, location, browser, os, spider, request_url, error_msg, title, create_by, create_time, status
-        from bg_visit_log where id =#{visitId};
+        select visit_id, ip_addr, location, browser, os, spider, request_url, error_msg, title, create_by, create_time, status
+        from bg_visit_log where visit_id =#{visitId};
     </select>
 
 

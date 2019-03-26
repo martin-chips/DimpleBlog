@@ -68,7 +68,7 @@ public interface LinkService {
      * @param ids 需要通过的友链的id
      * @return 受影响的行数
      */
-    int passLink(String ids);
+    int processedLinkByIds(String ids);
 
     /**
      * 获取所有的count统计

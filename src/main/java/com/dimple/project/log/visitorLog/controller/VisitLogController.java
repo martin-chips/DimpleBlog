@@ -54,7 +54,7 @@ public class VisitLogController extends BaseController {
     @RequiresPermissions("log:visitLog:detail")
     @GetMapping("/detail/{visitId}")
     public String detail(@PathVariable("visitId") Integer visitId, Model model) {
-        model.addAttribute("operLog", visitLogService.selectVisitLogById(visitId));
+        model.addAttribute("visit", visitLogService.selectVisitLogById(visitId));
         return "log/visitLog/detail";
     }
 

@@ -40,4 +40,12 @@ public interface VisitLogMapper {
      * @return 访客日志
      */
     VisitLog selectVisitLogById(Integer visitId);
+
+    /**
+     * 新增VisitLog记录
+     *
+     * @param visitLog 需要新增的VisitLog
+     * @return 受影响的行数
+     */
+    int insertVisitLog(VisitLog visitLog);
 }
