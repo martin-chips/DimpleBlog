@@ -1,0 +1,105 @@
+<!doctype html>
+
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dimple的个人博客</title>
+    <div th:include="front/common :: front-head"></div>
+</head>
+
+<body class="nobg">
+<header th:replace="front/common :: front-header"></header>
+
+<!--内容区开始-->
+<div class="container">
+    <!--最新文章-->
+    <section class="mysection">
+        <div class="arclist">
+            <h4 class="index-title homeh4"><a href=""><i class="el-certificate"></i>最新文章
+                <small>New Article</small>
+            </a></h4>
+            <!--列表开始-->
+            <ul>
+                <li th:each="item:${newestBlog}">
+                    <div class="arcimg">
+                        <img class="lazy-load" src="/static/front/images/loading-image.gif"
+                             th:data-original="${item.headerUrl}"
+                             th:alt="${item.title}" th:title="${item.title}"/>
+                    </div>
+                    <div class="arc-right">
+                        <h4 class="blue-text">
+                            <a th:href="${'/view/'+item.blogId}" th:title="${item.title}" th:text="${item?.title}"></a>
+                        </h4>
+                        <p th:text="${item.summary}"></p>
+                        <ul>
+                            <li>
+                                <a th:title="${'边小丰'+item.time+'发表'}">
+                                    <i class="el-time"></i><span th:text="${item.time}"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="about.html" title="作者： 边小丰"><i class="el-user"></i>边小丰</a>
+                            </li>
+                            <li><a th:href="${'/view/'+item.blogId+'#Comment'}" href="article/219.html#Comment">
+                                <i class="el-comment"></i>
+                                <span th:id="${'sourceId::'+item.blogId}" class="cy_cmt_count"></span>
+                                <script id="cy_cmt_num"
+                                        src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyu583FnA">
+                                </script>
+                            </a>
+                            </li>
+                            <li><a th:title="${'已有'+item.count+'次浏览'}"><i class="el-eye-open"></i><span
+                                    th:text="${item.count}"></span></a></li>
+                            <li>
+                                <a th:href="${'category/'+item.categoryId+'.html'}" title="查看分类">
+                                    <i class="el-th-list"></i>
+                                    <span th:text="${item.categoryName}"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <!-- <li id="Hot"> -->
+                    <div class="arcimg">
+                        <img class="lazy-load" src="/static/front/images/loading-image.gif"
+                             data-original="/Upload/image/artimg/20170121588381411557f.png"
+                             alt="数据库优化有哪些? 分别需要注意什么?" title="数据库优化有哪些? 分别需要注意什么?"/>
+                    </div>
+                    <div class="arc-right">
+                        <h4 class="blue-text"><a href="article/219.html" title="数据库优化有哪些? 分别需要注意什么?">数据库优化有哪些?
+                            分别需要注意什么?</a></h4>
+                        <p>SQL优化的原则是,将一次操作需要读取的BLOCK数减到最低,即在最短的时间达到最大的数据吞吐量</p>
+                        <ul>
+                            <li><a title="边小丰2019-03-01发表"><i class="el-time"></i>2019-03-01</a></li>
+                            <li><a href="Home/Index/about.html" title="作者： 边小丰"><i class="el-user"></i>边小丰</a></li>
+                            <!-- <li><a href="article/219.html#Comment" title="已有 0 条评论"><i class="el-comment"></i>0</a></li> -->
+                            <li><a title="已有 4 次浏览"><i class="el-eye-open"></i>4</a></li>
+                            <li><a href="category/31.html" title="查看分类"><i class="el-th-list"></i>数据库</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <!--友情链接-->
+            <div class="side-link ">
+                <h4 class="index-title"><i class="el-paper-clip"></i>友情链接
+                    <small>Friend Links</small>
+                    <a href="link.html"><i
+                            class="el el-plus"></i>申请</a></h4>
+                <ul>
+                    <li>
+                        <a href="javascript:if(confirm('http://itwgy.com/  \n\nكτݾϞרԃ Teleport Ultra Ђ՘, ӲΪ ̼ˇһٶԲܲ·޶΢ҿѻʨ׃Ϊ̼քǴʼַ֘քַ֘c  \n\nţЫ՚ؾϱǷʏղߪ̼?'))window.location='http://itwgy.com/'"
+                           target="_blank" title="IT家园">IT家园</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--左侧结束-->
+
+    <aside th:replace="front/common :: front-side"></aside>
+</div>
+<aside th:replace="front/common :: front-footer"></aside>
+</body>
+
+</html>

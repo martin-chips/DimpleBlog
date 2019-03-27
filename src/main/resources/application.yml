@@ -74,7 +74,10 @@ spring:
     restart:
       # 热部署开关
       enabled: true
-
+  redis:
+    host: localhost
+    port: 6379
+    database: 2
 # MyBatis
 mybatis:
   # 搜索指定包别名
@@ -129,14 +132,3 @@ xss:
   excludes: /system/notice/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
-
-# 代码生成
-gen:
-  # 作者
-  author: dimple
-  # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool
-  packageName: com.dimple.project.system
-  # 自动去除表前缀，默认是true
-  autoRemovePre: true
-  # 表前缀(类名不会包含表前缀)
-  tablePrefix: sys_

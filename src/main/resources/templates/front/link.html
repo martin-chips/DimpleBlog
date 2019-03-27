@@ -1,0 +1,100 @@
+<!doctype html>
+
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dimple的个人博客</title>
+    <div th:include="front/common :: front-head"></div>
+</head>
+
+<body class="nobg">
+<header th:replace="front/common :: front-header"></header>
+
+<!--内容区开始-->
+<div class="container">
+    <section>
+        <div class="">
+            <h4 class="index-title" id="New2"><i class="el-paper-clip"></i> 本站友情链接：</h4>
+            <ul class="link-list">
+                <li th:each="link:${links}">
+                    <div class="link-item">
+                        <a th:href="${link.url}" target="_blank">
+                            <img th:src="${link.headerUrl}">
+                            <h3 th:text="${link.title}"></h3>
+                            <p th:text="${link.description}"></p>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <article>
+
+            <!--编辑的内容-->
+            <div class="link-edit">
+                <h4 class="index-title">
+                    <i class="el-info-circle"></i><span
+                        style="font-size:14px;font-family:'Microsoft YaHei';">申请说明:</span>
+                </h4>
+                <p>
+                    <span style="font-size:14px;font-family:'Microsoft YaHei';">① .</span><span
+                        style="color:#E53333;font-size:14px;font-family:'Microsoft YaHei';"><strong>贵站需要先添加本站友链，友链信息见下方，本站会定时扫描所有友链，请确保网站访问正常，<strong>本站自动审核程序运行中，最迟会在24小时内跟上链接</strong></strong></span><span
+                        style="font-size:14px;font-family:'Microsoft YaHei';">，谢谢！</span><br/>
+                    <span style="font-size:14px;font-family:'Microsoft YaHei';">② .申请提交后若无其它原因将在24小时内审核,如超过时间还未通过,请通过首页邮件地址联系我。(各种额外因素)</span><br/>
+                </p>
+                <br/>
+                <h4 class="index-title">
+                    <i class="el-idea"></i><span style="font-size:14px;font-family:'Microsoft YaHei';">站点信息:</span>
+                </h4>
+                <p>
+                    <span style="font-size:14px;font-family:'Microsoft YaHei';">首页地址：</span><a href="/"
+                                                                                               target="_blank"><span
+                        style="font-size:14px;font-family:'Microsoft YaHei';">http://www.bianxiaofeng.com</span></a><br/>
+                    <span style="font-size:14px;font-family:'Microsoft YaHei';">友链地址：www.bianxiaofeng.com/link.html</span><br/>
+                    <span style="font-size:14px;font-family:'Microsoft YaHei';"> 网站名称：Dimple的个人博客</span><br/>
+                    <span style="font-size:14px;font-family:'Microsoft YaHei';"> 网站描述：边小丰的个人博客，记录学习，记录生活。</span><br/>
+                    <span style="font-size:14px;font-family:'Microsoft YaHei';"> 网站图标地址：www.bianxiaofeng.com/imgs/favicon.ico</span><br/>
+                </p>
+            </div>
+
+            <h4 class="index-title"><i class="el-edit"></i> 开始申请: 欢迎交换友链</h4>
+            <div id="Join" class="form-zd form-in">
+                <form action="#" id="contact-form" method="post" onsubmit="return false">
+                    <!----昵称------->
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="el-user"></i></span>
+                        <input name="lname" type="text" id="lname" size="16" placeholder="网站名称（必须）"/>
+                    </div>
+                    <!------邮箱----->
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="el-envelope"></i></span>
+                        <input name="email" type="text" id="email" size="16" placeholder="您的邮箱（必须）"/>
+                    </div>
+                    <!----网址------->
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="el-globe"></i></span>
+                        <input name="url" type="text" id="url" size="16" placeholder="您的网站（必须）"/>
+                    </div>
+                    <!----内容------->
+                     <textarea class="link-text" style="height:150px;width:70%;"name="u_content" id="info" placeholder="网站介绍（必须）"></textarea>
+                    <!--验证码-->
+<!--                    <div class="input-prepend yzm">-->
+                    <!--                        <i class="el-question-sign"></i>-->
+                    <!--                        <input name="txt_check" type="text" id="verify" size="16" placeholder="验证码"/>-->
+                    <!--                        <span>-->
+                    <!--                                <img id="safecode" src=""-->
+                    <!--                                     title="点击刷新验证码" onclick="this.src+='';">-->
+                    <!--                            </span>-->
+                    <!--                    </div>-->
+                    <!--提交表单--------->
+                    <div class="feed-sub"><input type="submit" class="btn btn-inverse" onclick="return link()"
+                                                 value="提交申请"/></div>
+                </form>
+            </div>
+        </article>
+    </section>
+    <aside th:replace="front/common :: front-side"></aside>
+</div>
+<aside th:replace="front/common :: front-footer"></aside>
+</body>
+
+</html>

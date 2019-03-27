@@ -8,6 +8,7 @@ import com.dimple.project.blog.blog.mapper.BlogTagMapper;
 import com.dimple.project.blog.blog.service.BlogService;
 import com.dimple.project.blog.tag.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -99,6 +100,7 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectBlogCountByStatus(status);
     }
 
+    @CachePut(cacheNames = "dimple", key = "#blogId")
     @Override
     public Blog selectBlogWithTextAndTagsById(Integer blogId) {
         Blog blog = blogMapper.selectBlogWithTextById(blogId);

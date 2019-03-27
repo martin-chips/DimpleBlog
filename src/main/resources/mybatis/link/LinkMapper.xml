@@ -92,7 +92,7 @@
     <select id="selectLinkById" resultType="com.dimple.project.link.domain.Link">
         select link_id, title, description, header_img, click, weight, available, processed, display, email, create_by, create_time, update_by, update_time
         from
-        bg_link
+        bg_link where link_id=#{linkId}
     </select>
 
     <select id="selectLinkCountByDisplay" resultType="java.lang.Integer">

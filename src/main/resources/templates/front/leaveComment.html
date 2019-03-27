@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="front/common :: front-head"></head>
+<body>
+
+<div th:include="front/common :: front-header"></div>
+<article data-scroll-reveal="enter top and move 50px over 0.6s">
+    <div class="whitebg lanmu" >
+        <img src="static/imgs/aboutMe.jpg">
+        <h1>留言板</h1>
+        <p>
+            欢迎各位来到我的个人博客网站，网站还在建设中，如果有更好的意见或者建议，请留言。
+        </p>
+    </div>
+
+    <div class="whitebg gbook">
+        <h2 class="htitle">留下你的小脚印吧</h2>
+        <ul>
+            <!--PC和WAP自适应版-->
+            <div id="SOHUCS" sid="leaveComment"></div>
+            <script type="text/javascript">
+                (function () {
+                    var appid = 'cyu583FnA';
+                    var conf = 'prod_e133a229a25f70b06b142787fad1386b';
+                    var width = window.innerWidth || document.documentElement.clientWidth;
+                    if (width < 960) {
+                        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+                    } else {
+                        var loadJs = function (d, a) {
+                            var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                            var b = document.createElement("script");
+                            b.setAttribute("type", "text/javascript");
+                            b.setAttribute("charset", "UTF-8");
+                            b.setAttribute("src", d);
+                            if (typeof a === "function") {
+                                if (window.attachEvent) {
+                                    b.onreadystatechange = function () {
+                                        var e = b.readyState;
+                                        if (e === "loaded" || e === "complete") {
+                                            b.onreadystatechange = null;
+                                            a()
+                                        }
+                                    }
+                                } else {
+                                    b.onload = a
+                                }
+                            }
+                            c.appendChild(b)
+                        };
+                        loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+                            window.changyan.api.config({appid: appid, conf: conf})
+                        });
+                    }
+                })(); </script>
+        </ul>
+    </div>
+</article>
+<div th:include="front/common :: front-footer"></div>
+
+</body>
+</html>

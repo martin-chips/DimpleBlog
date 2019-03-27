@@ -1,0 +1,85 @@
+.face-main{
+	z-index:9999;
+	overflow:hidden;
+	margin:0 auto;
+	position:absolute;
+	max-width:650px;
+	border: 1px solid #fff;
+	box-shadow: 4px 4px 15px #a2a2a2;
+	background:rgba(255,255,255,0.9);
+}
+/*隐藏浏览器的outline,兼容IE。*/
+.face-main a{
+	outline:none;blr:expression(this.onFocus=this.blur());
+	}
+.face-main ul{
+	list-style:none;
+	margin:0;
+	padding:0;
+	padding:15px!important;
+	
+	}
+.face-main ul li{display:list-item;list-style:none;    background-image: none!important;}
+
+.face-main ul.face-tab{
+	list-style:none;
+	background:rgba(255,255,255,0.8);
+}
+.face-tab:hover{cursor:move}
+.face-main ul.face-tab li{
+	float:left!important;
+	margin:0;margin-right:1em;
+	display:list-item;
+	text-align: -webkit-match-parent;
+	}
+.face-main ul.face-tab li a{
+	display: block;
+	padding:0.5em 1em;
+	font-size:13px;text-decoration: none;
+	color: #fff;
+	margin-bottom: -1px;
+	background: #e9e9e9;
+}
+.face-main ul.face-tab li a.selected-a{
+	zoom:1;
+	background: #0ecba1!important;
+	color:#fff!important;
+	box-shadow: none;
+	text-shadow: none;
+}
+
+/*表情内容样式*/
+.face-main{margin:0;padding:0;}
+.face-item{
+	cursor:pointer;
+	float:left;
+	border:1px solid!important;
+	overflow:hidden;
+	margin:-1px 0 0 -1px!important;
+	padding:5px!important;
+	text-align:center!important;
+	border-color: #c7eafb!important;
+	background:none!important;
+}
+.face-item:hover{border:1px solid #c4ee00!important;background:rgba(196,238,0,0.8)!important;position:relative;z-index:2!important;}
+.face-item img{display:inline-block;*zoom:1;border:0;margin:0!important;}
+.face-main ul:nth-of-type(1) img{width:100%;max-width:30px;height:30px;}
+.face-main ul:nth-of-type(2) img{width:100%;max-width:30px;height:30px;}
+.face-main ul:nth-of-type(3) img{width:100%;max-width:50px;height:50px;}
+.face-close{
+	position:absolute;right:6px;top:6px;text-decoration:none;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-size:16px;line-height:12px;
+	color:#000;
+}
+.face-close:hover,.face-close:focus{
+	color:#000;cursor:pointer;opacity:0.4;filter:alpha(opacity=40);
+}
+/*公共清浮类，摘自bootstrap*/
+.clearfix{*zoom:1;}
+.clearfix:before,.clearfix:after{display:table;line-height:0;content:"";}
+.clearfix:after{clear:both;}
+
+@media screen and (min-width:320px) and(max-width:768px){
+	
+	.face-main{width:100%;}
+}

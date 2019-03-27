@@ -56,7 +56,7 @@
                 <label class="col-sm-3 control-label">显示：</label>
                 <div class="col-sm-8">
                     <div class="onoffswitch">
-                        <input type="checkbox" th:checked="false" class="onoffswitch-checkbox"
+                        <input type="checkbox" class="onoffswitch-checkbox"
                                th:checked="${link.display == 1 ? true : false}" id="display">
                         <label class="onoffswitch-label" for="display">
                             <span class="onoffswitch-inner"></span>
@@ -68,7 +68,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">权重：</label>
                 <div class="col-sm-8">
-                    <input id="linkWeight" class="form-control" name="weight">
+                    <input id="linkWeight" class="form-control" name="weight" th:value="${link.weight}">
                 </div>
             </div>
         </form>
