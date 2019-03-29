@@ -1,7 +1,6 @@
-/*
 package com.dimple.common.utils;
 
-import com.dimple.common.constant.CachePrefixEnum;
+import com.dimple.common.constant.CachePrefix;
 import com.dimple.common.utils.spring.SpringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -11,18 +10,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-*/
 /**
  * @className: SpiderUtil
  * @description: 爬虫工具类
  * @auther: Dimple
  * @date: 01/14/19 20:57
  * @version: 1.0
- *//*
-
+ */
 public class SpiderUtils {
 
-    private static final String KEY = CachePrefixEnum.SPIDER.getPrefix() + "list";
+    private static final String KEY = CachePrefix.SPIDER + "list";
 
     public static String parseUserAgent(String userAgent) {
         if (StringUtils.isBlank(userAgent)) {
@@ -116,6 +113,4 @@ public class SpiderUtils {
         valueOperations.set(KEY, spider, 7, TimeUnit.DAYS);
         return spider;
     }
-
 }
-*/

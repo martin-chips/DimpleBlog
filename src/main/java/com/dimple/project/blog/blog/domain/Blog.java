@@ -1,7 +1,11 @@
 package com.dimple.project.blog.blog.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
+import com.dimple.project.blog.category.domain.Category;
+import com.dimple.project.blog.tag.domain.Tag;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @className: Blog
@@ -69,10 +73,19 @@ public class Blog extends BaseEntity {
      * 博文正文内容
      */
     private String content;
-
+    /**
+     * tag集合
+     */
+    private List<Tag> tagList;
 
     /**
      * 从页面获取或者传到页面的tags
      */
     private String[] tags;
+    /**
+     * 分类的名称
+     */
+    private String categoryTitle;
+
+    private Category category;
 }

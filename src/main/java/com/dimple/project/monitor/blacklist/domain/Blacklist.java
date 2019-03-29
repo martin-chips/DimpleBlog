@@ -1,4 +1,4 @@
-package com.dimple.project.log.visitorLog.domain;
+package com.dimple.project.monitor.blacklist.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Data
 public class Blacklist extends BaseEntity {
-    private Integer id;
+    private Integer blacklistId;
     private String ipAddr;
     private String description;
     private Integer count;

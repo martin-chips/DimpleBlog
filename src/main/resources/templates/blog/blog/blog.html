@@ -73,7 +73,7 @@
                         </li>
                         <li>
                             推荐：<select id="blogSupport" name="support"
-                                         th:with="type=${@dict.getType('blog_blog_support')}">
+                                       th:with="type=${@dict.getType('blog_blog_support')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -236,14 +236,14 @@
     /* 博客推荐-停用 */
     function disable(blogId) {
         $.modal.confirm("确认要取消推荐该博文吗？", function () {
-            $.operate.put($.table._option.changeSupportUrl+"/0", {"blogId": blogId});
+            $.operate.put($.table._option.changeSupportUrl + "/0", {"blogId": blogId});
         })
     }
 
     /* 博客推荐-启用 */
     function enable(blogId) {
         $.modal.confirm("确认要推荐该博文吗？", function () {
-            $.operate.put($.table._option.changeSupportUrl+"/1", {"blogId": blogId});
+            $.operate.put($.table._option.changeSupportUrl + "/1", {"blogId": blogId});
         })
     }
 

@@ -19,6 +19,7 @@
         <if test="requestUrl!=null and requestUrl!=''">request_url,</if>
         <if test="errorMsg!=null and errorMsg!=''">error_msg,</if>
         <if test="spider!=null and spider!=''">spider,</if>
+        <if test="status!=null and status!=''">status,</if>
         <if test="title!=null and title!=''">title,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time)
@@ -30,6 +31,7 @@
         <if test="requestUrl!=null and requestUrl!=''">#{requestUrl},</if>
         <if test="errorMsg!=null and errorMsg!=''">#{errorMsg},</if>
         <if test="spider!=null and spider!=''">#{spider},</if>
+        <if test="status!=null and status!=''">#{status},</if>
         <if test="title!=null and title!=''">#{title},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()

@@ -32,7 +32,7 @@ public class RedisConfig {
     @Autowired
     private LettuceConnectionFactory lettuceConnectionFactory;
 
-    private Duration timeToLive = Duration.ofSeconds(60);
+    private Duration timeToLive = Duration.ofHours(1);
 
 
     // 缓存管理器 使用Lettuce

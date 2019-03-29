@@ -13,7 +13,7 @@ import com.dimple.project.system.menu.service.IMenuService;
 import com.dimple.project.system.user.domain.User;
 
 /**
- * @className: IndexController
+ * @className: HomeController
  * @description: 首页 业务处理
  * @auther: Dimple
  * @Date: 2019/3/13

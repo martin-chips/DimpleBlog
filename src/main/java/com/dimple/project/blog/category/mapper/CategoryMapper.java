@@ -69,4 +69,11 @@ public interface CategoryMapper {
      * @return category实体
      */
     Category selectCategoryByCategoryTitle(String title);
+
+    /**
+     * 获取推荐的分类
+     *
+     * @return
+     */
+    List<Category> selectSupportCategoryList();
 }

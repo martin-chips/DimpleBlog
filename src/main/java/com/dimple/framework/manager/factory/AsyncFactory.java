@@ -4,6 +4,7 @@ import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.AddressUtils;
 import com.dimple.common.utils.LogUtils;
 import com.dimple.common.utils.ServletUtils;
+import com.dimple.common.utils.SpiderUtils;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.common.utils.spring.SpringUtils;
 import com.dimple.project.log.logininfor.domain.Logininfor;
@@ -125,13 +126,15 @@ public class AsyncFactory {
     public static TimerTask recordVisitLog(VisitLog visitLog) {
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         //获取爬虫类型
-//        final String spider = SpiderUtil.parseUserAgent(ServletUtil.getUserAgent());
+        final String spider = SpiderUtils.parseUserAgent(ServletUtils.getUserAgent());
         return new TimerTask() {
             @Override
             public void run() {
                 visitLog.setOs(userAgent.getOperatingSystem().getName());
+                visitLog.setSpider(spider);
                 visitLog.setBrowser(userAgent.getBrowser().getName());
                 visitLog.setLocation(AddressUtils.getRealAddressByIP(visitLog.getIpAddr()));
+                visitLog.setCreateBy(ShiroUtils.getSessionId());
                 SpringUtils.getBean(VisitLogService.class).insertVisitLog(visitLog);
             }
         };

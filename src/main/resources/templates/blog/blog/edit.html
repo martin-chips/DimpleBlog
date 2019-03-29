@@ -78,7 +78,7 @@
                                     <option th:each="category : ${categories}"
                                             th:text="${category.categoryTitle}"
                                             th:value="${category.categoryId}"
-                                            th:selected=" *{category.categoryId}">
+                                            th:field="*{blog.categoryId}">
                                     </option>
                                 </select>
                             </div>
@@ -138,7 +138,9 @@
     var tags = [[${blog.tags}]];
     $(function () {
         //添加已有标签
-        $("#tags").tagsinput('add', tags.join(","));
+        if (tags != null) {
+            $("#tags").tagsinput('add', tags.join(","));
+        }
     });
 </script>
 <script>
@@ -258,7 +260,7 @@
         var content = $("#summernote").summernote("code");
         var tagsArray = new Array();
         var data = {
-            headerUrl: headerUrl,
+            headerImg: headerUrl,
             title: title,
             summary: summary,
             tags: tags,

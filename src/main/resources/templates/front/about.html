@@ -1,9 +1,10 @@
 <!doctype html>
 
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Dimple的个人博客</title>
-    <div th:include="front/common :: front-head"></div>
+    <title>关于—Dimple的个人博客</title>
+    <div th:include="include-front :: head"></div>
     <style>
         .gyw_intro {float: left;font-size: 14px;}
         .gyw_intro h5 {width: 640px;font-weight: bold;margin-top: 10px;float: left;}
@@ -45,7 +46,7 @@
     </style>
 </head>
 <body class="nobg">
-<header th:replace="front/common :: front-header"></header>
+<header th:replace="include-front :: header"></header>
 <!--内容区开始-->
 <div class="container">
     <!--最新文章-->
@@ -164,9 +165,9 @@
     </section>
 
     <!--左侧结束-->
-    <aside th:replace="front/common :: front-side"></aside>
+    <aside th:replace="include-front :: side"></aside>
 </div>
-<aside th:replace="front/common :: front-footer"></aside>
+<aside th:replace="include-front :: footer"></aside>
 </body>
 
 </html>

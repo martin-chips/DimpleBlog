@@ -37,6 +37,7 @@ public class VisitLogController extends BaseController {
 
     @RequiresPermissions("log:visitLog:list")
     @GetMapping("/list")
+    @ResponseBody
     public TableDataInfo list(VisitLog visitLog) {
         startPage();
         List<VisitLog> list = visitLogService.selectVisitLogList(visitLog);

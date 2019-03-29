@@ -1,11 +1,10 @@
-package com.dimple.project.log.visitorLog.service.impl;
+package com.dimple.project.monitor.blacklist.service.impl;
 
 import com.dimple.common.constant.BlacklistConstants;
 import com.dimple.common.utils.security.ShiroUtils;
-import com.dimple.project.log.visitorLog.domain.Blacklist;
-import com.dimple.project.log.visitorLog.domain.VisitLog;
-import com.dimple.project.log.visitorLog.mapper.BlacklistMapper;
-import com.dimple.project.log.visitorLog.service.BlacklistService;
+import com.dimple.project.monitor.blacklist.domain.Blacklist;
+import com.dimple.project.monitor.blacklist.mapper.BlacklistMapper;
+import com.dimple.project.monitor.blacklist.service.BlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +23,13 @@ public class BlacklistServiceImpl implements BlacklistService {
     BlacklistMapper blacklistMapper;
 
     @Override
-    public List<VisitLog> selectBlacklistList(Blacklist blacklist) {
+    public List<Blacklist> selectBlacklistList(Blacklist blacklist) {
         return blacklistMapper.selectBlacklistList(blacklist);
     }
 
     @Override
     public int deleteBlacklistByIds(Integer[] ids) {
-        return blacklistMapper.deleteBlacklistByIds(ids);
+        return blacklistMapper.deleteBlacklistByBlacklistIds(ids);
     }
 
     @Override
@@ -70,5 +69,10 @@ public class BlacklistServiceImpl implements BlacklistService {
         Blacklist blacklist = new Blacklist();
         blacklist.setIpAddr(ipAddr);
         return blacklistMapper.insertBlacklist(blacklist);
+    }
+
+    @Override
+    public int updateBlacklist(Blacklist blacklist) {
+        return blacklistMapper.updateBlacklist(blacklist);
     }
 }

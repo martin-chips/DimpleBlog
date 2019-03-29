@@ -1,13 +1,12 @@
-package com.dimple.project.log.visitorLog.controller;
+package com.dimple.project.monitor.blacklist.controller;
 
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.log.visitorLog.domain.Blacklist;
-import com.dimple.project.log.visitorLog.domain.VisitLog;
-import com.dimple.project.log.visitorLog.service.BlacklistService;
+import com.dimple.project.monitor.blacklist.domain.Blacklist;
+import com.dimple.project.monitor.blacklist.service.BlacklistService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,32 +17,33 @@ import java.util.List;
 
 /**
  * @className: BlacklistController
- * @description:
+ * @description: 黑名单处理的Controller
  * @auther: Dimple
  * @date: 03/26/19
  * @version: 1.0
  */
 @Controller
-@RequestMapping("/log/blacklist")
+@RequestMapping("/monitor/blacklist")
 public class BlacklistController extends BaseController {
     @Autowired
     BlacklistService blacklistService;
 
     @GetMapping
-    @RequiresPermissions("log:blacklist:view")
+    @RequiresPermissions("monitor:blacklist:view")
     public String blacklist() {
-        return "log/blacklist/blacklist";
+        return "monitor/blacklist/blacklist";
     }
 
-    @RequiresPermissions("log:blacklist:list")
+    @RequiresPermissions("monitor:blacklist:list")
     @GetMapping("/list")
+    @ResponseBody
     public TableDataInfo list(Blacklist blacklist) {
         startPage();
-        List<VisitLog> list = blacklistService.selectBlacklistList(blacklist);
+        List<Blacklist> list = blacklistService.selectBlacklistList(blacklist);
         return getDataTable(list);
     }
 
-    @RequiresPermissions("log:blacklist:remove")
+    @RequiresPermissions("monitor:blacklist:remove")
     @Log(title = "黑名单", businessType = BusinessType.DELETE)
     @DeleteMapping("/remove")
     @ResponseBody
@@ -51,15 +51,22 @@ public class BlacklistController extends BaseController {
         return toAjax(blacklistService.deleteBlacklistByIds(ids));
     }
 
-    @RequiresPermissions("log:blacklist:detail")
-    @GetMapping("/detail/{blacklistId}")
-    public String detail(@PathVariable Integer blacklistId, Model model) {
-        model.addAttribute("operLog", blacklistService.selectBlacklistById(blacklistId));
-        return "log/visitLog/detail";
+    @GetMapping("/edit/{blacklistId}")
+    public String edit(@PathVariable Integer blacklistId, Model model) {
+        model.addAttribute("blacklist", blacklistService.selectBlacklistById(blacklistId));
+        return "monitor/blacklist/edit";
+    }
+
+    @PutMapping("/edit")
+    @RequiresPermissions("monitor:blacklist:edit")
+    @Log(title = "黑名单", businessType = BusinessType.UPDATE)
+    @ResponseBody
+    public AjaxResult editSave(Blacklist blacklist) {
+        return toAjax(blacklistService.updateBlacklist(blacklist));
     }
 
     @Log(title = "黑名单", businessType = BusinessType.CLEAN)
-    @RequiresPermissions("log:blacklist:remove")
+    @RequiresPermissions("monitor:blacklist:remove")
     @PostMapping("/clean")
     @ResponseBody
     public AjaxResult clean() {
@@ -67,11 +74,17 @@ public class BlacklistController extends BaseController {
         return success();
     }
 
+    @GetMapping("/add")
+    public String add() {
+        return "monitor/blacklist/add";
+    }
+
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Blacklist blacklist) {
         return toAjax(blacklistService.insertBlacklist(blacklist));
     }
+
 
     @PostMapping("/addBlacklist")
     @ResponseBody

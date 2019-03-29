@@ -60,4 +60,9 @@ public class CategoryImpl implements CategoryService {
         Category category = categoryMapper.selectCategoryByCategoryTitle(title);
         return category == null ? CategoryConstants.CATEGORY_TITLE_UNIQUE : CategoryConstants.CATEGORY_TITLE_NOT_UNIQUE;
     }
+
+    @Override
+    public List<Category> selectSupportCategoryList() {
+        return categoryMapper.selectSupportCategoryList();
+    }
 }

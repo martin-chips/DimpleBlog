@@ -62,4 +62,10 @@ public interface CategoryService {
      * @return 结果
      */
     String checkCategoryTitleUnique(String title);
+
+    /**
+     *
+     * @return
+     */
+    List<Category> selectSupportCategoryList();
 }

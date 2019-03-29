@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 public class VisitLog extends BaseEntity {
-    private Integer id;
+    private Integer visitId;
     /**
      * IP地址
      */

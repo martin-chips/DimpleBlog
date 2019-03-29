@@ -93,4 +93,51 @@ public interface BlogMapper {
      * @return
      */
     Blog selectBlogWithTextById(Integer blogId);
+
+    /**
+     * 获取前台展示的Blog的列表，包含category 信息
+     *
+     * @return
+     */
+    List<Blog> selectFrontNewestBlogList();
+
+    /**
+     * 获取最近更新的blog,限制i条
+     *
+     * @return
+     */
+    List<Blog> selectNewestUpdateBlog(int i);
+
+    /**
+     * 获取最近i条排行blog
+     *
+     * @param i 限制条数
+     * @return list
+     */
+    List<Blog> selectBlogRankingList(int i);
+
+    /**
+     * 获取推荐博文
+     *
+     * @return 推荐博文集合
+     */
+    List<Blog> selectSupportBlogList(int i);
+
+    /**
+     * 获取上一篇博文
+     */
+    Blog selectPreviousBlogById(Integer blogId);
+
+    /**
+     * 获取下一篇博文
+     */
+    Blog selectNextBlogById(Integer blogId);
+
+    /**
+     * 随机获取i篇blog
+     *
+     * @param i blog的数量
+     * @return 随机blog集合
+     */
+    List<Blog> selectRandBlogListLimit(int i);
 }

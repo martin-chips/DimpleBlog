@@ -1,7 +1,6 @@
-package com.dimple.project.log.visitorLog.mapper;
+package com.dimple.project.monitor.blacklist.mapper;
 
-import com.dimple.project.log.visitorLog.domain.Blacklist;
-import com.dimple.project.log.visitorLog.domain.VisitLog;
+import com.dimple.project.monitor.blacklist.domain.Blacklist;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public interface BlacklistMapper {
      * @param blacklist 带有条件的blacklist
      * @return blacklist集合
      */
-    List<VisitLog> selectBlacklistList(Blacklist blacklist);
+    List<Blacklist> selectBlacklistList(Blacklist blacklist);
 
     /**
      * 根据ids批量删除黑名单记录
@@ -28,7 +27,7 @@ public interface BlacklistMapper {
      * @param ids 黑名单的id
      * @return 受影响的行数
      */
-    int deleteBlacklistByIds(Integer[] ids);
+    int deleteBlacklistByBlacklistIds(Integer[] ids);
 
     /**
      * 根据id获取blacklist
@@ -66,4 +65,13 @@ public interface BlacklistMapper {
      * @return blacklist实体
      */
     Blacklist selectBlacklistByIp(String ip);
+
+    /**
+     * 更新黑名单信息
+     *
+     * @param blacklist 需要更新的黑名单的信息
+     * @return 受影响的行数
+     */
+    int updateBlacklist(Blacklist blacklist);
+
 }

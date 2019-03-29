@@ -3,12 +3,12 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Dimple的个人博客</title>
-    <div th:include="front/common :: front-head"></div>
+    <title>友链—Dimple的个人博客</title>
+    <div th:include="include-front :: head"></div>
 </head>
 
 <body class="nobg">
-<header th:replace="front/common :: front-header"></header>
+<header th:replace="include-front :: header"></header>
 
 <!--内容区开始-->
 <div class="container">
@@ -75,9 +75,10 @@
                         <input name="url" type="text" id="url" size="16" placeholder="您的网站（必须）"/>
                     </div>
                     <!----内容------->
-                     <textarea class="link-text" style="height:150px;width:70%;"name="u_content" id="info" placeholder="网站介绍（必须）"></textarea>
+                    <textarea class="link-text" style="height:150px;width:70%;" name="u_content" id="info"
+                              placeholder="网站介绍（必须）"></textarea>
                     <!--验证码-->
-<!--                    <div class="input-prepend yzm">-->
+                    <!--                    <div class="input-prepend yzm">-->
                     <!--                        <i class="el-question-sign"></i>-->
                     <!--                        <input name="txt_check" type="text" id="verify" size="16" placeholder="验证码"/>-->
                     <!--                        <span>-->
@@ -92,9 +93,8 @@
             </div>
         </article>
     </section>
-    <aside th:replace="front/common :: front-side"></aside>
+    <aside th:replace="include-front :: side"></aside>
 </div>
-<aside th:replace="front/common :: front-footer"></aside>
+<aside th:replace="include-front :: footer"></aside>
 </body>
-
 </html>

@@ -67,6 +67,7 @@
             <if test="weight != null and weight != ''">weight = #{weight},</if>
             <if test="support != null and support != ''">support = #{support},</if>
             <if test="headerImg != null and headerImg != ''">header_img = #{headerImg},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
             <if test="type != null and type != ''">type = #{type},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()
@@ -113,6 +114,9 @@
             <if test="type != null and type != ''">
                 AND type = #{type}
             </if>
+            <if test="categoryId != null and categoryId != ''">
+                AND category_id = #{categoryId}
+            </if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
@@ -143,6 +147,41 @@
         weight, support, click, header_img, type,content,
         create_by, create_time, update_by, update_time
         from bg_blog where blog_id=#{blogId}
+    </select>
+
+    <select id="selectFrontNewestBlogList" resultType="com.dimple.project.blog.blog.domain.Blog">
+        select b.blog_id,
+               b.category_id,
+               b.title,
+               b.summary,
+               b.click,
+               b.header_img,
+               b.create_by,
+               b.create_time,
+               c.category_title
+        from bg_blog b
+                 left join bg_category c on b.category_id = c.category_id
+        order by b.create_time desc
+    </select>
+
+    <select id="selectNewestUpdateBlog" resultType="com.dimple.project.blog.blog.domain.Blog">
+        select blog_id, title,update_time from bg_blog order by  update_time  desc limit #{i}
+    </select>
+    <select id="selectBlogRankingList" resultType="com.dimple.project.blog.blog.domain.Blog">
+        select blog_id,title,click from bg_blog order by click desc limit #{i}
+    </select>
+    <select id="selectSupportBlogList" resultType="com.dimple.project.blog.blog.domain.Blog">
+        select blog_id,title,summary, click,create_time,header_img from bg_blog order by weight desc limit #{i}
+    </select>
+    <select id="selectPreviousBlogById" resultType="com.dimple.project.blog.blog.domain.Blog">
+        select blog_id,title from bg_blog where blog_id &lt; #{blogId} and status=1 order by blog_id limit 0,1
+    </select>
+    <select id="selectNextBlogById" resultType="com.dimple.project.blog.blog.domain.Blog">
+        select blog_id,title from bg_blog where blog_id &gt; #{blogId} and status=1 order by blog_id desc limit 0,1
+    </select>
+
+    <select id="selectRandBlogListLimit" resultType="com.dimple.project.blog.blog.domain.Blog">
+        select blog_id,title,header_img from bg_blog  where status=1 order by rand() limit #{i}
     </select>
 
 

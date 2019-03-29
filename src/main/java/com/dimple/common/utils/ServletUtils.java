@@ -1,14 +1,14 @@
 package com.dimple.common.utils;
 
-import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.dimple.common.utils.text.Convert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import com.dimple.common.utils.text.Convert;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * @className: ServletUtils
@@ -118,5 +118,14 @@ public class ServletUtils {
         }
 
         return false;
+    }
+
+    /**
+     * 获取User-Agent
+     *
+     * @return
+     */
+    public static String getUserAgent() {
+        return getRequestAttributes().getRequest().getHeader("User-Agent");
     }
 }

@@ -71,6 +71,9 @@
         <include refid="selectCategoryVo"/>
         where category_title=#{title}
     </select>
+    <select id="selectSupportCategoryList" resultType="com.dimple.project.blog.category.domain.Category">
+        select category_id,category_title from bg_category where support=1 order by weight desc
+    </select>
 
 
 </mapper>

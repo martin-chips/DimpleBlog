@@ -1,16 +1,20 @@
 package com.dimple.project.blog.blog.service.impl;
 
+import com.dimple.common.constant.CachePrefix;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.common.utils.text.Convert;
 import com.dimple.project.blog.blog.domain.Blog;
 import com.dimple.project.blog.blog.mapper.BlogMapper;
 import com.dimple.project.blog.blog.mapper.BlogTagMapper;
 import com.dimple.project.blog.blog.service.BlogService;
+import com.dimple.project.blog.category.service.CategoryService;
+import com.dimple.project.blog.tag.domain.Tag;
 import com.dimple.project.blog.tag.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,6 +32,9 @@ public class BlogServiceImpl implements BlogService {
     TagService tagService;
     @Autowired
     BlogTagMapper blogTagMapper;
+    @Autowired
+    CategoryService categoryService;
+
 
     @Override
     public List<Blog> selectBlogList(Blog blog) {
@@ -70,6 +77,9 @@ public class BlogServiceImpl implements BlogService {
     }
 
     private void updateBlogTag(Integer blogId, String[] tags) {
+        if (tags == null || tags.length == 0) {
+            return;
+        }
         //根据tag名称获取所有的tag的id
         List<Integer> ids = tagService.selectTagIdsByTagTitles(tags);
         //删除原有的tag的和blog的关联关系
@@ -100,18 +110,54 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectBlogCountByStatus(status);
     }
 
-    @CachePut(cacheNames = "dimple", key = "#blogId")
     @Override
-    public Blog selectBlogWithTextAndTagsById(Integer blogId) {
+    public Blog selectBlogWithTextAndTagsAndCategoryByBlogId(Integer blogId) {
         Blog blog = blogMapper.selectBlogWithTextById(blogId);
-        List<Integer> tagIds = blogTagMapper.selectTagIdsByBlogId(blogId);
-        if (tagIds != null && tagIds.size() != 0) {
-            String[] tags = new String[tagIds.size()];
-            for (int i = 0; i < tagIds.size(); i++) {
-                tags[i] = tagService.selectTagById(tagIds.get(i)).getTagTitle();
-            }
-            blog.setTags(tags);
+        if (blog == null) {
+            return null;
         }
+        //先去tag和blog的关联表中选择所有的tagIds
+        List<Integer> tagIds = blogTagMapper.selectTagIdsByBlogId(blogId);
+        //根据查询出的tag的id去tag表中查询
+        List<Tag> tags = new LinkedList<>();
+        for (int i = 0; i < tagIds.size(); i++) {
+            tags.add(tagService.selectTagById(tagIds.get(i)));
+        }
+        blog.setTagList(tags);
+        blog.setCategory(categoryService.selectCategoryById(blog.getCategoryId()));
         return blog;
+    }
+
+    @Cacheable(value = CachePrefix.FRONT_NEWEST_UPDATE_BLOG)
+    @Override
+    public List<Blog> selectNewestUpdateBlog() {
+        return blogMapper.selectNewestUpdateBlog(4);
+    }
+
+    @Cacheable(value = CachePrefix.FRONT_BLOG_RANKING)
+    @Override
+    public List<Blog> selectBlogRanking() {
+        return blogMapper.selectBlogRankingList(5);
+    }
+
+    @Cacheable(value = CachePrefix.FRONT_SUPPORT_CATEGORIES)
+    @Override
+    public List<Blog> selectSupportBlog() {
+        return blogMapper.selectSupportBlogList(8);
+    }
+
+    @Override
+    public Blog selectPreviousBlogById(Integer blogId) {
+        return blogMapper.selectPreviousBlogById(blogId);
+    }
+
+    @Override
+    public Blog selectNextBlogById(Integer blogId) {
+        return blogMapper.selectNextBlogById(blogId);
+    }
+
+    @Override
+    public List<Blog> selectRandBlogList() {
+        return blogMapper.selectRandBlogListLimit(4);
     }
 }

@@ -1,0 +1,122 @@
+<!doctype html>
+
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dimple的个人博客</title>
+    <div th:include="include-front :: head"></div>
+</head>
+
+<body class="nobg">
+<header th:replace="include-front :: header"></header>
+
+<!--内容区开始-->
+<div class="container">
+    <section>
+        <h4 style="text-align:center;">版权说明</h4>
+        <div class="content_post">
+            <p style="text-align: center;"><strong>第一章 声明</strong></p>
+            <p></p>
+            <p style="text-align: left;"><strong>第一条：</strong><span
+                    style="text-decoration: underline;">本站为个人非盈利站点，<strong>旨在个人学习、欣赏及记录等</strong>，故不受狭义的商业性版权限制</span>，除非特别声明；
+            </p>
+            <p></p>
+            <p style="text-align: left;"><strong>第二条：</strong>本站主要内容来源为本站编辑撰写、网友投稿（包括原创及非原创）、翻译外文和转载其他网站。</p>
+            <p></p>
+            <p style="text-align: center;"><strong>第二章：许可协议</strong></p>
+            <p></p>
+            <p style="text-align: left;"><strong>第三条：</strong>Dimple个人博客网站内容基于CC共享协议：署名---非商业性使用---相同共享方式 创作（<span
+                    style="text-decoration: underline;"><strong>另有特别声明的文章按照声明内容处理</strong></span>）；</p>
+            <p></p>
+            <p style="text-align: left;"><strong>第四条：</strong>转载许可：转载需遵守“署名---非商业性使用---相同共享方式”，即<span
+                    style="text-decoration: underline;">注明来源于Dimple的个人博客及标注作者姓名，但不允许为商业性质使用</span>；</p>
+            <p></p>
+            <p style="text-align: left;"><strong>第五条：</strong><span style="text-decoration: underline;">转载本站内容意味着“您”接受Dimple的个人博客网站的授权协议“署名---非商业性使用---相同共享方式”协议，这也意味Dimple的个人博客网站有权利转载“您”的内容，采取同样的授权方式。</span>
+            </p>
+            <p></p>
+            <p style="text-align: left;">注：“您”代指互联网上所有的网站及媒体（下同）</p>
+            <p></p>
+            <p style="text-align: center;"><strong>第三章：“您”的权利</strong></p>
+            <p></p>
+            <p style="text-align: left;"><strong>第六条：</strong><span style="text-decoration: underline;">依据中华人民共和国《著作权法》第四节第二十二条，本站转载“您”的内容时会注明作者、作品名称，并遵守CC共享协议；</span>
+            </p>
+            <p></p>
+            <p style="text-align: left;"><strong>第七条：</strong>如果“您”明确注明“不可转载／禁止转载／禁无断转载／未经许可不得转载”等，则本站将按照“您”的标示进行处理；
+            </p>
+            <p></p>
+            <p style="text-align: left;"><strong>第八条：</strong>如果“您”明确注明“不可转载／禁止转载／禁无断转载／未经许可不得转载”等，但已主动转载（转载过）Dimple的个人博客网站的内容，则按第二章、第五条处理。
+            </p>
+            <p></p>
+            <p style="text-align: center;"><strong>第四章：豁免</strong></p>
+            <p></p>
+            <p style="text-align: left;"><strong>第九条：</strong><span style="text-decoration: underline;"><strong>对于本站已有内容如若违反了“您”的授权协议（包括其他权利）</strong>，请“您”联系本站进行处理，包括修改、删除、致歉等；</span>
+            </p>
+            <p></p>
+            <p style="text-align: left;"><strong>第十条：</strong>本站具有一定的开放性，接受网友的投稿，这也意味着可能存在稿件中<span
+                    style="text-decoration: underline;">“未注明 / 注明但错误 / 作者错误 / 作品错误”</span>等情况，请参考第四章、第九条处理；</p>
+            <p></p>
+            <p style="text-align: left;"><strong>第十一条：</strong>“您”主动更改、变更授权协议导致本站违反授权协议，请参考第四章、第九条处理；</p>
+            <p></p>
+            <p style="text-align: center;"><strong>附则</strong></p>
+            <p></p>
+            <p style="text-align: left;"><strong>第十二条：</strong><span style="text-decoration: underline;">Dimple的个人博客网站有权利在不通知“您”的情况下修改本声明内容；</span>
+            </p>
+            <p></p>
+            <p style="text-align: left;"><strong>第十三条：本声明自2017年3月1日生效；</strong></p>
+            <p></p>
+            <p style="text-align: left;"><strong>第十四条：</strong>本声明解释权归Dimple的个人博客网站所有。</p>
+            <p></p>
+            <p style="text-align: center;"><strong>附：</strong></p>
+            <p></p>
+            <p style="text-align: left;">侵权及请求本站删除内容请查看该流程：<a href="/delete.html"
+                                                              target="_blank" rel="nofollow">http://www.bianxiaofeng.com/delete.html</a>
+            </p>
+            <p></p>
+            <p style="text-align: left;">联系人：边小丰</p>
+            <p></p>
+            <p style="text-align: left;">电子邮箱：bianxiaofeng@sohu.com </p>
+            <p></p>
+            <p style="text-align: left;">腾讯QQ：726567707（注明版权问题）</p>
+        </div>
+        <!--PC和WAP自适应版-->
+        <div id="SOHUCS" sid="copyright"></div>
+        <script type="text/javascript">
+            (function () {
+                var appid = 'cyu583FnA';
+                var conf = 'prod_e133a229a25f70b06b142787fad1386b';
+                var width = window.innerWidth || document.documentElement.clientWidth;
+                if (width < 960) {
+                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+                } else {
+                    var loadJs = function (d, a) {
+                        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                        var b = document.createElement("script");
+                        b.setAttribute("type", "text/javascript");
+                        b.setAttribute("charset", "UTF-8");
+                        b.setAttribute("src", d);
+                        if (typeof a === "function") {
+                            if (window.attachEvent) {
+                                b.onreadystatechange = function () {
+                                    var e = b.readyState;
+                                    if (e === "loaded" || e === "complete") {
+                                        b.onreadystatechange = null;
+                                        a()
+                                    }
+                                }
+                            } else {
+                                b.onload = a
+                            }
+                        }
+                        c.appendChild(b)
+                    };
+                    loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+                        window.changyan.api.config({appid: appid, conf: conf})
+                    });
+                }
+            })(); </script>
+    </section>    <!--左侧结束-->
+    <aside th:replace="include-front :: side"></aside>
+</div>
+<aside th:replace="include-front :: footer"></aside>
+</body>
+</html>

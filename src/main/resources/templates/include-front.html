@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="head">
+    <meta charset=utf-8"utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable="no"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--CSS-->
+    <link rel="stylesheet" th:href="@{/front/css/default.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/public.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/animation.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/skin_1.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/font-icon.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/swiper.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/index.css}"/>
+    <!--JS-->
+    <script type="text/javascript" th:src="@{/front/js/jquery.min.js}"></script>
+    <script>
+        $("body").append(
+            "<div id=\"progress\"><span></span></div>"
+        )
+    </script>
+    <script type="text/javascript" th:src="@{/front/js/superbg.min.js}"></script>
+    <script type="text/javascript" th:src="@{/front/js/album.js}"></script>
+    <script type="text/javascript" th:src="@{/front/js/checkform.js}"></script>
+    <script type="text/javascript" th:src="@{/front/js/skin.js}"></script>
+    <!--[if lte IE 9]>
+    <script>window.location.href = 'https://cdn.dmeng.net/upgrade-your-browser.html?referrer=' + location.href;</script>
+    <![endif]-->
+    <script type="text/javascript" th:src="@{/front/js/index.js}"></script>
+    <script type="text/javascript" th:src="@{/front/js/showtip.js}"></script>
+    <script type="text/javascript" th:src="@{/front/js/swiper.min.js}"></script>
+</div>
+
+
+<header class="myheader" th:fragment="header">
+    <!--导航开始-->
+    <div class="top">
+        <div class="top-left">
+            <!--logo部分-->
+            <div class="logo">
+                <a href="/">
+                    <img src="/front/images/logo.gif"/>
+                </a>
+            </div>
+            <!--滚动消息-->
+            <div class="web-xiaoxi">
+                <i class="el-speaker"></i>
+                <ul class="mulitline">
+                    <li>没事点点广告，也是对博主的支持，谢谢！</li>
+                    <li>本站提供丰富的素材下载，有源码、模板、插件...</li>
+                    <li>内容如有侵犯，请立即联系管理员删除</li>
+                </ul>
+            </div>
+            <!--手机菜单按钮-->
+            <div class="mobile-nav"><i class="el-lines"></i><i class="el-remove"></i></div>
+        </div>
+        <!--电脑导航开始-->
+        <nav class="mynav">
+            <ul class="orange-text">
+                <li class=""><a href="/">首页</a></li>
+                <li class='drop'>
+                    <a href="JavaScript:;">分类<i class='el-chevron-down'></i></a>
+                    <div class="drop-nav orange-text ">
+                        <ul>
+                            <li th:each="category:${categories}">
+                                <a th:href="${'/category/'+category.categoryId+'/1.html'}"
+                                   th:text="${category.categoryTitle}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="/archives.html">归档</a></li>
+                <li><a href="/link.html">友链</a></li>
+                <li><a href="/leaveComment.html">留言</a></li>
+                <li><a href="/about.html">关于</a></li>
+            </ul>
+            <!--移动的滑动-->
+            <div class="move-bg"></div>
+            <!--移动的滑动 end-->
+        </nav>
+        <!--登录-->
+        <div class="vip" style="width: 4%;float: right;text-align: right;">
+            <a href="javascript:;" onclick="showLogin()">
+                <img class="img-circle"
+                     src="/front/images/default_head_img.gif"
+                     alt="后台登录" title="后台登录" style="margin-top: 17px;">
+            </a>
+        </div>
+        <!--手机导航-->
+        <div class="mob-menu">
+            <!--手机顶部搜索-->
+            <div class="search " style="height:50px;">
+                <ul class="loginwap-third-list">
+                    <li><a class="weixin-login" title="微信账号登录"
+                           href="javascript:if(confirm('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0427f5b144bcfbd&redirect_uri=http%3A%2F%2Fwww.vilyun.com%2Fapi%2Fwechat%2FgetRedirectUrl%3Fsource%3Dhttps%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fwechat&response_type=code&scope=snsapi_userinfo&state=STATE%23wechat_redirect  \n\nكτݾϞרԃ Teleport Ultra Ђ՘, ӲΪ ̼ˇһٶԲܲ·޶΢ҿѻʨ׃Ϊ̼քǴʼַ֘քַ֘c  \n\nţЫ՚ؾϱǷʏղߪ̼?'))window.location='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0427f5b144bcfbd&redirect_uri=http%3A%2F%2Fwww.vilyun.com%2Fapi%2Fwechat%2FgetRedirectUrl%3Fsource%3Dhttps%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fwechat&response_type=code&scope=snsapi_userinfo&state=STATE%23wechat_redirect'"></a>
+                    </li>
+                    <li><a class="qq-login" title="QQ账号登录"
+                           href="javascript:if(confirm('https://graph.qq.com/oauth2.0/authorize?client_id=101370818&redirect_uri=http%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fqq&response_type=code&scope=get_user_info%2Cadd_share  \n\nكτݾϞרԃ Teleport Ultra Ђ՘, ӲΪ ̼ˇһٶԲܲ·޶΢ҿѻʨ׃Ϊ̼քǴʼַ֘քַ֘c  \n\nţЫ՚ؾϱǷʏղߪ̼?'))window.location='https://graph.qq.com/oauth2.0/authorize?client_id=101370818&redirect_uri=http%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fqq&response_type=code&scope=get_user_info%2Cadd_share'"></a>
+                    </li>
+                    <li style="margin-right: 0!important;"><a class="weibo-login" title="新浪微博账号登录"
+                                                              href="javascript:if(confirm('https://api.weibo.com/oauth2/authorize?client_id=2703252362&redirect_uri=http%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fsina&response_type=code  \n\nكτݾϞרԃ Teleport Ultra Ђ՘, ӲΪ ̼ˇһٶԲܲ·޶΢ҿѻʨ׃Ϊ̼քǴʼַ֘քַ֘c  \n\nţЫ՚ؾϱǷʏղߪ̼?'))window.location='https://api.weibo.com/oauth2/authorize?client_id=2703252362&redirect_uri=http%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fsina&response_type=code'"></a>
+                    </li>
+                </ul>
+            </div>
+            <!--手机下拉菜单-->
+            <ul class="mob-ulnav">
+                <li><a href="/">首页</a></li>
+                <li><a href="chat.html">说说</a></li>
+                <li class='mob-drop'>
+                    <a href="javascrip:;">分类<i></i></a>
+                    <ul class="mob-dropmenu">
+                        <li><a href="category/28.html">PHP</a></li>
+                        <li><a href="category/29.html">Linux</a></li>
+                        <li><a href="category/36.html">Java</a></li>
+                        <li><a href="category/39.html">C</a></li>
+                    </ul>
+                </li>
+                <li><a href="Home/Index/feedback.html">留言</a></li>
+                <li><a href="git.html">友链</a></li>
+                <li><a href="Home/Index/about.html">关于</a></li>
+                <li><a href="git.html">开源</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--导航结束-->
+</header>
+
+
+<!---底部开始-->
+<footer th:fragment="footer">
+    <!--底部导航-->
+    <div class="foot-nav">
+        <div class="copy-right"><span>CopyRight &#169; 2017-2019 Dimple &#160;</span></div>
+        <div class="bottom-nav">
+            <span>
+                <a href="/copyright.html" target="_blank">版权说明</a>
+                -<a href="/delete.html" target="_blank">侵删联系</a>
+                -<a href="sitemap-1.xml" target="_blank">网站地图</a>
+                -<a href="http://www.miitbeian.gov.cn">蜀ICP备 19004343</a>
+            </span>
+        </div>
+    </div>
+    <div id="toTop">返回顶部</div>
+    <script>
+        $({property: 0}).animate({property: 100}, {
+            duration: 3000,
+            step: function () {
+                var percentage = Math.round(this.property);
+
+                $('#progress').css('width', percentage + "%");
+
+                if (percentage == 100) {
+                    $("#progress").addClass("done");//完成，隐藏进度条
+                }
+            }
+        });
+    </script>
+    <!-- 图片懒加载 end-->
+    <div class="hide_box2"></div>
+
+    <div class="shang_box2">
+        <a class="shang_close2" href="javascript:void(0)" onClick="dashangToggle2()" title="关闭"><img
+                src="/front/images/close.jpg"
+                alt="取消"/></a>
+        <img class="shang_logo2" src="/front/images/logo.png" alt="边小丰博客"/>
+        <div class="TY-login-window">
+            <div class="login-window-body">
+                <div id="loginWin_content_wrapper" class="loginWin-normal-login-wrapper">
+                    <div class="loginWin-tab">
+                        <ul class="loginWin-tab-list cf">
+                            <li class="normal-login-tab"><span>普通登录</span></li>
+                            <li class="qrcode-login-tab"><span>扫码登录</span></li>
+                        </ul>
+                    </div>
+                    <div class="loginWin-form">
+                        <form class="loginWin-login-form" id="topguideloginform" name="topguideloginform" method="post"
+                              action="javascript::void(0);" accept-charset="UTF-8" target="_top">
+                            <div class="loginWin-form-item loginWin-account-input">
+                                <input type="text" class="input-text"
+                                       id="vwriter" name="vwriter"
+                                       placeholder="用户名/手机/邮箱"
+                                       autocomplete="off">
+                                <input type="hidden" id="user_action" name="action"
+                                       value="">
+                                <label for="vwriter"></label>
+                            </div>
+                            <div class="loginWin-form-item loginWin-password-input">
+                                <input type="password" class="input-text" id="vpassword" name="vpassword"
+                                       placeholder="密码">
+                                <label for="vpassword"></label>
+                            </div>
+                            <div class="loginWin-form-item cf"><label class="fl">
+                                <input type="checkbox" class="input-checkbox" id="rmflag" name="rmflag" value="1"
+                                       checked="checked">下次自动登录</label>
+                                <a class="loginWin-password-link fr" onclick="return alert('暂不开放！');">忘记密码？</a>
+                            </div>
+                            <div class="loginWin-form-item">
+                                <button type="submit" onclick="return alert('暂不开放');"
+                                        class="loginWin-submit-btn">登 录
+                                </button>
+                            </div>
+                            <div class="cf">
+                                <a class="loginWin-register-link fl"
+                                   onclick="return alert('暂不开放');"
+                                   target="_blank">立即注册</a>
+                                <span class="normal-login-toggle fr">返回登录</span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="loginWin-third">
+                        <p class="loginWin-third-title"><span>使用第三方账号登录</span></p>
+                        <ul class="loginWin-third-list cf">
+                            <li>
+                                <a class="weixin-login" title="微信账号登录" onclick="return alert('暂不开放')"></a>
+                            </li>
+                            <li>
+                                <a class="qq-login" title="QQ账号登录" onclick="return alert('暂不开放')"></a>
+                            </li>
+                            <li>
+                                <a class="weibo-login" title="新浪微博账号登录" onclick="return alert('暂不开放')"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片懒加载 -->
+    <script type="text/javascript" th:src="@{/front/js/require.min.js}"
+            data-main="front/js/config"></script>
+    <script>
+        require.config({
+            baseUrl: "/front/js",
+            paths: {
+                jquery: 'jquery.min',
+                fastclick: 'fastclick',
+                jqueryLazyload: 'jquery.lazyload', //图片懒加载
+            },
+            shim: {
+                jqueryLazyload: {
+                    deps: ['jquery'],
+                    exports: '$'
+                }
+            }
+        });
+        require(
+            [
+                'jquery',
+                'fastclick',
+                'jqueryLazyload'
+            ],
+            function ($, FastClick) {
+                $(document).ready(function () {
+                    FastClick.attach(document.body);
+                    $("img").lazyload({
+                        effect: "fadeIn"
+                    });
+                });
+            });
+    </script>
+</footer>
+
+<aside class="myaside" th:fragment="side">
+    <!--个人信息-->
+    <div class="web-author bg-color animation-div">
+        <div class="author-tx">
+            <a class="img-circle" href="about.html" title="点击查看详细信息">
+                <img class="img-circle" src="/front/images/ava.jpg"/>
+            </a>
+        </div>
+        <div class="author-name"><span class="blue-text">边小丰</span>
+            <p></p>
+        </div>
+    </div>
+    <!--关注我-->
+    <div class="focus-me bg-color animation-div">
+        <h4 class="index-title"><i class="el-heart"></i>关注我
+            <small>Focus Me</small>
+        </h4>
+        <div class="xiangguan">
+            <div>
+                <a class="benbo"
+                   href="mailto:bianxiaofeng@sohu.com" rel="nofollow" target="_blank">
+                    <i class="el el-envelope el-spin"></i>
+                </a>
+                <span>邮件</span>
+            </div>
+            <div>
+                <a class="taobao" href="" rel="nofollow" target="_blank">
+                    <i class="el el-github el-spin"></i>
+                </a>
+                <span>github</span></div>
+            <div>
+                <a class="side-fx" href="" rel="nofollow" target="_blank">
+                    <i class="el el-cog el-spin"></i>
+                </a>
+                <span>熊掌号</span></div>
+        </div>
+        <div class="mail-dy">
+            <img src="/front/images/weixin.jpg">
+            <i class="el-remove fx-close"></i>
+        </div>
+    </div>
+    <!--搜索-->
+    <div class="search animation-div">
+        <form action="" method="get">
+            <div class="search-index">
+                <input name="search_word" type="text" placeholder="请输入关键字" onfocus="this.placeholder=''"
+                       onblur="this.placeholder='请输入关键字'"/>
+                <i class="el-search"><input value=" " type="submit"/></i>
+            </div>
+        </form>
+    </div>
+    <!--文章排行tab-->
+    <div class="mytab bg-color animation-div">
+        <h4 class="index-title">
+            <i class="el-signal"></i>文章排行
+            <small>Push Article</small>
+        </h4>
+        <ul class="paihang-ul" style="display: block;">
+            <li th:each="blog:${blogRanking}">
+                <span></span>
+                <a th:href="${'/article/'+blog.blogId+'.html'}" th:title="${blog.title}" th:utext="${blog.title+'<b>('+blog.click+')<b/>'}"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="clos-new bg-color animation-div">
+        <h4 class="index-title"><i class="el-bulb"></i>最新更新
+            <small>Close New</small>
+        </h4>
+        <ul>
+            <li>
+                <i class="el-cloud"></i>
+                <iframe id="tianqi" scrolling="no" frameborder="0" allowtransparency="true"
+                        src="http://i.tianqi.com/index.php?c=code&id=34&icon=1&num=3"></iframe>
+            </li>
+            <li th:each="blog:${newestUpdateBlog}">
+                <span><i class="el-arrow-up"></i>最近：<font class="blue-text">边小丰</font><span
+                        th:text="${#dates.format(blog.updateTime, 'MM-dd hh:mm')}"> 03-01 09:30</span></span>
+                <a th:href="${'/article/'+blog.blogId+'.html'}" th:title="${blog.title}"> 更新了<b class="lable"
+                                                                                                th:text="${blog.title}"></b></a>
+            </li>
+        </ul>
+    </div>
+    <!--推荐图文-->
+    <div class="article-push  bg-color animation-div">
+        <h4 class="index-title">
+            <i class="el-asl"></i>推荐图文
+            <small>Push Article</small>
+        </h4>
+        <ul>
+            <li th:each="blog:${supportBlog}">
+                <div class="arcimg ">
+                    <a th:href="${'article'+blog.blogId+'.html'}" target="_blank">
+                        <img class="lazy-load" th:data-original="${blog.headerImg}"
+                             src="/front/images/loading-image.gif" th:alt="${blog.title}"
+                             th:title="${blog.title}">
+                    </a>
+                </div>
+                <div class="arc-right">
+                    <h4 class="blue-text"><a th:href="${'article'+blog.blogId+'.html'}" th:text="${blog.title}"></a>
+                    </h4>
+                    <p th:text="${blog.summary}"></p>
+                    <ul>
+                        <li>
+                            <a th:title="${'发表于'+#dates.format(blog.createTime, 'MM-dd hh:mm')}">
+                                <i class="el-time"></i><span
+                                    th:text="${#dates.format(blog.createTime, 'MM-dd hh:mm')}"></span>
+                            </a>
+                        </li>
+                        <li><a th:title="${blog.click+'次浏览'}"><i class="el-fire"></i><span
+                                th:text="${blog.click}"></span> </a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!--标签-->
+    <div class="cloud bg-color animation-div">
+        <h4 class="index-title"><i class="el-tags"></i>标签云
+            <small>Tags Clouds</small>
+        </h4>
+        <ul id="3dcloud">
+            <li th:each="tag,tagStat:${tags}">
+                <a th:class="${'tstyle-'+tagStat.count%4+1}" th:href="${'/'+tag.tagId+'.html'}"
+                   th:title="${'标签：'+tag.tagTitle}" th:text="${tag.tagTitle+' ('+tag.count+')'}">
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+</html>

@@ -4,83 +4,307 @@
 
 <head>
     <title>Dimple的个人博客</title>
-    <div th:include="front/common :: front-head"></div>
+    <div th:include="include-front :: head"></div>
 </head>
 
 <body class="nobg">
-<header th:replace="front/common :: front-header"></header>
+<header th:replace="include-front :: header"></header>
 
 <!--内容区开始-->
 <div class="container">
     <!--最新文章-->
     <section class="mysection">
+
         <div class="arclist">
             <h4 class="index-title homeh4"><a href=""><i class="el-certificate"></i>最新文章
                 <small>New Article</small>
             </a></h4>
             <!--列表开始-->
             <ul>
-                <li th:each="item:${newestBlog}">
+                <li th:each="blog:${blogs}">
                     <div class="arcimg">
-                        <img class="lazy-load" src="/static/front/images/loading-image.gif"
-                             th:data-original="${item.headerUrl}"
-                             th:alt="${item.title}" th:title="${item.title}"/>
+                        <img class="lazy-load" src="/front/images/loading-image.gif"
+                             th:data-original="${blog.headerImg}"
+                             th:alt="${blog.title}" th:title="${blog.title}"/>
                     </div>
                     <div class="arc-right">
                         <h4 class="blue-text">
-                            <a th:href="${'/view/'+item.blogId}" th:title="${item.title}" th:text="${item?.title}"></a>
+                            <a th:href="${'/article/'+blog.blogId+'.html'}"
+                               th:title="${blog.title}"
+                               th:text="${blog.title}">
+                            </a>
                         </h4>
-                        <p th:text="${item.summary}"></p>
+                        <p th:text="${blog.summary}"></p>
                         <ul>
                             <li>
-                                <a th:title="${'边小丰'+item.time+'发表'}">
-                                    <i class="el-time"></i><span th:text="${item.time}"></span>
+                                <a th:title="${'边小丰'+#dates.format(blog.createTime, 'yyyy-MM-dd')+'发表'}">
+                                    <i class="el-time"></i>
+                                    <span th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}"></span>
                                 </a>
                             </li>
                             <li>
                                 <a href="about.html" title="作者： 边小丰"><i class="el-user"></i>边小丰</a>
                             </li>
-                            <li><a th:href="${'/view/'+item.blogId+'#Comment'}" href="article/219.html#Comment">
+                            <li><a th:href="${'/article/'+blog.blogId+'.html'}" href="article/219.html#Comment">
                                 <i class="el-comment"></i>
-                                <span th:id="${'sourceId::'+item.blogId}" class="cy_cmt_count"></span>
+                                <span th:id="${'sourceId::'+blog.blogId}" class="cy_cmt_count"></span>
                                 <script id="cy_cmt_num"
                                         src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyu583FnA">
                                 </script>
                             </a>
                             </li>
-                            <li><a th:title="${'已有'+item.count+'次浏览'}"><i class="el-eye-open"></i><span
-                                    th:text="${item.count}"></span></a></li>
+                            <li><a th:title="${'已有'+blog.click+'次浏览'}"><i class="el-eye-open"></i><span
+                                    th:text="${blog.click}"></span></a></li>
                             <li>
-                                <a th:href="${'category/'+item.categoryId+'.html'}" title="查看分类">
+                                <a th:href="${'category/'+blog.categoryId+'.html'}" title="查看分类">
                                     <i class="el-th-list"></i>
-                                    <span th:text="${item.categoryName}"></span>
+                                    <span th:text="${blog.categoryTitle}"></span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
-
-                <li>
-                    <!-- <li id="Hot"> -->
-                    <div class="arcimg">
-                        <img class="lazy-load" src="/static/front/images/loading-image.gif"
-                             data-original="/Upload/image/artimg/20170121588381411557f.png"
-                             alt="数据库优化有哪些? 分别需要注意什么?" title="数据库优化有哪些? 分别需要注意什么?"/>
-                    </div>
-                    <div class="arc-right">
-                        <h4 class="blue-text"><a href="article/219.html" title="数据库优化有哪些? 分别需要注意什么?">数据库优化有哪些?
-                            分别需要注意什么?</a></h4>
-                        <p>SQL优化的原则是,将一次操作需要读取的BLOCK数减到最低,即在最短的时间达到最大的数据吞吐量</p>
-                        <ul>
-                            <li><a title="边小丰2019-03-01发表"><i class="el-time"></i>2019-03-01</a></li>
-                            <li><a href="Home/Index/about.html" title="作者： 边小丰"><i class="el-user"></i>边小丰</a></li>
-                            <!-- <li><a href="article/219.html#Comment" title="已有 0 条评论"><i class="el-comment"></i>0</a></li> -->
-                            <li><a title="已有 4 次浏览"><i class="el-eye-open"></i>4</a></li>
-                            <li><a href="category/31.html" title="查看分类"><i class="el-th-list"></i>数据库</a></li>
-                        </ul>
-                    </div>
-                </li>
             </ul>
+            <div class="sucailist mob-hidden">
+                <h4 class="index-title"><a href=""><i class="el-certificate"></i>最新素材
+                    <small>New sucai</small>
+                </a></h4>
+                <!--列表开始-->
+                <ul class="su">
+                    <div class="wall-column">
+                        <div class="su-li" >
+                            <!-- <li class="su-li"id="Hot"> -->
+                            <a href="/downdetail/30.html" title="php websocket实现聊天室功能源码下载">
+                                <div class="sucaiimg">
+                                    <img class="lazy-load" src="/front/images/loading-image.gif"
+                                         data-original="/Upload/image/download/201811225bf65626d60b2.jpg"
+                                         alt="php websocket实现聊天室功能源码下载" style="display: inline;">
+                                </div>
+
+                            </a>
+
+                            <div class="sucai-right">
+
+                                <h4 class="blue-text"><a href="/downdetail/30.html" title="php websocket实现聊天室功能源码下载">php
+                                    websocket实现聊天室功能源码下载</a></h4>
+
+                                <ul>
+
+                                    <li><a title="php websocket实现聊天室功能源码下载2018-11-22发表 "><i class="el-time"></i>2018-11-22</a>
+                                    </li>
+
+                                    <li class="mob-hidden">
+
+                                        <i class="el-download-alt"></i>
+
+                                        <a href="javascript::void(0);">1</a>&nbsp;
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                        <div class="su-li" id="">
+                            <!-- <li class="su-li"id="Hot"> -->
+
+                            <a href="/downdetail/27.html" title="HTML5 Canvas 赛车游戏动画DEMO演示">
+
+                                <div class="sucaiimg">
+
+                                    <img class="lazy-load" src="/front/images/loading-image.gif"
+                                         data-original="/Upload/image/download/201810075bb9ba2b57170.png"
+                                         alt="HTML5 Canvas 赛车游戏动画DEMO演示" style="display: inline;">
+
+                                </div>
+
+                            </a>
+
+                            <div class="sucai-right">
+
+                                <h4 class="blue-text"><a href="/downdetail/27.html" title="HTML5 Canvas 赛车游戏动画DEMO演示">HTML5
+                                    Canvas 赛车游戏动画DEMO演示</a></h4>
+
+                                <ul>
+
+                                    <li><a title="HTML5 Canvas 赛车游戏动画DEMO演示2018-10-07发表 "><i class="el-time"></i>2018-10-07</a>
+                                    </li>
+
+                                    <li class="mob-hidden">
+
+                                        <i class="el-download-alt"></i>
+
+                                        <a href="javascript::void(0);">6</a>&nbsp;
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="wall-column">
+                        <div class="su-li" id="">
+                            <!-- <li class="su-li"id="Hot"> -->
+
+                            <a href="/downdetail/29.html" title="jQuery网页图片延迟预加载代码">
+
+                                <div class="sucaiimg">
+
+                                    <img class="lazy-load"src="/front/images/loading-image.gif"
+                                         data-original="/Upload/image/download/201811085be3fd5bab103.jpg"
+                                         alt="jQuery网页图片延迟预加载代码" style="display: inline;">
+
+                                </div>
+
+                            </a>
+
+                            <div class="sucai-right">
+
+                                <h4 class="blue-text"><a href="/downdetail/29.html" title="jQuery网页图片延迟预加载代码">jQuery网页图片延迟预加载代码</a>
+                                </h4>
+
+                                <ul>
+
+                                    <li><a title="jQuery网页图片延迟预加载代码2018-11-08发表 "><i class="el-time"></i>2018-11-08</a>
+                                    </li>
+
+                                    <li class="mob-hidden">
+
+                                        <i class="el-download-alt"></i>
+
+                                        <a href="javascript::void(0);">17</a>&nbsp;
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                        <div class="su-li" id="">
+                            <!-- <li class="su-li"id="Hot"> -->
+
+                            <a href="/downdetail/26.html" title="纯CSS3 3D立方体焦点图动画">
+
+                                <div class="sucaiimg">
+
+                                    <img class="lazy-load"src="/front/images/loading-image.gif"
+                                         data-original="/Upload/image/download/201805305b0e0eadcdaf3.png"
+                                         alt="纯CSS3 3D立方体焦点图动画" style="display: inline;">
+
+                                </div>
+
+                            </a>
+
+                            <div class="sucai-right">
+
+                                <h4 class="blue-text"><a href="/downdetail/26.html" title="纯CSS3 3D立方体焦点图动画">纯CSS3
+                                    3D立方体焦点图动画</a></h4>
+
+                                <ul>
+
+                                    <li><a title="纯CSS3 3D立方体焦点图动画2018-05-30发表 "><i class="el-time"></i>2018-05-30</a>
+                                    </li>
+
+                                    <li class="mob-hidden">
+
+                                        <i class="el-download-alt"></i>
+
+                                        <a href="javascript::void(0);">25</a>&nbsp;
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="wall-column">
+                        <div class="su-li" id="">
+                            <!-- <li class="su-li"id="Hot"> -->
+
+                            <a href="/downdetail/28.html" title="altium designer 10 破解汉化版下载（百度网盘）">
+
+                                <div class="sucaiimg">
+
+                                    <img class="lazy-load" src="/front/images/loading-image.gif"
+                                         data-original="/Upload/image/download/201810245bcfda6ea25e2.jpg"
+                                         alt="altium designer 10 破解汉化版下载（百度网盘）" style="display: inline;">
+
+                                </div>
+
+                            </a>
+
+                            <div class="sucai-right">
+
+                                <h4 class="blue-text"><a href="/downdetail/28.html"
+                                                         title="altium designer 10 破解汉化版下载（百度网盘）">altium designer 10
+                                    破解汉化版下载（百度网盘）</a></h4>
+
+                                <ul>
+
+                                    <li><a title="altium designer 10 破解汉化版下载（百度网盘）2018-10-24发表 "><i class="el-time"></i>2018-10-24</a>
+                                    </li>
+
+                                    <li class="mob-hidden">
+
+                                        <i class="el-download-alt"></i>
+
+                                        <a href="javascript::void(0);">1</a>&nbsp;
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                        <div class="su-li" >
+                            <!-- <li class="su-li"id="Hot"> -->
+
+                            <a href="/downdetail/25.html" title="酷炫立体轮播个人博客模板">
+
+                                <div class="sucaiimg">
+
+                                    <img class="lazy-load" src="/front/images/loading-image.gif"
+                                         data-original="/Upload/image/download/201805285b0b974116d33.jpg"
+                                         alt="酷炫立体轮播个人博客模板" style="display: inline;">
+
+                                </div>
+
+                            </a>
+
+                            <div class="sucai-right">
+
+                                <h4 class="blue-text"><a href="/downdetail/25.html"
+                                                         title="酷炫立体轮播个人博客模板">酷炫立体轮播个人博客模板</a></h4>
+
+                                <ul>
+
+                                    <li><a title="酷炫立体轮播个人博客模板2018-05-28发表 "><i class="el-time"></i>2018-05-28</a></li>
+
+                                    <li class="mob-hidden">
+
+                                        <i class="el-download-alt"></i>
+
+                                        <a href="javascript::void(0);">3</a>&nbsp;
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </ul>
+                <!--列表结束-->
+            </div>
+
             <!--友情链接-->
             <div class="side-link ">
                 <h4 class="index-title"><i class="el-paper-clip"></i>友情链接
@@ -97,9 +321,8 @@
     </section>
     <!--左侧结束-->
 
-    <aside th:replace="front/common :: front-side"></aside>
+    <aside th:replace="include-front :: side"></aside>
 </div>
-<aside th:replace="front/common :: front-footer"></aside>
+<aside th:replace="include-front :: footer"></aside>
 </body>
-
 </html>

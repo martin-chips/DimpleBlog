@@ -1,7 +1,6 @@
-package com.dimple.project.log.visitorLog.service;
+package com.dimple.project.monitor.blacklist.service;
 
-import com.dimple.project.log.visitorLog.domain.Blacklist;
-import com.dimple.project.log.visitorLog.domain.VisitLog;
+import com.dimple.project.monitor.blacklist.domain.Blacklist;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public interface BlacklistService {
      * @param blacklist 带有条件的blacklist
      * @return blacklist集合
      */
-    List<VisitLog> selectBlacklistList(Blacklist blacklist);
+    List<Blacklist> selectBlacklistList(Blacklist blacklist);
 
     /**
      * 根据id删除黑名单
@@ -66,6 +65,12 @@ public interface BlacklistService {
      */
     boolean checkIpIsInBlacklist(String ip);
 
+    /**
+     * 根据ip获取黑名单的信息
+     *
+     * @param ip IP地址
+     * @return 黑名单实体类
+     */
     Blacklist selectBlacklistByIp(String ip);
 
     /**
@@ -75,4 +80,12 @@ public interface BlacklistService {
      * @return 受影响的行
      */
     int insertBlacklist(String ipAddr);
+
+    /**
+     * 更新黑名单
+     *
+     * @param blacklist 需要更新的黑命单的实体类
+     * @return 受影响的行数
+     */
+    int updateBlacklist(Blacklist blacklist);
 }

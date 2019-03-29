@@ -1,0 +1,105 @@
+<!doctype html>
+
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dimple的个人博客</title>
+    <div th:include="include-front :: head"></div>
+</head>
+
+<body class="nobg">
+<header th:replace="include-front :: header"></header>
+
+<!--内容区开始-->
+<div class="container">
+    <!--最新文章-->
+    <section>
+        <h4 style="text-align:center;">侵删联系</h4>
+        <div class="content_post">
+            <p style="text-align: center;"><strong>声明</strong></p>
+            <p></p>
+            <p style="text-align: left;">1、<span style="text-decoration: underline;">出于传递信息之目的</span>，故本站可能会误刊发损害或影响“您”的合法权益，请“您”积极与我们联系处理；
+            </p>
+            <p></p>
+            <p style="text-align: left;">2、因时间、精力有限，我们无法一一核实每一条消息的真实性，但我们会在发布之前尽最大努力来核实这些信息；</p>
+            <p></p>
+            <p style="text-align: left;">3、<span style="text-decoration: underline;">无论出于何种目的要求本站删除内容，“您”均需要提供相关证明，否则不予处理；</span>
+            </p>
+            <p></p>
+            <p style="text-align: center;"><strong>主体要求</strong></p>
+            <p></p>
+            <p style="text-align: left;">4、无论是因我站侵权还是刊发内容可能影响到“您”的权益，<strong>所有删除、修改请求仅允许直接权利人申请；</strong></p>
+            <p></p>
+            <p style="text-align: left;">5、“您”如果希望删除、修改内容，首先“您”必须是直接权利人且必须可以提供相关证明文件；</p>
+            <p></p>
+            <p style="text-align: left;">6、<span
+                    style="text-decoration: underline;">非直接权利人例如关联公司、朋友等，需持有直接权利人的授权证明；</span>
+            </p>
+            <p></p>
+            <p style="text-align: center;"><strong>处理流程</strong></p>
+            <p></p>
+            <p style="text-align: left;">7、所需材料：直接权利人的证明文件、权利人给予处理人的授权文件、删改请求文件，<span
+                    style="text-decoration: underline;">以上文件均需加盖公章</span>；</p>
+            <p></p>
+            <p style="text-align: left;">
+                8、<strong>填写完成上述文件后请打印并加盖公章后将扫描件发送至：bianxiaofeng@sohu.com</strong></p>
+            <p></p>
+            <p style="text-align: left;">9、注意：仅上述邮箱接受删改请求、仅支持通过邮箱联系（便于日后查证）。</p>
+            <p></p>
+            <p style="text-align: center;"><strong>注：</strong></p>
+            <p></p>
+            <p style="text-align: left;">1、<span style="text-decoration: underline;">为保证本站正常运作，凡是无法提供完整证明文件的请求本站一律不予处理，请谅解；</span>
+            </p>
+            <p></p>
+            <p style="text-align: left;">2、<span style="text-decoration: underline;">因时间精力有限，凡是无法提供完整证明文件的请求本站均不会回复邮件，请谅解；</span>
+            </p>
+            <p></p>
+            <p style="text-align: left;">3、<strong>符合删改条件的请求本站会在72小时内进行处理</strong>，无论是否按照“您”的要求删改页面，我们均会通过邮件回复“您”。
+            </p>
+            <p></p>
+            <p style="text-align: left;"><strong><span style="color: #ff0000;">4、本站不接受任何付费删帖、亦未授权任何代理公司负责删帖，请勿轻信任何谣传谨防上当受骗！</span></strong>
+            </p>
+        </div>
+        <!--PC和WAP自适应版-->
+        <div id="SOHUCS" sid="delete"></div>
+        <script type="text/javascript">
+            (function () {
+                var appid = 'cyu583FnA';
+                var conf = 'prod_e133a229a25f70b06b142787fad1386b';
+                var width = window.innerWidth || document.documentElement.clientWidth;
+                if (width < 960) {
+                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+                } else {
+                    var loadJs = function (d, a) {
+                        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                        var b = document.createElement("script");
+                        b.setAttribute("type", "text/javascript");
+                        b.setAttribute("charset", "UTF-8");
+                        b.setAttribute("src", d);
+                        if (typeof a === "function") {
+                            if (window.attachEvent) {
+                                b.onreadystatechange = function () {
+                                    var e = b.readyState;
+                                    if (e === "loaded" || e === "complete") {
+                                        b.onreadystatechange = null;
+                                        a()
+                                    }
+                                }
+                            } else {
+                                b.onload = a
+                            }
+                        }
+                        c.appendChild(b)
+                    };
+                    loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+                        window.changyan.api.config({appid: appid, conf: conf})
+                    });
+                }
+            })(); </script>
+    </section>    <!--左侧结束-->
+
+    <aside th:replace="include-front :: side"></aside>
+</div>
+<aside th:replace="include-front :: footer"></aside>
+</body>
+</html>

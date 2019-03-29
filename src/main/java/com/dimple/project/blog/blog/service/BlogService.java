@@ -84,5 +84,49 @@ public interface BlogService {
      * @param blogId 需要获取信息的blog的id
      * @return Blog实体类
      */
-    Blog selectBlogWithTextAndTagsById(Integer blogId);
+    Blog selectBlogWithTextAndTagsAndCategoryByBlogId(Integer blogId);
+
+    /**
+     * 获取最新更新的blog
+     *
+     * @return 最近更新的blog的列表
+     */
+    List<Blog> selectNewestUpdateBlog();
+
+    /**
+     * 获取文章排行
+     *
+     * @return 文章排行列表
+     */
+    List<Blog> selectBlogRanking();
+
+    /**
+     * 获取推荐博文
+     *
+     * @return 推荐博文集合
+     */
+    List<Blog> selectSupportBlog();
+
+    /**
+     * 获取当前Blog的上一篇Blog
+     *
+     * @param blogId id
+     * @return 上一篇博客
+     */
+    Blog selectPreviousBlogById(Integer blogId);
+
+    /**
+     * 获取下一篇博客
+     *
+     * @param blogId 当前博客的Id
+     * @return 下一篇Blog
+     */
+    Blog selectNextBlogById(Integer blogId);
+
+    /**
+     * 获取随机的blog列表
+     *
+     * @return 随机的blog的列表
+     */
+    List<Blog> selectRandBlogList();
 }

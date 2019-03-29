@@ -6,8 +6,8 @@
  * -------------------------- */
 @font-face {
     font-family: 'Elusive-Icons';
-    src: url("/static/front/font/elusiveicons-webfont.eot-v=2.0.0");
-    src: url("/static/front/font/elusiveicons-webfont.eot-#iefix&v=2.0.0") format('embedded-opentype'), url("/static/front/font/elusiveicons-webfont.woff-v=2.0.0") format('woff'), url("/static/front/font/elusiveicons-webfont.ttf-v=2.0.0") format('truetype'), url("/static/front/font/elusiveicons-webfont.svg-v=2.0.0#elusiveiconsregular") format('svg');
+    src: url("/front/font/elusiveicons-webfont.eot-v=2.0.0");
+    src: url("/front/font/elusiveicons-webfont.eot-#iefix&v=2.0.0") format('embedded-opentype'), url("/front/font/elusiveicons-webfont.woff-v=2.0.0") format('woff'), url("/front/font/elusiveicons-webfont.ttf-v=2.0.0") format('truetype'), url("/front/font/elusiveicons-webfont.svg-v=2.0.0#elusiveiconsregular") format('svg');
     font-weight: normal;
     font-style: normal;
 }

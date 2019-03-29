@@ -1,8 +1,9 @@
 package com.dimple.framework.web.filter;
 
+import com.dimple.common.utils.IpUtils;
 import com.dimple.common.utils.security.ShiroUtils;
-import com.dimple.project.log.visitorLog.domain.Blacklist;
-import com.dimple.project.log.visitorLog.service.BlacklistService;
+import com.dimple.project.monitor.blacklist.domain.Blacklist;
+import com.dimple.project.monitor.blacklist.service.BlacklistService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @Slf4j
 public class RequestInterceptor implements HandlerInterceptor {
+
     @Autowired
     BlacklistService blacklistService;
 
@@ -32,11 +34,13 @@ public class RequestInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        Blacklist blacklist = blacklistService.selectBlacklistByIp(request.getRemoteHost());
+        log.info("当前访问的IP {}", IpUtils.getIpAddr(request));
+        Blacklist blacklist = blacklistService.selectBlacklistByIp(IpUtils.getIpAddr(request));
+
         if (blacklist != null) {
             log.warn("拦截到黑名单IP [{}]请求！", ShiroUtils.getIp());
             modelAndView.setViewName("/error/blacklist");
-            blacklistService.updateNewestBlacklist(blacklist.getId(), request.getRequestURI());
+            blacklistService.updateNewestBlacklist(blacklist.getBlacklistId(), request.getRequestURI());
         }
     }
 
