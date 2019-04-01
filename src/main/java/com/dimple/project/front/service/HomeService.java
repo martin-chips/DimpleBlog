@@ -16,6 +16,7 @@ public interface HomeService {
      * 获取最新的blog
      *
      * @return 最新的blog的集合
+     * @param blog
      */
-    List<Blog> selectFrontNewestBlogList();
+    List<Blog> selectFrontBlogList(Blog blog);
 }

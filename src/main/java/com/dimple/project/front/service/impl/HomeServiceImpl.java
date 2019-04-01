@@ -22,8 +22,8 @@ public class HomeServiceImpl implements HomeService {
     BlogMapper blogMapper;
 
     @Override
-    public List<Blog> selectFrontNewestBlogList() {
-        List<Blog> blogs = blogMapper.selectFrontNewestBlogList();
+    public List<Blog> selectFrontBlogList(Blog blog) {
+        List<Blog> blogs = blogMapper.selectFrontBlogList(blog);
         return blogs;
     }
 }

@@ -42,17 +42,23 @@
         </set>
         where link_id #{link_id}
     </update>
+
     <update id="changeDisplay">
         update bg_link set display=#{display}where link_id in
         <foreach item="linkId" collection="array" open="(" separator="," close=")">
             #{linkId}
         </foreach>
     </update>
+
     <update id="processedLinkByIds">
         update bg_link set processed= 1 where link_id in
         <foreach item="linkId" collection="array" open="(" separator="," close=")">
             #{linkId}
         </foreach>
+    </update>
+
+    <update id="incrementLinkClickById">
+        update bg_link set click=click+1 where link_id=#{id}
     </update>
 
     <delete id="deleteLinkByIds">
@@ -65,7 +71,7 @@
 
     <select id="selectLinkList" resultType="com.dimple.project.link.domain.Link">
         select link_id, title, description, header_img, click, weight, available,
-        processed, display, email, create_by, create_time, update_by, update_time
+        processed, display, email, create_by, create_time,url
         from bg_link
         <where>
             <if test="title != null and title != ''">

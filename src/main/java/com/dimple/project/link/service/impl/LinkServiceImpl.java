@@ -76,4 +76,8 @@ public class LinkServiceImpl implements LinkService {
         return map;
     }
 
+    @Override
+    public void incrementLinkClickById(Integer id) {
+        linkMapper.incrementLinkClickById(id);
+    }
 }

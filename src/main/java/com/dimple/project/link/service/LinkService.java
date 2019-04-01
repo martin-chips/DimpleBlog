@@ -76,4 +76,11 @@ public interface LinkService {
      * @return
      */
     Map<String, Integer> selectLinkCount();
+
+    /**
+     * 根据友链的id增加点击量
+     *
+     * @param id
+     */
+    void incrementLinkClickById(Integer id);
 }

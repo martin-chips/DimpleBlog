@@ -1,34 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head th:include="front/common :: front-head"></head>
-<body>
 
+<head>
+    <title>归档—Dimple的个人博客</title>
+    <div th:include="include-front :: head"></div>
+</head>
 
-<div th:include="front/common :: front-header"></div>
-<style>
+<body class="nobg">
+<header th:replace="include-front :: header"></header>
 
-</style>
-
-<article>
-    <div class="whitebg timebox">
-        <div class="archive">
-            <div th:each="archive:${archives}" >
-                <h2 class="archive-title" th:text="${archive.date}"></h2>
-                <ul>
-                    <li th:each="item:${archive.blogs}" data-scroll-reveal="enter top and move 50px over 0.6s">
-                        <span th:text="${#dates.format(item['create_time'],'yyyy-MM-dd')}"></span>
-                        <div class="atitle">
-                            <a th:href="${'/view/'+item['blog_id']}" target="_blank"
-                               th:title="${item['title']}" th:text="${item['title']}"></a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+<!--内容区开始-->
+<div class="container">
+    <!--最新文章-->
+    <section class="mysection">
+        <h4 class="search-title bg-color"><i class="el-search-alt"></i>您查询的关键字： <font color="#DC4900"></font>
+        </h4>
+        <div class="arclist">
+            <!--列表开始-->
+            <ul>
+                <li th:each="blog:${blogs.list}">
+                    <div class="arcimg">
+                        <img class="lazy-load" src="/front/images/loading-image.gif"
+                             th:data-original="${blog.headerImg}"
+                             th:alt="${blog.title}" th:title="${blog.title}"/>
+                    </div>
+                    <div class="arc-right">
+                        <h4 class="blue-text">
+                            <a th:href="${'/article/'+blog.blogId+'.html'}"
+                               th:title="${blog.title}"
+                               th:text="${blog.title}">
+                            </a>
+                        </h4>
+                        <p th:text="${blog.summary}"></p>
+                        <ul>
+                            <li>
+                                <a th:title="${'边小丰'+#dates.format(blog.createTime, 'yyyy-MM-dd')+'发表'}">
+                                    <i class="el-time"></i>
+                                    <span th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="about.html" title="作者： 边小丰"><i class="el-user"></i>边小丰</a>
+                            </li>
+                            <li><a th:href="${'/article/'+blog.blogId+'.html'}" href="article/219.html#Comment">
+                                <i class="el-comment"></i>
+                                <span th:id="${'sourceId::'+blog.blogId}" class="cy_cmt_count"></span>
+                                <script id="cy_cmt_num"
+                                        src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyu583FnA">
+                                </script>
+                            </a>
+                            </li>
+                            <li><a th:title="${'已有'+blog.click+'次浏览'}"><i class="el-eye-open"></i><span
+                                    th:text="${blog.click}"></span></a></li>
+                            <li>
+                                <a th:href="${'category/'+blog.categoryId+'.html'}" title="查看分类">
+                                    <i class="el-th-list"></i>
+                                    <span th:text="${blog.categoryTitle}"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <!--列表结束-->
         </div>
-        <script src="js/page2.js"></script>
-    </div>
-</article>
+        <!--分页开始-->
+        <div th:replace="navigation :: navigation(${blogs},'search',${keyWord})"></div>
+        <!--分页结束-->
+    </section>
+    <!--左侧结束-->
 
-<head th:include="front/common :: front-footer"></head>
+    <aside th:replace="include-front :: side"></aside>
+</div>
+<aside th:replace="include-front :: footer"></aside>
 </body>
 </html>

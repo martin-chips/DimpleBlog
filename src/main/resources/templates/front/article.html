@@ -33,7 +33,7 @@
                    th:text="${blog.category.categoryTitle}"></a>&gt;正文
             </div>
             <!--标题-->
-            <h3 class="arc-title index-title" th:text="${blog.title}"></h3>
+            <h3 class="arc-title index-title" style="margin-top: 70px" th:text="${blog.title}"></h3>
             <!--副标题信息-->
             <div class="post-line bg-color">
                 <ul>
@@ -59,56 +59,56 @@
             <div align="center"><img style="border: 0;display: block;width: 60%;height: auto;"
                                      th:src="${blog.headerImg}"></div>
             <div class=" article-content bg-color">
-                <div class="article-content bg-color" id="Hotbg">
-                    <!--文章正文-->
-                    <div class="article-body" th:utext="${blog.content}">
+                <!--                <div class="article-content bg-color" id="Hotbg">-->
+                <!--文章正文-->
+                <div class="article-body" th:utext="${blog.content}">
 
-                    </div>
-                    <!--END 文章正文-->
-                    <!--分享-->
-                    <div class="article-fx">
-                        <span class="img-circle" href="javascript:void(0)" onClick="dashangToggle()">打赏</span>&nbsp;&nbsp;&nbsp;
-                        <a class="fx-btn img-circle img-circle" href="javascript:;">分享</a>
-                        <div class="bd-fx arc-bdfx">
-                            <i class="el-remove fx-close"></i>
-                            <ul class="bdsharebuttonbox">
-                                <li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
-                                <li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
-                                <li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
-                                <li><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
-                                <script th:inline="javascript"> window._bd_share_config = {
-                                    "common": {
-                                        "bdSnsKey": {},
-                                        "bdText": "",
-                                        "bdMini": "2",
-                                        "bdMiniList": false,
-                                        "bdPic": "",
-                                        "bdStyle": "1",
-                                        "bdSize": "32"
-                                    }, "share": {}
-                                };
-                                (document.getElementsByTagName('head')[0] || document.body).appendChild(document.createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5);
-                                </script>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--END 分享-->
-                    <hr>
-                    <!--标签-->
-                    <div class="article_tag">
-                        <ul>
-                            <li><a th:href="${'/category/'+blog.category.categoryId+'.html'}"
-                                   th:title="${'归类：'+blog.category.categoryTitle}"
-                                   th:text="${blog.category.categoryTitle}"></a>
-                            </li>
-                            <li th:each="tag:${blog.tagList}">
-                                <a class="b-tag-name" th:title="${'标签：'+tag.tagTitle}"
-                                   th:href="${'/tag/'+tag.tagId+'.html'}">
-                                </a>
-                            </li>
+                </div>
+                <!--END 文章正文-->
+                <!--分享-->
+                <div class="article-fx">
+                    <span class="img-circle" href="javascript:void(0)" onClick="dashangToggle()">打赏</span>&nbsp;&nbsp;&nbsp;
+                    <a class="fx-btn img-circle img-circle" href="javascript:;">分享</a>
+                    <div class="bd-fx arc-bdfx">
+                        <i class="el-remove fx-close"></i>
+                        <ul class="bdsharebuttonbox">
+                            <li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
+                            <li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
+                            <li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
+                            <li><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
+                            <script th:inline="javascript"> window._bd_share_config = {
+                                "common": {
+                                    "bdSnsKey": {},
+                                    "bdText": "",
+                                    "bdMini": "2",
+                                    "bdMiniList": false,
+                                    "bdPic": "",
+                                    "bdStyle": "1",
+                                    "bdSize": "32"
+                                }, "share": {}
+                            };
+                            (document.getElementsByTagName('head')[0] || document.body).appendChild(document.createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5);
+                            </script>
                         </ul>
                     </div>
                 </div>
+                <!--END 分享-->
+                <hr>
+                <!--标签-->
+                <div class="article_tag">
+                    <ul>
+                        <li><a th:href="${'/category/'+blog.category.categoryId+'.html'}"
+                               th:title="${'归类：'+blog.category.categoryTitle}"
+                               th:text="${blog.category.categoryTitle}"></a>
+                        </li>
+                        <li th:if="${#lists.isEmpty(blog.tagList)}" th:each="tag:${blog.tagList}">
+                            <a class="b-tag-name" th:title="${'标签：'+tag.tagTitle}"
+                               th:href="${'/tag/'+tag.tagId+'.html'}">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </article>
 
         <!--上一篇，下一篇-->
@@ -135,7 +135,7 @@
             <ul>
                 <li th:each="blog:${randBlogList}">
                     <a th:href="${'/article/'+blog.blogId+'.html'}">
-                        <img class="lazy-load" src="../Template/xiao/Home/Public/images/icon/loading.gif"
+                        <img class="lazy-load" src="/front/images/loading-image.gif"
                              th:data-original="${blog.headerImg}" th:alt="${blog.title}"
                              th:title="${blog.title}"/>
                         <span th:text="${blog.title}"></span>
@@ -144,14 +144,14 @@
             </ul>
         </div>
         <!--END 随机推荐-->
-        <h3 class="form-btn blue-text"><a href="javascript:;"><i class="el-edit"></i>我要留言 / 展开表单</a></h3>
+        <h3 class="form-btn blue-text"><a href="javascript:;"><i class="el-edit"></i>我要留言</a></h3>
         <!-- 通用评论开始 -->
         <div class="comment-area" id="Comment">
             <h4 class="index-title"><i class="el el-comment-alt"></i> 当前共有<span href="#SOHUCS"
                                                                                 id="changyan_count_unit"></span>
                 条评论
-                <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js">
-                </script>
+                <script type="text/javascript"
+                        src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
             </h4>
             <ul>
                 <!--PC和WAP自适应版-->
@@ -197,34 +197,23 @@
     <aside th:replace="include-front :: side"></aside>
 </div>
 <div class="hide_box"></div>
-<div class="shang_box">
-    <a class="shang_close" href="javascript:void(0)" onClick="dashangToggle()" title="关闭">
-        <img src="/front/images/close.jpg" alt="取消"/>
-    </a>
-    <img class="shang_logo" src="front/images/logo.gif" alt="Dimple 的个人博客"/>
+<div class="shang_box" >
+    <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/front/images/close.jpg" alt="取消"></a>
+    <img class="shang_logo" src="/front/images/logo.png" alt="Dimple 的个人博客"/>
     <div class="shang_tit">
-        <img src="front/images/alipay.png"
-             alt="扫码查看"
-             title="扫一扫"/>
+        <p>感谢</p>
     </div>
     <div class="shang_payimg">
-        <img src="/front/images/weichartpay.png"
-             alt="扫码查看"
-             title="扫一扫"/>
+        <img src="/front/images/alipay.png" alt="扫码查看" title="扫一扫">
     </div>
-
-    <div class="pay_explain">感谢您的支持，我会继续努力的!</div>
-
     <div class="shang_payselect">
         <div class="pay_item checked" data-id="alipay">
             <span class="radiobox"></span>
-            <span class="pay_logo"><img src="../Template/xiao/Home/Public/images/icon/alipay.jpg"
-                                        alt="支付宝"/></span>
+            <span class="pay_logo"><img src="/front/images/alipay-logo.jpg" alt="支付宝"></span>
         </div>
         <div class="pay_item" data-id="weipay">
             <span class="radiobox"></span>
-            <span class="pay_logo"><img src="/front/images/weichartpay.png"
-                                        alt="微信"/></span>
+            <span class="pay_logo"><img src="/front/images/wechat-logo.jpg" alt="微信"></span>
         </div>
     </div>
 </div>
@@ -237,7 +226,7 @@
         <p>感谢您的支持，我会继续努力的!</p>
     </div>
     <div class="shang_payimg">
-        <img src="../Template/xiao/Home/Public/images/icon/alipayimg.jpg" alt="扫码查看"
+        <img src="/front/images/alipay.png" alt="扫码查看"
              title="扫一扫"/>
     </div>
     <div class="pay_explain">长按二维码打赏，你说多少就多少</div>
@@ -259,7 +248,7 @@
         $(".pay_item").click(function () {
             $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
             var dataid = $(this).attr('data-id');
-            $(".shang_payimg img").attr("src", "/Template/xiao/Home/Public/images/icon/" + dataid + "img.jpg");
+            $(".shang_payimg img").attr("src", dataid == "alipay" ? "/front/images/alipay.png" : "/front/images/weichart.png");
             $("#shang_pay_txt").text(dataid == "alipay" ? "支付宝" : "微信");
         });
     });

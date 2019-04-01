@@ -97,9 +97,10 @@ public interface BlogMapper {
     /**
      * 获取前台展示的Blog的列表，包含category 信息
      *
+     * @param blog
      * @return
      */
-    List<Blog> selectFrontNewestBlogList();
+    List<Blog> selectFrontBlogList(Blog blog);
 
     /**
      * 获取最近更新的blog,限制i条
@@ -140,4 +141,12 @@ public interface BlogMapper {
      * @return 随机blog集合
      */
     List<Blog> selectRandBlogListLimit(int i);
+
+    /**
+     * 根据tag的id查询出blog
+     *
+     * @param tagId tag的id
+     * @return 集合
+     */
+    List<Blog> selectBlogsByTagId(@Param("tagId") Integer tagId);
 }

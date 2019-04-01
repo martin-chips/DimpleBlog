@@ -160,4 +160,9 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> selectRandBlogList() {
         return blogMapper.selectRandBlogListLimit(4);
     }
+
+    @Override
+    public List<Blog> selectBlogListByTagId(Integer tagId) {
+       return blogMapper.selectBlogsByTagId(tagId);
+    }
 }

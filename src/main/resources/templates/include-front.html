@@ -21,7 +21,6 @@
         )
     </script>
     <script type="text/javascript" th:src="@{/front/js/superbg.min.js}"></script>
-    <script type="text/javascript" th:src="@{/front/js/album.js}"></script>
     <script type="text/javascript" th:src="@{/front/js/checkform.js}"></script>
     <script type="text/javascript" th:src="@{/front/js/skin.js}"></script>
     <!--[if lte IE 9]>
@@ -29,7 +28,7 @@
     <![endif]-->
     <script type="text/javascript" th:src="@{/front/js/index.js}"></script>
     <script type="text/javascript" th:src="@{/front/js/showtip.js}"></script>
-    <script type="text/javascript" th:src="@{/front/js/swiper.min.js}"></script>
+    <!--    <script type="text/javascript" th:src="@{/front/js/swiper.min.js}"></script>-->
 </div>
 
 
@@ -40,7 +39,7 @@
             <!--logo部分-->
             <div class="logo">
                 <a href="/">
-                    <img src="/front/images/logo.gif"/>
+                    <img src="/front/images/logo.png"/>
                 </a>
             </div>
             <!--滚动消息-->
@@ -64,7 +63,7 @@
                     <div class="drop-nav orange-text ">
                         <ul>
                             <li th:each="category:${categories}">
-                                <a th:href="${'/category/'+category.categoryId+'/1.html'}"
+                                <a th:href="${'/category/'+category.categoryId+'.html'}"
                                    th:text="${category.categoryTitle}"></a>
                             </li>
                         </ul>
@@ -305,12 +304,18 @@
     </div>
     <!--搜索-->
     <div class="search animation-div">
-        <form action="" method="get">
+        <form action="/search" method="get" id="searchForm">
             <div class="search-index">
-                <input name="search_word" type="text" placeholder="请输入关键字" onfocus="this.placeholder=''"
+                <input name="search_word" id="search_word" type="text" placeholder="请输入关键字"
+                       onfocus="this.placeholder=''"
                        onblur="this.placeholder='请输入关键字'"/>
-                <i class="el-search"><input value=" " type="submit"/></i>
+                <i class="el-search"><input id="search" value=" " type="submit"/></i>
             </div>
+            <script>
+                $("#search").click(function () {
+                    $("#searchForm").attr("action", "/search/" + $("#search_word").val() + ".html");
+                });
+            </script>
         </form>
     </div>
     <!--文章排行tab-->
@@ -322,7 +327,8 @@
         <ul class="paihang-ul" style="display: block;">
             <li th:each="blog:${blogRanking}">
                 <span></span>
-                <a th:href="${'/article/'+blog.blogId+'.html'}" th:title="${blog.title}" th:utext="${blog.title+'<b>('+blog.click+')<b/>'}"></a>
+                <a th:href="${'/article/'+blog.blogId+'.html'}" th:title="${blog.title}"
+                   th:utext="${blog.title+'<b>('+blog.click+')<b/>'}"></a>
             </li>
         </ul>
     </div>
@@ -384,7 +390,7 @@
         </h4>
         <ul id="3dcloud">
             <li th:each="tag,tagStat:${tags}">
-                <a th:class="${'tstyle-'+tagStat.count%4+1}" th:href="${'/'+tag.tagId+'.html'}"
+                <a th:class="${'tstyle-'+tagStat.count%4+1}" th:href="${'/tag/'+tag.tagId+'.html'}"
                    th:title="${'标签：'+tag.tagTitle}" th:text="${tag.tagTitle+' ('+tag.count+')'}">
                 </a>
             </li>

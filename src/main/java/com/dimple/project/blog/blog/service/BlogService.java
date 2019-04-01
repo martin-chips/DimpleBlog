@@ -129,4 +129,12 @@ public interface BlogService {
      * @return 随机的blog的列表
      */
     List<Blog> selectRandBlogList();
+
+    /**
+     * 根据tag的id查询blog列表
+     *
+     * @param tagId tag的id
+     * @return list集合
+     */
+    List<Blog> selectBlogListByTagId(Integer tagId);
 }

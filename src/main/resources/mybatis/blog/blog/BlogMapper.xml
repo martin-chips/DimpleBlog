@@ -149,19 +149,23 @@
         from bg_blog where blog_id=#{blogId}
     </select>
 
-    <select id="selectFrontNewestBlogList" resultType="com.dimple.project.blog.blog.domain.Blog">
+    <select id="selectFrontBlogList" resultType="com.dimple.project.blog.blog.domain.Blog">
         select b.blog_id,
-               b.category_id,
-               b.title,
-               b.summary,
-               b.click,
-               b.header_img,
-               b.create_by,
-               b.create_time,
-               c.category_title
+        b.category_id,
+        b.title,
+        b.summary,
+        b.click,
+        b.header_img,
+        b.create_by,
+        b.create_time,
+        c.category_title
         from bg_blog b
-                 left join bg_category c on b.category_id = c.category_id
-        order by b.create_time desc
+        left join bg_category c on b.category_id = c.category_id
+        <where>
+            <if test="categoryId !=null and categoryId !=''">
+                and b.category_id =#{categoryId}
+            </if>
+        </where>
     </select>
 
     <select id="selectNewestUpdateBlog" resultType="com.dimple.project.blog.blog.domain.Blog">
@@ -182,6 +186,23 @@
 
     <select id="selectRandBlogListLimit" resultType="com.dimple.project.blog.blog.domain.Blog">
         select blog_id,title,header_img from bg_blog  where status=1 order by rand() limit #{i}
+    </select>
+    <select id="selectBlogsByTagId" resultType="com.dimple.project.blog.blog.domain.Blog">
+        SELECT b.blog_id,
+        b.category_id,
+        b.title,
+        b.summary,
+        b.click,
+        b.header_img,
+        b.create_by,
+        c.category_title
+        FROM (bg_blog b
+        LEFT JOIN bg_category c ON b.category_id = c.category_id) left join bg_blog_tag t on t.blog_id =b.blog_id
+        <where>
+            <if test="tagId!=null">
+                and t.tag_id=#{tagId}
+            </if>
+        </where>
     </select>
 
 

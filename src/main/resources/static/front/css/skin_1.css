@@ -81,6 +81,12 @@ textarea:focus {
 	font-size: 12px;
 }
 
+.smallText{
+	color: #bcbcbc;
+	margin-left: 50px;
+	font-size: 12px;
+}
+
 header {
 	width: 100%;
 	height: 70px;

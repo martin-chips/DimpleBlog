@@ -8,12 +8,17 @@ import com.dimple.project.blog.category.service.CategoryService;
 import com.dimple.project.blog.tag.domain.Tag;
 import com.dimple.project.blog.tag.service.TagService;
 import com.dimple.project.front.service.HomeService;
+import com.dimple.project.link.domain.Link;
+import com.dimple.project.link.service.LinkService;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 /**
  * @className: HomeController
@@ -33,6 +38,8 @@ public class HomeController extends BaseController {
     CategoryService categoryService;
     @Autowired
     TagService tagService;
+    @Autowired
+    LinkService linkService;
 
     /**
      * 设置前台页面公用的部分代码
@@ -58,7 +65,8 @@ public class HomeController extends BaseController {
     @VLog(title = "首页")
     public String index(Model model) {
         setCommonMessage(model);
-        model.addAttribute("blogs", homeService.selectFrontNewestBlogList());
+        PageHelper.startPage(1, 10, "create_time desc");
+        model.addAttribute("blogs", homeService.selectFrontBlogList(new Blog()));
         return "front/index";
     }
 
@@ -94,15 +102,37 @@ public class HomeController extends BaseController {
     }
 
     @VLog(title = "分类")
-    @GetMapping("/category/{categoryId}/{pageNum}.html")
-    public String category(@PathVariable Integer categoryId, @PathVariable Integer pageNum, Model model) {
+    @GetMapping({"/category/{categoryId}.html"})
+    public String category(@PathVariable Integer categoryId, Integer pageNum, Model model) {
         setCommonMessage(model);
         model.addAttribute("category", categoryService.selectCategoryById(categoryId));
         Blog blog = new Blog();
         blog.setCategoryId(categoryId);
-        PageHelper.startPage(pageNum, 12, "create_time desc");
-        model.addAttribute("blogs", blogService.selectBlogList(blog));
+        PageHelper.startPage(pageNum == null ? 1 : pageNum, 10, "create_time desc");
+        model.addAttribute("blogs", new PageInfo<>(homeService.selectFrontBlogList(blog)));
         return "front/category";
+    }
+
+    @GetMapping("/tag/{tagId}.html")
+    public String tag(@PathVariable Integer tagId, Integer pageNum, Model model) {
+        setCommonMessage(model);
+        PageHelper.startPage(pageNum == null ? 1 : pageNum, 10, "b.create_time desc");
+        List<Blog> blogs = blogService.selectBlogListByTagId(tagId);
+        model.addAttribute("blogs", new PageInfo(blogs));
+        model.addAttribute("tag", tagService.selectTagById(tagId));
+        return "front/tag";
+    }
+
+    @GetMapping("/search/{keyWord}.html")
+    public String search(@PathVariable String keyWord, Integer pageNum, Model model) {
+        setCommonMessage(model);
+        PageHelper.startPage(pageNum == null ? 1 : pageNum, 10, "create_time desc");
+        Blog blog = new Blog();
+        blog.setTitle(keyWord);
+        List<Blog> blogs = blogService.selectBlogList(blog);
+        model.addAttribute("blogs", new PageInfo<>(blogs));
+        model.addAttribute("keyWord", keyWord);
+        return "front/search";
     }
 
     /**
@@ -139,6 +169,16 @@ public class HomeController extends BaseController {
     @GetMapping("/link.html")
     public String link(Model model) {
         setCommonMessage(model);
+        model.addAttribute("links", linkService.selectLinkList(new Link()));
         return "front/link";
+    }
+
+    /**
+     * 友链跳转
+     */
+    @GetMapping("/linkRedirect")
+    public String redirectTo(String ref, Integer id) {
+        linkService.incrementLinkClickById(id);
+        return redirect(ref);
     }
 }

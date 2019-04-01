@@ -18,8 +18,8 @@
             <ul class="link-list">
                 <li th:each="link:${links}">
                     <div class="link-item">
-                        <a th:href="${link.url}" target="_blank">
-                            <img th:src="${link.headerUrl}">
+                        <a th:href="${'/linkRedirect?ref='+link.url+'&&id='+link.linkId}" target="_blank">
+                            <img th:src="${link.headerImg}">
                             <h3 th:text="${link.title}"></h3>
                             <p th:text="${link.description}"></p>
                         </a>

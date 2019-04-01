@@ -3,7 +3,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title th:text="${category.categoryTitle+'—Dimple的个人博客'}">Dimple的个人博客</title>
+    <title th:text="${keyWord+'—Dimple的个人博客'}">Dimple的个人博客</title>
     <div th:include="include-front :: head"></div>
 </head>
 
@@ -14,17 +14,9 @@
 <div class="container">
     <!--最新文章-->
     <section class="mysection">
-        <h4 class="index-title">
-            <a href="/"><i class="el el-home"></i>首页 &nbsp;> </a>
-            <span class="orange-text" th:text="${category.categoryTitle}"></span>
-            <span style="float:right;margin-right:10px;">共有文章:<font class="orange-text"
-                                                                    th:text="${blogs.total}"> 11 </font>篇</span>
+        <h4 class="search-title bg-color"><i class="el-search-alt"></i>您查询的关键字： <font color="#DC4900"
+                                                                                      th:text="${keyWord}"></font>
         </h4>
-        <div>
-            <p class="smallText" th:text="${'分类描述：'+category.description}"></p>
-            <p class="smallText" th:text="${'创建时间：'+#dates.format(category.createTime,'yyyy-MM-dd')}"></p>
-        </div>
-        <hr/>
         <div class="arclist">
             <!--列表开始-->
             <ul>
@@ -75,7 +67,7 @@
             <!--列表结束-->
         </div>
         <!--分页开始-->
-        <div th:replace="navigation :: navigation(${blogs},'category',${category.categoryId})"></div>
+        <div th:replace="navigation :: navigation(${blogs},'search',${keyWord})"></div>
         <!--分页结束-->
     </section>
     <!--左侧结束-->

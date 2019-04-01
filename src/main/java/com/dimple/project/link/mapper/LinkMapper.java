@@ -100,4 +100,10 @@ public interface LinkMapper {
      * @return num
      */
     int selectLinkCount();
+
+    /**
+     * 增加友链的点击数
+     * @param id
+     */
+    void incrementLinkClickById(Integer id);
 }
