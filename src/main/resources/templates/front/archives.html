@@ -54,7 +54,7 @@
                             <li><a th:title="${'已有'+blog.click+'次浏览'}"><i class="el-eye-open"></i><span
                                     th:text="${blog.click}"></span></a></li>
                             <li>
-                                <a th:href="${'category/'+blog.categoryId+'.html'}" title="查看分类">
+                                <a th:href="${'/category/'+blog.categoryId+'.html'}" title="查看分类">
                                     <i class="el-th-list"></i>
                                     <span th:text="${blog.categoryTitle}"></span>
                                 </a>
