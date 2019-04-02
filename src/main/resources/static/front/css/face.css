@@ -17,7 +17,7 @@
 	margin:0;
 	padding:0;
 	padding:15px!important;
-	
+
 	}
 .face-main ul li{display:list-item;list-style:none;    background-image: none!important;}
 
@@ -80,6 +80,6 @@
 .clearfix:after{clear:both;}
 
 @media screen and (min-width:320px) and(max-width:768px){
-	
+
 	.face-main{width:100%;}
 }

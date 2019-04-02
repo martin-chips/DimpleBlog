@@ -12,11 +12,6 @@
           th:href="@{/front/plugin/hightlight/xcode.css}"/>
     <div th:include="include-front :: head"></div>
 </head>
-<!--<style>-->
-<!--    #bdshare_weixin_qrcode_dialog_qr table {-->
-<!--        width: auto !important;-->
-<!--    }-->
-<!--</style>-->
 <body class="nobg">
 <header th:replace="include-front :: header"></header>
 <!--内容区开始-->
@@ -33,7 +28,7 @@
                    th:text="${blog.category.categoryTitle}"></a>&gt;正文
             </div>
             <!--标题-->
-            <h3 class="arc-title index-title" style="margin-top: 70px" th:text="${blog.title}"></h3>
+            <h3 class="act-title" th:text="${blog.title}"></h3>
             <!--副标题信息-->
             <div class="post-line bg-color">
                 <ul>
@@ -56,57 +51,58 @@
                     </li>
                 </ul>
             </div>
-            <div align="center"><img style="border: 0;display: block;width: 60%;height: auto;"
-                                     th:src="${blog.headerImg}"></div>
+            <div align="center">
+                <img style="border: 0;display: block;width: 60%;height: auto;" th:src="${blog.headerImg}">
+            </div>
             <div class=" article-content bg-color">
-                <!--                <div class="article-content bg-color" id="Hotbg">-->
-                <!--文章正文-->
-                <div class="article-body" th:utext="${blog.content}">
+                <div class="article-content bg-color" th:id="${blog.support==1}?'tuijian':''">
+                    <!--文章正文-->
+                    <div class="article-body" th:utext="${blog.content}">
 
-                </div>
-                <!--END 文章正文-->
-                <!--分享-->
-                <div class="article-fx">
-                    <span class="img-circle" href="javascript:void(0)" onClick="dashangToggle()">打赏</span>&nbsp;&nbsp;&nbsp;
-                    <a class="fx-btn img-circle img-circle" href="javascript:;">分享</a>
-                    <div class="bd-fx arc-bdfx">
-                        <i class="el-remove fx-close"></i>
-                        <ul class="bdsharebuttonbox">
-                            <li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
-                            <li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
-                            <li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
-                            <li><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
-                            <script th:inline="javascript"> window._bd_share_config = {
-                                "common": {
-                                    "bdSnsKey": {},
-                                    "bdText": "",
-                                    "bdMini": "2",
-                                    "bdMiniList": false,
-                                    "bdPic": "",
-                                    "bdStyle": "1",
-                                    "bdSize": "32"
-                                }, "share": {}
-                            };
-                            (document.getElementsByTagName('head')[0] || document.body).appendChild(document.createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5);
-                            </script>
+                    </div>
+                    <!--END 文章正文-->
+                    <!--分享-->
+                    <div class="article-fx">
+                        <span class="img-circle" href="javascript:void(0)" onClick="dashangToggle()">打赏</span>&nbsp;&nbsp;&nbsp;
+                        <a class="fx-btn img-circle img-circle" href="javascript:;">分享</a>
+                        <div class="bd-fx arc-bdfx">
+                            <i class="el-remove fx-close"></i>
+                            <ul class="bdsharebuttonbox">
+                                <li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
+                                <li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
+                                <li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
+                                <li><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
+                                <script th:inline="javascript"> window._bd_share_config = {
+                                    "common": {
+                                        "bdSnsKey": {},
+                                        "bdText": "",
+                                        "bdMini": "2",
+                                        "bdMiniList": false,
+                                        "bdPic": "",
+                                        "bdStyle": "1",
+                                        "bdSize": "32"
+                                    }, "share": {}
+                                };
+                                (document.getElementsByTagName('head')[0] || document.body).appendChild(document.createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5);
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--END 分享-->
+                    <hr>
+                    <!--标签-->
+                    <div class="article_tag">
+                        <ul>
+                            <li><a th:href="${'/category/'+blog.category.categoryId+'.html'}"
+                                   th:title="${'归类：'+blog.category.categoryTitle}"
+                                   th:text="${blog.category.categoryTitle}"></a>
+                            </li>
+                            <li th:each="tag:${blog.tags}">
+                                <a class="b-tag-name" th:title="${'标签：'+tag}" th:text="${tag}">
+                                </a>
+                            </li>
                         </ul>
                     </div>
-                </div>
-                <!--END 分享-->
-                <hr>
-                <!--标签-->
-                <div class="article_tag">
-                    <ul>
-                        <li><a th:href="${'/category/'+blog.category.categoryId+'.html'}"
-                               th:title="${'归类：'+blog.category.categoryTitle}"
-                               th:text="${blog.category.categoryTitle}"></a>
-                        </li>
-                        <li th:if="${#lists.isEmpty(blog.tagList)}" th:each="tag:${blog.tagList}">
-                            <a class="b-tag-name" th:title="${'标签：'+tag.tagTitle}"
-                               th:href="${'/tag/'+tag.tagId+'.html'}">
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </article>
@@ -197,8 +193,9 @@
     <aside th:replace="include-front :: side"></aside>
 </div>
 <div class="hide_box"></div>
-<div class="shang_box" >
-    <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/front/images/close.jpg" alt="取消"></a>
+<div class="shang_box">
+    <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img
+            src="/front/images/close.jpg" alt="取消"></a>
     <img class="shang_logo" src="/front/images/logo.png" alt="Dimple 的个人博客"/>
     <div class="shang_tit">
         <p>感谢</p>

@@ -147,7 +147,7 @@ header .mynav{width:60%;float:left;height:100%;position:relative;}
 .xiangguan div span{display:block;width:100%;padding-top:10px;color:#777;}
 .xiangguan .benbo{background:#0cabd3;}
 .xiangguan > div >.mail-btn{background:#0cd38f;padding:0;}
-.xiangguan .taobao{background:#ee4f08;}
+.xiangguan .github{background:#ee4f08;}
 .xiangguan .side-fx{background:#8aee08;cursor:pointer;}
 .xiangguan a:hover{opacity:0.8;transform:rotate(360deg) scale(1.3);}
 .xiangguan a i{color:inherit;}
@@ -207,7 +207,7 @@ header .mynav{width:60%;float:left;height:100%;position:relative;}
 .article-push>ul>li> .arcimg{width:33%;float:left;border-radius:3px;height:83px;-webkit-border-radius:3px;overflow:hidden;border:1px dotted #05b129;}
 .article-push>ul>li> .arcimg img{width:100%;height:100%;padding:3px;box-sizing:border-box;border-radius:3px;-webkit-border-radius:3px;}
 .article-push>ul>li> .arc-right{width:62%;}
-.article-push>ul>li> .arc-right p{height:30px;font-size:12px;}
+.article-push>ul>li> .arc-right p{height:36px;font-size:12px;}
 .article-push >ul>li>ul{width:100%;}
 .article-push .arc-right>ul li{padding:0;}
 .article-push >ul> li:hover{background:#f9fffc;}
@@ -443,7 +443,7 @@ footer{width:100%;background:rgba(0,67,94,0.65);margin-top:35px;clear:both;}
 .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
 .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
 .shang_close{float:right;display:inline-block;}
-.shang_logo{display:block;text-align:center;margin:20px auto;}
+.shang_logo{display:block;text-align:center;margin:20px auto;width: 300px}
 .shang_tit{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url("../images/cy-reward-title-bg.jpg");font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
 .shang_tit p{color:#a3a3a3;text-align:center;font-size:16px;}
 .shang_payimg{width:140px;padding:10px;border:6px solid #EA5F00;margin:0 auto;border-radius:3px;height:140px;}

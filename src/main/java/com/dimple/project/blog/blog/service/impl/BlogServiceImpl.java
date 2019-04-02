@@ -8,13 +8,11 @@ import com.dimple.project.blog.blog.mapper.BlogMapper;
 import com.dimple.project.blog.blog.mapper.BlogTagMapper;
 import com.dimple.project.blog.blog.service.BlogService;
 import com.dimple.project.blog.category.service.CategoryService;
-import com.dimple.project.blog.tag.domain.Tag;
 import com.dimple.project.blog.tag.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -119,11 +117,11 @@ public class BlogServiceImpl implements BlogService {
         //先去tag和blog的关联表中选择所有的tagIds
         List<Integer> tagIds = blogTagMapper.selectTagIdsByBlogId(blogId);
         //根据查询出的tag的id去tag表中查询
-        List<Tag> tags = new LinkedList<>();
+       String[] tags = new String[tagIds.size()];
         for (int i = 0; i < tagIds.size(); i++) {
-            tags.add(tagService.selectTagById(tagIds.get(i)));
+            tags[i]=(tagService.selectTagById(tagIds.get(i)).getTagTitle());
         }
-        blog.setTagList(tags);
+        blog.setTags(tags);
         blog.setCategory(categoryService.selectCategoryById(blog.getCategoryId()));
         return blog;
     }

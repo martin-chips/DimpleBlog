@@ -1,13 +1,13 @@
 package com.dimple.project.system.notice.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.common.utils.text.Convert;
-import com.dimple.project.system.notice.mapper.NoticeMapper;
 import com.dimple.project.system.notice.domain.Notice;
+import com.dimple.project.system.notice.mapper.NoticeMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @className: NoticeServiceImpl
@@ -76,5 +76,15 @@ public class NoticeServiceImpl implements INoticeService {
     @Override
     public int deleteNoticeByIds(String ids) {
         return noticeMapper.deleteNoticeByIds(Convert.toStrArray(ids));
+    }
+
+    @Override
+    public int changeNoticeDisplayById(Integer display, Integer id) {
+        return noticeMapper.changeNoticeDisplayById(display, id);
+    }
+
+    @Override
+    public List<Notice> selectNoticeListDisplay() {
+        return noticeMapper.selectNoticeDisplay();
     }
 }

@@ -54,6 +54,28 @@
     var datas = [[${@dict.getType('sys_notice_status')}]];
     var prefix = ctx + "system/notice";
 
+    function statusTools(value, row) {
+        if (value == "0") {
+            return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.noticeId + '\')"></i> ';
+        } else {
+            return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.noticeId + '\')"></i> ';
+        }
+    }
+
+    /* 停用 */
+    function disable(noticeId) {
+        $.modal.confirm("确认要隐藏该通知吗？", function () {
+            $.operate.put("/system/notice/changeDisplay/0", {"id": noticeId});
+        })
+    }
+
+    /* 启用 */
+    function enable(noticeId) {
+        $.modal.confirm("确认要显示该通知吗？", function () {
+            $.operate.put("/system/notice/changeDisplay/1", {"id": noticeId});
+        })
+    }
+
     $(function () {
         var options = {
             url: prefix + "/list",
@@ -72,11 +94,11 @@
                     field: 'noticeTitle',
                     title: '公告'
                 }, {
-                    field: 'status',
-                    title: '状态',
+                    field: 'display',
+                    title: '显示',
                     align: 'center',
                     formatter: function (value, row, index) {
-                        return $.table.selectDictLabel(datas, value);
+                        return statusTools(value, row);
                     }
                 },
                 {
@@ -100,6 +122,7 @@
                 }]
         };
         $.table.init(options);
+
     });
 </script>
 </body>

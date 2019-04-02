@@ -25,6 +25,6 @@ public class Notice extends BaseEntity {
     /**
      * 显示（0不显示 1显示）
      */
-    private String display;
+    private Integer display;
 
 }

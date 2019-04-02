@@ -1,6 +1,7 @@
 package com.dimple.project.blog.blog.mapper;
 
 import com.dimple.project.blog.blog.domain.Blog;
+import com.dimple.project.front.domain.Archives;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -149,4 +150,19 @@ public interface BlogMapper {
      * @return 集合
      */
     List<Blog> selectBlogsByTagId(@Param("tagId") Integer tagId);
+
+    /**
+     * 获取归档的Date和count
+     *
+     * @return list集合
+     */
+    List<Archives> selectArchivesDateAndCount();
+
+    /**
+     * 根据createTime获取blog信息
+     *
+     * @param date 创建的时间
+     * @return blog集合
+     */
+    List<Blog> selectBlogByCreateTime(String date);
 }

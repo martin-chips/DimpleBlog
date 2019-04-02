@@ -205,5 +205,12 @@
         </where>
     </select>
 
+    <select id="selectArchivesDateAndCount" resultType="com.dimple.project.front.domain.Archives">
+        select date_format(create_time, '%Y-%m') as date,count(*) as count from bg_blog where status=1 group by date_format(create_time,'%Y-%m')order by date_format(create_time, '%Y-%m') desc
+    </select>
+    <select id="selectBlogByCreateTime" resultType="com.dimple.project.blog.blog.domain.Blog">
+        select blog_id,title,click,create_time from bg_blog where date_format(create_time, '%Y-%m') =#{date} and status=1
+    </select>
+
 
 </mapper>

@@ -35,6 +35,9 @@
             </if>
         </where>
     </select>
+    <select id="selectNoticeDisplay" resultType="com.dimple.project.system.notice.domain.Notice">
+        select notice_title from sys_notice where display=1
+    </select>
 
     <insert id="insertNotice" parameterType="Notice">
         insert into sys_notice (
@@ -59,6 +62,9 @@
             update_time = sysdate()
         </set>
         where notice_id = #{noticeId}
+    </update>
+    <update id="changeNoticeDisplayById">
+        update sys_notice set display=#{display} where notice_id=#{id}
     </update>
 
     <delete id="deleteNoticeByIds" parameterType="String">

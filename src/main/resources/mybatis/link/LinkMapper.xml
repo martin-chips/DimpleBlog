@@ -40,7 +40,7 @@
             <if test="email != null">email = #{remark},</if>
             update_time = sysdate()
         </set>
-        where link_id #{link_id}
+        where link_id #{linkId}
     </update>
 
     <update id="changeDisplay">
@@ -96,7 +96,7 @@
     </select>
 
     <select id="selectLinkById" resultType="com.dimple.project.link.domain.Link">
-        select link_id, title, description, header_img, click, weight, available, processed, display, email, create_by, create_time, update_by, update_time
+        select link_id, title, description, header_img, weight, processed, display, email, create_by, create_time,url
         from
         bg_link where link_id=#{linkId}
     </select>

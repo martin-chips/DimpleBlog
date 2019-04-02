@@ -10,6 +10,7 @@ import com.dimple.project.blog.tag.service.TagService;
 import com.dimple.project.front.service.HomeService;
 import com.dimple.project.link.domain.Link;
 import com.dimple.project.link.service.LinkService;
+import com.dimple.project.system.notice.service.INoticeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ public class HomeController extends BaseController {
     TagService tagService;
     @Autowired
     LinkService linkService;
+    @Autowired
+    INoticeService noticeService;
 
     /**
      * 设置前台页面公用的部分代码
@@ -56,6 +59,8 @@ public class HomeController extends BaseController {
         model.addAttribute("blogRanking", blogService.selectBlogRanking());
         //查询推荐博文
         model.addAttribute("supportBlog", blogService.selectSupportBlog());
+        //查询通知
+        model.addAttribute("notices", noticeService.selectNoticeListDisplay());
     }
 
     /**
@@ -87,6 +92,7 @@ public class HomeController extends BaseController {
     @GetMapping("/archives.html")
     public String archives(Model model) {
         setCommonMessage(model);
+        model.addAttribute("archives", homeService.selectArchives());
         return "front/archives";
     }
 
@@ -181,4 +187,5 @@ public class HomeController extends BaseController {
         linkService.incrementLinkClickById(id);
         return redirect(ref);
     }
+
 }

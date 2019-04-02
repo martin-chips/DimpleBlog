@@ -229,7 +229,7 @@ $(function () {
             var str1 = '<iframe class="Dimple_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
             $('.mainContent').find('iframe.Dimple_iframe').hide().parents('.mainContent').append(str1);
 
-            $.modal.loading("数据加载中，请稍后...");
+             $.modal.loading("数据加载中，请稍后...");
 
             $('.mainContent iframe:visible').load(function () {
                 $.modal.closeLoading();

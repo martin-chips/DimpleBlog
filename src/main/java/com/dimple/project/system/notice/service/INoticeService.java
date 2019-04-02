@@ -18,7 +18,7 @@ public interface INoticeService {
      * @param noticeId 公告ID
      * @return 公告信息
      */
-    public Notice selectNoticeById(Long noticeId);
+    Notice selectNoticeById(Long noticeId);
 
     /**
      * 查询公告列表
@@ -26,7 +26,7 @@ public interface INoticeService {
      * @param notice 公告信息
      * @return 公告集合
      */
-    public List<Notice> selectNoticeList(Notice notice);
+    List<Notice> selectNoticeList(Notice notice);
 
     /**
      * 新增公告
@@ -34,7 +34,7 @@ public interface INoticeService {
      * @param notice 公告信息
      * @return 结果
      */
-    public int insertNotice(Notice notice);
+    int insertNotice(Notice notice);
 
     /**
      * 修改公告
@@ -42,7 +42,7 @@ public interface INoticeService {
      * @param notice 公告信息
      * @return 结果
      */
-    public int updateNotice(Notice notice);
+    int updateNotice(Notice notice);
 
     /**
      * 删除公告信息
@@ -50,5 +50,21 @@ public interface INoticeService {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    public int deleteNoticeByIds(String ids);
+    int deleteNoticeByIds(String ids);
+
+    /**
+     * 切换公告显示
+     *
+     * @param display
+     * @param id      需要切换的id
+     * @return 受影响的行数
+     */
+    int changeNoticeDisplayById(Integer display, Integer id);
+
+    /**
+     * 获取显示的Notice
+     *
+     * @return notic集合
+     */
+    List<Notice> selectNoticeListDisplay();
 }

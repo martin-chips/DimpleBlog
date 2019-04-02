@@ -1,6 +1,7 @@
 package com.dimple.project.system.notice.mapper;
 
 import com.dimple.project.system.notice.domain.Notice;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -51,4 +52,20 @@ public interface NoticeMapper {
      * @return 结果
      */
     int deleteNoticeByIds(String[] noticeIds);
+
+    /**
+     * 切换显示
+     *
+     * @param display
+     * @param id
+     * @return
+     */
+    int changeNoticeDisplayById(@Param("display") Integer display, @Param("id") Integer id);
+
+    /**
+     * 获取显示的notice
+     *
+     * @return notice集合
+     */
+    List<Notice> selectNoticeDisplay();
 }

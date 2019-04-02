@@ -46,9 +46,7 @@
             <div class="web-xiaoxi">
                 <i class="el-speaker"></i>
                 <ul class="mulitline">
-                    <li>没事点点广告，也是对博主的支持，谢谢！</li>
-                    <li>本站提供丰富的素材下载，有源码、模板、插件...</li>
-                    <li>内容如有侵犯，请立即联系管理员删除</li>
+                    <li th:each="notice:${notices}" th:text="${notice.noticeTitle}"></li>
                 </ul>
             </div>
             <!--手机菜单按钮-->
@@ -105,20 +103,19 @@
             <!--手机下拉菜单-->
             <ul class="mob-ulnav">
                 <li><a href="/">首页</a></li>
-                <li><a href="chat.html">说说</a></li>
                 <li class='mob-drop'>
                     <a href="javascrip:;">分类<i></i></a>
                     <ul class="mob-dropmenu">
-                        <li><a href="category/28.html">PHP</a></li>
-                        <li><a href="category/29.html">Linux</a></li>
-                        <li><a href="category/36.html">Java</a></li>
-                        <li><a href="category/39.html">C</a></li>
+                        <li th:each="category:${categories}">
+                            <a th:href="${'/category/'+category.categoryId+'.html'}"
+                               th:text="${category.categoryTitle}"></a>
+                        </li>
                     </ul>
                 </li>
-                <li><a href="Home/Index/feedback.html">留言</a></li>
-                <li><a href="git.html">友链</a></li>
-                <li><a href="Home/Index/about.html">关于</a></li>
-                <li><a href="git.html">开源</a></li>
+                <li><a href="/archives.html">归档</a></li>
+                <li><a href="/link.html">友链</a></li>
+                <li><a href="/leaveComment.html">留言</a></li>
+                <li><a href="/about.html">关于</a></li>
             </ul>
         </div>
     </div>
@@ -265,7 +262,7 @@
     <!--个人信息-->
     <div class="web-author bg-color animation-div">
         <div class="author-tx">
-            <a class="img-circle" href="about.html" title="点击查看详细信息">
+            <a class="img-circle" href="/about.html" title="点击查看详细信息">
                 <img class="img-circle" src="/front/images/ava.jpg"/>
             </a>
         </div>
@@ -287,7 +284,7 @@
                 <span>邮件</span>
             </div>
             <div>
-                <a class="taobao" href="" rel="nofollow" target="_blank">
+                <a class="github" href="https://github.com/DimpleFeng" rel="nofollow" target="_blank" >
                     <i class="el el-github el-spin"></i>
                 </a>
                 <span>github</span></div>

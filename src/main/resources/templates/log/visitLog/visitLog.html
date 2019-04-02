@@ -79,7 +79,8 @@
                 title: '访问ID'
             }, {
                 field: 'title',
-                title: '请求模块'
+                title: '请求模块',
+                sortable: true
             }, {
                 field: 'os',
                 title: '操作系统',
@@ -88,7 +89,8 @@
                 title: '浏览器'
             }, {
                 field: 'ipAddr',
-                title: '主机'
+                title: '主机',
+                sortable: true
             }, {
                 field: 'location',
                 title: '地点'
@@ -123,7 +125,7 @@
 
     function addBlacklist(ipAddr) {
         $.modal.confirm("确认将此IP地址 [" + ipAddr + "]移入黑名单？", function () {
-            $.operate.postM("/log/blacklist/addBlacklist", {"ipAddr": ipAddr});
+            $.operate.postM("/monitor/blacklist/addBlacklist", {"ipAddr": ipAddr});
         })
     }
 

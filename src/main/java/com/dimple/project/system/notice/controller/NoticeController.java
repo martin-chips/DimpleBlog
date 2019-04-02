@@ -97,4 +97,12 @@ public class NoticeController extends BaseController {
     public AjaxResult remove(String ids) {
         return toAjax(noticeService.deleteNoticeByIds(ids));
     }
+
+    @RequiresPermissions("system:notice:edit")
+    @Log(title = "通知公告", businessType = BusinessType.UPDATE)
+    @PutMapping("/changeDisplay/{display}")
+    @ResponseBody
+    public AjaxResult display(Integer id,@PathVariable Integer display) {
+        return toAjax(noticeService.changeNoticeDisplayById(display,id));
+    }
 }
