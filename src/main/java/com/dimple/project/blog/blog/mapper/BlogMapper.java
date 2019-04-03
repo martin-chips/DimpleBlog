@@ -165,4 +165,12 @@ public interface BlogMapper {
      * @return blog集合
      */
     List<Blog> selectBlogByCreateTime(String date);
+
+    /**
+     * 增加blog的访问量
+     *
+     * @param blogId 需要增加访问量的blog的id
+     * @return 受影响的行
+     */
+    int increamentBlogClick(Integer blogId);
 }

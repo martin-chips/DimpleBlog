@@ -1,18 +1,18 @@
 package com.dimple.framework.shiro.session;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.dimple.common.utils.IpUtils;
+import com.dimple.common.utils.ServletUtils;
+import com.dimple.common.utils.StringUtils;
+import com.dimple.project.monitor.online.domain.OnlineSession;
+import com.dimple.project.monitor.online.domain.UserOnline;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SessionContext;
 import org.apache.shiro.session.mgt.SessionFactory;
 import org.apache.shiro.web.session.mgt.WebSessionContext;
 import org.springframework.stereotype.Component;
-import com.dimple.common.utils.ServletUtils;
-import com.dimple.common.utils.IpUtils;
-import com.dimple.common.utils.StringUtils;
-import com.dimple.project.monitor.online.domain.OnlineSession;
-import com.dimple.project.monitor.online.domain.UserOnline;
-import eu.bitwalker.useragentutils.UserAgent;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @className: OnlineSessionFactory
@@ -23,6 +23,7 @@ import eu.bitwalker.useragentutils.UserAgent;
  */
 @Component
 public class OnlineSessionFactory implements SessionFactory {
+
     public Session createSession(UserOnline userOnline) {
         OnlineSession onlineSession = userOnline.getSession();
         if (StringUtils.isNotNull(onlineSession) && onlineSession.getId() == null) {

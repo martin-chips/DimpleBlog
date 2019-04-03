@@ -1,25 +1,24 @@
 package com.dimple.framework.shiro.web.session;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.time.DateUtils;
-import org.apache.shiro.session.ExpiredSessionException;
-import org.apache.shiro.session.InvalidSessionException;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.DefaultSessionKey;
-import org.apache.shiro.session.mgt.SessionKey;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.dimple.common.constant.ShiroConstants;
 import com.dimple.common.utils.spring.SpringUtils;
 import com.dimple.project.monitor.online.domain.OnlineSession;
 import com.dimple.project.monitor.online.domain.UserOnline;
 import com.dimple.project.monitor.online.service.UserOnlineServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.shiro.session.ExpiredSessionException;
+import org.apache.shiro.session.InvalidSessionException;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.SessionListener;
+import org.apache.shiro.session.mgt.DefaultSessionKey;
+import org.apache.shiro.session.mgt.SessionKey;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @className: OnlineWebSessionManager
@@ -30,6 +29,10 @@ import com.dimple.project.monitor.online.service.UserOnlineServiceImpl;
  */
 @Slf4j
 public class OnlineWebSessionManager extends DefaultWebSessionManager {
+    @Override
+    public void setSessionListeners(Collection<SessionListener> listeners) {
+        super.setSessionListeners(listeners);
+    }
 
     @Override
     public void setAttribute(SessionKey sessionKey, Object attributeKey, Object value) throws InvalidSessionException {
@@ -125,8 +128,11 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
 
     }
 
+    /**
+     * 获取在线用户信息，包括访客信息和后台登录用户的信息
+     */
     @Override
     protected Collection<Session> getActiveSessions() {
-        throw new UnsupportedOperationException("getActiveSessions method not supported");
+        return sessionDAO.getActiveSessions();
     }
 }

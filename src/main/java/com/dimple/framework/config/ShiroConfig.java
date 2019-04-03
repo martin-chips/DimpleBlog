@@ -5,6 +5,7 @@ import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.shiro.realm.UserRealm;
 import com.dimple.framework.shiro.session.OnlineSessionDAO;
 import com.dimple.framework.shiro.session.OnlineSessionFactory;
+import com.dimple.framework.shiro.session.ShiroSessionListener;
 import com.dimple.framework.shiro.web.filter.LogoutFilter;
 import com.dimple.framework.shiro.web.filter.captcha.CaptchaValidateFilter;
 import com.dimple.framework.shiro.web.filter.online.OnlineSessionFilter;
@@ -17,6 +18,7 @@ import org.apache.shiro.codec.Base64;
 import org.apache.shiro.config.ConfigurationException;
 import org.apache.shiro.io.ResourceUtils;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
@@ -24,15 +26,15 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -103,15 +105,6 @@ public class ShiroConfig {
         }
     }
 
-    @Bean
-    public FilterRegistrationBean delegatingFilterProxy() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-        proxy.setTargetFilterLifecycle(true);
-        proxy.setTargetBeanName("shiroFilter");
-        filterRegistrationBean.setFilter(proxy);
-        return filterRegistrationBean;
-    }
 
     /**
      * 返回配置文件流 避免ehcache配置文件一直被占用，无法完全销毁项目重新部署
@@ -161,6 +154,16 @@ public class ShiroConfig {
     }
 
     /**
+     * 配置Session监听
+     */
+    @Bean("sessionListener")
+    public ShiroSessionListener sessionListener() {
+        ShiroSessionListener shiroSessionListener = new ShiroSessionListener();
+        return shiroSessionListener;
+    }
+
+
+    /**
      * 自定义sessionFactory调度器
      */
     @Bean
@@ -179,6 +182,11 @@ public class ShiroConfig {
     @Bean
     public OnlineWebSessionManager sessionValidationManager() {
         OnlineWebSessionManager manager = new OnlineWebSessionManager();
+        Collection<SessionListener> listeners = new ArrayList<SessionListener>();
+        //配置监听
+        listeners.add(sessionListener());
+        manager.setSessionListeners(listeners);
+
         // 加入缓存管理器
         manager.setCacheManager(getEhCacheManager());
         // 删除过期的session
@@ -272,6 +280,14 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/dimple/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
+        //前台界面设置允许访问
+//        setFront(filterChainDefinitionMap);
+        filterChainDefinitionMap.put("/f/**", "anon");
+        filterChainDefinitionMap.put("/", "anon");
+        filterChainDefinitionMap.put("/about**", "anon");
+        filterChainDefinitionMap.put("/f/about**", "anon");
+        filterChainDefinitionMap.put("/front/**", "anon");
+
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");

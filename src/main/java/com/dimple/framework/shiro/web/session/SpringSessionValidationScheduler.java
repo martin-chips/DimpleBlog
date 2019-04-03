@@ -1,17 +1,15 @@
 package com.dimple.framework.shiro.web.session;
 
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
+import com.dimple.common.utils.Threads;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.ValidatingSessionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import com.dimple.common.utils.Threads;
+
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @className: SpringSessionValidationScheduler
@@ -96,12 +94,9 @@ public class SpringSessionValidationScheduler implements SessionValidationSchedu
         }
 
         try {
-            executorService.scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    if (enabled) {
-                        sessionManager.validateSessions();
-                    }
+            executorService.scheduleAtFixedRate(() -> {
+                if (enabled) {
+                    sessionManager.validateSessions();
                 }
             }, 1000, sessionValidationInterval, TimeUnit.MILLISECONDS);
 

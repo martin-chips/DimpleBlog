@@ -80,4 +80,9 @@ public class LinkServiceImpl implements LinkService {
     public void incrementLinkClickById(Integer id) {
         linkMapper.incrementLinkClickById(id);
     }
+
+    @Override
+    public List<Link> selectLinkListFront() {
+        return linkMapper.selectLinkListFront();
+    }
 }

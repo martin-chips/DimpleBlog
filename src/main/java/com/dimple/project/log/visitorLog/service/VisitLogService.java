@@ -47,4 +47,18 @@ public interface VisitLogService {
      * @param visitLog
      */
     void insertVisitLog(VisitLog visitLog);
+
+    /**
+     * 获取历史访客总数
+     *
+     * @return 访客数量
+     */
+    Integer selectVisitLogTotalCount();
+
+    /**
+     * 获取今天访客记录
+     *
+     * @return 访客数量
+     */
+    Integer selectVisitLogTodayCount();
 }

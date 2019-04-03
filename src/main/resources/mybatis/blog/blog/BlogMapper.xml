@@ -85,6 +85,9 @@
     <update id="updateBlogSupportById">
         update bg_blog set support=#{support} where blog_id =#{blogId}
     </update>
+    <update id="increamentBlogClick">
+        update bg_blog set click=click+1 where blog_id=#{blogId}
+    </update>
 
     <delete id="deleteBlogById">
         delete from bg_blog where blog_id=#{blogId}
@@ -158,6 +161,7 @@
         b.header_img,
         b.create_by,
         b.create_time,
+        b.support,
         c.category_title
         from bg_blog b
         left join bg_category c on b.category_id = c.category_id

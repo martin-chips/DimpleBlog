@@ -182,7 +182,7 @@ border-radius:6px;*/
     line-height: 0;
     left: 12px;
     top: 6px;
-    background: url("/front/images/loginWin_icons.png") no-repeat;
+    background: url("../images/loginWin_icons.png") no-repeat;
 }
 
 .fr {

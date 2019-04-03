@@ -114,6 +114,9 @@
     <select id="selectLinkCount" resultType="java.lang.Integer">
         select count(*) from bg_link
     </select>
+    <select id="selectLinkListFront" resultType="com.dimple.project.link.domain.Link">
+        select link_id,title,url from bg_link where display=1 and available=1 order by weight limit 5
+    </select>
 
 
 </mapper>

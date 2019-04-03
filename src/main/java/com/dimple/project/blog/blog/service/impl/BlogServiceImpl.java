@@ -10,6 +10,7 @@ import com.dimple.project.blog.blog.service.BlogService;
 import com.dimple.project.blog.category.service.CategoryService;
 import com.dimple.project.blog.tag.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +94,8 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.updateBlogSupportById(blogId, support);
     }
 
+    //清除缓存
+    @CacheEvict(value = {CachePrefix.FRONT_NEWEST_UPDATE_BLOG, CachePrefix.FRONT_BLOG_RANKING, CachePrefix.FRONT_SUPPORT_CATEGORIES})
     @Override
     public int updateBlogStatusById(String blogIds, String status) {
         return blogMapper.updateBlogStatusByIds(Convert.toIntArray(blogIds), status);
@@ -117,12 +120,14 @@ public class BlogServiceImpl implements BlogService {
         //先去tag和blog的关联表中选择所有的tagIds
         List<Integer> tagIds = blogTagMapper.selectTagIdsByBlogId(blogId);
         //根据查询出的tag的id去tag表中查询
-       String[] tags = new String[tagIds.size()];
+        String[] tags = new String[tagIds.size()];
         for (int i = 0; i < tagIds.size(); i++) {
-            tags[i]=(tagService.selectTagById(tagIds.get(i)).getTagTitle());
+            tags[i] = (tagService.selectTagById(tagIds.get(i)).getTagTitle());
         }
         blog.setTags(tags);
         blog.setCategory(categoryService.selectCategoryById(blog.getCategoryId()));
+        //新增blog访问量
+        blogMapper.increamentBlogClick(blogId);
         return blog;
     }
 
@@ -135,7 +140,7 @@ public class BlogServiceImpl implements BlogService {
     @Cacheable(value = CachePrefix.FRONT_BLOG_RANKING)
     @Override
     public List<Blog> selectBlogRanking() {
-        return blogMapper.selectBlogRankingList(5);
+        return blogMapper.selectBlogRankingList(6);
     }
 
     @Cacheable(value = CachePrefix.FRONT_SUPPORT_CATEGORIES)
@@ -161,6 +166,6 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Blog> selectBlogListByTagId(Integer tagId) {
-       return blogMapper.selectBlogsByTagId(tagId);
+        return blogMapper.selectBlogsByTagId(tagId);
     }
 }

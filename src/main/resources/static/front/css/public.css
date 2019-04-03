@@ -18,7 +18,7 @@ div#tooltip {position:absolute; z-index:1000;width:auto!important;background:lin
     box-shadow:0 5px 20px #666;}
 div#tooltip p {color:#ff6700;font-size:12px;}
 div#tooltip p:after{content:'';width: 0;height: 0;position:absolute;left:10%;top:-8px;border-left: 8px solid transparent;border-right: 8px solid transparent;border-bottom: 8px solid rgba(255,255,255,0.95);}
-/*ȫ��������ɫ*/
+/*小图标*/
 .orange-text{color:#ff6700;}
 .blue-text{color:#0181da;}
 .bg-color{background:rgba(255,255,255,0.5);}
@@ -26,13 +26,13 @@ div#tooltip p:after{content:'';width: 0;height: 0;position:absolute;left:10%;top
 .index-title small{color:#bcbcbc;margin-left:5px;font-size:12px;}
 .lable{display:inline-block;background:#ff4200;padding:0px 5px;color:#fff;border-radius:5px;-webkit-border-radius:5px;font-weight:normal;margin-left:5px;}
 .img-circle{border-radius:100px;-webkit-border-radius:100px;-moz-border-radius:100px;}
-#tuijian{background:rgba(255,255,255,0.5) url("../images/tuijian.gif.png")no-repeat 98% 8px;}
-#Hot{background:rgba(255,255,255,0.5) url("../images/hot.gif")no-repeat 98% 8px;}
-#New{background:rgba(255,255,255,0.5) url("../images/new.gif")no-repeat 98% 8px;}
-#News{background:url("../images/new.gif")no-repeat 100% 0px;}
-#Hots{background:url("../images/hot.gif")no-repeat 100% 0px;}
-#arc-tj{background:rgba(255,255,255,0.5) url("../images/tj.gif")no-repeat 98% 8px;background-size:10%;}
-#qq{background:url("../images/qqz.png")no-repeat 100% 0px;}
+.tuijian{background:rgba(255,255,255,0.5) url("../images/tuijian.gif.png")no-repeat 98% 8px!important;}
+.Hot{background:rgba(255,255,255,0.5) url("../images/hot.gif")no-repeat 98% 8px;}
+.New{background:rgba(255,255,255,0.5) url("../images/new.gif")no-repeat 98% 8px;}
+.News{background:url("../images/new.gif")no-repeat 100% 0px;}
+.Hots{background:url("../images/hot.gif")no-repeat 100% 0px;}
+.arc-tj{background:rgba(255,255,255,0.5) url("../images/tj.gif")no-repeat 98% 8px;background-size:10%;}
+.qq{background:url("../images/qqz.png")no-repeat 100% 0px;}
 
 /*����ͨ����ʽ*/
 header{width:100%;height:70px; background:rgba(255,255,255,0.85);box-shadow:0 0 5px #13c5f8;position:fixed;z-index:10;/*url(../images/bgimg/topbg1.png)repeat-x;background-size: 100% 100%;*/	}
@@ -207,7 +207,7 @@ header .mynav{width:60%;float:left;height:100%;position:relative;}
 .article-push>ul>li> .arcimg{width:33%;float:left;border-radius:3px;height:83px;-webkit-border-radius:3px;overflow:hidden;border:1px dotted #05b129;}
 .article-push>ul>li> .arcimg img{width:100%;height:100%;padding:3px;box-sizing:border-box;border-radius:3px;-webkit-border-radius:3px;}
 .article-push>ul>li> .arc-right{width:62%;}
-.article-push>ul>li> .arc-right p{height:36px;font-size:12px;}
+.article-push>ul>li> .arc-right p{height:37px;font-size:12px;}
 .article-push >ul>li>ul{width:100%;}
 .article-push .arc-right>ul li{padding:0;}
 .article-push >ul> li:hover{background:#f9fffc;}
@@ -247,8 +247,8 @@ header .mynav{width:60%;float:left;height:100%;position:relative;}
 .paihang-ul li:nth-of-type(2) span:before{content:'2';background:#16d083;color:#fff;}
 .paihang-ul li:nth-of-type(3) span:before{content:'3';background:#ff6700;color:#fff;}
 .paihang-ul li:nth-of-type(4) span:before{content:'4';background:#857479;color:#fff;}
-.paihang-ul li:nth-of-type(5) span:before{content:'5';background:#857479;color:#fff;}
-.paihang-ul li:nth-of-type(6) span:before{content:'6';background:#857479;color:#fff;}
+.paihang-ul li:nth-of-type(5) span:before{content:'5';background:#d092a4;color:#fff;}
+.paihang-ul li:nth-of-type(6) span:before{content:'6';background: rgba(39, 133, 0, 0.33);color:#fff;}
 .paihang-ul li a{font-size:13px;color:#777;}
 .paihang-ul li a b{color:#999;font-weight:normal;font-size:12px;    position: absolute;right: 0px;}
 .mytab ul li a{transition:all 0.5s;-webkit-transition:all 0.5s;line-height: 15px; display: inline-block;width: 80%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
@@ -418,7 +418,7 @@ footer{width:100%;background:rgba(0,67,94,0.65);margin-top:35px;clear:both;}
 
     .data-count ul,.cloud ul,.bdsharebuttonbox{width:95%;}
 
-    #tuijian,#Hot,#New{background-position:-100% -100%;}
+    .tuijian,.Hot,.New{background-position:-100% -100%!important;}
 
     .left-side,.right-side{width:95%;margin:auto;float:none;}
     .bdsharebuttonbox a{margin:0 2.5%!important;}
@@ -683,3 +683,4 @@ footer{width:100%;background:rgba(0,67,94,0.65);margin-top:35px;clear:both;}
 /*侵删联系和版权声明*/
 .content_post{font-size:14px}
 .content_post p {margin-bottom: 12px;}
+

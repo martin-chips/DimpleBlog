@@ -15,10 +15,11 @@
     <section>
         <div class="">
             <h4 class="index-title" id="New2"><i class="el-paper-clip"></i> 本站友情链接：</h4>
+
             <ul class="link-list">
                 <li th:each="link:${links}">
                     <div class="link-item">
-                        <a th:href="${'/linkRedirect?ref='+link.url+'&&id='+link.linkId}" target="_blank">
+                        <a th:href="${'/f/linkRedirect?ref='+link.url+'&&id='+link.linkId}" target="_blank">
                             <img th:src="${link.headerImg}">
                             <h3 th:text="${link.title}"></h3>
                             <p th:text="${link.description}"></p>

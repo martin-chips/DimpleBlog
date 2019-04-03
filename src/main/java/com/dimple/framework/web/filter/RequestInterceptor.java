@@ -34,7 +34,8 @@ public class RequestInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("当前访问的IP {}", IpUtils.getIpAddr(request));
+        log.info("当前访问的IP {},session id {}", IpUtils.getIpAddr(request), request.getSession().getId());
+
         Blacklist blacklist = blacklistService.selectBlacklistByIp(IpUtils.getIpAddr(request));
 
         if (blacklist != null) {

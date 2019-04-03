@@ -44,4 +44,14 @@ public class VisitLogServiceImpl implements VisitLogService {
     public void insertVisitLog(VisitLog visitLog) {
         visitLogMapper.insertVisitLog(visitLog);
     }
+
+    @Override
+    public Integer selectVisitLogTotalCount() {
+        return visitLogMapper.selectVisitLogTotalCount();
+    }
+
+    @Override
+    public Integer selectVisitLogTodayCount() {
+        return visitLogMapper.selectVisitLogTodayCount();
+    }
 }

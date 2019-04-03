@@ -55,19 +55,6 @@
             categoryTitle: {
                 required: true,
                 rangelength: [2, 15],
-                remote: {
-                    url: prefix + "/checkCategoryTitleUnique",
-                    type: "post",
-                    dataType: "json",
-                    data: {
-                        title: function () {
-                            return $.common.trim($("#categoryTitle").val());
-                        }
-                    },
-                    dataFilter: function (data, type) {
-                        return $.validate.unique(data);
-                    }
-                }
             },
             description: {
                 required: true,

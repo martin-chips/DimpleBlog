@@ -23,7 +23,7 @@
                         <h5>博客</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins" th:text="${all}"></h1>
+                        <h1 class="no-margins" th:text="${total}"></h1>
                         <div class="stat-percent font-bold text-success">100% <i class="fa fa-bolt"></i></div>
                         <small>博客总数</small>
                     </div>
@@ -62,7 +62,7 @@
                         <h5>博客 </h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins" th:text="${dustbin}">80,600</h1>
+                        <h1 class="no-margins" th:text="${garbage}">80,600</h1>
                         <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
                         <small>垃圾箱博客数量</small>
                     </div>
@@ -147,14 +147,14 @@
                                     <li>
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-title">
-                                                <span class="label label-success pull-right">本月</span>
+                                                <span class="label label-success pull-right">今日</span>
                                                 <h5>访客</h5>
                                             </div>
                                             <div class="ibox-content">
-                                                <h1 class="no-margins" th:text="${localMonthVisitorCount}"></h1>
+                                                <h1 class="no-margins" th:text="${todayCount}"></h1>
                                                 <div class="stat-percent font-bold text-success">100% <i
                                                         class="fa fa-bolt"></i></div>
-                                                <small>本月访客数量</small>
+                                                <small>今日访客数量</small>
                                             </div>
                                         </div>
                                     </li>
@@ -166,7 +166,7 @@
                                                 <h5>访客</h5>
                                             </div>
                                             <div class="ibox-content">
-                                                <h1 class="no-margins" th:text="${historyVisitorCount}"></h1>
+                                                <h1 class="no-margins" th:text="${totalCount}"></h1>
                                                 <div class="stat-percent font-bold text-success">100% <i
                                                         class="fa fa-bolt"></i></div>
                                                 <small>历史访客数量</small>
@@ -214,15 +214,15 @@
 
     function fixDataLine() {
         $.ajax({
-            url: "/api/visitorCount",
+            url: "/dashboard/visitCount/list",
             type: "get",
             success: function (result) {
                 echarts_line_visitor.hideLoading();
-                if (result.code == web_status.SUCCESS) {
+                if (result.code == 0) {
                     console.log(result.data);
                     var xAxiss = new Array();
                     $.each(result.data, function (index, obj) {
-                        xAxiss[index] = obj.name;
+                        xAxiss[index] = obj.date;
                     });
                     echarts_line_visitor.setOption({
                         xAxis: {
@@ -250,7 +250,7 @@
             },
             title: {
                 text: '近七日访问量',
-                // left: 'center',
+                left: 'center',
                 subtext: ''
             },
             tooltip: {
@@ -284,7 +284,7 @@
                 type: 'value',
             },
             series: [{
-                name: '近七日访问量',
+                name: '当日访问量',
                 type: 'line',
                 data: [],
                 markPoint: {
@@ -309,13 +309,14 @@
         echarts_line_visitor.showLoading();
         echarts_line_visitor.setOption(option);
     }
+
     function fixDataPie() {
         $.ajax({
-            url: "/api/spiderPieData",
+            url: "/dashboard/spiderData/list",
             type: "get",
             success: function (result) {
-                echarts_pie_spider_type.hideLoading();
-                if (result.code == web_status.SUCCESS) {
+                if (result.code == 0) {
+                    echarts_pie_spider_type.hideLoading();
                     echarts_pie_spider_type.setOption({
                         legend: {
                             data: result.data
@@ -330,13 +331,15 @@
             }
         })
     }
+
     function fixDataGauge() {
         $.ajax({
-            url: "/api/memJvmCpuData",
+            url: "/dashboard/memJvmCpuData/list",
             type: "get",
             success: function (result) {
-                echarts_gauge_percent.hideLoading();
-                if (result.code == web_status.SUCCESS) {
+                console.log(result)
+                if (result.code == 0) {
+                    echarts_gauge_percent.hideLoading();
                     var option = echarts_gauge_percent.getOption();
                     //mem
                     option.series[0].data[0].value = result.data[0];
@@ -344,12 +347,13 @@
                     option.series[1].data[0].value = result.data[1];
                     //jvm
                     option.series[2].data[0].value = result.data[2];
+                    echarts_gauge_percent.setOption(option, true);
                 }
-                echarts_gauge_percent.setOption(option, true);
             }
         })
 
     }
+
     function initEchartsPie() {
         echarts_pie_spider_type = echarts.init(document.getElementById('echarts_pie_spider_type'));
         let option = {
@@ -363,7 +367,7 @@
             },
             title: {
                 text: '爬虫访问统计',
-                subtext: '仅列举前五',
+                subtext: '',
                 x: 'center'
             },
             tooltip: {

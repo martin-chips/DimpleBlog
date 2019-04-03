@@ -103,7 +103,15 @@ public interface LinkMapper {
 
     /**
      * 增加友链的点击数
+     *
      * @param id
      */
     void incrementLinkClickById(Integer id);
+
+    /**
+     * 获取前台展示的link
+     *
+     * @return link的集合
+     */
+    List<Link> selectLinkListFront();
 }

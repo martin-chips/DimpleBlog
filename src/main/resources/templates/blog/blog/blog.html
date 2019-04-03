@@ -251,7 +251,7 @@
 
     function detail(id) {
         var title = "详细";
-        var url = "/p/" + id;
+        var url = "/f/article/" + id+'.html';
         var width = $(window).width() / 1.5;
         var height = $(window).height() / 1.2;
         //如果是移动端，就使用自适应大小弹窗
@@ -278,7 +278,7 @@
             //不固定
             maxmin: true,
             shade: 0.3,
-            title: $.table._options.modalName + "详细",
+            title:  "详细",
             content: url,
             btn: '关闭',
             // 弹层外区域关闭

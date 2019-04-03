@@ -83,4 +83,11 @@ public interface LinkService {
      * @param id
      */
     void incrementLinkClickById(Integer id);
+
+    /**
+     * 获取前台暂时的link
+     *
+     * @return link的集合
+     */
+    List<Link> selectLinkListFront();
 }

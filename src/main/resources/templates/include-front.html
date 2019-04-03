@@ -61,16 +61,16 @@
                     <div class="drop-nav orange-text ">
                         <ul>
                             <li th:each="category:${categories}">
-                                <a th:href="${'/category/'+category.categoryId+'.html'}"
+                                <a th:href="${'/f/category/'+category.categoryId+'.html'}"
                                    th:text="${category.categoryTitle}"></a>
                             </li>
                         </ul>
                     </div>
                 </li>
-                <li><a href="/archives.html">归档</a></li>
-                <li><a href="/link.html">友链</a></li>
-                <li><a href="/leaveComment.html">留言</a></li>
-                <li><a href="/about.html">关于</a></li>
+                <li><a href="/f/archives.html">归档</a></li>
+                <li><a href="/f/link.html">友链</a></li>
+                <li><a href="/f/leaveComment.html">留言</a></li>
+                <li><a href="/f/about.html">关于</a></li>
             </ul>
             <!--移动的滑动-->
             <div class="move-bg"></div>
@@ -78,7 +78,7 @@
         </nav>
         <!--登录-->
         <div class="vip" style="width: 4%;float: right;text-align: right;">
-            <a href="javascript:;" onclick="showLogin()">
+            <a href="/login">
                 <img class="img-circle"
                      src="/front/images/default_head_img.gif"
                      alt="后台登录" title="后台登录" style="margin-top: 17px;">
@@ -86,20 +86,6 @@
         </div>
         <!--手机导航-->
         <div class="mob-menu">
-            <!--手机顶部搜索-->
-            <div class="search " style="height:50px;">
-                <ul class="loginwap-third-list">
-                    <li><a class="weixin-login" title="微信账号登录"
-                           href="javascript:if(confirm('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0427f5b144bcfbd&redirect_uri=http%3A%2F%2Fwww.vilyun.com%2Fapi%2Fwechat%2FgetRedirectUrl%3Fsource%3Dhttps%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fwechat&response_type=code&scope=snsapi_userinfo&state=STATE%23wechat_redirect  \n\nكτݾϞרԃ Teleport Ultra Ђ՘, ӲΪ ̼ˇһٶԲܲ·޶΢ҿѻʨ׃Ϊ̼քǴʼַ֘քַ֘c  \n\nţЫ՚ؾϱǷʏղߪ̼?'))window.location='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0427f5b144bcfbd&redirect_uri=http%3A%2F%2Fwww.vilyun.com%2Fapi%2Fwechat%2FgetRedirectUrl%3Fsource%3Dhttps%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fwechat&response_type=code&scope=snsapi_userinfo&state=STATE%23wechat_redirect'"></a>
-                    </li>
-                    <li><a class="qq-login" title="QQ账号登录"
-                           href="javascript:if(confirm('https://graph.qq.com/oauth2.0/authorize?client_id=101370818&redirect_uri=http%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fqq&response_type=code&scope=get_user_info%2Cadd_share  \n\nكτݾϞרԃ Teleport Ultra Ђ՘, ӲΪ ̼ˇһٶԲܲ·޶΢ҿѻʨ׃Ϊ̼քǴʼַ֘քַ֘c  \n\nţЫ՚ؾϱǷʏղߪ̼?'))window.location='https://graph.qq.com/oauth2.0/authorize?client_id=101370818&redirect_uri=http%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fqq&response_type=code&scope=get_user_info%2Cadd_share'"></a>
-                    </li>
-                    <li style="margin-right: 0!important;"><a class="weibo-login" title="新浪微博账号登录"
-                                                              href="javascript:if(confirm('https://api.weibo.com/oauth2/authorize?client_id=2703252362&redirect_uri=http%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fsina&response_type=code  \n\nكτݾϞרԃ Teleport Ultra Ђ՘, ӲΪ ̼ˇһٶԲܲ·޶΢ҿѻʨ׃Ϊ̼քǴʼַ֘քַ֘c  \n\nţЫ՚ؾϱǷʏղߪ̼?'))window.location='https://api.weibo.com/oauth2/authorize?client_id=2703252362&redirect_uri=http%3A%2F%2Fwww.100txy.com%2Findex.php%2FApi%2FIndex%2Foauth%2Ftype%2Fsina&response_type=code'"></a>
-                    </li>
-                </ul>
-            </div>
             <!--手机下拉菜单-->
             <ul class="mob-ulnav">
                 <li><a href="/">首页</a></li>
@@ -107,15 +93,15 @@
                     <a href="javascrip:;">分类<i></i></a>
                     <ul class="mob-dropmenu">
                         <li th:each="category:${categories}">
-                            <a th:href="${'/category/'+category.categoryId+'.html'}"
+                            <a th:href="${'/f/category/'+category.categoryId+'.html'}"
                                th:text="${category.categoryTitle}"></a>
                         </li>
                     </ul>
                 </li>
-                <li><a href="/archives.html">归档</a></li>
-                <li><a href="/link.html">友链</a></li>
-                <li><a href="/leaveComment.html">留言</a></li>
-                <li><a href="/about.html">关于</a></li>
+                <li><a href="/f/archives.html">归档</a></li>
+                <li><a href="/f/link.html">友链</a></li>
+                <li><a href="/f/leaveComment.html">留言</a></li>
+                <li><a href="/f/about.html">关于</a></li>
             </ul>
         </div>
     </div>
@@ -130,8 +116,8 @@
         <div class="copy-right"><span>CopyRight &#169; 2017-2019 Dimple &#160;</span></div>
         <div class="bottom-nav">
             <span>
-                <a href="/copyright.html" target="_blank">版权说明</a>
-                -<a href="/delete.html" target="_blank">侵删联系</a>
+                <a href="/f/copyright.html" target="_blank">版权说明</a>
+                -<a href="/f/delete.html" target="_blank">侵删联系</a>
                 -<a href="sitemap-1.xml" target="_blank">网站地图</a>
                 -<a href="http://www.miitbeian.gov.cn">蜀ICP备 19004343</a>
             </span>
@@ -185,6 +171,13 @@
                                 <input type="password" class="input-text" id="vpassword" name="vpassword"
                                        placeholder="密码">
                                 <label for="vpassword"></label>
+                            </div>
+                            <div class="loginWin-form-item loginWin-account-input">
+                                <input type="text" class="input-text"
+                                       id="vcaptcha" name="vwriter"
+                                       placeholder="用户名/手机/邮箱"
+                                       autocomplete="off">
+                                <label for="vcaptcha"></label>
                             </div>
                             <div class="loginWin-form-item cf"><label class="fl">
                                 <input type="checkbox" class="input-checkbox" id="rmflag" name="rmflag" value="1"
@@ -262,7 +255,7 @@
     <!--个人信息-->
     <div class="web-author bg-color animation-div">
         <div class="author-tx">
-            <a class="img-circle" href="/about.html" title="点击查看详细信息">
+            <a class="img-circle" href="/f/about.html" title="点击查看详细信息">
                 <img class="img-circle" src="/front/images/ava.jpg"/>
             </a>
         </div>
@@ -284,7 +277,7 @@
                 <span>邮件</span>
             </div>
             <div>
-                <a class="github" href="https://github.com/DimpleFeng" rel="nofollow" target="_blank" >
+                <a class="github" href="https://github.com/DimpleFeng" rel="nofollow" target="_blank">
                     <i class="el el-github el-spin"></i>
                 </a>
                 <span>github</span></div>
@@ -310,7 +303,7 @@
             </div>
             <script>
                 $("#search").click(function () {
-                    $("#searchForm").attr("action", "/search/" + $("#search_word").val() + ".html");
+                    $("#searchForm").attr("action", "/f/search/" + $("#search_word").val() + ".html");
                 });
             </script>
         </form>
@@ -318,14 +311,14 @@
     <!--文章排行tab-->
     <div class="mytab bg-color animation-div">
         <h4 class="index-title">
-            <i class="el-signal"></i>文章排行
-            <small>Push Article</small>
+            <i class="el-signal"></i>点击排行
+            <small> Article Ranking</small>
         </h4>
         <ul class="paihang-ul" style="display: block;">
             <li th:each="blog:${blogRanking}">
                 <span></span>
-                <a th:href="${'/article/'+blog.blogId+'.html'}" th:title="${blog.title}"
-                   th:utext="${blog.title+'<b>('+blog.click+')<b/>'}"></a>
+                <a th:href="${'/f/article/'+blog.blogId+'.html'}" th:title="${blog.title}"
+                   th:utext="${blog.title+'<b>('+blog.click+')</b>'}"></a>
             </li>
         </ul>
     </div>
@@ -342,8 +335,8 @@
             <li th:each="blog:${newestUpdateBlog}">
                 <span><i class="el-arrow-up"></i>最近：<font class="blue-text">边小丰</font><span
                         th:text="${#dates.format(blog.updateTime, 'MM-dd hh:mm')}"> 03-01 09:30</span></span>
-                <a th:href="${'/article/'+blog.blogId+'.html'}" th:title="${blog.title}"> 更新了<b class="lable"
-                                                                                                th:text="${blog.title}"></b></a>
+                <a th:href="${'/f/article/'+blog.blogId+'.html'}" th:title="${blog.title}"> 更新了<b class="lable"
+                                                                                                  th:text="${blog.title}"></b></a>
             </li>
         </ul>
     </div>
@@ -356,14 +349,14 @@
         <ul>
             <li th:each="blog:${supportBlog}">
                 <div class="arcimg ">
-                    <a th:href="${'article'+blog.blogId+'.html'}" target="_blank">
+                    <a th:href="${'/f/article/'+blog.blogId+'.html'}" target="_blank">
                         <img class="lazy-load" th:data-original="${blog.headerImg}"
                              src="/front/images/loading-image.gif" th:alt="${blog.title}"
                              th:title="${blog.title}">
                     </a>
                 </div>
                 <div class="arc-right">
-                    <h4 class="blue-text"><a th:href="${'article'+blog.blogId+'.html'}" th:text="${blog.title}"></a>
+                    <h4 class="blue-text"><a th:href="${'/f/article/'+blog.blogId+'.html'}" th:text="${blog.title}"></a>
                     </h4>
                     <p th:text="${blog.summary}"></p>
                     <ul>
@@ -387,9 +380,23 @@
         </h4>
         <ul id="3dcloud">
             <li th:each="tag,tagStat:${tags}">
-                <a th:class="${'tstyle-'+tagStat.count%4+1}" th:href="${'/tag/'+tag.tagId+'.html'}"
+                <a th:class="${'tstyle-'+tagStat.count%4+1}" th:href="${'/f/tag/'+tag.tagId+'.html'}"
                    th:title="${'标签：'+tag.tagTitle}" th:text="${tag.tagTitle+' ('+tag.count+')'}">
                 </a>
+            </li>
+        </ul>
+    </div>
+    <!--友情链接-->
+    <div class="side-link ">
+        <h4 class="index-title"><i class="el-paper-clip"></i>友情链接
+            <small>Friend Links</small>
+            <a href="/f/link.html"><i
+                    class="el el-plus"></i>申请</a></h4>
+        <ul>
+            <li th:each="link:${links}">
+                <a th:class="${'tstyle-'+(linkStat.index+1)%5}"
+                   th:href="${'/f/linkRedirect?ref='+link.url+'&id='+link.linkId}"
+                   target="_blank" th:title="${link.title}" th:text="${link.title}">娱乐</a>
             </li>
         </ul>
     </div>

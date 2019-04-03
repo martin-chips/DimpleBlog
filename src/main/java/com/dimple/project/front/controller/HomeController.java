@@ -61,6 +61,8 @@ public class HomeController extends BaseController {
         model.addAttribute("supportBlog", blogService.selectSupportBlog());
         //查询通知
         model.addAttribute("notices", noticeService.selectNoticeListDisplay());
+        //获取友链信息
+        model.addAttribute("links", linkService.selectLinkListFront());
     }
 
     /**
@@ -68,10 +70,10 @@ public class HomeController extends BaseController {
      */
     @GetMapping("/")
     @VLog(title = "首页")
-    public String index(Model model) {
+    public String index(Integer pageNum, Model model) {
         setCommonMessage(model);
-        PageHelper.startPage(1, 10, "create_time desc");
-        model.addAttribute("blogs", homeService.selectFrontBlogList(new Blog()));
+        PageHelper.startPage(pageNum == null ? 1 : pageNum, 12, "create_time desc");
+        model.addAttribute("blogs", new PageInfo<>(homeService.selectFrontBlogList(new Blog())));
         return "front/index";
     }
 
@@ -79,7 +81,7 @@ public class HomeController extends BaseController {
      * 关于我
      */
     @VLog(title = "关于我")
-    @GetMapping("/about.html")
+    @GetMapping("/f/about.html")
     public String about(Model model) {
         setCommonMessage(model);
         return "front/about";
@@ -89,7 +91,7 @@ public class HomeController extends BaseController {
      * 归档
      */
     @VLog(title = "归档")
-    @GetMapping("/archives.html")
+    @GetMapping("/f/archives.html")
     public String archives(Model model) {
         setCommonMessage(model);
         model.addAttribute("archives", homeService.selectArchives());
@@ -97,7 +99,7 @@ public class HomeController extends BaseController {
     }
 
     @VLog(title = "博客")
-    @GetMapping("/article/{blogId}.html")
+    @GetMapping("/f/article/{blogId}.html")
     public String article(@PathVariable Integer blogId, Model model) {
         setCommonMessage(model);
         model.addAttribute("blog", blogService.selectBlogWithTextAndTagsAndCategoryByBlogId(blogId));
@@ -108,7 +110,7 @@ public class HomeController extends BaseController {
     }
 
     @VLog(title = "分类")
-    @GetMapping({"/category/{categoryId}.html"})
+    @GetMapping({"/f/category/{categoryId}.html"})
     public String category(@PathVariable Integer categoryId, Integer pageNum, Model model) {
         setCommonMessage(model);
         model.addAttribute("category", categoryService.selectCategoryById(categoryId));
@@ -119,7 +121,8 @@ public class HomeController extends BaseController {
         return "front/category";
     }
 
-    @GetMapping("/tag/{tagId}.html")
+    @VLog(title = "标签")
+    @GetMapping("/f/tag/{tagId}.html")
     public String tag(@PathVariable Integer tagId, Integer pageNum, Model model) {
         setCommonMessage(model);
         PageHelper.startPage(pageNum == null ? 1 : pageNum, 10, "b.create_time desc");
@@ -129,7 +132,8 @@ public class HomeController extends BaseController {
         return "front/tag";
     }
 
-    @GetMapping("/search/{keyWord}.html")
+    @VLog(title = "搜索")
+    @GetMapping("/f/search/{keyWord}.html")
     public String search(@PathVariable String keyWord, Integer pageNum, Model model) {
         setCommonMessage(model);
         PageHelper.startPage(pageNum == null ? 1 : pageNum, 10, "create_time desc");
@@ -145,7 +149,7 @@ public class HomeController extends BaseController {
      * 留言
      */
     @VLog(title = "留言")
-    @GetMapping("/leaveComment.html")
+    @GetMapping("/f/leaveComment.html")
     public String leaveComment(Model model) {
         setCommonMessage(model);
         return "front/leaveComment";
@@ -154,7 +158,8 @@ public class HomeController extends BaseController {
     /**
      * 版权声明
      */
-    @GetMapping("/copyright.html")
+    @VLog(title = "版权声明")
+    @GetMapping("/f/copyright.html")
     public String copyright(Model model) {
         setCommonMessage(model);
         return "front/other/copyright";
@@ -163,7 +168,8 @@ public class HomeController extends BaseController {
     /**
      * 侵删联系
      */
-    @GetMapping("/delete.html")
+    @VLog(title = "侵删联系")
+    @GetMapping("/f/delete.html")
     public String delete(Model model) {
         setCommonMessage(model);
         return "front/other/delete";
@@ -172,7 +178,8 @@ public class HomeController extends BaseController {
     /**
      * 友链显示
      */
-    @GetMapping("/link.html")
+    @VLog(title = "友链显示")
+    @GetMapping("/f/link.html")
     public String link(Model model) {
         setCommonMessage(model);
         model.addAttribute("links", linkService.selectLinkList(new Link()));
@@ -182,7 +189,8 @@ public class HomeController extends BaseController {
     /**
      * 友链跳转
      */
-    @GetMapping("/linkRedirect")
+    @VLog(title = "友链跳转")
+    @GetMapping("/f/linkRedirect")
     public String redirectTo(String ref, Integer id) {
         linkService.incrementLinkClickById(id);
         return redirect(ref);

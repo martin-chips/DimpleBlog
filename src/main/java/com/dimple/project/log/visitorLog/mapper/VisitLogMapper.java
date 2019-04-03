@@ -1,5 +1,6 @@
 package com.dimple.project.log.visitorLog.mapper;
 
+import com.dimple.project.dashboard.domain.SpiderData;
 import com.dimple.project.log.visitorLog.domain.VisitLog;
 
 import java.util.List;
@@ -48,4 +49,33 @@ public interface VisitLogMapper {
      * @return 受影响的行数
      */
     int insertVisitLog(VisitLog visitLog);
+
+    /**
+     * 获取爬虫访问数据
+     *
+     * @return
+     */
+    List<SpiderData> selectSpiderData();
+
+    /**
+     * 根据时间获取当天的访问量
+     *
+     * @param date
+     * @return
+     */
+    Integer selectVisitCountByCreateTime(String date);
+
+    /**
+     * 获取所有数据
+     *
+     * @return 所有数据的数量
+     */
+    Integer selectVisitLogTotalCount();
+
+    /**
+     * 获取今天的访客数量
+     *
+     * @return 今天的访客数量
+     */
+    Integer selectVisitLogTodayCount();
 }
