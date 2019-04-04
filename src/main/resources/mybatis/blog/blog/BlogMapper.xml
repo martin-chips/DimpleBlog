@@ -165,11 +165,11 @@
         c.category_title
         from bg_blog b
         left join bg_category c on b.category_id = c.category_id
-        <where>
-            <if test="categoryId !=null and categoryId !=''">
-                and b.category_id =#{categoryId}
-            </if>
-        </where>
+        where status=1
+        <if test="categoryId !=null and categoryId !=''">
+            and b.category_id =#{categoryId}
+        </if>
+
     </select>
 
     <select id="selectNewestUpdateBlog" resultType="com.dimple.project.blog.blog.domain.Blog">

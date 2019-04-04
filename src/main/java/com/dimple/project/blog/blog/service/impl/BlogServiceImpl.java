@@ -146,7 +146,7 @@ public class BlogServiceImpl implements BlogService {
     @Cacheable(value = CachePrefix.FRONT_SUPPORT_CATEGORIES)
     @Override
     public List<Blog> selectSupportBlog() {
-        return blogMapper.selectSupportBlogList(8);
+        return blogMapper.selectSupportBlogList(5);
     }
 
     @Override

@@ -8,7 +8,6 @@ import com.dimple.project.blog.category.service.CategoryService;
 import com.dimple.project.blog.tag.domain.Tag;
 import com.dimple.project.blog.tag.service.TagService;
 import com.dimple.project.front.service.HomeService;
-import com.dimple.project.link.domain.Link;
 import com.dimple.project.link.service.LinkService;
 import com.dimple.project.system.notice.service.INoticeService;
 import com.github.pagehelper.PageHelper;
@@ -66,7 +65,7 @@ public class HomeController extends BaseController {
     }
 
     /**
-     * 首页
+     * 前台首页
      */
     @GetMapping("/")
     @VLog(title = "首页")
@@ -102,7 +101,12 @@ public class HomeController extends BaseController {
     @GetMapping("/f/article/{blogId}.html")
     public String article(@PathVariable Integer blogId, Model model) {
         setCommonMessage(model);
-        model.addAttribute("blog", blogService.selectBlogWithTextAndTagsAndCategoryByBlogId(blogId));
+        Blog blog = blogService.selectBlogWithTextAndTagsAndCategoryByBlogId(blogId);
+        //只能访问是已经发表的文章
+        if (!blog.getStatus().equals("1")) {
+            return "/error/404";
+        }
+        model.addAttribute("blog", blog);
         model.addAttribute("nextBlog", blogService.selectNextBlogById(blogId));
         model.addAttribute("previousBlog", blogService.selectPreviousBlogById(blogId));
         model.addAttribute("randBlogList", blogService.selectRandBlogList());
@@ -182,7 +186,7 @@ public class HomeController extends BaseController {
     @GetMapping("/f/link.html")
     public String link(Model model) {
         setCommonMessage(model);
-        model.addAttribute("links", linkService.selectLinkList(new Link()));
+        model.addAttribute("links", linkService.selectLinkListFrontWithSummary());
         return "front/link";
     }
 
@@ -192,8 +196,8 @@ public class HomeController extends BaseController {
     @VLog(title = "友链跳转")
     @GetMapping("/f/linkRedirect")
     public String redirectTo(String ref, Integer id) {
+        //增加点击量
         linkService.incrementLinkClickById(id);
         return redirect(ref);
     }
-
 }

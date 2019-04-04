@@ -90,4 +90,11 @@ public interface LinkService {
      * @return link的集合
      */
     List<Link> selectLinkListFront();
+
+    /**
+     * 获取前台link页面显示的link
+     *
+     * @return link集合
+     */
+    List<Link> selectLinkListFrontWithSummary();
 }

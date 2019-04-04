@@ -5,15 +5,56 @@
 <head>
     <title>Dimple的个人博客</title>
     <div th:include="include-front :: head"></div>
+    <style>
+        .mb25 {
+            margin-bottom: 25px;
+        }
+
+        .index_topbox {
+            margin-left: -2.8%;
+            margin-right: -2.8%
+        }
+    </style>
 </head>
 
 <body class="nobg">
 <header th:replace="include-front :: header"></header>
-
 <!--内容区开始-->
 <div class="container">
     <!--最新文章-->
     <section class="mysection">
+        <div class="index_topbox mb25">
+            <div class="swiper-container">
+                <ul class="slides swiper-wrapper">
+                    <li class="swiper-slide">
+                        <a href="/news/show-111.html" target="_blank"><img
+                                src="http://myaspx-pic.oss-cn-hangzhou.aliyuncs.com/upload/201611/15/2016521225722235.jpg"></a>
+                        <div class="slide-foot">
+                            <div class="swiper-pagination"></div>
+                            <span class="silde-title">汪汪博客net源码下载（已放出部分）</span>
+                        </div>
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="/news/show-108.html" target="_blank"><img
+                                src="http://myaspx-pic.oss-cn-hangzhou.aliyuncs.com/upload/201609/13/201609131550365913.jpg"></a>
+                        <div class="slide-foot">
+                            <div class="swiper-pagination"></div>
+                            <span class="silde-title">（2016-9-10更新）重磅！汪汪博客前台HTML模板放出</span>
+                        </div>
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="/news/show-109.html" target="_blank"><img
+                                src="http://myaspx-pic.oss-cn-hangzhou.aliyuncs.com/upload/201609/13/201609131550179813.jpg"></a>
+                        <div class="slide-foot">
+                            <div class="swiper-pagination"></div>
+                            <span class="silde-title">如果想做一件事，先别忙着发朋友圈</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
         <div class="arclist">
             <h4 class="index-title homeh4"><a href="\"><i class="el-certificate"></i>最新文章
                 <small>New Article</small>

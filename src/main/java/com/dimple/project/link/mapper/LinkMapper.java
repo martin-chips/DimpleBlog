@@ -114,4 +114,11 @@ public interface LinkMapper {
      * @return link的集合
      */
     List<Link> selectLinkListFront();
+
+    /**
+     * 获取前台link 页面显示的link
+     *
+     * @return link的集合
+     */
+    List<Link> selectLinkListFrontWithSummary();
 }

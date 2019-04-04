@@ -10,12 +10,91 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <link rel="stylesheet" href="/static/front/plugin/hightlight/xcode.css"
           th:href="@{/front/plugin/hightlight/xcode.css}"/>
+
     <div th:include="include-front :: head"></div>
+    <style>
+        #Catalog_box {
+            width: 100%;
+            /*height: auto!important;*/
+            /*overflow: hidden;*/
+            /*position: fixed;*/
+        }
+
+        #Catalog_box dl {
+            margin: 0;
+        }
+
+        #Catalog_box dl dd {
+            margin: 0;
+            height: 27px;
+            overflow: hidden;
+            width: 300px;
+            line-height: 27px;
+            padding-left: 15px;
+            border-left: 1px solid #999;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        #Catalog_box dl dd.cate-item2 {
+            padding-left: 30px;
+        }
+
+        #Catalog_box dl dd span {
+            margin-right: 10px;
+            color: #666;
+            font-size: 14px;
+            font-family: Arial;
+        }
+
+        #Catalog_box .cate-item1 span {
+            color: #999;
+            font-weight: bold;
+            font-family: Arial;
+            font-size: 14px;
+            padding-right: 5px;
+        }
+
+        #Catalog_box .cate-item2 span {
+            font-weight: 500;
+        }
+
+        #Catalog_box a {
+            text-decoration: none;
+            color: #666;
+            font-family: "Microsoft YaHei";
+            font-size: 14px;
+        }
+
+        #Catalog_box dl dd a:hover {
+            color: #ff6600;
+        }
+
+        #Catalog_box .cate-item2 {
+            padding-left: 20px;
+        }
+
+        #Catalog_box dd.active, #Catalog_box dd.active a, #Catalog_box dd.active span {
+            color: #ff6600 !important;
+        }
+
+        #Catalog_box dd.active {
+            border-left: 1px solid #ff6600;
+            background: #E8E8E8;
+        }
+        .sticky{
+            margin-top: 70px;
+        }
+    </style>
 </head>
 <body class="nobg">
 <header th:replace="include-front :: header"></header>
 <!--内容区开始-->
 <div class="container">
+
     <!--左侧开始-->
     <section>
         <article>
@@ -93,7 +172,7 @@
                     <!--标签-->
                     <div class="article_tag">
                         <ul>
-                            <li><a th:href="${'/category/'+blog.category.categoryId+'.html'}"
+                            <li><a th:href="${'/f/category/'+blog.category.categoryId+'.html'}"
                                    th:title="${'归类：'+blog.category.categoryTitle}"
                                    th:text="${blog.category.categoryTitle}"></a>
                             </li>
@@ -112,14 +191,14 @@
             <span>
                 <i class="el-arrow-up"></i>上一篇：
                   <a class='blue-text' th:if="${previousBlog!=null}"
-                     th:href="${'/article/'+previousBlog.blogId+'.html'}"
+                     th:href="${'/f/article/'+previousBlog.blogId+'.html'}"
                      th:title='${previousBlog.title}'
                      th:text="${previousBlog.title}"></a>
                 <a th:if="${previousBlog==null}" class='blue-text' href="#">没有了</a>
             </span>
             <span>
                 <i class="el-arrow-down"></i>下一篇：
-                <a class='blue-text' th:if="${nextBlog!=null}" th:href="${'/article/'+nextBlog.blogId+'.html'}"
+                <a class='blue-text' th:if="${nextBlog!=null}" th:href="${'/f/article/'+nextBlog.blogId+'.html'}"
                    th:title='${nextBlog.title}'
                    th:text="${nextBlog.title}"></a>
                  <a th:if="${nextBlog==null}" class='blue-text' href="#">没有了</a>
@@ -130,7 +209,7 @@
             <h4 class="index-title"><i class="el-heart"></i>您还可能喜欢</h4>
             <ul>
                 <li th:each="blog:${randBlogList}">
-                    <a th:href="${'/article/'+blog.blogId+'.html'}">
+                    <a th:href="${'/f/article/'+blog.blogId+'.html'}">
                         <img class="lazy-load" src="/front/images/loading-image.gif"
                              th:data-original="${blog.headerImg}" th:alt="${blog.title}"
                              th:title="${blog.title}"/>
@@ -144,7 +223,7 @@
         <!-- 通用评论开始 -->
         <div class="comment-area" id="Comment">
             <h4 class="index-title"><i class="el el-comment-alt"></i> 当前共有<span href="#SOHUCS"
-                                                                                id="changyan_count_unit"></span>
+                                                                                id="changyan_count_uni1t"></span>
                 条评论
                 <script type="text/javascript"
                         src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
@@ -190,7 +269,10 @@
         </div>
         <!-- 通用评论结束 -->
     </section>
+
+
     <aside th:replace="include-front :: side"></aside>
+
 </div>
 <div class="hide_box"></div>
 <div class="shang_box">
@@ -277,5 +359,32 @@
     }
 </script>
 <aside th:replace="include-front :: footer"></aside>
+<script th:src="@{/front/js/catNav.js}"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        //处理目录
+        $.CateNav('.article-body', '#Catalog_box');
+        $('#Catalog_box').height($('#Catalog_box').height() - 120);
+
+        $('#toolbar-c').height($('#odl').height() / 4);
+
+        console.log($('#Catalog_box').offset().top);
+        $('#toolbar').height($('#Catalog_box').height());
+        //处理固定元素
+        //aside
+        var $sticky = $('#Catalog_box');
+        $sticky.hcSticky({
+            stickTo: 'article',
+            followScroll: false,
+            responsive: {
+                980: {
+                    disable: true
+                }
+            }
+        });
+    });
+
+
+</script>
 </body>
 </html>

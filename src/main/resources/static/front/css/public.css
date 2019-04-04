@@ -254,7 +254,7 @@ header .mynav{width:60%;float:left;height:100%;position:relative;}
 .mytab ul li a{transition:all 0.5s;-webkit-transition:all 0.5s;line-height: 15px; display: inline-block;width: 80%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .mytab ul li a:hover{text-shadow:0 0px 3px #000;color:#fff;}
 
-
+.directory{margin-top:30px;width:100%;}
 /*��������*/
 .side-link{margin-top:30px;width:100%;}
 .side-link ul{width:95%;margin:auto;margin-top:10px;text-align:center;overflow:hidden;padding-bottom:10px;}

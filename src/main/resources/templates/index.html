@@ -66,10 +66,8 @@
                         </div>
                     </div>
                 </li>
-                <li>
-                    <a class="menuItem" href="index" data-index="0">
-                        <i class="fa fa-home"></i>
-                        <span class="nav-label">首页</span></a>
+                <li class="active">
+                    <a href="/dashboard/main" class="menuItem"><i class="fa fa-home"></i> <span class="nav-label">主页</span> </a>
                 </li>
                 <li th:each="menu : ${menus}">
                     <a href="#">
@@ -107,7 +105,7 @@
                 <ul class="nav navbar-top-links navbar-right welcome-message">
                     <li><a title="技术支持" href="/"><i
                             class="fa fa-tv"></i> 前台</a></li>
-                    <li><a title="技术支持" href="mailto:bianxiaofeng@sohu.com?subject='DimpleBlog系统反馈'" target="_blank"><i
+                    <li><a title="技术支持" href="mailto:bianxiaofeng@sohu.com?subject='DimpleBlog 系统反馈'" target="_blank"><i
                             class="fa fa-question-circle"></i> 技术支持</a></li>
                     <li><a title="全屏显示" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏显示</a></li>
                     <li class="dropdown user-menu">
@@ -141,7 +139,7 @@
             </button>
             <nav class="page-tabs menuTabs">
                 <div class="page-tabs-content">
-                    <a href="javascript:;" class="active menuTab" data-id="/index">首页</a>
+                    <a href="javascript:;" class="active menuTab" data-id="/dashboard/main">主页</a>
                 </div>
             </nav>
             <button class="roll-nav roll-right tabRight">
@@ -183,14 +181,15 @@
 <script th:src="@{/dimple/js/ui.js}"></script>
 <script th:src="@{/dimple/index.js}"></script>
 <script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
-<script>
+<script th:inline="javascript">
+    var ctx = [[@{
+        /}]];
 
         /*用户管理-重置密码*/
         function resetPwd() {
-            var url =  '/system/user/profile/resetPwd';
+            var url = ctx + 'system/user/profile/resetPwd';
             $.modal.open("重置密码", url, '800', '500');
         }
-
 </script>
 </body>
 </html>

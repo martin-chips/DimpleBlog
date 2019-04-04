@@ -28,7 +28,8 @@
     <![endif]-->
     <script type="text/javascript" th:src="@{/front/js/index.js}"></script>
     <script type="text/javascript" th:src="@{/front/js/showtip.js}"></script>
-    <!--    <script type="text/javascript" th:src="@{/front/js/swiper.min.js}"></script>-->
+    <script type="text/javascript" th:src="@{/front/js/hc-sticky.js}"></script>
+        <script type="text/javascript" th:src="@{/front/js/swiper.min.js}"></script>
 </div>
 
 
@@ -78,7 +79,7 @@
         </nav>
         <!--登录-->
         <div class="vip" style="width: 4%;float: right;text-align: right;">
-            <a href="/login">
+            <a href="/index">
                 <img class="img-circle"
                      src="/front/images/default_head_img.gif"
                      alt="后台登录" title="后台登录" style="margin-top: 17px;">
@@ -129,9 +130,7 @@
             duration: 3000,
             step: function () {
                 var percentage = Math.round(this.property);
-
                 $('#progress').css('width', percentage + "%");
-
                 if (percentage == 100) {
                     $("#progress").addClass("done");//完成，隐藏进度条
                 }
@@ -256,7 +255,7 @@
     <div class="web-author bg-color animation-div">
         <div class="author-tx">
             <a class="img-circle" href="/f/about.html" title="点击查看详细信息">
-                <img class="img-circle" src="/front/images/ava.jpg"/>
+                <img class="img-circle" src="/front/images/ava.png"/>
             </a>
         </div>
         <div class="author-name"><span class="blue-text">边小丰</span>
@@ -282,13 +281,13 @@
                 </a>
                 <span>github</span></div>
             <div>
-                <a class="side-fx" href="" rel="nofollow" target="_blank">
-                    <i class="el el-cog el-spin"></i>
-                </a>
-                <span>熊掌号</span></div>
+                <a class="mail-btn" href="javascript:;">
+                    <i class="el el-picasa el-spin"></i></a>
+                <span>微信</span>
+            </div>
         </div>
         <div class="mail-dy">
-            <img src="/front/images/weixin.jpg">
+            <img src="/front/images/weixin.png">
             <i class="el-remove fx-close"></i>
         </div>
     </div>
@@ -335,8 +334,8 @@
             <li th:each="blog:${newestUpdateBlog}">
                 <span><i class="el-arrow-up"></i>最近：<font class="blue-text">边小丰</font><span
                         th:text="${#dates.format(blog.updateTime, 'MM-dd hh:mm')}"> 03-01 09:30</span></span>
-                <a th:href="${'/f/article/'+blog.blogId+'.html'}" th:title="${blog.title}"> 更新了<b class="lable"
-                                                                                                  th:text="${blog.title}"></b></a>
+                <a th:href="${'/f/article/'+blog.blogId+'.html'}" th:title="${blog.title}"> 更新了<b
+                        class="lable">文章</b></a>
             </li>
         </ul>
     </div>
@@ -399,6 +398,17 @@
                    target="_blank" th:title="${link.title}" th:text="${link.title}">娱乐</a>
             </li>
         </ul>
+    </div>
+    <!--文章目录-->
+    <div class="directory mob-hidden " id="Catalog_box" th:if="${blog!=null}">
+        <h4 class="index-title"><i class="el-paper-clip"></i>文章目录
+            <small> Article Directory</small>
+        </h4>
+        <div style="width: 300px;" class="">
+            <div id="toolbar">
+                <div id="toolbar-c"></div>
+            </div>
+        </div>
     </div>
 </aside>
 </html>

@@ -85,4 +85,9 @@ public class LinkServiceImpl implements LinkService {
     public List<Link> selectLinkListFront() {
         return linkMapper.selectLinkListFront();
     }
+
+    @Override
+    public List<Link> selectLinkListFrontWithSummary() {
+        return linkMapper.selectLinkListFrontWithSummary();
+    }
 }

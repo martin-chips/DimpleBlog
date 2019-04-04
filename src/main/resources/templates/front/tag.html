@@ -27,7 +27,7 @@
                     </div>
                     <div class="arc-right">
                         <h4 class="blue-text">
-                            <a th:href="${'/article/'+blog.blogId+'.html'}"
+                            <a th:href="${'/f/article/'+blog.blogId+'.html'}"
                                th:title="${blog.title}"
                                th:text="${blog.title}">
                             </a>
@@ -43,7 +43,7 @@
                             <li>
                                 <a href="about.html" title="作者： 边小丰"><i class="el-user"></i>边小丰</a>
                             </li>
-                            <li><a th:href="${'/article/'+blog.blogId+'.html'}" href="article/219.html#Comment">
+                            <li><a th:href="${'/f/article/'+blog.blogId+'.html'}" >
                                 <i class="el-comment"></i>
                                 <span th:id="${'sourceId::'+blog.blogId}" class="cy_cmt_count"></span>
                                 <script id="cy_cmt_num"
@@ -54,7 +54,7 @@
                             <li><a th:title="${'已有'+blog.click+'次浏览'}"><i class="el-eye-open"></i><span
                                     th:text="${blog.click}"></span></a></li>
                             <li>
-                                <a th:href="${'/category/'+blog.categoryId+'.html'}" title="查看分类">
+                                <a th:href="${'/f/category/'+blog.categoryId+'.html'}" title="查看分类">
                                     <i class="el-th-list"></i>
                                     <span th:text="${blog.categoryTitle}"></span>
                                 </a>
