@@ -6,7 +6,7 @@ import com.dimple.project.dashboard.domain.VisitCount;
 import java.util.List;
 
 /**
- * @className: com.dimple.project.dashboard.service
+ * @className: com.dimple.project.dashboard.business
  * @description:
  * @auther: Dimple
  * @date: 04/02/19

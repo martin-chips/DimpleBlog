@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>Dimple的个人博客系统</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>轮播图点击量统计</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div id="echarts_carouselMap"></div>
+                    </div>
+                    <script>
+                        $(function () {
+                            initCarouselMapData();
+                            fixCarouselMapData();
+                        });
+                        var echarts_carouselMap;
+
+                        /**
+                         * 初始化数据
+                         */
+                        function fixCarouselMapData() {
+                            $.ajax({
+                                url: "/chart/business/carouselMapData",
+                                type: "get",
+                                success: function (result) {
+                                    console.log(result)
+                                    if (result.code == 0) {
+                                        var xAxiss = new Array();
+                                        $.each(result.data, function (index, obj) {
+                                            xAxiss[index] = obj.date;
+                                        });
+                                        echarts_carouselMap.hideLoading();
+                                        echarts_carouselMap.setOption({
+                                            legend: {
+                                                data: result.data
+                                            },
+                                            series: [
+                                                {
+                                                    data: result.data
+                                                }
+                                            ]
+                                        });
+                                    }
+                                }
+                            })
+                        }
+
+                        /**
+                         * 初始化图
+                         */
+                        function initCarouselMapData() {
+                            echarts_carouselMap = echarts.init(document.getElementById('echarts_carouselMap'));
+
+                            option = {
+                                title: {
+                                    text: '轮播图点击量统计',
+                                    subtext: ''
+                                },
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                legend: {
+                                    data: ['点击量']
+                                },
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        dataView: {
+                                            show: true,
+                                            readOnly: false
+                                        },
+                                        magicType: {
+                                            show: true,
+                                            type: ['line', 'bar']
+                                        },
+                                        restore: {
+                                            show: true
+                                        },
+                                        saveAsImage: {
+                                            show: true
+                                        }
+                                    }
+                                },
+                                calculable: true,
+                                xAxis: [{
+                                    type: 'category',
+                                    data: []
+                                }],
+                                yAxis: [{
+                                    type: 'value'
+                                }],
+                                series: [{
+                                    name: '该轮播图点击量',
+                                    type: 'bar',
+                                    data: [],
+                                    markPoint: {
+                                        data: [{
+                                            type: 'max',
+                                            name: '最大值'
+                                        }, {
+                                            type: 'min',
+                                            name: '最小值'
+                                        }]
+                                    },
+                                    markLine: {
+                                        data: [{
+                                            type: 'average',
+                                            name: '平均值'
+                                        }]
+                                    }
+                                }]
+                            };
+                            echarts_carouselMap.showLoading();
+                            echarts_carouselMap.setOption(option);
+                        }
+                    </script>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>博客访问量统计</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="echarts" id="echarts-bar-chart" _echarts_instance_="1554720597369"
+                             style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>系统登录统计</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>操作日志统计</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>访客访问统计</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script src="/static/ajax/libs/echarts/echarts.min.js" th:src="@{/ajax/libs/echarts/echarts.min.js}"></script>
+<script>
+
+</script>
+</body>
+</html>

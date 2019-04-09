@@ -86,35 +86,3 @@ function dashangToggle2() {
     $(".hide_box2").fadeToggle();
     $(".shang_box2").fadeToggle();
 }
-
-$(function () {
-    require.config({
-        baseUrl: "/front/js",
-        paths: {
-            jquery: 'jquery.min',
-            fastclick: 'fastclick',
-            jqueryLazyload: 'jquery.lazyload', //图片懒加载
-        },
-        shim: {
-            jqueryLazyload: {
-                deps: ['jquery'],
-                exports: '$'
-            }
-        }
-    });
-    require(
-        [
-            'jquery',
-            'fastclick',
-            'jqueryLazyload'
-        ],
-        function ($, FastClick) {
-            $(document).ready(function () {
-                FastClick.attach(document.body);
-
-                $("img").lazyload({
-                    effect: "fadeIn"
-                });
-            });
-        });
-});

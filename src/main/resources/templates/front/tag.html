@@ -14,16 +14,17 @@
 <div class="container">
     <!--最新文章-->
     <section class="mysection">
-        <h4 class="search-title bg-color"><i class="el-search-alt"></i>您查询的标签： <font color="#DC4900" th:text="${tag.tagTitle}">Ecstore</font>
+        <h4 class="search-title bg-color"><i class="el-search-alt"></i>您查询的标签： <font color="#DC4900"
+                                                                                     th:text="${tag.tagTitle}">Ecstore</font>
         </h4>
         <div class="arclist">
             <!--列表开始-->
             <ul>
                 <li th:each="blog:${blogs.list}">
                     <div class="arcimg">
-                        <img class="lazy-load" src="/front/images/loading-image.gif"
-                             th:data-original="${blog.headerImg}"
-                             th:alt="${blog.title}" th:title="${blog.title}"/>
+                        <img
+                                th:src="${blog.headerImg}"
+                                th:alt="${blog.title}" th:title="${blog.title}"/>
                     </div>
                     <div class="arc-right">
                         <h4 class="blue-text">
@@ -43,7 +44,7 @@
                             <li>
                                 <a href="about.html" title="作者： 边小丰"><i class="el-user"></i>边小丰</a>
                             </li>
-                            <li><a th:href="${'/f/article/'+blog.blogId+'.html'}" >
+                            <li><a th:href="${'/f/article/'+blog.blogId+'.html'}">
                                 <i class="el-comment"></i>
                                 <span th:id="${'sourceId::'+blog.blogId}" class="cy_cmt_count"></span>
                                 <script id="cy_cmt_num"

@@ -29,7 +29,7 @@
     <script type="text/javascript" th:src="@{/front/js/index.js}"></script>
     <script type="text/javascript" th:src="@{/front/js/showtip.js}"></script>
     <script type="text/javascript" th:src="@{/front/js/hc-sticky.js}"></script>
-        <script type="text/javascript" th:src="@{/front/js/swiper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/front/js/swiper.min.js}"></script>
 </div>
 
 
@@ -214,40 +214,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 图片懒加载 -->
-    <script type="text/javascript" th:src="@{/front/js/require.min.js}"
-            data-main="front/js/config"></script>
-    <script>
-        require.config({
-            baseUrl: "/front/js",
-            paths: {
-                jquery: 'jquery.min',
-                fastclick: 'fastclick',
-                jqueryLazyload: 'jquery.lazyload', //图片懒加载
-            },
-            shim: {
-                jqueryLazyload: {
-                    deps: ['jquery'],
-                    exports: '$'
-                }
-            }
-        });
-        require(
-            [
-                'jquery',
-                'fastclick',
-                'jqueryLazyload'
-            ],
-            function ($, FastClick) {
-                $(document).ready(function () {
-                    FastClick.attach(document.body);
-                    $("img").lazyload({
-                        effect: "fadeIn"
-                    });
-                });
-            });
-    </script>
 </footer>
 
 <aside class="myaside" th:fragment="side">
@@ -349,8 +315,7 @@
             <li th:each="blog:${supportBlog}">
                 <div class="arcimg ">
                     <a th:href="${'/f/article/'+blog.blogId+'.html'}" target="_blank">
-                        <img class="lazy-load" th:data-original="${blog.headerImg}"
-                             src="/front/images/loading-image.gif" th:alt="${blog.title}"
+                        <img th:src="${blog.headerImg}" th:alt="${blog.title}"
                              th:title="${blog.title}">
                     </a>
                 </div>

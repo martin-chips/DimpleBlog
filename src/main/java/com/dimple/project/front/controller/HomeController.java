@@ -9,6 +9,7 @@ import com.dimple.project.blog.tag.domain.Tag;
 import com.dimple.project.blog.tag.service.TagService;
 import com.dimple.project.front.service.HomeService;
 import com.dimple.project.link.service.LinkService;
+import com.dimple.project.system.carouselMap.service.CarouselMapService;
 import com.dimple.project.system.notice.service.INoticeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -42,6 +43,8 @@ public class HomeController extends BaseController {
     LinkService linkService;
     @Autowired
     INoticeService noticeService;
+    @Autowired
+    CarouselMapService carouselMapService;
 
     /**
      * 设置前台页面公用的部分代码
@@ -73,7 +76,16 @@ public class HomeController extends BaseController {
         setCommonMessage(model);
         PageHelper.startPage(pageNum == null ? 1 : pageNum, 12, "create_time desc");
         model.addAttribute("blogs", new PageInfo<>(homeService.selectFrontBlogList(new Blog())));
+        //放置轮播图
+        model.addAttribute("carouselMaps", carouselMapService.selectCarouselMapListFront());
         return "front/index";
+    }
+
+    @GetMapping("/f/carouselMap/{carouselId}")
+    public String carouselMapI(@PathVariable Integer carouselId, String url) {
+        //增加点击量
+        carouselMapService.incrementCarouselClickById(carouselId);
+        return redirect(url);
     }
 
     /**

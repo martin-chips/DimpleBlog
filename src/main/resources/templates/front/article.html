@@ -85,7 +85,8 @@
             border-left: 1px solid #ff6600;
             background: #E8E8E8;
         }
-        .sticky{
+
+        .sticky {
             margin-top: 70px;
         }
     </style>
@@ -210,9 +211,9 @@
             <ul>
                 <li th:each="blog:${randBlogList}">
                     <a th:href="${'/f/article/'+blog.blogId+'.html'}">
-                        <img class="lazy-load" src="/front/images/loading-image.gif"
-                             th:data-original="${blog.headerImg}" th:alt="${blog.title}"
-                             th:title="${blog.title}"/>
+                        <img
+                                th:src="${blog.headerImg}" th:alt="${blog.title}"
+                                th:title="${blog.title}"/>
                         <span th:text="${blog.title}"></span>
                     </a>
                 </li>

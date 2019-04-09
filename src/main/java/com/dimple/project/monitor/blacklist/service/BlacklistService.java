@@ -5,7 +5,7 @@ import com.dimple.project.monitor.blacklist.domain.Blacklist;
 import java.util.List;
 
 /**
- * @className: com.dimple.project.log.visitorLog.service
+ * @className: com.dimple.project.log.visitorLog.business
  * @description:
  * @auther: Dimple
  * @date: 03/26/19

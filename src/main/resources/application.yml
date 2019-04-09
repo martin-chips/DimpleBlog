@@ -76,9 +76,9 @@ spring:
       # 热部署开关
       enabled: true
   redis:
-    host: localhost
-    port: 6379
-    database: 2
+    host: 47.112.14.207
+    port: 8002
+    database: 11
 # MyBatis
 mybatis:
   # 搜索指定包别名

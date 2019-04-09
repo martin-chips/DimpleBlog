@@ -6,15 +6,202 @@
     <title>Dimple的个人博客</title>
     <div th:include="include-front :: head"></div>
     <style>
-        .mb25 {
-            margin-bottom: 25px;
+        .swiper-container {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
-        .index_topbox {
-            margin-left: -2.8%;
-            margin-right: -2.8%
+        .swiper-slide {
+            position: relative;
+        }
+
+        .swiper-slide .content {
+            width: 100%;
+            max-width: 460px;
+            position: absolute;
+            right: 50px;
+            bottom: 30px;
+            z-index: 20;
+        }
+
+        @media screen and (max-width: 768px) {
+            .swiper-slide .content {
+                display: none;
+            }
+        }
+
+        .swiper-slide .content .txt {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .swiper-slide .content .txt h3 {
+            font-family: "BerlingskeSans Serif", Georgia, Times, serif;
+            margin: 0;
+            font-size: 2.3em;
+            font-weight: normal;
+        }
+
+        .swiper-slide .content .txt p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+        }
+
+        .swiper-slide .content .link {
+            border-radius: 25px;
+            display: block;
+            background: #008369;
+            /*transition: .2s background;*/
+            color: #fff;
+            font-family: "BerlingskeSans Bd", Tahoma, helvetica, arial, sans-serif;
+            text-align: center;
+            font-weight: 400;
+            font-size: 1.1em;
+            line-height: 1.1em;
+            padding: 10px 30px 10px;
+            float: right;
+            margin-top: 15px;
+            text-decoration: none;
+        }
+
+        .swiper-slide .content .link:hover {
+            background: #006a55;
+        }
+
+        .img-fix {
+            margin-top: -16%;
+            /*overflow: hidden;*/
+            background-size: cover;
+        }
+
+        .img-inner {
+            transform: translateY(40%);
+        }
+
+        .swiper-container img {
+            width: 100%;
+            display: block;
+        }
+
+        .swiper-button-next, .swiper-button-prev {
+            background: none;
+            top: auto;
+            bottom: 30px;
+        }
+
+        .swiper-button-prev {
+            left: 0;
+        }
+
+        .swiper-button-next {
+            right: 40px;
+        }
+
+        .swiper-button-next:before, .swiper-button-prev:before {
+            font-family: "upsicons";
+            position: absolute;
+            display: block;
+            height: 54px;
+            width: 50px;
+            top: 0;
+            left: 0;
+            text-align: center;
+            line-height: 54px;
+            color: #fff;
+            font-size: 68px;
+        }
+
+        .swiper-button-prev:before {
+            content: '\e628';
+        }
+
+        .swiper-button-next:before {
+            content: '\e62a';
+        }
+
+        .bottom-nav {
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            bottom: 30px;
+            z-index: 10;
+        }
+
+        .ups-icon-videoplay {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .ups-icon-videoplay:before {
+            font-family: "upsicons";
+            content: "\e680";
+            font-size: 28px;
+            color: white;
+        }
+
+        .stop-status.ups-icon-videoplay:before {
+            content: "\e681";
+        }
+
+        .swiper-pagination {
+            position: relative;
+            display: inline-block;
+            height: 29px;
+            vertical-align: middle;
+        }
+
+        #ups-banner .swiper-pagination-bullet {
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            opacity: 1;
+            box-sizing: border-box;
+            border: 3px solid #fff;
+            margin: 0 15px;
+            vertical-align: middle;
+        }
+
+        #ups-banner .swiper-pagination-bullet-active {
+            background: #ffb500;
+        }
+
+        @media (max-width: 767px) {
+            .swiper-button-prev:before {
+                content: '\e627';
+            }
+
+            .swiper-button-next:before {
+                content: '\e629';
+            }
+
+            .swiper-button-next, .swiper-button-prev {
+                bottom: 10px;
+            }
+
+            .swiper-button-next:before, .swiper-button-prev:before {
+                font-size: 32px;
+            }
+
+            .bottom-nav {
+                bottom: 10px;
+            }
+
+            #ups-banner .swiper-pagination-bullet {
+                width: 12px;
+                height: 12px;
+                border-width: 2px;
+                margin: 0 10px;
+            }
+
+            .ups-icon-videoplay {
+                margin-right: 10px;
+            }
         }
     </style>
+    <link rel="stylesheet" th:href="@{/front/css/font.css}"/>
 </head>
 
 <body class="nobg">
@@ -23,38 +210,65 @@
 <div class="container">
     <!--最新文章-->
     <section class="mysection">
-        <div class="index_topbox mb25">
+        <div id="ups-banner">
             <div class="swiper-container">
-                <ul class="slides swiper-wrapper">
-                    <li class="swiper-slide">
-                        <a href="/news/show-111.html" target="_blank"><img
-                                src="http://myaspx-pic.oss-cn-hangzhou.aliyuncs.com/upload/201611/15/2016521225722235.jpg"></a>
-                        <div class="slide-foot">
-                            <div class="swiper-pagination"></div>
-                            <span class="silde-title">汪汪博客net源码下载（已放出部分）</span>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="content">
+                            <div class="txt"><h3>Your title</h3>
+                                <p>UPS today announced a series of service </p>
+                                <p>UPS today announced a series of service </p>
+                            </div>
+                            <a href="#" class="link">Your link</a></div>
+                        <div class="img-fix">
+                            <div class="img-inner">
+                                <img src="http://images.bianxiaofeng.com/a998b9bdf62e2de288c16e5499a4493f.png"
+                                     class="imgs">
+                            </div>
                         </div>
-                    </li>
-                    <li class="swiper-slide">
-                        <a href="/news/show-108.html" target="_blank"><img
-                                src="http://myaspx-pic.oss-cn-hangzhou.aliyuncs.com/upload/201609/13/201609131550365913.jpg"></a>
-                        <div class="slide-foot">
-                            <div class="swiper-pagination"></div>
-                            <span class="silde-title">（2016-9-10更新）重磅！汪汪博客前台HTML模板放出</span>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="content">
+                            <div class="txt"><h3>Your title</h3>
+                                <p>UPS today announced a series of service </p>
+                                <p>UPS today announced a series of service </p>
+                            </div>
+                            <a href="#" class="link">Your link</a>
                         </div>
-                    </li>
-                    <li class="swiper-slide">
-                        <a href="/news/show-109.html" target="_blank"><img
-                                src="http://myaspx-pic.oss-cn-hangzhou.aliyuncs.com/upload/201609/13/201609131550179813.jpg"></a>
-                        <div class="slide-foot">
-                            <div class="swiper-pagination"></div>
-                            <span class="silde-title">如果想做一件事，先别忙着发朋友圈</span>
+                        <div class="img-fix">
+                            <div class="img-inner">
+                                <img
+                                        src="http://images.bianxiaofeng.com/cf3fdf8fd09c5c08569c58bd1bf9b5bf.jpg"
+                                        class="imgs">
+                            </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="content">
+                            <div class="txt"><h3>Your title</h3>
+                                <p>UPS today announced a series of service </p>
+                                <p>UPS today announced a series of service </p></div>
+                            <a href="#" class="link">Your link</a>
+                        </div>
+                        <div class="img-fix">
+                            <div class="img-inner">
+                                <img
+                                        src="http://images.bianxiaofeng.com/ced846eab08578468670a87333e05b5f.jpg"
+                                        class="imgs">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-nav">
+                    <div class="ups-icon-videoplay"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
         </div>
+
+
         <div class="arclist">
             <h4 class="index-title homeh4"><a href="\"><i class="el-certificate"></i>最新文章
                 <small>New Article</small>
@@ -63,9 +277,9 @@
             <ul>
                 <li th:each="blog:${blogs.list}" th:class="${blog.support=='1'?'tuijian':''}">
                     <div class="arcimg">
-                        <img class="lazy-load" src="/front/images/loading-image.gif"
-                             th:data-original="${blog.headerImg}"
-                             th:alt="${blog.title}" th:title="${blog.title}"/>
+                        <img
+                                th:src="${blog.headerImg}"
+                                th:alt="${blog.title}" th:title="${blog.title}"/>
                     </div>
                     <div class="arc-right">
                         <h4 class="blue-text">
@@ -115,5 +329,43 @@
     <aside th:replace="include-front :: side"></aside>
 </div>
 <aside th:replace="include-front :: footer"></aside>
+<!-- Initialize Swiper -->
+<script>
+    $(function () {
+        var upsSwiper = new Swiper('.swiper-container', {
+            speed: 1000,
+            longSwipes: false,
+            loop: true,
+            autoplay: {
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            on: {
+                autoplayStop: function () {
+                    this.$el.find(".ups-icon-videoplay").addClass('stop-status');
+                },
+                autoplayStart: function () {
+                    this.$el.find(".ups-icon-videoplay").removeClass('stop-status');
+                },
+
+            }
+        });
+
+        upsSwiper.$el.find(".ups-icon-videoplay").on('click', function () {
+            if (upsSwiper.autoplay.running) {
+                upsSwiper.autoplay.stop();
+            } else {
+                upsSwiper.autoplay.start();
+            }
+        });
+    });
+</script>
 </body>
 </html>
