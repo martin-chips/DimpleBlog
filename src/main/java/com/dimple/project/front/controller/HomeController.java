@@ -3,12 +3,14 @@ package com.dimple.project.front.controller;
 import com.dimple.common.constant.CommonConstant;
 import com.dimple.framework.aspectj.lang.annotation.VLog;
 import com.dimple.framework.web.controller.BaseController;
+import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.blog.blog.domain.Blog;
 import com.dimple.project.blog.blog.service.BlogService;
 import com.dimple.project.blog.category.service.CategoryService;
 import com.dimple.project.blog.tag.domain.Tag;
 import com.dimple.project.blog.tag.service.TagService;
 import com.dimple.project.front.service.HomeService;
+import com.dimple.project.link.domain.Link;
 import com.dimple.project.link.service.LinkService;
 import com.dimple.project.system.carouselMap.service.CarouselMapService;
 import com.dimple.project.system.notice.service.INoticeService;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -212,5 +216,15 @@ public class HomeController extends BaseController {
         //增加点击量
         linkService.incrementLinkClickById(id);
         return redirect(ref);
+    }
+
+    /**
+     * 申请友链
+     */
+    @PostMapping("/f/applyLink")
+    @ResponseBody
+    public AjaxResult applyLink(Link link) {
+        linkService.applyLink(link);
+        return AjaxResult.success();
     }
 }

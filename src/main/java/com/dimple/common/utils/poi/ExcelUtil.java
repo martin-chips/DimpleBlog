@@ -44,7 +44,7 @@ public class ExcelUtil<T> {
     /**
      * 工作表名称
      */
-    private String SHEET_NAME;
+    private String sheetName;
 
     /**
      * 导出类型（EXPORT:导出数据；IMPORT：导入模板）
@@ -85,7 +85,7 @@ public class ExcelUtil<T> {
             list = new ArrayList<T>();
         }
         this.list = list;
-        this.SHEET_NAME = sheetName;
+        this.sheetName = sheetName;
         this.type = type;
         createExcelField();
         createWorkbook();
@@ -105,7 +105,7 @@ public class ExcelUtil<T> {
      * 对excel表单指定表格索引名转换成list
      *
      * @param sheetName 表格索引名
-     * @param input     输入流
+     * @param is        输入流
      * @return 转换后集合
      */
     public List<T> importExcel(String sheetName, InputStream is) throws Exception {
@@ -288,7 +288,7 @@ public class ExcelUtil<T> {
                     fillExcelData(index, row, cell);
                 }
             }
-            String filename = encodingFilename(SHEET_NAME);
+            String filename = encodingFilename(sheetName);
             out = new FileOutputStream(getAbsoluteFile(filename));
             wb.write(out);
             return AjaxResult.success(filename);
@@ -581,9 +581,9 @@ public class ExcelUtil<T> {
         this.sheet = wb.createSheet();
         // 设置工作表的名称.
         if (sheetNo == 0) {
-            wb.setSheetName(index, SHEET_NAME);
+            wb.setSheetName(index, sheetName);
         } else {
-            wb.setSheetName(index, SHEET_NAME + index);
+            wb.setSheetName(index, sheetName + index);
         }
     }
 

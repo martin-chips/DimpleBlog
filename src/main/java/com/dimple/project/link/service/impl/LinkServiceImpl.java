@@ -90,4 +90,11 @@ public class LinkServiceImpl implements LinkService {
     public List<Link> selectLinkListFrontWithSummary() {
         return linkMapper.selectLinkListFrontWithSummary();
     }
+
+    @Override
+    public int applyLink(Link link) {
+        link.setDisplay(0);
+        link.setProcessed(0);
+        return linkMapper.insertLink(link);
+    }
 }

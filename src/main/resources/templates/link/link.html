@@ -217,13 +217,13 @@
                     var actions = [];
                     if (row.processed == 1) {
                         actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.editTab(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.remove(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>删除</a> ');
                     } else if (row.processed == 0) {
                         actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.editTab(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-info btn-xs " href="#" onclick="processed(' + row.linkId + ')"><i class="fa fa-key"></i>通过</a>');
-                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>拒绝</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.remove(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>拒绝</a> ');
                     } else {
-                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.delete(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.remove(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>删除</a> ');
                     }
                     return actions.join('');
                 }

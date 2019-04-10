@@ -1,6 +1,6 @@
 
 # DimpleBlog
-# 重要通知： 本系统重构中，代码不稳定，请谨慎fork
+
 #### 介绍
 
 `Dimple Blog`是基于SpringBoot2搭建的个人博客系统。系统使用的技术不完全列举如下：
@@ -47,65 +47,42 @@
 
 [边小丰的个人博客](http://www.bianxiaofeng.com/)
 
-管理员账号：`admin` ,管理员密码： `123456`
+管理员账号：`test` ,管理员密码： `123456`
 
 ### 图片展示
 
 #### 项目目录结构
 
-[![kdqkOP.png](https://s2.ax1x.com/2019/02/12/kdqkOP.png)](https://imgchr.com/i/kdqkOP)
+[![kdqkOP.png](https://s2.ax1x.com/2019/04/10/ATge1O.png)](https://imgchr.com/i/kdqkOP)
 
 #### 前台
 ##### 首页
-![kdqVw8.md.png](https://s2.ax1x.com/2019/02/12/kdqVw8.md.png)
+![kdqVw8.md.png](https://s2.ax1x.com/2019/04/10/ATcVyQ.png)
 ##### 博客详情
-![kdqZTS.md.png](https://s2.ax1x.com/2019/02/12/kdqZTS.md.png)
+![kdqZTS.md.png](https://s2.ax1x.com/2019/04/10/ATcMF0.png)
 ##### 博客分类
-![kdqmFg.md.png](https://s2.ax1x.com/2019/02/12/kdqmFg.md.png)
+![kdqmFg.md.png](https://s2.ax1x.com/2019/04/10/ATcJOJ.png)
 ##### 项目归档
-![kdqEef.md.png](https://s2.ax1x.com/2019/02/12/kdqEef.md.png)
+![kdqEef.md.png](https://s2.ax1x.com/2019/04/10/ATcUT1.png)
 ##### 友链列表
-![kdqnYQ.md.png](https://s2.ax1x.com/2019/02/12/kdqnYQ.md.png)
+![kdqnYQ.md.png](https://s2.ax1x.com/2019/04/10/ATc0fK.png)
 ##### 关于我
-![kdqMSs.md.png](https://s2.ax1x.com/2019/02/12/kdqMSs.md.png)
+![kdqMSs.md.png](https://s2.ax1x.com/2019/04/10/ATcDSO.png)
 ##### 留言板
-![kdq1O0.md.png](https://s2.ax1x.com/2019/02/12/kdq1O0.md.png)
+![kdq1O0.md.png](https://s2.ax1x.com/2019/04/10/ATcyOH.png)
 #### 后台（仅列举部分）
 ##### 登录界面
-![kdqQln.md.png](https://s2.ax1x.com/2019/02/12/kdqQln.md.png)
+![kdqQln.md.png](https://s2.ax1x.com/2019/04/10/ATcWkt.png)
 ##### 
 ##### 后台首页
-![kdLbb6.png](https://s2.ax1x.com/2019/02/12/kdLbb6.png)
-##### 编辑博客界面
-![kdL58J.png](https://s2.ax1x.com/2019/02/12/kdL58J.png)
-##### 博客列表
-![kdLovR.png](https://s2.ax1x.com/2019/02/12/kdLovR.png)
-##### 系统信息图表
-![kdLI29.png](https://s2.ax1x.com/2019/02/12/kdLI29.png)
-##### 访客记录
-![kdL4C4.png](https://s2.ax1x.com/2019/02/12/kdL4C4.png)
-##### 登录日志
-![kdL7K1.png](https://s2.ax1x.com/2019/02/12/kdL7K1.png)
-##### 友链列表
-![kdLHDx.png](https://s2.ax1x.com/2019/02/12/kdLHDx.png)
-##### 七牛云图库
-![kdOCrt.png](https://s2.ax1x.com/2019/02/12/kdOCrt.png)
-##### 定时任务
-![kdLOUO.png](https://s2.ax1x.com/2019/02/12/kdLOUO.png)
-##### Druid
-![kdLLVK.png](https://s2.ax1x.com/2019/02/12/kdLLVK.png)
-##### Swagger
-![kdLX5D.png](https://s2.ax1x.com/2019/02/12/kdLX5D.png)
-##### 用户管理
-![kdLvPe.png](https://s2.ax1x.com/2019/02/12/kdLvPe.png)
-##### 角色管理
-![kdLx8H.png](https://s2.ax1x.com/2019/02/12/kdLx8H.png)
-##### 权限管理
-![kdO9KI.png](https://s2.ax1x.com/2019/02/12/kdO9KI.png)
-##### 首页设置
-![kdLz2d.png](https://s2.ax1x.com/2019/02/12/kdLz2d.png)
-##### 实验室功能
-![kdOSxA.png](https://s2.ax1x.com/2019/02/12/kdOSxA.png)
+![kdLbb6.png](https://s2.ax1x.com/2019/04/10/ATcTXQ.png)
+##### 其他界面
+
+[![ATgkA1.png](https://s2.ax1x.com/2019/04/10/ATgkA1.png)](https://imgchr.com/i/ATgkA1)
+[![ATgEh6.png](https://s2.ax1x.com/2019/04/10/ATgEh6.png)](https://imgchr.com/i/ATgEh6)
+[![ATgZ9K.png](https://s2.ax1x.com/2019/04/10/ATgZ9K.png)](https://imgchr.com/i/ATgZ9K)
+[![ATgAtx.png](https://s2.ax1x.com/2019/04/10/ATgAtx.png)](https://imgchr.com/i/ATgAtx)
+[![ATgi7R.png](https://s2.ax1x.com/2019/04/10/ATgi7R.png)](https://imgchr.com/i/ATgi7R)
 
 #### 软件架构
 

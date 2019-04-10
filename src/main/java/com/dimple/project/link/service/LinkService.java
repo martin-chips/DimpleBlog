@@ -97,4 +97,12 @@ public interface LinkService {
      * @return link集合
      */
     List<Link> selectLinkListFrontWithSummary();
+
+    /**
+     * 前台页面申请link
+     *
+     * @param link link实体
+     * @return 受影响的行数
+     */
+    int applyLink(Link link);
 }

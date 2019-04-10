@@ -26,6 +26,29 @@ public class TaskException extends Exception {
     }
 
     public enum Code {
-        TASK_EXISTS, NO_TASK_EXISTS, TASK_ALREADY_STARTED, UNKNOWN, CONFIG_ERROR, TASK_NODE_NOT_AVAILABLE
+        /**
+         * 任务存在
+         */
+        TASK_EXISTS,
+        /**
+         * 没有存在的任务
+         */
+        NO_TASK_EXISTS,
+        /**
+         * 任务已经运行
+         */
+        TASK_ALREADY_STARTED,
+        /**
+         * 未知
+         */
+        UNKNOWN,
+        /**
+         * 配置错误
+         */
+        CONFIG_ERROR,
+        /**
+         * 任务不可用
+         */
+        TASK_NODE_NOT_AVAILABLE
     }
 }
