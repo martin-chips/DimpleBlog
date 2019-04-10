@@ -3,45 +3,7 @@
 
 #### 介绍
 
-`Dimple Blog`是基于SpringBoot2搭建的个人博客系统。系统使用的技术不完全列举如下：
-
-##### Server端使用技术
-
-|序号  | 技术名称  |说明|链接地址 |
-|--|--|--|--|
-|1| SpringBoot2| 项目主体框架|[SpringBoot](http://spring.io/projects/spring-boot/) |
-|2|Spring Data JPA|持久层框架|[JPA](http://spring.io/projects/spring-data-jpa)
-|3|SpringBoot Cache|Spring缓存层框架||
-| 4| Redis|缓存| [Redis](https://redis.io/)
-| 5|Mysql  |数据库|[Mysql](https://www.mysql.com/)
-| 6| Apache Shiro |权限控制安全框架|[Shiro](http://shiro.apache.org/)
-| 7| Lombok|注解神器|[lomkok](https://www.projectlombok.org/)
-| 8|七牛云 |图床| [七牛云](https://www.qiniu.com/)
-| 9| Swagger|API接口工具|[Swagger](https://swagger.io/)
-| 10| fastjson|JSON转换工具|[fastjson](https://archive.codeplex.com/?p=fastjson)
-|11|UserAgentUtils|系统信息获取工具|[bitwalker](https://www.bitwalker.eu/software/user-agent-utils)
-|12|kaptcha|前谷歌code插件|[penggle](http://www.oddjack.com/?certs=penggle/kaptcha)
-|13|oshi-core|系统监控插件|[oshii](https://github.com/oshi/oshi)
-|14|druid|数据库连接池|[druid](http://druid.io/)
-|15|pegdown|markdown转为HTML工具|[pegdown](https://github.com/sirthias/pegdown/)
-#### 前端页面技术
-|序号  | 技术名称  |说明|链接地址 |
-|--|--|--|--|
-|1| animate.css| 特效样式|[animate](https://daneden.github.io/animate.css/) |
-|2|blueimpGallery|图片浏览框架|[blueimpGallery](http://blueimp.github.io/Gallery/)|
-|3|bootstrap大家族|前端样式|包括：[bootstrap-fileinput-4.5.2](http://blueimp.github.io/Gallery/);  [Bootstrap Table](https://bootstrap-table.com/)；[bootstrap-tagsinput](http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/)；bootstrap-treetable；|
-| 4| echarts|图表| [echarts](https://echarts.baidu.com/)
-| 5|font-awesome|字体库|[font-awesome](fontawesome.dashgame.com/)
-| 6| iCheck |美观的选择input|[iCheck ](https://xdsoft.net/jquery-plugins/icheck/)
-| 7| image-picker|图片选择器|[image-picker](https://ionicframework.com/docs/native/image-picker/)
-| 8|jquery |没说的| 
-| 9| layer|优秀的前端弹出层|[Layer](http://layer.layui.com/)
-| 10| layui|经典模块化前端框架|[layui](https://www.layui.com/)
-|11|summernote|编辑器[summernote](https://summernote.org/)
-|12|sweetalert|好看的提示框架|[sweetalert](https://sweetalert.bootcss.com/)
-|13|webUploader|文件上传框架|[webUploader](http://fex.baidu.com/webuploader/)
-|14|blockUI|遮罩层|[druid](http://malsup.com/jquery/block/)
-|15|fullscreen|全屏|[fullscreen](https://fullscreenmedia.co/)
+`Dimple Blog`是基于SpringBoot2搭建的个人博客系统。
 
 ### 体验链接地址
 
@@ -50,10 +12,6 @@
 管理员账号：`test` ,管理员密码： `123456`
 
 ### 图片展示
-
-#### 项目目录结构
-
-[![kdqkOP.png](https://s2.ax1x.com/2019/04/10/ATge1O.png)](https://imgchr.com/i/kdqkOP)
 
 #### 前台
 ##### 首页
@@ -131,4 +89,44 @@
 2. 新建 Feat_xxx 分支
 3. 提交代码
 4. 新建 Pull Request
+
+系统使用的技术不完全列举如下：
+
+##### Server端使用技术
+
+|序号  | 技术名称  |说明|链接地址 |
+|--|--|--|--|
+|1| SpringBoot2| 项目主体框架|[SpringBoot](http://spring.io/projects/spring-boot/) |
+|2|Spring Data JPA|持久层框架|[JPA](http://spring.io/projects/spring-data-jpa)
+|3|SpringBoot Cache|Spring缓存层框架||
+| 4| Redis|缓存| [Redis](https://redis.io/)
+| 5|Mysql  |数据库|[Mysql](https://www.mysql.com/)
+| 6| Apache Shiro |权限控制安全框架|[Shiro](http://shiro.apache.org/)
+| 7| Lombok|注解神器|[lomkok](https://www.projectlombok.org/)
+| 8|七牛云 |图床| [七牛云](https://www.qiniu.com/)
+| 9| Swagger|API接口工具|[Swagger](https://swagger.io/)
+| 10| fastjson|JSON转换工具|[fastjson](https://archive.codeplex.com/?p=fastjson)
+|11|UserAgentUtils|系统信息获取工具|[bitwalker](https://www.bitwalker.eu/software/user-agent-utils)
+|12|kaptcha|前谷歌code插件|[penggle](http://www.oddjack.com/?certs=penggle/kaptcha)
+|13|oshi-core|系统监控插件|[oshii](https://github.com/oshi/oshi)
+|14|druid|数据库连接池|[druid](http://druid.io/)
+|15|pegdown|markdown转为HTML工具|[pegdown](https://github.com/sirthias/pegdown/)
+#### 前端页面技术
+|序号  | 技术名称  |说明|链接地址 |
+|--|--|--|--|
+|1| animate.css| 特效样式|[animate](https://daneden.github.io/animate.css/) |
+|2|blueimpGallery|图片浏览框架|[blueimpGallery](http://blueimp.github.io/Gallery/)|
+|3|bootstrap大家族|前端样式|包括：[bootstrap-fileinput-4.5.2](http://blueimp.github.io/Gallery/);  [Bootstrap Table](https://bootstrap-table.com/)；[bootstrap-tagsinput](http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/)；bootstrap-treetable；|
+| 4| echarts|图表| [echarts](https://echarts.baidu.com/)
+| 5|font-awesome|字体库|[font-awesome](fontawesome.dashgame.com/)
+| 6| iCheck |美观的选择input|[iCheck ](https://xdsoft.net/jquery-plugins/icheck/)
+| 7| image-picker|图片选择器|[image-picker](https://ionicframework.com/docs/native/image-picker/)
+| 8|jquery |没说的| 
+| 9| layer|优秀的前端弹出层|[Layer](http://layer.layui.com/)
+| 10| layui|经典模块化前端框架|[layui](https://www.layui.com/)
+|11|summernote|编辑器[summernote](https://summernote.org/)
+|12|sweetalert|好看的提示框架|[sweetalert](https://sweetalert.bootcss.com/)
+|13|webUploader|文件上传框架|[webUploader](http://fex.baidu.com/webuploader/)
+|14|blockUI|遮罩层|[druid](http://malsup.com/jquery/block/)
+|15|fullscreen|全屏|[fullscreen](https://fullscreenmedia.co/)
 
