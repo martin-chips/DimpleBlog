@@ -92,19 +92,19 @@
 
         <div class="btn-group-sm" id="toolbar" role="group">
             <a class="btn btn-success" onclick="createMenuItem('/link/link/add','新增友链')"
-               shiro:hasPermission="link:link:add">
+            >
                 <i class="fa fa-plus"></i> 新增
             </a>
             <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()"
-               shiro:hasPermission="link:link:edit">
+            >
                 <i class="fa fa-edit"></i> 修改
             </a>
             <a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()"
-               shiro:hasPermission="link:link:remove">
+            >
                 <i class="fa fa-remove"></i> 删除
             </a>
             <a class="btn btn-warning" onclick="$.table.exportExcel()"
-               shiro:hasPermission="link:link:export">
+            >
                 <i class="fa fa-download"></i> 导出
             </a>
         </div>
@@ -117,8 +117,6 @@
 <div th:include="include :: footer"></div>
 <script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('blog:blog:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('blog:blog:remove')}]];
     var available = [[${@dict.getType('link_link_available')}]];
     var display = [[${@dict.getType('link_link_display')}]];
     var prefix = ctx + "link/link";
@@ -164,8 +162,7 @@
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
-            changeStatusUrl: prefix + "/status",
-            changeSupportUrl: prefix + "/support",
+            changeDisplayUrl: prefix + "/display",
             sortName: "createTime",
             sortOrder: "desc",
             uniqueId: "linkId",
@@ -247,17 +244,17 @@
         }
     }
 
-    /* 博客推荐-停用 */
-    function disable(blogId) {
-        $.modal.confirm("确认要显示该友链吗？", function () {
-            $.operate.put($.table._option.changeSupportUrl + "/0", {"blogId": blogId});
+    /* -停用 */
+    function disable(linkId) {
+        $.modal.confirm("确认要取消显示该友链吗？", function () {
+            $.operate.put($.table._option.changeDisplayUrl + "/0", {"id": linkId});
         })
     }
 
-    /* 博客推荐-启用 */
-    function enable(blogId) {
-        $.modal.confirm("确认要取消显示该友链吗？", function () {
-            $.operate.put($.table._option.changeSupportUrl + "/1", {"blogId": blogId});
+    /* -启用 */
+    function enable(linkId) {
+        $.modal.confirm("确认要显示该友链吗？", function () {
+            $.operate.put($.table._option.changeDisplayUrl + "/1", {"id": linkId});
         })
     }
 </script>

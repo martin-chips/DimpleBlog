@@ -28,4 +28,17 @@ public class CachePrefix {
      * 前台缓存的tag
      */
     public static final String FRONT_TAG = "front_tag_cache";
+    /**
+     * 获取前台的推荐博客
+     */
+    public static final String FRONT_BLOG_SUPPORT = "front_blog_support";
+    /**
+     * 缓存单个的blog
+     */
+    public static final String FRONT_BLOG_BLOG = "front_blog_blog";
+
+    /**
+     * 黑名单单个缓存
+     */
+    public static final String SYSTEM_BLACKLIST_ITEM = "system_blacklist_item";
 }

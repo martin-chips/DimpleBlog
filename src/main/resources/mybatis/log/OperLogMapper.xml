@@ -62,6 +62,9 @@
         <include refid="selectOperLogVo"/>
         where oper_id = #{operId}
     </select>
+    <select id="selectOperLogData" resultType="com.dimple.project.log.operlog.domain.OperLog">
+        select * from sys_oper_log order by oper_time desc limit 3
+    </select>
 
     <update id="cleanOperLog">
         truncate table sys_oper_log

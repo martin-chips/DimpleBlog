@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.tool.tool.mapper.BgToolMapper">
+
+    <resultMap type="com.dimple.project.tool.tool.domain.Tool" id="BgToolMap">
+        <result property="toolId" column="tool_id" jdbcType="INTEGER"/>
+        <result property="toolName" column="tool_name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="display" column="display" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="headImg" column="head_img" jdbcType="VARCHAR"/>
+        <result property="weight" column="weight" jdbcType="INTEGER"/>
+        <result property="toolCategoryId" column="tool_category_id" jdbcType="INTEGER"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="selectToolById" resultMap="BgToolMap">
+        select
+          tool_id, tool_name, description, display, url, type, head_img, weight, tool_category_id, update_by, create_by, create_time, update_time
+        from test.bg_tool
+        where tool_id = #{toolId}
+    </select>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectToolList" resultMap="BgToolMap">
+        select
+        tool_id, tool_name, description, display, url, type, head_img, weight, tool_category_id, update_by, create_by,
+        create_time, update_time
+        from test.bg_tool
+        <where>
+            <if test="toolId != null">
+                and tool_id = #{toolId}
+            </if>
+            <if test="toolName != null and toolName != ''">
+                and tool_name = #{toolName}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="display != null and display != ''">
+                and display = #{display}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="headImg != null and headImg != ''">
+                and head_img = #{headImg}
+            </if>
+            <if test="weight != null">
+                and weight = #{weight}
+            </if>
+            <if test="toolCategoryId != null">
+                and tool_category_id = #{toolCategoryId}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insertTool" keyProperty="toolId" useGeneratedKeys="true">
+        insert into test.bg_tool(tool_name, description, display, url, type, head_img, weight, tool_category_id, update_by, create_by, create_time, update_time)
+        values (#{toolName}, #{description}, #{display}, #{url}, #{type}, #{headImg}, #{weight}, #{toolCategoryId}, #{updateBy}, #{createBy}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="updateTool">
+        update test.bg_tool
+        <set>
+            <if test="toolName != null and toolName != ''">
+                tool_name = #{toolName},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="display != null and display != ''">
+                display = #{display},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="headImg != null and headImg != ''">
+                head_img = #{headImg},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+            <if test="toolCategoryId != null">
+                tool_category_id = #{toolCategoryId},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where tool_id = #{toolId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteToolByIds">
+        delete from test.bg_tool where tool_id in
+        <foreach collection="array" open="(" close=")" separator="," item="toolId">
+            #{toolId}
+        </foreach>
+    </delete>
+
+</mapper>

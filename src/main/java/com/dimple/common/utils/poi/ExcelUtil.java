@@ -1,5 +1,6 @@
 package com.dimple.common.utils.poi;
 
+import com.dimple.common.constant.CommonConstant;
 import com.dimple.common.exception.BusinessException;
 import com.dimple.common.utils.DateUtils;
 import com.dimple.common.utils.StringUtils;
@@ -38,12 +39,12 @@ public class ExcelUtil<T> {
     /**
      * Excel sheet最大行数，默认65536
      */
-    public static final int sheetSize = 65536;
+    public static final int SHEET_SIZE = 65536;
 
     /**
      * 工作表名称
      */
-    private String sheetName;
+    private String SHEET_NAME;
 
     /**
      * 导出类型（EXPORT:导出数据；IMPORT：导入模板）
@@ -84,7 +85,7 @@ public class ExcelUtil<T> {
             list = new ArrayList<T>();
         }
         this.list = list;
-        this.sheetName = sheetName;
+        this.SHEET_NAME = sheetName;
         this.type = type;
         createExcelField();
         createWorkbook();
@@ -229,10 +230,11 @@ public class ExcelUtil<T> {
         OutputStream out = null;
         try {
             // 取出一共有多少个sheet.
-            double sheetNo = Math.ceil(list.size() / sheetSize);
+            double sheetNo = Math.ceil(list.size() / SHEET_SIZE);
             for (int index = 0; index <= sheetNo; index++) {
                 createSheet(sheetNo, index);
-                Cell cell = null; // 产生单元格
+                // 产生单元格
+                Cell cell = null;
 
                 // 产生一行
                 Row row = sheet.createRow(0);
@@ -286,7 +288,7 @@ public class ExcelUtil<T> {
                     fillExcelData(index, row, cell);
                 }
             }
-            String filename = encodingFilename(sheetName);
+            String filename = encodingFilename(SHEET_NAME);
             out = new FileOutputStream(getAbsoluteFile(filename));
             wb.write(out);
             return AjaxResult.success(filename);
@@ -319,8 +321,8 @@ public class ExcelUtil<T> {
      * @param cell  类型单元格
      */
     public void fillExcelData(int index, Row row, Cell cell) {
-        int startNo = index * sheetSize;
-        int endNo = Math.min(startNo + sheetSize, list.size());
+        int startNo = index * SHEET_SIZE;
+        int endNo = Math.min(startNo + SHEET_SIZE, list.size());
         // 写入各条记录,每条记录对应excel表中的一行
         CellStyle cs = wb.createCellStyle();
         cs.setAlignment(HorizontalAlignment.CENTER);
@@ -503,7 +505,7 @@ public class ExcelUtil<T> {
         Object o = field.get(vo);
         if (StringUtils.isNotEmpty(excel.targetAttr())) {
             String target = excel.targetAttr();
-            if (target.indexOf(".") > -1) {
+            if (target.indexOf(CommonConstant.point) > -1) {
                 String[] targets = target.split("[.]");
                 for (String name : targets) {
                     o = getValue(o, name);
@@ -579,9 +581,9 @@ public class ExcelUtil<T> {
         this.sheet = wb.createSheet();
         // 设置工作表的名称.
         if (sheetNo == 0) {
-            wb.setSheetName(index, sheetName);
+            wb.setSheetName(index, SHEET_NAME);
         } else {
-            wb.setSheetName(index, sheetName + index);
+            wb.setSheetName(index, SHEET_NAME + index);
         }
     }
 

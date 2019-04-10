@@ -4,13 +4,13 @@
 
 <head>
     <title>友链—Dimple的个人博客</title>
-    <div th:include="include-front :: head"></div>
+    <div th:replace="include-front :: head"></div>
 </head>
 
 <body class="nobg">
 <header th:replace="include-front :: header"></header>
 
-<!--内容区开始-->
+<!--内容区开始-->l
 <div class="container">
     <section>
         <div class="">
@@ -21,8 +21,8 @@
                     <div class="link-item">
                         <a th:href="${'/f/linkRedirect?ref='+link.url+'&&id='+link.linkId}" target="_blank">
                             <img th:src="${link.headerImg}">
-                            <h3 th:text="${link.title}"></h3>
-                            <p th:text="${link.description}"></p>
+                            <h3 class="orange-text" th:text="${link.title}"></h3>
+                            <p class="orange-text" th:text="${link.description}"></p>
                         </a>
                     </div>
                 </li>
@@ -97,5 +97,16 @@
     <aside th:replace="include-front :: side"></aside>
 </div>
 <aside th:replace="include-front :: footer"></aside>
+<script>
+    $(function () {
+        if ($(".wall").children("li").length >= 10) {
+            $(".pagintion").show();
+            $(".wall").css("margin-bottom", "10px");
+        } else {
+            $(".pagination").hide();
+            $(".wall").css("margin-bottom", "90px");
+        }
+    });
+</script>
 </body>
 </html>

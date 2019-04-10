@@ -16,6 +16,7 @@
     <link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>
     <style type="text/css">label.error {
         position: inherit;
+        color: #0af5aa;
     }</style>
     <script>
         if (window.top !== window.self) {
@@ -30,12 +31,22 @@
 <div class="signinpanel">
     <div class="row">
         <div class="col-sm-7">
+            各位老铁大家好，欢迎来到本网站，为了方便大家查看系统效果，之前我一直都很放心，给了全权限的账号，系统上线4个月以来，有很多朋友访问后台，各位朋友没有删除我的数据
+            ，即使增加了数据也会在使用完毕后自行删除，这让我很感动，系统已经初步成型了，为了防止数据错乱，我准备收回全权限账号。
+            <hr>
+            为了方便大家互相交流学习，提供以下账号：
+            <hr/>
+            账号：test
+            <br/>
+            密码：123456
+            <hr/>
+            如果需要全权限账号的，请发邮件到bianxiaofeng@sohu.com，并注明目的。
         </div>
         <div class="col-sm-5">
             <form id="signupForm">
                 <h4 class="no-margins">登录：</h4>
-                <input type="text" name="username" class="form-control uname" placeholder="用户名" value="admin"/>
-                <input type="password" name="password" class="form-control pword" placeholder="密码" value="admin123"/>
+                <input type="text" name="username" class="form-control uname" placeholder="用户名"/>
+                <input type="password" name="password" class="form-control pword" placeholder="密码"/>
                 <div class="row m-t" th:if="${captchaEnabled==true}">
                     <div class="col-xs-6">
                         <input type="text" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5"

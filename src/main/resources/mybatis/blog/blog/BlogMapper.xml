@@ -215,6 +215,18 @@
     <select id="selectBlogByCreateTime" resultType="com.dimple.project.blog.blog.domain.Blog">
         select blog_id,title,click,create_time from bg_blog where date_format(create_time, '%Y-%m') =#{date} and status=1
     </select>
+    <select id="selectBlogClickData" resultType="com.dimple.project.dashboard.domain.BusinessCommonData">
+        select title as name,click as value from bg_blog
+        <where>
+            <if test="startTime != null and startTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{startTime},'%y%m%d')
+            </if>
+            <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+        order by create_time
+    </select>
 
 
 </mapper>

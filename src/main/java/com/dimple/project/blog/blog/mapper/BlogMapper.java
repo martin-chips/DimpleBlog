@@ -1,6 +1,7 @@
 package com.dimple.project.blog.blog.mapper;
 
 import com.dimple.project.blog.blog.domain.Blog;
+import com.dimple.project.dashboard.domain.BusinessCommonData;
 import com.dimple.project.front.domain.Archives;
 import org.apache.ibatis.annotations.Param;
 
@@ -173,4 +174,6 @@ public interface BlogMapper {
      * @return 受影响的行
      */
     int increamentBlogClick(Integer blogId);
+
+    List<BusinessCommonData> selectBlogClickData(@Param("startTime") String startTime, @Param("endTime") String endTime);
 }

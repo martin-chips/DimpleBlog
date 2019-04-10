@@ -70,6 +70,27 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-lg-4">
+                <div class="ibox-title">
+                    <h5>最新动态</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <ul>
+                        <li th:each="item:${logMessages}" style="margin-bottom:10px ;list-style-type: none">
+                            <span class="badge badge-info" th:text="${item.dateStr}"></span>
+                            <span th:text="${item.message}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="col-lg-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -88,22 +109,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="ibox-title">
-                    <h5>爬虫统计仪表盘</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content">
-                    <div id="echarts_pie_spider_type" style="width: 100%;height: 300px"></div>
-                </div>
-            </div>
+
         </div>
 
         <div class="row">
@@ -185,14 +191,11 @@
 <script src="/static/ajax/libs/echarts/echarts.min.js" th:src="@{/ajax/libs/echarts/echarts.min.js}"></script>
 <script>
     $(function () {
-        //初始化爬虫统计饼图
-        initEchartsPie();
+
         //初始化系统信息仪表盘
         initEchartsGauge();
         //初始化访客统计
         initEchartsLine();
-        //填充数据到饼图
-        fixDataPie();
         //填充数据到仪表盘
         fixDataGauge();
         // setInterval(fixDataGauge, 15000);
@@ -239,7 +242,7 @@
 
     function initEchartsLine() {
         echarts_line_visitor = echarts.init(document.getElementById('echarts_line_visitor'));
-        let option = {
+        option = {
             grid: {
                 x: 45,
                 y: 45,
@@ -308,27 +311,6 @@
         echarts_line_visitor.setOption(option);
     }
 
-    function fixDataPie() {
-        $.ajax({
-            url: "/dashboard/spiderData/list",
-            type: "get",
-            success: function (result) {
-                if (result.code == 0) {
-                    echarts_pie_spider_type.hideLoading();
-                    echarts_pie_spider_type.setOption({
-                        legend: {
-                            data: result.data
-                        },
-                        series: [
-                            {
-                                data: result.data
-                            }
-                        ]
-                    });
-                }
-            }
-        })
-    }
 
     function fixDataGauge() {
         $.ajax({
@@ -351,54 +333,6 @@
         })
 
     }
-
-    function initEchartsPie() {
-        echarts_pie_spider_type = echarts.init(document.getElementById('echarts_pie_spider_type'));
-        let option = {
-            toolbox: {
-                show: true,
-                feature: {
-                    dataView: {show: true, readOnly: false},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
-                }
-            },
-            title: {
-                text: '爬虫访问统计',
-                subtext: '',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                //左上角数据
-                data: []
-            },
-            series: [
-                {
-                    name: '访问来源',
-                    type: 'pie',
-                    radius: '70%',
-                    center: ['50%', '60%'],
-                    data: [],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        };
-        echarts_pie_spider_type.showLoading();
-        echarts_pie_spider_type.setOption(option);
-    }
-
 
     function initEchartsGauge() {
         echarts_gauge_percent = echarts.init(document.getElementById('echarts_gauge_percent'));

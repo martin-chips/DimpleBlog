@@ -63,4 +63,11 @@ public interface JobLogMapper {
      * 清空任务日志
      */
     void cleanJobLog();
+
+    /**
+     * 获取dashboard页面展示的job log
+     *
+     * @return joblog数据
+     */
+    List<JobLog> selectJobData();
 }

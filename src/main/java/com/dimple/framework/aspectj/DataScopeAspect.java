@@ -1,7 +1,11 @@
 package com.dimple.framework.aspectj;
 
-import java.lang.reflect.Method;
-
+import com.dimple.common.utils.StringUtils;
+import com.dimple.common.utils.security.ShiroUtils;
+import com.dimple.framework.aspectj.lang.annotation.DataScope;
+import com.dimple.framework.web.domain.BaseEntity;
+import com.dimple.project.system.role.domain.Role;
+import com.dimple.project.system.user.domain.User;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,12 +13,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import com.dimple.common.utils.StringUtils;
-import com.dimple.common.utils.security.ShiroUtils;
-import com.dimple.framework.aspectj.lang.annotation.DataScope;
-import com.dimple.framework.web.domain.BaseEntity;
-import com.dimple.project.system.role.domain.Role;
-import com.dimple.project.system.user.domain.User;
+
+import java.lang.reflect.Method;
 
 /**
  * @className: DataScopeAspect
@@ -83,9 +83,6 @@ public class DataScopeAspect {
                 sqlString = new StringBuilder();
                 break;
             } else if (DATA_SCOPE_CUSTOM.equals(dataScope)) {
-                sqlString.append(StringUtils.format(
-                        " OR {}.dept_id IN ( SELECT dept_id FROM sys_role_dept WHERE role_id = {} ) ", alias,
-                        role.getRoleId()));
             }
         }
 

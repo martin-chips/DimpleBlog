@@ -1,6 +1,7 @@
 package com.dimple.project.blog.blog.service.impl;
 
 import com.dimple.common.constant.CachePrefix;
+import com.dimple.common.constant.CommonConstant;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.common.utils.text.Convert;
 import com.dimple.project.blog.blog.domain.Blog;
@@ -9,6 +10,7 @@ import com.dimple.project.blog.blog.mapper.BlogTagMapper;
 import com.dimple.project.blog.blog.service.BlogService;
 import com.dimple.project.blog.category.service.CategoryService;
 import com.dimple.project.blog.tag.service.TagService;
+import com.dimple.project.dashboard.domain.BusinessCommonData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -89,18 +91,20 @@ public class BlogServiceImpl implements BlogService {
         }
     }
 
+    @CacheEvict(value = {CachePrefix.FRONT_NEWEST_UPDATE_BLOG, CachePrefix.FRONT_BLOG_RANKING, CachePrefix.FRONT_BLOG_SUPPORT})
     @Override
     public int updateBlogSupportById(Integer blogId, String support) {
         return blogMapper.updateBlogSupportById(blogId, support);
     }
 
     //清除缓存
-    @CacheEvict(value = {CachePrefix.FRONT_NEWEST_UPDATE_BLOG, CachePrefix.FRONT_BLOG_RANKING, CachePrefix.FRONT_SUPPORT_CATEGORIES})
+    @CacheEvict(value = {CachePrefix.FRONT_NEWEST_UPDATE_BLOG, CachePrefix.FRONT_BLOG_RANKING, CachePrefix.FRONT_BLOG_SUPPORT})
     @Override
     public int updateBlogStatusById(String blogIds, String status) {
         return blogMapper.updateBlogStatusByIds(Convert.toIntArray(blogIds), status);
     }
 
+    @CacheEvict(value = {CachePrefix.FRONT_NEWEST_UPDATE_BLOG, CachePrefix.FRONT_BLOG_RANKING, CachePrefix.FRONT_BLOG_SUPPORT})
     @Override
     public int deleteBlogById(Integer[] ids) {
         return blogMapper.deleteBlogByIds(ids);
@@ -111,6 +115,7 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectBlogCountByStatus(status);
     }
 
+    @Cacheable(value = {CachePrefix.FRONT_BLOG_BLOG})
     @Override
     public Blog selectBlogWithTextAndTagsAndCategoryByBlogId(Integer blogId) {
         Blog blog = blogMapper.selectBlogWithTextById(blogId);
@@ -143,7 +148,7 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectBlogRankingList(6);
     }
 
-    @Cacheable(value = CachePrefix.FRONT_SUPPORT_CATEGORIES)
+    @Cacheable(value = CachePrefix.FRONT_BLOG_SUPPORT)
     @Override
     public List<Blog> selectSupportBlog() {
         return blogMapper.selectSupportBlogList(5);
@@ -168,4 +173,16 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> selectBlogListByTagId(Integer tagId) {
         return blogMapper.selectBlogsByTagId(tagId);
     }
+
+    @Override
+    public List<BusinessCommonData> selectBlogClickData(String startTime, String endTime) {
+        if (CommonConstant.undefined.equals(startTime)) {
+            startTime = null;
+        }
+        if (CommonConstant.undefined.equals(endTime)) {
+            endTime = null;
+        }
+        return blogMapper.selectBlogClickData(startTime, endTime);
+    }
+
 }

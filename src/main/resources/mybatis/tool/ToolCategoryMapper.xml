@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.tool.toolCategory.mapper.ToolCategoryMapper">
+
+    <resultMap type="com.dimple.project.tool.toolCategory.domain.ToolCategory" id="BgToolCategoryMap">
+        <result property="toolCategoryId" column="tool_category_id" jdbcType="INTEGER"/>
+        <result property="toolCategoryTitle" column="tool_category_title" jdbcType="VARCHAR"/>
+        <result property="weight" column="weight" jdbcType="INTEGER"/>
+        <result property="display" column="display" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="selectToolCategoryById" resultMap="BgToolCategoryMap">
+        select
+          tool_category_id, tool_category_title, weight, display, create_by, create_time, update_by, update_time
+        from test.bg_tool_category
+        where tool_category_id = #{toolCategoryId}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectToolCategoryList" resultMap="BgToolCategoryMap">
+        select
+        tool_category_id, tool_category_title, weight, display, create_by, create_time, update_by, update_time
+        from test.bg_tool_category
+        <where>
+            <if test="toolCategoryId != null">
+                and tool_category_id = #{toolCategoryId}
+            </if>
+            <if test="toolCategoryTitle != null and toolCategoryTitle != ''">
+                and tool_category_title = #{toolCategoryTitle}
+            </if>
+            <if test="weight != null">
+                and weight = #{weight}
+            </if>
+            <if test="display != null and display != ''">
+                and display = #{display}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insertToolCategory" keyProperty="toolCategoryId" useGeneratedKeys="true">
+        insert into test.bg_tool_category(tool_category_title, weight, display, create_by, create_time, update_by, update_time)
+        values (#{toolCategoryTitle}, #{weight}, #{display}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="updateToolCategory">
+        update test.bg_tool_category
+        <set>
+            <if test="toolCategoryTitle != null and toolCategoryTitle != ''">
+                tool_category_title = #{toolCategoryTitle},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+            <if test="display != null and display != ''">
+                display = #{display},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where tool_category_id = #{toolCategoryId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteToolCategoryByIds">
+        delete from test.bg_tool_category where tool_category_id in
+        <foreach collection="array" item="id" separator="," close=")" open="(">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -84,7 +84,7 @@ public class CarouselMapController extends BaseController {
     @Log(title = "博客管理", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:carouselMap:remove")
     @ResponseBody
-    public AjaxResult remove(Integer ids[]) {
+    public AjaxResult remove(Integer[] ids) {
         return toAjax(carouselMapService.deleteCarouselMapByIds(ids));
     }
 }

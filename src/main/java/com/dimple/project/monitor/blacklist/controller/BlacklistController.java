@@ -80,6 +80,7 @@ public class BlacklistController extends BaseController {
     }
 
     @PostMapping("/add")
+    @RequiresPermissions("monitor:blacklist:add")
     @ResponseBody
     public AjaxResult addSave(Blacklist blacklist) {
         return toAjax(blacklistService.insertBlacklist(blacklist));

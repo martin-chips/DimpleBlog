@@ -1,21 +1,19 @@
 package com.dimple.project.monitor.job.util;
 
-import java.util.Date;
-
-import lombok.extern.slf4j.Slf4j;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.constant.ScheduleConstants;
 import com.dimple.common.utils.ExceptionUtil;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.bean.BeanUtils;
 import com.dimple.common.utils.spring.SpringUtils;
-import com.dimple.project.monitor.job.domain.Job;
 import com.dimple.project.log.jobLog.domain.JobLog;
 import com.dimple.project.log.jobLog.service.IJobLogService;
+import com.dimple.project.monitor.job.domain.Job;
+import lombok.extern.slf4j.Slf4j;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+
+import java.util.Date;
 
 /**
  * @className: AbstractQuartzJob
@@ -93,7 +91,7 @@ public abstract class AbstractQuartzJob implements org.quartz.Job {
      * 执行方法，由子类重载
      *
      * @param context 工作执行上下文对象
-     * @param sysJob  系统计划任务
+     * @param job  系统计划任务
      * @throws Exception 执行过程中的异常
      */
     protected abstract void doExecute(JobExecutionContext context, Job job) throws Exception;

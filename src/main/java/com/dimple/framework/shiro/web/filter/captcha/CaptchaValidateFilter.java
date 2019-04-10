@@ -1,14 +1,15 @@
 package com.dimple.framework.shiro.web.filter.captcha;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.shiro.web.filter.AccessControlFilter;
-import com.google.code.kaptcha.Constants;
+import com.dimple.common.constant.CommonConstant;
 import com.dimple.common.constant.ShiroConstants;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.security.ShiroUtils;
+import com.google.code.kaptcha.Constants;
+import org.apache.shiro.web.filter.AccessControlFilter;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @className: CaptchaValidateFilter
@@ -48,7 +49,7 @@ public class CaptchaValidateFilter extends AccessControlFilter {
             throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         // 验证码禁用 或不是表单提交 允许访问
-        if (captchaEnabled == false || !"post".equals(httpServletRequest.getMethod().toLowerCase())) {
+        if (captchaEnabled == false || !CommonConstant.post.equals(httpServletRequest.getMethod().toLowerCase())) {
             return true;
         }
         return validateResponse(httpServletRequest, httpServletRequest.getParameter(ShiroConstants.CURRENT_VALIDATECODE));

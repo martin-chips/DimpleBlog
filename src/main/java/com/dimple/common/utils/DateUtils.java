@@ -166,4 +166,48 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return simpleDateFormat.format(today);
     }
 
+    /**
+     * 根据传入的时间判断是刚刚，几秒前等
+     *
+     * @param paramTime 需要判断的时间
+     * @return 判断出的结果
+     */
+    public static String showTime(Date paramTime) {
+        String result = "";
+        if (paramTime == null) {
+            return result;
+        }
+        //当前时间的时间戳
+        long nowTimeLong = System.currentTimeMillis();
+        //传入的时间的时间戳
+        long paramTimeLong = paramTime.getTime();
+
+        long resultLong = Math.abs(nowTimeLong - paramTimeLong);
+
+        //一分钟内
+        if (resultLong < 60000) {
+            long seconds = resultLong / 1000;
+            //如果是5秒内
+            if (seconds < 5) {
+                result = "刚刚";
+            } else {
+                result = seconds + "秒前";
+            }
+        }//一小时内
+        else if (resultLong >= 60000 && resultLong < 3600000) {
+            long seconds = resultLong / 60000;
+            result = seconds + "分钟前";
+        }// 一天内
+        else if (resultLong >= 3600000 && resultLong < 86400000) {
+            long seconds = resultLong / 3600000;
+            result = seconds + "小时前";
+        }// 三十天内
+        else if (resultLong >= 86400000 && resultLong < 1702967296) {
+            long seconds = resultLong / 86400000;
+            result = seconds + "天前";
+        } else {
+            result = new SimpleDateFormat(YYYY_MM_DD).format(paramTime);
+        }
+        return result;
+    }
 }

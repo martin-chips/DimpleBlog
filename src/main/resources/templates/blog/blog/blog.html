@@ -99,19 +99,16 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="createMenuItem('/blog/blog/add','新增博文')"
-               shiro:hasPermission="blog:blog:add">
+            <a class="btn btn-success" onclick="createMenuItem('/blog/blog/add','新增博文')">
                 <i class="fa fa-plus"></i> 新增
             </a>
-            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()"
-               shiro:hasPermission="blog:blog:edit">
+            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()">
                 <i class="fa fa-edit"></i> 修改
             </a>
-            <a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()"
-               shiro:hasPermission="blog:blog:remove">
+            <a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()">
                 <i class="fa fa-remove"></i> 删除
             </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="blog:blog:export">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()">
                 <i class="fa fa-download"></i> 导出
             </a>
             <a class="btn btn-default btn-del disabled" onclick="changeStatus(1)">
@@ -136,8 +133,6 @@
 <div th:include="include :: footer"></div>
 <script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('blog:blog:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('blog:blog:remove')}]];
     var datas = [[${@dict.getType('blog_blog_status')}]];
     var support = [[${@dict.getType('blog_blog_support')}]];
     var prefix = ctx + "blog/blog";
@@ -217,8 +212,8 @@
                 align: 'center',
                 formatter: function (value, row, index) {
                     var actions = [];
-                    actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.blogId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                    actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.blogId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                    actions.push('<a class="btn btn-success btn-xs '  + '" href="#" onclick="$.operate.editTab(\'' + row.blogId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                    actions.push('<a class="btn btn-danger btn-xs '  + '" href="#" onclick="$.operate.remove(\'' + row.blogId + '\')"><i class="fa fa-remove"></i>删除</a>');
                     actions.push('<a class="btn btn-warning btn-xs ' + '" href="#" onclick="detail(\'' + row.blogId + '\')"><i class="fa fa-search"></i>详细</a>');
                     return actions.join('');
                 }

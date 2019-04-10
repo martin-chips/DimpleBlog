@@ -97,7 +97,7 @@ $(document).ready(function () {
 
     //当前连接高亮
 
-    $('nav li a').each(function () {
+    $('nva li a').each(function () {
 
         if ($($(this))[0].href == String(window.location))
 

@@ -1,6 +1,7 @@
 package com.dimple.project.dashboard.service;
 
-import com.dimple.project.dashboard.domain.SpiderData;
+import com.dimple.project.dashboard.domain.BusinessCommonData;
+import com.dimple.project.dashboard.domain.LogMessage;
 import com.dimple.project.dashboard.domain.VisitCount;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface DashboardService {
      *
      * @return 爬虫数据实体类
      */
-    List<SpiderData> selectSpiderData();
+    List<BusinessCommonData> selectSpiderData();
 
     /**
      * 获取访问量的数据
@@ -26,4 +27,6 @@ public interface DashboardService {
      * @return VisitCount实体类
      */
     List<VisitCount> getVisitData();
+
+    List<LogMessage> selectLogMessage();
 }

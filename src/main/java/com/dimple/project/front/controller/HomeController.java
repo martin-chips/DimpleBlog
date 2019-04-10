@@ -1,5 +1,6 @@
 package com.dimple.project.front.controller;
 
+import com.dimple.common.constant.CommonConstant;
 import com.dimple.framework.aspectj.lang.annotation.VLog;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.project.blog.blog.domain.Blog;
@@ -115,7 +116,7 @@ public class HomeController extends BaseController {
         setCommonMessage(model);
         Blog blog = blogService.selectBlogWithTextAndTagsAndCategoryByBlogId(blogId);
         //只能访问是已经发表的文章
-        if (!blog.getStatus().equals("1")) {
+        if (!CommonConstant.one.equals(blog.getStatus())) {
             return "/error/404";
         }
         model.addAttribute("blog", blog);

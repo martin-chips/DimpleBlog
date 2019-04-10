@@ -1,5 +1,6 @@
 package com.dimple.project.log.visitorLog.service.impl;
 
+import com.dimple.project.dashboard.domain.BusinessCommonData;
 import com.dimple.project.log.visitorLog.domain.VisitLog;
 import com.dimple.project.log.visitorLog.mapper.VisitLogMapper;
 import com.dimple.project.log.visitorLog.service.VisitLogService;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @Service
 public class VisitLogServiceImpl implements VisitLogService {
+
     @Autowired
     VisitLogMapper visitLogMapper;
 
@@ -53,5 +55,21 @@ public class VisitLogServiceImpl implements VisitLogService {
     @Override
     public Integer selectVisitLogTodayCount() {
         return visitLogMapper.selectVisitLogTodayCount();
+    }
+
+    @Override
+    public List<BusinessCommonData> selectSpiderData() {
+        return visitLogMapper.selectSpiderData();
+    }
+
+    @Override
+    public List<BusinessCommonData> selectVisitLogData(String startTime, String endTime) {
+        if (startTime != null && "undefined".equals(startTime)) {
+            startTime = null;
+        }
+        if (endTime != null && "undefined".equals(endTime)) {
+            endTime = null;
+        }
+        return visitLogMapper.selectVisitLogData(startTime, endTime);
     }
 }

@@ -43,6 +43,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
-        registry.addInterceptor(requestInterceptor).addPathPatterns("/**");
+        //添加黑名单拦截器
+        registry.addInterceptor(requestInterceptor).addPathPatterns("/**").excludePathPatterns("/error/blacklist");
     }
 }

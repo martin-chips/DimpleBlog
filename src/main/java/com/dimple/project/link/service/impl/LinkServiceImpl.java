@@ -56,8 +56,8 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public int changeDisplay(String ids, Integer display) {
-        return linkMapper.changeDisplay(Convert.toIntArray(ids), display);
+    public int changeDisplay(Integer id, Integer display) {
+        return linkMapper.changeDisplay(id, display);
     }
 
     @Override

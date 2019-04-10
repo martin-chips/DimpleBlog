@@ -50,6 +50,9 @@
         <include refid="selectJobLogVo"/>
         where job_log_id = #{jobLogId}
     </select>
+    <select id="selectJobData" resultType="com.dimple.project.log.jobLog.domain.JobLog">
+        select * from sys_job_log order by create_time desc limit 3
+    </select>
 
     <delete id="deleteJobLogById" parameterType="Long">
  		delete from sys_job_log where job_log_id = #{jobLogId}

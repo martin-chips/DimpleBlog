@@ -67,7 +67,7 @@
         select visit_id, ip_addr, location, browser, os, spider, request_url, error_msg, title, create_by, create_time, status
         from bg_visit_log where visit_id =#{visitId};
     </select>
-    <select id="selectSpiderData" resultType="com.dimple.project.dashboard.domain.SpiderData">
+    <select id="selectSpiderData" resultType="com.dimple.project.dashboard.domain.BusinessCommonData">
         select spider as 'name',count(spider) as 'value' from bg_visit_log group by spider order by spider limit 10
     </select>
     <select id="selectVisitCountByCreateTime" resultType="java.lang.Integer">
@@ -79,6 +79,21 @@
 
     <select id="selectVisitLogTodayCount" resultType="java.lang.Integer">
         select count(*) from bg_visit_log where date_format(create_time,'%Y-%m-%d')=CURDATE()
+    </select>
+    <select id="selectVisitLogData" resultType="com.dimple.project.dashboard.domain.BusinessCommonData">
+        select date_format(create_time,'%Y-%m-%d') as name,count(*) as value from bg_visit_log
+        <where>
+            <if test="startTime!=null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{startTime},'%y%m%d')
+            </if>
+            <if test="endTime!=null">
+                and date_format(create_time,'%y%m%d') &lt; date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+        group by date_format(create_time,'%Y-%m-%d')
+    </select>
+    <select id="selectVisitData" resultType="com.dimple.project.log.visitorLog.domain.VisitLog">
+        select * from bg_visit_log order by create_time desc limit 3
     </select>
 
 

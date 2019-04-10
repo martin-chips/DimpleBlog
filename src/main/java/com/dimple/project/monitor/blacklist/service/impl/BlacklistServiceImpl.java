@@ -1,11 +1,14 @@
 package com.dimple.project.monitor.blacklist.service.impl;
 
 import com.dimple.common.constant.BlacklistConstants;
+import com.dimple.common.constant.CachePrefix;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.project.monitor.blacklist.domain.Blacklist;
 import com.dimple.project.monitor.blacklist.mapper.BlacklistMapper;
 import com.dimple.project.monitor.blacklist.service.BlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +30,7 @@ public class BlacklistServiceImpl implements BlacklistService {
         return blacklistMapper.selectBlacklistList(blacklist);
     }
 
+    @CacheEvict(value = {CachePrefix.SYSTEM_BLACKLIST_ITEM})
     @Override
     public int deleteBlacklistByIds(Integer[] ids) {
         return blacklistMapper.deleteBlacklistByBlacklistIds(ids);
@@ -37,17 +41,20 @@ public class BlacklistServiceImpl implements BlacklistService {
         return blacklistMapper.selectBlacklistById(blacklistId);
     }
 
+    @CacheEvict(value = {CachePrefix.SYSTEM_BLACKLIST_ITEM})
     @Override
     public void cleanBlacklist() {
         blacklistMapper.cleanBlacklist();
     }
 
+    @CacheEvict(value = {CachePrefix.SYSTEM_BLACKLIST_ITEM})
     @Override
     public int insertBlacklist(Blacklist blacklist) {
         blacklist.setCreateBy(ShiroUtils.getLoginName());
         return blacklistMapper.insertBlacklist(blacklist);
     }
 
+    @CacheEvict(value = {CachePrefix.SYSTEM_BLACKLIST_ITEM})
     @Override
     public void updateNewestBlacklist(Integer id, String requestURI) {
         blacklistMapper.updateNewestBlacklist(id, requestURI);
@@ -59,11 +66,13 @@ public class BlacklistServiceImpl implements BlacklistService {
         return blacklist == null ? BlacklistConstants.IP_NOT_IN_BLACKLIST : BlacklistConstants.IP_IN_BLACKLIST;
     }
 
+    @Cacheable(CachePrefix.SYSTEM_BLACKLIST_ITEM)
     @Override
     public Blacklist selectBlacklistByIp(String ip) {
         return blacklistMapper.selectBlacklistByIp(ip);
     }
 
+    @CacheEvict(value = {CachePrefix.SYSTEM_BLACKLIST_ITEM})
     @Override
     public int insertBlacklist(String ipAddr) {
         Blacklist blacklist = new Blacklist();
@@ -71,6 +80,7 @@ public class BlacklistServiceImpl implements BlacklistService {
         return blacklistMapper.insertBlacklist(blacklist);
     }
 
+    @CacheEvict(value = {CachePrefix.SYSTEM_BLACKLIST_ITEM})
     @Override
     public int updateBlacklist(Blacklist blacklist) {
         return blacklistMapper.updateBlacklist(blacklist);

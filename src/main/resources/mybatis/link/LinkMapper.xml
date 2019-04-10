@@ -34,20 +34,18 @@
             <if test="title != null and title != ''">title = #{title},</if>
             <if test="description != null and description != ''">description = #{description},</if>
             <if test="headerImg != null and headerImg != ''">header_img = #{headerImg},</if>
+            <if test="url != null and url != ''">url = #{url},</if>
             <if test="weight != null and weight != ''">weight = #{weight},</if>
             <if test="display != null and display != ''">display = #{display},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-            <if test="email != null">email = #{remark},</if>
+            <if test="email != null">email = #{email},</if>
             update_time = sysdate()
         </set>
-        where link_id #{linkId}
+        where link_id =#{linkId}
     </update>
 
     <update id="changeDisplay">
-        update bg_link set display=#{display}where link_id in
-        <foreach item="linkId" collection="array" open="(" separator="," close=")">
-            #{linkId}
-        </foreach>
+        update bg_link set display=#{display} where link_id =#{id}
     </update>
 
     <update id="processedLinkByIds">
@@ -118,7 +116,7 @@
         select link_id,title,url from bg_link where display=1 and available=1 order by weight limit 5
     </select>
     <select id="selectLinkListFrontWithSummary" resultType="com.dimple.project.link.domain.Link">
-        select link_id,title,url from bg_link where display=1 and available=1 order by weight
+        select link_id,title,url,header_img,description from bg_link where display=1 and available=1 order by weight
     </select>
 
 

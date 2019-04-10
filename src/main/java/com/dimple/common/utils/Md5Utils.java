@@ -1,10 +1,8 @@
 package com.dimple.common.utils;
 
-import java.security.MessageDigest;
-
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.security.MessageDigest;
 
 /**
  * @className: Md5Utils
@@ -30,7 +28,7 @@ public class Md5Utils {
         return null;
     }
 
-    private static final String toHex(byte hash[]) {
+    private static final String toHex(byte[] hash) {
         if (hash == null) {
             return null;
         }

@@ -76,7 +76,7 @@ public class CategoryController extends BaseController {
     @Log(title = "分类管理", businessType = BusinessType.DELETE)
     @RequiresPermissions("blog:category:remove")
     @ResponseBody
-    public AjaxResult remove(Integer ids[]) {
+    public AjaxResult remove(Integer[] ids) {
         return toAjax(categoryService.deleteCategoryByIds(ids));
     }
 

@@ -1,21 +1,22 @@
 package com.dimple.project.system.user.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import com.dimple.common.constant.CommonConstant;
+import com.dimple.framework.web.controller.BaseController;
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.Producer;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import com.google.code.kaptcha.Constants;
-import com.google.code.kaptcha.Producer;
-import com.dimple.framework.web.controller.BaseController;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * @className: CaptchaController
@@ -51,12 +52,12 @@ public class CaptchaController extends BaseController {
             String capStr = null;
             String code = null;
             BufferedImage bi = null;
-            if ("math".equals(type)) {
+            if (CommonConstant.math.equals(type)) {
                 String capText = captchaProducerMath.createText();
                 capStr = capText.substring(0, capText.lastIndexOf("@"));
                 code = capText.substring(capText.lastIndexOf("@") + 1);
                 bi = captchaProducerMath.createImage(capStr);
-            } else if ("char".equals(type)) {
+            } else if (CommonConstant.charC.equals(type)) {
                 capStr = code = captchaProducer.createText();
                 bi = captchaProducer.createImage(capStr);
             }

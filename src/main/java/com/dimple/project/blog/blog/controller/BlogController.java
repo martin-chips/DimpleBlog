@@ -109,7 +109,7 @@ public class BlogController extends BaseController {
     @Log(title = "博客管理", businessType = BusinessType.DELETE)
     @RequiresPermissions("blog:blog:remove")
     @ResponseBody
-    public AjaxResult remove(Integer ids[]) {
+    public AjaxResult remove(Integer []ids) {
         return toAjax(blogService.deleteBlogById(ids));
     }
 

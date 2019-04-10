@@ -50,7 +50,7 @@
     </select>
     <select id="selectCarouselMapListFront"
             resultType="com.dimple.project.system.carouselMap.entity.CarouselMap">
-        select carousel_id,img_url,title,sub_title,target from bg_carousel_map where display='1'
+        select carousel_id,img_url,title,sub_title,target,url from bg_carousel_map where display='1'
     </select>
     <select id="selectCarouselMapData" resultType="com.dimple.project.chart.business.domain.Business">
         select  title as name,click as value from bg_carousel_map
@@ -59,7 +59,7 @@
     <!--新增所有列-->
     <insert id="insertCarouselMap" keyProperty="carouselId" useGeneratedKeys="true">
         insert into bg_carousel_map(
-        <if test="ImgUrl != null and ImgUrl !=''">img_url,</if>
+        <if test="imgUrl != null and imgUrl !=''">img_url,</if>
         <if test="title != null and title != ''">title,</if>
         <if test="subTitle != null and subTitle != ''">sub_title,</if>
         <if test="url != null and url != ''">url,</if>
@@ -68,7 +68,7 @@
         <if test="display != null and display != ''">display,</if>
         create_time
         )values(
-        <if test="ImgUrl != null and ImgUrl != ''">#{ImgUrl},</if>
+        <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
         <if test="title != null and title != ''">#{title},</if>
         <if test="subTitle != null and subTitle != ''">#{subTitle},</if>
         <if test="url != null and url != ''">#{url},</if>

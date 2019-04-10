@@ -7,7 +7,7 @@ import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.blog.blog.service.BlogService;
 import com.dimple.project.chart.server.domain.Server;
-import com.dimple.project.dashboard.domain.SpiderData;
+import com.dimple.project.dashboard.domain.BusinessCommonData;
 import com.dimple.project.dashboard.domain.VisitCount;
 import com.dimple.project.dashboard.service.DashboardService;
 import com.dimple.project.log.visitorLog.service.VisitLogService;
@@ -79,14 +79,17 @@ public class DashboardController extends BaseController {
         model.addAttribute("totalCount", visitLogService.selectVisitLogTotalCount());
         //本月访客人数
         model.addAttribute("todayCount", visitLogService.selectVisitLogTodayCount());
+        //放置最新消息
+        model.addAttribute("logMessages", dashboardService.selectLogMessage());
         return "main";
     }
+
 
     @GetMapping("/dashboard/spiderData/list")
     @ResponseBody
     public AjaxResult spiderData() {
-        List<SpiderData> spiderData = dashboardService.selectSpiderData();
-        return new AjaxResult().success().put("data", spiderData);
+        List<BusinessCommonData> businessCommonData = dashboardService.selectSpiderData();
+        return AjaxResult.success().put("data", businessCommonData);
     }
 
     @GetMapping("/dashboard/memJvmCpuData/list")
@@ -94,14 +97,14 @@ public class DashboardController extends BaseController {
     public AjaxResult memJvmCpuData() throws UnknownHostException {
         Server server = new Server();
         List<Double> data = server.getDashBoardData();
-        return new AjaxResult().success().put("data", data);
+        return AjaxResult.success().put("data", data);
     }
 
     @GetMapping("/dashboard/visitCount/list")
     @ResponseBody
     public AjaxResult visitCount() {
         List<VisitCount> visitData = dashboardService.getVisitData();
-        return new AjaxResult().success().put("data", visitData);
+        return AjaxResult.success().put("data", visitData);
     }
 
 }

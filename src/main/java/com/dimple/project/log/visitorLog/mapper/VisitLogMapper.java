@@ -1,7 +1,8 @@
 package com.dimple.project.log.visitorLog.mapper;
 
-import com.dimple.project.dashboard.domain.SpiderData;
+import com.dimple.project.dashboard.domain.BusinessCommonData;
 import com.dimple.project.log.visitorLog.domain.VisitLog;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public interface VisitLogMapper {
      *
      * @return
      */
-    List<SpiderData> selectSpiderData();
+    List<BusinessCommonData> selectSpiderData();
 
     /**
      * 根据时间获取当天的访问量
@@ -78,4 +79,20 @@ public interface VisitLogMapper {
      * @return 今天的访客数量
      */
     Integer selectVisitLogTodayCount();
+
+    /**
+     * 获取图表展示的visit记录
+     *
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @return 数据
+     */
+    List<BusinessCommonData> selectVisitLogData(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+    /**
+     * 获取dashboard界面展示的数据
+     *
+     * @return visitlog集合
+     */
+    List<VisitLog> selectVisitData();
 }

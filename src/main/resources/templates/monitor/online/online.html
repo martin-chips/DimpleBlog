@@ -27,7 +27,7 @@
 			</div>
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
-	            <a class="btn btn-danger btn-del disabled" onclick="javascript:batchForceLogout()" shiro:hasPermission="monitor:online:batchForceLogout">
+	            <a class="btn btn-danger btn-del disabled" onclick="javascript:batchForceLogout()" >
 	                <i class="fa fa-sign-out"></i> 强退
 	            </a>
 	        </div>
@@ -39,7 +39,6 @@
 	</div>
 	<div th:include="include :: footer"></div>
 	<script th:inline="javascript">
-		var forceFlag = [[${@permission.hasPermi('monitor:online:forceLogout')}]];
 		var prefix = ctx + "monitor/online";
 
 		$(function() {
@@ -110,7 +109,7 @@
 		            title: '操作',
 		            align: 'center',
 		            formatter: function(value, row, index) {
-		                var msg = '<a class="btn btn-danger btn-xs ' + forceFlag + '" href="#" onclick="forceLogout(\'' + row.sessionId + '\')"><i class="fa fa-sign-out"></i>强退</a> ';
+		                var msg = '<a class="btn btn-danger btn-xs '  + '" href="#" onclick="forceLogout(\'' + row.sessionId + '\')"><i class="fa fa-sign-out"></i>强退</a> ';
 		                return msg;
 		            }
 		        }]

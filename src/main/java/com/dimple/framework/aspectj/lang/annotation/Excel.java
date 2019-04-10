@@ -76,7 +76,18 @@ public @interface Excel {
     Type type() default Type.ALL;
 
     enum Type {
-        ALL(0), EXPORT(1), IMPORT(2);
+        /**
+         * 导入导出
+         */
+        ALL(0),
+        /**
+         * 仅导出
+         */
+        EXPORT(1),
+        /**
+         * 仅导入
+         */
+        IMPORT(2);
         private final int value;
 
         Type(int value) {

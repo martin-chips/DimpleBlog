@@ -1,5 +1,6 @@
 package com.dimple.project.log.visitorLog.service;
 
+import com.dimple.project.dashboard.domain.BusinessCommonData;
 import com.dimple.project.log.visitorLog.domain.VisitLog;
 
 import java.util.List;
@@ -61,4 +62,20 @@ public interface VisitLogService {
      * @return 访客数量
      */
     Integer selectVisitLogTodayCount();
+
+    /**
+     * 获取图表展示的爬虫访问数据
+     *
+     * @return 爬虫数据列表
+     */
+    List<BusinessCommonData> selectSpiderData();
+
+    /**
+     * 获取图表展示的访问统计
+     *
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @return 数据
+     */
+    List<BusinessCommonData> selectVisitLogData(String startTime, String endTime);
 }

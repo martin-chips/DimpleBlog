@@ -1,8 +1,9 @@
 package com.dimple.project.log.logininfor.mapper;
 
-import java.util.List;
-
+import com.dimple.project.dashboard.domain.LogMessage;
 import com.dimple.project.log.logininfor.domain.Logininfor;
+
+import java.util.List;
 
 /**
  * @className: LogininforMapper
@@ -41,4 +42,6 @@ public interface LogininforMapper {
      * @return 结果
      */
     public int cleanLogininfor();
+
+    List<LogMessage> selectLoginInforData();
 }

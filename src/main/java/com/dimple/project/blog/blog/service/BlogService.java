@@ -1,6 +1,7 @@
 package com.dimple.project.blog.blog.service;
 
 import com.dimple.project.blog.blog.domain.Blog;
+import com.dimple.project.dashboard.domain.BusinessCommonData;
 
 import java.util.List;
 
@@ -137,4 +138,13 @@ public interface BlogService {
      * @return list集合
      */
     List<Blog> selectBlogListByTagId(Integer tagId);
+
+    /**
+     * 图表展示博客点击量统计
+     *
+     * @return 博客点击量
+     * @param startTime
+     * @param endTime
+     */
+    List<BusinessCommonData> selectBlogClickData(String startTime, String endTime);
 }

@@ -81,9 +81,10 @@ public class LinkController extends BaseController {
 
     @Log(title = "友链管理", businessType = BusinessType.UPDATE)
     @PutMapping("/display/{display}")
+    @RequiresPermissions("link:link:display")
     @ResponseBody
-    public AjaxResult display(String ids, @PathVariable Integer display) {
-        return toAjax(linkService.changeDisplay(ids, display));
+    public AjaxResult display(Integer id, @PathVariable Integer display) {
+        return toAjax(linkService.changeDisplay(id, display));
     }
 
     /**
@@ -91,6 +92,7 @@ public class LinkController extends BaseController {
      */
     @Log(title = "友链管理", businessType = BusinessType.UPDATE)
     @PutMapping("/processed")
+    @RequiresPermissions("link:link:pass")
     @ResponseBody
     public AjaxResult processed(String ids) {
         return toAjax(linkService.processedLinkByIds(ids));

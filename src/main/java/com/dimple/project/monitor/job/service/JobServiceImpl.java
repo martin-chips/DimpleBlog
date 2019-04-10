@@ -1,14 +1,5 @@
 package com.dimple.project.monitor.job.service;
 
-import java.util.List;
-import javax.annotation.PostConstruct;
-
-import org.quartz.CronTrigger;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.dimple.common.constant.ScheduleConstants;
 import com.dimple.common.exception.job.TaskException;
 import com.dimple.common.utils.security.ShiroUtils;
@@ -17,6 +8,15 @@ import com.dimple.project.monitor.job.domain.Job;
 import com.dimple.project.monitor.job.mapper.JobMapper;
 import com.dimple.project.monitor.job.util.CronUtils;
 import com.dimple.project.monitor.job.util.ScheduleUtils;
+import org.quartz.CronTrigger;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * @className: JobServiceImpl
@@ -78,7 +78,7 @@ public class JobServiceImpl implements IJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = SchedulerException.class)
     public int pauseJob(Job job) throws SchedulerException {
         job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
         job.setUpdateBy(ShiroUtils.getLoginName());
@@ -95,7 +95,7 @@ public class JobServiceImpl implements IJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = SchedulerException.class)
     public int resumeJob(Job job) throws SchedulerException {
         job.setStatus(ScheduleConstants.Status.NORMAL.getValue());
         job.setUpdateBy(ShiroUtils.getLoginName());
@@ -112,7 +112,7 @@ public class JobServiceImpl implements IJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = SchedulerException.class)
     public int deleteJob(Job job) throws SchedulerException {
         int rows = jobMapper.deleteJobById(job.getJobId());
         if (rows > 0) {
@@ -128,7 +128,7 @@ public class JobServiceImpl implements IJobService {
      * @return 结果
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = SchedulerException.class)
     public void deleteJobByIds(String ids) throws SchedulerException {
         Long[] jobIds = Convert.toLongArray(ids);
         for (Long jobId : jobIds) {
@@ -143,7 +143,7 @@ public class JobServiceImpl implements IJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = SchedulerException.class)
     public int changeStatus(Job job) throws SchedulerException {
         int rows = 0;
         String status = job.getStatus();
@@ -161,7 +161,7 @@ public class JobServiceImpl implements IJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = SchedulerException.class)
     public void run(Job job) throws SchedulerException {
         ScheduleUtils.run(scheduler, selectJobById(job.getJobId()));
     }
@@ -172,7 +172,7 @@ public class JobServiceImpl implements IJobService {
      * @param job 调度信息 调度信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = SchedulerException.class)
     public int insertJobCron(Job job) throws SchedulerException, TaskException {
         job.setCreateBy(ShiroUtils.getLoginName());
         job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
@@ -189,7 +189,7 @@ public class JobServiceImpl implements IJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = SchedulerException.class)
     public int updateJobCron(Job job) throws SchedulerException, TaskException {
         job.setUpdateBy(ShiroUtils.getLoginName());
         int rows = jobMapper.updateJob(job);

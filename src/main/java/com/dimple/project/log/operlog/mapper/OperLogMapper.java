@@ -1,8 +1,8 @@
 package com.dimple.project.log.operlog.mapper;
 
-import java.util.List;
-
 import com.dimple.project.log.operlog.domain.OperLog;
+
+import java.util.List;
 
 /**
  * @className: OperLogMapper
@@ -17,7 +17,7 @@ public interface OperLogMapper {
      *
      * @param operLog 操作日志对象
      */
-    public void insertOperlog(OperLog operLog);
+    void insertOperlog(OperLog operLog);
 
     /**
      * 查询系统操作日志集合
@@ -25,7 +25,7 @@ public interface OperLogMapper {
      * @param operLog 操作日志对象
      * @return 操作日志集合
      */
-    public List<OperLog> selectOperLogList(OperLog operLog);
+    List<OperLog> selectOperLogList(OperLog operLog);
 
     /**
      * 批量删除系统操作日志
@@ -33,7 +33,7 @@ public interface OperLogMapper {
      * @param ids 需要删除的数据
      * @return 结果
      */
-    public int deleteOperLogByIds(String[] ids);
+    int deleteOperLogByIds(String[] ids);
 
     /**
      * 查询操作日志详细
@@ -41,10 +41,17 @@ public interface OperLogMapper {
      * @param operId 操作ID
      * @return 操作日志对象
      */
-    public OperLog selectOperLogById(Long operId);
+    OperLog selectOperLogById(Long operId);
 
     /**
      * 清空操作日志
      */
-    public void cleanOperLog();
+    void cleanOperLog();
+
+    /**
+     * 获取dashboard页面展示的操作日志
+     *
+     * @return 操作日志集合
+     */
+    List<OperLog> selectOperLogData();
 }

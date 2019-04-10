@@ -56,11 +56,11 @@ public interface LinkMapper {
     /**
      * 切换友链的显示状态
      *
-     * @param ids     需要切换的友链id
+     * @param id      需要切换的友链id
      * @param display 需要切换的状态
      * @return 受影响的行数
      */
-    int changeDisplay(@Param("ids") Integer[] ids, @Param("display") Integer display);
+    int changeDisplay(@Param("id") Integer id, @Param("display") Integer display);
 
     /**
      * 通过友链申请

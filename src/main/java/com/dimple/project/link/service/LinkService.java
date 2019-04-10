@@ -60,7 +60,7 @@ public interface LinkService {
      * @param display 需要切换到的状态
      * @return
      */
-    int changeDisplay(String ids, Integer display);
+    int changeDisplay(Integer ids, Integer display);
 
     /**
      * 通过友链申请

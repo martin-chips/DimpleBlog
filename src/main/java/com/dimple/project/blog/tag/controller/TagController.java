@@ -32,7 +32,7 @@ public class TagController extends BaseController {
     @RequiresPermissions("blog:tag:view")
     @GetMapping()
     public String tag() {
-        return "/blog/tag/tag";
+        return "blog/tag/tag";
     }
 
     @RequiresPermissions("blog:tag:list")

@@ -103,8 +103,8 @@ public class QiNiuUtils {
             return false;
         } finally {
             delete.close();
-            return true;
         }
+        return true;
     }
 
     public List<String> selectImgList() {

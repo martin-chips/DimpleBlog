@@ -43,14 +43,14 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:config:add">
+            <a class="btn btn-success" onclick="$.operate.add()" >
                 <i class="fa fa-plus"></i> 新增
             </a>
             <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
-               shiro:hasPermission="system:config:edit">
+               >
                 <i class="fa fa-edit"></i> 修改
             </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:config:export">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" >
                 <i class="fa fa-download"></i> 导出
             </a>
         </div>
@@ -61,8 +61,6 @@
 </div>
 <div th:include="include :: footer"></div>
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('system:config:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('system:config:remove')}]];
     var prefix = ctx + "monitor/blacklist";
 
     $(function () {
@@ -112,7 +110,7 @@
                 align: 'center',
                 formatter: function (value, row, index) {
                     var actions = [];
-                    actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="remove(\'' + row.blacklistId + '\')"><i class="fa fa-edit"></i>移除黑名单</a> ');
+                    actions.push('<a class="btn btn-success btn-xs '  + '" href="#" onclick="remove(\'' + row.blacklistId + '\')"><i class="fa fa-edit"></i>移除黑名单</a> ');
                     return actions.join('');
                 }
             }]

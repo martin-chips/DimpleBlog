@@ -4,6 +4,7 @@
 
 <head>
     <title>Dimple的个人博客</title>
+    <meta name="baidu_union_verify" content="7aef518d672b5859ca390cabb140abf3">
     <div th:include="include-front :: head"></div>
     <style>
         .swiper-container {
@@ -17,11 +18,11 @@
         }
 
         .swiper-slide .content {
-            width: 100%;
+            width: 50%;
             max-width: 460px;
             position: absolute;
-            right: 50px;
-            bottom: 30px;
+            right: 60px;
+            bottom: 90px;
             z-index: 20;
         }
 
@@ -52,7 +53,7 @@
             border-radius: 25px;
             display: block;
             background: #008369;
-            /*transition: .2s background;*/
+            transition: .2s background;
             color: #fff;
             font-family: "BerlingskeSans Bd", Tahoma, helvetica, arial, sans-serif;
             text-align: center;
@@ -70,13 +71,12 @@
         }
 
         .img-fix {
-            margin-top: -16%;
-            /*overflow: hidden;*/
-            background-size: cover;
+            margin-top: -25%;
+            overflow: hidden;
         }
 
         .img-inner {
-            transform: translateY(40%);
+            transform: translateY(0%);
         }
 
         .swiper-container img {
@@ -200,6 +200,7 @@
                 margin-right: 10px;
             }
         }
+
     </style>
     <link rel="stylesheet" th:href="@{/front/css/font.css}"/>
 </head>
@@ -210,51 +211,21 @@
 <div class="container">
     <!--最新文章-->
     <section class="mysection">
+        <!--        轮播图开始-->
         <div id="ups-banner">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
+                    <div class="swiper-slide" th:each="carouselMap:${carouselMaps}">
                         <div class="content">
-                            <div class="txt"><h3>Your title</h3>
-                                <p>UPS today announced a series of service </p>
-                                <p>UPS today announced a series of service </p>
+                            <div class="txt"><h3 th:text="${carouselMap.title}"></h3>
+                                <p th:text="${carouselMap.subTitle}"></p>
                             </div>
-                            <a href="#" class="link">Your link</a></div>
+                            <a th:target="${(carouselMap.target=='1')?'_blank':''}"
+                               th:href="${'/f/carouselMap/'+carouselMap.carouselId+'?url='+carouselMap.url}"
+                               class="link">详情点击</a></div>
                         <div class="img-fix">
                             <div class="img-inner">
-                                <img src="http://images.bianxiaofeng.com/a998b9bdf62e2de288c16e5499a4493f.png"
-                                     class="imgs">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="content">
-                            <div class="txt"><h3>Your title</h3>
-                                <p>UPS today announced a series of service </p>
-                                <p>UPS today announced a series of service </p>
-                            </div>
-                            <a href="#" class="link">Your link</a>
-                        </div>
-                        <div class="img-fix">
-                            <div class="img-inner">
-                                <img
-                                        src="http://images.bianxiaofeng.com/cf3fdf8fd09c5c08569c58bd1bf9b5bf.jpg"
-                                        class="imgs">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="content">
-                            <div class="txt"><h3>Your title</h3>
-                                <p>UPS today announced a series of service </p>
-                                <p>UPS today announced a series of service </p></div>
-                            <a href="#" class="link">Your link</a>
-                        </div>
-                        <div class="img-fix">
-                            <div class="img-inner">
-                                <img
-                                        src="http://images.bianxiaofeng.com/ced846eab08578468670a87333e05b5f.jpg"
-                                        class="imgs">
+                                <img th:src="${carouselMap.imgUrl}" class="imgs">
                             </div>
                         </div>
                     </div>
@@ -267,7 +238,7 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </div>
-
+        <!--        轮播图结束-->
 
         <div class="arclist">
             <h4 class="index-title homeh4"><a href="\"><i class="el-certificate"></i>最新文章
