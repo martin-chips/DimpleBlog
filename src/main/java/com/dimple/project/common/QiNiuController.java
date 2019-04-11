@@ -38,9 +38,9 @@ public class QiNiuController {
     @Log(title = "图片管理", businessType = BusinessType.UPLOAD)
     @RequiresPermissions("qiniu:image:upload")
     @ResponseBody
-    public String upload(@RequestParam("file") MultipartFile file) {
+    public AjaxResult upload(@RequestParam("file") MultipartFile file) {
         String s = qiNiuUtils.uploadImgToQiNiu(file);
-        return s;
+        return AjaxResult.success().put("data", s);
     }
 
     @DeleteMapping("/remove")

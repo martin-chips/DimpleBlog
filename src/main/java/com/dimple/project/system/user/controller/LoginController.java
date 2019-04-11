@@ -1,8 +1,9 @@
 package com.dimple.project.system.user.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.dimple.common.utils.ServletUtils;
+import com.dimple.common.utils.StringUtils;
+import com.dimple.framework.web.controller.BaseController;
+import com.dimple.framework.web.domain.AjaxResult;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -11,10 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.dimple.common.utils.ServletUtils;
-import com.dimple.common.utils.StringUtils;
-import com.dimple.framework.web.controller.BaseController;
-import com.dimple.framework.web.domain.AjaxResult;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @className: LoginController
@@ -54,6 +54,6 @@ public class LoginController extends BaseController {
 
     @GetMapping("/unauth")
     public String unauth() {
-        return "/error/403";
+        return "error/403";
     }
 }

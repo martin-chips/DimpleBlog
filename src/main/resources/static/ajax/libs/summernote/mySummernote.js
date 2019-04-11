@@ -72,7 +72,7 @@ function initSummernote() {
                             fileUrl: imgSrc
                         },
                         type: "DELETE",
-                        url: "/api/summernote/image",
+                        url: "/qiniu/image/remove",
                         dataType: "json",
                         success: function (data) {
                         }
@@ -87,13 +87,14 @@ function sendFile($summernote, file) {
     var formData = new FormData();
     formData.append("file", file);
     $.ajax({
-        url: "/api/summernote/image",
+        url: "/qiniu/image/upload",
         data: formData,
         cache: false,
         contentType: false,
         processData: false,
         type: 'POST',
         success: function (result) {
+            console.log(result)
             if (result.code == web_status.SUCCESS) {
                 $summernote.summernote('insertImage', result.data, function ($image) {
                     $image.attr('src', result.data);

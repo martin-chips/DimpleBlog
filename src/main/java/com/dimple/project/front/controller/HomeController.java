@@ -121,7 +121,7 @@ public class HomeController extends BaseController {
         Blog blog = blogService.selectBlogWithTextAndTagsAndCategoryByBlogId(blogId);
         //只能访问是已经发表的文章
         if (!CommonConstant.one.equals(blog.getStatus())) {
-            return "/error/404";
+            return "error/404";
         }
         model.addAttribute("blog", blog);
         model.addAttribute("nextBlog", blogService.selectNextBlogById(blogId));
