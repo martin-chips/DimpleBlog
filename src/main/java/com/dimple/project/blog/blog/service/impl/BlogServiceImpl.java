@@ -115,7 +115,6 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectBlogCountByStatus(status);
     }
 
-    @Cacheable(value = {CachePrefix.FRONT_BLOG_BLOG})
     @Override
     public Blog selectBlogWithTextAndTagsAndCategoryByBlogId(Integer blogId) {
         Blog blog = blogMapper.selectBlogWithTextById(blogId);

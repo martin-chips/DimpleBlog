@@ -58,19 +58,9 @@ public class DashboardServiceImpl implements DashboardService {
         return visitCounts;
     }
 
-    static class LogMessageSort implements Comparator {
-
-        @Override
-        public int compare(Object o1, Object o2) {
-            LogMessage logMessage1 = (LogMessage) o1;
-            LogMessage logMessage2 = (LogMessage) o2;
-            return -logMessage1.getDate().toString().compareTo(logMessage2.getDate().toString());
-        }
-    }
-
     @Override
     public List<LogMessage> selectLogMessage() {
-        List<LogMessage> messages = new LinkedList<>();
+        List<LogMessage> messages = new ArrayList<>();
         //登录日志
         List<LogMessage> logMessages = logininforMapper.selectLoginInforData();
         if (logMessages != null && logMessages.size() != 0) {
@@ -114,8 +104,16 @@ public class DashboardServiceImpl implements DashboardService {
             temp.setMessage(jobLog.getJobName() + " 启动运行");
             messages.add(temp);
         }
-        LogMessageSort sort = new LogMessageSort();
-        Collections.sort(messages, sort);
+        Collections.sort(messages, (logMessage1, logMessage2) -> {
+            long time = logMessage1.getDate().getTime() - logMessage2.getDate().getTime();
+            if (time < 0) {
+                return 1;
+            } else if (time > 0) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
         return messages;
     }
 
