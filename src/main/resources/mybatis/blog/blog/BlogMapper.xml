@@ -102,7 +102,7 @@
 
     <select id="selectBlogList" resultType="com.dimple.project.blog.blog.domain.Blog">
         select blog_id, title, status, weight, support, click, type,
-        create_time, update_time
+        create_time, update_time,header_img
         from bg_blog
         <where>
             <if test="title!=null and title!=''">
