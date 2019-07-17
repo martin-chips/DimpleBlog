@@ -46,20 +46,20 @@ public class HttpUtils {
             }
             log.info("recv - {}", result);
         } catch (ConnectException e) {
-            log.error("调用HttpUtils.sendGet ConnectException, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpUtils.sendGet ConnectException, url=" + url + ",param=" + param, e);
         } catch (SocketTimeoutException e) {
-            log.error("调用HttpUtils.sendGet SocketTimeoutException, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpUtils.sendGet SocketTimeoutException, url=" + url + ",param=" + param, e);
         } catch (IOException e) {
-            log.error("调用HttpUtils.sendGet IOException, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpUtils.sendGet IOException, url=" + url + ",param=" + param, e);
         } catch (Exception e) {
-            log.error("调用HttpsUtil.sendGet Exception, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpsUtil.sendGet Exception, url=" + url + ",param=" + param, e);
         } finally {
             try {
                 if (in != null) {
                     in.close();
                 }
             } catch (Exception ex) {
-                log.error("调用in.close Exception, url=" + url + ",param=" + param, ex);
+                log.error("transfer in.close Exception, url=" + url + ",param=" + param, ex);
             }
         }
         return result.toString();
@@ -98,13 +98,13 @@ public class HttpUtils {
             }
             log.info("recv - {}", result);
         } catch (ConnectException e) {
-            log.error("调用HttpUtils.sendPost ConnectException, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpUtils.sendPost ConnectException, url=" + url + ",param=" + param, e);
         } catch (SocketTimeoutException e) {
-            log.error("调用HttpUtils.sendPost SocketTimeoutException, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpUtils.sendPost SocketTimeoutException, url=" + url + ",param=" + param, e);
         } catch (IOException e) {
-            log.error("调用HttpUtils.sendPost IOException, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpUtils.sendPost IOException, url=" + url + ",param=" + param, e);
         } catch (Exception e) {
-            log.error("调用HttpsUtil.sendPost Exception, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpsUtil.sendPost Exception, url=" + url + ",param=" + param, e);
         } finally {
             try {
                 if (out != null) {
@@ -114,7 +114,7 @@ public class HttpUtils {
                     in.close();
                 }
             } catch (IOException ex) {
-                log.error("调用in.close Exception, url=" + url + ",param=" + param, ex);
+                log.error("transfer in.close Exception, url=" + url + ",param=" + param, ex);
             }
         }
         return result.toString();
@@ -152,13 +152,13 @@ public class HttpUtils {
             conn.disconnect();
             br.close();
         } catch (ConnectException e) {
-            log.error("调用HttpUtils.sendSSLPost ConnectException, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpUtils.sendSSLPost ConnectException, url=" + url + ",param=" + param, e);
         } catch (SocketTimeoutException e) {
-            log.error("调用HttpUtils.sendSSLPost SocketTimeoutException, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpUtils.sendSSLPost SocketTimeoutException, url=" + url + ",param=" + param, e);
         } catch (IOException e) {
-            log.error("调用HttpUtils.sendSSLPost IOException, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpUtils.sendSSLPost IOException, url=" + url + ",param=" + param, e);
         } catch (Exception e) {
-            log.error("调用HttpsUtil.sendSSLPost Exception, url=" + url + ",param=" + param, e);
+            log.error("transfer HttpsUtil.sendSSLPost Exception, url=" + url + ",param=" + param, e);
         }
         return result.toString();
     }
