@@ -1,4 +1,4 @@
-package com.dimple.project.common;
+package com.dimple.project.common.controller;
 
 import com.dimple.common.utils.file.QiNiuUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;

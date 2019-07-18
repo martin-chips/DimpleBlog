@@ -1,4 +1,4 @@
-package com.dimple.project.common;
+package com.dimple.project.common.controller;
 
 import com.dimple.common.constant.CommonConstant;
 import com.dimple.common.utils.StringUtils;
