@@ -805,7 +805,7 @@
                         $.operate.get(url);
                     } else {
                         var data = {"ids": id};
-                        $.operate.submit(url, "post", "json", data);
+                        $.operate.submit(url, "delete", "json", data);
                     }
                 });
 
@@ -820,14 +820,14 @@
                 $.modal.confirm("确认要删除选中的" + rows.length + "条数据吗?", function () {
                     var url = $.table._option.removeUrl;
                     var data = {"ids": rows.join()};
-                    $.operate.submit(url, "post", "json", data);
+                    $.operate.submit(url, "delete", "json", data);
                 });
             },
             // 清空信息
             clean: function () {
                 $.modal.confirm("确定清空所有" + $.table._option.modalName + "吗？", function () {
                     var url = $.table._option.cleanUrl;
-                    $.operate.submit(url, "post", "json", "");
+                    $.operate.submit(url, "delete", "json", "");
                 });
             },
             // 添加信息
