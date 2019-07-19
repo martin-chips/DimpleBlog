@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @className: RuoYiConfig
+ * @className: Config
  * @description: 读取项目相关配置
  * @auther: Dimple
  * @Date: 2019/3/13

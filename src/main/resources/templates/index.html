@@ -12,33 +12,16 @@
     <![endif]-->
     <link th:href="@{favicon.ico}" rel="stylesheet"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/animate.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link th:href="@{/css/skins.css}" rel="stylesheet"/>
     <link th:href="@{/dimple/css/ui.css}" rel="stylesheet"/>
-    <style type="text/css">
-        .nav > li:hover .dropdown-menu {
-            display: block;
-        }
-
-        #content-main.max {
-            height: calc(100% - 110px);
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            left: 0px;
-            position: absolute;
-            top: 0px;
-            z-index: 9998;
-            margin: 0;
-        }
-    </style>
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden"
       th:classappend="${@config.getKey('sys.index.skinName')}">
 <div id="wrapper">
-
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="nav-close">
@@ -67,7 +50,8 @@
                     </div>
                 </li>
                 <li class="active">
-                    <a href="/dashboard/main" class="menuItem"><i class="fa fa-home"></i> <span class="nav-label">主页</span> </a>
+                    <a href="/dashboard/main" class="menuItem"><i class="fa fa-home"></i> <span
+                            class="nav-label">主页</span> </a>
                 </li>
                 <li th:each="menu : ${menus}">
                     <a href="#">
@@ -109,7 +93,7 @@
                             class="fa fa-question-circle"></i> 技术支持</a></li>
                     <li><a title="全屏显示" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏显示</a></li>
                     <li class="dropdown user-menu">
-                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-hover="dropdown">
                             <img th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{/profile/avatar/} + ${user.avatar}"
                                  class="user-image">
                             <span class="hidden-xs">[[${user.userName}]]</span>
@@ -176,6 +160,7 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/jquery.contextMenu.min.js}"></script>
 <script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
 <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
 <script th:src="@{/dimple/js/ui.js}"></script>

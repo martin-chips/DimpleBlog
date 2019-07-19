@@ -1,7 +1,6 @@
 /**
- * bootstrapTreeTable
- *
- * @author swifly
+ * 基于bootstrapTreeTable/bootstrap-table-treegrid修改
+ * Copyright (c) 2019 Dimple
  */
 (function($) {
     "use strict";
@@ -71,6 +70,12 @@
             var $rightToolbar = $('<div class="btn-group tool-right">');
             $toolbar.append($rightToolbar);
             target.parent().before($toolbar);
+            // 是否显示检索信息
+            if (options.showSearch) {
+                var $searchBtn = $('<button class="btn btn-default btn-outline" type="button" aria-label="search" title="搜索"><i class="glyphicon glyphicon-search"></i></button>');
+                $rightToolbar.append($searchBtn);
+                registerSearchBtnClickEvent($searchBtn);
+            }
             // 是否显示刷新按钮
             if (options.showRefresh) {
                 var $refreshBtn = $('<button class="btn btn-default btn-outline" type="button" aria-label="refresh" title="刷新"><i class="glyphicon glyphicon-repeat"></i></button>');
@@ -234,7 +239,8 @@
         }
         // 缓存并格式化数据
         var formatData = function(data) {
-            var _root = options.rootIdValue ? options.rootIdValue : null
+            var _root = options.rootIdValue ? options.rootIdValue : null;
+            var firstCode = data[0][options.parentCode];
             $.each(data, function(index, item) {
                 // 添加一个默认属性，用来判断当前节点有没有被显示
                 item.isShow = false;
@@ -243,6 +249,7 @@
                 var _defaultRootFlag = item[options.parentCode] == '0' ||
                     item[options.parentCode] == 0 ||
                     item[options.parentCode] == null ||
+                    item[options.parentCode] == firstCode ||
                     item[options.parentCode] == '';
                 if (!item[options.parentCode] || (_root ? (item[options.parentCode] == options.rootIdValue) : _defaultRootFlag)) {
                     if (!target.data_list["_root_"]) {
@@ -334,13 +341,13 @@
                     }
                     // 增加formatter渲染
                     if (column.formatter) {
-                        $td.html(column.formatter.call(this, item[column.field], item, index));
+                        $td.html(column.formatter.call(this, getItemField(item, column.field), item, index));
                     } else {
                         if(options.showTitle){
                             // 只在字段没有formatter时才添加title属性
                             $td.attr("title",item[column.field]);
                         }
-                        $td.text(item[column.field]);
+                        $td.text(getItemField(item, column.field));
                     }
                     if (options.expandColumn == index) {
                         if (!isP) {
@@ -356,6 +363,12 @@
                 }
             });
             return $tr;
+        }
+        // 检索信息按钮点击事件
+        var registerSearchBtnClickEvent = function(btn) {
+            $(btn).off('click').on('click', function () {
+                $(".search-collapse").slideToggle();
+            });
         }
         // 注册刷新按钮点击事件
         var registerRefreshBtnClickEvent = function(btn) {
@@ -384,6 +397,15 @@
                         _ipt.prop('checked', true);
                         target.find("tbody").find("tr").removeClass("treetable-selected");
                         $(this).addClass("treetable-selected");
+                    } else if (_ipt.attr("type") == "checkbox") {
+                    	if (_ipt.prop('checked')) {
+                    		_ipt.prop('checked', true);
+                    		target.find("tbody").find("tr").removeClass("treetable-selected");
+                    		$(this).addClass("treetable-selected");
+                    	} else {
+                    		_ipt.prop('checked', false);
+                    		target.find("tbody").find("tr").removeClass("treetable-selected");
+                    	}
                     } else {
                         if (_ipt.prop('checked')) {
                             _ipt.prop('checked', false);
@@ -573,6 +595,19 @@
                 $input.prop("checked", '');
             }
         }
+        // 解析数据，支持多层级访问
+        var getItemField = function (item, field) {
+            var value = item;
+
+            if (typeof field !== 'string' || item.hasOwnProperty(field)) {
+                return item[field];
+            }
+            var props = field.split('.');
+            for (var p in props) {
+                value = value && value[props[p]];
+            }
+            return value;
+        };
         // 初始化
         init();
         return target;
@@ -661,6 +696,7 @@
         toolbar: null,             // 顶部工具条
         height: 0,                 // 表格高度
         showTitle: true,           // 是否采用title属性显示字段内容（被formatter格式化的字段不会显示）
+        showSearch: true,          // 是否显示检索信息
         showColumns: true,         // 是否显示内容列下拉框
         showRefresh: true,         // 是否显示刷新按钮
         expanderExpandedClass: 'glyphicon glyphicon-chevron-down', // 展开的按钮的图标

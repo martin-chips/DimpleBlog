@@ -9,6 +9,12 @@
 	background-color: #3c8dbc
 }
 
+.skin-blue .navbar-default .nav>li.selected>a,
+.skin-blue .navbar-default .nav>li.selected>a:focus {
+	background-color: #1890ff;
+	color: rgba(255,255,255,1);
+}
+
 .skin-blue .navbar .nav>li>a {
 	color: #fff
 }
@@ -93,7 +99,7 @@
 	border-left: 3px solid #3c8dbc;
 }
 
-.skin-blue .nav>li.active:last-child {
+.skin-blue .nav>li.active>ul li.active {
 	border-left: none;
 }
 
@@ -170,7 +176,7 @@
 }
 
 .skin-blue .content-tabs {
-	border-bottom: solid 2px #e7eaec;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .skin-blue.layout-top-nav>.logo {
@@ -188,8 +194,14 @@
 	background-color: #00a65a;
 }
 
+.skin-green .navbar-default .nav>li.selected>a,
+.skin-green .navbar-default .nav>li.selected>a:focus {
+	background-color: #52c41a;
+	color: rgba(255,255,255,1);
+}
+
 .skin-green .content-tabs {
-	border-bottom: solid 2px #e7eaec;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .skin-green .navbar .nav>li>a {
@@ -276,7 +288,7 @@
 	border-left: 3px solid #00a65a;
 }
 
-.skin-green .nav>li.active:last-child {
+.skin-green .nav>li.active>ul li.active {
 	border-left: none;
 }
 
@@ -345,6 +357,12 @@
 /** 红色主题 skin-red **/
 .skin-red .navbar {
 	background-color: #dd4b39
+}
+
+.skin-red .navbar-default .nav>li.selected>a,
+.skin-red .navbar-default .nav>li.selected>a:focus {
+	background-color: #f5222d;
+	color: rgba(255,255,255,1);
 }
 
 .skin-red .navbar .nav>li>a {
@@ -431,12 +449,12 @@
 	background: #293846;
 }
 
-.skin-red .nav>li.active:last-child {
+.skin-red .nav>li.active>ul li.active {
 	border-left: none;
 }
 
 .skin-red .content-tabs {
-	border-bottom: solid 2px #e7eaec;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .skin-red .nav>li>.treeview-menu {
@@ -504,6 +522,12 @@
 /** 黄色主题 skin-red **/
 .skin-yellow .navbar {
 	background-color: #f39c12
+}
+
+.skin-yellow .navbar-default .nav>li.selected>a,
+.skin-yellow .navbar-default .nav>li.selected>a:focus {
+	background-color: #faad14;
+	color: rgba(255,255,255,1);
 }
 
 .skin-yellow .navbar .nav>li>a {
@@ -590,13 +614,12 @@
 	border-left: 3px solid #f39c12;
 }
 
-.skin-yellow .nav>li.active:last-child {
+.skin-yellow .nav>li.active>ul li.active {
 	border-left: none;
 }
 
 .skin-yellow .content-tabs {
-	
-	 border-bottom: solid 2px #e7eaec;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .skin-yellow .nav>li>.treeview-menu {
@@ -664,6 +687,12 @@
 /** 紫色主题 skin-purple **/
 .skin-purple .navbar {
 	background-color: #605ca8
+}
+
+.skin-purple .navbar-default .nav>li.selected>a,
+.skin-purple .navbar-default .nav>li.selected>a:focus {
+	background-color: #722ed1;
+	color: rgba(255,255,255,1);
 }
 
 .skin-purple .navbar .nav>li>a {
@@ -750,13 +779,12 @@
 	border-left: 3px solid #605ca8;
 }
 
-.skin-purple .nav>li.active:last-child {
+.skin-purple .nav>li.active>ul li.active {
 	border-left: none;
 }
 
 .skin-purple .content-tabs {
-	
-	 border-bottom: solid 2px #e7eaec;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .skin-purple .nav>li>.treeview-menu {

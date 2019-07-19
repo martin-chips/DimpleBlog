@@ -8,7 +8,7 @@ $(document).ready(function(){
 	//手机号码验证身份证正则合并：(^\d{15}$)|(^\d{17}([0-9]|X)$)
 	jQuery.validator.addMethod("isPhone",function(value,element){
 		var length = value.length;
-		var phone=/^1[3|4|5|6|7|8][0-9]\d{8}$/;
+		var phone=/^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
 		return this.optional(element)||(length == 11 && phone.test(value));
 	},"请填写正确的11位手机号");
 	//电话号码验证
@@ -37,6 +37,17 @@ $(document).ready(function(){
 		var birth = /^(19|20)\d{2}-(1[0-2]|0?[1-9])-(0?[1-9]|[1-2][0-9]|3[0-1])$/;
 		return this.optional(element) || (birth).test(value);
 	},"出生日期格式示例2000-01-01");
+	//校验IP地址
+	jQuery.validator.addMethod("isIp",function(value,element){
+		var ip = /^(?:(?:2[0-4][0-9]\.)|(?:25[0-5]\.)|(?:1[0-9][0-9]\.)|(?:[1-9][0-9]\.)|(?:[0-9]\.)){3}(?:(?:2[0-4][0-9])|(?:25[0-5])|(?:1[0-9][0-9])|(?:[1-9][0-9])|(?:[0-9]))$/;
+		return this.optional(element) || (ip).test(value);
+	},"IP地址格式示例127.0.0.1");
+	jQuery.validator.addMethod("notEqual", function(value, element, param) {
+        return value != param;
+    }, $.validator.format("输入值不允许为{0}"));
+	jQuery.validator.addMethod("gt", function(value, element, param) {
+        return value > param;
+    }, $.validator.format("输入值必须大于{0}"));
 	//校验新旧密码是否相同
 	jQuery.validator.addMethod("isdiff",function(){
 		var p1=$("#pwdOld").val();

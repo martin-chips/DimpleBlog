@@ -1,18 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<meta charset="utf-8">
-<head th:include="include :: header"></head>
-<link th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
-<link rel="stylesheet" href="/static/ajax/libs/summernote/summernote.css"
-      th:href="@{/ajax/libs/summernote/summernote.css}">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('新增博文')"/>
+    <th:block th:include="include :: layout-latest-css"/>
+    <th:block th:include="include :: summernote-css"/>
+</head>
 <link rel="stylesheet" href="/static/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.css"
       th:href="@{/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.css}">
-<style>
-    .linksDetails li {
-        margin-top: 10px;
-    }
-</style>
 <body class="gray-bg">
 <div class="ui-layout-west">
     <div class="main-content">
@@ -116,20 +110,12 @@
     </div>
 </div>
 
-<div th:include="include :: footer"></div>
-<script src="/static/ajax/libs/summernote/summernote.min.js"
-        th:src="@{/ajax/libs/summernote/summernote.min.js}"></script>
-<script src="/static/ajax/libs/summernote/summernote-zh-CN.js"
-        th:src="@{/ajax/libs/summernote/summernote-zh-CN.js}"></script>
-<script src="/static/ajax/libs/summernote/summernote-ext-highlignt.js"
-        th:src="@{/ajax/libs/summernote/summernote-ext-highlignt.js}"></script>
-<script src="/static/ajax/libs/summernote/summernote-add-class.js"
-        th:src="@{/ajax/libs/summernote/summernote-add-class.js}"></script>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: summernote-js"/>
+<th:block th:include="include :: layout-latest-js"/>
 <script src="/static/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.min.js"
         th:src="@{/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.min.js}"></script>
-<script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
 <script src="/static/ajax/libs/summernote/mySummernote.js" th:src="@{/ajax/libs/summernote/mySummernote.js}"></script>
-
 <script>
     $(function () {
         $("#blogAddForm").formValidate({
@@ -183,6 +169,7 @@
         //初始化分栏
         $('body').layout({initClosed: panehHidden, west__size: 350});
     });
+
     function changeImg() {
         var title = "上传图片";
         var url = "/blog/blog/img";
@@ -228,10 +215,10 @@
             }
         });
     }
-    
+
     //获取表单数据
     function getData() {
-        var headerImg= $("#header")[0].src;
+        var headerImg = $("#header")[0].src;
         var title = $("input[name='title']").val();
         var summary = $("input[name='summary']").val();
         var tags = $("#tags").val();

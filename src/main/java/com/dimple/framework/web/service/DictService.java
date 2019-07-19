@@ -9,7 +9,7 @@ import com.dimple.project.system.dict.service.IDictDataService;
 
 /**
  * @className: DictService
- * @description: RuoYi首创 html调用 thymeleaf 实现字典读取
+ * @description: html调用 thymeleaf 实现字典读取
  * @auther: Dimple
  * @Date: 2019/3/13
  * @Version: 1.1

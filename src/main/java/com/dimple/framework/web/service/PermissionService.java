@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @className: PermissionService
- * @description: RuoYi首创 js调用 thymeleaf 实现按钮权限可见性
+ * @description:  js调用 thymeleaf 实现按钮权限可见性
  * @auther: Dimple
  * @Date: 2019/3/13
  * @Version: 1.1

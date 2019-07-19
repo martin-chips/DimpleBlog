@@ -6,7 +6,7 @@ import com.dimple.project.system.config.service.IConfigService;
 
 /**
  * @className: ConfigService
- * @description: RuoYi首创 html调用 thymeleaf 实现参数管理
+ * @description:  html调用 thymeleaf 实现参数管理
  * @auther: Dimple
  * @Date: 2019/3/13
  * @Version: 1.1

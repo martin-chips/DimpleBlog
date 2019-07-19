@@ -1,7 +1,7 @@
 /**
  * 基于bootstrap-table-fixed-columns修改
  * 支持左右列冻结
- * Copyright (c) 2019 dimple
+ * Copyright (c) 2019 Dimple
  */
 (function ($) {
     'use strict';
@@ -23,7 +23,7 @@
         this.timeoutBodyColumns_ = 0;
         if (this.options.fixedColumns) {
             this.$fixedBody = $([
-                '<div class="fixed-table-column" style="position: absolute; background-color: #fff; border-right:1px solid #ddd;">',
+                '<div class="left-fixed-table-columns">',
                 '<table>',
                 '<thead></thead>',
                 '<tbody></tbody>',
@@ -38,17 +38,19 @@
         }
         if (this.options.rightFixedColumns) {
             this.$rightfixedBody = $([
-                '<div class="fixed-table-column" style="position: absolute;right:0px; background-color: #fff; border-right:1px solid #ddd;">',
+                '<div class="right-fixed-table-columns">',
                 '<table>',
                 '<thead></thead>',
-                '<tbody></tbody>',
+                '<tbody style="background-color: #fff;"></tbody>',
                 '</table>',
                 '</div>'].join(''));
-
             this.$rightfixedBody.find('table').attr('class', this.$el.attr('class'));
             this.$rightfixedHeaderColumns = this.$rightfixedBody.find('thead');
             this.$rightfixedBodyColumns = this.$rightfixedBody.find('tbody');
             this.$tableBody.before(this.$rightfixedBody);
+            if (this.options.fixedColumns) {
+                $('.right-fixed-table-columns').attr('style','right:0px');
+            }
         }
     };
 
@@ -60,9 +62,9 @@
         }
         this.initFixedColumns();
 
-        var $ltr = this.$header.find('tr:eq(0)').clone(),
+        var $ltr = this.$header.find('tr:eq(0)').clone(true),
             $rtr = this.$header.find('tr:eq(0)').clone(),
-            $lths = $ltr.clone().find('th'),
+            $lths = $ltr.clone(true).find('th'),
             $rths = $rtr.clone().find('th');
 
         $ltr.html('');
@@ -78,9 +80,14 @@
         //左边列冻结
         if (this.options.fixedColumns) {
             for (var i = 0; i < this.options.fixedNumber; i++) {
-                $ltr.append($lths.eq(i).clone());
+                $ltr.append($lths.eq(i).clone(true));
             }
             this.$fixedHeaderColumns.html('').append($ltr);
+            this.$selectAll = $ltr.find('[name="btSelectAll"]');
+            this.$selectAll.on('click', function () {
+            	var checked = $(this).prop('checked');
+            	$(".left-fixed-table-columns input[name=btSelectItem]").filter(':enabled').prop('checked', checked);
+            });
         }
     };
 
@@ -95,12 +102,12 @@
         if (this.options.fixedColumns) {
             this.$fixedBodyColumns.html('');
             this.$body.find('> tr[data-index]').each(function () {
-                var $tr = $(this).clone(),
-                    $tds = $tr.clone().find('td');
+                var $tr = $(this).clone(true),
+                    $tds = $tr.clone(true).find('td');
 
                 $tr.html('');
                 for (var i = 0; i < that.options.fixedNumber; i++) {
-                    $tr.append($tds.eq(i).clone());
+                    $tr.append($tds.eq(i).clone(true));
                 }
                 that.$fixedBodyColumns.append($tr);
             });
@@ -202,6 +209,16 @@
             this.$body.find('> tr').each(function (i) {
                 that.$fixedBody.find('tbody tr:eq(' + i + ')').height($(this).height());
             });
+            
+            $.btTable.on("check.bs.table uncheck.bs.table", function (e, rows, $element) {
+        	    var index= $element.data('index');
+                $(this).find('.bs-checkbox').find('input[data-index="' + index + '"]').prop("checked", true);
+                var selectFixedItem = $('.left-fixed-table-columns input[name=btSelectItem]');
+                var checkAll = selectFixedItem.filter(':enabled').length &&
+                    selectFixedItem.filter(':enabled').length ===
+                	selectFixedItem.filter(':enabled').filter(':checked').length;
+                $(".left-fixed-table-columns input[name=btSelectAll]").prop('checked', checkAll);
+        	});
 
             //// events
             this.$tableBody.on('scroll', function () {

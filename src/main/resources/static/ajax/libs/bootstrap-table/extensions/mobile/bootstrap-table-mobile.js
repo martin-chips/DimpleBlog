@@ -1,7 +1,7 @@
 /**
  * 基于bootstrap-table-mobile修改
  * 修正部分iPhone手机不显示卡片视图
- * Copyright (c) 2019 dimple
+ * Copyright (c) 2019 Dimple
  */
 !function ($) {
     
