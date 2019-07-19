@@ -5,8 +5,6 @@
     <th:block th:include="include :: layout-latest-css"/>
     <th:block th:include="include :: summernote-css"/>
 </head>
-<link rel="stylesheet" href="/static/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.css"
-      th:href="@{/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.css}">
 <body class="gray-bg">
 <div class="ui-layout-west">
     <div class="main-content">
@@ -113,9 +111,6 @@
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: summernote-js"/>
 <th:block th:include="include :: layout-latest-js"/>
-<script src="/static/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.min.js"
-        th:src="@{/ajax/libs/bootstrap-tags-input/bootstrap-tagsinput.min.js}"></script>
-<script src="/static/ajax/libs/summernote/mySummernote.js" th:src="@{/ajax/libs/summernote/mySummernote.js}"></script>
 <script>
     $(function () {
         $("#blogAddForm").formValidate({

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head th:include="include :: header"></head>
+<head>
+    <th:block th:include="include :: header('图片上传')"/>
+</head>
 <link rel="stylesheet" href="/static/ajax/libs/webUploader/webuploader.css"
       th:href="@{/ajax/libs/webUploader/webuploader.css}">
 <link rel="stylesheet" href="/static/ajax/libs/webUploader/webuploader-custom.css"
@@ -79,7 +81,7 @@
     </div>
 </div>
 </div>
-<div th:include="include :: footer"></div>
+<th:block th:include="include :: footer"/>
 
 <script src="/static/ajax/libs/webUploader/webuploader.nolog.js"
         th:src="@{/ajax/libs/webUploader/webuploader.nolog.js}"></script>

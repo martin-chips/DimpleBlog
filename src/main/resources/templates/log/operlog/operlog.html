@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<meta charset="utf-8">
-<head th:include="include :: header"></head>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('操作日志列表')"/>
+</head>
 <body class="gray-bg">
 
 <div class="container-div">
@@ -63,7 +63,7 @@
     </div>
 </div>
 
-<div th:include="include :: footer"></div>
+<th:block th:include="include :: footer"/>
 <script th:inline="javascript">
     var datas = [[${@dict.getType('sys_oper_type')}]];
     var prefix = ctx + "log/operlog";

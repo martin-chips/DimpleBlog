@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<meta charset="utf-8">
-<head th:include="include :: header"></head>
+<head>
+    <th:block th:include="include :: header('图片管理')"/>
+</head>
 <style>
     .card {
         margin-bottom: 1.25rem;
@@ -60,6 +61,6 @@
         </div>
     </div>
 </div>
-<div th:include="include :: footer"></div>
+<th:block th:include="include :: footer"/>
 </body>
 </html>

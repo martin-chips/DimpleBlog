@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="common :: common-head"></head>
+<head>
+    <th:block th:include="include :: header('未处理友链')"/>
+</head>
 <body class="gray-bg">
 <div class="col-sm-2">
     <div class="ibox float-e-margins">
@@ -92,8 +94,9 @@
         </div>
     </div>
 </div>
-<div th:include="common :: common-footer"></div>
-<script src="/static/js/custom/links/links_table_unhandled.js" th:src="@{/js/custom/links/links_table_unhandled.js}"></script>
+<th:block th:include="include :: footer"/>
+<script src="/static/js/custom/links/links_table_unhandled.js"
+        th:src="@{/js/custom/links/links_table_unhandled.js}"></script>
 </body>
 
 </html>

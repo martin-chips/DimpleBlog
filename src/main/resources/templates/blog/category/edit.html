@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<meta charset="utf-8">
-<head th:include="include :: header"></head>
+<head>
+    <th:block th:include="include :: header('编辑列表')"/>
+</head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="categoryAddForm" name="form-config-add">
@@ -9,7 +10,8 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">名称：</label>
             <div class="col-sm-8">
-                <input id="categoryTitle" name="categoryTitle" class="form-control" type="text" th:value="${category.categoryTitle}">
+                <input id="categoryTitle" name="categoryTitle" class="form-control" type="text"
+                       th:value="${category.categoryTitle}">
             </div>
         </div>
         <div class="form-group">
@@ -28,7 +30,8 @@
             <label class="col-sm-3 control-label">推荐：</label>
             <div class="col-sm-8">
                 <div class="onoffswitch">
-                    <input type="checkbox"  th:checked="${category.support == '1' ? true : false}" class="onoffswitch-checkbox" id="support">
+                    <input type="checkbox" th:checked="${category.support == '1' ? true : false}"
+                           class="onoffswitch-checkbox" id="support">
                     <label class="onoffswitch-label" for="support">
                         <span class="onoffswitch-inner"></span>
                         <span class="onoffswitch-switch"></span>
@@ -46,7 +49,7 @@
         </div>
     </form>
 </div>
-<div th:include="include::footer"></div>
+<th:block th:include="include :: footer"/>
 <script type="text/javascript">
     var prefix = ctx + "blog/category";
 

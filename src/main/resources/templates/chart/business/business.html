@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head th:include="include :: header"></head>
+<head>
+    <th:block th:include="include :: header('业务统计图表')"/>
+</head>
 
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -136,7 +138,7 @@
         </div>
     </div>
 </div>
-<div th:include="include :: footer"></div>
+<th:block th:include="include :: footer"/>
 
 <script src="/static/ajax/libs/echarts/echarts.min.js"
         th:src="@{/ajax/libs/echarts/echarts.min.js}"></script>
