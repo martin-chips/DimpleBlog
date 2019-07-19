@@ -81,7 +81,7 @@
 <script type="text/javascript">
     var prefix = ctx + "link/link";
 
-    $("#linkAddForm").formValidate({
+    $("#linkAddForm").validate({
         rules: {
             title: {
                 required: true,
@@ -139,7 +139,7 @@
             var display = $("input[id='display']").is(':checked') == true ? 1 : 0;
             var data = $('#linkUpdateForm').serializeArray();
             data.push({"name": "display", "value": display})
-            $.operate.saveTabPut(prefix + "/edit", data);
+            $.operate.updateTab(prefix + "/edit", data);
         }
     }
 </script>

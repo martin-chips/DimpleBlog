@@ -66,7 +66,7 @@
 <script type="text/javascript">
     var prefix = ctx + "system/carouselMap";
 
-    $("#carouselMapUpdateForm").formValidate({
+    $("#carouselMapUpdateForm").validate({
         rules: {
             imgUrl: {
                 required: true,
@@ -101,7 +101,7 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.saveTabPut(prefix + "/edit", $('#carouselMapUpdateForm').serialize());
+            $.operate.updateTab(prefix + "/edit", $('#carouselMapUpdateForm').serialize());
         }
     }
 </script>

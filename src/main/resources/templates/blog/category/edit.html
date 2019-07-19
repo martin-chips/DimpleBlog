@@ -53,7 +53,7 @@
 <script type="text/javascript">
     var prefix = ctx + "blog/category";
 
-    $("#categoryAddForm").formValidate({
+    $("#categoryAddForm").validate({
         rules: {
             categoryTitle: {
                 required: true,
@@ -90,7 +90,7 @@
             var support = $("input[id='support']").is(':checked') == true ? 1 : 0;
             var data = $('#categoryAddForm').serializeArray();
             data.push({"name": "support", "value": support})
-            $.operate.saveTabPut(prefix + "/edit", data);
+            $.operate.updateTab(prefix + "/edit", data);
         }
     }
 </script>

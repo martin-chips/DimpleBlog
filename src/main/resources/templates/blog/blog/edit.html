@@ -130,12 +130,12 @@
 </script>
 <script>
     function submitHandler() {
-        $.operate.saveTabPut("/blog/blog/edit", getData());
+        $.operate.updateTab("/blog/blog/edit", getData());
     }
 
     $(function () {
         $("#summernote").summernote("code", $("#blogContentInit").val());
-        $("#blogUpdateForm").formValidate({
+        $("#blogUpdateForm").validate({
             rules: {
                 headerImg: {
                     required: true,

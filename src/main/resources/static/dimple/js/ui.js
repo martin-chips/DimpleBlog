@@ -34,7 +34,7 @@
                     showColumns: true,
                     showToggle: true,
                     showExport: false,
-                    clickToSelect: false,
+                    clickToSelect: true,
                     rememberSelected: false,
                     fixedColumns: false,
                     fixedNumber: 0,
@@ -943,6 +943,25 @@
                 var config = {
                     url: url,
                     type: "post",
+                    dataType: "json",
+                    data: data,
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                    },
+                    success: function (result) {
+                        if (typeof callback == "function") {
+                            callback(result);
+                        }
+                        $.operate.successTabCallback(result);
+                    }
+                };
+                $.ajax(config)
+            },
+            // 修改选项卡信息
+            updateTab: function (url, data, callback) {
+                var config = {
+                    url: url,
+                    type: "put",
                     dataType: "json",
                     data: data,
                     beforeSend: function () {
