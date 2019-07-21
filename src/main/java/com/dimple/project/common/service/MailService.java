@@ -1,44 +1,47 @@
 package com.dimple.project.common.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
-
 /**
  * @className: MailService
- * @description: 邮件发送
+ * @description:
  * @auther: Dimple
- * @date: 07/18/19
+ * @date: 2019/7/18
  * @version: 1.0
  */
-@Service
-@Slf4j
-public class MailService {
-
-    @Autowired
-    private JavaMailSender mailSender;
-
-    @Value("${spring.mail.username}")
-    private String from;
-
+public interface MailService {
     /**
      * 发送纯文本邮件
      *
-     * @param to
-     * @param subject
-     * @param content
+     * @param to      邮件地址
+     * @param subject 主题
+     * @param content 内容
      */
-    public void sendSimpleMail(String to, String subject, String content) {
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(from);
-        simpleMailMessage.setTo(to);
-        simpleMailMessage.setSubject(subject);
-        simpleMailMessage.setText(content);
-        log.info("Send simple email->{}", simpleMailMessage);
-        mailSender.send(simpleMailMessage);
-    }
+    void sendSimpleMail(String to, String subject, String content);
+
+    /**
+     * 发送HTML邮件
+     *
+     * @param to      收件人
+     * @param subject 主题
+     * @param content 内容
+     */
+    void sendHtmlMail(String to, String subject, String content);
+
+    /**
+     * 发送带附件的邮件
+     *
+     * @param to      收件人
+     * @param subject 主题
+     * @param content 内容
+     */
+    void sendAttachmentMail(String to, String subject, String content, String filePath, boolean isHTML);
+
+    /**
+     * 发送邮件模板
+     *
+     * @param to      收件人
+     * @param subject 主题
+     * @param content 内容
+     */
+    void sendTemplateEmail(String to, String subject, String content);
 
 }
