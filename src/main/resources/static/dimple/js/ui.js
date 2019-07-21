@@ -766,6 +766,9 @@
             get: function (url, callback) {
                 $.operate.submit(url, "get", "json", "", callback);
             },
+            put: function (url, callback) {
+                $.operate.submit(url, "put", "json", "", callback);
+            },
             // 详细信息
             detail: function (id, width, height) {
                 var _url = $.operate.detailUrl(id);
@@ -897,6 +900,25 @@
                 var config = {
                     url: url,
                     type: "post",
+                    dataType: "json",
+                    data: data,
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                        $.modal.disable();
+                    },
+                    success: function (result) {
+                        if (typeof callback == "function") {
+                            callback(result);
+                        }
+                        $.operate.successCallback(result);
+                    }
+                };
+                $.ajax(config)
+            },
+            update: function (url, data, callback) {
+                var config = {
+                    url: url,
+                    type: "put",
                     dataType: "json",
                     data: data,
                     beforeSend: function () {

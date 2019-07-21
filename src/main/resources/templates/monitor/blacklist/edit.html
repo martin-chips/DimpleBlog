@@ -55,7 +55,7 @@
     function submitHandler() {
         if ($.validate.form()) {
             var data = $('#blacklistAddForm').serializeArray();
-            $.operate.savePut(prefix + "/edit", data);
+            $.operate.update(prefix + "/edit", data);
         }
     }
 </script>
