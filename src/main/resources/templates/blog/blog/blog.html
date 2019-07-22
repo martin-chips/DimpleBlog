@@ -134,7 +134,7 @@
     var prefix = ctx + "blog/blog";
 
     function changeStatus(status) {
-        var data = {"blogIds": $.table.affectedRowIds()};
+        var data = {"blogIds": $.table.getSelectIds()};
         $.operate.put($.table._option.changeStatusUrl + "/" + status, data);
     }
 

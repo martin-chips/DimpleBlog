@@ -114,12 +114,12 @@
     var prefix = ctx + "link/link";
 
     function changeDisplay(status) {
-        var data = {"linkId": $.table.affectedRowIds()};
+        var data = {"linkId": $.table.getSelectIds()};
         $.operate.put($.table._option.changeStatusUrl + "/" + status, data);
     }
 
     function changeSupport(support) {
-        var data = {"blogIds": $.table.affectedRowIds()};
+        var data = {"blogIds": $.table.getSelectIds()};
         $.operate.put($.table._option.changeSupportUrl + "/" + status, data);
     }
 

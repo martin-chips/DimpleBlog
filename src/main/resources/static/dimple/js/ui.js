@@ -374,6 +374,12 @@
                 }
                 return rowIds;
             },
+            //获取所有选中行的id
+            getSelectIds: function () {
+                var column = $.common.isEmpty($.table._option.uniqueId) ? $.table._option.columns[1].field : $.table._option.uniqueId;
+                console.log($.table.selectColumns(column).toString());
+                return $.table.selectColumns(column).toString();
+            },
             // 查询表格首列值
             selectFirstColumns: function () {
                 var rows = $.map($.btTable.bootstrapTable('getSelections'), function (row) {
@@ -766,8 +772,8 @@
             get: function (url, callback) {
                 $.operate.submit(url, "get", "json", "", callback);
             },
-            put: function (url, callback) {
-                $.operate.submit(url, "put", "json", "", callback);
+            put: function (url, data,callback) {
+                $.operate.submit(url, "put", "json", data, callback);
             },
             // 详细信息
             detail: function (id, width, height) {
