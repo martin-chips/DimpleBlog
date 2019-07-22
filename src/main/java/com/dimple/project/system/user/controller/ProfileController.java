@@ -1,17 +1,5 @@
 package com.dimple.project.system.user.controller;
 
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.file.FileUploadUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
@@ -23,6 +11,17 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.service.DictService;
 import com.dimple.project.system.user.domain.User;
 import com.dimple.project.system.user.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @className: ProfileController
@@ -98,9 +97,9 @@ public class ProfileController extends BaseController {
      * 修改用户
      */
     @GetMapping("/edit")
-    public String edit(ModelMap mmap) {
+    public String edit(Model model) {
         User user = getSysUser();
-        mmap.put("user", userService.selectUserById(user.getUserId()));
+        model.addAttribute("user", userService.selectUserById(user.getUserId()));
         return prefix + "/edit";
     }
 
@@ -155,5 +154,15 @@ public class ProfileController extends BaseController {
             log.error("修改头像失败！", e);
             return error(e.getMessage());
         }
+    }
+
+    /**
+     * 检查旧密码
+     */
+    @GetMapping("/checkOldPassword")
+    @ResponseBody
+    public boolean checkOldPassword(String oldPassword) {
+        User user = getSysUser();
+        return passwordService.matches(user, oldPassword);
     }
 }

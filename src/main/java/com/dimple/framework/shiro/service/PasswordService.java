@@ -1,14 +1,5 @@
 package com.dimple.framework.shiro.service;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import javax.annotation.PostConstruct;
-
-import org.apache.shiro.cache.Cache;
-import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.crypto.hash.Md5Hash;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.exception.user.UserPasswordNotMatchException;
 import com.dimple.common.exception.user.UserPasswordRetryLimitExceedException;
@@ -16,6 +7,15 @@ import com.dimple.common.utils.MessageUtils;
 import com.dimple.framework.manager.AsyncManager;
 import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.project.system.user.domain.User;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @className: PasswordService
@@ -76,6 +76,5 @@ public class PasswordService {
 
     public static void main(String[] args) {
         System.out.println(new PasswordService().encryptPassword("admin", "admin123", "111111"));
-        System.out.println(new PasswordService().encryptPassword("ry", "admin123", "222222"));
     }
 }
