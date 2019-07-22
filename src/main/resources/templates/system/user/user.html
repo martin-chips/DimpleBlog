@@ -86,7 +86,6 @@
         }
         $('body').layout({initClosed: panehHidden, west__size: 185});
         queryUserList();
-        queryDeptTree();
     });
 
     function queryUserList() {
@@ -154,22 +153,6 @@
         $.table.init(options);
     }
 
-    function queryDeptTree() {
-        var url = ctx + "system/dept/treeData";
-        var options = {
-            url: url,
-            expandLevel: 2,
-            onClick: zOnClick
-        };
-        $.tree.init(options);
-
-        function zOnClick(event, treeId, treeNode) {
-            $("#deptId").val(treeNode.id);
-            $("#parentId").val(treeNode.pId);
-            $.table.search();
-        }
-    }
-
     $('#btnExpand').click(function () {
         $._tree.expandAll(true);
         $(this).hide();
@@ -185,12 +168,6 @@
     $('#btnRefresh').click(function () {
         queryDeptTree();
     });
-
-    /* 用户管理-部门 */
-    function dept() {
-        var url = ctx + "system/dept";
-        createMenuItem(url, "部门管理");
-    }
 
     /* 用户管理-重置密码 */
     function resetPwd(userId) {

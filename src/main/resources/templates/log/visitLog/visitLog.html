@@ -113,8 +113,8 @@
                 align: 'center',
                 formatter: function (value, row, index) {
                     var actions = [];
-                    actions.push('<a class="btn btn-warning btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.detail(\'' + row.visitId + '\')"><i class="fa fa-search"></i>详细</a>');
-                    actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="addBlacklist(\'' + row.ipAddr + '\')"><i class="fa fa-exclamation-triangle"></i>加入黑名单</a>');
+                    actions.push('<a class="btn btn-info btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.detail(\'' + row.visitId + '\')"><i class="fa fa-search"></i>详细</a> ');
+                    actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="addBlacklist(\'' + row.ipAddr + '\')"><i class="fa fa-exclamation-triangle"></i>加入黑名单</a> ');
                     return actions.join('');
                 }
             }]
