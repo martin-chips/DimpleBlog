@@ -148,10 +148,10 @@
                         <div class="bd-fx arc-bdfx">
                             <i class="el-remove fx-close"></i>
                             <ul class="bdsharebuttonbox">
-                                <li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
-                                <li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
-                                <li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
-                                <li><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
+                                <li><a href="javascript:void(0)" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
+                                <li><a href="javascript:void(0)" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
+                                <li><a href="javascript:void(0)" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
+                                <li><a href="javascript:void(0)" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
                                 <script th:inline="javascript"> window._bd_share_config = {
                                     "common": {
                                         "bdSnsKey": {},
@@ -195,14 +195,14 @@
                      th:href="${'/f/article/'+previousBlog.blogId+'.html'}"
                      th:title='${previousBlog.title}'
                      th:text="${previousBlog.title}"></a>
-                <a th:if="${previousBlog==null}" class='blue-text' href="#">没有了</a>
+                <a th:if="${previousBlog==null}" class='blue-text' href="javascript:void(0)">没有了</a>
             </span>
             <span>
                 <i class="el-arrow-down"></i>下一篇：
                 <a class='blue-text' th:if="${nextBlog!=null}" th:href="${'/f/article/'+nextBlog.blogId+'.html'}"
                    th:title='${nextBlog.title}'
                    th:text="${nextBlog.title}"></a>
-                 <a th:if="${nextBlog==null}" class='blue-text' href="#">没有了</a>
+                 <a th:if="${nextBlog==null}" class='blue-text' href="javascript:void(0)">没有了</a>
             </span>
         </div>
         <!--随机推荐-->

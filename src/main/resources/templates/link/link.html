@@ -94,7 +94,7 @@
                 <i class="fa fa-edit"></i> 修改
             </a>
             <a class="btn btn-danger btn-del multiple disabled" onclick="$.operate.removeAll()">
-                <i class="fa fa-remove"></i> 删除
+                <i class="fa fa-trash"></i> 删除
             </a>
             <a class="btn btn-warning" onclick="$.table.exportExcel()">
                 <i class="fa fa-download"></i> 导出
@@ -209,14 +209,14 @@
                 formatter: function (value, row, index) {
                     var actions = [];
                     if (row.processed == 1) {
-                        actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.editTab(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.remove(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.linkId + '\')"><i class="fa fa-trash"></i>删除</a> ');
                     } else if (row.processed == 0) {
-                        actions.push('<a class="btn btn-success btn-xs ' + '" href="#" onclick="$.operate.editTab(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-info btn-xs " href="#" onclick="processed(' + row.linkId + ')"><i class="fa fa-key"></i>通过</a>');
-                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.remove(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>拒绝</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.linkId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-info btn-xs " href="javascript:void(0)" onclick="processed(' + row.linkId + ')"><i class="fa fa-key"></i>通过</a>');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.linkId + '\')"><i class="fa fa-trash"></i>拒绝</a> ');
                     } else {
-                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="#" onclick="$.operate.remove(\'' + row.linkId + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.linkId + '\')"><i class="fa fa-trash"></i>删除</a> ');
                     }
                     return actions.join('');
                 }
