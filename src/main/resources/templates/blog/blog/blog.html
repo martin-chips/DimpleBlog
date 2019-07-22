@@ -134,12 +134,12 @@
     var prefix = ctx + "blog/blog";
 
     function changeStatus(status) {
-        var data = {"blogIds": $.table.getSelectIds()};
+        var data = {"blogIds": $.table.affectedRowIds()};
         $.operate.put($.table._option.changeStatusUrl + "/" + status, data);
     }
 
     function changeSupport(support) {
-        var data = {"blogIds": $.table.getSelectIds()};
+        var data = {"blogIds": $.table.selectColumns("userId")};
         $.operate.put($.table._option.changeSupportUrl + "/" + status, data);
     }
 
@@ -168,6 +168,7 @@
             uniqueId: "blogId",
             modalName: "博客",
             columns: [{
+                field: 'state',
                 checkbox: true
             }, {
                 field: 'blogId',

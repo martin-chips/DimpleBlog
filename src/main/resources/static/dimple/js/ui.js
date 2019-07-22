@@ -35,7 +35,7 @@
                     showToggle: true,
                     showExport: false,
                     clickToSelect: true,
-                    rememberSelected: false,
+                    rememberSelected: true,//默认为true
                     fixedColumns: false,
                     fixedNumber: 0,
                     rightFixedColumns: false,
