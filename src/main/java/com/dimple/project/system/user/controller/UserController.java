@@ -9,7 +9,7 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.role.service.IRoleService;
 import com.dimple.project.system.user.domain.User;
-import com.dimple.project.system.user.service.IUserService;
+import com.dimple.project.system.user.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +32,7 @@ public class UserController extends BaseController {
     private String prefix = "system/user";
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @Autowired
     private IRoleService roleService;

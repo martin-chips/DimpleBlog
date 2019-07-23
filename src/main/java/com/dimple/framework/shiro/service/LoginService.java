@@ -19,7 +19,7 @@ import com.dimple.framework.manager.AsyncManager;
 import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.project.system.user.domain.User;
 import com.dimple.project.system.user.domain.UserStatus;
-import com.dimple.project.system.user.service.IUserService;
+import com.dimple.project.system.user.service.UserService;
 
 /**
  * @className: LoginService
@@ -34,7 +34,7 @@ public class LoginService {
     private PasswordService passwordService;
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     /**
      * 登录

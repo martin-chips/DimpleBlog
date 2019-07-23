@@ -10,7 +10,7 @@ import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.service.DictService;
 import com.dimple.project.system.user.domain.User;
-import com.dimple.project.system.user.service.IUserService;
+import com.dimple.project.system.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class ProfileController extends BaseController {
     private String prefix = "system/user/profile";
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @Autowired
     private PasswordService passwordService;
@@ -52,7 +52,6 @@ public class ProfileController extends BaseController {
     @GetMapping()
     public String profile(ModelMap mmap) {
         User user = getSysUser();
-        user.setSex(dict.getLabel("sys_user_sex", user.getSex()));
         mmap.put("user", user);
         mmap.put("roleGroup", userService.selectUserRoleGroup(user.getUserId()));
         return prefix + "/profile";
