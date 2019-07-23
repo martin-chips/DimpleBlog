@@ -96,6 +96,52 @@
 <div th:fragment="summernote-js">
     <script th:src="@{/ajax/libs/summernote/summernote.min.js}"></script>
     <script th:src="@{/ajax/libs/summernote/summernote-zh-CN.js}"></script>
+    <script>
+        $(".summernote").summernote({
+            height: '220px',
+            //设置Dialog淡入淡出效果
+            dialogsFade: true,
+            lang: 'zh-CN',
+            callbacks: {
+                onImageUpload: function (files, editor, $editable) {
+                    var formData = new FormData();
+                    formData.append("file", files[0]);
+                    $.ajax({
+                        type: "POST",
+                        url: ctx + "/qiniu/image/upload",
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        success: function (result) {
+                            if (result.code == web_status.SUCCESS) {
+                                $(obj).summernote('editor.insertImage', result.url, result.fileName);
+                            } else {
+                                $.modal.alertError(result.msg);
+                            }
+                        },
+                        error: function (error) {
+                            $.modal.alertWarning("图片上传失败。");
+                        }
+                    });
+                },
+                onMediaDelete: function (target) {
+                    var imgSrc = target.context.currentSrc;
+                    $.ajax({
+                        data: {
+                            fileUrl: imgSrc
+                        },
+                        type: "DELETE",
+                        url: ctx + "/qiniu/image/remove",
+                        dataType: "json",
+                        success: function (data) {
+                        }
+                    });
+                }
+            }
+        })
+    </script>
 </div>
 
 <!-- cropbox图像裁剪插件 -->
