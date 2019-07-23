@@ -41,4 +41,8 @@ public class CachePrefix {
      * 黑名单单个缓存
      */
     public static final String SYSTEM_BLACKLIST_ITEM = "system_blacklist_item";
+    /**
+     * 重复提交缓存
+     */
+    public static final String NO_REPEAT_SUBMIT = "no_repeat_submit";
 }

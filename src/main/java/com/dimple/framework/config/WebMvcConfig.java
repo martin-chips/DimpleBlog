@@ -1,6 +1,7 @@
 package com.dimple.framework.config;
 
-import com.dimple.framework.web.filter.RequestInterceptor;
+import com.dimple.framework.filter.RequestInterceptor;
+import com.dimple.framework.interceptor.impl.NoRepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,8 @@ import java.util.Locale;
 public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     RequestInterceptor requestInterceptor;
+    @Autowired
+    NoRepeatSubmitInterceptor noRepeatSubmitInterceptor;
 
     @Bean
     public LocaleResolver localeResolver() {
@@ -45,5 +48,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(localeChangeInterceptor());
         //添加黑名单拦截器
         registry.addInterceptor(requestInterceptor).addPathPatterns("/**").excludePathPatterns("/error/blacklist");
+        registry.addInterceptor(noRepeatSubmitInterceptor).addPathPatterns("/**");
     }
 }

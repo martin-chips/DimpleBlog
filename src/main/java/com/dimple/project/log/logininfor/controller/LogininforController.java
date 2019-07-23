@@ -51,7 +51,7 @@ public class LogininforController extends BaseController {
     @ResponseBody
     public AjaxResult export(Logininfor logininfor) {
         List<Logininfor> list = logininforService.selectLogininforList(logininfor);
-        ExcelUtil<Logininfor> util = new ExcelUtil<Logininfor>(Logininfor.class);
+        ExcelUtil<Logininfor> util = new ExcelUtil<>(Logininfor.class);
         return util.exportExcel(list, "登陆日志");
     }
 

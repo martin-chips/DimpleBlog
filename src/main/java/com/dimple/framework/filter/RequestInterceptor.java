@@ -1,4 +1,4 @@
-package com.dimple.framework.web.filter;
+package com.dimple.framework.filter;
 
 import com.dimple.common.utils.IpUtils;
 import com.dimple.project.monitor.blacklist.domain.Blacklist;
