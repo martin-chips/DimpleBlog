@@ -11,8 +11,13 @@ import com.dimple.project.log.jobLog.service.IJobLogService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -66,9 +71,9 @@ public class JobLogController extends BaseController {
 
     @RequiresPermissions("log:job:detail")
     @GetMapping("/detail/{jobLogId}")
-    public String detail(@PathVariable("jobLogId") Long jobLogId, ModelMap mmap) {
-        mmap.put("name", "jobLog");
-        mmap.put("jobLog", jobLogService.selectJobLogById(jobLogId));
+    public String detail(@PathVariable("jobLogId") Long jobLogId, Model model) {
+        model.addAttribute("name", "jobLog");
+        model.addAttribute("jobLog", jobLogService.selectJobLogById(jobLogId));
         return prefix + "/detail";
     }
 

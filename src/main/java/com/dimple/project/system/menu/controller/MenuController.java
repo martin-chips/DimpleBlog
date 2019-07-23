@@ -1,16 +1,5 @@
 package com.dimple.project.system.menu.controller;
 
-import java.util.List;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
@@ -19,6 +8,17 @@ import com.dimple.framework.web.domain.Ztree;
 import com.dimple.project.system.menu.domain.Menu;
 import com.dimple.project.system.menu.service.IMenuService;
 import com.dimple.project.system.role.domain.Role;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @className: MenuController
@@ -70,7 +70,7 @@ public class MenuController extends BaseController {
      * 新增
      */
     @GetMapping("/add/{parentId}")
-    public String add(@PathVariable("parentId") Long parentId, ModelMap mmap) {
+    public String add(@PathVariable("parentId") Long parentId, Model model) {
         Menu menu = null;
         if (0L != parentId) {
             menu = menuService.selectMenuById(parentId);
@@ -79,7 +79,7 @@ public class MenuController extends BaseController {
             menu.setMenuId(0L);
             menu.setMenuName("主目录");
         }
-        mmap.put("menu", menu);
+        model.addAttribute("menu", menu);
         return prefix + "/add";
     }
 
@@ -98,8 +98,8 @@ public class MenuController extends BaseController {
      * 修改菜单
      */
     @GetMapping("/edit/{menuId}")
-    public String edit(@PathVariable("menuId") Long menuId, ModelMap mmap) {
-        mmap.put("menu", menuService.selectMenuById(menuId));
+    public String edit(@PathVariable("menuId") Long menuId, Model model) {
+        model.addAttribute("menu", menuService.selectMenuById(menuId));
         return prefix + "/edit";
     }
 
@@ -155,8 +155,8 @@ public class MenuController extends BaseController {
      * 选择菜单树
      */
     @GetMapping("/selectMenuTree/{menuId}")
-    public String selectMenuTree(@PathVariable("menuId") Long menuId, ModelMap mmap) {
-        mmap.put("menu", menuService.selectMenuById(menuId));
+    public String selectMenuTree(@PathVariable("menuId") Long menuId, Model model) {
+        model.addAttribute("menu", menuService.selectMenuById(menuId));
         return prefix + "/tree";
     }
 }

@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,10 +49,10 @@ public class ProfileController extends BaseController {
      * 个人信息
      */
     @GetMapping()
-    public String profile(ModelMap mmap) {
+    public String profile(Model model) {
         User user = getSysUser();
-        mmap.put("user", user);
-        mmap.put("roleGroup", userService.selectUserRoleGroup(user.getUserId()));
+        model.addAttribute("user", user);
+        model.addAttribute("roleGroup", userService.selectUserRoleGroup(user.getUserId()));
         return prefix + "/profile";
     }
 
@@ -68,9 +67,9 @@ public class ProfileController extends BaseController {
     }
 
     @GetMapping("/resetPwd")
-    public String resetPwd(ModelMap mmap) {
+    public String resetPwd(Model model) {
         User user = getSysUser();
-        mmap.put("user", userService.selectUserById(user.getUserId()));
+        model.addAttribute("user", userService.selectUserById(user.getUserId()));
         return prefix + "/resetPwd";
     }
 
@@ -106,9 +105,9 @@ public class ProfileController extends BaseController {
      * 修改头像
      */
     @GetMapping("/avatar")
-    public String avatar(ModelMap mmap) {
+    public String avatar(Model model) {
         User user = getSysUser();
-        mmap.put("user", userService.selectUserById(user.getUserId()));
+        model.addAttribute("user", userService.selectUserById(user.getUserId()));
         return prefix + "/avatar";
     }
 

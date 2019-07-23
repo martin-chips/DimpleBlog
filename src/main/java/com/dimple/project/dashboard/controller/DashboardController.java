@@ -17,7 +17,6 @@ import com.dimple.project.system.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -52,14 +51,14 @@ public class DashboardController extends BaseController {
 
     // 系统首页
     @GetMapping("/index")
-    public String index(ModelMap mmap) {
+    public String index(Model model) {
         // 取身份信息
         User user = getSysUser();
         // 根据用户id取出菜单
         List<Menu> menus = menuService.selectMenusByUser(user);
-        mmap.put("menus", menus);
-        mmap.put("user", user);
-        mmap.put("copyrightYear", systemConfig.getCopyrightYear());
+        model.addAttribute("menus", menus);
+        model.addAttribute("user", user);
+        model.addAttribute("copyrightYear", systemConfig.getCopyrightYear());
         return "index";
     }
 

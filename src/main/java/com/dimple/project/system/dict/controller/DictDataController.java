@@ -11,8 +11,13 @@ import com.dimple.project.system.dict.service.IDictDataService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -60,8 +65,8 @@ public class DictDataController extends BaseController {
      * 新增字典类型
      */
     @GetMapping("/add/{dictType}")
-    public String add(@PathVariable("dictType") String dictType, ModelMap mmap) {
-        mmap.put("dictType", dictType);
+    public String add(@PathVariable("dictType") String dictType, Model model) {
+        model.addAttribute("dictType", dictType);
         return prefix + "/add";
     }
 
@@ -80,8 +85,8 @@ public class DictDataController extends BaseController {
      * 修改字典类型
      */
     @GetMapping("/edit/{dictCode}")
-    public String edit(@PathVariable("dictCode") Long dictCode, ModelMap mmap) {
-        mmap.put("dict", dictDataService.selectDictDataById(dictCode));
+    public String edit(@PathVariable("dictCode") Long dictCode, Model model) {
+        model.addAttribute("dict", dictDataService.selectDictDataById(dictCode));
         return prefix + "/edit";
     }
 

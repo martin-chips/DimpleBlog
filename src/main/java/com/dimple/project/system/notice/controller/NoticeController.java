@@ -10,8 +10,14 @@ import com.dimple.project.system.notice.service.INoticeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -71,8 +77,8 @@ public class NoticeController extends BaseController {
      * 修改公告
      */
     @GetMapping("/edit/{noticeId}")
-    public String edit(@PathVariable("noticeId") Long noticeId, ModelMap mmap) {
-        mmap.put("notice", noticeService.selectNoticeById(noticeId));
+    public String edit(@PathVariable("noticeId") Long noticeId, Model model) {
+        model.addAttribute("notice", noticeService.selectNoticeById(noticeId));
         return prefix + "/edit";
     }
 

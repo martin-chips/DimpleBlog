@@ -11,8 +11,13 @@ import com.dimple.project.system.config.service.IConfigService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -82,8 +87,8 @@ public class ConfigController extends BaseController {
      * 修改参数配置
      */
     @GetMapping("/edit/{configId}")
-    public String edit(@PathVariable("configId") Long configId, ModelMap mmap) {
-        mmap.put("config", configService.selectConfigById(configId));
+    public String edit(@PathVariable("configId") Long configId, Model model) {
+        model.addAttribute("config", configService.selectConfigById(configId));
         return prefix + "/edit";
     }
 

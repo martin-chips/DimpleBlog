@@ -4,7 +4,7 @@ import com.dimple.framework.web.controller.BaseController;
 import com.dimple.project.chart.server.domain.Server;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,10 +22,10 @@ public class ServerController extends BaseController {
 
     @RequiresPermissions("chart:server:view")
     @GetMapping()
-    public String server(ModelMap mmap) throws Exception {
+    public String server(Model model) throws Exception {
         Server server = new Server();
         server.copyTo();
-        mmap.put("server", server);
+        model.addAttribute("server", server);
         return prefix + "/server";
     }
 }

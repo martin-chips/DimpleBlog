@@ -13,8 +13,13 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -69,9 +74,9 @@ public class JobController extends BaseController {
 
     @RequiresPermissions("monitor:job:detail")
     @GetMapping("/detail/{jobId}")
-    public String detail(@PathVariable("jobId") Long jobId, ModelMap mmap) {
-        mmap.put("name", "job");
-        mmap.put("job", jobService.selectJobById(jobId));
+    public String detail(@PathVariable("jobId") Long jobId, Model model) {
+        model.addAttribute("name", "job");
+        model.addAttribute("job", jobService.selectJobById(jobId));
         return prefix + "/detail";
     }
 
@@ -121,8 +126,8 @@ public class JobController extends BaseController {
      * 修改调度
      */
     @GetMapping("/edit/{jobId}")
-    public String edit(@PathVariable("jobId") Long jobId, ModelMap mmap) {
-        mmap.put("job", jobService.selectJobById(jobId));
+    public String edit(@PathVariable("jobId") Long jobId, Model model) {
+        model.addAttribute("job", jobService.selectJobById(jobId));
         return prefix + "/edit";
     }
 

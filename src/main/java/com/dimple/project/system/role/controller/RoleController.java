@@ -11,8 +11,13 @@ import com.dimple.project.system.role.service.IRoleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -80,8 +85,8 @@ public class RoleController extends BaseController {
      * 修改角色
      */
     @GetMapping("/edit/{roleId}")
-    public String edit(@PathVariable("roleId") Long roleId, ModelMap mmap) {
-        mmap.put("role", roleService.selectRoleById(roleId));
+    public String edit(@PathVariable("roleId") Long roleId, Model model) {
+        model.addAttribute("role", roleService.selectRoleById(roleId));
         return prefix + "/edit";
     }
 
@@ -100,8 +105,8 @@ public class RoleController extends BaseController {
      * 新增数据权限
      */
     @GetMapping("/rule/{roleId}")
-    public String rule(@PathVariable("roleId") Long roleId, ModelMap mmap) {
-        mmap.put("role", roleService.selectRoleById(roleId));
+    public String rule(@PathVariable("roleId") Long roleId, Model model) {
+        model.addAttribute("role", roleService.selectRoleById(roleId));
         return prefix + "/rule";
     }
 

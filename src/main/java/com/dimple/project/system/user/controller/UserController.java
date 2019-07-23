@@ -13,8 +13,13 @@ import com.dimple.project.system.user.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -85,8 +90,8 @@ public class UserController extends BaseController {
      * 新增用户
      */
     @GetMapping("/add")
-    public String add(ModelMap mmap) {
-        mmap.put("roles", roleService.selectRoleAll());
+    public String add(Model model) {
+        model.addAttribute("roles", roleService.selectRoleAll());
         return prefix + "/add";
     }
 
@@ -108,9 +113,9 @@ public class UserController extends BaseController {
      * 修改用户
      */
     @GetMapping("/edit/{userId}")
-    public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
-        mmap.put("user", userService.selectUserById(userId));
-        mmap.put("roles", roleService.selectRolesByUserId(userId));
+    public String edit(@PathVariable("userId") Long userId, Model model) {
+        model.addAttribute("user", userService.selectUserById(userId));
+        model.addAttribute("roles", roleService.selectRolesByUserId(userId));
         return prefix + "/edit";
     }
 
@@ -131,8 +136,8 @@ public class UserController extends BaseController {
     @RequiresPermissions("system:user:resetPwd")
     @Log(title = "重置密码", businessType = BusinessType.UPDATE)
     @GetMapping("/resetPwd/{userId}")
-    public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap) {
-        mmap.put("user", userService.selectUserById(userId));
+    public String resetPwd(@PathVariable("userId") Long userId, Model model) {
+        model.addAttribute("user", userService.selectUserById(userId));
         return prefix + "/resetPwd";
     }
 
