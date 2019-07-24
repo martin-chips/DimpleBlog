@@ -1,11 +1,13 @@
 package com.dimple.project.monitor.blacklist.service.impl;
 
 import com.dimple.common.constant.BlacklistConstants;
+import com.dimple.common.constant.CachePrefix;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.project.monitor.blacklist.domain.Blacklist;
 import com.dimple.project.monitor.blacklist.mapper.BlacklistMapper;
 import com.dimple.project.monitor.blacklist.service.BlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class BlacklistServiceImpl implements BlacklistService {
     }
 
     @Override
+    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
     public int deleteBlacklistByIds(Integer[] ids) {
         return blacklistMapper.deleteBlacklistByBlacklistIds(ids);
     }
@@ -38,11 +41,13 @@ public class BlacklistServiceImpl implements BlacklistService {
     }
 
     @Override
+    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
     public void cleanBlacklist() {
         blacklistMapper.cleanBlacklist();
     }
 
     @Override
+    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
     public int insertBlacklist(Blacklist blacklist) {
         blacklist.setCreateBy(ShiroUtils.getLoginName());
         return blacklistMapper.insertBlacklist(blacklist);
@@ -65,6 +70,7 @@ public class BlacklistServiceImpl implements BlacklistService {
     }
 
     @Override
+    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
     public int insertBlacklist(String ipAddr) {
         Blacklist blacklist = new Blacklist();
         blacklist.setIpAddr(ipAddr);
@@ -72,6 +78,7 @@ public class BlacklistServiceImpl implements BlacklistService {
     }
 
     @Override
+    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
     public int updateBlacklist(Blacklist blacklist) {
         return blacklistMapper.updateBlacklist(blacklist);
     }

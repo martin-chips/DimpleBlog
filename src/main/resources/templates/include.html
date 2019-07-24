@@ -97,19 +97,60 @@
     <script th:src="@{/ajax/libs/summernote/summernote.min.js}"></script>
     <script th:src="@{/ajax/libs/summernote/summernote-zh-CN.js}"></script>
     <script>
+
+        function initfunction(params) {
+            console.log(params)
+        }
+
+        function myfunction(params) {
+            console.log(params)
+
+        }
+
+        var MyphotoButton = function (context) {
+            var ui = $.summernote.ui;
+            // create button
+            var button = ui.button({
+                contents: '<i class="note-icon-picture"/>',  //按钮样式
+                tooltip: "图片",
+                click: function (params) {
+                    //  点击时执行
+                },
+                callback: function (params) {
+                    // 页面加载时执行
+                }
+            });
+            return button.render();    //按钮渲染
+        }
         $(".summernote").summernote({
-            height: '220px',
+            height: '450px',
             //设置Dialog淡入淡出效果
             dialogsFade: true,
+            fontNames: ['宋体', '微软雅黑', '楷体', '黑体', '隶书', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New',
+                'Helvetica Neue', 'Helvetica', 'Impact', 'Lucida Grande',
+                'Tahoma', 'Times New Roman', 'Verdana'],
             lang: 'zh-CN',
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph', 'height']],
+                ['table', ['table']],
+                ['insert', ['fileBtn', 'myphoto', 'media', 'link', 'video']],
+                ['view', ['fullscreen']]
+            ],
+            buttons: {
+                myphoto: MyphotoButton      //自已定义的按钮函数
+            },
             callbacks: {
                 onImageUpload: function (files, editor, $editable) {
                     var formData = new FormData();
                     formData.append("file", files[0]);
                     $.ajax({
                         type: "POST",
-                        url: ctx + "/qiniu/image/upload",
-                        data: data,
+                        url: ctx + "qiniu/image/upload",
+                        data: formData,
                         cache: false,
                         contentType: false,
                         processData: false,
@@ -133,7 +174,7 @@
                             fileUrl: imgSrc
                         },
                         type: "DELETE",
-                        url: ctx + "/qiniu/image/remove",
+                        url: ctx + "qiniu/image/remove",
                         dataType: "json",
                         success: function (data) {
                         }

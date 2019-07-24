@@ -1,6 +1,6 @@
 package com.dimple.framework.config;
 
-import com.dimple.framework.filter.RequestInterceptor;
+import com.dimple.framework.interceptor.impl.RequestInterceptor;
 import com.dimple.framework.interceptor.impl.NoRepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
