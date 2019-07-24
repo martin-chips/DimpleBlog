@@ -74,6 +74,11 @@ public class TestController extends BaseController {
         System.out.println("在Page里面收到name" + name);
         return "blog/blog/blog";
     }
+
+    @GetMapping("/upload")
+    public String upload() {
+        return "test1";
+    }
 }
 
 class Test {

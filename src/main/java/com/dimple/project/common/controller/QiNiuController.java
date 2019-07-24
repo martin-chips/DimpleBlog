@@ -1,14 +1,21 @@
 package com.dimple.project.common.controller;
 
-import com.dimple.common.utils.file.QiNiuUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.project.common.domain.FileItem;
+import com.dimple.project.common.service.FileService;
+import com.qiniu.common.QiniuException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -26,7 +33,7 @@ import java.util.List;
 public class QiNiuController {
 
     @Autowired
-    QiNiuUtils qiNiuUtils;
+    FileService fileService;
 
     @GetMapping()
     @RequiresPermissions("qiniu:image:view")
@@ -39,23 +46,24 @@ public class QiNiuController {
     @RequiresPermissions("qiniu:image:upload")
     @ResponseBody
     public AjaxResult upload(@RequestParam("file") MultipartFile file) {
-        String s = qiNiuUtils.uploadImgToQiNiu(file);
+        String s = fileService.insertQiNiuYunFile(file);
         return AjaxResult.success().put("data", s);
     }
 
     @DeleteMapping("/remove")
     @Log(title = "图片管理", businessType = BusinessType.DELETE)
     @ResponseBody
-    public boolean remove(String fileUrl) {
-        log.info("删除图片{}", fileUrl);
-        boolean b = qiNiuUtils.deleteImgFromQiNiu(fileUrl);
-        return b;
+    public boolean remove(String fileName) throws QiniuException {
+        log.info("删除图片{}", fileName);
+        return fileService.deleteQiNiuYunFile(fileName) > 0 ? true : false;
     }
 
     @GetMapping("/list")
     @ResponseBody
     public AjaxResult list() {
-        List<String> list = qiNiuUtils.selectImgList();
+        FileItem fileItem = new FileItem();
+        fileItem.setServerType(FileItem.ServerType.QI_NIU_YUN.getServerType());
+        List<FileItem> list = fileService.getFileItemList(fileItem);
         AjaxResult ajaxResult = AjaxResult.success();
         ajaxResult.put("list", list);
         return ajaxResult;
