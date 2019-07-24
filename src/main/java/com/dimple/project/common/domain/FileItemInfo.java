@@ -1,5 +1,6 @@
 package com.dimple.project.common.domain;
 
+import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
  * @version: 1.0
  */
 @Data
-public class FileItemInfo {
+public class FileItemInfo extends BaseEntity {
     private Integer id;
     /**
      * 资源名。

@@ -3,6 +3,7 @@ package com.dimple.common.utils.file;
 import com.dimple.common.utils.spring.SpringUtils;
 import com.dimple.framework.config.QiNiuConfig;
 import com.dimple.project.common.domain.FileItemInfo;
+import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -68,13 +69,14 @@ public class QiNiuUtils {
         String token = auth.uploadToken(qiNiuConfig.getBucket());
         Response response = null;
         //重新编码文件名
-        String fileName = file.getOriginalFilename() + new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+        String fileExtension = Files.getFileExtension(file.getOriginalFilename());
+        String fileName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + "-" + new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + "." + fileExtension;
         FileItemInfo fileItemInfo = null;
         try {
             response = uploadManager.put(file.getInputStream(), fileName, token, null, null);
             DefaultPutRet defaultPutRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             String path = qiNiuConfig.getPath() + File.separator + defaultPutRet.key;
-            log.info("上传文件到七牛云服务器成功", path);
+            log.info("上传文件到七牛云服务器成功{}", path);
             fileItemInfo = new FileItemInfo(fileName, defaultPutRet.hash, file.getSize(), file.getContentType(), new Date(), FileItemInfo.ServerType.QI_NIU_YUN.getServerType(), path);
         } catch (QiniuException e) {
             Response r = e.response;

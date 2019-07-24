@@ -3,37 +3,37 @@
 <mapper namespace="com.dimple.project.common.mapper.FileItemInfoMapper">
 
     <insert id="insertFileItem">
-        insert into bg_file_item (
+        insert into bg_file_item_info (
         <if test="name != null and name != '' ">name,</if>
         <if test="hash != null and hash != '' ">hash,</if>
         <if test="size != null  ">size,</if>
         <if test="mimeType != null and mimeType != '' ">mime_type,</if>
-        <if test="putTime != null and putTime != ''">put_time,</if>
+        <if test="putTime != null">put_time,</if>
         <if test="serverType != null and serverType != ''">server_type,</if>
-        <if test="path != null and path != ''">path,</if>
+        <if test="path != null and path != ''">path</if>
         )values(
         <if test="name != null and name != ''">#{name},</if>
         <if test="hash != null and hash != ''">#{hash},</if>
         <if test="size != null ">#{size},</if>
         <if test="mimeType != null and mimeType != ''">#{mimeType},</if>
-        <if test="putTime != null and putTime != ''">#{putTime},</if>
+        <if test="putTime != null">#{putTime},</if>
         <if test="serverType != null and serverType != ''">#{serverType},</if>
-        <if test="path != null and path != ''">#{path},</if>
-
+        <if test="path != null and path != ''">#{path}</if>
+        )
     </insert>
 
 
     <delete id="deleteByServerType">
-        delete from bg_file_item where server_type =#{serverType}
+        delete from bg_file_item_info where server_type =#{serverType}
     </delete>
     <delete id="deleteByNameAndServerType">
-        delete  from bg_file_item where server_type =#{serverType} and name=#{name}
+        delete  from bg_file_item_info where server_type =#{serverType} and name=#{name}
     </delete>
 
 
     <select id="getFileItemList" resultType="com.dimple.project.common.domain.FileItemInfo">
         select name,hash,size,mime_type,put_time,server_type,path
-        from bg_file_item
+        from bg_file_item_info
         <where>
             <if test="name != null and name != ''">
                 and name like concat('%', #{configName}, '%')
