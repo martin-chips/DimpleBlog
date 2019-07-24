@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dimple.project.common.mapper.FileItemMapper">
+<mapper namespace="com.dimple.project.common.mapper.FileItemInfoMapper">
 
     <insert id="insertFileItem">
         insert into bg_file_item (
@@ -31,7 +31,7 @@
     </delete>
 
 
-    <select id="getFileItemList" resultType="com.dimple.project.common.domain.FileItem">
+    <select id="getFileItemList" resultType="com.dimple.project.common.domain.FileItemInfo">
         select name,hash,size,mime_type,put_time,server_type,path
         from bg_file_item
         <where>

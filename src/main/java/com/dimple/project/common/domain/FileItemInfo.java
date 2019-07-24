@@ -5,14 +5,14 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @className: FileItem
+ * @className: FileItemInfo
  * @description: 文件类
  * @auther: Dimple
  * @date: 07/24/19
  * @version: 1.0
  */
 @Data
-public class FileItem {
+public class FileItemInfo {
     private Integer id;
     /**
      * 资源名。
@@ -43,11 +43,11 @@ public class FileItem {
      */
     private String path;
 
-    public FileItem() {
+    public FileItemInfo() {
         super();
     }
 
-    public FileItem(String name, String hash, Long size, String mimeType, Date putTime, Integer serverType, String path) {
+    public FileItemInfo(String name, String hash, Long size, String mimeType, Date putTime, Integer serverType, String path) {
         this.name = name;
         this.hash = hash;
         this.size = size;

@@ -1,6 +1,6 @@
 package com.dimple.project.common.mapper;
 
-import com.dimple.project.common.domain.FileItem;
+import com.dimple.project.common.domain.FileItemInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,9 +14,9 @@ import java.util.List;
  * @version: 1.0
  */
 @Mapper
-public interface FileItemMapper {
+public interface FileItemInfoMapper {
 
-    List<FileItem> getFileItemList(FileItem fileItem);
+    List<FileItemInfo> getFileItemList(FileItemInfo fileItemInfo);
 
     /**
      * 根据serverType删除数据库中的数据
@@ -26,7 +26,7 @@ public interface FileItemMapper {
      */
     int deleteByServerType(Integer serverType);
 
-    int insertFileItem(FileItem fileItem);
+    int insertFileItem(FileItemInfo fileItemInfo);
 
     int deleteByNameAndServerType(@Param("name") String name, @Param("serverType") Integer serverType);
 }

@@ -1,6 +1,6 @@
 package com.dimple.project.common.service;
 
-import com.dimple.project.common.domain.FileItem;
+import com.dimple.project.common.domain.FileItemInfo;
 import com.qiniu.common.QiniuException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,5 +38,5 @@ public interface FileService {
      */
     String insertQiNiuYunFile(MultipartFile file);
 
-    List<FileItem> getFileItemList(FileItem fileItem);
+    List<FileItemInfo> selectFileItemList(FileItemInfo fileItemInfo);
 }

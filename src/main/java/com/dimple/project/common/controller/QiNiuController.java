@@ -3,7 +3,7 @@ package com.dimple.project.common.controller;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.domain.AjaxResult;
-import com.dimple.project.common.domain.FileItem;
+import com.dimple.project.common.domain.FileItemInfo;
 import com.dimple.project.common.service.FileService;
 import com.qiniu.common.QiniuException;
 import lombok.extern.slf4j.Slf4j;
@@ -61,9 +61,9 @@ public class QiNiuController {
     @GetMapping("/list")
     @ResponseBody
     public AjaxResult list() {
-        FileItem fileItem = new FileItem();
-        fileItem.setServerType(FileItem.ServerType.QI_NIU_YUN.getServerType());
-        List<FileItem> list = fileService.getFileItemList(fileItem);
+        FileItemInfo fileItemInfo = new FileItemInfo();
+        fileItemInfo.setServerType(FileItemInfo.ServerType.QI_NIU_YUN.getServerType());
+        List<FileItemInfo> list = fileService.selectFileItemList(fileItemInfo);
         AjaxResult ajaxResult = AjaxResult.success();
         ajaxResult.put("list", list);
         return ajaxResult;

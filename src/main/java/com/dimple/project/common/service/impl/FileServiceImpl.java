@@ -1,8 +1,8 @@
 package com.dimple.project.common.service.impl;
 
 import com.dimple.common.utils.file.QiNiuUtils;
-import com.dimple.project.common.domain.FileItem;
-import com.dimple.project.common.mapper.FileItemMapper;
+import com.dimple.project.common.domain.FileItemInfo;
+import com.dimple.project.common.mapper.FileItemInfoMapper;
 import com.dimple.project.common.service.FileService;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FileServiceImpl implements FileService {
     @Autowired
-    FileItemMapper fileItemMapper;
+    FileItemInfoMapper fileItemInfoMapper;
 
     @Override
     @Transactional
@@ -43,14 +43,14 @@ public class FileServiceImpl implements FileService {
             return 0;
         }
         //将fileListing.item转换为FileItem类型
-        List<FileItem> fileItemsQiNiuYun = Arrays.stream(fileListing.items).map(item -> new FileItem(item.key, item.hash, item.fsize, item.mimeType, new Date(item.putTime), FileItem.ServerType.QI_NIU_YUN.getServerType(), QiNiuUtils.getPathByName(item.key))).collect(Collectors.toList());
+        List<FileItemInfo> fileItemsQiNiuYunInfo = Arrays.stream(fileListing.items).map(item -> new FileItemInfo(item.key, item.hash, item.fsize, item.mimeType, new Date(item.putTime), FileItemInfo.ServerType.QI_NIU_YUN.getServerType(), QiNiuUtils.getPathByName(item.key))).collect(Collectors.toList());
 
         //删除数据库现有的在七牛云上的记录
-        fileItemMapper.deleteByServerType(FileItem.ServerType.QI_NIU_YUN.getServerType());
+        fileItemInfoMapper.deleteByServerType(FileItemInfo.ServerType.QI_NIU_YUN.getServerType());
         //将新记录插入
         int count = 0;
-        for (FileItem fileItem : fileItemsQiNiuYun) {
-            count += fileItemMapper.insertFileItem(fileItem);
+        for (FileItemInfo fileItemInfo : fileItemsQiNiuYunInfo) {
+            count += fileItemInfoMapper.insertFileItem(fileItemInfo);
         }
         return count;
     }
@@ -59,22 +59,22 @@ public class FileServiceImpl implements FileService {
     public int deleteQiNiuYunFile(String name) throws QiniuException {
         BucketManager bucketManager = QiNiuUtils.getBucketManager();
         Response response = bucketManager.delete(QiNiuUtils.getBucket(), name);
-        return response.isOK() ? fileItemMapper.deleteByNameAndServerType(name, FileItem.ServerType.QI_NIU_YUN.getServerType()) : -1;
+        return response.isOK() ? fileItemInfoMapper.deleteByNameAndServerType(name, FileItemInfo.ServerType.QI_NIU_YUN.getServerType()) : -1;
     }
 
     @Override
     public String insertQiNiuYunFile(MultipartFile file) {
-        Optional<FileItem> optionalS = QiNiuUtils.uploadFile(file);
+        Optional<FileItemInfo> optionalS = QiNiuUtils.uploadFile(file);
         if (optionalS.isPresent()) {
-            fileItemMapper.insertFileItem(optionalS.get());
+            fileItemInfoMapper.insertFileItem(optionalS.get());
             return optionalS.get().getPath();
         }
         return "";
     }
 
     @Override
-    public List<FileItem> getFileItemList(FileItem fileItem) {
-        return fileItemMapper.getFileItemList(fileItem);
+    public List<FileItemInfo> selectFileItemList(FileItemInfo fileItemInfo) {
+        return fileItemInfoMapper.getFileItemList(fileItemInfo);
     }
 
 }

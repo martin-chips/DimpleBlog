@@ -2,7 +2,7 @@ package com.dimple.common.utils.file;
 
 import com.dimple.common.utils.spring.SpringUtils;
 import com.dimple.framework.config.QiNiuConfig;
-import com.dimple.project.common.domain.FileItem;
+import com.dimple.project.common.domain.FileItemInfo;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -61,7 +61,7 @@ public class QiNiuUtils {
      *
      * @param file 需要上传的文件
      */
-    public static Optional<FileItem> uploadFile(MultipartFile file) {
+    public static Optional<FileItemInfo> uploadFile(MultipartFile file) {
         Configuration configuration = new Configuration();
         UploadManager uploadManager = new UploadManager(configuration);
         Auth auth = Auth.create(qiNiuConfig.getAccessKey(), qiNiuConfig.getSecretKey());
@@ -69,13 +69,13 @@ public class QiNiuUtils {
         Response response = null;
         //重新编码文件名
         String fileName = file.getOriginalFilename() + new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-        FileItem fileItem = null;
+        FileItemInfo fileItemInfo = null;
         try {
             response = uploadManager.put(file.getInputStream(), fileName, token, null, null);
             DefaultPutRet defaultPutRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             String path = qiNiuConfig.getPath() + File.separator + defaultPutRet.key;
             log.info("上传文件到七牛云服务器成功", path);
-            fileItem = new FileItem(fileName, defaultPutRet.hash, file.getSize(), file.getContentType(), new Date(), FileItem.ServerType.QI_NIU_YUN.getServerType(), path);
+            fileItemInfo = new FileItemInfo(fileName, defaultPutRet.hash, file.getSize(), file.getContentType(), new Date(), FileItemInfo.ServerType.QI_NIU_YUN.getServerType(), path);
         } catch (QiniuException e) {
             Response r = e.response;
             log.error(r.toString());
@@ -84,7 +84,7 @@ public class QiNiuUtils {
         } finally {
             response.close();
         }
-        return Optional.ofNullable(fileItem);
+        return Optional.ofNullable(fileItemInfo);
     }
 
     /**
