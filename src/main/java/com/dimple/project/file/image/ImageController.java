@@ -54,4 +54,11 @@ public class ImageController {
         int i = fileService.syncQiNiuYunToLocalDB();
         return AjaxResult.success().put("count", i);
     }
+
+    @GetMapping()
+    @ResponseBody
+    public AjaxResult deleteQiNiuYun(String name) throws QiniuException {
+        int i = fileService.deleteQiNiuYunFile(name);
+        return AjaxResult.success().put("count", i);
+    }
 }

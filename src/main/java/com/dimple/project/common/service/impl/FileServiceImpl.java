@@ -59,6 +59,7 @@ public class FileServiceImpl implements FileService {
     public int deleteQiNiuYunFile(String name) throws QiniuException {
         BucketManager bucketManager = QiNiuUtils.getBucketManager();
         Response response = bucketManager.delete(QiNiuUtils.getBucket(), name);
+        log.info("删除七牛云文件{}", name);
         return response.isOK() ? fileItemInfoMapper.deleteByNameAndServerType(name, FileItemInfo.ServerType.QI_NIU_YUN.getServerType()) : -1;
     }
 
@@ -66,6 +67,7 @@ public class FileServiceImpl implements FileService {
     public String insertQiNiuYunFile(MultipartFile file) {
         Optional<FileItemInfo> optionalS = QiNiuUtils.uploadFile(file);
         if (optionalS.isPresent()) {
+            log.info("上传七牛云图片{}成功", file.toString());
             fileItemInfoMapper.insertFileItem(optionalS.get());
             return optionalS.get().getPath();
         }
