@@ -16,16 +16,17 @@
         .fileinput-remove {
             display: none;
         }
+
+        .active-item {
+            background-color: aliceblue;
+        }
     </style>
 </head>
-<body class="gray-bg">
+<body>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h4>素材库</h4>
-                </div>
+            <div class=" float-e-margins">
                 <div class="ibox-content form-horizontal">
                     <button class="btn btn-success " type="button"><i class="fa fa-upload"></i> <span
                             class="bold"> 上传图片到本地图库</span></button>
@@ -35,7 +36,7 @@
                     <div class="form-group ">
                         <label class="col-sm-2 control-label">网络图片</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
+                            <input id="netImgUrl" type="text" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -65,23 +66,9 @@
                             <div id="tab-9" class="tab-pane">
                                 <div class="panel-body">
                                     <strong>栅格系统</strong>
-
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group">
-                    <div class="mail-body text-right tooltip-demo">
-                        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
-                                class="fa fa-check"></i>保 存
-                        </button>&nbsp;
-                        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
-                                class="fa fa-reply-all"></i>关 闭
-                        </button>
                     </div>
                 </div>
             </div>
@@ -96,7 +83,6 @@
         var initialPreviewConfig = new Array();
         //发送请求获取数据
         $.operate.ajaxSend("/file/image/list/2", "get", "json", "", function (result) {
-            console.log(result)
             if (result.code == web_status.SUCCESS) {
                 //封装数据
                 var list = result.list
@@ -116,17 +102,26 @@
         });
         $("#qiNiuYunContainer").fileinput({
             'theme': 'explorer-fas',
-            overwriteInitial: false,
-            dropZoneEnabled: false,
+            // overwriteInitial: false,
+            // dropZoneEnabled: false,
             initialPreviewAsData: true,
+            showRemove:false,
+
+
             initialPreview: initialPreview,
             initialPreviewConfig: initialPreviewConfig
         });
     });
 
-    $(document).on("click", ".file-preview-image", (function () {
-        console.log(1)
-
+    $(document).on("click", ".file-preview-frame", (function () {
+        if ($(this).hasClass("active-item")) {
+            $(this).removeClass("active-item");
+            return;
+        }
+        $(".active-item").each(function (i, n) {
+            $(this).removeClass("active-item")
+        });
+        $(this).addClass("active-item")
     }));
 </script>
 </body>

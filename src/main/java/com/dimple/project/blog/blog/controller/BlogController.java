@@ -45,7 +45,7 @@ public class BlogController extends BaseController {
         return "blog/blog/blog";
     }
 
-    @GetMapping("/img")
+    @GetMapping("/image")
     public String img() {
         return "blog/blog/img";
     }

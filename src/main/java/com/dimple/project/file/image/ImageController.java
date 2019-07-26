@@ -41,6 +41,11 @@ public class ImageController {
         return "file/image/add";
     }
 
+    @GetMapping("/image")
+    public String image() {
+        return "file/image/image";
+    }
+
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult add(@RequestParam("file") MultipartFile file, Integer serverType) throws IOException {
