@@ -1,5 +1,7 @@
 package com.dimple.common.utils.file;
 
+import com.dimple.framework.config.SystemConfig;
+import com.dimple.project.common.domain.FileItemInfo;
 import com.google.common.io.Files;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,7 +11,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @className: FileUtils
@@ -78,6 +83,7 @@ public class FileUtils {
         return flag;
     }
 
+
     /**
      * 文件名称验证
      *
@@ -102,12 +108,45 @@ public class FileUtils {
     }
 
     /**
-     * 获取文件扩展名
+     * 获取所有图片
      *
-     * @param file 文件
-     * @return 扩展名
+     * @return 文件信息
      */
-    public static String getExtension(MultipartFile file) {
-        return Files.getFileExtension(file.getOriginalFilename());
+    public static List<FileItemInfo> getImageFileItemInfoList() {
+        File file = new File(SystemConfig.getImagePath());
+        File[] files = file.listFiles();
+        List<FileItemInfo> fileItemInfos = Arrays.stream(files).map(f ->
+                new FileItemInfo(f.getName(), String.valueOf(f.hashCode()), f.getUsableSpace(), "", new Date(f.lastModified()), FileItemInfo.ServerType.LOCAL.getServerType(), getImageFilePath(f.getName()))
+        ).collect(Collectors.toList());
+        return fileItemInfos;
+    }
+
+    /**
+     * 根据文件名获取该文件的访问路径（图片）
+     *
+     * @param name 文件名
+     * @return 可访问路径
+     */
+    public static String getImageFilePath(String name) {
+        String imagePath = SystemConfig.getImagePath();
+        return imagePath + "/" + name;
+    }
+
+    /**
+     * 删除图片文件
+     *
+     * @param name 文件名
+     * @return 是否删除成功
+     */
+    public static boolean deleteImageFile(String name) {
+        boolean flag = false;
+        String filePath = getImageFilePath(name);
+        File file = new File(filePath);
+        // 路径为文件且不为空则进行删除
+        if (file.isFile() && file.exists()) {
+            file.delete();
+            flag = true;
+        }
+        return flag;
     }
 }

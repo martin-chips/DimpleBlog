@@ -166,7 +166,7 @@
 
     function changeImg() {
         var title = "上传图片";
-        var url = "/blog/blog/img";
+        var url = "/file/image/image";
         var width = $(window).width() / 1.5;
         var height = $(window).height() / 1.2;
         //如果是移动端，就使用自适应大小弹窗
@@ -191,11 +191,10 @@
             area: [width + 'px', height + 'px'],
             fix: false,
             //不固定
-            maxmin: true,
+            // maxmin: true,
             shade: 0.3,
-            title: title,
+            title: "",
             content: url,
-            btn: ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'],
             // 弹层外区域关闭
             shadeClose: true,
             yes: function (index, layero) {

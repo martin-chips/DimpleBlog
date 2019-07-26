@@ -45,11 +45,6 @@ public class BlogController extends BaseController {
         return "blog/blog/blog";
     }
 
-    @GetMapping("/img")
-    public String img() {
-        return "blog/blog/img";
-    }
-
     @GetMapping("/list")
     @RequiresPermissions("blog:blog:list")
     @ResponseBody

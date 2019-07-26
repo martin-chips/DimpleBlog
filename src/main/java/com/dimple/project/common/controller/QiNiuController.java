@@ -46,7 +46,7 @@ public class QiNiuController {
     @RequiresPermissions("qiniu:image:upload")
     @ResponseBody
     public AjaxResult upload(@RequestParam("file") MultipartFile file) {
-        String s = fileService.insertQiNiuYunFile(file);
+        String s = fileService.insertQiNiuYunImageFile(file);
         return AjaxResult.success().put("data", s);
     }
 
@@ -55,7 +55,7 @@ public class QiNiuController {
     @ResponseBody
     public boolean remove(String fileName) throws QiniuException {
         log.info("删除图片{}", fileName);
-        return fileService.deleteQiNiuYunFile(fileName) > 0 ? true : false;
+        return fileService.deleteQiNiuYunImageFile(fileName) > 0 ? true : false;
     }
 
     @GetMapping("/list")
@@ -63,7 +63,7 @@ public class QiNiuController {
     public AjaxResult list() {
         FileItemInfo fileItemInfo = new FileItemInfo();
         fileItemInfo.setServerType(FileItemInfo.ServerType.QI_NIU_YUN.getServerType());
-        List<FileItemInfo> list = fileService.selectFileItemList(fileItemInfo);
+        List<FileItemInfo> list = fileService.selectFileItemImageList(fileItemInfo);
         AjaxResult ajaxResult = AjaxResult.success();
         ajaxResult.put("list", list);
         return ajaxResult;

@@ -1,13 +1,16 @@
 package com.dimple.project.file.image;
 
 import com.dimple.common.utils.file.FileUploadUtils;
+import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.common.domain.FileItemInfo;
 import com.dimple.project.common.service.FileService;
 import com.qiniu.common.QiniuException;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +33,8 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/file/image")
-public class ImageController {
+@Api
+public class ImageController extends BaseController {
 
     @Autowired
     FileService fileService;
@@ -41,6 +45,11 @@ public class ImageController {
         return "file/image/add";
     }
 
+    @GetMapping("/image")
+    public String image() {
+        return "file/image/image";
+    }
+
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult add(@RequestParam("file") MultipartFile file, Integer serverType) throws IOException {
@@ -49,9 +58,9 @@ public class ImageController {
         FileUploadUtils.assertAllowed(file);
         String path = null;
         if (FileItemInfo.ServerType.QI_NIU_YUN.getServerType() == serverType) {
-            path = fileService.insertQiNiuYunFile(file);
+            path = fileService.insertQiNiuYunImageFile(file);
         } else if (FileItemInfo.ServerType.LOCAL.getServerType() == serverType) {
-            path = fileService.insertLocalFile(file);
+            path = fileService.insertLocalImageFile(file);
         }
         return AjaxResult.success().put("path", path);
     }
@@ -60,29 +69,33 @@ public class ImageController {
     @ResponseBody
     public AjaxResult list(FileItemInfo fileItemInfo, @PathVariable Integer serverType) {
         fileItemInfo.setServerType(serverType);
-        List<FileItemInfo> fileItemInfoList = fileService.selectFileItemList(fileItemInfo);
+        List<FileItemInfo> fileItemInfoList = fileService.selectFileItemImageList(fileItemInfo);
         return AjaxResult.success().put("list", fileItemInfoList);
     }
 
-    @PutMapping("/syncQiNiuYun")
+    @PutMapping("/sync")
     @ResponseBody
-    public AjaxResult syncQiNiuYun() throws QiniuException {
-        int i = fileService.syncQiNiuYunToLocalDB();
-        return AjaxResult.success().put("count", i);
+    public AjaxResult sync(Integer serverType) throws QiniuException {
+        Objects.requireNonNull(serverType, "未选定刷新的服务器，请重试！");
+        int i = 0;
+        if (FileItemInfo.ServerType.QI_NIU_YUN.getServerType() == serverType) {
+            i = fileService.syncQiNiuYunImage();
+        } else if (FileItemInfo.ServerType.LOCAL.getServerType() == serverType) {
+            i = fileService.syncLocalImage();
+        }
+        return toAjax(i);
     }
 
-    @PutMapping("/syncLocal")
+    @DeleteMapping()
     @ResponseBody
-    public AjaxResult syncLocal() {
-        int i = fileService.syncLocalImageToDB();
-        return AjaxResult.success();
-    }
-
-
-    @GetMapping()
-    @ResponseBody
-    public AjaxResult deleteQiNiuYun(String name) throws QiniuException {
-        int i = fileService.deleteQiNiuYunFile(name);
-        return AjaxResult.success().put("count", i);
+    public AjaxResult deleteImage(String name, Integer serverType) throws QiniuException {
+        Objects.requireNonNull(serverType, "未选定服务器，请重试！");
+        int i = 0;
+        if (FileItemInfo.ServerType.QI_NIU_YUN.getServerType() == serverType) {
+            i = fileService.deleteQiNiuYunImageFile(name);
+        } else if (FileItemInfo.ServerType.LOCAL.getServerType() == serverType) {
+            i = fileService.deleteLocalImageFile(name);
+        }
+        return toAjax(i);
     }
 }

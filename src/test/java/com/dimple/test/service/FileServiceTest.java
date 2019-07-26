@@ -23,6 +23,6 @@ public class FileServiceTest {
 
     @Test
     public void testSyncQiNiuYunToLocalDB() throws QiniuException {
-        fileService.syncQiNiuYunToLocalDB();
+        fileService.syncQiNiuYunImage();
     }
 }

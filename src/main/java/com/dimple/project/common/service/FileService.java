@@ -21,7 +21,7 @@ public interface FileService {
      *
      * @return 成功保存到数据库的条数
      */
-    int syncQiNiuYunToLocalDB() throws QiniuException;
+    int syncQiNiuYunImage() throws QiniuException;
 
     /**
      * 删除七牛云图片
@@ -29,7 +29,7 @@ public interface FileService {
      * @param name
      * @return 受影响的行数
      */
-    int deleteQiNiuYunFile(String name) throws QiniuException;
+    int deleteQiNiuYunImageFile(String name) throws QiniuException;
 
     /**
      * 上传文件到七牛云
@@ -37,9 +37,9 @@ public interface FileService {
      * @param file 需要上传的文件
      * @return 文件路径
      */
-    String insertQiNiuYunFile(MultipartFile file);
+    String insertQiNiuYunImageFile(MultipartFile file);
 
-    List<FileItemInfo> selectFileItemList(FileItemInfo fileItemInfo);
+    List<FileItemInfo> selectFileItemImageList(FileItemInfo fileItemInfo);
 
     /**
      * 上传文件到本地
@@ -47,13 +47,20 @@ public interface FileService {
      * @param file 需要上传的文件
      * @return 文件路径
      */
-    String insertLocalFile(MultipartFile file) throws IOException;
+    String insertLocalImageFile(MultipartFile file) throws IOException;
 
     /**
      * 刷新本地图片到数据库
      *
      * @return 受影响的行数
      */
-    int syncLocalImageToDB();
+    int syncLocalImage();
 
+    /**
+     * 删除本地图片
+     *
+     * @param name 图片名称
+     * @return 受影响的行数
+     */
+    int deleteLocalImageFile(String name);
 }
