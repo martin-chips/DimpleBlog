@@ -1,10 +1,15 @@
 package com.dimple.common.utils.file;
 
+import com.google.common.io.Files;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @className: FileUtils
@@ -81,5 +86,28 @@ public class FileUtils {
      */
     public static boolean isValidFilename(String filename) {
         return filename.matches(FILENAME_PATTERN);
+    }
+
+    /**
+     * 生成文件名
+     *
+     * @param file 文件
+     * @return 新生成的文件名
+     */
+    public static String generateFileName(MultipartFile file) {
+        //获取文件后缀
+        String fileExtension = Files.getFileExtension(file.getOriginalFilename());
+        String fileName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + "-" + new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + "." + fileExtension;
+        return fileName;
+    }
+
+    /**
+     * 获取文件扩展名
+     *
+     * @param file 文件
+     * @return 扩展名
+     */
+    public static String getExtension(MultipartFile file) {
+        return Files.getFileExtension(file.getOriginalFilename());
     }
 }

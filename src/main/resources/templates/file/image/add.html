@@ -14,6 +14,7 @@
                 </div>
                 <div class="ibox-content">
                     <div class="form-group">
+                        <input type="hidden" id="serverType" th:value="${serverType}">
                         <label class="font-noraml">多文件上传</label>
                         <div class="file-loading">
                             <input id="fileUpload" name="file" type="file" multiple>
@@ -30,10 +31,13 @@
     $(document).ready(function () {
         $("#fileUpload").fileinput({
             theme: 'explorer-fas',
-            uploadUrl: '/add',
+            uploadUrl: '/file/image/add',
             overwriteInitial: false,
-            allowedFileExtensions: ["jpg", "png", "jpeg", "bmp"],
-            initialPreviewAsData: true
+            // allowedFileExtensions: ["jpg", "png", "jpeg", "bmp"],
+            initialPreviewAsData: true,
+            uploadExtraData: {
+                "serverType": $("#serverType").val()//参数
+            }
         });
     });
     //异步上传返回结果处理

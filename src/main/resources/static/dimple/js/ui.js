@@ -771,7 +771,7 @@
             get: function (url, callback) {
                 $.operate.submit(url, "get", "json", "", callback);
             },
-            put: function (url, data,callback) {
+            put: function (url, data, callback) {
                 $.operate.submit(url, "put", "json", data, callback);
             },
             // 详细信息
@@ -1073,6 +1073,25 @@
                     $.modal.alertError(result.msg);
                 }
                 $.modal.closeLoading();
+            },
+            //发送get请求获取数据
+            ajaxSend: function (url,type,dataType,data,callback) {
+                var config = {
+                    url: url,
+                    type: type,
+                    dataType: dataType,
+                    data: data,
+                    async:false,//取消异步请求
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                    },
+                    success: function (result) {
+                        if (typeof callback == "function") {
+                            callback(result);
+                        }
+                    }
+                };
+                $.ajax(config)
             }
         },
         // 校验封装处理
@@ -1381,7 +1400,7 @@ table_type = {
 
 /** 消息状态码 */
 web_status = {
-    SUCCESS: 0,
+    SUCCESS: 200,
     FAIL: 500,
     WARNING: 301
 };

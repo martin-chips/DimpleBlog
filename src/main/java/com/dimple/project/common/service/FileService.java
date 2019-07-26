@@ -4,6 +4,7 @@ import com.dimple.project.common.domain.FileItemInfo;
 import com.qiniu.common.QiniuException;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -39,4 +40,20 @@ public interface FileService {
     String insertQiNiuYunFile(MultipartFile file);
 
     List<FileItemInfo> selectFileItemList(FileItemInfo fileItemInfo);
+
+    /**
+     * 上传文件到本地
+     *
+     * @param file 需要上传的文件
+     * @return 文件路径
+     */
+    String insertLocalFile(MultipartFile file) throws IOException;
+
+    /**
+     * 刷新本地图片到数据库
+     *
+     * @return 受影响的行数
+     */
+    int syncLocalImageToDB();
+
 }

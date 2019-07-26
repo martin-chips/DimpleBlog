@@ -3,7 +3,6 @@ package com.dimple.common.utils.file;
 import com.dimple.common.utils.spring.SpringUtils;
 import com.dimple.framework.config.QiNiuConfig;
 import com.dimple.project.common.domain.FileItemInfo;
-import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -18,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -68,9 +66,8 @@ public class QiNiuUtils {
         Auth auth = Auth.create(qiNiuConfig.getAccessKey(), qiNiuConfig.getSecretKey());
         String token = auth.uploadToken(qiNiuConfig.getBucket());
         Response response = null;
-        //重新编码文件名
-        String fileExtension = Files.getFileExtension(file.getOriginalFilename());
-        String fileName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + "-" + new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + "." + fileExtension;
+        //生成文件名
+        String fileName = FileUtils.generateFileName(file);
         FileItemInfo fileItemInfo = null;
         try {
             response = uploadManager.put(file.getInputStream(), fileName, token, null, null);

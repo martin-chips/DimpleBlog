@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Api("用户信息管理")
 @Controller
-@RequestMapping("/test/*")
+@RequestMapping("/test/")
 public class TestController extends BaseController {
     private final static List<Test> TEST_LIST = new ArrayList<>();
 

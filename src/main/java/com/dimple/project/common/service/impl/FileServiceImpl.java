@@ -1,6 +1,8 @@
 package com.dimple.project.common.service.impl;
 
+import com.dimple.common.utils.file.FileUploadUtils;
 import com.dimple.common.utils.file.QiNiuUtils;
+import com.dimple.framework.config.SystemConfig;
 import com.dimple.project.common.domain.FileItemInfo;
 import com.dimple.project.common.mapper.FileItemInfoMapper;
 import com.dimple.project.common.service.FileService;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -77,6 +80,20 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<FileItemInfo> selectFileItemList(FileItemInfo fileItemInfo) {
         return fileItemInfoMapper.getFileItemList(fileItemInfo);
+    }
+
+    @Override
+    @Transactional
+    public String insertLocalFile(MultipartFile file) throws IOException {
+        FileItemInfo fileItemInfo = FileUploadUtils.upload(SystemConfig.getImagePath(), file);
+        fileItemInfoMapper.insertFileItem(fileItemInfo);
+        return fileItemInfo.getPath();
+    }
+
+    @Override
+    public int syncLocalImageToDB() {
+
+        return 0;
     }
 
 }

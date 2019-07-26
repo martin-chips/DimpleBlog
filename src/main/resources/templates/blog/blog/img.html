@@ -1,134 +1,133 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-
+<html lang="zh">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('图片上传')"/>
+    <th:block th:include="include :: header('文件上传')"/>
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+    <style>
+        .file-caption-main {
+            display: none;
+        }
+
+        .file-preview {
+            border: 0;
+        }
+
+        .fileinput-remove {
+            display: none;
+        }
+    </style>
 </head>
-<link rel="stylesheet" href="/static/ajax/libs/webUploader/webuploader.css"
-      th:href="@{/ajax/libs/webUploader/webuploader.css}">
-<link rel="stylesheet" href="/static/ajax/libs/webUploader/webuploader-custom.css"
-      th:href="@{/ajax/libs/webUploader/webuploader-custom.css}">
-<link rel="stylesheet" href="/static/ajax/libs/image-picker/image-picker.css"
-      th:href="@{/ajax/libs/image-picker/image-picker.css}">
-<style>
-    img {
-        padding: 5px;
-        background-size: cover;
-        background-position: center;
-        width: 300px;
-        height: 200px;
-        border: 5px solid #ddd;
-    }
-</style>
 <body class="gray-bg">
-<div class="wrapper wrapper-content animated fadeIn">
-    <input type="hidden" id="imgUrl">
-    <!--加载选项卡-->
-    <div class="ibox float-e-margins">
-        <div class="ibox-content">
-            <div class="panel blank-panel">
-                <div class="panel-heading">
-                    <div class="panel-options">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#upload"><i
-                                    class="fa fa-laptop"></i> 本地上传</a>
-                            </li>
-                            <li class=""><a data-toggle="tab" href="#onlineGallery"><i
-                                    class="fa fa-desktop"></i> 七牛云图库</a>
-                            </li>
-                        </ul>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>素材库</h4>
+                </div>
+                <div class="ibox-content form-horizontal">
+                    <button class="btn btn-success " type="button"><i class="fa fa-upload"></i> <span
+                            class="bold"> 上传图片到本地图库</span></button>
+                    <button class="btn btn-success " type="button"><i class="fa fa-upload"></i> <span
+                            class="bold"> 上传图片到七牛云</span></button>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">网络图片</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
                     </div>
                 </div>
+                <div class="tabs-container">
 
-                <div class="panel-body">
-                    <div class="tab-content">
-                        <div id="upload" class="tab-pane active">
-                            <div class="page-container">
-                                <strong>您可以尝试文件拖拽，使用QQ截屏工具，然后激活窗口后粘贴，或者点击添加图片按钮，来上传图片.</strong>
-                                <div id="uploader" class="wu-example">
-                                    <div class="queueList">
-                                        <div id="dndArea" class="placeholder">
-                                            <div id="filePicker"></div>
-                                            <p>或将照片拖到这里，单次最多可选300张</p>
-                                        </div>
-                                    </div>
-                                    <div class="statusBar" style="display:none;">
-                                        <div class="progress">
-                                            <span class="text">0%</span>
-                                            <span class="percentage"></span>
-                                        </div>
-                                        <div class="info"></div>
-                                        <div class="btns">
-                                            <div id="filePicker2"></div>
-                                            <div class="uploadBtn">开始上传</div>
+                    <div class="tabs-left">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab-8"> 七牛云图库</a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#tab-9"> 本地图库</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content ">
+                            <div id="tab-8" class="tab-pane active">
+                                <div class="panel-body">
+                                    <strong id="qiNiuYunSize"></strong>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group" style="height:600px;overflow-x:hidden;overflow-y:auto">
+                                        <div class="file-loading">
+                                            <input id="qiNiuYunContainer" type="file" multiple>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div id="tab-9" class="tab-pane">
+                                <div class="panel-body">
+                                    <strong>栅格系统</strong>
 
-                        <div id="onlineGallery" class="tab-pane">
-                            <div class="page-container">
-                                <strong>或者您也可以在此处选择</strong>
-                                <div class="" id="imageView">
                                 </div>
                             </div>
                         </div>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="mail-body text-right tooltip-demo">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                                class="fa fa-check"></i>保 存
+                        </button>&nbsp;
+                        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                                class="fa fa-reply-all"></i>关 闭
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 <th:block th:include="include :: footer"/>
-
-<script src="/static/ajax/libs/webUploader/webuploader.nolog.js"
-        th:src="@{/ajax/libs/webUploader/webuploader.nolog.js}"></script>
-<script src="/static/ajax/libs/webUploader/webuploader-custom.js"
-        th:src="@{/ajax/libs/webUploader/webuploader-custom.js}"></script>
-<script src="/static/ajax/libs/image-picker/image-picker.min.js"
-        th:src="@{/ajax/libs/image-picker/image-picker.min.js}"></script>
-<script>
-    $(function () {
-        loadImage();
-    });
-
-    function submitHandler() {
-        return $(".image-picker").val();
-    }
-
-    function closeLocal() {
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);//关闭当前页
-    }
-
-
-    function loadImage() {
-        $.ajax({
-            url: "/qiniu/image/list",
-            type: "get",
-            dataType: "json",
-            success: function (data) {
-                console.log(data)
-                if (data.code == web_status.SUCCESS) {
-                    var imagesUrl = data.list;
-                    var select = $("<select class='image-picker' id='imgSelect'></select>");
-                    for (var i = 0; i < imagesUrl.length; i++) {
-                        var option = $("<option></option>");
-                        option.attr("data-img-src", imagesUrl[i]);
-                        option.attr("value", imagesUrl[i]);
-                        option.addClass("file");
-                        select.append(option);
+<th:block th:include="include :: bootstrap-fileinput-js"/>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var initialPreview = new Array();
+        var initialPreviewConfig = new Array();
+        //发送请求获取数据
+        $.operate.ajaxSend("/file/image/list/2", "get", "json", "", function (result) {
+            console.log(result)
+            if (result.code == web_status.SUCCESS) {
+                //封装数据
+                var list = result.list
+                //设置页面大小
+                $("#qiNiuYunSize").text("七牛云存有" + list.length + "张图片");
+                if (list.length > 0) {
+                    for (var i = 0; i < list.length; i++) {
+                        initialPreview[i] = list[i].path;
+                        var obj = new Object();
+                        obj.caption = list[i].name;
+                        obj.size = list[i].size
+                        initialPreviewConfig[i] = obj
                     }
-                    $("#imageView").append(select);
-                    $("select").imagepicker();
                 }
             }
-        })
-    }
+            $.modal.closeLoading();
+        });
+        $("#qiNiuYunContainer").fileinput({
+            'theme': 'explorer-fas',
+            overwriteInitial: false,
+            dropZoneEnabled: false,
+            initialPreviewAsData: true,
+            initialPreview: initialPreview,
+            initialPreviewConfig: initialPreviewConfig
+        });
+    });
+
+    $(document).on("click", ".file-preview-image", (function () {
+        console.log(1)
+
+    }));
 </script>
-
 </body>
-
 </html>

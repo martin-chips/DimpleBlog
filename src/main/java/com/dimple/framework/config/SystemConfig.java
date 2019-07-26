@@ -85,4 +85,8 @@ public class SystemConfig {
     public static String getUploadPath() {
         return profile + "upload/";
     }
+
+    public static String getImagePath() {
+        return profile + "images/";
+    }
 }
