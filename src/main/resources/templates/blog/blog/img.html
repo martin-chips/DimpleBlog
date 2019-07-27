@@ -28,10 +28,10 @@
         <div class="col-sm-12">
             <div class=" float-e-margins">
                 <div class="ibox-content form-horizontal">
-                    <button class="btn btn-success " type="button"><i class="fa fa-upload"></i> <span
+                    <button class="btn btn-success " id="uploadToLocal" type="button"><i class="fa fa-upload"></i> <span
                             class="bold"> 上传图片到本地图库</span></button>
-                    <button class="btn btn-success " type="button"><i class="fa fa-upload"></i> <span
-                            class="bold"> 上传图片到七牛云</span></button>
+                    <button class="btn btn-success " id="uploadToQiNiuYun" type="button"><i class="fa fa-upload"></i>
+                        <span class="bold"> 上传图片到七牛云</span></button>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group ">
                         <label class="col-sm-2 control-label">网络图片</label>
@@ -105,7 +105,7 @@
             // overwriteInitial: false,
             // dropZoneEnabled: false,
             initialPreviewAsData: true,
-            showRemove:false,
+            showRemove: false,
 
 
             initialPreview: initialPreview,
@@ -123,6 +123,19 @@
         });
         $(this).addClass("active-item")
     }));
+
+    function t(index, layero) {
+        var body = layer.getChildFrame('body', index);
+        var netImgUrl = body.find("#ttt").val();
+        alert(netImgUrl)
+    }
+
+    $("#uploadToLocal").click(function () {
+
+        $.modal.open(
+            "test", "/file/image/add", "", "", t
+        );
+    });
 </script>
 </body>
 </html>

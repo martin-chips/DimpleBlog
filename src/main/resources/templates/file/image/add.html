@@ -17,18 +17,20 @@
                         <input type="hidden" id="serverType" th:value="${serverType}">
                         <label class="font-noraml">多文件上传</label>
                         <div class="file-loading">
-                            <input id="fileUpload" name="file" type="file" multiple>
+                            <input id="fileUpload" name="file" type="file" value="11" multiple>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <input type="hidden" value="111" id="ttt">
 </div>
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: bootstrap-fileinput-js"/>
 <script type="text/javascript">
     $(document).ready(function () {
+        // $.modal.close();
         $("#fileUpload").fileinput({
             theme: 'explorer-fas',
             uploadUrl: '/file/image/add',
@@ -44,7 +46,7 @@
     $("#fileUpload").on("fileuploaded", function (event, data, previewId, index) {
         var response = data.response;
         if (response.code == web_status.FAIL) {
-            $.modal.msgError(response.msg);
+            $.modal.alertError(response.msg);
         }
         console.log(data);
     });
