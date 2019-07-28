@@ -111,6 +111,7 @@
 <th:block th:include="include :: summernote-js"/>
 <th:block th:include="include :: layout-latest-js"/>
 <script>
+
     $(function () {
         $("#blogAddForm").validate({
             rules: {
@@ -164,7 +165,10 @@
         $('body').layout({initClosed: panehHidden, west__size: 350});
     });
 
-    function test(index, layero) {
+    /**
+     *打开选择图片的窗口
+     */
+    function imageSelect(index, layero) {
         var body = layer.getChildFrame('body', index);
         var netImgUrl = body.find("#netImgUrl").val();
         var imageSelectUrl = body.find('.active-item').find("img").attr("src");
@@ -174,9 +178,7 @@
         }
         var url = $.common.isNotEmpty(netImgUrl) ? netImgUrl : imageSelectUrl;
         $("#header").attr("src", url);
-        alert(url);
         var val = body.find("#ttt").val();
-        alert(val)
         layer.close(index);
     }
 
@@ -185,47 +187,9 @@
             url: "/blog/blog/image",
             title: "素材库",
             width: $(window).width() / 1.5,
-            callBack: test
+            callBack: imageSelect
         };
         $.modal.openOptions(option);
-        // var url = "/file/image/image";
-        // var width = $(window).width() / 1.5;
-        // var height = $(window).height() / 1.2;
-        // //如果是移动端，就使用自适应大小弹窗
-        // if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
-        //     width = 'auto';
-        //     height = 'auto';
-        // }
-        // if ($.common.isEmpty(url)) {
-        //     url = "/404.html";
-        // }
-        // if ($.common.isEmpty(width)) {
-        //     width = 800;
-        // }
-        // if ($.common.isEmpty(height)) {
-        //     height = ($(window).height() - 50);
-        // }
-        // layer.open({
-        //     type: 2,
-        //     area: [width + 'px', height + 'px'],
-        //     fix: false,
-        //     //不固定
-        //     maxmin: true,
-        //     shade: 0.3,
-        //     title: "素材库",
-        //     content: url,
-        //     // 弹层外区域关闭
-        //     shadeClose: true,
-        //     yes: function (index, layero) {
-        //         var iframeWin = layero.find('iframe')[0];
-        //         var data = iframeWin.contentWindow.submitHandler();
-        //         $("#header").attr("src", data);
-        //         iframeWin.contentWindow.closeLocal();
-        //     },
-        //     cancel: function (index) {
-        //         return true;
-        //     }
-        // });
     }
 
     //获取表单数据

@@ -106,8 +106,6 @@
             // dropZoneEnabled: false,
             initialPreviewAsData: true,
             showRemove: false,
-
-
             initialPreview: initialPreview,
             initialPreviewConfig: initialPreviewConfig
         });
@@ -131,11 +129,18 @@
     }
 
     $("#uploadToLocal").click(function () {
-
         $.modal.open(
             "test", "/file/image/add", "", "", t
         );
     });
+
+    /**
+     * 关闭当前页面
+     */
+    function closeSelf() {
+        var i = window.parent.layer.getFrameIndex();
+        window.parent.layer.close(i);
+    }
 </script>
 </body>
 </html>
