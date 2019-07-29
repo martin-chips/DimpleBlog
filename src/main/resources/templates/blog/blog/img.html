@@ -99,7 +99,7 @@
                     <div class="form-group">
                         <div class="hr-line-dashed"></div>
                         <div class="file-loading">
-                            <input class="file" id="imageFileUploader" type="file">
+                            <input class="file" id="imageFileUploader" name="file" type="file">
                         </div>
                     </div>
                 </div>
@@ -140,14 +140,24 @@
         maxFileCount: 1, //表示允许同时上传的最大文件个数
         validateInitialCount: true,
         msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-        uploadExtraData: {
-            "serverType": $("input[name='serverType']").val() //参数
+        uploadExtraData: function (previewId, index) {   //额外参数的关键点
+            var obj = {};
+            obj.serverType = serverType();  //参数
+            console.log(obj);
+            return obj;
         }
     });
+
     //异步上传返回结果处理
     $("#imageFileUploader").on("fileuploaded", function (event, data, previewId, index) {
+        //设置父级的URL
         console.log(data);
     });
+
+    serverType = function () {
+        return $("input[name='serverType']:checked").val();
+    };
+
 
     function fixQiNiuYunContainer() {
         var initialPreviewQiNiuYun = new Array();
