@@ -28,7 +28,7 @@ function login() {
             "rememberMe": rememberMe
         },
         success: function (r) {
-            if (r.code == 0) {
+            if (r.code == 200) {
                 location.href = ctx + 'index';
             } else {
                 $.modal.closeLoading();
