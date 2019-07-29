@@ -16,25 +16,22 @@
         .fileinput-remove {
             display: none;
         }
+
+        .active-item {
+            background-color: aliceblue;
+        }
     </style>
 </head>
-<body class="gray-bg">
+<body>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h4>素材库</h4>
-                </div>
+            <div class=" float-e-margins">
                 <div class="ibox-content form-horizontal">
                     <button class="btn btn-success " type="button"><i class="fa fa-upload"></i> <span
                             class="bold"> 上传图片到本地图库</span></button>
                     <button class="btn btn-success " type="button"><i class="fa fa-upload"></i> <span
                             class="bold"> 上传图片到七牛云</span></button>
-                    <button class="btn btn-success " type="button"><i class="fa fa-upload"></i> <span
-                            class="bold"> 刷新本地图库</span></button>
-                    <button class="btn btn-success " type="button"><i class="fa fa-upload"></i> <span
-                            class="bold"> 刷新七牛云图库</span></button>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group ">
                         <label class="col-sm-2 control-label">网络图片</label>
@@ -43,11 +40,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="hr-line-dashed"></div>
-                <div class="ibox-title">
-                    <h4>单击图片即可选择</h4>
-                </div>
                 <div class="tabs-container">
+
                     <div class="tabs-left">
                         <ul class="nav nav-tabs">
                             <li class="active">
@@ -71,19 +65,11 @@
                             </div>
                             <div id="tab-9" class="tab-pane">
                                 <div class="panel-body">
-                                    <strong id="localSize"></strong>
-                                    <div class="hr-line-dashed"></div>
-                                    <div class="form-group" style="height:600px;overflow-x:hidden;overflow-y:auto">
-                                        <div class="file-loading">
-                                            <input id="localContainer" type="file" multiple>
-                                        </div>
-                                    </div>
+                                    <strong>栅格系统</strong>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -114,27 +100,6 @@
             }
             $.modal.closeLoading();
         });
-        var initialPreviewLocal = new Array();
-        var initialPreviewConfigLocal = new Array();
-        $.operate.ajaxSend("/file/image/list/1", "get", "json", "", function (result) {
-            if (result.code == web_status.SUCCESS) {
-                //封装数据
-                var list = result.list
-                //设置页面大小
-                $("#localSize").text("本地服务器存有" + list.length + "张图片");
-                if (list.length > 0) {
-                    for (var i = 0; i < list.length; i++) {
-                        initialPreviewLocal[i] = list[i].path;
-                        var obj = new Object();
-                        obj.caption = list[i].name;
-                        obj.size = list[i].size
-                        initialPreviewConfigLocal[i] = obj
-                    }
-                }
-            }
-            $.modal.closeLoading();
-        });
-
         $("#qiNiuYunContainer").fileinput({
             'theme': 'explorer-fas',
             overwriteInitial: false,
@@ -143,19 +108,13 @@
             initialPreview: initialPreview,
             initialPreviewConfig: initialPreviewConfig
         });
-        $("#localContainer").fileinput({
-            'theme': 'explorer-fas',
-            overwriteInitial: false,
-            dropZoneEnabled: false,
-            initialPreviewAsData: true,
-            initialPreview: initialPreviewLocal,
-            initialPreviewConfig: initialPreviewConfigLocal
-        });
     });
 
-    $(document).on("click", ".file-preview-image", (function () {
-        console.log(1)
-
+    $(document).on("click", ".file-preview-frame", (function () {
+        $(".active-item").each(function (i, n) {
+            $(this).removeClass("active-item")
+        })
+        $(this).addClass("active-item")
     }));
 </script>
 </body>

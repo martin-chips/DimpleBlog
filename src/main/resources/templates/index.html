@@ -20,7 +20,7 @@
     <link th:href="@{/dimple/css/ui.css}" rel="stylesheet"/>
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden"
-      th:classappend="${@config.getKey('sys.index.skinName')}">
+      th:classappend="|${@config.getKey('sys.index.sideTheme')} ${@config.getKey('sys.index.skinName')}|">
 <div id="wrapper">
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
@@ -82,7 +82,8 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2" style="color:#FFF;" href="javascript:void(0)" title="收起菜单">
+                    <a class="navbar-minimalize minimalize-styl-2" style="color:#FFF;" href="javascript:void(0)"
+                       title="收起菜单">
                         <i class="fa fa-bars"></i>
                     </a>
                 </div>
@@ -143,7 +144,8 @@
             <a href="javascript:void(0)" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
         </div>
 
-        <a id="ax_close_max" class="ax_close_max" href="javascript:void(0)" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
+        <a id="ax_close_max" class="ax_close_max" href="javascript:void(0)" title="关闭全屏"> <i
+                class="fa fa-times-circle-o"></i> </a>
 
         <div class="row mainContent" id="content-main">
             <iframe class="Dimple_iframe" name="iframe0" width="100%" height="100%" data-id="/dashboard/main"
