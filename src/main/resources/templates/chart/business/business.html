@@ -139,9 +139,8 @@
     </div>
 </div>
 <th:block th:include="include :: footer"/>
+<th:block th:include="include :: echarts-js"/>
 
-<script src="/static/ajax/libs/echarts/echarts.min.js"
-        th:src="@{/ajax/libs/echarts/echarts.min.js}"></script>
 <script>
 
     /**
@@ -171,11 +170,11 @@
         //填充数据到折线图
         fixVisit();
         //页面大小改变重新渲染图表
-        window.onresize = function () {
-            carouselMap_echarts_instance.resize();
-            echarts_pspider.resize();
-            echarts_blog_instance.resize();
-        };
+        // window.onresize = function () {
+        //     carouselMap_echarts_instance.resize();
+        //     echarts_pspider.resize();
+        //     echarts_blog_instance.resize();
+        // };
     });
     //柱状图实例
     var carouselMap_echarts_instance;
@@ -275,7 +274,7 @@
             type: "get",
             success: function (result) {
                 echarts_visit_instance.hideLoading();
-                if (result.code == 0) {
+                if (result.code == 200) {
                     var xAxiss = new Array();
                     var yAxiss = new Array();
                     $.each(result.data, function (index, obj) {
@@ -428,7 +427,7 @@
             url: "/chart/business/blogClickData?startTime=" + startTime + "&endTime=" + endTime,
             type: "get",
             success: function (result) {
-                if (result.code == 0) {
+                if (result.code == 200) {
                     echarts_blog_instance.hideLoading();
                     var xAxiss = new Array();
                     var yAxiss = new Array();
@@ -503,7 +502,7 @@
             url: "/chart/business/spiderData",
             type: "get",
             success: function (result) {
-                if (result.code == 0) {
+                if (result.code == 200) {
                     echarts_pspider.hideLoading();
                     echarts_pspider.setOption({
                         legend: {
@@ -615,7 +614,7 @@
             url: "/chart/business/carouselMapData",
             type: "get",
             success: function (result) {
-                if (result.code == 0) {
+                if (result.code == 200) {
                     carouselMap_echarts_instance.hideLoading();
                     var xAxiss = new Array();
                     var yAxiss = new Array();

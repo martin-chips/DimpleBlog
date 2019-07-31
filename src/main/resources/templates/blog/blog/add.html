@@ -170,15 +170,16 @@
      */
     function imageSelect(index, layero) {
         var body = layer.getChildFrame('body', index);
-        var netImgUrl = body.find("#netImgUrl").val();
-        var imageSelectUrl = body.find('.active-item').find("img").attr("src");
-        if ($.common.isNotEmpty(netImgUrl) && $.common.isNotEmpty(imageSelectUrl)) {
-            $.modal.alertError("博文封面只能选择一个哦~，请检查网络地址是否有输入");
+        //获取上传文件的URL
+        var url = body.find("#url").val();
+        //获取网络地址URL
+        var netUrl = body.find("#netUrl").val();
+        if ($.common.isNotEmpty(url) && $.common.isNotEmpty(netUrl)) {
+            $.modal.alertError("博文封面只能选择一个哦~，请检查是否有选中图片、上传图片或者图片地址输入！");
             return;
         }
-        var url = $.common.isNotEmpty(netImgUrl) ? netImgUrl : imageSelectUrl;
-        $("#header").attr("src", url);
-        var val = body.find("#ttt").val();
+        var urlFinal = $.common.isNotEmpty(url) ? url : netUrl;
+        $("#header").attr("src", urlFinal);
         layer.close(index);
     }
 

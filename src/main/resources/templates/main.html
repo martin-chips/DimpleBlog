@@ -105,7 +105,7 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <div id="echarts_gauge_percent" style="width: 100%;height: 300px"></div>
+                        <div id="systemInfoEchart" style="width: 100%;height: 300px"></div>
                     </div>
                 </div>
             </div>
@@ -188,60 +188,25 @@
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
-<script src="/static/ajax/libs/echarts/echarts.min.js" th:src="@{/ajax/libs/echarts/echarts.min.js}"></script>
+<th:block th:include="include :: echarts-js"/>
 <script>
+
+
     $(function () {
+        //初始化系统信息仪表
+        initSystemInfoEchart();
+        setSystemDataToEchart();
 
-        //初始化系统信息仪表盘
-        initEchartsGauge();
         //初始化访客统计
-        initEchartsLine();
-        //填充数据到仪表盘
-        fixDataGauge();
-        // setInterval(fixDataGauge, 15000);
-        //填充数据到折线图
-        fixDataLine();
+        initVisitorCountInfoEchart();
+        setVisitorCountInfoDataToEchart();
 
-        window.onresize = function () {
-            echarts_pie_spider_type.resize();
-            echarts_gauge_percent.resize();
-            echarts_line_visitor.resize();
-        };
     });
+    var systemInfoEchart;
+    var visitorCountInfoEchart;
 
-    let echarts_pie_spider_type;
-    let echarts_gauge_percent;
-    let echarts_line_visitor;
-
-    function fixDataLine() {
-        $.ajax({
-            url: "/dashboard/visitCount/list",
-            type: "get",
-            success: function (result) {
-                echarts_line_visitor.hideLoading();
-                if (result.code == 0) {
-                    console.log(result.data);
-                    var xAxiss = new Array();
-                    $.each(result.data, function (index, obj) {
-                        xAxiss[index] = obj.date;
-                    });
-                    echarts_line_visitor.setOption({
-                        xAxis: {
-                            data: xAxiss
-                        },
-                        series: [
-                            {
-                                data: result.data
-                            }
-                        ]
-                    });
-                }
-            }
-        });
-    }
-
-    function initEchartsLine() {
-        echarts_line_visitor = echarts.init(document.getElementById('echarts_line_visitor'));
+    function initVisitorCountInfoEchart() {
+        visitorCountInfoEchart = echarts.init(document.getElementById('echarts_line_visitor'));
         option = {
             grid: {
                 x: 45,
@@ -307,38 +272,41 @@
                 }
             }]
         };
-        echarts_line_visitor.showLoading();
-        echarts_line_visitor.setOption(option);
+        visitorCountInfoEchart.showLoading();
+        visitorCountInfoEchart.setOption(option);
     }
 
-
-    function fixDataGauge() {
+    function setVisitorCountInfoDataToEchart() {
         $.ajax({
-            url: "/dashboard/memJvmCpuData/list",
+            url: "/dashboard/visitCount/list",
             type: "get",
             success: function (result) {
-                console.log(result)
-                if (result.code == 0) {
-                    echarts_gauge_percent.hideLoading();
-                    var option = echarts_gauge_percent.getOption();
-                    //mem
-                    option.series[0].data[0].value = result.data[0];
-                    //cpu
-                    option.series[1].data[0].value = result.data[1];
-                    //jvm
-                    option.series[2].data[0].value = result.data[2];
-                    echarts_gauge_percent.setOption(option, true);
+                visitorCountInfoEchart.hideLoading();
+                if (result.code == 200) {
+                    console.log(result.data);
+                    var xAxiss = new Array();
+                    $.each(result.data, function (index, obj) {
+                        xAxiss[index] = obj.date;
+                    });
+                    visitorCountInfoEchart.setOption({
+                        xAxis: {
+                            data: xAxiss
+                        },
+                        series: [
+                            {
+                                data: result.data
+                            }
+                        ]
+                    });
                 }
             }
-        })
-
+        });
     }
 
-    function initEchartsGauge() {
-        echarts_gauge_percent = echarts.init(document.getElementById('echarts_gauge_percent'));
-
-        option = {
-
+    function initSystemInfoEchart() {
+        systemInfoEchart = echarts.init(document.getElementById('systemInfoEchart'));
+        //设置参数
+        var option = {
             backgroundColor: 'rgba(255,255,255,0)',
             tooltip: {
                 formatter: "{a} <br/>{c} {b}"
@@ -481,9 +449,33 @@
                 }
             ]
         };
-        echarts_gauge_percent.showLoading();
-        echarts_gauge_percent.setOption(option);
+        systemInfoEchart.showLoading();
+        systemInfoEchart.setOption(option);
+    }
 
+    /**
+     * 设置系统状态仪表盘的数据
+     */
+    function setSystemDataToEchart() {
+        $.ajax({
+            url: "/dashboard/memJvmCpuData/list",
+            type: "get",
+            success: function (result) {
+                console.log(result)
+                if (result.code === 200) {
+                    console.log(11);
+                    systemInfoEchart.hideLoading();
+                    var option = systemInfoEchart.getOption();
+                    //mem
+                    option.series[0].data[0].value = result.data[0];
+                    //cpu
+                    option.series[1].data[0].value = result.data[1];
+                    //jvm
+                    option.series[2].data[0].value = result.data[2];
+                    systemInfoEchart.setOption(option, true);
+                }
+            }
+        })
     }
 </script>
 </body>
