@@ -4,6 +4,7 @@
     <th:block th:include="include :: header('编辑博客')"/>
     <th:block th:include="include :: layout-latest-css"/>
     <th:block th:include="include :: summernote-css"/>
+    <th:block th:include="include :: bootstrap-tagsinput-css"/>
 </head>
 
 
@@ -118,6 +119,8 @@
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: summernote-js"/>
 <th:block th:include="include :: layout-latest-js"/>
+<th:block th:include="include :: bootstrap-tagsinput-js"/>
+
 
 <script th:inline="javascript">
     var tags = [[${blog.tags}]];
