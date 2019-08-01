@@ -97,24 +97,39 @@
     <script th:src="@{/ajax/libs/summernote/summernote.min.js}"></script>
     <script th:src="@{/ajax/libs/summernote/summernote-zh-CN.js}"></script>
     <script>
-
-        function initfunction(params) {
-            console.log(params)
+        /**
+         * 图片选择事件回调
+         */
+        function summerNoteImageSelectCallback(index, layero) {
+            var body = layer.getChildFrame('body', index);
+            //获取上传文件的URL
+            var url = body.find("#url").val();
+            //获取网络地址URL
+            var netUrl = body.find("#netUrl").val();
+            if ($.common.isNotEmpty(url) && $.common.isNotEmpty(netUrl)) {
+                $.modal.alertError("博文封面只能选择一个哦~，请检查是否有选中图片、上传图片或者图片地址输入！");
+                return;
+            }
+            var urlFinal = $.common.isNotEmpty(url) ? url : netUrl;
+            $(".summernote").summernote('editor.insertImage', urlFinal, urlFinal);
+            layer.close(index);
         }
 
-        function myfunction(params) {
-            console.log(params)
-
-        }
-
-        var MyphotoButton = function (context) {
+        var selectImageButton = function (context) {
             var ui = $.summernote.ui;
             // create button
             var button = ui.button({
                 contents: '<i class="note-icon-picture"/>',  //按钮样式
                 tooltip: "图片",
                 click: function (params) {
-                    //  点击时执行
+                    var option = {
+                        url: "/blog/blog/image",
+                        title: "素材库",
+                        width: $(window).width() / 1.5,
+                        callBack: summerNoteImageSelectCallback
+                    };
+                    $.modal.openOptions(option);
+
                 },
                 callback: function (params) {
                     // 页面加载时执行
@@ -141,46 +156,8 @@
                 ['view', ['fullscreen']]
             ],
             buttons: {
-                myphoto: MyphotoButton      //自已定义的按钮函数
+                myphoto: selectImageButton      //自已定义的按钮函数
             },
-            callbacks: {
-                onImageUpload: function (files, editor, $editable) {
-                    var formData = new FormData();
-                    formData.append("file", files[0]);
-                    $.ajax({
-                        type: "POST",
-                        url: ctx + "qiniu/image/upload",
-                        data: formData,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        dataType: 'json',
-                        success: function (result) {
-                            if (result.code == web_status.SUCCESS) {
-                                $(obj).summernote('editor.insertImage', result.url, result.fileName);
-                            } else {
-                                $.modal.alertError(result.msg);
-                            }
-                        },
-                        error: function (error) {
-                            $.modal.alertWarning("图片上传失败。");
-                        }
-                    });
-                },
-                onMediaDelete: function (target) {
-                    var imgSrc = target.context.currentSrc;
-                    $.ajax({
-                        data: {
-                            fileUrl: imgSrc
-                        },
-                        type: "DELETE",
-                        url: ctx + "qiniu/image/remove",
-                        dataType: "json",
-                        success: function (data) {
-                        }
-                    });
-                }
-            }
         })
     </script>
 </div>
