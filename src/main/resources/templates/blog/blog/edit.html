@@ -46,13 +46,11 @@
                                     <i class="fa fa-info-circle"></i> 留空则默认为博文前150字节为博文的摘要</span>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class=" control-label">标签:</label>
-                        <div class="">
-                            <input id="tags" name="tags" class="form-control col-sm-12" data-role="tagsinput"
-                                   type="text"
-                                   style=" min-width: 100%;"
-                                   placeholder="按回车确定  ">
+                    <div>
+                        <label class="">标签:</label>
+                        <div class="tagsinput-primary form-group">
+                            <input name="tags" id="tags" class="tagsinput" data-role="tagsinput"
+                                   placeholder="输入后回车">
                         </div>
                     </div>
                     <div class="form-group">
@@ -120,8 +118,6 @@
 <th:block th:include="include :: summernote-js"/>
 <th:block th:include="include :: layout-latest-js"/>
 <th:block th:include="include :: bootstrap-tagsinput-js"/>
-
-
 <script th:inline="javascript">
     var tags = [[${blog.tags}]];
     $(function () {
