@@ -87,7 +87,8 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <div id="logMessagesRefresh" th:fragment="logMessagesRefresh">
+                    <div id="logMessagesRefresh" style="height:300px;overflow-x:hidden;overflow-y:auto"
+                         th:fragment="logMessagesRefresh">
                         <ul>
                             <li th:each="item:${logMessages}" style="margin-bottom:10px ;list-style-type: none">
                             <span style="" class="badge badge-info" th:class="${'badge '+item.style}"
@@ -143,17 +144,15 @@
                             <div class="col-lg-3">
                                 <ul class="stat-list">
                                     <li>
-                                        <div class=" ">
-                                            <div class="ibox-title">
-                                                <span class="label label-warning-light pull-right">在线</span>
-                                                <h5>访客</h5>
-                                            </div>
-                                            <div class="ibox-content">
-                                                <h1 class="no-margins" th:text="${onlineCount}"></h1>
-                                                <div class="stat-percent font-bold text-success">100% <i
-                                                        class="fa fa-bolt"></i></div>
-                                                <small>当前在线访客数</small>
-                                            </div>
+                                        <div class="ibox-title">
+                                            <span class="label label-warning-light pull-right">在线</span>
+                                            <h5>访客</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <h1 class="no-margins" th:text="${onlineCount}"></h1>
+                                            <div class="stat-percent font-bold text-success">100% <i
+                                                    class="fa fa-bolt"></i></div>
+                                            <small>当前在线访客数</small>
                                         </div>
                                     </li>
                                     <li>

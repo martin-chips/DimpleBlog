@@ -93,7 +93,7 @@
         group by date_format(create_time,'%Y-%m-%d')
     </select>
     <select id="selectVisitData" resultType="com.dimple.project.log.visitorLog.domain.VisitLog">
-        select * from bg_visit_log order by create_time desc limit 10
+        select * from bg_visit_log order by create_time desc limit 30
     </select>
 
 

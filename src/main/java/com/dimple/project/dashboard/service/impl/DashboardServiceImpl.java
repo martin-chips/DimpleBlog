@@ -97,7 +97,7 @@ public class DashboardServiceImpl implements DashboardService {
                         .builder()
         );
         return Stream.concat(loginLogStream, Stream.concat(Stream.concat(operateLogStream, visitLogStream), jobLogStream))
-                .sorted(Comparator.comparing(LogMessage::getDate).reversed()).limit(12).collect(Collectors.toList());
+                .sorted(Comparator.comparing(LogMessage::getDate).reversed()).limit(100).collect(Collectors.toList());
     }
 
     private String strongStringToHTML(String str) {
