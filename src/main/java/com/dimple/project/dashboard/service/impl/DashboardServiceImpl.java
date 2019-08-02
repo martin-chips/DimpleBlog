@@ -84,7 +84,7 @@ public class DashboardServiceImpl implements DashboardService {
                 new LogMessage.Builder()
                         .date(log.getCreateTime())
                         .dateStr(DateUtils.showTime(log.getCreateTime()))
-                        .message(StringUtils.format("@{} 浏览了 {}", log.getIpAddr(), "<a href='" + log.getRequestUrl() + "'>" + log.getTitle() + "</a>"))
+                        .message(StringUtils.format("@{} 浏览了 {}", log.getIpAddr(), "<a href=' style='font-weight: bold;'" + log.getRequestUrl() + "'>" + log.getTitle() + "</a>"))
                         .style(BadgeStyle.INFO.getType())
                         .builder()
         );
