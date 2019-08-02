@@ -186,51 +186,34 @@
         $('body').layout({initClosed: panehHidden, west__size: 350});
     });
 
-    function changeImg() {
-        var title = "上传图片";
-        var url = "/blog/blog/img";
-        var width = $(window).width() / 1.5;
-        var height = $(window).height() / 1.2;
-        //如果是移动端，就使用自适应大小弹窗
-        if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
-            width = 'auto';
-            height = 'auto';
+    /**
+     *打开选择图片的窗口
+     */
+    function imageSelect(index, layero) {
+        var body = layer.getChildFrame('body', index);
+        //获取上传文件的URL
+        var url = body.find("#url").val();
+        //获取网络地址URL
+        var netUrl = body.find("#netUrl").val();
+        if ($.common.isNotEmpty(url) && $.common.isNotEmpty(netUrl)) {
+            $.modal.alertError("博文封面只能选择一个哦~，请检查是否有选中图片、上传图片或者图片地址输入！");
+            return;
         }
-        if ($.common.isEmpty(title)) {
-            title = false;
-        }
-        if ($.common.isEmpty(url)) {
-            url = "/404.html";
-        }
-        if ($.common.isEmpty(width)) {
-            width = 800;
-        }
-        if ($.common.isEmpty(height)) {
-            height = ($(window).height() - 50);
-        }
-        layer.open({
-            type: 2,
-            area: [width + 'px', height + 'px'],
-            fix: false,
-            //不固定
-            maxmin: true,
-            shade: 0.3,
-            title: title,
-            content: url,
-            btn: ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'],
-            // 弹层外区域关闭
-            shadeClose: true,
-            yes: function (index, layero) {
-                var iframeWin = layero.find('iframe')[0];
-                var data = iframeWin.contentWindow.submitHandler();
-                $("#header").attr("src", data);
-                iframeWin.contentWindow.closeLocal();
-            },
-            cancel: function (index) {
-                return true;
-            }
-        });
+        var urlFinal = $.common.isNotEmpty(url) ? url : netUrl;
+        $("#header").attr("src", urlFinal);
+        layer.close(index);
     }
+
+    function changeImg() {
+        var option = {
+            url: "/blog/blog/image",
+            title: "素材库",
+            width: $(window).width() / 1.5,
+            callBack: imageSelect
+        };
+        $.modal.openOptions(option);
+    }
+
 
     //获取表单数据
     function getData() {
