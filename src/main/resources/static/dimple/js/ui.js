@@ -1075,13 +1075,13 @@
                 $.modal.closeLoading();
             },
             //发送get请求获取数据
-            ajaxSend: function (url,type,dataType,data,callback) {
+            ajaxSend: function (url, type, dataType, data, callback) {
                 var config = {
                     url: url,
                     type: type,
                     dataType: dataType,
                     data: data,
-                    async:false,//取消异步请求
+                    async: false,//取消异步请求
                     beforeSend: function () {
                         $.modal.loading("正在处理中，请稍后...");
                     },

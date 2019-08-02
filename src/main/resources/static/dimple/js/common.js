@@ -3,6 +3,28 @@
  * Copyright (c) 2019 Dimple
  */
 $(function () {
+    $(function () {
+        // Collapse ibox function
+        $('.collapse-link').on('click', function () {
+            var ibox = $(this).closest('div.ibox');
+            var button = $(this).find('i');
+            var content = ibox.children('.ibox-content');
+            content.slideToggle(200);
+            button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+            ibox.toggleClass('').toggleClass('border-bottom');
+            setTimeout(function () {
+                ibox.resize();
+                ibox.find('[id^=map-]').resize();
+            }, 50);
+        });
+
+        // Close ibox function
+        $('.close-link').on('click', function () {
+            var content = $(this).closest('div.ibox');
+            content.remove();
+        });
+
+    });
     // select2复选框事件绑定
     if ($.fn.select2 !== undefined) {
         $.fn.select2.defaults.set("theme", "bootstrap");

@@ -28,5 +28,10 @@ public interface DashboardService {
      */
     List<VisitCount> getVisitData();
 
+    /**
+     * 获取最近动态
+     *
+     * @return 最近动态log
+     */
     List<LogMessage> selectLogMessage();
 }

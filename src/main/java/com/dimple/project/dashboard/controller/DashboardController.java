@@ -83,6 +83,15 @@ public class DashboardController extends BaseController {
         return "main";
     }
 
+    /**
+     * 批量刷新最新动态日志组件
+     */
+    @GetMapping("/dashboard/main/logMessages")
+    public String logMessages(Model model) {
+        model.addAttribute("logMessages", dashboardService.selectLogMessage());
+        return "main :: logMessagesRefresh";
+    }
+
 
     @GetMapping("/dashboard/spiderData/list")
     @ResponseBody

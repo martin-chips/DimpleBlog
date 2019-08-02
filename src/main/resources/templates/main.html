@@ -10,6 +10,7 @@
     <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
     <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
     <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
 </head>
 
 <body class="gray-bg">
@@ -74,22 +75,40 @@
                 <div class="ibox-title">
                     <h5>最新动态</h5>
                     <div class="ibox-tools">
-                        <a class="collapse-link">
+                        <a onclick="localRefresh()" title="刷新">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                        <a class="collapse-link" title="折叠">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="close-link">
+                        <a class="close-link" title="关闭">
                             <i class="fa fa-times"></i>
                         </a>
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <ul>
-                        <li th:each="item:${logMessages}" style="margin-bottom:10px ;list-style-type: none">
+                    <div id="logMessagesRefresh" th:fragment="logMessagesRefresh">
+                        <script>
+                            function localRefresh() {
+                                $('#logMessagesRefresh').block({
+                                        message: '<div class="loaderbox"><div class="loading-activity"></div> ' + '正在加载中，请稍后' + '</div>'
+                                    }
+                                );
+
+                                // 装载局部刷新返回的页面
+                                $('#logMessagesRefresh').load("/dashboard/main/logMessages");
+                            }
+
+
+                        </script>
+                        <ul>
+                            <li th:each="item:${logMessages}" style="margin-bottom:10px ;list-style-type: none">
                             <span style="" class="badge badge-info" th:class="${'badge '+item.style}"
                                   th:text="${item.dateStr}"></span>
-                            <span th:utext="${item.message}"></span>
-                        </li>
-                    </ul>
+                                <span th:utext="${item.message}"></span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-8">
@@ -97,10 +116,10 @@
                     <div class="ibox-title">
                         <h5>系统状态仪表盘</h5>
                         <div class="ibox-tools">
-                            <a class="collapse-link">
+                            <a class="collapse-link" title="折叠">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
-                            <a class="close-link">
+                            <a class="close-link" title="关闭">
                                 <i class="fa fa-times"></i>
                             </a>
                         </div>
@@ -119,10 +138,10 @@
                     <div class="ibox-title">
                         <h5>访客统计</h5>
                         <div class="ibox-tools">
-                            <a class="collapse-link">
+                            <a class="collapse-link" title="折叠">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
-                            <a class="close-link">
+                            <a class="close-link" title="关闭">
                                 <i class="fa fa-times"></i>
                             </a>
                         </div>
@@ -187,12 +206,11 @@
         </div>
     </div>
 </div>
-<script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <th:block th:include="include :: echarts-js"/>
+<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+
 <script>
-
-
     $(function () {
         //初始化系统信息仪表
         initSystemInfoEchart();
