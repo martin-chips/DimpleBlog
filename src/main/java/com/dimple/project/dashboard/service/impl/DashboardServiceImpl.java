@@ -4,6 +4,8 @@ import com.dimple.common.constant.BadgeStyle;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.DateUtils;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.project.blog.blog.mapper.BlogMapper;
+import com.dimple.project.blog.tag.mapper.TagMapper;
 import com.dimple.project.dashboard.domain.BusinessCommonData;
 import com.dimple.project.dashboard.domain.LogMessage;
 import com.dimple.project.dashboard.domain.VisitCount;
@@ -16,6 +18,8 @@ import com.dimple.project.system.dict.mapper.DictDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -41,6 +45,10 @@ public class DashboardServiceImpl implements DashboardService {
     JobLogMapper jobLogMapper;
     @Autowired
     DictDataMapper dictDataMapper;
+    @Autowired
+    BlogMapper blogMapper;
+    @Autowired
+    TagMapper tagMapper;
 
 
     @Override
@@ -81,12 +89,48 @@ public class DashboardServiceImpl implements DashboardService {
                         .builder()
         );
         Stream<LogMessage> visitLogStream = visitLogMapper.selectVisitData().stream().map(log ->
-                new LogMessage.Builder()
-                        .date(log.getCreateTime())
-                        .dateStr(DateUtils.showTime(log.getCreateTime()))
-                        .message(StringUtils.format("@{} 浏览了 {}", log.getIpAddr(), "<a href=' style='font-weight: bold;'" + log.getRequestUrl() + "'>" + log.getTitle() + "</a>"))
-                        .style(BadgeStyle.INFO.getType())
-                        .builder()
+                {
+                    LogMessage logMessage = new LogMessage.Builder()
+                            .date(log.getCreateTime())
+                            .message(StringUtils.format("@{} 浏览了 {}", log.getIpAddr(), "<a class='logUrl'  style='font-weight: bold;' href='" + log.getRequestUrl() + "'>" + log.getTitle() + "</a>"))
+                            .dateStr(DateUtils.showTime(log.getCreateTime()))
+                            .style(BadgeStyle.INFO.getType())
+                            .builder();
+                    String blogIdString = log.getRequestUrl().replaceAll("[^0-9]", "");
+                    try {
+                        Integer id = Integer.valueOf(blogIdString);
+                        String title = "";
+                        //表示是文章
+                        if (log.getRequestUrl().contains("article")) {
+                            title = blogMapper.selectBlogTitleByBlogId(id);
+                            if (StringUtils.isNotEmpty(title)) {
+                                logMessage.setMessage(StringUtils.format("@{} 浏览了 {}", log.getIpAddr(), "<a class='logUrl' style='font-weight: bold;' href=' " + log.getRequestUrl() + "'>" + "文章：" + title + "</a>"));
+                            }
+                        } else if (log.getRequestUrl().contains("tag")) {
+                            title = tagMapper.selectTagTitleByTagId(id);
+                            if (StringUtils.isNotEmpty(title)) {
+                                logMessage.setMessage(StringUtils.format("@{} 浏览了 {}", log.getIpAddr(), "<a class='logUrl' style='font-weight: bold;' href='" + log.getRequestUrl() + "'>" + "标签：" + title + "</a>"));
+                            }
+                        }
+
+                    } catch (Exception e) {
+                        //ignore
+                    }
+                    if (log.getRequestUrl().contains("search")) {
+                        String searchKey = null;
+                        try {
+                            searchKey = URLDecoder.decode(log.getRequestUrl().replaceAll("/f/search/", "").replaceAll(".html", ""), "UTF-8");
+                            if (StringUtils.isNotEmpty(searchKey)) {
+                                logMessage.setMessage(StringUtils.format("@{} 浏览了 {}", log.getIpAddr(), "<a style='font-weight: bold;' href=' " + log.getRequestUrl() + "'>" + "标签：" + searchKey + "</a>"));
+                            }
+                        } catch (UnsupportedEncodingException e) {
+                            //ignore
+                        }
+
+
+                    }
+                    return logMessage;
+                }
         );
         Stream<LogMessage> jobLogStream = jobLogMapper.selectJobData().stream().map(log ->
                 new LogMessage.Builder()

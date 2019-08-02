@@ -68,4 +68,6 @@ public interface TagMapper {
      * @return 符合条件的tag的List
      */
     List<Integer> selectTagIdsByTagTitles(@Param("tagTitles") String[] tagTitles);
+
+    String selectTagTitleByTagId(Integer tagId);
 }

@@ -227,6 +227,9 @@
         </where>
         order by create_time
     </select>
+    <select id="selectBlogTitleByBlogId" resultType="java.lang.String">
+        select title from bg_blog where blog_id=#{blogId}
+    </select>
 
 
 </mapper>

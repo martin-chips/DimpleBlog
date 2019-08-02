@@ -74,5 +74,8 @@
             #{title}
         </foreach>
     </select>
+    <select id="selectTagTitleByTagId" resultType="java.lang.String">
+        select tag_title from bg_tag where tag_id=#{tagId}
+    </select>
 
 </mapper>

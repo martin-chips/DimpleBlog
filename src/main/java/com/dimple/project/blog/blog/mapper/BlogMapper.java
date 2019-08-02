@@ -176,4 +176,6 @@ public interface BlogMapper {
     int increamentBlogClick(Integer blogId);
 
     List<BusinessCommonData> selectBlogClickData(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+    String selectBlogTitleByBlogId(Integer blogId);
 }

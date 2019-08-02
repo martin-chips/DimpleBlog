@@ -91,17 +91,18 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <div id="logMessagesRefresh" style="height:300px;overflow-x:hidden;overflow-y:auto"
+                    <div id="logMessagesRefresh" style="height:300px;overflow-x:auto;overflow-y:auto"
                          th:fragment="logMessagesRefresh">
                         <ul>
                             <li th:each="item:${logMessages}" style="margin-bottom:10px ;list-style-type: none">
                             <span style="" class="badge badge-info" th:class="${'badge '+item.style}"
                                   th:text="${item.dateStr}"></span>
-                                <span th:utext="${item.message}"></span>
+                                <span class="logTitle" th:utext="${item.message}"></span>
                             </li>
                         </ul>
                     </div>
                 </div>
+
             </div>
             <div class="col-lg-8">
                 <div class="ibox float-e-margins">
@@ -142,48 +143,47 @@
                         <div class="row">
                             <div class="col-lg-9">
                                 <div class="">
-                                    <div id="echarts_line_visitor" style="width: 100%;height: 450px"></div>
+                                    <div id="echarts_line_visitor" style="width: 100%;height: 350px"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <ul class="stat-list">
                                     <li>
-                                        <div class="ibox-title">
-                                            <span class="label label-warning-light pull-right">在线</span>
-                                            <h5>访客</h5>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <h1 class="no-margins" th:text="${onlineCount}"></h1>
-                                            <div class="stat-percent font-bold text-success">100% <i
-                                                    class="fa fa-bolt"></i></div>
-                                            <small>当前在线访客数</small>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class=" ">
-                                            <div class="ibox-title">
-                                                <span class="label label-success pull-right">今日</span>
-                                                <h5>访客</h5>
-                                            </div>
-                                            <div class="ibox-content">
-                                                <h1 class="no-margins" th:text="${todayCount}"></h1>
-                                                <div class="stat-percent font-bold text-success">100% <i
-                                                        class="fa fa-bolt"></i></div>
-                                                <small>今日访客数量</small>
+                                        <div class="widget style1 lazur-bg">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <i class="fa fa-user   fa-5x"></i>
+                                                </div>
+                                                <div class="col-xs-8 text-right">
+                                                    <span> 在线人数 </span>
+                                                    <h2 class="font-bold" th:text="${onlineCount}">260</h2>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
-                                        <div class=" ">
-                                            <div class="ibox-title">
-                                                <span class="label label-primary pull-right">历史</span>
-                                                <h5>访客</h5>
+                                        <div class="widget style1 yellow-bg">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <i class="fa  fa-plug fa-5x"></i>
+                                                </div>
+                                                <div class="col-xs-8 text-right">
+                                                    <span> 今日访客 </span>
+                                                    <h2 class="font-bold" th:text="${todayCount}">12</h2>
+                                                </div>
                                             </div>
-                                            <div class="ibox-content">
-                                                <h1 class="no-margins" th:text="${totalCount}"></h1>
-                                                <div class="stat-percent font-bold text-success">100% <i
-                                                        class="fa fa-bolt"></i></div>
-                                                <small>历史访客数量</small>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="widget style1 navy-bg">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <i class="fa  fa-arrow-circle-up fa-5x"></i>
+                                                </div>
+                                                <div class="col-xs-8 text-right">
+                                                    <span> 历史总数 </span>
+                                                    <h2 class="font-bold" th:text="${totalCount}">26'C</h2>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -198,7 +198,23 @@
 </div>
 <th:block th:include="include :: echarts-js"/>
 <th:block th:include="include :: footer"/>
-
+<script>
+    $(function () {
+        $(".logUrl").click(function () {
+            var option = {
+                url: $(this).attr("href"),
+                title: "预览",
+                width: $(window).width() / 1.5,
+                btn: ['关闭'],
+                yes: function (index, layero) {
+                    layer.close(index);
+                }
+            };
+            $.modal.openOptions(option);
+            return false;
+        });
+    })
+</script>
 <script>
     function localRefresh() {
         $('#logMessagesRefresh').block({
