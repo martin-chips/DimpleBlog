@@ -88,19 +88,6 @@
                 </div>
                 <div class="ibox-content">
                     <div id="logMessagesRefresh" th:fragment="logMessagesRefresh">
-                        <script>
-                            function localRefresh() {
-                                $('#logMessagesRefresh').block({
-                                        message: '<div class="loaderbox"><div class="loading-activity"></div> ' + '正在加载中，请稍后' + '</div>'
-                                    }
-                                );
-
-                                // 装载局部刷新返回的页面
-                                $('#logMessagesRefresh').load("/dashboard/main/logMessages");
-                            }
-
-
-                        </script>
                         <ul>
                             <li th:each="item:${logMessages}" style="margin-bottom:10px ;list-style-type: none">
                             <span style="" class="badge badge-info" th:class="${'badge '+item.style}"
@@ -211,6 +198,38 @@
 <script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
 
 <script>
+    function localRefresh() {
+        $('#logMessagesRefresh').block({
+                message: '<div class="loaderbox"><div class="loading-activity"></div> ' + '正在加载中，请稍后' + '</div>'
+            }
+        );
+        // 装载局部刷新返回的页面
+        $('#logMessagesRefresh').load("/dashboard/main/logMessages");
+    }
+
+    $(function () {
+        // Collapse ibox function
+        $('.collapse-link').on('click', function () {
+            var ibox = $(this).closest('div.ibox');
+            var button = $(this).find('i');
+            var content = ibox.children('.ibox-content');
+            content.slideToggle(200);
+            button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+            ibox.toggleClass('').toggleClass('border-bottom');
+            setTimeout(function () {
+                ibox.resize();
+                ibox.find('[id^=map-]').resize();
+            }, 50);
+        });
+
+        // Close ibox function
+        $('.close-link').on('click', function () {
+            var content = $(this).closest('div.ibox');
+            content.remove();
+        });
+
+    });
+
     $(function () {
         //初始化系统信息仪表
         initSystemInfoEchart();
