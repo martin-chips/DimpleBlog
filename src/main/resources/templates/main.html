@@ -85,8 +85,9 @@
                 <div class="ibox-content">
                     <ul>
                         <li th:each="item:${logMessages}" style="margin-bottom:10px ;list-style-type: none">
-                            <span class="badge badge-info" th:text="${item.dateStr}"></span>
-                            <span th:text="${item.message}"></span>
+                            <span style="" class="badge badge-info" th:class="${'badge '+item.style}"
+                                  th:text="${item.dateStr}"></span>
+                            <span th:utext="${item.message}"></span>
                         </li>
                     </ul>
                 </div>

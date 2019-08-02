@@ -41,9 +41,12 @@
             </if>
         </where>
     </select>
-    <select id="selectLoginInforData" resultType="com.dimple.project.dashboard.domain.LogMessage">
-        select login_time as date,login_name as message  from sys_logininfor order by login_time desc limit 3
+
+
+    <select id="selectLoginInforData" resultType="com.dimple.project.log.logininfor.domain.Logininfor">
+        select info_id,login_name,ipaddr,login_location,browser,os,status,msg,login_time from sys_logininfor order by login_time desc limit 10
     </select>
+
 
     <delete id="deleteLogininforByIds" parameterType="String">
         delete from sys_logininfor where info_id in

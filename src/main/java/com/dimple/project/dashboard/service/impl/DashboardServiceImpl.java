@@ -1,22 +1,26 @@
 package com.dimple.project.dashboard.service.impl;
 
+import com.dimple.common.constant.BadgeStyle;
+import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.DateUtils;
+import com.dimple.common.utils.StringUtils;
 import com.dimple.project.dashboard.domain.BusinessCommonData;
 import com.dimple.project.dashboard.domain.LogMessage;
 import com.dimple.project.dashboard.domain.VisitCount;
 import com.dimple.project.dashboard.service.DashboardService;
-import com.dimple.project.log.jobLog.domain.JobLog;
 import com.dimple.project.log.jobLog.mapper.JobLogMapper;
 import com.dimple.project.log.logininfor.mapper.LogininforMapper;
-import com.dimple.project.log.operlog.domain.OperLog;
 import com.dimple.project.log.operlog.mapper.OperLogMapper;
-import com.dimple.project.log.visitorLog.domain.VisitLog;
 import com.dimple.project.log.visitorLog.mapper.VisitLogMapper;
 import com.dimple.project.system.dict.mapper.DictDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @className: DashboardServiceImpl
@@ -60,61 +64,43 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     public List<LogMessage> selectLogMessage() {
-        List<LogMessage> messages = new ArrayList<>();
-        //登录日志
-        List<LogMessage> logMessages = logininforMapper.selectLoginInforData();
-        if (logMessages != null && logMessages.size() != 0) {
-            for (LogMessage logMessage : logMessages) {
-                LogMessage temp = new LogMessage();
-                temp.setDateStr(DateUtils.showTime(logMessage.getDate()));
-                temp.setDate(logMessage.getDate());
-                temp.setMessage(logMessage.getMessage() + " 登录了系统");
-                messages.add(temp);
-            }
-        }
-        //操作日志
-        List<OperLog> operLogs = operLogMapper.selectOperLogData();
-        if (operLogs != null && operLogs.size() != 0) {
-            for (OperLog operLog : operLogs) {
-                LogMessage temp = new LogMessage();
-                temp.setDateStr(DateUtils.showTime(operLog.getOperTime()));
-                temp.setDate(operLog.getOperTime());
-                String sys_oper_type = dictDataMapper.selectDictLabel("sys_oper_type", operLog.getBusinessType().toString());
-                temp.setMessage(operLog.getOperName() + " 对 " + operLog.getTitle() + " 进行了 " + sys_oper_type + " 操作");
-                messages.add(temp);
-            }
-        }
-        //访问日志
-        List<VisitLog> visitLogs = visitLogMapper.selectVisitData();
-        if (visitLogs != null && visitLogs.size() != 0) {
-            for (VisitLog visitLog : visitLogs) {
-                LogMessage temp = new LogMessage();
-                temp.setDate(visitLog.getCreateTime());
-                temp.setDateStr(DateUtils.showTime(visitLog.getCreateTime()));
-                temp.setMessage(visitLog.getIpAddr() + " 访问了 " + visitLog.getTitle() + " 模块");
-                messages.add(temp);
-            }
-        }
-        //调度日志
-        List<JobLog> jobLogs = jobLogMapper.selectJobData();
-        for (JobLog jobLog : jobLogs) {
-            LogMessage temp = new LogMessage();
-            temp.setDateStr(DateUtils.showTime(jobLog.getCreateTime()));
-            temp.setDate(jobLog.getCreateTime());
-            temp.setMessage(jobLog.getJobName() + " 启动运行");
-            messages.add(temp);
-        }
-        Collections.sort(messages, (logMessage1, logMessage2) -> {
-            long time = logMessage1.getDate().getTime() - logMessage2.getDate().getTime();
-            if (time < 0) {
-                return 1;
-            } else if (time > 0) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
-        return messages;
+        Stream<LogMessage> loginLogStream = logininforMapper.selectLoginInforData().stream().map(log ->
+                new LogMessage.Builder()
+                        .date(log.getLoginTime())
+                        .dateStr(DateUtils.showTime(log.getLoginTime()))
+                        .message(StringUtils.format("@{}: {} {}", log.getIpaddr(), log.getLoginName(), strongStringToHTML(log.getMsg())))
+                        .style(Constants.SUCCESS.equals(log.getStatus()) ? BadgeStyle.SUCCESS.getType() : BadgeStyle.DANGER.getType())
+                        .builder()
+        );
+        Stream<LogMessage> operateLogStream = operLogMapper.selectOperLogData().stream().map(log ->
+                new LogMessage.Builder().
+                        dateStr(DateUtils.showTime(log.getOperTime()))
+                        .date(log.getOperTime())
+                        .message(StringUtils.format("@{}：{} 对 {} 进行了 {} 操作", log.getOperIp(), log.getOperName(), strongStringToHTML(log.getTitle()), strongStringToHTML(dictDataMapper.selectDictLabel("sys_oper_type", log.getBusinessType().toString()))))
+                        .style("badge-" + dictDataMapper.selectCssClassByDictTypeAndDictValue("sys_oper_type", log.getBusinessType().toString()))
+                        .builder()
+        );
+        Stream<LogMessage> visitLogStream = visitLogMapper.selectVisitData().stream().map(log ->
+                new LogMessage.Builder()
+                        .date(log.getCreateTime())
+                        .dateStr(DateUtils.showTime(log.getCreateTime()))
+                        .message(StringUtils.format("@{} 浏览了 {}", log.getIpAddr(), "<a href='" + log.getRequestUrl() + "'>" + log.getTitle() + "</a>"))
+                        .style(BadgeStyle.INFO.getType())
+                        .builder()
+        );
+        Stream<LogMessage> jobLogStream = jobLogMapper.selectJobData().stream().map(log ->
+                new LogMessage.Builder()
+                        .dateStr(DateUtils.showTime(log.getCreateTime()))
+                        .date(log.getCreateTime())
+                        .message(StringUtils.format("{}({}) {} {}", log.getJobName(), log.getJobGroup(), Constants.SUCCESS.equals(log.getStatus()) ? "启动成功：" : "启动失败：", strongStringToHTML(log.getJobMessage())))
+                        .style(Constants.SUCCESS.equals(log.getStatus()) ? BadgeStyle.SUCCESS.getType() : BadgeStyle.DANGER.getType())
+                        .builder()
+        );
+        return Stream.concat(loginLogStream, Stream.concat(Stream.concat(operateLogStream, visitLogStream), jobLogStream))
+                .sorted(Comparator.comparing(LogMessage::getDate).reversed()).limit(12).collect(Collectors.toList());
     }
 
+    private String strongStringToHTML(String str) {
+        return "<b>" + str + "</b>";
+    }
 }
