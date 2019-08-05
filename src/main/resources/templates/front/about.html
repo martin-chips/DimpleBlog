@@ -6,43 +6,169 @@
     <title>关于—Dimple的个人博客</title>
     <div th:include="include-front :: head"></div>
     <style>
-        .gyw_intro {float: left;font-size: 14px;}
-        .gyw_intro h5 {width: 640px;font-weight: bold;margin-top: 10px;float: left;}
-        .gyw_intro hr {border: 0.5px dashed #ccc;}
-        .bz_about div {margin: 10px 0; width: 95%;float: left;padding: 10px 30px 10px 30px;color: #555; border-left: 4px solid #0cc;}
-        .bz_about .wb_url {margin: 0 20px;}
-        .bz_about .wb_url a {color: #1CA368;}
-        .gyw_intro span {color: #ff3366;}
-        .about { overflow: hidden; background: url(../images/abbg.png) no-repeat right top #fff; padding: 20px 40px }
-        .ab_box { overflow: hidden; margin: 20px 0; }
-        .ab_box h3 { margin: 10px 0 10px; font-size: 18px; }
-        .ab_box p { color: #666; margin-bottom: 5px }
-        .avatar_pic { position: relative; float: left; margin-right: 10px; background: -webkit-linear-gradient(bottom left, rgba(0,153,255,.9), rgba(42,228,197,.7)); background: -o-linear-gradient(bottom left, rgba(0,153,255,.9), rgba(42,228,197,.7)); background: linear-gradient(to top right, rgba(0,153,255,.9), rgba(42,228,197,.7)); display: block; padding: 2px; width: 100px; border-radius: 50%; }
-        .avatar_pic img { width: 100%; border-radius: 50%; }
-        .avatar_pic:before { position: absolute; content: ""; background: url(../images/v.png) no-repeat; bottom: 0px; right: 10px; height: 24px; width: 24px; background-size: 24px; }
-        .ab_dubai { margin-bottom: 15px; display: inline-block; }
-        .ly_button { float: right; width: 100px; background: #000; text-align: center; border-radius: 3px; line-height: 30px }
-        .ly_button a { color: #FFF }
-        .gd_title { margin: 20px 0; font-size: 18px; background: url(../images/hline.png) no-repeat bottom right; width: 120px; clear: both; background-size: 40px; border-bottom: #000 1px dashed; padding-left: 10px; padding-bottom: 5px; display: inline-block; }
-        .xinlu li { width: 25%; float: left; overflow: hidden; margin-bottom: 20px }
-        .xinlu li a { display: block; margin: 0 10px; background: #f3f3f3; padding: 20px; }
-        .xinlu li i { display: block; overflow: hidden; height: 120px; margin-bottom: 10px }
-        .xinlu li i img { width: 100%; min-height: 120px; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; -ms-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; transition: all 0.5s; }
-        .xinlu li i:hover img { transform: scale(1.1); }
-        .xinlu li p { font-weight: bold; margin-bottom: 10px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
-        .xinlu li span { color: #666; overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3; font-size: 14px; height: 62px; }
-        .myblog { overflow: hidden; clear: both }
-        .myblog li { width: 20%; float: left; display: block; text-align: center; padding-bottom: 10px; position: relative; overflow: hidden }
-        .myblog li:after { position: absolute; content: ""; right: 0; top: 0; background: #e9eaed; height: 100%; width: 1px; }
-        .myblog li:last-child:after { content: none }
-        .myblog li b { display: block; line-height: 30px; margin-bottom: 10px; }
+        .gyw_intro {
+            float: left;
+            font-size: 14px;
+        }
+
+        .gyw_intro h5 {
+            width: 60%;
+            font-weight: bold;
+            margin-top: 10px;
+            float: left;
+        }
+
+        .gyw_intro hr {
+            border: 0.5px dashed #ccc;
+        }
+
+        .bz_about div {
+            margin: 10px 0;
+            float: left;
+            padding: 10px 20px 10px 20px;
+            color: #555;
+            border-left: 4px solid #0cc;
+        }
+
+        .bz_about .wb_url {
+            margin: 0 20px;
+        }
+
+        .bz_about .wb_url a {
+            color: #1CA368;
+        }
+
+        .gyw_intro span {
+            color: #ff3366;
+        }
+
+        .ab_box h3 {
+            margin: 10px 0 10px;
+            font-size: 18px;
+        }
+
+        .ab_box p {
+            color: #666;
+            margin-bottom: 5px
+        }
+
+        .avatar_pic img {
+            width: 100%;
+            border-radius: 50%;
+        }
+
+        .ab_dubai {
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .ly_button {
+            float: right;
+            width: 100px;
+            background: #000;
+            text-align: center;
+            border-radius: 3px;
+            line-height: 30px
+        }
+
+        .ly_button a {
+            color: #FFF
+        }
+
+        .xinlu li {
+            width: 25%;
+            float: left;
+            overflow: hidden;
+            margin-bottom: 20px
+        }
+
+        .xinlu li a {
+            display: block;
+            margin: 0 10px;
+            background: #f3f3f3;
+            padding: 20px;
+        }
+
+        .xinlu li i {
+            display: block;
+            overflow: hidden;
+            height: 120px;
+            margin-bottom: 10px
+        }
+
+        .xinlu li i img {
+            width: 100%;
+            min-height: 120px;
+            -moz-transition: all .5s ease;
+            -webkit-transition: all .5s ease;
+            -ms-transition: all .5s ease;
+            -o-transition: all .5s ease;
+            transition: all .5s ease;
+            transition: all 0.5s;
+        }
+
+        .xinlu li i:hover img {
+            transform: scale(1.1);
+        }
+
+        .xinlu li p {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .xinlu li span {
+            color: #666;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            font-size: 14px;
+            height: 62px;
+        }
+
+        .myblog {
+            overflow: hidden;
+            clear: both
+        }
+
+        .myblog li {
+            width: 20%;
+            float: left;
+            display: block;
+            text-align: center;
+            padding-bottom: 10px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .myblog li:after {
+            position: absolute;
+            content: "";
+            right: 0;
+            top: 0;
+            background: #e9eaed;
+            height: 100%;
+            width: 1px;
+        }
+
+        .myblog li:last-child:after {
+            content: none
+        }
+
+        .myblog li b {
+            display: block;
+            line-height: 30px;
+            margin-bottom: 10px;
+        }
+
         .myblog li:nth-child(even)
-        .myblog p { margin-bottom: 10px }
-        .qq_join li { float: left; width: 25%; }
-        .qq_join li section { margin: 0 20px; box-shadow: #ccc 1px 1px 5px; padding: 10px; display: block; overflow: hidden }
-        .qq_join li img { width: 90%; margin: auto; background: -webkit-linear-gradient(bottom left, rgba(0,153,255,.9), rgba(42,228,197,.7)); background: -o-linear-gradient(bottom left, rgba(0,153,255,.9), rgba(42,228,197,.7)); background: linear-gradient(to top right, rgba(0,153,255,.9), rgba(42,228,197,.7)); display: block; padding: 5px; }
-        .qq_join li p { margin: 10px; }
-        .qq_join li b { color: #019881; margin: 0 5px; }
+        .myblog p {
+            margin-bottom: 10px
+        }
     </style>
 </head>
 <body class="nobg">
@@ -89,11 +215,11 @@
                         </div>
                     </div>
                 </ul>
-                <span class="ly_button"><a href="/leaveComment.html" target="_blank">留言</a></span>
+                <span class="ly_button"><a href="/f/leaveComment.html" target="_blank">留言</a></span>
                 <h2 class="gd_title">关于我</h2>
                 <p class="ab_dubai">
                 <div class="gyw_intro">
-                    <h5>我的各种详细信息(不放照片，怕帅哭别人，皮一下很开心)。</h5>
+                    <h5>个人简介 | Resume：</h5>
                     <div class="bz_about">
                         <div>
                             人物：Dimple<br>
@@ -103,11 +229,6 @@
                             体重：&gt; 65kg<br>
                             现居：中国·四川·成都<br>
                             职业：Java开发工程师<br>
-                        </div>
-                    </div>
-                    <h5>个人简介 | Resume：</h5>
-                    <div class="bz_about">
-                        <div>
                             <span>注意：此处捡一些比较重要的说。</span><br>
                             1、2015年9月—2019年6月开始并结束了我的大学生活，大学无挂科，无违纪，大学里连续三年专业综测第一获国家励志奖学金。<br>
                             2、获成都市龙泉驿区成龙谷创业奖金10000元。<br>
@@ -160,7 +281,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                </p></div>
         </article>
     </section>
 
