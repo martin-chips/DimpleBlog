@@ -126,8 +126,6 @@ public class DashboardServiceImpl implements DashboardService {
                         } catch (UnsupportedEncodingException e) {
                             //ignore
                         }
-
-
                     }
                     return logMessage;
                 }

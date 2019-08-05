@@ -51,7 +51,7 @@
         where job_log_id = #{jobLogId}
     </select>
     <select id="selectJobData" resultType="com.dimple.project.log.jobLog.domain.JobLog">
-        select * from sys_job_log order by create_time desc limit 30
+        select * from sys_job_log order by create_time desc limit 100
     </select>
 
     <delete id="deleteJobLogById" parameterType="Long">
