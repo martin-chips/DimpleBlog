@@ -1,7 +1,5 @@
 <!doctype html>
-
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <title th:text="${blog.title+'—Dimple的个人博客'}">—Dimple的个人博客</title>
     <meta name="description" th:content="${blog.summary}">
@@ -10,14 +8,10 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <link rel="stylesheet" href="/static/front/plugin/hightlight/xcode.css"
           th:href="@{/front/plugin/hightlight/xcode.css}"/>
-
     <div th:include="include-front :: head"></div>
     <style>
         #Catalog_box {
             width: 100%;
-            /*height: auto!important;*/
-            /*overflow: hidden;*/
-            /*position: fixed;*/
         }
 
         #Catalog_box dl {
@@ -363,6 +357,12 @@
 <aside th:replace="include-front :: footer"></aside>
 <script th:src="@{/front/js/catNav.js}"></script>
 <script>
+    $(function () {
+        //代码高亮自定义
+        $("code").each(function(){
+            $(this).html("<ul><li>" + $(this).html().replace(/\n/g,"\n</li><li>") +"\n</li></ul>");
+        });
+    });
     jQuery(document).ready(function ($) {
         //处理目录
         $.CateNav('.article-body', '#Catalog_box');

@@ -1,7 +1,7 @@
 /*
 
 XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
-
+Dimple update-add line number
 */
 
 .hljs {
@@ -102,4 +102,38 @@ XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 
 .hljs-emphasis {
   font-style: italic;
+}
+.hljs {
+  border: 0;
+  font-family: "Consulas", "Courier New", Courier, mono, serif;
+  font-size: 12px;
+  background: #eee !important;
+  display: block;
+  padding: 1px;
+  margin: 0;
+  width: 100%;
+  font-weight: 200;
+  color: #333;
+  white-space: pre-wrap
+}
+/*Add line Number*/
+.hljs ul {
+  list-style: decimal;
+  background-color: #fff;
+  margin: 0px 0px 0 40px !important;
+  padding: 0px;
+}
+.hljs ul li {
+  list-style: decimal-leading-zero;
+  border-left: 1px solid #ddd !important;
+  background: #fff;
+  padding: 5px!important;
+  margin: 0 !important;
+  line-height: 14px;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.hljs ul li:nth-of-type(even) {
+  background-color: #fcfcfc;
+  color: inherit;
 }
