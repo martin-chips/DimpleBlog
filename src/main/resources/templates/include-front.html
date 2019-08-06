@@ -12,7 +12,7 @@
     <link rel="stylesheet" th:href="@{/front/css/public.css}"/>
     <link rel="stylesheet" th:href="@{/front/css/animation.css}"/>
     <link rel="stylesheet" th:href="@{/front/css/skin_1.css}"/>
-<!--    <link rel="stylesheet" th:href="@{/front/css/font-icon.css}"/>-->
+    <!--    <link rel="stylesheet" th:href="@{/front/css/font-icon.css}"/>-->
     <link rel="stylesheet" th:href="@{/front/css/swiper.css}"/>
     <link rel="stylesheet" th:href="@{/front/css/index.css}"/>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -143,6 +143,37 @@
     </div>
     <div id="toTop">返回顶部</div>
     <script>
+        /* 鼠标特效 */
+        var a_idx = 0;
+        jQuery(document).ready(function ($) {
+            $("body").click(function (e) {
+                var a = new Array("❤富强❤", "❤民主❤", "❤文明❤", "❤和谐❤", "❤自由❤", "❤平等❤", "❤公正❤", "❤法治❤", "❤爱国❤", "❤敬业❤", "❤诚信❤", "❤友善❤");
+                var $i = $("<span></span>").text(a[a_idx]);
+                a_idx = (a_idx + 1) % a.length;
+                var x = e.pageX,
+                    y = e.pageY;
+                $i.css({
+                    "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+                    "top": y - 20,
+                    "left": x,
+                    "position": "absolute",
+                    "font-weight": "bold",
+                    "color": "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+                });
+                $("body").append($i);
+                $i.animate({
+                        "top": y - 180,
+                        "opacity": 0
+                    },
+                    1500,
+                    function () {
+                        $i.remove();
+                    });
+            });
+        });
+        /**
+         * 隐藏加载条
+         */
         $({property: 0}).animate({property: 100}, {
             duration: 3000,
             step: function () {

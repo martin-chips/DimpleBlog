@@ -12,6 +12,46 @@
             min-height: 200px;
             max-height: 200px;
         }
+
+        .write2014 .emot .emot_btn:hover {
+            background-position: 0 -218px;
+        }
+
+        .write2014 .login_info_cm {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .select_star_wrap {
+
+            border-bottom: 0 none;
+        }
+
+        .select_star_wrap .select_star {
+            font-size: 14px;
+            padding: 15px;
+            float: left;
+            display: inline;
+            margin-right: 30px;
+        }
+
+        #myform {
+            border: 1px solid #ddd;
+        }
+
+        .select_star_wrap .select_star.right {
+            float: right
+        }
+
+        .select_star_wrap .i_star_0 .text {
+            width: 200px;
+            height: 40px;
+            background-position: 12px center;
+        }
+
+        .clear {
+            clear: both
+        }
     </style>
 </head>
 <body class="nobg">
@@ -158,8 +198,55 @@
             <h4 class="index-title">
                 <i class="fa fa-comments-o"></i> 当前共有 条评论
             </h4>
-            <textarea id="markdownEditor"></textarea>
-            <a id="comment-form-btn" type="button" class="btn btn-default btn-block">提交评论</a>
+            <!--            <textarea id="markdownEditor"></textarea>-->
+            <div class="write2014">
+                <form id="myform" s>
+                    <input id="chrmarkForm" name="chrmark" type="hidden">
+                    <div class="select_star_wrap ">
+                        <div class="select_star">
+                            <span class="sp">信息获取：</span>
+                            <span class="i_star_0">
+                                <input name="u_qq" type="text" id="qq" class="text" value="" maxlength="49"
+                                       placeholder="填入qq自动获取信息" tabindex="0">
+                            </span>
+                            <span id="error"></span>
+                            <span id="ajaxloading"></span>
+                        </div>
+                        <div class="select_star right">
+                            <span class="sp">您的称呼：</span>
+                            <span class="i_star_0">
+                                <input name="u_name" type="text" class="text" id="u_name" value="" maxlength="16"
+                                       placeholder="您的称呼 必须">
+                            </span>
+                        </div>
+                        <div class="select_star">
+                            <span class="sp">您的邮箱：</span>
+                            <span class="i_star_0">
+                                <input name="u_mail" type="text" id="u_mail" class="text" value="" maxlength="35"
+                                       placeholder="您的邮箱 选填">
+                                <span class="sel_check_form" data-name="is_email"
+                                      style="position: relative;left: 8px;top: 8px;">
+				                    <span class="display0"><input type="checkbox" id="is_email" name="is_email"
+                                                                  value="1" checked=""></span>
+				                    <span class="gx_check current" data-val="1">邮件通知</span>
+				                </span>
+                            </span>
+                        </div>
+                        <div class="select_star right">
+                            <span class="sp">您的网站：</span>
+                            <span class="i_star_0">
+                                <input name="u_url" type="text" class="text" id="u_url" maxlength="35" value=""
+                                       placeholder="您的网站 选填">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <textarea id="markdownEditor"></textarea>
+                    <div class="feed-sub"style="width: 100%">
+                        <input type="submit" class="btn btn-inverse" onclick="" value="提交申请">
+                    </div>
+                </form>
+            </div>
             <div class="commentList">
                 <ul class="comment">
                     <li>
@@ -309,41 +396,14 @@
 <script th:src="@{/front/js/catNav.js}"></script>
 <script th:src="@{/front/plugin/simplemde/simplemde.min.js}"></script>
 <script>
-
-    /* 鼠标特效 */
-    var a_idx = 0;
-    jQuery(document).ready(function($) {
-        $("body").click(function(e) {
-            var a = new Array("❤富强❤","❤民主❤","❤文明❤","❤和谐❤","❤自由❤","❤平等❤","❤公正❤","❤法治❤","❤爱国❤","❤敬业❤","❤诚信❤","❤友善❤");
-            var $i = $("<span></span>").text(a[a_idx]);
-            a_idx = (a_idx + 1) % a.length;
-            var x = e.pageX,
-                y = e.pageY;
-            $i.css({
-                "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
-                "top": y - 20,
-                "left": x,
-                "position": "absolute",
-                "font-weight": "bold",
-                "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
-            });
-            $("body").append($i);
-            $i.animate({
-                    "top": y - 180,
-                    "opacity": 0
-                },
-                1500,
-                function() {
-                    $i.remove();
-                });
-        });
-    });
-
-    $(function () {
-
+    /**
+     * 初始化编辑器
+     * @param id
+     */
+    function initSimpleMDE(id) {
         var simplemde = new SimpleMDE({
-            element: document.getElementById("markdownEditor"),
-            toolbar: ["bold", "italic", "|", "code", "quote", "|", "preview", "|", "link","|","image"],
+            element: document.getElementById(id),
+            toolbar: ["bold", "italic", "|", "code", "quote", "|", "preview", "|", "link", "|", "image"],
             autoDownloadFontAwesome: false,
             // autofocus: true,
             placeholder: "说点什么吧",
@@ -352,8 +412,12 @@
             },
             tabSize: 4
         });
+    }
 
+    $(function () {
+        initSimpleMDE("markdownEditor")
     });
+
     $("#qqNum").blur(function () {
         var qqNumStr = $('#qqNum').val();
         if (qqNumStr == "") {
