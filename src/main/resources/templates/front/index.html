@@ -241,7 +241,7 @@
         <!--        轮播图结束-->
 
         <div class="arclist">
-            <h4 class="index-title homeh4"><a href="\"><i class="el-certificate"></i>最新文章
+            <h4 class="index-title homeh4"><a href="\"><i class="fa fa-certificate"></i>最新文章
                 <small>New Article</small>
             </a></h4>
             <!--列表开始-->
@@ -263,26 +263,26 @@
                         <ul>
                             <li>
                                 <a th:title="${'边小丰'+#dates.format(blog.createTime, 'yyyy-MM-dd')+'发表'}">
-                                    <i class="el-time"></i>
+                                    <i class="fa fa-clock-o"></i>
                                     <span th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}"></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="about.html" title="作者： 边小丰"><i class="el-user"></i>边小丰</a>
+                                <a href="/f/about.html" title="作者： 边小丰"><i class="fa fa-user"></i>边小丰</a>
                             </li>
                             <li><a th:href="${'/f/article/'+blog.blogId+'.html'}" href="article/219.html#Comment">
-                                <i class="el-comment"></i>
+                                <i class="fa fa-comments-o"></i>
                                 <span th:id="${'sourceId::'+blog.blogId}" class="cy_cmt_count"></span>
                                 <script id="cy_cmt_num"
                                         src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyu583FnA">
                                 </script>
                             </a>
                             </li>
-                            <li><a th:title="${'已有'+blog.click+'次浏览'}"><i class="el-eye-open"></i><span
+                            <li><a th:title="${'已有'+blog.click+'次浏览'}"><i class="fa fa-eye"></i><span
                                     th:text="${blog.click}"></span></a></li>
                             <li>
                                 <a th:href="${'/f/category/'+blog.categoryId+'.html'}" title="查看分类">
-                                    <i class="el-th-list"></i>
+                                    <i class="fa fa-list-ul"></i>
                                     <span th:text="${blog.categoryTitle}"></span>
                                 </a>
                             </li>

@@ -60,16 +60,16 @@ header .mynav{width:60%;float:left;height:100%;position:relative;}
 .mynav >ul >li >a:hover {background: #13c5f8;color:#fff;font-size:20px;}
 .mynav >.nav-active{background: #13c5f8;}
 .mynav >.nav-active a{color:#fff!important;font-size:20px;}
-.mynav >ul >li .el-chevron-down{font-size:12px;color:inherit;}
-.drop:hover .el-chevron-down{color:inherit;}
+.mynav >ul >li .fa-chevron-down{font-size:12px;color:inherit;}
+.drop:hover .fa-chevron-down{color:inherit;}
 
 
 .drop-nav{}
 .drop-nav li.nav-active a{border:none;}
 /*������*/
-.drop .el-chevron-down{font-size:12px;margin-left:10px;display:inline-block;transition: all 0.2s;-webkit-transition: all 0.2s;}
-.nav-active .el-chevron-down{transform:rotate(180deg);}
-.drop:hover .el-chevron-down{transform:rotate(180deg);}
+.drop .fa-chevron-down{font-size:12px;margin-left:10px;display:inline-block;transition: all 0.2s;-webkit-transition: all 0.2s;}
+.nav-active .fa-chevron-down{transform:rotate(180deg);}
+.drop:hover .fa-chevron-down{transform:rotate(180deg);}
 .drop-nav{position:absolute;width:150px;border:1px solid #ddd;top:70px;box-sizing:border-box;border-top:none;display:none;	background:rgba(255,255,255,0.9);box-shadow:2px 2px 8px #ccc;}
 .drop-nav li{padding:10px 0;width:100%;color:inherit;font-size:14px;text-align:center;border-bottom:1px dotted #ddd;box-sizing:border-box;transition: all 0.2s;-webkit-transition: all 0.2s;}
 .drop-nav li:hover{background:#13c5f8;font-size:16px;}

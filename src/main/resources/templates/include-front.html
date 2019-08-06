@@ -12,9 +12,10 @@
     <link rel="stylesheet" th:href="@{/front/css/public.css}"/>
     <link rel="stylesheet" th:href="@{/front/css/animation.css}"/>
     <link rel="stylesheet" th:href="@{/front/css/skin_1.css}"/>
-    <link rel="stylesheet" th:href="@{/front/css/font-icon.css}"/>
+<!--    <link rel="stylesheet" th:href="@{/front/css/font-icon.css}"/>-->
     <link rel="stylesheet" th:href="@{/front/css/swiper.css}"/>
     <link rel="stylesheet" th:href="@{/front/css/index.css}"/>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!--JS-->
     <script type="text/javascript" th:src="@{/front/js/jquery.min.js}"></script>
     <script type="text/javascript" src="http://tajs.qq.com/stats?sId=66398462" charset="UTF-8"></script>
@@ -61,20 +62,20 @@
             </div>
             <!--滚动消息-->
             <div class="web-xiaoxi">
-                <i class="el-speaker"></i>
+                <i class="fa fa-volume-up"></i>
                 <ul class="mulitline">
                     <li th:each="notice:${notices}" th:text="${notice.noticeTitle}"></li>
                 </ul>
             </div>
             <!--手机菜单按钮-->
-            <div class="mobile-nav"><i class="el-lines"></i><i class="el-remove"></i></div>
+            <div class="mobile-nav"><i class="fa fa-line-chart"></i><i class="fa fa-remove"></i></div>
         </div>
         <!--电脑导航开始-->
         <nav class="mynav">
             <ul class="orange-text">
                 <li class=""><a href="/">首页</a></li>
                 <li class='drop'>
-                    <a href="JavaScript:;">分类<i class='el-chevron-down'></i></a>
+                    <a href="JavaScript:;">分类 <i class='fa fa-chevron-down '></i></a>
                     <div class="drop-nav orange-text ">
                         <ul>
                             <li th:each="category:${categories}">
@@ -181,31 +182,31 @@
     </div>
     <!--关注我-->
     <div class="focus-me bg-color animation-div">
-        <h4 class="index-title"><i class="el-heart"></i>关注我
+        <h4 class="index-title"><i class="fa fa-heart"></i>关注我
             <small>Focus Me</small>
         </h4>
         <div class="xiangguan">
             <div>
                 <a class="benbo"
                    href="mailto:bianxiaofeng@sohu.com" rel="nofollow" target="_blank">
-                    <i class="el el-envelope el-spin"></i>
+                    <i class="fa fa-envelope fa-spin"></i>
                 </a>
                 <span>邮件</span>
             </div>
             <div>
                 <a class="github" href="https://github.com/DimpleFeng" rel="nofollow" target="_blank">
-                    <i class="el el-github el-spin"></i>
+                    <i class="fa fa-github fa-spin"></i>
                 </a>
                 <span>github</span></div>
             <div>
                 <a class="mail-btn" href="javascript:;">
-                    <i class="el el-picasa el-spin"></i></a>
+                    <i class="el el-picasa fa-spin"></i></a>
                 <span>微信</span>
             </div>
         </div>
         <div class="mail-dy">
             <img src="/front/images/weixin.png">
-            <i class="el-remove fx-close"></i>
+            <i class="fa fa-remove fx-close"></i>
         </div>
     </div>
     <!--搜索-->
@@ -215,7 +216,7 @@
                 <input name="search_word" id="search_word" type="text" placeholder="请输入关键字"
                        onfocus="this.placeholder=''"
                        onblur="this.placeholder='请输入关键字'"/>
-                <i class="el-search"><input id="search" value=" " type="submit"/></i>
+                <i class="fa fa-search"><input id="search" value=" " type="submit"/></i>
             </div>
             <script>
                 $("#search").click(function () {
@@ -227,7 +228,7 @@
     <!--文章排行tab-->
     <div class="mytab bg-color animation-div">
         <h4 class="index-title">
-            <i class="el-signal"></i>点击排行
+            <i class="fa fa-signal"></i>点击排行
             <small> Article Ranking</small>
         </h4>
         <ul class="paihang-ul" style="display: block;">
@@ -239,17 +240,17 @@
         </ul>
     </div>
     <div class="clos-new bg-color animation-div">
-        <h4 class="index-title"><i class="el-bulb"></i>最新更新
+        <h4 class="index-title"><i class="fa fa-lightbulb-o"></i>最新更新
             <small>Close New</small>
         </h4>
         <ul>
             <li>
-                <i class="el-cloud"></i>
+                <i class="fa fa-cloud"></i>
                 <iframe id="tianqi" scrolling="no" frameborder="0" allowtransparency="true"
                         src="http://i.tianqi.com/index.php?c=code&id=34&icon=1&num=3"></iframe>
             </li>
             <li th:each="blog:${newestUpdateBlog}">
-                <span><i class="el-arrow-up"></i>最近：<font class="blue-text">边小丰</font><span
+                <span><i class="fa fa-arrow-up"></i>最近：<font class="blue-text">边小丰</font><span
                         th:text="${#dates.format(blog.updateTime, 'MM-dd hh:mm')}"> 03-01 09:30</span></span>
                 <a th:href="${'/f/article/'+blog.blogId+'.html'}" th:title="${blog.title}"> 更新了<b
                         class="lable">文章</b></a>
@@ -259,7 +260,7 @@
     <!--推荐图文-->
     <div class="article-push  bg-color animation-div">
         <h4 class="index-title">
-            <i class="el-asl"></i>推荐图文
+            <i class="fa  fa-thumbs-up"></i>推荐图文
             <small>Push Article</small>
         </h4>
         <ul>
@@ -277,11 +278,11 @@
                     <ul>
                         <li>
                             <a th:title="${'发表于'+#dates.format(blog.createTime, 'MM-dd hh:mm')}">
-                                <i class="el-time"></i><span
+                                <i class="fa fa-clock-o"></i><span
                                     th:text="${#dates.format(blog.createTime, 'MM-dd hh:mm')}"></span>
                             </a>
                         </li>
-                        <li><a th:title="${blog.click+'次浏览'}"><i class="el-fire"></i><span
+                        <li><a th:title="${blog.click+'次浏览'}"><i class="fa fa-fire"></i><span
                                 th:text="${blog.click}"></span> </a></li>
                     </ul>
                 </div>
@@ -290,7 +291,7 @@
     </div>
     <!--标签-->
     <div class="cloud bg-color animation-div">
-        <h4 class="index-title"><i class="el-tags"></i>标签云
+        <h4 class="index-title"><i class="fa fa-tags"></i>标签云
             <small>Tags Clouds</small>
         </h4>
         <ul id="3dcloud">
@@ -303,10 +304,10 @@
     </div>
     <!--友情链接-->
     <div class="side-link ">
-        <h4 class="index-title"><i class="el-paper-clip"></i>友情链接
+        <h4 class="index-title"><i class="fa fa-paperclip"></i>友情链接
             <small>Friend Links</small>
             <a href="/f/link.html"><i
-                    class="el el-plus"></i>申请</a></h4>
+                    class="fa fa-plus"></i>申请</a></h4>
         <ul>
             <li th:each="link:${links}">
                 <a th:class="${'tstyle-'+(linkStat.index+1)%5}"
@@ -317,7 +318,7 @@
     </div>
     <!--文章目录-->
     <div class="directory mob-hidden " id="Catalog_box" th:if="${blog!=null}">
-        <h4 class="index-title"><i class="el-paper-clip"></i>文章目录
+        <h4 class="index-title"><i class="fa fa-book fa-fw icon"></i>文章目录
             <small> Article Directory</small>
         </h4>
         <div style="width: 300px;" class="">

@@ -71,7 +71,7 @@ function checkform(){
             var src=data.src;
             //  layer.msg('恭喜提交成功！待管理员审核通过后显示!', {icon: 1});
              layer.msg('恭喜您，留言成功！', {icon: 1});
-            var str='<li class="bg-color"><div class="comment-ava"><img class="img-circle" src="'+src+'" alt="'+name+'" title="'+name+'"/></div><div class="comment-info "><div class="comment-line "><ul><li><a ><i class="el-user"></i>'+name+'</a></li><li><a title="发表于'+date+'"><i class="el-time"></i>'+date+'</a></li><li><a title="'+name+' 当前位于：'+city+'"><i class="el-map-marker"></i>'+city+'</a></li><li><a title="'+name+' 当前IP:'+ip+'"><i class="el-network"></i>'+ip+'</a></li></ul></div><div class="comment-content">'+txaArticle+'</div><ul class="re-comment"></ul></div></li>';
+            var str='<li class="bg-color"><div class="comment-ava"><img class="img-circle" src="'+src+'" alt="'+name+'" title="'+name+'"/></div><div class="comment-info "><div class="comment-line "><ul><li><a ><i class="fa fa-user"></i>'+name+'</a></li><li><a title="发表于'+date+'"><i class="fa fa-clock-o"></i>'+date+'</a></li><li><a title="'+name+' 当前位于：'+city+'"><i class="el-map-marker"></i>'+city+'</a></li><li><a title="'+name+' 当前IP:'+ip+'"><i class="el-network"></i>'+ip+'</a></li></ul></div><div class="comment-content">'+txaArticle+'</div><ul class="re-comment"></ul></div></li>';
             $('.feedback-comment').prepend(str);
             setTimeout(function(){
               var verify=document.getElementById('safecode');

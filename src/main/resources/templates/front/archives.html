@@ -20,7 +20,7 @@
                             <time class="archive-time" th:text="${#dates.format(item.createTime,'yyyy-MM-dd')}">
                                 01.06
                             </time>
-                            <span><i class="el-eye-open"></i><span th:text="${item.click}"></span></span><a
+                            <span><i class="fa fa-eye"></i><span th:text="${item.click}"></span></span><a
                                 class="archive-title"
                                 th:href="${'/f/article/'+item.blogId+'.html'}"
                                 th:title="${item.title}"
