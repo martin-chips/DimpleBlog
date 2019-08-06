@@ -6,12 +6,18 @@
     <th:block th:include="include-front :: highlight-js"/>
     <link rel="stylesheet" th:href="@{/front/css/comment.css}"/>
     <link rel="stylesheet" th:href="@{/front/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/front/plugin/simplemde/simplemde.min.css}"/>
+    <style>
+        .CodeMirror, .CodeMirror-scroll {
+            min-height: 200px;
+            max-height: 200px;
+        }
+    </style>
 </head>
 <body class="nobg">
 <th:block th:replace="include-front :: header"/>
 <!--内容区开始-->
 <div class="container">
-
     <!--左侧开始-->
     <section>
         <article>
@@ -28,21 +34,24 @@
             <!--副标题信息-->
             <div class="post-line bg-color">
                 <ul>
-                    <li><a th:title="${'边小丰发表于'+#dates.format(blog.createTime,'yyyy-MM-dd')}">
-                        <i class="fa fa-clock-o"></i>
-                        <time th:text="${#dates.format(blog.createTime,'yyyy-MM-dd')}"></time>
-                    </a></li>
+                    <li>
+                        <a th:title="${'边小丰发表于'+#dates.format(blog.createTime,'yyyy-MM-dd')}">
+                            <i class="fa fa-clock-o"></i>
+                            <time th:text="${#dates.format(blog.createTime,'yyyy-MM-dd')}"></time>
+                        </a>
+                    </li>
                     <li>
                         <a href="/about.html" title="本文作者：边小丰">
                             <i class="fa fa-user"></i>边小丰</a>
                     </li>
                     <li>
-                        <a href="#Comment" title="转到评论"><i class="fa fa-comments-o"></i></span></a>
+                        <a href="#Comment" title="转到评论"><i class="fa fa-comments-o"></i><span>15</span></a>
                     </li>
                     <li>
                         <a th:title="${'已有'+blog.click+'次浏览'}">
                             <i class="fa fa-eye"></i>
-                            <span th:text="${'('+blog.click+')'}"></span></a>
+                            <span th:text="${'('+blog.click+')'}"></span>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -53,10 +62,9 @@
                 <div class="article-content bg-color" th:id="${blog.support==1}?'tuijian':''">
                     <!--文章正文-->
                     <div class="article-body" th:utext="${blog.content}">
-
                     </div>
                     <!--END 文章正文-->
-                    <!--分享-->
+                    <!--打赏和分享-->
                     <div class="article-fx">
                         <span class="img-circle" href="javascript:void(0)" onClick="dashangToggle()">打赏</span>&nbsp;&nbsp;&nbsp;
                         <a class="fx-btn img-circle img-circle" href="javascript:;">分享</a>
@@ -89,7 +97,7 @@
                     </div>
                     <!--END 分享-->
                     <hr>
-                    <!--标签-->
+                    <!--分类和标签-->
                     <div class="article_tag">
                         <ul>
                             <li><a th:href="${'/f/category/'+blog.category.categoryId+'.html'}"
@@ -102,6 +110,7 @@
                             </li>
                         </ul>
                     </div>
+                    <!--End 分类和标签-->
                 </div>
             </div>
         </article>
@@ -139,200 +148,73 @@
             </ul>
         </div>
         <!--END 随机推荐-->
-        <h3 class="form-btn blue-text"><a href="javascript:;"><i class="fa fa-edit"></i>我要留言</a></h3>
+        <h3 class="form-btn blue-text">
+            <a href="javascript:;">
+                <i class="fa fa-edit"></i>我要留言
+            </a>
+        </h3>
         <!-- 通用评论开始 -->
         <div class="comment-area" id="Comment">
-            <h4 class="index-title"><i class="fa fa-comments-o"></i> 当前共有
-                条评论
-
+            <h4 class="index-title">
+                <i class="fa fa-comments-o"></i> 当前共有 条评论
             </h4>
-            <div id="comment-box" data-id="59">
-                <div id="comment-place">
-                    <div class="comment-post" id="comment-post" style="position: relative"><h5 class="custom-title"><i
-                            class="fa fa-commenting-o fa-fw icon"></i><strong>评论</strong><small></small></h5>
-                        <form class="form-horizontal" role="form" id="comment-form">
-                            <div class="cancel-reply" id="cancel-reply" style="display: none;"><a
-                                    href="javascript:void(0);" onclick="$.comment.cancelReply(this)"
-                                    rel="external nofollow"><i class="fa fa-share"></i>取消回复</a></div>
-                            <input type="hidden" name="pid" id="comment-pid" value="" size="22" tabindex="1"><textarea
-                                id="comment_content" class="form-control col-md-7 col-xs-12 valid"
-                                style="display: none"></textarea>
-                            <div class="editor-toolbar"><a title="Bold (Ctrl-B)" tabindex="-1" class="fa fa-bold"></a><a
-                                    title="Italic (Ctrl-I)" tabindex="-1" class="fa fa-italic"></a><i class="separator">|</i><a
-                                    title="Code (Ctrl-Alt-C)" tabindex="-1" class="fa fa-code"></a><a
-                                    title="Quote (Ctrl-')" tabindex="-1" class="fa fa-quote-left"></a><i
-                                    class="separator">|</i><a title="Toggle Preview (Ctrl-P)" tabindex="-1"
-                                                              class="fa fa-eye no-disable"></a><i
-                                    class="separator">|</i><a title="Markdown Guide" tabindex="-1"
-                                                              class="fa fa-question-circle"
-                                                              href="https://simplemde.com/markdown-guide"
-                                                              target="_blank"></a></div>
-                            <div class="CodeMirror cm-s-paper CodeMirror-wrap CodeMirror-empty">
-                                <div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 25px; left: 11px;">
-                                    <textarea autocorrect="off" autocapitalize="off" spellcheck="false"
-                                              style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none;"
-                                              tabindex="0"></textarea></div>
-                                <div class="CodeMirror-vscrollbar" cm-not-content="true">
-                                    <div style="min-width: 1px; height: 0px;"></div>
+            <textarea id="markdownEditor"></textarea>
+            <a id="comment-form-btn" type="button" class="btn btn-default btn-block">提交评论</a>
+            <div class="commentList">
+                <ul class="comment">
+                    <li>
+                        <div class="comment-body fade-in" id="comment-51">
+                            <div class="cheader">
+                                <div class="user-img">
+                                    <img class="userImage" src="http://dblog-web.zhyd.me/img/user.png"
+                                         onerror="this.src='http://dblog-web.zhyd.me/img/user.png'">
                                 </div>
-                                <div class="CodeMirror-hscrollbar"
-                                     cm-not-content="true">
-                                    <div style="height: 100%; min-height: 1px; width: 0px;"></div>
-                                </div>
-                                <div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div>
-                                <div class="CodeMirror-gutter-filler" cm-not-content="true"></div>
-                                <div class="CodeMirror-scroll" tabindex="-1">
-                                    <div class="CodeMirror-sizer"
-                                         style="margin-left: 0px; margin-bottom: -7px; border-right-width: 23px; min-height: 49px; padding-right: 0px; padding-bottom: 0px;">
-                                        <div style="position: relative; top: 0px;">
-                                            <div class="CodeMirror-lines">
-                                                <div style="position: relative; outline: none;">
-                                                    <pre class="CodeMirror-placeholder"
-                                                         style="height: 0px; overflow: visible;">说点什么吧</pre>
-                                                    <div class="CodeMirror-measure"></div>
-                                                    <div class="CodeMirror-measure"></div>
-                                                    <div style="position: relative; z-index: 1;"></div>
-                                                    <div class="CodeMirror-cursors" style="">
-                                                        <div class="CodeMirror-cursor"
-                                                             style="left: 10px; top: 0px; height: 41px;">&nbsp;
-                                                        </div>
-                                                    </div>
-                                                    <div class="CodeMirror-code">
-                                                        <pre class=" CodeMirror-line "><span
-                                                                style="padding-right: 0.1px;"><span
-                                                                cm-text="">&#8203;</span></span></pre>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="user-info">
+                                    <div class="nickname">
+                                        <a target="_blank" href="javascript:void(0)" rel="external nofollow">
+                                            <strong>2</strong>
+                                        </a>
+                                        <i class="icons os-null" title="Windows 10"></i>
+                                        <i class="icons browser-null" title="Chrome 76.0.3809.87"></i>
                                     </div>
-                                    <div style="position: absolute; height: 23px; width: 1px; border-bottom: 0px solid transparent; top: 49px;"></div>
-                                    <div class="CodeMirror-gutters" style="display: none; height: 72px;"></div>
+                                    <div class="timer">
+                                        <i class="fa fa-clock-o fa-fw"></i>2019-08-06 14:11
+                                        <i class="fa fa-map-marker fa-fw"></i>未知
+                                    </div>
                                 </div>
-                                <div class="editor-preview"></div>
                             </div>
-                            <div class="editor-preview-side"></div>
-                            <div class="editor-statusbar"><span class="autosave"></span><span
-                                    class="lines">1</span><span class="words">0</span><span class="cursor">0:0</span>
+                            <div class="content">
+                                <a href="#comment-50" class="comment-quote">@匿名</a>
+                                <div style="background-color: #f5f5f5;padding: 5px;margin: 5px;border-radius: 4px;">
+                                    <i class="fa fa-quote-left"></i>
+                                    <p></p>
+                                    <div style="padding-left: 10px;"><p>1111</p></div>
+                                </div>
+                                <div>
+                                    <p>21321</p>
+                                </div>
                             </div>
-                            <textarea name="content" style="display: none"></textarea>
-                            <div style="position: absolute;right: 10px;bottom: 70px;font-size: 14px;color: #dbdada;z-index: 1;">
-                                OneBlog开源博客<br>http://dblog-web.zhyd.me<br>讲文明、要和谐
+                            <div class="sign">
+                                <a href="javascript:void(0);" class="comment-up" onclick="effectBubble()">
+                                    <i class="fa fa-thumbs-o-up"></i>赞(<span class="count">0</span>)
+                                    <i class="sepa"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="comment-down" onclick="$.comment.step(51, this)">
+                                    <i class="fa fa-thumbs-o-down"></i>踩(<span class="count">0</span>)
+                                    <i class="sepa"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="comment-reply" onclick="reply()"
+                                   style="display: inline;">
+                                    <i class="fa fa-reply"></i>回复
+                                </a>
+                                <a href="javascript:void(0);" class="comment-flag hide"
+                                   onclick="$.comment.report(51, this)">
+                                    <i class="fa fa-flag"></i>举报
+                                </a>
                             </div>
-                            <a id="comment-form-btn" type="button" data-loading-text="正在提交评论..."
-                               class="btn btn-default btn-block">提交评论</a></form>
-                    </div>
-                </div>
-                <div class="commentList"><h5 class="custom-title"><i class="fa fa-comments-o fa-fw icon"></i><strong>3
-                    评论</strong><small></small></h5>
-                    <ul class="comment">
-                        <li>
-                            <div class="comment-body fade-in" id="comment-51">
-                                <div class="cheader">
-                                    <div class="user-img"><img class="userImage"
-                                                               src="http://dblog-web.zhyd.me/img/user.png"
-                                                               onerror="this.src='http://dblog-web.zhyd.me/img/user.png'">
-                                    </div>
-                                    <div class="user-info">
-                                        <div class="nickname"><a target="_blank" href="javascript:void(0)"
-                                                                 rel="external nofollow"><strong>2</strong></a> <i
-                                                class="icons os-null" title="Windows 10"></i> <i
-                                                class="icons browser-null" title="Chrome 76.0.3809.87"></i></div>
-                                        <div class="timer"><i class="fa fa-clock-o fa-fw"></i>2019-08-06 14:11 <i
-                                                class="fa fa-map-marker fa-fw"></i>未知
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content"><a href="#comment-50" class="comment-quote">@匿名</a>
-                                    <div style="background-color: #f5f5f5;padding: 5px;margin: 5px;border-radius: 4px;">
-                                        <i class="fa fa-quote-left"></i>
-                                        <p></p>
-                                        <div style="padding-left: 10px;"><p>1111</p></div>
-                                    </div>
-                                    <div><p>21321</p></div>
-                                </div>
-                                <div class="sign"><a href="javascript:void(0);" class="comment-up"
-                                                     onclick="$.comment.praise(51, this)"><i
-                                        class="fa fa-thumbs-o-up"></i>赞(<span class="count">0</span>)<i
-                                        class="sepa"></i></a> <a href="javascript:void(0);" class="comment-down"
-                                                                 onclick="$.comment.step(51, this)"><i
-                                        class="fa fa-thumbs-o-down"></i>踩(<span class="count">0</span>)<i
-                                        class="sepa"></i></a> <a href="javascript:void(0);" class="comment-reply"
-                                                                 onclick="$.comment.reply(51, this)"
-                                                                 style="display: inline;"><i class="fa fa-reply"></i>回复</a>
-                                    <a href="javascript:void(0);" class="comment-flag hide"
-                                       onclick="$.comment.report(51, this)"><i class="fa fa-flag"></i>举报</a></div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="comment-body fade-in" id="comment-50">
-                                <div class="cheader">
-                                    <div class="user-img"><img class="userImage"
-                                                               src="https://q1.qlogo.cn/g?b=qq&amp;nk=aaa11&amp;s=40"
-                                                               onerror="this.src='http://dblog-web.zhyd.me/img/user.png'">
-                                    </div>
-                                    <div class="user-info">
-                                        <div class="nickname"><a target="_blank" href="https://user.qzone.qq.com/aaa11"
-                                                                 rel="external nofollow"><strong>匿名</strong></a> <i
-                                                class="icons os-null" title="Windows 7"></i> <i
-                                                class="icons browser-null" title="Chrome 58.0.3029.110"></i></div>
-                                        <div class="timer"><i class="fa fa-clock-o fa-fw"></i>2019-08-05 15:17 <i
-                                                class="fa fa-map-marker fa-fw"></i>未知
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div><p>1111</p></div>
-                                </div>
-                                <div class="sign"><a href="javascript:void(0);" class="comment-up"
-                                                     onclick="$.comment.praise(50, this)"><i
-                                        class="fa fa-thumbs-o-up"></i>赞(<span class="count">0</span>)<i
-                                        class="sepa"></i></a> <a href="javascript:void(0);" class="comment-down"
-                                                                 onclick="$.comment.step(50, this)"><i
-                                        class="fa fa-thumbs-o-down"></i>踩(<span class="count">0</span>)<i
-                                        class="sepa"></i></a> <a href="javascript:void(0);" class="comment-reply"
-                                                                 onclick="$.comment.reply(50, this)"
-                                                                 style="display: inline;"><i class="fa fa-reply"></i>回复</a>
-                                    <a href="javascript:void(0);" class="comment-flag hide"
-                                       onclick="$.comment.report(50, this)"><i class="fa fa-flag"></i>举报</a></div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="comment-body fade-in" id="comment-46">
-                                <div class="cheader">
-                                    <div class="user-img"><img class="userImage"
-                                                               src="http://dblog-web.zhyd.me/img/user.png"
-                                                               onerror="this.src='http://dblog-web.zhyd.me/img/user.png'">
-                                    </div>
-                                    <div class="user-info">
-                                        <div class="nickname"><a target="_blank" href="javascript:void(0)"
-                                                                 rel="external nofollow"><strong>匿名</strong></a> <i
-                                                class="icons os-null" title="Mac OS X"></i> <i
-                                                class="icons browser-null" title="Chrome 75.0.3770.142"></i></div>
-                                        <div class="timer"><i class="fa fa-clock-o fa-fw"></i>2019-08-01 15:58 <i
-                                                class="fa fa-map-marker fa-fw"></i>未知
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div><p>多多岛</p></div>
-                                </div>
-                                <div class="sign"><a href="javascript:void(0);" class="comment-up"
-                                                     onclick="$.comment.praise(46, this)"><i
-                                        class="fa fa-thumbs-o-up"></i>赞(<span class="count">0</span>)<i
-                                        class="sepa"></i></a> <a href="javascript:void(0);" class="comment-down"
-                                                                 onclick="$.comment.step(46, this)"><i
-                                        class="fa fa-thumbs-o-down"></i>踩(<span class="count">0</span>)<i
-                                        class="sepa"></i></a> <a href="javascript:void(0);" class="comment-reply"
-                                                                 onclick="$.comment.reply(46, this)"><i
-                                        class="fa fa-reply"></i>回复</a> <a href="javascript:void(0);"
-                                                                          class="comment-flag hide"
-                                                                          onclick="$.comment.report(46, this)"><i
-                                        class="fa fa-flag"></i>举报</a></div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- 通用评论结束 -->
@@ -377,13 +259,13 @@
     <div class="shang_payselect">
         <div class="pay_item checked" data-id="alipay">
             <span class="radiobox"></span>
-            <span class="pay_logo"><img src="/front/images/alipay.png"
-                                        alt="支付宝"/></span>
+            <span class="pay_logo">
+                <img src="/front/images/alipay.png" alt="支付宝"/></span>
         </div>
         <div class="pay_item" data-id="weipay">
             <span class="radiobox"></span>
-            <span class="pay_logo"><img src="/front/images/weichartpay.png"
-                                        alt="微信"/></span>
+            <span class="pay_logo">
+                <img src="/front/images/weichartpay.png" alt="微信"/></span>
         </div>
     </div>
 </div>
@@ -425,7 +307,82 @@
 </script>
 <th:block th:replace="include-front :: footer"/>
 <script th:src="@{/front/js/catNav.js}"></script>
+<script th:src="@{/front/plugin/simplemde/simplemde.min.js}"></script>
 <script>
+
+    /* 鼠标特效 */
+    var a_idx = 0;
+    jQuery(document).ready(function($) {
+        $("body").click(function(e) {
+            var a = new Array("❤富强❤","❤民主❤","❤文明❤","❤和谐❤","❤自由❤","❤平等❤","❤公正❤","❤法治❤","❤爱国❤","❤敬业❤","❤诚信❤","❤友善❤");
+            var $i = $("<span></span>").text(a[a_idx]);
+            a_idx = (a_idx + 1) % a.length;
+            var x = e.pageX,
+                y = e.pageY;
+            $i.css({
+                "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+                "top": y - 20,
+                "left": x,
+                "position": "absolute",
+                "font-weight": "bold",
+                "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+            });
+            $("body").append($i);
+            $i.animate({
+                    "top": y - 180,
+                    "opacity": 0
+                },
+                1500,
+                function() {
+                    $i.remove();
+                });
+        });
+    });
+
+    $(function () {
+
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("markdownEditor"),
+            toolbar: ["bold", "italic", "|", "code", "quote", "|", "preview", "|", "link","|","image"],
+            autoDownloadFontAwesome: false,
+            // autofocus: true,
+            placeholder: "说点什么吧",
+            renderingConfig: {
+                codeSyntaxHighlighting: true
+            },
+            tabSize: 4
+        });
+
+    });
+    $("#qqNum").blur(function () {
+        var qqNumStr = $('#qqNum').val();
+        if (qqNumStr == "") {
+            return false;
+        }
+        $("#ajaxloading").html('<img src="/images/loading.gif"><a style="font-size:12px;margin-left:5px;">正在获取QQ信息..</a>');
+        $.ajax({
+            type: "GET",
+            url: "",
+            dataType: "text",
+            timeout: 20000,
+            success: function (data, textStatus) {
+                data = $.parseJSON(data);
+                if (data.status == 200) {
+                    $('#nickname').val(data.msg[6]);
+                    $('#email').val(qqNumStr + '@qq.com');
+                    $('#qq').attr("disabled", false);
+                    $("#ajaxloading").html('<img style="width:24px;border-radius:100px" src="https://q.qlogo.cn/headimg_dl?dst_uin=' + qqNumStr + '&spec=100">');
+                } else {
+                    $("#ajaxloading").hide();
+                    $("#error").html('qq账号错误').show().fadeOut(4000);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#ajaxloading").hide();
+                $("#error").html('qq账号错误').show().fadeOut(4000);
+            }
+        });
+    });
     $(function () {
         //代码高亮自定义
         $("code").each(function () {

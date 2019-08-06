@@ -1,5 +1,9 @@
 package com.dimple.project.blog.comment.service;
 
+import com.dimple.project.blog.comment.domain.Comment;
+
+import java.util.List;
+
 /**
  * @className: CommentService
  * @description:
@@ -8,4 +12,11 @@ package com.dimple.project.blog.comment.service;
  * @version: 1.0
  */
 public interface CommentService {
+
+    List<Comment> selectCommentList(Comment comment);
+
+    int deleteCommentById(Integer id);
+
+    int insertComment(Comment comment);
+
 }

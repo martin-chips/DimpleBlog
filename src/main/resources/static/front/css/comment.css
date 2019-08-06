@@ -269,128 +269,128 @@ i {
 
 /* 浏览器图标 */
 .browser-360 {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -4px -6px;
+    background: url("../images/browser.png") no-repeat -4px -6px;
 }
 
 .browser-baidu {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -27px -6px;
+    background: url("../images/browser.png") no-repeat -27px -6px;
 }
 
 .browser-chrome {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -50px -6px;
+    background: url("../images/browser.png") no-repeat -50px -6px;
 }
 
 .browser-edge {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -73px -6px;
+    background: url("../images/browser.png") no-repeat -73px -6px;
 }
 
 .browser-firefox {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -96px -6px;
+    background: url("../images/browser.png") no-repeat -96px -6px;
 }
 
 .browser-ie {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -119px -6px;
+    background: url("../images/browser.png") no-repeat -119px -6px;
 }
 
 .browser-lb {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -142px -6px;
+    background: url("../images/browser.png") no-repeat -142px -6px;
 }
 
 .browser-maxthon {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -165px -6px;
+    background: url("../images/browser.png") no-repeat -165px -6px;
 }
 
 .browser-mi {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -188px -6px;
+    background: url("../images/browser.png") no-repeat -188px -6px;
 }
 
 .browser-opera {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -211px -6px;
+    background: url("../images/browser.png") no-repeat -211px -6px;
 }
 
 .browser-qq {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -234px -6px;
+    background: url("../images/browser.png") no-repeat -234px -6px;
 }
 
 .browser-safari {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -257px -6px;
+    background: url("../images/browser.png") no-repeat -257px -6px;
 }
 
 .browser-sogou {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -280px -6px;
+    background: url("../images/browser.png") no-repeat -280px -6px;
 }
 
 .browser-tt {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -303px -6px;
+    background: url("../images/browser.png") no-repeat -303px -6px;
 }
 
 .browser-uc {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -326px -6px;
+    background: url("../images/browser.png") no-repeat -326px -6px;
 }
 
 .browser-other {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -349px -6px;
+    background: url("../images/browser.png") no-repeat -349px -6px;
 }
 
 /* 系统图标 */
 .os-android {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -4px -28px;
+    background: url("../images/browser.png") no-repeat -4px -28px;
 }
 
 .os-chrome {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -27px -28px;
+    background: url("../images/browser.png") no-repeat -27px -28px;
 }
 
 .os-huawei {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -50px -28px;
+    background: url("../images/browser.png") no-repeat -50px -28px;
 }
 
 .os-ipad {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -73px -28px;
+    background: url("../images/browser.png") no-repeat -73px -28px;
 }
 
 .os-iphone {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -96px -27px;
+    background: url("../images/browser.png") no-repeat -96px -27px;
 }
 
 .os-mac {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -166px -28px;
+    background: url("../images/browser.png") no-repeat -166px -28px;
 }
 
 .os-kindle {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -73px -28px;
+    background: url("../images/browser.png") no-repeat -73px -28px;
 }
 
 .os-lenovo {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -121px -28px;
+    background: url("../images/browser.png") no-repeat -121px -28px;
 }
 
 .os-linux {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -146px -28px;
+    background: url("../images/browser.png") no-repeat -146px -28px;
 }
 
 .os-nokia {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -190px -28px;
+    background: url("../images/browser.png") no-repeat -190px -28px;
 }
 
 .os-ubuntu {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -213px -28px;
+    background: url("../images/browser.png") no-repeat -213px -28px;
 }
 
 .os-vivo {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -236px -28px;
+    background: url("../images/browser.png") no-repeat -236px -28px;
 }
 
 .os-win1 {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -259px -28px;
+    background: url("../images/browser.png") no-repeat -259px -28px;
 }
 
 .os-win2 {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -282px -28px;
+    background: url("../images/browser.png") no-repeat -282px -28px;
 }
 
 .os-mi {
-    background: url("/img/icons-3c7d3a68b224bc9fdedd2415f6dc4ed5.png") no-repeat -305px -28px;
+    background: url("../images/browser.png") no-repeat -305px -28px;
 }
 
 /* icons end */

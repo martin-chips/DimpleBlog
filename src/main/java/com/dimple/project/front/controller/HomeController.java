@@ -7,6 +7,8 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.blog.blog.domain.Blog;
 import com.dimple.project.blog.blog.service.BlogService;
 import com.dimple.project.blog.category.service.CategoryService;
+import com.dimple.project.blog.comment.domain.Comment;
+import com.dimple.project.blog.comment.service.CommentService;
 import com.dimple.project.blog.tag.domain.Tag;
 import com.dimple.project.blog.tag.service.TagService;
 import com.dimple.project.front.service.HomeService;
@@ -50,6 +52,8 @@ public class HomeController extends BaseController {
     INoticeService noticeService;
     @Autowired
     CarouselMapService carouselMapService;
+    @Autowired
+    CommentService commentService;
 
     /**
      * 设置前台页面公用的部分代码
@@ -227,4 +231,18 @@ public class HomeController extends BaseController {
         linkService.applyLink(link);
         return AjaxResult.success();
     }
+
+
+    /**
+     * 添加评论
+     */
+    @PostMapping("/f/comment")
+    @ResponseBody
+    public AjaxResult comment(Comment comment) {
+        commentService.insertComment(comment);
+        return AjaxResult.success();
+    }
+
+
+
 }

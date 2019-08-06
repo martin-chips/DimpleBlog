@@ -29,10 +29,7 @@ public class Comment extends BaseEntity {
      * 头像地址
      */
     private String avatar;
-    /**
-     * 页面Id
-     */
-    private Integer pageId;
+
     /**
      * 评论内容
      */
@@ -40,11 +37,27 @@ public class Comment extends BaseEntity {
     /**
      * 当有回复的是否邮件通知
      */
-    private boolean reply;
+    private boolean notice;
     /**
      * 上级评论的id
      */
-    private Integer parentId;
+    private Integer replyId;
+    /**
+     * Ip地址
+     */
+    private String ip;
+    /**
+     * 操作系统类型
+     */
+    private String os;
+    /**
+     * 浏览器
+     */
+    private String browser;
+    /**
+     * 地址
+     */
+    private String location;
 
     private Comment parentComment;
 

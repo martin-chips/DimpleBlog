@@ -1,5 +1,9 @@
 package com.dimple.project.blog.comment.mapper;
 
+import com.dimple.project.blog.comment.domain.Comment;
+
+import java.util.List;
+
 /**
  * @className: CommentMapper
  * @description:
@@ -8,4 +12,10 @@ package com.dimple.project.blog.comment.mapper;
  * @version: 1.0
  */
 public interface CommentMapper {
+
+    List<Comment> selectCommentList(Comment comment);
+
+    int deleteCommonById(Integer id);
+
+    int insertComment(Comment comment);
 }
