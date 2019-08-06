@@ -1,16 +1,13 @@
 <!doctype html>
 
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>友链—Dimple的个人博客</title>
-    <div th:replace="include-front :: head"></div>
+    <th:block th:include="include-front :: head('友链—Dimple的个人博客','友情链接')"/>
     <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
     <script th:src="@{/ajax/libs/layui/layui.js}"></script>
 </head>
-
 <body class="nobg">
-<header th:replace="include-front :: header"></header>
+<th:block th:replace="include-front :: header"/>
 
 <!--内容区开始-->l
 <div class="container">
@@ -95,9 +92,9 @@
             </div>
         </article>
     </section>
-    <aside th:replace="include-front :: side"></aside>
+    <th:block th:replace="include-front :: side"/>
 </div>
-<aside th:replace="include-front :: footer"></aside>
+<th:block th:replace="include-front :: footer"/>
 <script>
     $(function () {
         if ($(".wall").children("li").length >= 10) {

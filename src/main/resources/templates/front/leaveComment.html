@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>留言—Dimple的个人博客</title>
-    <div th:include="include-front :: head"></div>
-</head>
 
+<head>
+    <th:block th:include="include-front :: head('留言—Dimple的个人博客','留言板')"/>
+</head>
 <body class="nobg">
-<header th:replace="include-front :: header"></header>
+<th:block th:replace="include-front :: header"/>
 <div class="container" id="location">
     <!--左侧开始-->
     <section>
@@ -64,9 +63,9 @@
             </ul>
         </div>
     </section>
-    <aside th:replace="include-front :: side"></aside>
+    <th:block th:replace="include-front :: side"/>
 </div>
-<aside th:replace="include-front :: footer"></aside>
+<th:block th:replace="include-front :: footer"/>
 
 </body>
 </html>

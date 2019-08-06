@@ -5,7 +5,7 @@
 <head>
     <title>Dimple的个人博客</title>
     <meta name="baidu_union_verify" content="7aef518d672b5859ca390cabb140abf3">
-    <div th:include="include-front :: head"></div>
+    <div th:include="include-front :: head('','')"></div>
     <style>
         .swiper-container {
             width: 100%;
@@ -206,7 +206,7 @@
 </head>
 
 <body class="nobg">
-<header th:replace="include-front :: header"></header>
+<th:block th:replace="include-front :: header"/>
 <!--内容区开始-->
 <div class="container">
     <!--最新文章-->
@@ -297,9 +297,9 @@
     </section>
     <!--左侧结束-->
 
-    <aside th:replace="include-front :: side"></aside>
+    <th:block th:replace="include-front :: side"/>
 </div>
-<aside th:replace="include-front :: footer"></aside>
+<th:block th:replace="include-front :: footer"/>
 <!-- Initialize Swiper -->
 <script>
     $(function () {

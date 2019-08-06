@@ -1,92 +1,12 @@
 <!doctype html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${blog.title+'—Dimple的个人博客'}">—Dimple的个人博客</title>
-    <meta name="description" th:content="${blog.summary}">
-    <script src="/static/front/plugin/hightlight/highlight.pack.js"
-            th:src="@{/front/plugin/hightlight/highlight.pack.js}"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <link rel="stylesheet" href="/static/front/plugin/hightlight/xcode.css"
-          th:href="@{/front/plugin/hightlight/xcode.css}"/>
-    <div th:include="include-front :: head"></div>
-    <style>
-        #Catalog_box {
-            width: 100%;
-        }
-
-        #Catalog_box dl {
-            margin: 0;
-        }
-
-        #Catalog_box dl dd {
-            margin: 0;
-            height: 27px;
-            overflow: hidden;
-            width: 300px;
-            line-height: 27px;
-            padding-left: 15px;
-            border-left: 1px solid #999;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            -o-box-sizing: border-box;
-            -ms-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        #Catalog_box dl dd.cate-item2 {
-            padding-left: 30px;
-        }
-
-        #Catalog_box dl dd span {
-            margin-right: 10px;
-            color: #666;
-            font-size: 14px;
-            font-family: Arial;
-        }
-
-        #Catalog_box .cate-item1 span {
-            color: #999;
-            font-weight: bold;
-            font-family: Arial;
-            font-size: 14px;
-            padding-right: 5px;
-        }
-
-        #Catalog_box .cate-item2 span {
-            font-weight: 500;
-        }
-
-        #Catalog_box a {
-            text-decoration: none;
-            color: #666;
-            font-family: "Microsoft YaHei";
-            font-size: 14px;
-        }
-
-        #Catalog_box dl dd a:hover {
-            color: #ff6600;
-        }
-
-        #Catalog_box .cate-item2 {
-            padding-left: 20px;
-        }
-
-        #Catalog_box dd.active, #Catalog_box dd.active a, #Catalog_box dd.active span {
-            color: #ff6600 !important;
-        }
-
-        #Catalog_box dd.active {
-            border-left: 1px solid #ff6600;
-            background: #E8E8E8;
-        }
-
-        .sticky {
-            margin-top: 70px;
-        }
-    </style>
+    <th:block th:include="include-front :: head(${blog.title+'—Dimple的个人博客'},${blog.summary})"/>
+    <th:block th:include="include-front :: highlight-css"/>
+    <th:block th:include="include-front :: highlight-js"/>
 </head>
 <body class="nobg">
-<header th:replace="include-front :: header"></header>
+<th:block th:replace="include-front :: header"/>
 <!--内容区开始-->
 <div class="container">
 
@@ -268,7 +188,7 @@
         </div>
         <!-- 通用评论结束 -->
     </section>
-    <aside th:replace="include-front :: side"></aside>
+    <th:block th:replace="include-front :: side"/>
 </div>
 <div class="hide_box"></div>
 <div class="shang_box">
@@ -354,7 +274,7 @@
         return flag;
     }
 </script>
-<aside th:replace="include-front :: footer"></aside>
+<th:block th:replace="include-front :: footer"/>
 <script th:src="@{/front/js/catNav.js}"></script>
 <script>
     $(function () {

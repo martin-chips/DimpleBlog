@@ -1,189 +1,20 @@
 <!doctype html>
-
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>关于—Dimple的个人博客</title>
-    <div th:include="include-front :: head"></div>
-    <style>
-        .gyw_intro {
-            float: left;
-            font-size: 14px;
-        }
-
-        .gyw_intro h5 {
-            width: 60%;
-            font-weight: bold;
-            margin-top: 10px;
-            float: left;
-        }
-
-        .gyw_intro hr {
-            border: 0.5px dashed #ccc;
-        }
-
-        .bz_about div {
-            margin: 10px 0;
-            float: left;
-            padding: 10px 20px 10px 20px;
-            color: #555;
-            border-left: 4px solid #0cc;
-        }
-
-        .bz_about .wb_url {
-            margin: 0 20px;
-        }
-
-        .bz_about .wb_url a {
-            color: #1CA368;
-        }
-
-        .gyw_intro span {
-            color: #ff3366;
-        }
-
-        .ab_box h3 {
-            margin: 10px 0 10px;
-            font-size: 18px;
-        }
-
-        .ab_box p {
-            color: #666;
-            margin-bottom: 5px
-        }
-
-        .avatar_pic img {
-            width: 100%;
-            border-radius: 50%;
-        }
-
-        .ab_dubai {
-            margin-bottom: 15px;
-            display: inline-block;
-        }
-
-        .ly_button {
-            float: right;
-            width: 100px;
-            background: #000;
-            text-align: center;
-            border-radius: 3px;
-            line-height: 30px
-        }
-
-        .ly_button a {
-            color: #FFF
-        }
-
-        .xinlu li {
-            width: 25%;
-            float: left;
-            overflow: hidden;
-            margin-bottom: 20px
-        }
-
-        .xinlu li a {
-            display: block;
-            margin: 0 10px;
-            background: #f3f3f3;
-            padding: 20px;
-        }
-
-        .xinlu li i {
-            display: block;
-            overflow: hidden;
-            height: 120px;
-            margin-bottom: 10px
-        }
-
-        .xinlu li i img {
-            width: 100%;
-            min-height: 120px;
-            -moz-transition: all .5s ease;
-            -webkit-transition: all .5s ease;
-            -ms-transition: all .5s ease;
-            -o-transition: all .5s ease;
-            transition: all .5s ease;
-            transition: all 0.5s;
-        }
-
-        .xinlu li i:hover img {
-            transform: scale(1.1);
-        }
-
-        .xinlu li p {
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .xinlu li span {
-            color: #666;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-box-orient: vertical;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            font-size: 14px;
-            height: 62px;
-        }
-
-        .myblog {
-            overflow: hidden;
-            clear: both
-        }
-
-        .myblog li {
-            width: 20%;
-            float: left;
-            display: block;
-            text-align: center;
-            padding-bottom: 10px;
-            position: relative;
-            overflow: hidden
-        }
-
-        .myblog li:after {
-            position: absolute;
-            content: "";
-            right: 0;
-            top: 0;
-            background: #e9eaed;
-            height: 100%;
-            width: 1px;
-        }
-
-        .myblog li:last-child:after {
-            content: none
-        }
-
-        .myblog li b {
-            display: block;
-            line-height: 30px;
-            margin-bottom: 10px;
-        }
-
-        .myblog li:nth-child(even)
-        .myblog p {
-            margin-bottom: 10px
-        }
-    </style>
+    <th:block th:include="include-front :: head('关于我-Dimple的个人博客','个人简介')"/>
 </head>
 <body class="nobg">
-<header th:replace="include-front :: header"></header>
+<th:block th:replace="include-front :: header"/>
 <!--内容区开始-->
 <div class="container">
-    <!--最新文章-->
     <section class="mysection">
         <article>
             <div class="about-content" style="padding:0;">
                 <h2 class="gd_title">关于本站</h2>
                 <ul class="myblog">
-                    <div class="gyw_intro">
+                    <div class="intro">
                         <h5>博客简介 | Blog：</h5>
-                        <div class="bz_about">
+                        <div class="intro_detail">
                             <div>
                                 程&nbsp;序：基于SpringBoot开发的个人博客程序。 <span class="wb_url"><a
                                     href="https://github.com/DimpleFeng/DimpleBlog"
@@ -198,7 +29,7 @@
                             </div>
                         </div>
                         <h5>搭建博客目的 | Goal：</h5>
-                        <div class="bz_about">
+                        <div class="intro_detail">
                             <div>
                                 &nbsp;&nbsp;&nbsp;&nbsp;计算机、互联网这一类的东西，很多很庞杂，要想全部记住是不可能的事。所以在上大学不久，我就使用为知笔记、有道云或者OneNote这些笔记工具记录自己的笔记，方便自己什么时候遗忘了，再拿起来看看，
                                 这是最开始的目的。随着接触互联网的东西越来越多，分享这个词在我的身边越来越多的被提及，CSDN、博客园等等博客网站出现在我的眼前，我开始觉得，自己写的东西，如果能够实实在在的帮助到别人，
@@ -218,9 +49,9 @@
                 <span class="ly_button"><a href="/f/leaveComment.html" target="_blank">留言</a></span>
                 <h2 class="gd_title">关于我</h2>
                 <p class="ab_dubai">
-                <div class="gyw_intro">
+                <div class="intro">
                     <h5>个人简介 | Resume：</h5>
-                    <div class="bz_about">
+                    <div class="intro_detail">
                         <div>
                             人物：Dimple<br>
                             性别：男<br>
@@ -238,13 +69,13 @@
                         </div>
                     </div>
                     <h5>编程理想 | Dream：</h5>
-                    <div class="bz_about">
+                    <div class="intro_detail">
                         <div>
                             我希望我自己是一个会技术的产品经理，会产品的工程师。写代码不能不带业务的写，而做产品不能不考虑实际的胡乱设计，我想融合产品经理与开发，做一个融合的人。
                         </div>
                     </div>
                     <h5>技术方向 | Technology：</h5>
-                    <div class="bz_about">
+                    <div class="intro_detail">
                         <div>
                             1、掌握Java基础语法及面向对象设计，数据结构。<br>
                             2、熟悉HTML、CSS、Javascript(搬砖型)、AJAX、JSON等Web页面技术。<br>
@@ -258,7 +89,7 @@
                         </div>
                     </div>
                     <h5 id="project">项目经验 | Project：</h5>
-                    <div class="bz_about">
+                    <div class="intro_detail">
                         <div>
                             <span>注意：该处只介绍项目名称、运行环境、（不包含在公司做的任何项目）...</span><br>
                             1、个人博客系统（正如您所看到的）。<br>
@@ -272,7 +103,7 @@
                         </div>
                     </div>
                     <h5>兴趣爱好 | Hobby：</h5>
-                    <div class="bz_about">
+                    <div class="intro_detail">
                         <div>
                             1、拿到软件会胡思乱想其背后在干些什么，比如搜索的时候各种条件是怎么组合的，代码是什么。<br>
                             2、喜欢电子竞技（LOL），现在的游戏不是以前的游戏，锻炼人反应和临场发挥能力，预防痴呆(真的)，但我真的很菜。<br>
@@ -284,11 +115,8 @@
                 </p></div>
         </article>
     </section>
-
-    <!--左侧结束-->
-    <aside th:replace="include-front :: side"></aside>
+    <th:block th:replace="include-front :: side"/>
 </div>
-<aside th:replace="include-front :: footer"></aside>
+<th:block th:replace="include-front :: footer"/>
 </body>
-
 </html>

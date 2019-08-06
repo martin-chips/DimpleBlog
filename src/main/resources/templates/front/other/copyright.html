@@ -1,15 +1,10 @@
 <!doctype html>
-
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Dimple的个人博客</title>
-    <div th:include="include-front :: head"></div>
+    <th:block th:include="include-front :: head('版权声明-Dimple的个人博客','本站为个人非盈利站点，旨在个人学习、欣赏及记录等，故不受狭义的商业性版权限制')"/>
 </head>
-
 <body class="nobg">
-<header th:replace="include-front :: header"></header>
-
+<th:block th:replace="include-front :: header"/>
 <!--内容区开始-->
 <div class="container">
     <section>
@@ -115,8 +110,8 @@
                 }
             })(); </script>
     </section>    <!--左侧结束-->
-    <aside th:replace="include-front :: side"></aside>
+    <th:block th:replace="include-front :: side"/>
 </div>
-<aside th:replace="include-front :: footer"></aside>
+<th:block th:replace="include-front :: footer"/>
 </body>
 </html>

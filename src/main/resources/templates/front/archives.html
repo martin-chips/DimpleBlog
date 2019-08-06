@@ -1,64 +1,12 @@
 <!doctype html>
 
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>归档—Dimple的个人博客</title>
-    <div th:include="include-front :: head"></div>
-    <style>
-        .page-content {
-            position: relative;
-            min-height: 500px;
-            margin: 50px 0;
-            /*padding: 60px 48px;*/
-            /*background: #fff;*/
-            /*-webkit-box-shadow: 0 2px 5px 0 rgba(146, 146, 146, .1);*/
-            /*-moz-box-shadow: 0 2px 5px 0 rgba(146, 146, 146, .1);*/
-            /*box-shadow: 0 2px 5px 0 rgba(146, 146, 146, .1);*/
-        }
-
-        .mod-archive-list li {
-            line-height: 30px;
-            margin-bottom: 2px;
-            list-style: disc
-        }
-
-        .mod-archive-list li span {
-            color: #848484;
-            font-size: 12px;
-            float: right
-        }
-
-        .archive-time-title {
-            color: #19B5FE;
-            font-family: Courier, Menlo, Monaco, Consolas, "Courier New", monospace;
-            font-size: 25px
-        }
-
-        .archive-time {
-            color: #666;
-            font-size: 14px;
-            margin-right: 10px
-        }
-
-        .mod-archive-list {
-            padding-left: 30px;
-            padding-top: 10px;
-            padding-bottom: 30px
-        }
-
-        .archive-title {
-            color: #666;
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    </style>
+    <th:block th:include="include-front :: head('归档—Dimple的个人博客','归档')"/>
 </head>
 
 <body class="nobg">
-<header th:replace="include-front :: header"></header>
+<th:block  th:replace="include-front :: header"/>
 
 <!--内容区开始-->
 <div class="container">
@@ -84,8 +32,8 @@
     </section>
     <!--左侧结束-->
 
-    <aside th:replace="include-front :: side"></aside>
+    <th:block th:replace="include-front :: side"/>
 </div>
-<aside th:replace="include-front :: footer"></aside>
+<th:block th:replace="include-front :: footer"/>
 </body>
 </html>
