@@ -7,6 +7,8 @@ import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.SpiderUtils;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.common.utils.spring.SpringUtils;
+import com.dimple.project.blog.comment.domain.Comment;
+import com.dimple.project.blog.comment.service.CommentService;
 import com.dimple.project.log.logininfor.domain.Logininfor;
 import com.dimple.project.log.logininfor.service.LogininforServiceImpl;
 import com.dimple.project.log.operlog.domain.OperLog;
@@ -138,5 +140,29 @@ public class AsyncFactory {
                 SpringUtils.getBean(VisitLogService.class).insertVisitLog(visitLog);
             }
         };
+    }
+
+    /**
+     * 异步插入评论
+     *
+     * @param comment 评论信息
+     * @return
+     */
+    public static TimerTask recordCommentInfo(Comment comment) {
+        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        return new TimerTask() {
+            @Override
+            public void run() {
+                // 获取客户端操作系统
+                String os = userAgent.getOperatingSystem().getName();
+                // 获取客户端浏览器
+                String browser = userAgent.getBrowser().getName();
+                comment.setOs(os);
+                comment.setBrowser(browser);
+                comment.setLocation(AddressUtils.getRealAddressByIP(comment.getIp()));
+                SpringUtils.getBean(CommentService.class).insertComment(comment);
+            }
+        };
+
     }
 }

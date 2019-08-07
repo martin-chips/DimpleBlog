@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dimple.common.utils.http.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -19,7 +20,7 @@ public final class QQUtil {
     //QQ 头像和昵称查询地址
     private static final String QQ_QUERY_URL = "https://users.qzone.qq.com/fcg-bin/cgi_get_portrait.fcg";
 
-    public static class QQInfo {
+    public static class QQInfo implements Serializable {
         private long QQNum;
         private String nickName;
         private String avatar;
@@ -32,7 +33,7 @@ public final class QQUtil {
             this.email = builder.email;
         }
 
-        public static class Builder {
+        public static class Builder implements Serializable {
             private long QQNum;
             private String nickName = "匿名";
             private String avatar;

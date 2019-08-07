@@ -1,6 +1,10 @@
 package com.dimple.project.front.controller;
 
 import com.dimple.common.constant.CommonConstant;
+import com.dimple.common.utils.AddressUtils;
+import com.dimple.common.utils.QQUtil;
+import com.dimple.common.utils.ServletUtils;
+import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.framework.aspectj.lang.annotation.VLog;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
@@ -18,6 +22,7 @@ import com.dimple.project.system.carouselMap.service.CarouselMapService;
 import com.dimple.project.system.notice.service.INoticeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @className: HomeController
@@ -131,6 +137,9 @@ public class HomeController extends BaseController {
         model.addAttribute("nextBlog", blogService.selectNextBlogById(blogId));
         model.addAttribute("previousBlog", blogService.selectPreviousBlogById(blogId));
         model.addAttribute("randBlogList", blogService.selectRandBlogList());
+        Comment comment = new Comment();
+        comment.setPageId(blogId);
+        model.addAttribute("comments", commentService.selectCommentList(comment));
         return "front/article";
     }
 
@@ -239,10 +248,41 @@ public class HomeController extends BaseController {
     @PostMapping("/f/comment")
     @ResponseBody
     public AjaxResult comment(Comment comment) {
+        comment.setIp(ShiroUtils.getIp());
+        comment.setDisplay(true);
+        comment.setUrl(ServletUtils.getRequest().getRequestURI());
+        comment.setCreateBy(ServletUtils.getRequest().getRequestedSessionId());
+        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        // 获取客户端操作系统
+        String os = userAgent.getOperatingSystem().getName();
+        // 获取客户端浏览器
+        String browser = userAgent.getBrowser().getName();
+        comment.setOs(os);
+        comment.setBrowser(browser);
+        comment.setLocation(AddressUtils.getRealAddressByIP(comment.getIp()));
         commentService.insertComment(comment);
         return AjaxResult.success();
     }
 
 
+    @GetMapping("/f/qqInfo")
+    @ResponseBody
+    public AjaxResult qqInfo(Long qqNum) {
+        Optional<QQUtil.QQInfo> qqInfo = QQUtil.getQQByQQNum(qqNum);
+        if (qqInfo.isPresent()) {
+            return AjaxResult.success().put("qqInfo", qqInfo.get());
+        }
+        return AjaxResult.error();
+    }
+
+    /**
+     * 刷新当前评论框
+     */
+    @GetMapping("/f/comment")
+    public String commentSync() {
+
+        return "";
+
+    }
 
 }

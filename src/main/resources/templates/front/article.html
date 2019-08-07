@@ -7,23 +7,19 @@
     <link rel="stylesheet" th:href="@{/front/css/comment.css}"/>
     <link rel="stylesheet" th:href="@{/front/css/font-awesome.min.css}"/>
     <link rel="stylesheet" th:href="@{/front/plugin/simplemde/simplemde.min.css}"/>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script th:src="@{/ajax/libs/layui/layui.js}"></script>
     <style>
         .CodeMirror, .CodeMirror-scroll {
-            min-height: 200px;
-            max-height: 200px;
+            min-height: 150px;
+            max-height: 150px;
         }
 
-        .write2014 .emot .emot_btn:hover {
+        .emot .emot_btn:hover {
             background-position: 0 -218px;
         }
 
-        .write2014 .login_info_cm {
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-
         .select_star_wrap {
-
             border-bottom: 0 none;
         }
 
@@ -58,6 +54,7 @@
 <th:block th:replace="include-front :: header"/>
 <!--内容区开始-->
 <div class="container">
+    <input type="hidden" id="pageId" th:value="${blog.blogId}"/>
     <!--左侧开始-->
     <section>
         <article>
@@ -198,15 +195,13 @@
             <h4 class="index-title">
                 <i class="fa fa-comments-o"></i> 当前共有 条评论
             </h4>
-            <!--            <textarea id="markdownEditor"></textarea>-->
-            <div class="write2014">
-                <form id="myform" s>
-                    <input id="chrmarkForm" name="chrmark" type="hidden">
+            <div>
+                <form id="myform">
                     <div class="select_star_wrap ">
                         <div class="select_star">
                             <span class="sp">信息获取：</span>
                             <span class="i_star_0">
-                                <input name="u_qq" type="text" id="qq" class="text" value="" maxlength="49"
+                                <input name="qqNum" type="number" id="qqNum" class="text" value="" maxlength="49"
                                        placeholder="填入qq自动获取信息" tabindex="0">
                             </span>
                             <span id="error"></span>
@@ -215,19 +210,23 @@
                         <div class="select_star right">
                             <span class="sp">您的称呼：</span>
                             <span class="i_star_0">
-                                <input name="u_name" type="text" class="text" id="u_name" value="" maxlength="16"
+                                <input type="hidden" id="avatar">
+
+                                <input name="nickname" type="text" class="text" id="nickname" value="" maxlength="16"
                                        placeholder="您的称呼 必须">
                             </span>
                         </div>
                         <div class="select_star">
                             <span class="sp">您的邮箱：</span>
                             <span class="i_star_0">
-                                <input name="u_mail" type="text" id="u_mail" class="text" value="" maxlength="35"
+                                <input name="email" type="text" id="email" class="text" value="" maxlength="35"
                                        placeholder="您的邮箱 选填">
                                 <span class="sel_check_form" data-name="is_email"
                                       style="position: relative;left: 8px;top: 8px;">
-				                    <span class="display0"><input type="checkbox" id="is_email" name="is_email"
-                                                                  value="1" checked=""></span>
+				                    <span class="display0">
+                                        <input type="checkbox" id="notice" name="notice"
+                                               value="1" checked="">
+                                    </span>
 				                    <span class="gx_check current" data-val="1">邮件通知</span>
 				                </span>
                             </span>
@@ -242,62 +241,71 @@
                     </div>
                     <div class="clear"></div>
                     <textarea id="markdownEditor"></textarea>
-                    <div class="feed-sub"style="width: 100%">
-                        <input type="submit" class="btn btn-inverse" onclick="" value="提交申请">
+                    <div class="feed-sub" style="width: 100%">
+                        <input type="button" class="btn btn-inverse" onclick="leaveComment()" value="提交留言">
                     </div>
                 </form>
             </div>
             <div class="commentList">
                 <ul class="comment">
-                    <li>
-                        <div class="comment-body fade-in" id="comment-51">
+                    <li th:each="comment:${comments}">
+                        <div class="comment-body fade-in" th:id="${'comment-'+comment.id}">
                             <div class="cheader">
                                 <div class="user-img">
-                                    <img class="userImage" src="http://dblog-web.zhyd.me/img/user.png"
-                                         onerror="this.src='http://dblog-web.zhyd.me/img/user.png'">
+                                    <img class="userImage" th:src="${comment.avatar}"
+                                         th:onerror="this.src='/front/images/user.png'">
                                 </div>
                                 <div class="user-info">
                                     <div class="nickname">
-                                        <a target="_blank" href="javascript:void(0)" rel="external nofollow">
-                                            <strong>2</strong>
+                                        <a href="javascript:void(0)" rel="external nofollow">
+                                            <strong th:text="${comment.nickname}"></strong>
                                         </a>
                                         <i class="icons os-null" title="Windows 10"></i>
                                         <i class="icons browser-null" title="Chrome 76.0.3809.87"></i>
                                     </div>
                                     <div class="timer">
-                                        <i class="fa fa-clock-o fa-fw"></i>2019-08-06 14:11
-                                        <i class="fa fa-map-marker fa-fw"></i>未知
+                                        <i class="fa fa-clock-o fa-fw"></i><span
+                                            th:text="${#dates.format(comment.createTime,'yyyy-MM-dd hh:mm:ss')}"></span>
+                                        <i class="fa fa-map-marker fa-fw"></i> [(${comment.location})]
                                     </div>
                                 </div>
                             </div>
                             <div class="content">
-                                <a href="#comment-50" class="comment-quote">@匿名</a>
-                                <div style="background-color: #f5f5f5;padding: 5px;margin: 5px;border-radius: 4px;">
+                                <a th:if="${comment.parentComment != null}"
+                                   th:href="${'#comment-'+comment.parentComment.id}"
+                                   class="comment-quote"
+                                   th:text="${'@'+comment.parentComment.nickname}"></a>
+                                <div th:if="${comment.parentComment != null}"
+                                     style="background-color: #f5f5f5;padding: 5px;margin: 5px;border-radius: 4px;">
                                     <i class="fa fa-quote-left"></i>
                                     <p></p>
-                                    <div style="padding-left: 10px;"><p>1111</p></div>
+                                    <div style="padding-left: 10px;">
+                                        <p th:utext="${comment.parentComment.content}"></p>
+                                    </div>
                                 </div>
                                 <div>
-                                    <p>21321</p>
+                                    <p th:utext="${comment.content}">21321</p>
                                 </div>
                             </div>
                             <div class="sign">
                                 <a href="javascript:void(0);" class="comment-up" onclick="effectBubble()">
-                                    <i class="fa fa-thumbs-o-up"></i>赞(<span class="count">0</span>)
+                                    <i class="fa fa-thumbs-o-up"></i>赞(<span class="count"
+                                                                             th:text="${comment.good}">0</span>)
                                     <i class="sepa"></i>
                                 </a>
                                 <a href="javascript:void(0);" class="comment-down" onclick="$.comment.step(51, this)">
-                                    <i class="fa fa-thumbs-o-down"></i>踩(<span class="count">0</span>)
+                                    <i class="fa fa-thumbs-o-down"></i>踩(<span class="count"
+                                                                               th:text="${comment.bad}">0</span>)
                                     <i class="sepa"></i>
                                 </a>
                                 <a href="javascript:void(0);" class="comment-reply" onclick="reply()"
                                    style="display: inline;">
                                     <i class="fa fa-reply"></i>回复
                                 </a>
-                                <a href="javascript:void(0);" class="comment-flag hide"
-                                   onclick="$.comment.report(51, this)">
-                                    <i class="fa fa-flag"></i>举报
-                                </a>
+<!--                                <a href="javascript:void(0);" class="comment-flag hide"-->
+<!--                                   onclick="$.comment.report(51, this)">-->
+<!--                                    <i class="fa fa-flag"></i>举报-->
+<!--                                </a>-->
                             </div>
                         </div>
                     </li>
@@ -400,8 +408,10 @@
      * 初始化编辑器
      * @param id
      */
+    var simplemde;
+
     function initSimpleMDE(id) {
-        var simplemde = new SimpleMDE({
+        simplemde = new SimpleMDE({
             element: document.getElementById(id),
             toolbar: ["bold", "italic", "|", "code", "quote", "|", "preview", "|", "link", "|", "image"],
             autoDownloadFontAwesome: false,
@@ -418,24 +428,75 @@
         initSimpleMDE("markdownEditor")
     });
 
+    function checkForm() {
+        if ($("#nickname").val().trim() == "") {
+            layer.msg('称呼不能为空', {icon: 2});
+            return false;
+        }
+
+        if ($("#email").val().trim() == "") {
+            layer.msg('邮箱不能为空喔', {icon: 2});
+            return false;
+        } else {
+            var reg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+            var email = $("#email").val();
+            if (!reg.test(email)) {
+                layer.msg('邮箱格式错误', {icon: 2});
+                return false;
+            }
+        }
+        var markdownText = simplemde.value().trim();
+        var htmlText = simplemde.markdown(markdownText);
+        if (htmlText == "" || htmlText.length < 2) {
+            layer.msg('亲啥都没写喔，或者内容太少啦！', {icon: 2});
+            return false;
+        }
+        return true;
+    }
+
+    function leaveComment() {
+        if (!checkForm()) {
+            return;
+        }
+        var data = {
+            pageId: $("#pageId").val(),
+            nickname: $("#nickname").val(),
+            qqNum: $("#qqNum").val(),
+            url: window.location.href,
+            email: $("#email").val(),
+            avatar: $("#avatar").val(),
+            content: simplemde.markdown(simplemde.value().trim()),
+            notice: $("#notice").val()
+        }
+        //留言发送
+        $.ajax({
+            type: "POST",
+            url: "/f/comment",
+            data: data,
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
+
     $("#qqNum").blur(function () {
         var qqNumStr = $('#qqNum').val();
         if (qqNumStr == "") {
             return false;
         }
-        $("#ajaxloading").html('<img src="/images/loading.gif"><a style="font-size:12px;margin-left:5px;">正在获取QQ信息..</a>');
+        var data = {qqNum: qqNumStr}
+        $("#ajaxloading").html('<img src="/front/images/loading-sm.gif"><a style="font-size:12px;margin-left:5px;">正在获取QQ信息..</a>');
         $.ajax({
             type: "GET",
-            url: "",
-            dataType: "text",
-            timeout: 20000,
+            url: "/f/qqInfo",
+            data: data,
             success: function (data, textStatus) {
                 data = $.parseJSON(data);
-                if (data.status == 200) {
+                if (data.code == 200) {
                     $('#nickname').val(data.msg[6]);
                     $('#email').val(qqNumStr + '@qq.com');
                     $('#qq').attr("disabled", false);
-                    $("#ajaxloading").html('<img style="width:24px;border-radius:100px" src="https://q.qlogo.cn/headimg_dl?dst_uin=' + qqNumStr + '&spec=100">');
+                    $("#ajaxloading").html('<img style="width:24px;border-radius:100px" src="https://qg.qlogo.cn/headimg_dl?dst_uin=' + qqNumStr + '&spec=100">');
                 } else {
                     $("#ajaxloading").hide();
                     $("#error").html('qq账号错误').show().fadeOut(4000);
@@ -472,6 +533,12 @@
             }
         });
     });
+
+    function imageError() {
+        var img = event.srcElement;
+        img.src = "/front/images/default_head_img.gif";
+        img.onerror = null;
+    }
 </script>
 </body>
 </html>

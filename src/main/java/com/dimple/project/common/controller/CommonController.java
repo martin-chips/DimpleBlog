@@ -1,7 +1,6 @@
 package com.dimple.project.common.controller;
 
 import com.dimple.common.constant.CommonConstant;
-import com.dimple.common.utils.QQUtil;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.file.FileUploadUtils;
 import com.dimple.common.utils.file.FileUtils;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Optional;
 
 /**
  * @className: CommonController
@@ -88,16 +86,6 @@ public class CommonController {
         } catch (Exception e) {
             return AjaxResult.error(e.getMessage());
         }
-    }
-
-    @GetMapping("/common/qqInfo")
-    @ResponseBody
-    public AjaxResult qqInfo(Long qqNum) {
-        Optional<QQUtil.QQInfo> qqInfo = QQUtil.getQQByQQNum(qqNum);
-        if (qqInfo.isPresent()) {
-            return AjaxResult.success().put("qqInfo", qqInfo.get());
-        }
-        return AjaxResult.error();
     }
 
     public String setFileDownloadHeader(HttpServletRequest request, String fileName) throws UnsupportedEncodingException {

@@ -125,7 +125,7 @@ $(document).ready(function () {
     var mindex = mli.index();
 
 
-    mb.find(".el-lines").click(function () {
+    mb.find(".fa-list").click(function () {
 
         $(this).hide();
 
@@ -153,7 +153,7 @@ $(document).ready(function () {
     });
 
 
-    mb.find(".el-remove").click(function () {
+    mb.find(".fa-remove").click(function () {
 
         $(this).hide();
 

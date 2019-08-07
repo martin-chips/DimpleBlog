@@ -22,7 +22,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> selectCommentList(Comment comment) {
-        return commentMapper.selectCommentList(comment);
+        List<Comment> comments = commentMapper.selectCommentList(comment);
+        for (Comment temp : comments) {
+            Integer replyId = temp.getReplyId();
+            if (replyId != null) {
+                temp.setParentComment(commentMapper.selectCommentById(replyId));
+            }
+        }
+        return comments;
     }
 
     @Override

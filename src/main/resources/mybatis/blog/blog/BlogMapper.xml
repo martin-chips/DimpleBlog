@@ -162,12 +162,13 @@
         b.create_by,
         b.create_time,
         b.support,
-        c.category_title
+        c.category_title,
+        (select count(*) from bg_comment where page_id=b.blog_id) as comment_count
         from bg_blog b
         left join bg_category c on b.category_id = c.category_id
         where status=1
         <if test="categoryId !=null and categoryId !=''">
-            and b.category_id =#{categoryId}
+            and b.category_id =#{categoryId};
         </if>
 
     </select>

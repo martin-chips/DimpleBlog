@@ -81,11 +81,11 @@ header .mynav{width:60%;float:left;height:100%;position:relative;}
 .drop-nav li.nav-active a{color:#fff!important;font-size:16px!important;}
 
 
-/*�ֻ� nav css*/
+/*nav css*/
 .mobile-nav{overflow:hidden;float:right;text-align:center;width:33px;height:100%;position:relative;}
 
-.mobile-nav .el-lines,.mobile-nav .el-remove{display:inline-block;line-height:2.8em;font-size:20px;color:#ff6700;}
-.mobile-nav .el-remove{display:none;}
+.mobile-nav .fa-list, .mobile-nav .fa-remove{display:inline-block;line-height:2.8em;font-size:20px;color:#ff6700;}
+.mobile-nav .fa-remove{display:none;}
 .mob-menu{z-index:999;position:absolute;width:100%;box-shadow:0px 5px 7px #999;background:rgba(255,255,255,0.9);top:3.3em;display:none;z-index:99999;right:0;-webkit-animation:mob-menu 0.5s}
 
 

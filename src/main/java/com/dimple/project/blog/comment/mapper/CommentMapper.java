@@ -18,4 +18,6 @@ public interface CommentMapper {
     int deleteCommonById(Integer id);
 
     int insertComment(Comment comment);
+
+    Comment selectCommentById(Integer replyId);
 }

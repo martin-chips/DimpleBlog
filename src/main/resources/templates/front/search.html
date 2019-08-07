@@ -43,12 +43,9 @@
                             <li>
                                 <a href="about.html" title="作者： 边小丰"><i class="fa fa-user"></i>边小丰</a>
                             </li>
-                            <li><a th:href="${'/f/article/'+blog.blogId+'.html'}">
+                            <li><a  th:title="${'已有'+blog.commentCount+'条评论'}"th:href="${'/f/article/'+blog.blogId+'.html#Comment'}">
                                 <i class="fa-comments-o"></i>
-                                <span th:id="${'sourceId::'+blog.blogId}" class="cy_cmt_count"></span>
-                                <script id="cy_cmt_num"
-                                        src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyu583FnA">
-                                </script>
+                                <span th:text="${blog.commentCount}"></span>
                             </a>
                             </li>
                             <li><a th:title="${'已有'+blog.click+'次浏览'}"><i class="fa fa-eye"></i><span

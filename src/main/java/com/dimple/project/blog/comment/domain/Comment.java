@@ -37,11 +37,19 @@ public class Comment extends BaseEntity {
     /**
      * 当有回复的是否邮件通知
      */
-    private boolean notice;
+    private boolean reply;
     /**
      * 上级评论的id
      */
     private Integer replyId;
+    /**
+     * 赞
+     */
+    private Integer good;
+    /**
+     * 踩
+     */
+    private Integer bad;
     /**
      * Ip地址
      */
@@ -58,6 +66,18 @@ public class Comment extends BaseEntity {
      * 地址
      */
     private String location;
+    /**
+     * 是否审核通过，审核通过
+     */
+    private boolean display=false;
+    /**
+     * 当前页面的id
+     */
+    private Integer pageId;
+    /**
+     * 当前地址
+     */
+    private String url;
 
     private Comment parentComment;
 

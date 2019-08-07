@@ -88,4 +88,10 @@ public class Blog extends BaseEntity {
     private String categoryTitle;
 
     private Category category;
+
+    /**
+     * 评论数量
+     */
+    private Integer commentCount;
+
 }

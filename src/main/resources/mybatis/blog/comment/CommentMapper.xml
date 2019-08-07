@@ -8,10 +8,13 @@
         <if test="qqNum != null and qqNum != ''">qq_num,</if>
         <if test="email != null and email != ''">email,</if>
         <if test="avatar != null and avatar != ''">avatar,</if>
-        <if test="content != null and status != ''">content,</if>
-        <if test="notice != null and notice != ''">notice,</if>
+        <if test="content != null and content != ''">content,</if>
+        <if test="reply != null and reply != ''">reply,</if>
+        <if test="display != null and display != ''">display,</if>
         <if test="replyId != null and replyId != ''">reply_id,</if>
         <if test="ip != null and ip !=''">ip,</if>
+        <if test="pageId != null and pageId !=''">page_id,</if>
+        <if test="url != null and url !=''">url,</if>
         <if test="os != null and os !=''">os,</if>
         <if test="browser != null and browser !=''">browser,</if>
         <if test="location != null and location !=''">location,</if>
@@ -23,9 +26,12 @@
         <if test="email != null and email != ''">#{email},</if>
         <if test="avatar != null and avatar != ''">#{avatar},</if>
         <if test="content != null and content != ''">#{content},</if>
-        <if test="notice != null and notice != ''">#{notice},</if>
+        <if test="reply != null and reply != ''">#{reply},</if>
+        <if test="display != null and display != ''">#{display},</if>
         <if test="replyId != null and replyId != ''">#{replyId},</if>
         <if test="ip != null and ip != ''">#{ip},</if>
+        <if test="pageId != null and pageId != ''">#{pageId},</if>
+        <if test="url != null and url != ''">#{url},</if>
         <if test="os != null and os != ''">#{os},</if>
         <if test="browser != null and browser != ''">#{browser},</if>
         <if test="location != null and location != ''">#{location},</if>
@@ -39,7 +45,7 @@
 
 
     <select id="selectCommentList" resultType="com.dimple.project.blog.comment.domain.Comment">
-        select id, nickname, qq_num, email, avatar, content, reply, parent_id, page_id, create_by, create_time,
+        select id, nickname, qq_num, email, avatar, content, reply_id, reply, url, page_id, good, bad, ip, location, os, browser, display, create_by, create_time
         from bg_comment
         <where>
             <if test="nickname!=null and nickname!=''">
@@ -59,5 +65,8 @@
             </if>
         </where>
 
+    </select>
+    <select id="selectCommentById" resultType="com.dimple.project.blog.comment.domain.Comment">
+        select id, nickname, qq_num, email, avatar, content, reply_id, reply, url, page_id, good, bad, ip, location, os, browser, display, create_by, create_time from bg_comment where id=#{replyId}
     </select>
 </mapper>
