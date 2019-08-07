@@ -82,7 +82,8 @@
                             <i class="fa fa-user"></i>边小丰</a>
                     </li>
                     <li>
-                        <a href="#Comment" title="转到评论"><i class="fa fa-comments-o"></i><span>15</span></a>
+                        <a href="#Comment" title="转到评论"><i class="fa fa-comments-o"></i><span th:value="
+${blog.commentCount}">15</span></a>
                     </li>
                     <li>
                         <a th:title="${'已有'+blog.click+'次浏览'}">
@@ -302,10 +303,10 @@
                                    style="display: inline;">
                                     <i class="fa fa-reply"></i>回复
                                 </a>
-<!--                                <a href="javascript:void(0);" class="comment-flag hide"-->
-<!--                                   onclick="$.comment.report(51, this)">-->
-<!--                                    <i class="fa fa-flag"></i>举报-->
-<!--                                </a>-->
+                                <!--                                <a href="javascript:void(0);" class="comment-flag hide"-->
+                                <!--                                   onclick="$.comment.report(51, this)">-->
+                                <!--                                    <i class="fa fa-flag"></i>举报-->
+                                <!--                                </a>-->
                             </div>
                         </div>
                     </li>
