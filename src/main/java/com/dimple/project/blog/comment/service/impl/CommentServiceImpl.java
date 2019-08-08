@@ -1,5 +1,6 @@
 package com.dimple.project.blog.comment.service.impl;
 
+import com.dimple.common.utils.text.Convert;
 import com.dimple.project.blog.comment.domain.Comment;
 import com.dimple.project.blog.comment.mapper.CommentMapper;
 import com.dimple.project.blog.comment.service.CommentService;
@@ -35,6 +36,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public int deleteCommentById(Integer id) {
         return commentMapper.deleteCommonById(id);
+    }
+
+    @Override
+    public int deleteBgCommentByIds(String ids) {
+        return commentMapper.deleteBgCommentByIds(Convert.toStrArray(ids));
     }
 
     @Override

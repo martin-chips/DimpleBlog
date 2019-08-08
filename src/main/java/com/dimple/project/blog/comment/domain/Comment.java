@@ -1,7 +1,10 @@
 package com.dimple.project.blog.comment.domain;
 
+import com.dimple.framework.aspectj.lang.annotation.Excel;
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @className: Comment
@@ -13,76 +16,60 @@ import lombok.Data;
 @Data
 public class Comment extends BaseEntity {
     private Integer id;
-    /**
-     * QQ 昵称
-     */
+
+    @Excel(name = "QQ昵称")
     private String nickname;
-    /**
-     * QQ号
-     */
+
+    @Excel(name = "QQ号码")
     private Long qqNum;
-    /**
-     * 邮箱
-     */
+
+    @Excel(name = "邮箱地址")
     private String email;
-    /**
-     * 头像地址
-     */
+
+    @Excel(name = "QQ头像地址")
     private String avatar;
 
-    /**
-     * 评论内容
-     */
+    @Excel(name = "留言")
     private String content;
-    /**
-     * 当有回复的是否邮件通知
-     */
-    private boolean reply;
-    /**
-     * 上级评论的id
-     */
+
+    @Excel(name = "收到评论是否邮件通知")
     private Integer replyId;
-    /**
-     * 赞
-     */
-    private Integer good;
-    /**
-     * 踩
-     */
-    private Integer bad;
-    /**
-     * Ip地址
-     */
+
+    @Excel(name = "回复的上一个留言的id")
+    private boolean reply;
+
+    @Excel(name = "评论的页面地址")
+    private String url;
+
+    @Excel(name = "页面id")
+    private Long pageId;
+
+    @Excel(name = "点赞数")
+    private Long good;
+
+    @Excel(name = "踩数")
+    private Long bad;
+
+    @Excel(name = "IP 地址")
     private String ip;
-    /**
-     * 操作系统类型
-     */
-    private String os;
-    /**
-     * 浏览器
-     */
-    private String browser;
-    /**
-     * 地址
-     */
+
+    @Excel(name = "地理位置")
     private String location;
-    /**
-     * 是否审核通过，审核通过
-     */
+
+    @Excel(name = "操作系统")
+    private String os;
+
+    @Excel(name = "浏览器类型")
+    private String browser;
+
+    @Excel(name = "是否显示", readConverterExp = "=核通过显示，审核不通过不显示")
     private boolean display;
-    /**
-     * 审核记录
-     */
+
+    @Excel(name = "审核信息")
     private String reviewMsg;
 
-    /**
-     * 当前页面的id
-     */
-    private Integer pageId;
-    /**
-     * 当前地址
-     */
-    private String url;
+    @Excel(name = "审核信息", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date updateDatetime;
 
     private Comment parentComment;
 

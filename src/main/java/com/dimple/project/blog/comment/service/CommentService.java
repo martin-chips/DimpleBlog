@@ -17,6 +17,14 @@ public interface CommentService {
 
     int deleteCommentById(Integer id);
 
+    /**
+     * 批量删除留言
+     *
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     */
+    int deleteBgCommentByIds(String ids);
+
     int insertComment(Comment comment);
 
     /**

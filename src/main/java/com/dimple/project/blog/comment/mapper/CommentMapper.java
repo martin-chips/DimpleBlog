@@ -26,4 +26,12 @@ public interface CommentMapper {
 
     int increaseBadCount(@Param("pageId") Integer pageId, @Param("commentId") Integer commentId);
 
+    /**
+     * 批量删除留言
+     *
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     */
+    public int deleteBgCommentByIds(String[] ids);
+
 }

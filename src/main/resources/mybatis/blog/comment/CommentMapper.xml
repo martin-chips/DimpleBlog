@@ -84,4 +84,10 @@
     <select id="selectCommentById" resultType="com.dimple.project.blog.comment.domain.Comment">
         select id, nickname, qq_num, email, avatar, content, reply_id, reply, url, page_id, good, bad, ip, location, os, browser, display, create_by, create_time from bg_comment where id=#{replyId} and display=1
     </select>
+    <delete id="deleteBgCommentByIds" parameterType="String">
+        delete from bg_comment where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>
