@@ -12,7 +12,20 @@ import java.util.List;
  * @version: 1.0
  */
 public interface CommentService {
+    /**
+     * 获取前端展示的Comment
+     *
+     * @param comment comment
+     * @return CommentList
+     */
+    List<Comment> selectCommentListForFront(Comment comment);
 
+    /**
+     * 获取CommentList
+     *
+     * @param comment 带有条件的Comment
+     * @return Comment List
+     */
     List<Comment> selectCommentList(Comment comment);
 
     int deleteCommentById(Integer id);
@@ -43,4 +56,22 @@ public interface CommentService {
      * @return
      */
     int increaseBadCount(Integer pageId, Integer commentId);
+
+    /**
+     * 根据Id查询单个comment
+     *
+     * @param id id
+     * @return Comment
+     */
+    Comment selectCommentById(Integer id);
+
+    /**
+     * 修改显示状态
+     *
+     * @param id
+     * @param display
+     * @return
+     */
+    int changeDisplayById(Integer id, boolean display);
+
 }

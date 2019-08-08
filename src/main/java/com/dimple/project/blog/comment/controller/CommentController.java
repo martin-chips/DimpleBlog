@@ -11,9 +11,12 @@ import com.dimple.project.blog.comment.service.CommentService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -52,6 +55,16 @@ public class CommentController extends BaseController {
     }
 
     /**
+     * 修改留言
+     */
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model) {
+        Comment comment = commentService.selectCommentById(id);
+        model.addAttribute("comment", comment);
+        return "blog/comment/edit";
+    }
+
+    /**
      * 导出留言列表
      */
     @RequiresPermissions("blog:comment:export")
@@ -72,5 +85,13 @@ public class CommentController extends BaseController {
     @ResponseBody
     public AjaxResult remove(String ids) {
         return toAjax(commentService.deleteBgCommentByIds(ids));
+    }
+
+
+    @RequiresPermissions("blog:comment:update")
+    @PutMapping("/display/{id}")
+    @ResponseBody
+    public AjaxResult display(boolean display, @PathVariable Integer id) {
+        return toAjax(commentService.changeDisplayById(id, display));
     }
 }

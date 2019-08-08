@@ -1,5 +1,6 @@
 package com.dimple.project.blog.comment.service.impl;
 
+import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.common.utils.text.Convert;
 import com.dimple.project.blog.comment.domain.Comment;
 import com.dimple.project.blog.comment.mapper.CommentMapper;
@@ -20,6 +21,18 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentMapper commentMapper;
+
+    @Override
+    public List<Comment> selectCommentListForFront(Comment comment) {
+        List<Comment> comments = commentMapper.selectCommentListForFront(comment);
+        for (Comment temp : comments) {
+            Integer replyId = temp.getReplyId();
+            if (replyId != null) {
+                temp.setParentComment(commentMapper.selectCommentById(replyId));
+            }
+        }
+        return comments;
+    }
 
     @Override
     public List<Comment> selectCommentList(Comment comment) {
@@ -57,4 +70,19 @@ public class CommentServiceImpl implements CommentService {
     public int increaseBadCount(Integer pageId, Integer commentId) {
         return commentMapper.increaseBadCount(pageId, commentId);
     }
+
+    @Override
+    public Comment selectCommentById(Integer id) {
+        return commentMapper.selectCommentById(id);
+    }
+
+    @Override
+    public int changeDisplayById(Integer id, boolean display) {
+        Comment comment = new Comment();
+        comment.setId(id);
+        comment.setDisplay(display);
+        comment.setUpdateBy(ShiroUtils.getSysUser().getLoginName());
+        return commentMapper.updateComment(comment);
+    }
+
 }

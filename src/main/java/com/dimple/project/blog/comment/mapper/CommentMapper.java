@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface CommentMapper {
 
-    List<Comment> selectCommentList(Comment comment);
+    List<Comment> selectCommentListForFront(Comment comment);
 
     int deleteCommonById(Integer id);
 
@@ -33,5 +33,15 @@ public interface CommentMapper {
      * @return 结果
      */
     public int deleteBgCommentByIds(String[] ids);
+
+    List<Comment> selectCommentList(Comment comment);
+
+    /**
+     * 更新留言
+     *
+     * @param comment 留言
+     * @return 受影响的行数
+     */
+    int updateComment(Comment comment);
 
 }

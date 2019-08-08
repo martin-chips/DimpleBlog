@@ -141,7 +141,7 @@ public class HomeController extends BaseController {
         Comment comment = new Comment();
         comment.setPageId(blogId);
         comment.setDisplay(true);
-        model.addAttribute("comments", commentService.selectCommentList(comment));
+        model.addAttribute("comments", commentService.selectCommentListForFront(comment));
         return "front/article";
     }
 
@@ -284,7 +284,7 @@ public class HomeController extends BaseController {
     public String commentSync(Integer pageId, Model model) {
         Comment comment = new Comment();
         comment.setPageId(pageId);
-        List<Comment> comments = commentService.selectCommentList(comment);
+        List<Comment> comments = commentService.selectCommentListForFront(comment);
         model.addAttribute("comments", comments);
         return "front/article::comment";
     }
