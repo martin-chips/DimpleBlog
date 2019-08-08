@@ -395,8 +395,6 @@
             '                        <div class="select_star right">\n' +
             '                            <span class="sp">您的称呼：</span>\n' +
             '                            <span class="i_star_0">\n' +
-            '                                <input type="hidden" id="avatar">\n' +
-            '\n' +
             '                                <input name="nickname" type="text" class="text" id="nickname" value="" maxlength="16"\n' +
             '                                       placeholder="您的称呼 必须">\n' +
             '                            </span>\n' +
@@ -501,7 +499,7 @@
             url: window.location.href,
             replyId: $("#replyId").val(),
             email: $("#email").val(),
-            avatar: $("#avatar").val(),
+            avatar: $("#avatar").attr("src"),
             content: simplemde.markdown(simplemde.value().trim()),
             notice: $("#notice").val()
         }
@@ -520,7 +518,7 @@
                         url: "/f/comment",
                         success: function (data) {
                             $("#Comment").html(data);
-                            initSimpleMDE("markdownEditor");
+                            initCommentEditor("#Space");
                         }
                     })
                 } else {
@@ -530,7 +528,8 @@
         });
     }
 
-    $("#qqNum").blur(function () {
+
+    $("body").on("blur", "#qqNum", function () {
         var qqNumStr = $('#qqNum').val();
         if (qqNumStr == "") {
             return false;
@@ -542,12 +541,10 @@
             url: "/f/qqInfo",
             data: data,
             success: function (data, textStatus) {
-                data = $.parseJSON(data);
                 if (data.code == 200) {
-                    $('#nickname').val(data.msg[6]);
-                    $('#email').val(qqNumStr + '@qq.com');
-                    $('#qq').attr("disabled", false);
-                    $("#ajaxloading").html('<img style="width:24px;border-radius:100px" src="https://qg.qlogo.cn/headimg_dl?dst_uin=' + qqNumStr + '&spec=100">');
+                    $('#nickname').val(data.qqInfo.nickname);
+                    $('#email').val(data.qqInfo.email);
+                    $("#ajaxloading").html('<img id="avatar" style="width:24px;border-radius:100px" src="' + data.qqInfo.avatar + '">');
                 } else {
                     $("#ajaxloading").hide();
                     $("#error").html('qq账号错误').show().fadeOut(4000);
@@ -558,7 +555,8 @@
                 $("#error").html('qq账号错误').show().fadeOut(4000);
             }
         });
-    });
+    })
+
     $(function () {
         //代码高亮自定义
         $("code").each(function () {

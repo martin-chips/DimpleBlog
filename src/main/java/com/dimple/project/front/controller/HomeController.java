@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 /**
  * @className: HomeController
@@ -270,9 +270,9 @@ public class HomeController extends BaseController {
     @GetMapping("/f/qqInfo")
     @ResponseBody
     public AjaxResult qqInfo(Long qqNum) {
-        Optional<QQUtil.QQInfo> qqInfo = QQUtil.getQQByQQNum(qqNum);
-        if (qqInfo.isPresent()) {
-            return AjaxResult.success().put("qqInfo", qqInfo.get());
+        QQUtil.QQInfo qqByQQNum = QQUtil.getQQByQQNum(qqNum);
+        if (Objects.nonNull(qqByQQNum)) {
+            return AjaxResult.success().put("qqInfo", qqByQQNum);
         }
         return AjaxResult.error();
     }
