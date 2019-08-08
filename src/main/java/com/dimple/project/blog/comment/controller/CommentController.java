@@ -11,8 +11,10 @@ import com.dimple.project.blog.comment.service.CommentService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.List;
  * @version: 1.0
  */
 @Controller
+@RequestMapping("/blog/comment")
 public class CommentController extends BaseController {
 
     @Autowired
@@ -40,7 +43,7 @@ public class CommentController extends BaseController {
      * 查询留言列表
      */
     @RequiresPermissions("blog:comment:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(Comment bgComment) {
         startPage();
@@ -65,7 +68,7 @@ public class CommentController extends BaseController {
      */
     @RequiresPermissions("blog:comment:remove")
     @Log(title = "留言", businessType = BusinessType.DELETE)
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
         return toAjax(commentService.deleteBgCommentByIds(ids));

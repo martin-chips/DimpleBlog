@@ -42,13 +42,13 @@ public class Comment extends BaseEntity {
     private String url;
 
     @Excel(name = "页面id")
-    private Long pageId;
+    private Integer pageId;
 
     @Excel(name = "点赞数")
-    private Long good;
+    private Integer good;
 
     @Excel(name = "踩数")
-    private Long bad;
+    private Integer bad;
 
     @Excel(name = "IP 地址")
     private String ip;
