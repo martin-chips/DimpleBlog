@@ -18,6 +18,9 @@ dimple:
     path: http://images.bianxiaofeng.com
     imageMaxSize: 52428800
     imageMaxNameLength: 200
+  baidu:
+    clientId:
+    clientSecret:
 
 
 # 开发环境配置

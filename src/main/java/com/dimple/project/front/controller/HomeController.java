@@ -4,6 +4,8 @@ import com.dimple.common.constant.CommonConstant;
 import com.dimple.common.utils.AddressUtils;
 import com.dimple.common.utils.QQUtil;
 import com.dimple.common.utils.ServletUtils;
+import com.dimple.common.utils.StringUtils;
+import com.dimple.common.utils.baidu.BaiduUtils;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.framework.aspectj.lang.annotation.VLog;
 import com.dimple.framework.web.controller.BaseController;
@@ -262,8 +264,11 @@ public class HomeController extends BaseController {
         comment.setOs(os);
         comment.setBrowser(browser);
         comment.setLocation(AddressUtils.getRealAddressByIP(comment.getIp()));
+        String reviewMsg = BaiduUtils.checkText(comment.getContent());
+        comment.setReviewMsg(reviewMsg);
+        comment.setDisplay(StringUtils.isEmpty(reviewMsg) ? true : false);
         commentService.insertComment(comment);
-        return AjaxResult.success();
+        return StringUtils.isEmpty(reviewMsg) ? AjaxResult.success() : AjaxResult.error(reviewMsg + ",请文明发言！");
     }
 
 

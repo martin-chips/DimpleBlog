@@ -49,4 +49,9 @@ public class CachePrefix {
      * 系統黑名单缓存
      */
     public static final String SYSTEM_BLACKLIST_ALL = "system_blacklist_all_";
+    /**
+     * 百度AIToken
+     */
+    public static final String SYSTEM_BAIDU_ACCESS_TOKEN = "system_baidu_access_token";
+
 }
