@@ -11,6 +11,7 @@
         <if test="content != null and content != ''">content,</if>
         <if test="reply != null and reply != ''">reply,</if>
         <if test="display != null and display != ''">display,</if>
+        <if test="reviewMsg != null and reviewMsg != ''">review_msg,</if>
         <if test="replyId != null and replyId != ''">reply_id,</if>
         <if test="ip != null and ip !=''">ip,</if>
         <if test="pageId != null and pageId !=''">page_id,</if>
@@ -28,6 +29,7 @@
         <if test="content != null and content != ''">#{content},</if>
         <if test="reply != null and reply != ''">#{reply},</if>
         <if test="display != null and display != ''">#{display},</if>
+        <if test="reviewMsg != null and reviewMsg != ''">#{reviewMsg},</if>
         <if test="replyId != null and replyId != ''">#{replyId},</if>
         <if test="ip != null and ip != ''">#{ip},</if>
         <if test="pageId != null and pageId != ''">#{pageId},</if>
@@ -39,15 +41,28 @@
         sysdate()
         )
     </insert>
+    <update id="increaseGoodCount">
+        update bg_comment set good=good+1 where page_id=#{pageId} and id=#{commentId}
+    </update>
+    <update id="increaseBadCount">
+        update bg_comment set bad =bad +1 where page_id=#{pageId} and id=#{commentId}
+    </update>
     <delete id="deleteCommonById">
         delete from bg_comment where id=#{id}
     </delete>
 
 
     <select id="selectCommentList" resultType="com.dimple.project.blog.comment.domain.Comment">
-        select id, nickname, qq_num, email, avatar, content, reply_id, reply, url, page_id, good, bad, ip, location, os, browser, display, create_by, create_time
+        select id, nickname, qq_num, email, avatar, content, reply_id, reply, url, page_id, good, bad, ip, location, os,
+        browser, display, create_by, create_time
         from bg_comment
         <where>
+            <if test="pageId!=null and pageId!=''">
+                and page_id =#{pageId}
+            </if>
+            <if test="display!=null and display!=''">
+                and display =#{display}
+            </if>
             <if test="nickname!=null and nickname!=''">
                 and nickname like concat('%',#{nickname},'%')
             </if>
@@ -63,10 +78,10 @@
             <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
                 AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
+            order by create_time desc
         </where>
-
     </select>
     <select id="selectCommentById" resultType="com.dimple.project.blog.comment.domain.Comment">
-        select id, nickname, qq_num, email, avatar, content, reply_id, reply, url, page_id, good, bad, ip, location, os, browser, display, create_by, create_time from bg_comment where id=#{replyId}
+        select id, nickname, qq_num, email, avatar, content, reply_id, reply, url, page_id, good, bad, ip, location, os, browser, display, create_by, create_time from bg_comment where id=#{replyId} and display=1
     </select>
 </mapper>

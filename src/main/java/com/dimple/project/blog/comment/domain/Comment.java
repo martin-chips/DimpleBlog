@@ -69,7 +69,12 @@ public class Comment extends BaseEntity {
     /**
      * 是否审核通过，审核通过
      */
-    private boolean display=false;
+    private boolean display;
+    /**
+     * 审核记录
+     */
+    private String reviewMsg;
+
     /**
      * 当前页面的id
      */

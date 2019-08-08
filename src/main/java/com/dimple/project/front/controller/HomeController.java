@@ -29,6 +29,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -139,6 +140,7 @@ public class HomeController extends BaseController {
         model.addAttribute("randBlogList", blogService.selectRandBlogList());
         Comment comment = new Comment();
         comment.setPageId(blogId);
+        comment.setDisplay(true);
         model.addAttribute("comments", commentService.selectCommentList(comment));
         return "front/article";
     }
@@ -279,10 +281,26 @@ public class HomeController extends BaseController {
      * 刷新当前评论框
      */
     @GetMapping("/f/comment")
-    public String commentSync() {
+    public String commentSync(Integer pageId, Model model) {
+        Comment comment = new Comment();
+        comment.setPageId(pageId);
+        List<Comment> comments = commentService.selectCommentList(comment);
+        model.addAttribute("comments", comments);
+        return "front/article::comment";
+    }
 
-        return "";
+    @PutMapping("/f/comment/good")
+    @ResponseBody
+    public AjaxResult commentGood(Integer pageId, Integer commentId) {
+        commentService.increaseGoodCount(pageId, commentId);
+        return AjaxResult.success();
+    }
 
+    @PutMapping("/f/comment/bad")
+    @ResponseBody
+    public AjaxResult commentBad(Integer pageId, Integer commentId) {
+        commentService.increaseBadCount(pageId, commentId);
+        return AjaxResult.success();
     }
 
 }

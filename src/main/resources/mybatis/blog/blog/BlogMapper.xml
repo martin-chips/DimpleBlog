@@ -163,7 +163,7 @@
         b.create_time,
         b.support,
         c.category_title,
-        (select count(*) from bg_comment where page_id=b.blog_id) as comment_count
+        (select count(*) from bg_comment where page_id=b.blog_id and display=1 ) as comment_count
         from bg_blog b
         left join bg_category c on b.category_id = c.category_id
         where status=1

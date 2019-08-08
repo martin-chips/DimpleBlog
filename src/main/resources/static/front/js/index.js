@@ -18,10 +18,10 @@ function logout() {
  * @param {string} value 键值
  * @param {integer} days cookie周期
  */
-function setCookie(name, value, days) {
-    if (days) {
+function setCookie(name, value, minute) {
+    if (minute) {
         var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        date.setTime(date.getTime() + (minute * 1000*60));
         var expires = "; expires=" + date.toGMTString();
     } else {
         var expires = "";

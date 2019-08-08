@@ -1,6 +1,7 @@
 package com.dimple.project.blog.comment.mapper;
 
 import com.dimple.project.blog.comment.domain.Comment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,4 +21,9 @@ public interface CommentMapper {
     int insertComment(Comment comment);
 
     Comment selectCommentById(Integer replyId);
+
+    int increaseGoodCount(@Param("pageId") Integer pageId, @Param("commentId") Integer commentId);
+
+    int increaseBadCount(@Param("pageId") Integer pageId, @Param("commentId") Integer commentId);
+
 }

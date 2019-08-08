@@ -41,4 +41,14 @@ public class CommentServiceImpl implements CommentService {
     public int insertComment(Comment comment) {
         return commentMapper.insertComment(comment);
     }
+
+    @Override
+    public int increaseGoodCount(Integer pageId, Integer commentId) {
+        return commentMapper.increaseGoodCount(pageId, commentId);
+    }
+
+    @Override
+    public int increaseBadCount(Integer pageId, Integer commentId) {
+        return commentMapper.increaseBadCount(pageId, commentId);
+    }
 }
