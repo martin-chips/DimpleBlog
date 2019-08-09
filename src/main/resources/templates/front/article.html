@@ -322,6 +322,15 @@
         </div>
     </div>
 </div>
+
+<script th:inline="javascript">
+    var display = [[${blog.allowComment}]];
+</script>
+
+
+<th:block th:replace="include-front :: footer"/>
+<script th:src="@{/front/js/catNav.js}"></script>
+<script th:src="@{/front/plugin/simplemde/simplemde.min.js}"></script>
 <script>
     $(function () {
         $(".pay_item").click(function () {
@@ -357,11 +366,6 @@
         }
         return flag;
     }
-</script>
-<th:block th:replace="include-front :: footer"/>
-<script th:src="@{/front/js/catNav.js}"></script>
-<script th:src="@{/front/plugin/simplemde/simplemde.min.js}"></script>
-<script>
 
     var simplemde;
 
@@ -434,7 +438,14 @@
     }
 
     $(function () {
-        initCommentEditor("#Space");
+        console.log(display)
+        if (display == false) {
+            $(".comment-reply").remove();
+            $("#CommentEditor").remove();
+            $("#Space").append("<div style='border: 1px solid #ff6700;padding-top: 30px; padding-bottom: 30px;text-align: center;font-size: 24px;'>管理员设置当前博客禁止评论</div>");
+        } else {
+            initCommentEditor("#Space");
+        }
     });
 
     function reply(commentId) {

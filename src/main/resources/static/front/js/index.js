@@ -21,7 +21,7 @@ function logout() {
 function setCookie(name, value, minute) {
     if (minute) {
         var date = new Date();
-        date.setTime(date.getTime() + (minute * 1000*60));
+        date.setTime(date.getTime() + (minute * 1000 * 60));
         var expires = "; expires=" + date.toGMTString();
     } else {
         var expires = "";
@@ -65,17 +65,33 @@ function recordId(category, id) {
 }
 
 /**
- * 阻止F5右键操作
+ * 阻止F12操作
  */
-// document.onkeydown = function () {
-//     if (event.keyCode == 116 || event.keyCode == 123) {
-//         event.keyCode = 0;
-//         event.returnValue = false;
-//     }
-// }
+document.onkeydown = function () {
+    if (event.keyCode == 123) {
+        event.keyCode = 0;
+        event.returnValue = false;
+    }
+}
+/**
+ * 禁止右键
+ */
 document.oncontextmenu = function () {
     event.returnValue = false;
 }
+/**
+ * 禁止预先调试
+ * @type {number}
+ */
+var threshold = 160; // 打开控制台的宽或高阈值
+// 每秒检查一次
+setInternet(function () {
+    if (window.outerWidth - window.innerWidth > threshold ||
+        window.outerHeight - window.innerHeight > threshold) {
+        // 如果打开控制台，则刷新页面
+        window.location.reload();
+    }
+}, 1e3);
 
 function showLogin() {
     $(".hide_box2").fadeToggle();
