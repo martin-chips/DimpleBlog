@@ -192,6 +192,10 @@ public class HomeController extends BaseController {
     @GetMapping("/f/leaveComment.html")
     public String leaveComment(Model model) {
         setCommonMessage(model);
+        Comment comment = new Comment();
+        comment.setPageId(-1000);
+        model.addAttribute("comments", commentService.selectCommentListForFront(comment));
+        model.addAttribute("pageId", -1000);
         return "front/leaveComment";
     }
 

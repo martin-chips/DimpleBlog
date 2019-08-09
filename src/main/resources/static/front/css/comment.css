@@ -1,3 +1,41 @@
+.CodeMirror, .CodeMirror-scroll {
+    min-height: 100px;
+    max-height: 100px;
+}
+
+.emot .emot_btn:hover {
+    background-position: 0 -218px;
+}
+
+.select_star_wrap {
+    border-bottom: 0 none;
+}
+
+.select_star_wrap .select_star {
+    font-size: 14px;
+    padding: 15px;
+    float: left;
+    display: inline;
+    margin-right: 30px;
+}
+
+#myform {
+    border: 1px solid #ddd;
+}
+
+.select_star_wrap .select_star.right {
+    float: right
+}
+
+.select_star_wrap .i_star_0 .text {
+    width: 200px;
+    height: 40px;
+    background-position: 12px center;
+}
+
+.clear {
+    clear: both
+}
 em {
     font-family: "Georgia";
     /*font-size: 24px;*/

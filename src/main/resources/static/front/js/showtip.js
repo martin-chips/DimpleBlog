@@ -369,7 +369,7 @@ $(document).ready(function () {
 
     });
 
-    $(".el-remove").click(function () {
+    $(".fa-remove").click(function () {
 
         $(".arc-bdfx").hide();
 

@@ -3,6 +3,11 @@
 
 <head>
     <th:block th:include="include-front :: head('留言—Dimple的个人博客','留言板')"/>
+    <link rel="stylesheet" th:href="@{/front/css/comment.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/front/plugin/simplemde/simplemde.min.css}"/>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script th:src="@{/ajax/libs/layui/layui.js}"></script>
 </head>
 <body class="nobg">
 <th:block th:replace="include-front :: header"/>
@@ -13,59 +18,101 @@
             <img src="/front/images/leaveComment-bg.png"
                  style="width:100%;"
                  alt="Dimple个人博客留言板"/>
+            <h3 class="form-btn blue-text">
+                <a href="javascript:;">
+                    <i class="fa fa-edit"></i>我要留言
+                </a>
+            </h3>
+            <!-- 通用评论开始 -->
+            <div class="comment-area" th:fragment="comment" id="Comment">
+                <h4 class="index-title">
+                    <input type="hidden" id="pageId" th:value="${pageId}">
+                    <i class="fa fa-comments-o"></i>[[${'当前共有 '+comments.size()+' 条评论'}]]
+                </h4>
+                <div id="Space"></div>
 
-
-            <h4 class="index-title">
-                <i class="fa fa-comments"></i>
-                当前共有<span href="#SOHUCS" id="changyan_count_unit"></span>参与，
-                <span href="#SOHUCS" id="changyan_parti_unit"></span>留言
-                <script type="text/javascript"
-                        src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
-                <a rel="nofollow"><i class="fa fa-edit"></i>发表留言</a>
-            </h4>
-            <ul>
-                <!--PC和WAP自适应版-->
-                <div id="SOHUCS" sid="leaveComment"></div>
-                <script type="text/javascript">
-                    (function () {
-                        var appid = 'cyu583FnA';
-                        var conf = 'prod_e133a229a25f70b06b142787fad1386b';
-                        var width = window.innerWidth || document.documentElement.clientWidth;
-                        if (width < 960) {
-                            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
-                        } else {
-                            var loadJs = function (d, a) {
-                                var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
-                                var b = document.createElement("script");
-                                b.setAttribute("type", "text/javascript");
-                                b.setAttribute("charset", "UTF-8");
-                                b.setAttribute("src", d);
-                                if (typeof a === "function") {
-                                    if (window.attachEvent) {
-                                        b.onreadystatechange = function () {
-                                            var e = b.readyState;
-                                            if (e === "loaded" || e === "complete") {
-                                                b.onreadystatechange = null;
-                                                a()
-                                            }
-                                        }
-                                    } else {
-                                        b.onload = a
-                                    }
-                                }
-                                c.appendChild(b)
-                            };
-                            loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
-                                window.changyan.api.config({appid: appid, conf: conf})
-                            });
-                        }
-                    })(); </script>
-            </ul>
+                <div class="commentList">
+                    <input type="hidden" id="replyId">
+                    <ul class="comment">
+                        <li th:each="comment:${comments}">
+                            <div class="comment-body fade-in" th:id="${'comment-'+comment.id}">
+                                <div class="cheader">
+                                    <div class="user-img">
+                                        <img class="userImage" th:src="${comment.avatar}"
+                                             th:onerror="this.src='/front/images/user.png'">
+                                    </div>
+                                    <div class="user-info">
+                                        <div class="nickname">
+                                            <a href="javascript:void(0)" rel="external nofollow">
+                                                <strong th:text="${comment.nickname}"></strong>
+                                            </a>
+                                            <i class="icons os-null" title="Windows 10"></i>
+                                            <i class="icons browser-null" title="Chrome 76.0.3809.87"></i>
+                                        </div>
+                                        <div class="timer">
+                                            <i class="fa fa-clock-o fa-fw"></i><span
+                                                th:text="${#dates.format(comment.createTime,'yyyy-MM-dd hh:mm:ss')}"></span>
+                                            <i class="fa fa-map-marker fa-fw"></i> [(${comment.location})]
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <a th:if="${comment.parentComment != null}"
+                                       th:href="${'#comment-'+comment.parentComment.id}"
+                                       class="comment-quote"
+                                       th:text="${'@'+comment.parentComment.nickname}"></a>
+                                    <div th:if="${comment.parentComment != null}"
+                                         style="background-color: #f5f5f5;padding: 5px;margin: 5px;border-radius: 4px;">
+                                        <i class="fa fa-quote-left"></i>
+                                        <p></p>
+                                        <div style="padding-left: 10px;">
+                                            <p th:utext="${comment.parentComment.content}"></p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p th:utext="${comment.content}">21321</p>
+                                    </div>
+                                </div>
+                                <div class="sign" th:id="${'commentDiv-'+comment.id}">
+                                    <a href="javascript:void(0);" class="comment-up"
+                                       th:onclick="good(event,[[${comment.id}]])">
+                                        <i class="fa fa-thumbs-o-up"></i>赞(<span class="count"
+                                                                                 th:id="${'good-count-'+comment.id}"
+                                                                                 th:text="${comment.good}">0</span>)
+                                        <i class="sepa"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" class="comment-down" t
+                                       th:onclick="bad(event,[[${comment.id}]])">
+                                        <i class="fa fa-thumbs-o-down"></i>踩(<span class="count"
+                                                                                   th:id="${'bad-count-'+comment.id}"
+                                                                                   th:text="${comment.bad}">0</span>)
+                                        <i class="sepa"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" class="comment-reply" th:id="${'reply-'+comment.id}"
+                                       th:onclick="reply([[${comment.id}]])"
+                                       style="display: inline;">
+                                        <i class="fa fa-reply"></i>回复
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 通用评论结束 -->
         </div>
     </section>
     <th:block th:replace="include-front :: side"/>
 </div>
 <th:block th:replace="include-front :: footer"/>
+<script th:src="@{/front/js/comment.js}"></script>
+<script th:src="@{/front/plugin/simplemde/simplemde.min.js}"></script>
+
+<script>
+    $(function () {
+        initCommentEditor("#Space");
+    });
+</script>
 
 </body>
 </html>
