@@ -137,9 +137,8 @@
         $.operate.put($.table._option.changeStatusUrl + "/" + status, data);
     }
 
-    function changeSupport(support) {
-        var data = {"blogIds": $.table.selectColumns("userId")};
-        $.operate.put($.table._option.changeSupportUrl + "/" + status, data);
+    function changeAllowComment(blogId) {
+        $.operate.put($.table._option.changeAllowCommentUrl + "/" + blogId, data);
     }
 
     $(".condition").click(function () {
@@ -162,6 +161,7 @@
             exportUrl: prefix + "/export",
             changeStatusUrl: prefix + "/status",
             changeSupportUrl: prefix + "/support",
+            changeAllowCommentUrl: prefix + "/allowComment",
             sortName: "createTime",
             sortOrder: "desc",
             uniqueId: "blogId",
@@ -196,6 +196,13 @@
                     return statusTools(value, row);
                 }
             }, {
+                field: 'allowComment',
+                title: '评论',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return statusToolsAllowComment(value, row);
+                }
+            }, {
                 field: 'weight',
                 title: '权重',
                 align: 'center',
@@ -224,6 +231,28 @@
         } else {
             return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.blogId + '\')"></i> ';
         }
+    }
+
+    function statusToolsAllowComment(value, row) {
+        if (value == false) {
+            return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enableAllowComment(\'' + row.blogId + '\')"></i> ';
+        } else {
+            return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disableAllowComment(\'' + row.blogId + '\')"></i> ';
+        }
+    }
+
+    /* 博客禁止评论评论 */
+    function disableAllowComment(blogId) {
+        $.modal.confirm("确认要禁止评论该博文吗？", function () {
+            $.operate.put($.table._option.changeAllowCommentUrl + "/" + blogId + "/" + false);
+        })
+    }
+
+    /* 博客允许评论 */
+    function enableAllowComment(blogId) {
+        $.modal.confirm("确认要允许评论该博文吗？", function () {
+            $.operate.put($.table._option.changeAllowCommentUrl + "/" + blogId + "/" + true);
+        })
     }
 
     /* 博客推荐-停用 */

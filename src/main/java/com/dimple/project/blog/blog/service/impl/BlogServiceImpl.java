@@ -131,7 +131,7 @@ public class BlogServiceImpl implements BlogService {
         blog.setTags(tags);
         blog.setCategory(categoryService.selectCategoryById(blog.getCategoryId()));
         //新增blog访问量
-        blogMapper.increamentBlogClick(blogId);
+        blogMapper.incrementBlogClick(blogId);
         return blog;
     }
 
@@ -149,8 +149,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Cacheable(value = CachePrefix.FRONT_BLOG_SUPPORT)
     @Override
-    public List<Blog>
-    selectSupportBlog() {
+    public List<Blog> selectSupportBlog() {
         return blogMapper.selectSupportBlogList(5);
     }
 
@@ -183,6 +182,11 @@ public class BlogServiceImpl implements BlogService {
             endTime = null;
         }
         return blogMapper.selectBlogClickData(startTime, endTime);
+    }
+
+    @Override
+    public int updateBlogAllowCommentByBlogId(Boolean allowComment, Integer blogId) {
+        return blogMapper.updateBlogAllowCommentByBlogId(allowComment, blogId);
     }
 
 }

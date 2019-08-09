@@ -173,9 +173,31 @@ public interface BlogMapper {
      * @param blogId 需要增加访问量的blog的id
      * @return 受影响的行
      */
-    int increamentBlogClick(Integer blogId);
+    int incrementBlogClick(Integer blogId);
 
+    /**
+     * 获取博文展示数据
+     *
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @return 博文数据
+     */
     List<BusinessCommonData> selectBlogClickData(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
+    /**
+     * 根据Blog的Id获取title
+     *
+     * @param blogId blogId
+     * @return BlogTitle
+     */
     String selectBlogTitleByBlogId(Integer blogId);
+
+    /**
+     * 更新是否允许评论状态
+     *
+     * @param allowComment 是否允许
+     * @param blogId       BlogId
+     * @return 受影响的函数
+     */
+    int updateBlogAllowCommentByBlogId(@Param("allowComment") Boolean allowComment, @Param("blogId") Integer blogId);
 }

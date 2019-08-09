@@ -93,5 +93,8 @@ public class Blog extends BaseEntity {
      * 评论数量
      */
     private Integer commentCount;
-
+    /**
+     * 是否允许评论
+     */
+    private boolean allowComment;
 }

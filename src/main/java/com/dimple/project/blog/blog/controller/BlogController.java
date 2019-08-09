@@ -105,11 +105,20 @@ public class BlogController extends BaseController {
         return toAjax(blogService.updateBlogStatusById(blogIds, status));
     }
 
+    @PutMapping("/allowComment/{blogId}/{allowComment}")
+    @RequiresPermissions("blog:blog:allowComment")
+    @Log(title = "博客管理", businessType = BusinessType.UPDATE)
+    @ResponseBody
+    public AjaxResult allowCommentSave(@PathVariable Boolean allowComment, @PathVariable Integer blogId) {
+        return toAjax(blogService.updateBlogAllowCommentByBlogId(allowComment, blogId));
+    }
+
     @DeleteMapping("/remove")
     @Log(title = "博客管理", businessType = BusinessType.DELETE)
     @RequiresPermissions("blog:blog:remove")
     @ResponseBody
-    public AjaxResult remove(Integer []ids) {
+    public AjaxResult remove(Integer[] ids) {
+
         return toAjax(blogService.deleteBlogById(ids));
     }
 

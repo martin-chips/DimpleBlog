@@ -142,9 +142,19 @@ public interface BlogService {
     /**
      * 图表展示博客点击量统计
      *
-     * @return 博客点击量
      * @param startTime
      * @param endTime
+     * @return 博客点击量
      */
     List<BusinessCommonData> selectBlogClickData(String startTime, String endTime);
+
+    /**
+     * 根据Id设置是否允许评论
+     *
+     * @param allowComment 状态
+     * @param blogId       blogId
+     * @return 受影响的行数
+     */
+    int updateBlogAllowCommentByBlogId(Boolean allowComment, Integer blogId);
+
 }
