@@ -1,20 +1,7 @@
 
 
 # DimpleBlog
-# 声明
-# 目前bianxiaofeng.com网站受到大量攻击，为了保证系统正常运行，我已经紧急上了一个版本，所有异常访问会被永久加入系统黑名单，不接受申请解封，永不解封，不管是否误伤。
-目前已经加入系统黑名单IP如下  
-target     prot opt source               destination         
-DROP       all  --  113.118.227.210      anywhere            
-DROP       all  --  45.56.155.179        anywhere            
-DROP       all  --  118.89.219.82        anywhere  
-
-本人于2019年7月31日提供攻击材料给腾讯云，腾讯云已将该服务器封停，现在受到境外服务器攻击，还是那句话有的是时间陪你玩，谢谢你陪我练技术哦。
-
-目前怀疑对象为售卖我博客系统源码的人，咸鱼名：后来和你没能在一起cly 你猜我紧急上线的版本是收集了你什么数据呢？会拿着这些数据干嘛呢？
-
-# 没错，我又回来了，本次版本V1.2，正在开发中，如需稳定版请使用ReleaseV1.1版本，本次大规模更新预计结束时间8月中旬。期间代码不可用。请使用ReleaseV1.1版本。期间代码不可用。请使用ReleaseV1.1版本。期间代码不可用。请使用ReleaseV1.1版本。期间代码不可用。请使用ReleaseV1.1版本。
-本次版本更新的目的在于构建一个简单的应用。代码方面力求精简。同时修复之前没来得及修复的bug。主要精力在于后台部分，前台不会做太大改动。
+本次进行一次大规模更新，目的在于构建一个简单的应用。代码方面力求精简。同时修复之前没来得及修复的bug。主要精力在于后台部分，前台不会做太大改动。
 
 #### 介绍
 
@@ -90,6 +77,7 @@ DROP       all  --  118.89.219.82        anywhere
     driver-class-name: com.mysql.jdbc.Driver
 ```
 2. 创建数据库`dimple_blog`，运行SQL文件（在`resources`下的`sql`文件夹下）。由于使用JPA会自动创建表，你也可以不运行SQL文件，**当时需要数据库**。
+
 3. 配置七牛云图库accessKey、secretKey、bucket、path、imageMaxSize、imageMaxNameLength等信息：
 ```
   qiniuyun:
@@ -108,6 +96,7 @@ DROP       all  --  118.89.219.82        anywhere
     pushUrl: http://data.zz.baidu.com/urls?site=www.bianxiaofeng.com&token=LqRHUkKxK89qudvA
 ```
 5. 使用Maven打包项目。
+
 6. 使用命令`java -jar +jar包名`启动项目。
 
 #### 使用说明
