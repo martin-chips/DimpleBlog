@@ -1,6 +1,6 @@
 package com.dimple.project.blog.blog.service.impl;
 
-import com.dimple.common.constant.CachePrefix;
+import com.dimple.common.constant.CacheConstant;
 import com.dimple.common.constant.CommonConstant;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.common.utils.text.Convert;
@@ -91,20 +91,29 @@ public class BlogServiceImpl implements BlogService {
         }
     }
 
-    @CacheEvict(value = {CachePrefix.FRONT_NEWEST_UPDATE_BLOG, CachePrefix.FRONT_BLOG_RANKING, CachePrefix.FRONT_BLOG_SUPPORT})
+    @CacheEvict(value = {CacheConstant.BUSINESS_CACHE_BLOG_NEWEST_UPDATE, CacheConstant.BUSINESS_CACHE_BLOG_RANKING, CacheConstant.BUSINESS_CACHE_BLOG_SUPPORT})
     @Override
     public int updateBlogSupportById(Integer blogId, String support) {
         return blogMapper.updateBlogSupportById(blogId, support);
     }
 
     //清除缓存
-    @CacheEvict(value = {CachePrefix.FRONT_NEWEST_UPDATE_BLOG, CachePrefix.FRONT_BLOG_RANKING, CachePrefix.FRONT_BLOG_SUPPORT})
+    @CacheEvict(value = {CacheConstant.BUSINESS_CACHE_BLOG_NEWEST_UPDATE,
+            CacheConstant.BUSINESS_CACHE_BLOG_RANKING,
+            CacheConstant.BUSINESS_CACHE_BLOG_SUPPORT,
+            CacheConstant.BUSINESS_CACHE_BLOG_ITEM
+    })
     @Override
     public int updateBlogStatusById(String blogIds, String status) {
         return blogMapper.updateBlogStatusByIds(Convert.toIntArray(blogIds), status);
     }
 
-    @CacheEvict(value = {CachePrefix.FRONT_NEWEST_UPDATE_BLOG, CachePrefix.FRONT_BLOG_RANKING, CachePrefix.FRONT_BLOG_SUPPORT})
+    @CacheEvict(value = {
+            CacheConstant.BUSINESS_CACHE_BLOG_NEWEST_UPDATE,
+            CacheConstant.BUSINESS_CACHE_BLOG_RANKING,
+            CacheConstant.BUSINESS_CACHE_BLOG_SUPPORT,
+            CacheConstant.BUSINESS_CACHE_BLOG_ITEM
+    })
     @Override
     public int deleteBlogById(Integer[] ids) {
         return blogMapper.deleteBlogByIds(ids);
@@ -116,6 +125,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @Cacheable(value = CacheConstant.BUSINESS_CACHE_BLOG_ITEM, key = "#blogId")
     public Blog selectBlogWithTextAndTagsAndCategoryByBlogId(Integer blogId) {
         Blog blog = blogMapper.selectBlogWithTextById(blogId);
         if (blog == null) {
@@ -130,24 +140,22 @@ public class BlogServiceImpl implements BlogService {
         }
         blog.setTags(tags);
         blog.setCategory(categoryService.selectCategoryById(blog.getCategoryId()));
-        //新增blog访问量
-        blogMapper.incrementBlogClick(blogId);
         return blog;
     }
 
-    @Cacheable(value = CachePrefix.FRONT_NEWEST_UPDATE_BLOG)
+    @Cacheable(value = CacheConstant.BUSINESS_CACHE_BLOG_NEWEST_UPDATE)
     @Override
     public List<Blog> selectNewestUpdateBlog() {
         return blogMapper.selectNewestUpdateBlog(4);
     }
 
-    @Cacheable(value = CachePrefix.FRONT_BLOG_RANKING)
+    @Cacheable(value = CacheConstant.BUSINESS_CACHE_BLOG_RANKING)
     @Override
     public List<Blog> selectBlogRanking() {
         return blogMapper.selectBlogRankingList(6);
     }
 
-    @Cacheable(value = CachePrefix.FRONT_BLOG_SUPPORT)
+    @Cacheable(value = CacheConstant.BUSINESS_CACHE_BLOG_SUPPORT)
     @Override
     public List<Blog> selectSupportBlog() {
         return blogMapper.selectSupportBlogList(5);
@@ -187,6 +195,12 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public int updateBlogAllowCommentByBlogId(Boolean allowComment, Integer blogId) {
         return blogMapper.updateBlogAllowCommentByBlogId(allowComment, blogId);
+    }
+
+    @Override
+    public int incrementBlogClick(Integer blogId) {
+        //新增blog访问量
+        return blogMapper.incrementBlogClick(blogId);
     }
 
 }

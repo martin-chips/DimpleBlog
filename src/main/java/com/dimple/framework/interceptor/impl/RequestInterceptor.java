@@ -1,7 +1,7 @@
 package com.dimple.framework.interceptor.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dimple.common.constant.CachePrefix;
+import com.dimple.common.constant.CacheConstant;
 import com.dimple.common.utils.IpUtils;
 import com.dimple.project.monitor.blacklist.domain.Blacklist;
 import com.dimple.project.monitor.blacklist.service.BlacklistService;
@@ -74,12 +74,12 @@ public class RequestInterceptor implements HandlerInterceptor {
     private boolean checkIfInBlackList(HttpServletRequest request) {
         String ip = IpUtils.getIpAddr(request);
         //从Redis中获取黑名单
-        String blackListCache = redisTemplate.opsForValue().get(CachePrefix.SYSTEM_BLACKLIST_ALL);
+        String blackListCache = redisTemplate.opsForValue().get(CacheConstant.SYSTEM_CONFIG_CACHE_BLACKLIST_All);
         List<Blacklist> list = JSONObject.parseArray(blackListCache, Blacklist.class);
         if (Objects.isNull(list) || list.size() == 0) {
             List<Blacklist> blacklists = blacklistService.selectBlacklistList(new Blacklist());
             //设置保存一天的缓存
-            redisTemplate.opsForValue().set(CachePrefix.SYSTEM_BLACKLIST_ALL, JSONObject.toJSONString(blacklists), 1, TimeUnit.DAYS);
+            redisTemplate.opsForValue().set(CacheConstant.SYSTEM_CONFIG_CACHE_BLACKLIST_All, JSONObject.toJSONString(blacklists), 1, TimeUnit.DAYS);
             return false;
         }
         Optional<Blacklist> any = list.stream().filter(blacklist -> blacklist.getIpAddr().equals(ip)).findAny();

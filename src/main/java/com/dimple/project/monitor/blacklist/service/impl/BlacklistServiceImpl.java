@@ -1,7 +1,7 @@
 package com.dimple.project.monitor.blacklist.service.impl;
 
 import com.dimple.common.constant.BlacklistConstants;
-import com.dimple.common.constant.CachePrefix;
+import com.dimple.common.constant.CacheConstant;
 import com.dimple.common.utils.security.ShiroUtils;
 import com.dimple.project.monitor.blacklist.domain.Blacklist;
 import com.dimple.project.monitor.blacklist.mapper.BlacklistMapper;
@@ -30,7 +30,7 @@ public class BlacklistServiceImpl implements BlacklistService {
     }
 
     @Override
-    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
+    @CacheEvict(value = CacheConstant.SYSTEM_CONFIG_CACHE_BLACKLIST_All)
     public int deleteBlacklistByIds(Integer[] ids) {
         return blacklistMapper.deleteBlacklistByBlacklistIds(ids);
     }
@@ -41,13 +41,13 @@ public class BlacklistServiceImpl implements BlacklistService {
     }
 
     @Override
-    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
+    @CacheEvict(value = CacheConstant.SYSTEM_CONFIG_CACHE_BLACKLIST_All)
     public void cleanBlacklist() {
         blacklistMapper.cleanBlacklist();
     }
 
     @Override
-    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
+    @CacheEvict(value = CacheConstant.SYSTEM_CONFIG_CACHE_BLACKLIST_All)
     public int insertBlacklist(Blacklist blacklist) {
         blacklist.setCreateBy(ShiroUtils.getLoginName());
         return blacklistMapper.insertBlacklist(blacklist);
@@ -70,7 +70,7 @@ public class BlacklistServiceImpl implements BlacklistService {
     }
 
     @Override
-    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
+    @CacheEvict(value = CacheConstant.SYSTEM_CONFIG_CACHE_BLACKLIST_All)
     public int insertBlacklist(String ipAddr) {
         Blacklist blacklist = new Blacklist();
         blacklist.setIpAddr(ipAddr);
@@ -78,7 +78,7 @@ public class BlacklistServiceImpl implements BlacklistService {
     }
 
     @Override
-    @CacheEvict(value = CachePrefix.SYSTEM_BLACKLIST_ALL)
+    @CacheEvict(value = CacheConstant.SYSTEM_CONFIG_CACHE_BLACKLIST_All)
     public int updateBlacklist(Blacklist blacklist) {
         return blacklistMapper.updateBlacklist(blacklist);
     }

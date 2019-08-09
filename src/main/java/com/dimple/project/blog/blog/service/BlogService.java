@@ -157,4 +157,12 @@ public interface BlogService {
      */
     int updateBlogAllowCommentByBlogId(Boolean allowComment, Integer blogId);
 
+    /**
+     * 增加Blog的点击量
+     *
+     * @param blogId BlogId
+     * @return 受影响的行数
+     */
+    int incrementBlogClick(Integer blogId);
+
 }

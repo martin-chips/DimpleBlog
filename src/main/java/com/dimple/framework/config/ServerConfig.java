@@ -1,16 +1,15 @@
 package com.dimple.framework.config;
 
-import com.dimple.common.constant.CachePrefix;
+import com.dimple.common.constant.CacheConstant;
 import com.dimple.common.utils.ServletUtils;
-import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.baidu.BaiduUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @className: ServerConfig
@@ -51,19 +50,16 @@ public class ServerConfig {
      *
      * @return token
      */
+    @Cacheable(value = CacheConstant.SYSTEM_CONFIG_CACHE_BAIDU_AI_ACCESS_TOKEN)
     public String getBaiduAIAccessToken() {
-        String token = redisTemplate.opsForValue().get(CachePrefix.SYSTEM_BAIDU_ACCESS_TOKEN);
-        if (StringUtils.isEmpty(token)) {
-            String auth = BaiduUtils.getAuth(clientId, clientSecret);
-            redisTemplate.opsForValue().set(CachePrefix.SYSTEM_BAIDU_ACCESS_TOKEN, auth, 10, TimeUnit.DAYS);
-        }
-        return token;
+        String auth = BaiduUtils.getAuth(clientId, clientSecret);
+        return auth;
     }
 
     /**
      * 删除AI Token
      */
     public void deleteBaiduAIAccessToken() {
-        redisTemplate.delete(CachePrefix.SYSTEM_BAIDU_ACCESS_TOKEN);
+        redisTemplate.delete(CacheConstant.SYSTEM_CONFIG_CACHE_BAIDU_AI_ACCESS_TOKEN);
     }
 }

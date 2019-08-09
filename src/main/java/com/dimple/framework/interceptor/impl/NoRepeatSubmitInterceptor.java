@@ -1,7 +1,7 @@
 package com.dimple.framework.interceptor.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dimple.common.constant.CachePrefix;
+import com.dimple.common.constant.CacheConstant;
 import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.interceptor.annotation.NoRepeatSubmit;
@@ -64,7 +64,7 @@ public class NoRepeatSubmitInterceptor extends HandlerInterceptorAdapter {
     private boolean isRepeatSubmit(HttpServletRequest request, int intervalSecond) {
         String nowParams = (request.getParameterMap() == null || request.getParameterMap().size() == 0) ? String.valueOf(System.currentTimeMillis()) : JSONObject.toJSONString(request.getParameterMap());
         //请求的SessionID+URI作为key保证不重复
-        String key = CachePrefix.NO_REPEAT_SUBMIT + request.getRequestedSessionId() + request.getRequestURI();
+        String key = CacheConstant.NO_REPEAT_SUBMIT + request.getRequestedSessionId() + request.getRequestURI();
         String value = redisTemplate.opsForValue().get(key);
         if (StringUtils.isNotEmpty(value)) {
             String preParams = JSONObject.parseObject(value, String.class);

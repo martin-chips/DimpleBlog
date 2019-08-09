@@ -136,6 +136,8 @@ public class HomeController extends BaseController {
         if (!CommonConstant.one.equals(blog.getStatus())) {
             return "error/404";
         }
+        //增加点击量
+        blogService.incrementBlogClick(blogId);
         model.addAttribute("blog", blog);
         model.addAttribute("nextBlog", blogService.selectNextBlogById(blogId));
         model.addAttribute("previousBlog", blogService.selectPreviousBlogById(blogId));

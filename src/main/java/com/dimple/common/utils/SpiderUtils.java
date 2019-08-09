@@ -1,6 +1,6 @@
 package com.dimple.common.utils;
 
-import com.dimple.common.constant.CachePrefix;
+import com.dimple.common.constant.CacheConstant;
 import com.dimple.common.utils.spring.SpringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SpiderUtils {
 
-    private static final String KEY = CachePrefix.SPIDER + "list";
+    private static final String KEY = CacheConstant.BUSINESS_CACHE_SPIDER + "List";
 
     public static String parseUserAgent(String userAgent) {
         if (StringUtils.isBlank(userAgent)) {
