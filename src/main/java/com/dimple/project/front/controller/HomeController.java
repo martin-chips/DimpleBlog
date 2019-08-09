@@ -266,7 +266,12 @@ public class HomeController extends BaseController {
         comment.setOs(os);
         comment.setBrowser(browser);
         comment.setLocation(AddressUtils.getRealAddressByIP(comment.getIp()));
-        String reviewMsg = BaiduUtils.checkText(comment.getContent());
+        String reviewMsg = "";
+        try {
+            reviewMsg = BaiduUtils.checkText(comment.getContent());
+        } catch (Exception e) {
+            //ignore
+        }
         comment.setReviewMsg(reviewMsg);
         comment.setDisplay(StringUtils.isEmpty(reviewMsg) ? true : false);
         commentService.insertComment(comment);
