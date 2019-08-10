@@ -36,6 +36,7 @@
 .clear {
     clear: both
 }
+
 em {
     font-family: "Georgia";
     /*font-size: 24px;*/
@@ -57,7 +58,6 @@ em {
     background-color: #006741 !important;
     border-color: #00432a !important;
 }
-
 
 .commentList {
     margin-top: 0;
@@ -114,6 +114,7 @@ em {
     float: left !important;
     position: relative;
 }
+
 .comment .comment-body .cheader .user-img .author-icon {
     width: 30px;
     height: 16px;
@@ -462,10 +463,20 @@ i {
     height: 95% !important;
     max-height: initial !important
 }
+
 /* wangEditor-fullscreen*/
 
 /* simplemd */
 
 .CodeMirror-cursor {
-    height: auto!important;
+    height: auto !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
 }

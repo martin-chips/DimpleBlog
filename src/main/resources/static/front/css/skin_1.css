@@ -1,49 +1,23 @@
 body {
-
 	background: #e9ecd7 url(../images/bg.jpg);
-
 	background-attachment: fixed;
-
 	background-repeat: no-repeat;
-
 	background-size: 100% 100%;
-
 }
 
-
-
 body:after {
-
-
-
 	content: '';
-
 	position: fixed;
-
 	left: 0;
-
 	top: 0;
-
 	width: 100%;
-
 	height: 100%;
-
 	background: rgba(255, 255, 255, 0.5);
-
 	z-index: -1;
-
-
-
 }
 
 i {
-
 	color: #ff6700;
-
-
-
-
-
 }
 
 input,
@@ -81,7 +55,7 @@ textarea:focus {
 	font-size: 12px;
 }
 
-.smallText{
+.smallText {
 	color: #bcbcbc;
 	margin-left: 50px;
 	font-size: 12px;
@@ -105,10 +79,6 @@ header {
 	color: #fff;
 	font-size: 20px;
 }
-
-
-
-
 
 .nav-active {
 	background: #13c5f8;
@@ -134,14 +104,9 @@ div#tooltip {
 	text-align: left;
 	padding: 5px 10px;
 	border-radius: 5px;
-
 	background: -webkit-linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
-
 	box-shadow: 0 5px 20px #666;
-
 }
-
-
 
 div#tooltip p {
 	color: #ff6700;
@@ -149,40 +114,23 @@ div#tooltip p {
 }
 
 div#tooltip p:after {
-
 	content: '';
-
 	width: 0;
-
 	height: 0;
-
 	position: absolute;
-
 	left: 10%;
-
 	top: -8px;
-
 	border-left: 8px solid transparent;
-
 	border-right: 8px solid transparent;
-
 	border-bottom: 8px solid rgba(255, 255, 255, 0.95);
-
 }
-
-
 
 @media screen and (min-width:320px) and (max-width:1023px) {
 
 	body {
-
 		background: url(../images/mob-bg.jpg) no-repeat;
-
 		background-attachment: fixed;
-
 		background-repeat: no-repeat;
-
 		background-size: 100%;
-
 	}
 }
