@@ -61,6 +61,9 @@
                                 <div id="tab-8" class="tab-pane active">
                                     <div class="panel-body">
                                         <strong id="qiNiuYunSize"></strong>
+                                        <a onclick="qiNiuYunRefresh()" title="刷新">
+                                            <i class="fa fa-refresh"></i>
+                                        </a>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group" style="height:600px;overflow-x:hidden;overflow-y:auto">
                                             <div class="file-loading">
@@ -72,6 +75,9 @@
                                 <div id="tab-9" class="tab-pane">
                                     <div class="panel-body">
                                         <strong id="localSize"></strong>
+                                        <a onclick="localRefresh()" title="刷新">
+                                            <i class="fa fa-refresh"></i>
+                                        </a>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group" style="height:600px;overflow-x:hidden;overflow-y:auto">
                                             <div class="file-loading">
@@ -203,7 +209,8 @@
                         initialPreviewQiNiuYun[i] = list[i].path;
                         var obj = new Object();
                         obj.caption = list[i].name;
-                        obj.size = list[i].size
+                        obj.size = list[i].size;
+                        obj.url = '/file/image?name=' + list[i].name + '&serverType=1';
                         initialPreviewConfigQiNiuYun[i] = obj
                     }
                 }
@@ -230,13 +237,14 @@
                 //封装数据
                 var list = result.list
                 //设置页面大小
-                $("#localSize").text("本地服务器公有" + list.length + "张图片");
+                $("#localSize").text("本地服务器共有" + list.length + "张图片");
                 if (list.length > 0) {
                     for (var i = 0; i < list.length; i++) {
                         initialPreviewLocal[i] = list[i].path;
                         var obj = new Object();
                         obj.caption = list[i].name;
-                        obj.size = list[i].size
+                        obj.size = list[i].size;
+                        obj.url = '/file/image?name=' + list[i].name + '&serverType=2';
                         initialPreviewConfigLocal[i] = obj
                     }
                 }
@@ -252,6 +260,16 @@
             initialPreview: initialPreviewLocal,
             initialPreviewConfig: initialPreviewConfigLocal
         });
+    }
+
+    function localRefresh() {
+        $("#localContainer").fileinput('destroy');
+        fixLocalConatiner();
+    }
+
+    function qiNiuYunRefresh() {
+        $("#qiNiuYunContainer").fileinput('destroy');
+        fixQiNiuYunContainer();
     }
 </script>
 </body>

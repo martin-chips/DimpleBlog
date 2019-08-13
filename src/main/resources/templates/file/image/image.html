@@ -12,12 +12,6 @@
         #gallery .file-preview {
             border: 0;
         }
-
-        #gallery .active-item {
-            background-color: aliceblue;
-        }
-
-
         #gallery .file-caption-main {
             display: none;
         }
@@ -56,6 +50,9 @@
                                 <div id="tab-8" class="tab-pane active">
                                     <div class="panel-body">
                                         <strong id="qiNiuYunSize"></strong>
+                                        <a onclick="fixQiNiuYunContainer()" title="刷新">
+                                            <i class="fa fa-refresh"></i>
+                                        </a>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group" style="height:600px;overflow-x:hidden;overflow-y:auto">
                                             <div class="file-loading">
@@ -67,6 +64,9 @@
                                 <div id="tab-9" class="tab-pane">
                                     <div class="panel-body">
                                         <strong id="localSize"></strong>
+                                        <a onclick="localRefresh()" title="刷新">
+                                            <i class="fa fa-refresh"></i>
+                                        </a>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group" style="height:600px;overflow-x:hidden;overflow-y:auto">
                                             <div class="file-loading">
@@ -113,18 +113,16 @@
         fixQiNiuYunContainer();
     });
 
-    $(document).on("click", ".file-preview-frame", (function () {
-        if ($(this).hasClass("active-item")) {
-            $(this).removeClass("active-item");
-            $("#url").val("");
-            return;
-        }
-        $(".active-item").each(function (i, n) {
-            $(this).removeClass("active-item")
-        });
-        $(this).addClass("active-item");
-        $("#url").val($(this).find("img").attr("src"));
-    }));
+
+    function localRefresh() {
+        $("#localContainer").fileinput('destroy');
+        fixLocalConatiner();
+    }
+
+    function qiNiuYunRefresh() {
+        $("#qiNiuYunContainer").fileinput('destroy');
+        fixQiNiuYunContainer();
+    }
 
     $("#imageFileUploader").fileinput({
         uploadUrl: "/file/image/add", //上传的地址(访问接口地址)
@@ -163,6 +161,7 @@
             $.modal.alertError(result.msg);
         } else if (result.code == web_status.SUCCESS) {
             $.modal.msgSuccess(result.msg);
+            $('#imageFileUploader').fileinput('clear');
             $("#url").val(result.path);
         }
     });
