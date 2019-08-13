@@ -53,7 +53,7 @@ public class ToolController extends BaseController {
         return "tool/tool/add";
     }
 
-    @Log(title = "工具管理", businessType = BusinessType.INSERT)
+    @Log(title = "系统工具", businessType = BusinessType.INSERT)
     @RequiresPermissions("tool:tool:add")
     @PostMapping("/add")
     @ResponseBody
@@ -70,14 +70,14 @@ public class ToolController extends BaseController {
 
     @PutMapping("/edit")
     @RequiresPermissions("tool:tool:edit")
-    @Log(title = "工具管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统工具", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult editSave(Tool tool) {
         return toAjax(toolService.updateTool(tool));
     }
 
     @DeleteMapping("/remove")
-    @Log(title = "工具管理", businessType = BusinessType.DELETE)
+    @Log(title = "系统工具", businessType = BusinessType.DELETE)
     @RequiresPermissions("blog:blog:remove")
     @ResponseBody
     public AjaxResult remove(Integer[] ids) {

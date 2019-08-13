@@ -52,6 +52,7 @@ public class LinkController extends BaseController {
 
     @PostMapping("/add")
     @ResponseBody
+    @Log(title = "系统友链", businessType = BusinessType.INSERT)
     @RequiresPermissions("link:link:add")
     public AjaxResult addSave(Link link) {
         return toAjax(linkService.insertLink(link));
@@ -64,7 +65,7 @@ public class LinkController extends BaseController {
     }
 
     @PutMapping("/edit")
-    @Log(title = "友链管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统友链", businessType = BusinessType.UPDATE)
     @ResponseBody
     @RequiresPermissions("link:link:edit")
     public AjaxResult editSave(Link link) {
@@ -72,14 +73,14 @@ public class LinkController extends BaseController {
     }
 
     @RequiresPermissions("link:link:remove")
-    @Log(title = "友链管理", businessType = BusinessType.DELETE)
+    @Log(title = "系统友链", businessType = BusinessType.DELETE)
     @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
         return toAjax(linkService.deleteLinkByIds(ids));
     }
 
-    @Log(title = "友链管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统友链", businessType = BusinessType.UPDATE)
     @PutMapping("/display/{display}")
     @RequiresPermissions("link:link:display")
     @ResponseBody
@@ -90,7 +91,7 @@ public class LinkController extends BaseController {
     /**
      * 通过友链
      */
-    @Log(title = "友链管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统友链", businessType = BusinessType.UPDATE)
     @PutMapping("/processed")
     @RequiresPermissions("link:link:pass")
     @ResponseBody

@@ -57,7 +57,7 @@ public class UserController extends BaseController {
         return getDataTable(list);
     }
 
-    @Log(title = "用户管理", businessType = BusinessType.EXPORT)
+    @Log(title = "系统用户", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:user:export")
     @PostMapping("/export")
     @ResponseBody
@@ -67,7 +67,7 @@ public class UserController extends BaseController {
         return util.exportExcel(list, "用户数据");
     }
 
-    @Log(title = "用户管理", businessType = BusinessType.IMPORT)
+    @Log(title = "系统用户", businessType = BusinessType.IMPORT)
     @RequiresPermissions("system:user:import")
     @PostMapping("/importData")
     @ResponseBody
@@ -99,7 +99,7 @@ public class UserController extends BaseController {
      * 新增保存用户
      */
     @RequiresPermissions("system:user:add")
-    @Log(title = "用户管理", businessType = BusinessType.INSERT)
+    @Log(title = "系统用户", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(User user) {
@@ -123,7 +123,7 @@ public class UserController extends BaseController {
      * 修改保存用户
      */
     @RequiresPermissions("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统用户", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(User user) {
@@ -150,7 +150,7 @@ public class UserController extends BaseController {
     }
 
     @RequiresPermissions("system:user:remove")
-    @Log(title = "用户管理", businessType = BusinessType.DELETE)
+    @Log(title = "系统用户", businessType = BusinessType.DELETE)
     @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
@@ -191,7 +191,7 @@ public class UserController extends BaseController {
     /**
      * 用户状态修改
      */
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统用户", businessType = BusinessType.UPDATE)
     @RequiresPermissions("system:user:edit")
     @PostMapping("/changeStatus")
     @ResponseBody

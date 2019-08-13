@@ -42,7 +42,7 @@ public class QiNiuController {
     }
 
     @PostMapping("/upload")
-    @Log(title = "图片管理", businessType = BusinessType.UPLOAD)
+    @Log(title = "七牛云图片", businessType = BusinessType.UPLOAD)
     @RequiresPermissions("qiniu:image:upload")
     @ResponseBody
     public AjaxResult upload(@RequestParam("file") MultipartFile file) {
@@ -51,7 +51,7 @@ public class QiNiuController {
     }
 
     @DeleteMapping("/remove")
-    @Log(title = "图片管理", businessType = BusinessType.DELETE)
+    @Log(title = "七牛云图片", businessType = BusinessType.DELETE)
     @ResponseBody
     public boolean remove(String fileName) throws QiniuException {
         log.info("删除图片{}", fileName);

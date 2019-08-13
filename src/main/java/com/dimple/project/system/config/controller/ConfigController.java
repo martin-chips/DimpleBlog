@@ -54,7 +54,7 @@ public class ConfigController extends BaseController {
         return getDataTable(list);
     }
 
-    @Log(title = "参数管理", businessType = BusinessType.EXPORT)
+    @Log(title = "系统参数", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:config:export")
     @PostMapping("/export")
     @ResponseBody
@@ -76,7 +76,7 @@ public class ConfigController extends BaseController {
      * 新增保存参数配置
      */
     @RequiresPermissions("system:config:add")
-    @Log(title = "参数管理", businessType = BusinessType.INSERT)
+    @Log(title = "系统参数", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Config config) {
@@ -96,7 +96,7 @@ public class ConfigController extends BaseController {
      * 修改保存参数配置
      */
     @RequiresPermissions("system:config:edit")
-    @Log(title = "参数管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统参数", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Config config) {
@@ -107,7 +107,7 @@ public class ConfigController extends BaseController {
      * 删除参数配置
      */
     @RequiresPermissions("system:config:remove")
-    @Log(title = "参数管理", businessType = BusinessType.DELETE)
+    @Log(title = "系统参数", businessType = BusinessType.DELETE)
     @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {

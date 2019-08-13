@@ -50,7 +50,7 @@ public class TagController extends BaseController {
     }
 
     @RequiresPermissions("blog:tag:add")
-    @Log(title = "标签管理", businessType = BusinessType.INSERT)
+    @Log(title = "博客标签", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Tag tag) {
@@ -65,7 +65,7 @@ public class TagController extends BaseController {
 
 
     @RequiresPermissions("blog:tag:edit")
-    @Log(title = "标签管理", businessType = BusinessType.UPDATE)
+    @Log(title = "博客标签", businessType = BusinessType.UPDATE)
     @PutMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Tag tag) {
@@ -73,7 +73,7 @@ public class TagController extends BaseController {
     }
 
     @RequiresPermissions("blog:tag:remove")
-    @Log(title = "标签管理", businessType = BusinessType.DELETE)
+    @Log(title = "博客标签", businessType = BusinessType.DELETE)
     @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(Integer[] ids) {

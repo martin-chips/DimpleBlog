@@ -50,7 +50,7 @@ public class CategoryController extends BaseController {
         return "blog/category/add";
     }
 
-    @Log(title = "分类管理", businessType = BusinessType.INSERT)
+    @Log(title = "博客分类", businessType = BusinessType.INSERT)
     @RequiresPermissions("blog:category:add")
     @PostMapping("/add")
     @ResponseBody
@@ -66,14 +66,14 @@ public class CategoryController extends BaseController {
 
     @PutMapping("/edit")
     @RequiresPermissions("blog:category:edit")
-    @Log(title = "分类管理", businessType = BusinessType.UPDATE)
+    @Log(title = "博客分类", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult editSave(Category category) {
         return toAjax(categoryService.updateCategory(category));
     }
 
     @DeleteMapping("/remove")
-    @Log(title = "分类管理", businessType = BusinessType.DELETE)
+    @Log(title = "博客分类", businessType = BusinessType.DELETE)
     @RequiresPermissions("blog:category:remove")
     @ResponseBody
     public AjaxResult remove(Integer[] ids) {
@@ -82,7 +82,7 @@ public class CategoryController extends BaseController {
 
     @PutMapping("/support/{support}")
     @RequiresPermissions("blog:category:support")
-    @Log(title = "分类管理", businessType = BusinessType.UPDATE)
+    @Log(title = "博客分类", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult supportSave(Integer categoryId, @PathVariable String support) {
         return toAjax(categoryService.updateCategorySupportById(categoryId, support));

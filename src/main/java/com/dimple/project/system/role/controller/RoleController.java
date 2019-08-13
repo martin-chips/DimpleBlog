@@ -51,7 +51,7 @@ public class RoleController extends BaseController {
         return getDataTable(list);
     }
 
-    @Log(title = "角色管理", businessType = BusinessType.EXPORT)
+    @Log(title = "系统角色", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:role:export")
     @PostMapping("/export")
     @ResponseBody
@@ -73,7 +73,7 @@ public class RoleController extends BaseController {
      * 新增保存角色
      */
     @RequiresPermissions("system:role:add")
-    @Log(title = "角色管理", businessType = BusinessType.INSERT)
+    @Log(title = "系统角色", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Role role) {
@@ -94,7 +94,7 @@ public class RoleController extends BaseController {
      * 修改保存角色
      */
     @RequiresPermissions("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统角色", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Role role) {
@@ -114,7 +114,7 @@ public class RoleController extends BaseController {
      * 修改保存数据权限
      */
     @RequiresPermissions("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统角色", businessType = BusinessType.UPDATE)
     @PostMapping("/rule")
     @ResponseBody
     public AjaxResult ruleSave(Role role) {
@@ -122,7 +122,7 @@ public class RoleController extends BaseController {
     }
 
     @RequiresPermissions("system:role:remove")
-    @Log(title = "角色管理", businessType = BusinessType.DELETE)
+    @Log(title = "系统角色", businessType = BusinessType.DELETE)
     @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
@@ -162,7 +162,7 @@ public class RoleController extends BaseController {
     /**
      * 角色状态修改
      */
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统角色", businessType = BusinessType.UPDATE)
     @RequiresPermissions("system:role:edit")
     @PostMapping("/changeStatus")
     @ResponseBody

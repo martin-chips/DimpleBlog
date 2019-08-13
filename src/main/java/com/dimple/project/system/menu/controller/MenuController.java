@@ -52,7 +52,7 @@ public class MenuController extends BaseController {
     /**
      * 删除菜单
      */
-    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
+    @Log(title = "系统菜单", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:menu:remove")
     @GetMapping("/remove/{menuId}")
     @ResponseBody
@@ -86,7 +86,7 @@ public class MenuController extends BaseController {
     /**
      * 新增保存菜单
      */
-    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
+    @Log(title = "系统菜单", businessType = BusinessType.INSERT)
     @RequiresPermissions("system:menu:add")
     @PostMapping("/add")
     @ResponseBody
@@ -106,7 +106,7 @@ public class MenuController extends BaseController {
     /**
      * 修改保存菜单
      */
-    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统菜单", businessType = BusinessType.UPDATE)
     @RequiresPermissions("system:menu:edit")
     @PostMapping("/edit")
     @ResponseBody

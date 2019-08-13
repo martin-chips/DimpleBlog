@@ -65,7 +65,7 @@ public class BlogController extends BaseController {
         return "blog/blog/add";
     }
 
-    @Log(title = "博客管理", businessType = BusinessType.INSERT)
+    @Log(title = "系统博客", businessType = BusinessType.INSERT)
     @RequiresPermissions("blog:blog:add")
     @PostMapping("/add")
     @ResponseBody
@@ -83,7 +83,7 @@ public class BlogController extends BaseController {
 
     @PutMapping("/edit")
     @RequiresPermissions("blog:blog:edit")
-    @Log(title = "博客管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统博客", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult editSave(Blog blog) {
         return toAjax(blogService.updateBlog(blog));
@@ -91,7 +91,7 @@ public class BlogController extends BaseController {
 
     @PutMapping("/support/{support}")
     @RequiresPermissions("blog:blog:support")
-    @Log(title = "博客管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统博客", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult supportSave(Integer blogId, @PathVariable String support) {
         return toAjax(blogService.updateBlogSupportById(blogId, support));
@@ -99,7 +99,7 @@ public class BlogController extends BaseController {
 
     @PutMapping("/status/{status}")
     @RequiresPermissions("blog:blog:status")
-    @Log(title = "博客管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统博客", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult statusSave(String blogIds, @PathVariable String status) {
         return toAjax(blogService.updateBlogStatusById(blogIds, status));
@@ -107,14 +107,14 @@ public class BlogController extends BaseController {
 
     @PutMapping("/allowComment/{blogId}/{allowComment}")
     @RequiresPermissions("blog:blog:allowComment")
-    @Log(title = "博客管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统博客", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult allowCommentSave(@PathVariable Boolean allowComment, @PathVariable Integer blogId) {
         return toAjax(blogService.updateBlogAllowCommentByBlogId(allowComment, blogId));
     }
 
     @DeleteMapping("/remove")
-    @Log(title = "博客管理", businessType = BusinessType.DELETE)
+    @Log(title = "系统博客", businessType = BusinessType.DELETE)
     @RequiresPermissions("blog:blog:remove")
     @ResponseBody
     public AjaxResult remove(Integer[] ids) {

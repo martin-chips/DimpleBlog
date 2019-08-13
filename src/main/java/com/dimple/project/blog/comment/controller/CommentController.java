@@ -68,6 +68,7 @@ public class CommentController extends BaseController {
      * 导出留言列表
      */
     @RequiresPermissions("blog:comment:export")
+    @Log(title = "博客留言", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(Comment bgComment) {
@@ -80,7 +81,7 @@ public class CommentController extends BaseController {
      * 删除留言
      */
     @RequiresPermissions("blog:comment:remove")
-    @Log(title = "留言", businessType = BusinessType.DELETE)
+    @Log(title = "博客留言", businessType = BusinessType.DELETE)
     @DeleteMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
@@ -90,6 +91,7 @@ public class CommentController extends BaseController {
 
     @RequiresPermissions("blog:comment:update")
     @PutMapping("/display/{id}")
+    @Log(title = "博客留言", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult display(boolean display, @PathVariable Integer id) {
         return toAjax(commentService.changeDisplayById(id, display));

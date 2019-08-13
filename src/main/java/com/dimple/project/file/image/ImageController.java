@@ -1,12 +1,15 @@
 package com.dimple.project.file.image;
 
 import com.dimple.common.utils.file.FileUploadUtils;
+import com.dimple.framework.aspectj.lang.annotation.Log;
+import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.common.domain.FileItemInfo;
 import com.dimple.project.common.service.FileService;
 import com.qiniu.common.QiniuException;
 import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,12 +49,15 @@ public class ImageController extends BaseController {
     }
 
     @GetMapping("/image")
+    @RequiresPermissions("file:image:view")
     public String image() {
         return "file/image/image";
     }
 
     @PostMapping("/add")
+    @Log(title = "系统图片", businessType = BusinessType.UPLOAD)
     @ResponseBody
+    @RequiresPermissions("file:image:upload")
     public AjaxResult add(@RequestParam("file") MultipartFile file, Integer serverType) throws IOException {
         Objects.requireNonNull(serverType, "上传服务器未选定，请重试！");
         //检查文件大小
@@ -75,6 +81,8 @@ public class ImageController extends BaseController {
 
     @PutMapping("/sync")
     @ResponseBody
+    @Log(title = "系统图片", businessType = BusinessType.OTHER)
+    @RequiresPermissions("file:image:sync")
     public AjaxResult sync(Integer serverType) throws QiniuException {
         Objects.requireNonNull(serverType, "未选定刷新的服务器，请重试！");
         int i = 0;
@@ -88,6 +96,8 @@ public class ImageController extends BaseController {
 
     @DeleteMapping()
     @ResponseBody
+    @RequiresPermissions("file:image:delete")
+    @Log(title = "系统图片", businessType = BusinessType.DELETE)
     public AjaxResult deleteImage(String name, Integer serverType) throws QiniuException {
         Objects.requireNonNull(serverType, "未选定服务器，请重试！");
         int i = 0;

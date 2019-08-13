@@ -49,7 +49,7 @@ public class CarouselMapController extends BaseController {
         return "system/carouselMap/add";
     }
 
-    @Log(title = "轮播图设置", businessType = BusinessType.INSERT)
+    @Log(title = "系统轮播图", businessType = BusinessType.INSERT)
     @RequiresPermissions("system:carouselMap:add")
     @PostMapping("/add")
     @ResponseBody
@@ -65,7 +65,7 @@ public class CarouselMapController extends BaseController {
 
     @PutMapping("/edit")
     @RequiresPermissions("system:carouselMap:edit")
-    @Log(title = "轮播图管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统轮播图", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult editSave(CarouselMap carouselMap) {
         return toAjax(carouselMapService.updateCarouselMap(carouselMap));
@@ -73,7 +73,7 @@ public class CarouselMapController extends BaseController {
 
     @PutMapping("/changeDisplay/{display}")
     @RequiresPermissions("system:carouselMap:edit")
-    @Log(title = "轮播图管理", businessType = BusinessType.UPDATE)
+    @Log(title = "系统轮播图", businessType = BusinessType.UPDATE)
     @ResponseBody
     public AjaxResult editSave(@PathVariable String display, String carouselId) {
         return toAjax(carouselMapService.changeCarouselDisplay(carouselId,display));
@@ -81,7 +81,7 @@ public class CarouselMapController extends BaseController {
 
 
     @DeleteMapping("/remove")
-    @Log(title = "博客管理", businessType = BusinessType.DELETE)
+    @Log(title = "系统轮播图", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:carouselMap:remove")
     @ResponseBody
     public AjaxResult remove(Integer[] ids) {

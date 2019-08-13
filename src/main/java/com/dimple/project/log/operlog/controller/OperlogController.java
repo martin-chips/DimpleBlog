@@ -64,6 +64,7 @@ public class OperlogController extends BaseController {
     @RequiresPermissions("log:operlog:remove")
     @DeleteMapping("/remove")
     @ResponseBody
+    @Log(title = "操作日志", businessType = BusinessType.DELETE)
     public AjaxResult remove(String ids) {
         return toAjax(operLogService.deleteOperLogByIds(ids));
     }
