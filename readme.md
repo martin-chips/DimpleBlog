@@ -1,16 +1,16 @@
-
-
 # DimpleBlog
-本次进行一次大规模更新，目的在于构建一个简单的应用。代码方面力求精简。同时修复之前没来得及修复的bug。主要精力在于后台部分，前台不会做太大改动。
-
 #### 介绍
 
 `Dimple Blog`是基于SpringBoot2搭建的个人博客系统。
 
-#### 公告
-这段时间因为毕业设计及学校的事情，系统停更很久了，很多小伙伴发现的bug也没来得及修复，预计在7月上中旬恢复系统的维护。陆陆续续收到很多小伙伴的打赏，非常感谢你们的支持；
+### 项目说明
+1. 首先项目是开源的，近期，已经有很多朋友在反映在“闲鱼”或者其他平台上有售卖源码的情况，再次严正声明：源码开源，但禁止任何人以任何方式进行售卖。  
+2. 安装软件前，请仔细阅读下面的**安装教程**。更希望加我好友朋友是为了探讨技术，互相成长或者适当红包打赏，**而不是以私聊为目的的打扰**。任何有关项目的问题，请提issue。  
+3. 如果觉得项目还可以，希望能够star支持一下，谢谢。
 
 #### 打赏名单
+上线以来，收到很多朋友的好友申请，感谢你们对系统做出了肯定和打赏，非常感谢你们。
+
 |序号| 用户账号  |打赏方式|打赏金额|打赏时间|
 |--|--|--|--|--|
 |1  |꧁奔跑吧少年꧂ |微信 |30.00 |2019-05-18|
@@ -22,6 +22,7 @@
 |7|184******14|支付宝|200.00|2019-05-22|
 |8|*粤浩|支付宝|20.00|2019-04-30|
 |9|*恒|支付宝|25.00|2019-03-20|
+|10|我语丶|微信|10.00|2019-08-13|
 
 `排名不分时间先后，赞赏金额多少`
 
@@ -68,7 +69,7 @@
 
 #### 安装教程
 
-1. 修改application.yml中的数据库连接信息：
+1. 修改application-druid.yml中的数据库连接信息：
 ```
     type: com.alibaba.druid.pool.DruidDataSource
     username: 你的数据库连接地址
@@ -76,9 +77,9 @@
     url:你的数据库URL
     driver-class-name: com.mysql.jdbc.Driver
 ```
-2. 创建数据库`dimple_blog`，运行SQL文件（在`resources`下的`sql`文件夹下）。由于使用JPA会自动创建表，你也可以不运行SQL文件，**当时需要数据库**。
+2. 创建数据库`test`，运行SQL文件（在`resources`下的`sql`文件夹下），附赠上万条数据。
 
-3. 配置七牛云图库accessKey、secretKey、bucket、path、imageMaxSize、imageMaxNameLength等信息：
+3. 配置**七牛云**图库accessKey、secretKey、bucket、path、imageMaxSize、imageMaxNameLength等信息：
 ```
   qiniuyun:
     accessKey: tq8X9efPviPasgmoz6kcIzDuE_v4T-UJQXchcWgz
@@ -88,16 +89,26 @@
     imageMaxSize: 52428800
     imageMaxNameLength: 200
 ```
-4. 配置百度站长平台push的URL
+4. 配置**百度站长**平台push的URL
 
 ```
   #百度站长Push 的URL
   baidu:
     pushUrl: http://data.zz.baidu.com/urls?site=www.bianxiaofeng.com&token=LqRHUkKxK89qudvA
 ```
-5. 使用Maven打包项目。
 
-6. 使用命令`java -jar +jar包名`启动项目。
+5. 配置**百度AI**内容审核(评论系统需要用到)
+```
+  baidu:
+    clientId: 
+    clientSecret: 
+```
+
+6. 配置Redis
+
+7. 使用Maven打包项目。
+
+8. 使用命令`java -jar +jar包名`启动项目。
 
 #### 使用说明
 
@@ -119,7 +130,7 @@
 |序号  | 技术名称  |说明|链接地址 |
 |--|--|--|--|
 |1| SpringBoot2| 项目主体框架|[SpringBoot](http://spring.io/projects/spring-boot/) |
-|2|Spring Data JPA|持久层框架|[JPA](http://spring.io/projects/spring-data-jpa)
+|2|Mybatis|持久层框架|[Mybatis](http://www.mybatis.org/mybatis-3/)
 |3|SpringBoot Cache|Spring缓存层框架||
 | 4| Redis|缓存| [Redis](https://redis.io/)
 | 5|Mysql  |数据库|[Mysql](https://www.mysql.com/)
