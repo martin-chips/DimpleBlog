@@ -3606,7 +3606,7 @@
                 self._mergeAjaxCallback('error', fnError, 'delete');
                 settings = $.extend(true, {}, {
                     url: self._encodeURI(vUrl),
-                    type: 'POST',
+                    type: 'DELETE',
                     dataType: 'json',
                     data: $.extend(true, {}, {key: vKey}, extraData)
                 }, self._ajaxDeleteSettings);
@@ -3614,20 +3614,22 @@
                     if (!self._validateMinCount()) {
                         return false;
                     }
-                    self.ajaxAborted = false;
-                    self._raise('filebeforedelete', [vKey, extraData]);
-                    //noinspection JSUnresolvedVariable,JSHint
-                    if (self.ajaxAborted instanceof Promise) {
-                        self.ajaxAborted.then(function (result) {
-                            if (!result) {
+                    $.modal.confirm("确定要删除这张图片吗？这将永久删除，并且可能会影响到已经发布的博客！", function () {
+                        self.ajaxAborted = false;
+                        self._raise('filebeforedelete', [vKey, extraData]);
+                        //noinspection JSUnresolvedVariable,JSHint
+                        if (self.ajaxAborted instanceof Promise) {
+                            self.ajaxAborted.then(function (result) {
+                                if (!result) {
+                                    $.ajax(settings);
+                                }
+                            });
+                        } else {
+                            if (!self.ajaxAborted) {
                                 $.ajax(settings);
                             }
-                        });
-                    } else {
-                        if (!self.ajaxAborted) {
-                            $.ajax(settings);
                         }
-                    }
+                    });
                 });
             });
         },
