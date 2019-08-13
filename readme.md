@@ -103,9 +103,9 @@
 1. 修改application-druid.yml中的数据库连接信息：
 ```
     type: com.alibaba.druid.pool.DruidDataSource
-    username: 你的数据库连接地址
+    username: 用户名
     password: 你的数据库面貌
-    url:你的数据库URL
+    url:你的数据库连接地址
     driver-class-name: com.mysql.jdbc.Driver
 ```
 2. 创建数据库`test`，运行SQL文件（在`resources`下的`sql`文件夹下），附赠上万条数据。
