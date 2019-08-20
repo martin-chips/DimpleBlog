@@ -206,6 +206,9 @@ public class HomeController extends BaseController {
     @GetMapping("/f/copyright.html")
     public String copyright(Model model) {
         setCommonMessage(model);
+        Comment comment = new Comment();
+        comment.setPageId(-2000);
+        model.addAttribute("comments", commentService.selectCommentListForFront(comment));
         return "front/other/copyright";
     }
 
@@ -216,6 +219,9 @@ public class HomeController extends BaseController {
     @GetMapping("/f/delete.html")
     public String delete(Model model) {
         setCommonMessage(model);
+        Comment comment = new Comment();
+        comment.setPageId(-3000);
+        model.addAttribute("comments", commentService.selectCommentListForFront(comment));
         return "front/other/delete";
     }
 
