@@ -72,6 +72,8 @@ public class VisitLogAspect {
             } else {
                 visitLog.setStatus(1);
             }
+            //设置入口地址
+            visitLog.setEntryUrl(ServletUtils.getRequest().getHeader("referer"));
             // 处理设置注解上的参数
             getControllerMethodDescription(vLog, visitLog);
             // 保存数据库

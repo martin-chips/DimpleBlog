@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +39,11 @@ public class CommonController {
 
     @Autowired
     private ServerConfig serverConfig;
+
+    @GetMapping("/error/{type}")
+    public String error(@PathVariable String type) {
+        return "error/" + type;
+    }
 
     /**
      * 通用下载请求

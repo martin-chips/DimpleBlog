@@ -5,7 +5,7 @@
 <mapper namespace="com.dimple.project.log.visitorLog.mapper.VisitLogMapper">
 
     <sql id="selectVisitLogVo">
-        select visit_id, ip_addr, location, browser, os, status,spider, title, create_by, create_time
+        select visit_id, ip_addr, location, browser, os, status,spider, title, create_by, create_time,entry_url
         from
         bg_visit_log
     </sql>
@@ -21,6 +21,7 @@
         <if test="spider!=null and spider!=''">spider,</if>
         <if test="status!=null and status!=''">status,</if>
         <if test="title!=null and title!=''">title,</if>
+        <if test="entryUrl!=null and entryUrl!=''">entry_url,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time)
         values (
@@ -33,6 +34,7 @@
         <if test="spider!=null and spider!=''">#{spider},</if>
         <if test="status!=null and status!=''">#{status},</if>
         <if test="title!=null and title!=''">#{title},</if>
+        <if test="entryUrl!=null and entryUrl!=''">#{entryUrl},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )
@@ -64,7 +66,7 @@
         </where>
     </select>
     <select id="selectVisitLogById" resultType="com.dimple.project.log.visitorLog.domain.VisitLog">
-        select visit_id, ip_addr, location, browser, os, spider, request_url, error_msg, title, create_by, create_time, status
+        select visit_id, ip_addr, location, browser, os, spider, request_url, error_msg, title, create_by, create_time, status,entry_url
         from bg_visit_log where visit_id =#{visitId};
     </select>
     <select id="selectSpiderData" resultType="com.dimple.project.dashboard.domain.BusinessCommonData">

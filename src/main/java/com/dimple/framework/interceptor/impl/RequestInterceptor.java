@@ -37,15 +37,17 @@ public class RequestInterceptor implements HandlerInterceptor {
 
     /**
      * 请求处理之前调用（Controller方法之前）
-     *
-     * @param request
-     * @param response
-     * @param handler
-     * @return
-     * @throws Exception
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.info("当前访问的IP {},当前访问入口地址：{}", IpUtils.getIpAddr(request), request.getHeader("referer"));
+        if (request.getRequestURI().contains("error")) {
+            return true;
+        }
+        if (checkIfInBlackList(request)) {
+            response.sendRedirect("/error/blacklist");
+            return false;
+        }
         return true;
     }
 
@@ -54,15 +56,7 @@ public class RequestInterceptor implements HandlerInterceptor {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("当前访问的IP {},当前访问入口地址：{}", IpUtils.getIpAddr(request), request.getHeader("referer"));
-        if (checkIfInBlackList(request)) {
-            if (modelAndView == null) {
-                ModelAndView modelAndView1 = new ModelAndView();
-                modelAndView1.setViewName("/error/blacklist");
-            } else {
-                modelAndView.setViewName("/error/blacklist");
-            }
-        }
+
     }
 
     /**

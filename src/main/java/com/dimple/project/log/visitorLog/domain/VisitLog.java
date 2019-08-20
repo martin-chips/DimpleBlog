@@ -49,4 +49,8 @@ public class VisitLog extends BaseEntity {
      * 访问状态
      */
     private Integer status;
+    /**
+     * 入口地址
+     */
+    private String entryUrl;
 }
