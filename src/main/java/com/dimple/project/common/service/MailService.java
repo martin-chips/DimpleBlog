@@ -35,13 +35,7 @@ public interface MailService {
      */
     void sendAttachmentMail(String to, String subject, String content, String filePath, boolean isHTML);
 
-    /**
-     * 发送邮件模板
-     *
-     * @param to      收件人
-     * @param subject 主题
-     * @param content 内容
-     */
-    void sendTemplateEmail(String to, String subject, String content);
+
+    void sendReplyEmail(String to, String originalContent, String content,String url);
 
 }

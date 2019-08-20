@@ -28,4 +28,9 @@ public class MailServiceImplTest {
         String content = "test";
         mailServiceImpl.sendSimpleMail(to, subject, content);
     }
+
+    @Test
+    public void testReplyEmail() {
+        mailServiceImpl.sendReplyEmail("bianxiaofeng@sohu.com","原始内容","","www.bianxiaofeng.com");
+    }
 }

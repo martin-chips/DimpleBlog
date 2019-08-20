@@ -5,10 +5,13 @@ import com.dimple.common.utils.text.Convert;
 import com.dimple.project.blog.comment.domain.Comment;
 import com.dimple.project.blog.comment.mapper.CommentMapper;
 import com.dimple.project.blog.comment.service.CommentService;
+import com.dimple.project.common.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @className: CommentServiceImpl
@@ -21,6 +24,10 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentMapper commentMapper;
+    @Autowired
+    MailService mailService;
+    @Autowired
+    TemplateEngine templateEngine;
 
     @Override
     public List<Comment> selectCommentListForFront(Comment comment) {
@@ -58,6 +65,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int insertComment(Comment comment) {
+        Objects.requireNonNull(comment, "系统异常，参数为空");
+        if (comment.getReplyId() != null) {
+            Comment replyComment = commentMapper.selectCommentById(comment.getReplyId());
+            String email = replyComment.getEmail();
+            mailService.sendReplyEmail(email, replyComment.getContent(), comment.getContent(), comment.getUrl());
+        }
         return commentMapper.insertComment(comment);
     }
 

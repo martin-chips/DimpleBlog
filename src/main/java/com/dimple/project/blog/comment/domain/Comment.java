@@ -32,10 +32,10 @@ public class Comment extends BaseEntity {
     @Excel(name = "留言")
     private String content;
 
-    @Excel(name = "收到评论是否邮件通知")
+    @Excel(name = "回复的上一个留言的id")
     private Integer replyId;
 
-    @Excel(name = "回复的上一个留言的id")
+    @Excel(name = "收到评论是否邮件通知")
     private boolean reply;
 
     @Excel(name = "评论的页面地址")

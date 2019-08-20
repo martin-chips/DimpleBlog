@@ -9,6 +9,7 @@ import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -97,20 +98,24 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendTemplateEmail(String to, String subject, String content) {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
+    @Async
+    public void sendReplyEmail(String to, String originalContent, String content, String url) {
+        String subject = "DimpleBlog留言回复通知";
+        Context context = new Context();
+        context.setVariable("url", url);
+        context.setVariable("originalContent", originalContent);
+        context.setVariable("content", content);
+        String templateContext = templateEngine.process("email/replyEmailTemplate", context);
+        MimeMessage message = mailSender.createMimeMessage();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(subject);
-            //使用模板引擎
-            Context context = new Context();
-            //context.setVariable();
-
+            helper.setText(templateContext, true);
+            mailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
-
 }
