@@ -69,7 +69,7 @@ public class CommentServiceImpl implements CommentService {
         if (comment.getReplyId() != null) {
             Comment replyComment = commentMapper.selectCommentById(comment.getReplyId());
             String email = replyComment.getEmail();
-            mailService.sendReplyEmail(email, replyComment.getContent(), comment.getContent(), comment.getUrl());
+            mailService.sendReplyEmail(email,replyComment.getId(), replyComment.getContent(), comment.getContent(), comment.getUrl());
         }
         return commentMapper.insertComment(comment);
     }

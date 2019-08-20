@@ -31,6 +31,6 @@ public class MailServiceImplTest {
 
     @Test
     public void testReplyEmail() {
-        mailServiceImpl.sendReplyEmail("bianxiaofeng@sohu.com","原始内容","","www.bianxiaofeng.com");
+        mailServiceImpl.sendReplyEmail("bianxiaofeng@sohu.com", 15, "原始内容", "", "http://www.bianxiaofeng.com");
     }
 }

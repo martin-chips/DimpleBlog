@@ -36,6 +36,6 @@ public interface MailService {
     void sendAttachmentMail(String to, String subject, String content, String filePath, boolean isHTML);
 
 
-    void sendReplyEmail(String to, String originalContent, String content,String url);
+    void sendReplyEmail(String to, Integer id, String originalContent, String content, String url);
 
 }

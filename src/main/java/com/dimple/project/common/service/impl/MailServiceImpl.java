@@ -99,12 +99,13 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Async
-    public void sendReplyEmail(String to, String originalContent, String content, String url) {
+    public void sendReplyEmail(String to, Integer id, String originalContent, String content, String url) {
         String subject = "DimpleBlog留言回复通知";
         Context context = new Context();
         context.setVariable("url", url);
         context.setVariable("originalContent", originalContent);
         context.setVariable("content", content);
+        context.setVariable("id", id);
         String templateContext = templateEngine.process("email/replyEmailTemplate", context);
         MimeMessage message = mailSender.createMimeMessage();
         try {
@@ -114,8 +115,9 @@ public class MailServiceImpl implements MailService {
             helper.setSubject(subject);
             helper.setText(templateContext, true);
             mailSender.send(message);
+            log.info("send email {} to {} success ", templateContext, to);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            log.error("send email {} to {} failed {},{}", templateContext, to, e.getMessage(), e);
         }
     }
 }

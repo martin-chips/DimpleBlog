@@ -1,12 +1,16 @@
 package com.dimple.project.monitor.swagger;
 
+import com.dimple.common.utils.poi.ExcelUtil;
 import com.dimple.framework.interceptor.annotation.NoRepeatSubmit;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.project.log.logininfor.domain.Logininfor;
+import com.dimple.project.log.logininfor.service.ILogininforService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +45,18 @@ public class TestController extends BaseController {
     {
         TEST_LIST.add(new Test("1", "admin", "admin123"));
         TEST_LIST.add(new Test("2", "ry", "admin123"));
+    }
+
+    @Autowired
+    ILogininforService logininforService;
+
+
+    @GetMapping("/export")
+    @ResponseBody
+    public void export() {
+        List<Logininfor> logininfors = logininforService.selectLogininforList(new Logininfor());
+        ExcelUtil<Logininfor> logininforExcelUtil = new ExcelUtil<>(Logininfor.class);
+        logininforExcelUtil.exportExcel(logininfors, "ss");
     }
 
     @ApiOperation("获取列表")

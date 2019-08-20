@@ -3,6 +3,7 @@ package com.dimple.common.utils.poi;
 import com.dimple.common.constant.CommonConstant;
 import com.dimple.common.exception.BusinessException;
 import com.dimple.common.utils.DateUtils;
+import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.reflect.ReflectUtils;
 import com.dimple.common.utils.text.Convert;
@@ -14,17 +15,41 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DataValidation;
+import org.apache.poi.ss.usermodel.DataValidationConstraint;
+import org.apache.poi.ss.usermodel.DataValidationHelper;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddressList;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFDataValidation;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.*;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @className: ExcelUtil
@@ -289,7 +314,14 @@ public class ExcelUtil<T> {
                 }
             }
             String filename = encodingFilename(sheetName);
-            out = new FileOutputStream(getAbsoluteFile(filename));
+            //out = new FileOutputStream(getAbsoluteFile(filename));
+            HttpServletResponse response = ServletUtils.getResponse();
+            out = response.getOutputStream();
+
+
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+            response.setHeader("Content-Disposition", "attachment;filename=ppointmentUser.xlsx");
             wb.write(out);
             return AjaxResult.success(filename);
         } catch (Exception e) {
@@ -568,7 +600,7 @@ public class ExcelUtil<T> {
      * 创建一个工作簿
      */
     public void createWorkbook() {
-        this.wb = new SXSSFWorkbook(500);
+        this.wb = new XSSFWorkbook();
     }
 
     /**
