@@ -124,7 +124,7 @@
 
     function addBlacklist(ipAddr) {
         $.modal.confirm("确认将此IP地址 [" + ipAddr + "]移入黑名单？", function () {
-            $.operate.postM("/monitor/blacklist/addBlacklist", {"ipAddr": ipAddr});
+            $.operate.post("/monitor/blacklist/addBlacklist", {"ipAddr": ipAddr});
         })
     }
 
