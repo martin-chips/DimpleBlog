@@ -188,7 +188,7 @@ public class HomeController extends BaseController {
     /**
      * 留言
      */
-    @VLog(title = "留言")
+    @VLog(title = "留言页")
     @GetMapping("/f/leaveComment.html")
     public String leaveComment(Model model) {
         setCommonMessage(model);
@@ -246,6 +246,7 @@ public class HomeController extends BaseController {
      */
     @PostMapping("/f/applyLink")
     @ResponseBody
+    @VLog(title = "申请友链")
     public AjaxResult applyLink(Link link) {
         linkService.applyLink(link);
         return AjaxResult.success();
@@ -257,6 +258,7 @@ public class HomeController extends BaseController {
      */
     @PostMapping("/f/comment")
     @ResponseBody
+    @VLog(title = "评论")
     public AjaxResult comment(Comment comment) {
         comment.setIp(ShiroUtils.getIp());
         comment.setDisplay(true);
