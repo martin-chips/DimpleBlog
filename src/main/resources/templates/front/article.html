@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="https://www.thymeleaf.org">
 <head>
     <th:block th:include="include-front :: head(${blog.title+'—Dimple的个人博客'},${blog.summary})"/>
     <th:block th:include="include-front :: highlight-css"/>
@@ -92,7 +92,7 @@
                                         "bdSize": "32"
                                     }, "share": {}
                                 };
-                                (document.getElementsByTagName('head')[0] || document.body).appendChild(document.createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5);
+                                (document.getElementsByTagName('head')[0] || document.body).appendChild(document.createElement('script')).src = 'https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5);
                                 </script>
                             </ul>
                         </div>
