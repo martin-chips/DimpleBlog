@@ -8,7 +8,7 @@ Dimple update-add line number
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #f3f3f3;
+  /*background: #f3f3f3;*/
   color: black;
   border-radius: 5px;
 }
@@ -107,7 +107,7 @@ Dimple update-add line number
   border: 0;
   font-family: "Consulas", "Courier New", Courier, mono, serif;
   font-size: 12px;
-  background: #eee !important;
+  /*background: #eee !important;*/
   display: block;
   padding: 1px;
   margin: 0;
@@ -119,21 +119,20 @@ Dimple update-add line number
 /*Add line Number*/
 .hljs ul {
   list-style: decimal;
-  background-color: #fff;
+  /*background-color: #fff;*/
   margin: 0px 0px 0 40px !important;
   padding: 0px;
 }
 .hljs ul li {
   list-style: decimal-leading-zero;
   border-left: 1px solid #ddd !important;
-  background: #fff;
+  /*background: #fff;*/
   padding: 5px!important;
   margin: 0 !important;
   line-height: 14px;
-  word-break: break-all;
-  word-wrap: break-word;
+  word-break: keep-all;
+  white-space: pre;
 }
 .hljs ul li:nth-of-type(even) {
-  background-color: #fcfcfc;
   color: inherit;
 }
