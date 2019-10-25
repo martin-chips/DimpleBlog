@@ -1,31 +1,16 @@
+
 # DimpleBlog
+
+## 更新公告  
+近期由于学了些Vue,突然萌生想重新改造一个前后端分离的博客的想法.其实我也知道小系统用不着这么折腾,前后端分离完全没有必要.但是我还是想拿来练手练手.
+
+对于新技术新事物,我的想法是能怎么折腾就怎么折腾,空学一身理论知识没有用,写两三个demo就说会了才是最大的笑话.
+
+我已经单独切了一个Thymeleaf-Version分支,该分支是一体机的代码,现在bianxiaofeng.com上运行的就是该版本的代码.如果任何问题请提issue.
+
 #### 介绍
 
 `Dimple Blog`是基于SpringBoot2搭建的个人博客系统。
-
-### 项目说明
-1. 首先项目是开源的，近期，已经有很多朋友在反映在“闲鱼”或者其他平台上有售卖源码的情况，再次严正声明：源码开源，但禁止任何人以任何方式进行售卖。  
-2. 安装软件前，请仔细阅读下面的**安装教程**。更希望加我好友朋友是为了探讨技术，互相成长或者适当红包打赏，**而不是以私聊为目的的打扰**。任何有关项目的问题，请提issue。  
-3. 如果觉得项目还可以，希望能够star支持一下，谢谢。
-4. **使用本系统的（包含基于本系统进行修改的项目），请在显眼位置说明基于DimpleBlog并给出GitHub链接。**
-
-#### 打赏名单
-上线以来，收到很多朋友的好友申请，感谢你们对系统做出了肯定和打赏，非常感谢你们。
-
-|序号| 用户账号  |打赏方式|打赏金额|打赏时间|
-|--|--|--|--|--|
-|1  |꧁奔跑吧少年꧂ |微信 |30.00 |2019-05-18|
-|2|青春浮华一场梦|微信|40.00| 2019-05-12|
-|3|两个线程|微信|10.00|2019-04-25|
-|4|JackRen|微信|10.00|2019-04-22|
-|5|南桥先生|微信|10.00|2019-02-20|
-|6|无名之辈|微信|9.99|2019-02-04||
-|7|184******14|支付宝|200.00|2019-05-22|
-|8|*粤浩|支付宝|20.00|2019-04-30|
-|9|*恒|支付宝|25.00|2019-03-20|
-|10|我语丶|微信|10.00|2019-08-13|
-
-`排名不分时间先后，赞赏金额多少`
 
 ### 体验链接地址
 
@@ -34,66 +19,35 @@
 管理员账号：`test` ,管理员密码： `123456`
 
 ### 图片展示
+
 #### 前台
-![mCHAij.png](https://s2.ax1x.com/2019/08/13/mCHAij.png)
-
-![mCHFoQ.png](https://s2.ax1x.com/2019/08/13/mCHFoQ.png)
-
-![mCHPeS.png](https://s2.ax1x.com/2019/08/13/mCHPeS.png)
-
-![mCH9L8.png](https://s2.ax1x.com/2019/08/13/mCH9L8.png)
-
-![mCHidg.png](https://s2.ax1x.com/2019/08/13/mCHidg.png)
-
-![mCHEJs.png](https://s2.ax1x.com/2019/08/13/mCHEJs.png)
-
-![mCHVWn.png](https://s2.ax1x.com/2019/08/13/mCHVWn.png)
-
+##### 首页
+![kdqVw8.md.png](https://s2.ax1x.com/2019/04/10/ATcVyQ.png)
+##### 博客详情
+![kdqZTS.md.png](https://s2.ax1x.com/2019/04/10/ATcMF0.png)
+##### 博客分类
+![kdqmFg.md.png](https://s2.ax1x.com/2019/04/10/ATcJOJ.png)
+##### 项目归档
+![kdqEef.md.png](https://s2.ax1x.com/2019/04/10/ATcUT1.png)
+##### 友链列表
+![kdqnYQ.md.png](https://s2.ax1x.com/2019/04/10/ATc0fK.png)
+##### 关于我
+![kdqMSs.md.png](https://s2.ax1x.com/2019/04/10/ATcDSO.png)
+##### 留言板
+![kdq1O0.md.png](https://s2.ax1x.com/2019/04/10/ATcyOH.png)
 #### 后台（仅列举部分）
 ##### 登录界面
 ![kdqQln.md.png](https://s2.ax1x.com/2019/04/10/ATcWkt.png)
 ##### 
-![mC7B2q.png](https://s2.ax1x.com/2019/08/13/mC7B2q.png)
+##### 后台首页
+![kdLbb6.png](https://s2.ax1x.com/2019/04/10/ATcTXQ.png)
+##### 其他界面
 
-![mC7Dx0.png](https://s2.ax1x.com/2019/08/13/mC7Dx0.png)
-
-![mC7wPs.png](https://s2.ax1x.com/2019/08/13/mC7wPs.png)
-
-![mC70Gn.png](https://s2.ax1x.com/2019/08/13/mC70Gn.png)
-
-![mC7a5j.png](https://s2.ax1x.com/2019/08/13/mC7a5j.png)
-
-![mC7yrT.png](https://s2.ax1x.com/2019/08/13/mC7yrT.png)
-
-![mC7sMV.png](https://s2.ax1x.com/2019/08/13/mC7sMV.png)
-
-![mC76qU.png](https://s2.ax1x.com/2019/08/13/mC76qU.png)
-
-![mC7gZF.png](https://s2.ax1x.com/2019/08/13/mC7gZF.png)
-
-![mC72a4.png](https://s2.ax1x.com/2019/08/13/mC72a4.png)
-
-![mC7RIJ.png](https://s2.ax1x.com/2019/08/13/mC7RIJ.png)
-
-![mC7hGR.png](https://s2.ax1x.com/2019/08/13/mC7hGR.png)
-
-![mC7fi9.png](https://s2.ax1x.com/2019/08/13/mC7fi9.png)
-
-![mC74R1.png](https://s2.ax1x.com/2019/08/13/mC74R1.png)
-
-![mC75xx.png](https://s2.ax1x.com/2019/08/13/mC75xx.png)
-
-![mC7oM6.png](https://s2.ax1x.com/2019/08/13/mC7oM6.png)
-
-![mC7TsK.png](https://s2.ax1x.com/2019/08/13/mC7TsK.png)
-
-![mC7bZD.png](https://s2.ax1x.com/2019/08/13/mC7bZD.png)
-
-![mC77qO.png](https://s2.ax1x.com/2019/08/13/mC77qO.png)
-
-![mC7qde.png](https://s2.ax1x.com/2019/08/13/mC7qde.png)
-
-![mC7LIH.png](https://s2.ax1x.com/2019/08/13/mC7LIH.png)
+[![ATgkA1.png](https://s2.ax1x.com/2019/04/10/ATgkA1.png)](https://imgchr.com/i/ATgkA1)
+[![ATgEh6.png](https://s2.ax1x.com/2019/04/10/ATgEh6.png)](https://imgchr.com/i/ATgEh6)
+[![ATgZ9K.png](https://s2.ax1x.com/2019/04/10/ATgZ9K.png)](https://imgchr.com/i/ATgZ9K)
+[![ATgAtx.png](https://s2.ax1x.com/2019/04/10/ATgAtx.png)](https://imgchr.com/i/ATgAtx)
+[![ATgi7R.png](https://s2.ax1x.com/2019/04/10/ATgi7R.png)](https://imgchr.com/i/ATgi7R)
 
 #### 软件架构
 
@@ -101,17 +55,16 @@
 
 #### 安装教程
 
-1. 修改application-druid.yml中的数据库连接信息：
+1. 修改application.yml中的数据库连接信息：
 ```
     type: com.alibaba.druid.pool.DruidDataSource
-    username: 用户名
+    username: 你的数据库连接地址
     password: 你的数据库面貌
-    url:你的数据库连接地址
+    url:你的数据库URL
     driver-class-name: com.mysql.jdbc.Driver
 ```
-2. 创建数据库`test`，运行SQL文件（在`resources`下的`sql`文件夹下），附赠上万条数据。
-
-3. 配置**七牛云**图库accessKey、secretKey、bucket、path、imageMaxSize、imageMaxNameLength等信息：
+2. 创建数据库`dimple_blog`，运行SQL文件（在`resources`下的`sql`文件夹下）。由于使用JPA会自动创建表，你也可以不运行SQL文件，**当时需要数据库**。
+3. 配置七牛云图库accessKey、secretKey、bucket、path、imageMaxSize、imageMaxNameLength等信息：
 ```
   qiniuyun:
     accessKey: tq8X9efPviPasgmoz6kcIzDuE_v4T-UJQXchcWgz
@@ -121,26 +74,15 @@
     imageMaxSize: 52428800
     imageMaxNameLength: 200
 ```
-4. 配置**百度站长**平台push的URL
+4. 配置百度站长平台push的URL
 
 ```
   #百度站长Push 的URL
   baidu:
     pushUrl: http://data.zz.baidu.com/urls?site=www.bianxiaofeng.com&token=LqRHUkKxK89qudvA
 ```
-
-5. 配置**百度AI**内容审核(评论系统需要用到)
-```
-  baidu:
-    clientId: 
-    clientSecret: 
-```
-
-6. 配置Redis
-
-7. 使用Maven打包项目。
-
-8. 使用命令`java -jar +jar包名`启动项目。
+5. 使用Maven打包项目。
+6. 使用命令`java -jar +jar包名`启动项目。
 
 #### 使用说明
 
@@ -162,7 +104,7 @@
 |序号  | 技术名称  |说明|链接地址 |
 |--|--|--|--|
 |1| SpringBoot2| 项目主体框架|[SpringBoot](http://spring.io/projects/spring-boot/) |
-|2|Mybatis|持久层框架|[Mybatis](http://www.mybatis.org/mybatis-3/)
+|2|Spring Data JPA|持久层框架|[JPA](http://spring.io/projects/spring-data-jpa)
 |3|SpringBoot Cache|Spring缓存层框架||
 | 4| Redis|缓存| [Redis](https://redis.io/)
 | 5|Mysql  |数据库|[Mysql](https://www.mysql.com/)

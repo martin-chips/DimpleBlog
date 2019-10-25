@@ -1,0 +1,19 @@
+#DimpleBlog-UI
+DimpleBlog-UI/node_modules
+DimpleBlog-UI/node_modules/
+DimpleBlog-UI/dist/
+DimpleBlog-UI/npm-debug.log*
+DimpleBlog-UI/yarn-debug.log*
+DimpleBlog-UI/yarn-error.log*
+DimpleBlog-UI/**/*.log
+
+DimpleBlog-UI/tests/**/coverage/
+DimpleBlog-UI/package-lock.json
+DimpleBlog-UI/yarn.lock
+
+# DimpleBlog
+
+DimpleBlog-Main/DimpleBlog-Main.iml
+DimpleBlog-Main/target
+.idea
+
