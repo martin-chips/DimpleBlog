@@ -1,14 +1,14 @@
-package com.dimple.project.blog.comment.mapper;
+package com.dimple.project.blog.mapper;
 
-import com.dimple.project.blog.comment.domain.Comment;
+import com.dimple.project.blog.domain.Comment;
 
 import java.util.List;
 
 /**
- * 评论表(Comment)表数据库访问层
- *
- * @author makejava
- * @since 2019-10-26 19:28:28
+ * @className: CommentMapper
+ * @description:
+ * @author: Dimple
+ * @date: 2019-10-28
  */
 public interface CommentMapper {
 
@@ -56,16 +56,16 @@ public interface CommentMapper {
     /**
      * 评论点赞
      *
-     * @return 受影响的行数
      * @param id
+     * @return 受影响的行数
      */
     int incrementCommentGood(Long id);
 
     /**
      * 评论踩
      *
-     * @return 受影响的行数
      * @param id
+     * @return 受影响的行数
      */
     int incrementCommentBad(Long id);
 

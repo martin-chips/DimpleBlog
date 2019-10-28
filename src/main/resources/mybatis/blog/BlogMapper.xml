@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dimple.project.blog.blog.mapper.BlogMapper">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.blog.mapper.BlogMapper">
 
-    <resultMap type="com.dimple.project.blog.blog.domain.Blog" id="BgBlogMap">
+    <resultMap type="com.dimple.project.blog.domain.Blog" id="BlogResult">
         <result property="id" column="id"/>
         <result property="categoryId" column="category_id"/>
         <result property="title" column="title"/>
@@ -18,5 +20,85 @@
         <result property="deleteBy" column="delete_by"/>
         <result property="deleteTime" column="delete_time"/>
     </resultMap>
+
+    <sql id="selectBlogVo">
+        select id, category_id, title, summary, header_img, content, status, comment, create_by, update_by, create_time, update_time, delete_by, delete_time from bg_blog
+    </sql>
+
+    <select id="selectBlogList" resultMap="BlogResult">
+        <include refid="selectBlogVo"/>
+        <where>
+        </where>
+    </select>
+
+    <select id="selectBlogById" parameterType="Long" resultMap="BlogResult">
+        <include refid="selectBlogVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBlog" useGeneratedKeys="true" keyProperty="id">
+        insert into bg_blog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null ">category_id,</if>
+            <if test="title != null  and title != ''">title,</if>
+            <if test="summary != null  and summary != ''">summary,</if>
+            <if test="headerImg != null  and headerImg != ''">header_img,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="status != null ">status,</if>
+            <if test="comment != null ">comment,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleteBy != null  and deleteBy != ''">delete_by,</if>
+            <if test="deleteTime != null ">delete_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null ">#{categoryId},</if>
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="summary != null  and summary != ''">#{summary},</if>
+            <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="comment != null ">#{comment},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleteBy != null  and deleteBy != ''">#{deleteBy},</if>
+            <if test="deleteTime != null ">#{deleteTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBlog">
+        update bg_blog
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryId != null ">category_id = #{categoryId},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="summary != null  and summary != ''">summary = #{summary},</if>
+            <if test="headerImg != null  and headerImg != ''">header_img = #{headerImg},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="comment != null ">comment = #{comment},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleteBy != null  and deleteBy != ''">delete_by = #{deleteBy},</if>
+            <if test="deleteTime != null ">delete_time = #{deleteTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBlogById">
+        update  bg_blog set delete_time =sysdate() ,delete_by=#{username} where id = #{id}
+    </delete>
+
+    <delete id="deleteBlogByIds">
+        update  bg_blog set delete_time =sysdate() ,delete_by=#{username} where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

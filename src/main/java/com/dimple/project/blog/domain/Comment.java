@@ -1,10 +1,7 @@
-package com.dimple.project.blog.comment.domain;
+package com.dimple.project.blog.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
-
-import java.util.Date;
-import java.io.Serializable;
 
 /**
  * @className: Comment

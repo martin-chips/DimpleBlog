@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.blog.mapper.CategoryMapper">
+
+    <resultMap type="com.dimple.project.blog.domain.Category" id="CategoryResult">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="support" column="support"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectBgCategoryVo">
+        select id, title, description, support, create_by, create_time from bg_category
+    </sql>
+
+    <select id="selectCategoryList" parameterType="com.dimple.project.blog.domain.Category"
+            resultMap="CategoryResult">
+        <include refid="selectBgCategoryVo"/>
+        <where>
+        </where>
+    </select>
+
+    <select id="selectCategoryById" parameterType="Long" resultMap="CategoryResult">
+        <include refid="selectBgCategoryVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCategory" parameterType="com.dimple.project.blog.domain.Category" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into bg_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">title,</if>
+            <if test="description != null  and description != ''">description,</if>
+            <if test="support != null ">support,</if>
+            create_by,create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="description != null  and description != ''">#{description},</if>
+            <if test="support != null ">#{support},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            sysdate()
+        </trim>
+    </insert>
+
+    <update id="updateCategory" parameterType="com.dimple.project.blog.domain.Category">
+        update bg_category
+        <set>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="description != null  and description != ''">description = #{description},</if>
+            <if test="support != null ">support = #{support},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            update_time =sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCategoryById">
+        update bg_category set delete_date=sysdate(),delete_by=#{username} where id = #{id}
+    </delete>
+
+    <delete id="deleteCategoryByIds" parameterType="String">
+        update bg_category set delete_date=sysdate(),delete_by=#{username} where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,6 +1,6 @@
-package com.dimple.project.blog.comment.service;
+package com.dimple.project.blog.service;
 
-import com.dimple.project.blog.comment.domain.Comment;
+import com.dimple.project.blog.domain.Comment;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import java.util.List;
  * @description:
  * @auther: Dimple
  * @date: 2019/10/26
- * @version: 1.0
  */
 public interface CommentService {
     /**

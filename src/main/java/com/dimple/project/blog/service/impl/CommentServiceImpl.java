@@ -1,9 +1,9 @@
-package com.dimple.project.blog.comment.service.impl;
+package com.dimple.project.blog.service.impl;
 
 import com.dimple.common.utils.SecurityUtils;
-import com.dimple.project.blog.comment.domain.Comment;
-import com.dimple.project.blog.comment.mapper.CommentMapper;
-import com.dimple.project.blog.comment.service.CommentService;
+import com.dimple.project.blog.domain.Comment;
+import com.dimple.project.blog.mapper.CommentMapper;
+import com.dimple.project.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

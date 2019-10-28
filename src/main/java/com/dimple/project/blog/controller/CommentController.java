@@ -1,4 +1,4 @@
-package com.dimple.project.blog.comment.controller;
+package com.dimple.project.blog.controller;
 
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
@@ -6,8 +6,8 @@ import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.blog.comment.domain.Comment;
-import com.dimple.project.blog.comment.service.CommentService;
+import com.dimple.project.blog.domain.Comment;
+import com.dimple.project.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +26,6 @@ import java.util.List;
  * @description:
  * @auther: Dimple
  * @date: 2019/10/26
- * @version: 1.0
  */
 @RestController
 @RequestMapping("/blog/comment")
