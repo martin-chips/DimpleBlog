@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @className: Threads
+ * @className: ThreadUtils
  * @description: 线程相关工具类.
  * @author: Dimple
  * @date: 10/22/19

@@ -1,7 +1,6 @@
 package com.dimple.project.blog.comment.service;
 
 import com.dimple.project.blog.comment.domain.Comment;
-import com.dimple.project.system.domain.SysConfig;
 
 import java.util.List;
 
@@ -52,4 +51,20 @@ public interface CommentService {
      * @return 受影响的行数
      */
     int deleteCommentById(Long id);
+
+    /**
+     * 评论点赞
+     *
+     * @param id 评论的id
+     * @return 受影响的行数
+     */
+    int incrementCommentGood(Long id);
+
+    /**
+     * 评论踩
+     *
+     * @param id comment id
+     * @return 受影响的行数
+     */
+    int incrementCommentBad(Long id);
 }

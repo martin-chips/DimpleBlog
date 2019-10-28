@@ -1,0 +1,22 @@
+package com.dimple.project.system.domain;
+
+import lombok.Data;
+
+/**
+ * @className: RoleMenu
+ * @description: 角色和菜单关联 sys_role_menu
+ * @author: Dimple
+ * @date: 10/22/19
+ */
+@Data
+public class RoleMenu {
+    /**
+     * 角色ID
+     */
+    private Long roleId;
+
+    /**
+     * 菜单ID
+     */
+    private Long menuId;
+}

@@ -84,7 +84,7 @@ public class SysUser extends BaseEntity {
     /**
      * 角色对象
      */
-    private List<SysRole> roles;
+    private List<Role> roles;
 
     /**
      * 角色组

@@ -6,10 +6,10 @@ import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.ip.AddressUtils;
 import com.dimple.common.utils.ip.IpUtils;
 import com.dimple.common.utils.spring.SpringUtils;
-import com.dimple.project.monitor.domain.SysLoginLog;
-import com.dimple.project.monitor.domain.SysOperateLog;
-import com.dimple.project.monitor.service.SysLoginLogService;
-import com.dimple.project.monitor.service.SysOperateLogService;
+import com.dimple.project.monitor.domain.LoginLog;
+import com.dimple.project.monitor.domain.OperateLog;
+import com.dimple.project.monitor.service.LoginLogService;
+import com.dimple.project.monitor.service.OperateLogService;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +55,7 @@ public class AsyncFactory {
                 // 获取客户端浏览器
                 String browser = userAgent.getBrowser().getName();
                 // 封装对象
-                SysLoginLog loginLog = new SysLoginLog();
+                LoginLog loginLog = new LoginLog();
                 loginLog.setUserName(username);
                 loginLog.setIpaddr(ip);
                 loginLog.setLoginLocation(address);
@@ -69,7 +69,7 @@ public class AsyncFactory {
                     loginLog.setStatus(Constants.FAIL);
                 }
                 // 插入数据
-                SpringUtils.getBean(SysLoginLogService.class).insertLoginLog(loginLog);
+                SpringUtils.getBean(LoginLogService.class).insertLoginLog(loginLog);
             }
         };
     }
@@ -80,13 +80,13 @@ public class AsyncFactory {
      * @param operLog 操作日志信息
      * @return 任务task
      */
-    public static TimerTask recordOper(final SysOperateLog operLog) {
+    public static TimerTask recordOper(final OperateLog operLog) {
         return new TimerTask() {
             @Override
             public void run() {
                 // 远程查询操作地点
                 operLog.setLocation(AddressUtils.getRealAddressByIP(operLog.getIp()));
-                SpringUtils.getBean(SysOperateLogService.class).insertOperateLog(operLog);
+                SpringUtils.getBean(OperateLogService.class).insertOperateLog(operLog);
             }
         };
     }

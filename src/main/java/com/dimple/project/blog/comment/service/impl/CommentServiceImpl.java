@@ -1,5 +1,6 @@
 package com.dimple.project.blog.comment.service.impl;
 
+import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.blog.comment.domain.Comment;
 import com.dimple.project.blog.comment.mapper.CommentMapper;
 import com.dimple.project.blog.comment.service.CommentService;
@@ -23,26 +24,37 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> selectCommentList(Comment comment) {
-        return commentMapper.;
+        return commentMapper.selectCommentList(comment);
     }
 
     @Override
     public Comment selectCommentById(Long id) {
-        return null;
+        return commentMapper.selectCommentById(id);
     }
 
     @Override
     public int insertComment(Comment comment) {
-        return 0;
+        return commentMapper.insertComment(comment);
     }
 
     @Override
     public int updateComment(Comment comment) {
-        return 0;
+        return commentMapper.updateComment(comment);
     }
 
     @Override
     public int deleteCommentById(Long id) {
-        return 0;
+        String username = SecurityUtils.getUsername();
+        return commentMapper.deleteCommentById(id, username);
+    }
+
+    @Override
+    public int incrementCommentGood(Long id) {
+        return commentMapper.incrementCommentGood(id);
+    }
+
+    @Override
+    public int incrementCommentBad(Long id) {
+        return commentMapper.incrementCommentBad(id);
     }
 }

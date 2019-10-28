@@ -1,7 +1,7 @@
 package com.dimple.project.common.constant;
 
 /**
- * @className: UserConstants
+ * @className: LinkConstants
  * @description: 友链常量
  * @author: Dimple
  * @date: 10/22/19

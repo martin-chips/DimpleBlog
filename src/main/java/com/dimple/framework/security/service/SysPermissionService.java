@@ -1,8 +1,8 @@
 package com.dimple.framework.security.service;
 
 import com.dimple.project.system.domain.SysUser;
-import com.dimple.project.system.service.SysMenuService;
-import com.dimple.project.system.service.SysRoleService;
+import com.dimple.project.system.service.MenuService;
+import com.dimple.project.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +18,10 @@ import java.util.Set;
 @Component
 public class SysPermissionService {
     @Autowired
-    private SysRoleService roleService;
+    private RoleService roleService;
 
     @Autowired
-    private SysMenuService menuService;
+    private MenuService menuService;
 
     /**
      * 获取角色数据权限

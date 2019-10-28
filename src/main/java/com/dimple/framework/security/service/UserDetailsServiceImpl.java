@@ -12,7 +12,7 @@ import com.dimple.common.exception.BaseException;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.security.LoginUser;
 import com.dimple.project.system.domain.SysUser;
-import com.dimple.project.system.service.SysUserService;
+import com.dimple.project.system.service.UserService;
 
 /**
  * @className: UserDetailsServiceImpl
@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
-    private SysUserService userService;
+    private UserService userService;
 
     @Autowired
     private SysPermissionService permissionService;

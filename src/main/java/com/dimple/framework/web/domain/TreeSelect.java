@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.dimple.project.system.domain.SysMenu;
+import com.dimple.project.system.domain.Menu;
 
 /**
  * @className: TreeSelect
@@ -36,7 +36,7 @@ public class TreeSelect implements Serializable {
 
     }
 
-    public TreeSelect(SysMenu menu) {
+    public TreeSelect(Menu menu) {
         this.id = menu.getMenuId();
         this.label = menu.getMenuName();
         this.children = menu.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());

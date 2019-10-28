@@ -1,7 +1,7 @@
 package com.dimple.project.common.constant;
 
 /**
- * @className: UserConstants
+ * @className: BlacklistConstants
  * @description: 黑名单常量
  * @author: Dimple
  * @date: 10/22/19

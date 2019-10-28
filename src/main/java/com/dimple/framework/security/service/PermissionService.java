@@ -3,7 +3,7 @@ package com.dimple.framework.security.service;
 import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.security.LoginUser;
-import com.dimple.project.system.domain.SysRole;
+import com.dimple.project.system.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -99,7 +99,7 @@ public class PermissionService {
         if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getUser().getRoles())) {
             return false;
         }
-        for (SysRole sysRole : loginUser.getUser().getRoles()) {
+        for (Role sysRole : loginUser.getUser().getRoles()) {
             String roleKey = sysRole.getRoleKey();
             if (SUPER_ADMIN.contains(roleKey) || roleKey.contains(StringUtils.trim(role))) {
                 return true;

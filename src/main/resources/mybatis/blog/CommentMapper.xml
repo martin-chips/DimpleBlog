@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dimple.project.blog.comment.mapper.CommentMapper">
 
-    <resultMap type="com.dimple.project.blog.comment.domain.Comment" id="BgCommentMap">
+    <resultMap type="com.dimple.project.blog.comment.domain.Comment" id="CommentMap">
         <result property="id" column="id"/>
         <result property="email" column="email"/>
         <result property="ip" column="ip"/>
@@ -23,7 +23,7 @@
     </resultMap>
 
     <!--查询单个-->
-    <select id="selectCommentById" resultMap="BgCommentMap">
+    <select id="selectCommentById" resultMap="CommentMap">
         select
           id, email, ip, location, os, browser, parent_id, qq_num, avatar, page_id, url, display, good, bad, content, create_by, create_time
         from bg_comment
@@ -31,7 +31,7 @@
     </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="selectCommentList" resultMap="BgCommentMap">
+    <select id="selectCommentList" resultMap="CommentMap">
         select
         id, email, ip, location, os, browser, parent_id, qq_num, avatar, page_id, url, display, good, bad, content,
         create_by, create_time
@@ -56,8 +56,37 @@
 
     <!--新增所有列-->
     <insert id="insertComment" keyProperty="id" useGeneratedKeys="true">
-        insert into bg_comment(email, ip, location, os, browser, parent_id, qq_num, avatar, page_id, url, display, good, bad, content, create_by, create_time, update_by, update_time, delete_by, delete_time)
-        values (#{email}, #{ip}, #{location}, #{os}, #{browser}, #{parentId}, #{qqNum}, #{avatar}, #{pageId}, #{url}, #{display}, #{good}, #{bad}, #{content}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{deleteBy}, #{deleteTime})
+        insert into bg_comment(
+        <if test="email != null and email != ''">email,</if>
+        <if test="ip != null and ip != ''">ip,</if>
+        <if test="location != null and location != ''">location,</if>
+        <if test="os != null and os != ''">os,</if>
+        <if test="browser != null and browser != ''">browser,</if>
+        <if test="parentId != null and parentId != ''">parent_id,</if>
+        <if test="qqNum != null and qqNum != ''">qq_num,</if>
+        <if test="avatar != null and avatar != ''">avatar,</if>
+        <if test="pageId != null and pageId != ''">page_id,</if>
+        <if test="url != null and url != ''">url,</if>
+        <if test="display != null and display != ''">display,</if>
+        <if test="content != null and content != ''">content,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="email != null and email != ''">#{email},</if>
+        <if test="nickName != null and nickName != ''">#{nickName},</if>
+        <if test="location != null and location != ''">#{location},</if>
+        <if test="os != null and os != ''">#{os},</if>
+        <if test="browser != null and browser != ''">#{browser},</if>
+        <if test="parentId != null and parentId != ''">#{parentId},</if>
+        <if test="qqNum != null and qqNum != ''">#{qqNum},</if>
+        <if test="avatar != null and avatar != ''">#{avatar},</if>
+        <if test="pageId != null and pageId != ''">#{pageId},</if>
+        <if test="url != null and url != ''">#{url},</if>
+        <if test="display != null and display != ''">#{display},</if>
+        <if test="content != null and content != ''">#{content},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
     </insert>
 
     <!--通过主键修改数据-->
@@ -106,31 +135,25 @@
             <if test="content != null and content != ''">
                 content = #{content},
             </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
             </if>
             <if test="updateTime != null">
                 update_time = #{updateTime},
             </if>
-            <if test="deleteBy != null and deleteBy != ''">
-                delete_by = #{deleteBy},
-            </if>
-            <if test="deleteTime != null">
-                delete_time = #{deleteTime},
-            </if>
         </set>
         where id = #{id}
+    </update>
+    <update id="incrementCommentGood">
+        update bg_comment set good+=1 where id=#{id}
+    </update>
+    <update id="incrementCommentBad">
+        update bg_comment set bad+=1 where id=#{id}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteCommentById">
-        delete from bg_comment where id = #{id}
+        update bg_comment set delete_by=${username},delete_time =sysdate() where id = #{id}
     </delete>
 
 </mapper>
