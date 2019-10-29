@@ -1,5 +1,6 @@
 package com.dimple.project.blog.controller;
 
+import com.dimple.common.utils.SecurityUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
@@ -10,9 +11,11 @@ import com.dimple.project.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,41 +32,41 @@ import java.util.List;
 public class CategoryController extends BaseController {
 
     @Autowired
-    private CategoryService bgCategoryService;
+    private CategoryService categoryService;
 
     @PreAuthorize("@permissionService.hasPermission('blog:category:list')")
-    @PostMapping("/list")
+    @GetMapping("/list")
     public TableDataInfo list(Category category) {
         startPage();
-        List<Category> list = bgCategoryService.selectCategoryList(category);
+        List<Category> list = categoryService.selectCategoryList(category);
         return getDataTable(list);
     }
 
     @PreAuthorize("@permissionService.hasPermission('blog:category:add')")
     @Log(title = "分类管理", businessType = BusinessType.INSERT)
     @PostMapping()
-    public AjaxResult add(Category category) {
-        return toAjax(bgCategoryService.insertCategory(category));
+    public AjaxResult add(@RequestBody Category category) {
+        category.setCreateBy(SecurityUtils.getUsername());
+        return toAjax(categoryService.insertCategory(category));
+    }
+
+    @PreAuthorize("@permissionService.hasPermission('blog:category:query')")
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable Long id) {
+        return AjaxResult.success(categoryService.selectCategoryById(id));
     }
 
     @PreAuthorize("@permissionService.hasPermission('blog:category:edit')")
     @Log(title = "分类管理", businessType = BusinessType.UPDATE)
     @PutMapping()
-    public AjaxResult edit(Category category) {
-        return toAjax(bgCategoryService.updateCategory(category));
+    public AjaxResult edit(@RequestBody Category category) {
+        return toAjax(categoryService.updateCategory(category));
     }
 
     @PreAuthorize("@permissionService.hasPermission('blog:category:remove')")
     @Log(title = "分类管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(String ids) {
-        return toAjax(bgCategoryService.deleteCategoryByIds(ids));
-    }
-
-    @PreAuthorize("@permissionService.hasPermission('blog:category:remove')")
-    @Log(title = "分类管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{id}")
-    public AjaxResult remove(@PathVariable("id") Long id) {
-        return toAjax(bgCategoryService.deleteCategoryById(id));
+    public AjaxResult remove(@PathVariable String ids) {
+        return toAjax(categoryService.deleteCategoryByIds(ids));
     }
 }

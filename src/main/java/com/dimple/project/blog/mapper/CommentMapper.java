@@ -1,6 +1,7 @@
 package com.dimple.project.blog.mapper;
 
 import com.dimple.project.blog.domain.Comment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public interface CommentMapper {
      * @param username
      * @return 影响行数
      */
-    int deleteCommentById(Long id, String username);
+    int deleteCommentById(@Param("id") Long id, @Param("username") String username);
 
     /**
      * 评论点赞

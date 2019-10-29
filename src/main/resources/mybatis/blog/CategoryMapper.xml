@@ -20,8 +20,19 @@
     <select id="selectCategoryList" parameterType="com.dimple.project.blog.domain.Category"
             resultMap="CategoryResult">
         <include refid="selectBgCategoryVo"/>
-        <where>
-        </where>
+        where delete_time is null
+        <if test="title != null and title != ''">
+            AND title like concat('%', #{title}, '%')
+        </if>
+        <if test="support != null and support != ''">
+            AND support = #{support}
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
     </select>
 
     <select id="selectCategoryById" parameterType="Long" resultMap="CategoryResult">
@@ -36,7 +47,8 @@
             <if test="title != null  and title != ''">title,</if>
             <if test="description != null  and description != ''">description,</if>
             <if test="support != null ">support,</if>
-            create_by,create_time
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            create_time
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null  and title != ''">#{title},</if>
@@ -64,8 +76,8 @@
     </delete>
 
     <delete id="deleteCategoryByIds" parameterType="String">
-        update bg_category set delete_date=sysdate(),delete_by=#{username} where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        update bg_category set delete_time=sysdate(),delete_by=#{username} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>

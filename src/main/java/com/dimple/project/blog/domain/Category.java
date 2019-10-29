@@ -32,6 +32,6 @@ public class Category extends BaseEntity {
     /**
      * 是否推荐
      */
-    private Integer support;
+    private Boolean support;
 
 }

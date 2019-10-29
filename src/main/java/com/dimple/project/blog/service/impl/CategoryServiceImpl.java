@@ -34,7 +34,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public int insertCategory(Category bgCategory) {
-        bgCategory.setCreateTime(DateUtils.getNowDate());
         return bgCategoryMapper.insertCategory(bgCategory);
     }
 

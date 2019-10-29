@@ -27,13 +27,24 @@
 
     <select id="selectBlogList" resultMap="BlogResult">
         <include refid="selectBlogVo"/>
-        <where>
-        </where>
+        where delete_time is null
+        <if test="title != null and title != ''">
+            AND title like concat('%', #{title}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
     </select>
 
     <select id="selectBlogById" parameterType="Long" resultMap="BlogResult">
         <include refid="selectBlogVo"/>
-        where id = #{id}
+        where id = #{id} and delete_time is null
     </select>
 
     <insert id="insertBlog" useGeneratedKeys="true" keyProperty="id">
@@ -82,10 +93,7 @@
             <if test="comment != null ">comment = #{comment},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
-            <if test="createTime != null ">create_time = #{createTime},</if>
-            <if test="updateTime != null ">update_time = #{updateTime},</if>
-            <if test="deleteBy != null  and deleteBy != ''">delete_by = #{deleteBy},</if>
-            <if test="deleteTime != null ">delete_time = #{deleteTime},</if>
+            update_time=sysdate()
         </trim>
         where id = #{id}
     </update>
@@ -95,8 +103,8 @@
     </delete>
 
     <delete id="deleteBlogByIds">
-        update  bg_blog set delete_time =sysdate() ,delete_by=#{username} where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        update bg_blog set delete_time =sysdate() ,delete_by=#{username} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>

@@ -81,7 +81,7 @@ public class BlacklistController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('monitor:blacklist:remove')")
     @Log(title = "黑名单管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String ids) {
         return toAjax(blacklistService.deleteBlacklistByIds(ids));
     }

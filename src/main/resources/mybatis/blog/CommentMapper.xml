@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dimple.project.blog.comment.mapper.CommentMapper">
+<mapper namespace="com.dimple.project.blog.mapper.CommentMapper">
 
     <resultMap type="com.dimple.project.blog.domain.Comment" id="CommentMap">
         <result property="id" column="id"/>
@@ -38,10 +38,10 @@
         from bg_comment
         where delete_time is null
         <if test="email != null and email != ''">
-            and email = #{email}
+            AND email like concat('%', #{email}, '%')
         </if>
         <if test="ip != null and ip != ''">
-            and ip = #{ip}
+            AND ip like concat('%', #{ip}, '%')
         </if>
         <if test="location != null and location != ''">
             and location = #{location}
@@ -49,8 +49,11 @@
         <if test="display != null">
             and display = #{display}
         </if>
-        <if test="createTime != null">
-            and create_time = #{createTime}
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
 
@@ -153,7 +156,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteCommentById">
-        update bg_comment set delete_by=${username},delete_time =sysdate() where id = #{id}
+        update bg_comment set delete_by=#{username},delete_time =sysdate() where id = #{id}
     </delete>
 
 </mapper>
