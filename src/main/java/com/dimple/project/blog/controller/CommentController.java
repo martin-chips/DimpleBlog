@@ -34,9 +34,6 @@ public class CommentController extends BaseController {
     @Autowired
     private CommentService commentService;
 
-    /**
-     * 获取评论列表
-     */
     @PreAuthorize("@permissionService.hasPermission('blog:comment:list')")
     @GetMapping("/list")
     public TableDataInfo list(Comment comment) {
@@ -45,18 +42,12 @@ public class CommentController extends BaseController {
         return getDataTable(list);
     }
 
-    /**
-     * 根据id获取详细信息
-     */
     @PreAuthorize("@permissionService.hasPermission('blog:comment:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable Long id) {
         return AjaxResult.success(commentService.selectCommentById(id));
     }
 
-    /**
-     * 新增评论
-     */
     @PreAuthorize("@permissionService.hasPermission('blog:comment:add')")
     @Log(title = "评论管理", businessType = BusinessType.INSERT)
     @PostMapping
@@ -65,9 +56,6 @@ public class CommentController extends BaseController {
         return toAjax(commentService.insertComment(comment));
     }
 
-    /**
-     * 修改评论
-     */
     @PreAuthorize("@permissionService.hasPermission('blog:comment:edit')")
     @Log(title = "评论管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -76,9 +64,6 @@ public class CommentController extends BaseController {
         return toAjax(commentService.updateComment(comment));
     }
 
-    /**
-     * 删除评论
-     */
     @PreAuthorize("@permissionService.hasPermission('system:config:remove')")
     @Log(title = "评论管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")

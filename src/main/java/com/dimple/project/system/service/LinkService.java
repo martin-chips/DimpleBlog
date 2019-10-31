@@ -1,14 +1,14 @@
-package com.ruoyi.project.system.link.service;
+package com.dimple.project.system.service;
 
 import com.dimple.project.system.domain.Link;
 
 import java.util.List;
 
 /**
- * @className: 友链Service接口
- * @description:
+ * @className: Link
+ * @description: 友链Service接口
  * @author: Dimple
- * @date: 2019-10-28
+ * @date: 2019-10-29
  */
 public interface LinkService {
     /**
@@ -58,4 +58,14 @@ public interface LinkService {
      * @return 结果
      */
     int deleteLinkById(Long id);
+
+    /**
+     * 处理友链申请
+     *
+     * @param id      link id
+     * @param pass
+     * @return 结果
+     */
+    int handleLinkPass(Long id, Boolean pass);
+
 }

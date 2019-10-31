@@ -1,23 +1,25 @@
 package com.dimple.project.system.service.impl;
 
+import com.dimple.common.exception.CustomException;
 import com.dimple.common.utils.ConvertUtils;
-import com.dimple.common.utils.DateUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.system.domain.Link;
 import com.dimple.project.system.mapper.LinkMapper;
+import com.dimple.project.system.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
- * @className: 友链Service业务层处理
- * @description:
+ * @className: Link
+ * @description: 友链Service业务层处理
  * @author: Dimple
- * @date: 2019-10-28
+ * @date: 2019-10-29
  */
 @Service
-public class LinkServiceImpl implements com.ruoyi.project.system.link.service.LinkService {
+public class LinkServiceImpl implements LinkService {
     @Autowired
     private LinkMapper linkMapper;
 
@@ -33,13 +35,11 @@ public class LinkServiceImpl implements com.ruoyi.project.system.link.service.Li
 
     @Override
     public int insertLink(Link link) {
-        link.setCreateTime(DateUtils.getNowDate());
         return linkMapper.insertLink(link);
     }
 
     @Override
     public int updateLink(Link link) {
-        link.setUpdateTime(DateUtils.getNowDate());
         return linkMapper.updateLink(link);
     }
 
@@ -51,6 +51,21 @@ public class LinkServiceImpl implements com.ruoyi.project.system.link.service.Li
 
     @Override
     public int deleteLinkById(Long id) {
-        return linkMapper.deleteLinkById(id);
+        String username = SecurityUtils.getUsername();
+        return linkMapper.deleteLinkById(id, username);
+    }
+
+    @Override
+    public int handleLinkPass(Long id, Boolean pass) {
+        Link link = selectLinkById(id);
+        if (Objects.isNull(link)) {
+            throw new CustomException("友链不存在");
+        }
+        if (!pass) {
+            //todo 发送email
+            return linkMapper.deleteLinkById(id, SecurityUtils.getUsername());
+        }
+        link.setStatus(true);
+        return linkMapper.updateLink(link);
     }
 }

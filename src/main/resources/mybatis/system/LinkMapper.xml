@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dimple.project.system.mapper.LinkMapper">
 
-    <resultMap type="com.dimple.project.system.domain.Link" id="LinkMap">
+    <resultMap type="com.dimple.project.system.domain.Link" id="LinkResult">
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="url" column="url"/>
@@ -14,114 +16,92 @@
         <result property="weight" column="weight"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="deleteBy" column="delete_by"/>
-        <result property="deleteTime" column="delete_time"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="selectLinkById" resultMap="LinkMap">
-        select
-          id, title, url, description, header_img, status, display, email, weight, create_by, create_time, update_by, update_time
-        from Linksys_link
-        where id = #{id} and delete_time is null
-    </select>
+    <sql id="selectLinkVo">
+        select id, title, url, description, header_img, status, display, email, weight, create_by, create_time  from sys_link where delete_time is null
+    </sql>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="selectLinkList" resultMap="LinkMap">
-        select
-        id, title, url, description, header_img, status, display, email, weight, create_by, create_time
-        from Linksys_link
-        where delete_time is null
+    <select id="selectLinkList" resultMap="LinkResult">
+        <include refid="selectLinkVo"/>
         <if test="title != null and title != ''">
-            and title = #{title}
-        </if>
-        <if test="status != null">
-            and status = #{status}
-        </if>
-        <if test="display != null">
-            and display = #{display}
+            AND title like concat('%', #{title}, '%')
         </if>
         <if test="email != null and email != ''">
-            and email = #{email}
+            AND email like concat('%', #{email}, '%')
         </if>
-        <if test="createTime != null">
-            and create_time = #{createTime}
+        <if test="display != null and display != ''">
+            AND display =#{display}
+        </if>
+        <if test="status != null and status != ''">
+            AND status =#{status}
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insertLink" keyProperty="id" useGeneratedKeys="true">
-        insert into sys_link (
-        <if test="title != null  and title != ''">title,</if>
-        <if test="url != null  and url != ''">url,</if>
-        <if test="description != null  and description != ''">description,</if>
-        <if test="headerImg != null  and headerImg != ''">header_img,</if>
-        <if test="status != null ">status,</if>
-        <if test="display != null ">display,</if>
-        <if test="email != null  and email != ''">email,</if>
-        <if test="weight != null ">weight,</if>
-        <if test="createBy != null  and createBy != ''">create_by,</if>
-        create_time
-        )values(
-        <if test="title != null  and title != ''">#{title},</if>
-        <if test="url != null  and url != ''">#{url},</if>
-        <if test="description != null  and description != ''">#{description},</if>
-        <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
-        <if test="status != null ">#{status},</if>
-        <if test="display != null ">#{display},</if>
-        <if test="email != null  and email != ''">#{email},</if>
-        <if test="weight != null ">#{weight},</if>
-        <if test="createBy != null and createBy != ''">#{createBy},</if>
-        sysdate()
-        )
+    <select id="selectLinkById" parameterType="Long" resultMap="LinkResult">
+        <include refid="selectLinkVo"/>
+        and id = #{id}
+    </select>
+
+    <insert id="insertLink" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sys_link
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">title,</if>
+            <if test="url != null  and url != ''">url,</if>
+            <if test="description != null  and description != ''">description,</if>
+            <if test="headerImg != null  and headerImg != ''">header_img,</if>
+            <if test="status != null ">status,</if>
+            <if test="display != null ">display,</if>
+            <if test="email != null  and email != ''">email,</if>
+            <if test="weight != null ">weight,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="url != null  and url != ''">#{url},</if>
+            <if test="description != null  and description != ''">#{description},</if>
+            <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="display != null ">#{display},</if>
+            <if test="email != null  and email != ''">#{email},</if>
+            <if test="weight != null ">#{weight},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            sysdate()
+        </trim>
     </insert>
 
-    <!--通过主键修改数据-->
     <update id="updateLink">
-        update Linksys_link
-        <set>
-            <if test="title != null and title != ''">
-                title = #{title},
-            </if>
-            <if test="url != null and url != ''">
-                url = #{url},
-            </if>
-            <if test="description != null and description != ''">
-                description = #{description},
-            </if>
-            <if test="headerImg != null and headerImg != ''">
-                header_img = #{headerImg},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-            <if test="display != null">
-                display = #{display},
-            </if>
-            <if test="email != null and email != ''">
-                email = #{email},
-            </if>
-            <if test="weight != null">
-                weight = #{weight},
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                update_by = #{updateBy},
-            </if>
-            ,update_time=sysdate()
-        </set>
+        update sys_link
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="url != null  and url != ''">url = #{url},</if>
+            <if test="description != null  and description != ''">description = #{description},</if>
+            <if test="headerImg != null  and headerImg != ''">header_img = #{headerImg},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="display != null ">display = #{display},</if>
+            <if test="email != null  and email != ''">email = #{email},</if>
+            <if test="weight != null ">weight = #{weight},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </trim>
         where id = #{id}
     </update>
 
-    <!--通过主键删除-->
     <delete id="deleteLinkById">
-        delete from Linksys_link where id = #{id}
+        update sys_link set delete_time = sysdate(), delete_by =#{username} where id = #{id}
     </delete>
 
-    <delete id="deleteLinkByIds" parameterType="String">
-        update sys_link set delete_time =sysdate(),delete_by=#{username} where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+    <delete id="deleteLinkByIds">
+        update sys_link set delete_time = sysdate() , delete_by =#{username} where id in
+        <foreach item="id" collection="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>

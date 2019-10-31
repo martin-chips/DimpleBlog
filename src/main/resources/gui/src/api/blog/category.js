@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import da from "element-ui/src/locale/lang/da";
 
 // 查询分类列表
 export function listCategory(query) {

@@ -18,6 +18,10 @@ public class Comment extends BaseEntity {
      */
     private String email;
     /**
+     * 昵称
+     */
+    private String nickName;
+    /**
      * IP地址
      */
     private String ip;

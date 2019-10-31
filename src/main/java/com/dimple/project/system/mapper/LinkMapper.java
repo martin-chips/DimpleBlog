@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @className: 友链Mapper接口
- * @description:
+ * @className: Link
+ * @description: 友链Mapper接口
  * @author: Dimple
- * @date: 2019-10-28
+ * @date: 2019-10-29
  */
 public interface LinkMapper {
     /**
@@ -50,7 +50,7 @@ public interface LinkMapper {
      * @param id 友链ID
      * @return 结果
      */
-    int deleteLinkById(Long id);
+    int deleteLinkById(@Param("id") Long id, @Param("username") String username);
 
     /**
      * 批量删除友链

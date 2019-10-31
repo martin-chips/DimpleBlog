@@ -12,6 +12,7 @@
         <result property="parentId" column="parent_id"/>
         <result property="qqNum" column="qq_num"/>
         <result property="avatar" column="avatar"/>
+        <result property="nickName" column="nick_name"/>
         <result property="pageId" column="page_id"/>
         <result property="url" column="url"/>
         <result property="display" column="display"/>
@@ -25,7 +26,7 @@
     <!--查询单个-->
     <select id="selectCommentById" resultMap="CommentMap">
         select
-          id, email, ip, location, os, browser, parent_id, qq_num, avatar, page_id, url, display, good, bad, content, create_by, create_time
+          id, email, ip, location, os, browser, parent_id, qq_num, avatar, page_id,nick_name, url, display, good, bad, content, create_by, create_time
         from bg_comment
         where id = #{id}
     </select>
@@ -33,7 +34,8 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectCommentList" resultMap="CommentMap">
         select
-        id, email, ip, location, os, browser, parent_id, qq_num, avatar, page_id, url, display, good, bad, content,
+        id, email, ip, location, os, browser, parent_id, qq_num,nick_name, avatar, page_id, url, display, good, bad,
+        content,
         create_by, create_time
         from bg_comment
         where delete_time is null
@@ -43,8 +45,11 @@
         <if test="ip != null and ip != ''">
             AND ip like concat('%', #{ip}, '%')
         </if>
+        <if test="nickName != null and nickName != ''">
+            AND nick_name like concat('%', #{nickName}, '%')
+        </if>
         <if test="location != null and location != ''">
-            and location = #{location}
+            and location like concat('%', #{location}, '%')
         </if>
         <if test="display != null">
             and display = #{display}
@@ -67,6 +72,7 @@
         <if test="browser != null and browser != ''">browser,</if>
         <if test="parentId != null and parentId != ''">parent_id,</if>
         <if test="qqNum != null and qqNum != ''">qq_num,</if>
+        <if test="nickName != null and nickName != ''">nick_name,</if>
         <if test="avatar != null and avatar != ''">avatar,</if>
         <if test="pageId != null and pageId != ''">page_id,</if>
         <if test="url != null and url != ''">url,</if>
@@ -82,6 +88,7 @@
         <if test="browser != null and browser != ''">#{browser},</if>
         <if test="parentId != null and parentId != ''">#{parentId},</if>
         <if test="qqNum != null and qqNum != ''">#{qqNum},</if>
+        <if test="nickName != null and nickName != ''">#{nickName},</if>
         <if test="avatar != null and avatar != ''">#{avatar},</if>
         <if test="pageId != null and pageId != ''">#{pageId},</if>
         <if test="url != null and url != ''">#{url},</if>
@@ -107,6 +114,9 @@
             </if>
             <if test="os != null and os != ''">
                 os = #{os},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName},
             </if>
             <if test="browser != null and browser != ''">
                 browser = #{browser},
@@ -141,9 +151,7 @@
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
+            update_time=sysdate()
         </set>
         where id = #{id}
     </update>
