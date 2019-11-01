@@ -13,12 +13,15 @@
         <result property="content" column="content"/>
         <result property="status" column="status"/>
         <result property="comment" column="comment"/>
+        <result property="tag" column="tag"/>
+        <result property="support" column="support"/>
+        <result property="weight" column="weight"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
 
     <sql id="selectBlogVo">
-        select id, category_id, title, summary, header_img, content, status, comment, create_by, update_by, create_time, update_time, delete_by, delete_time from bg_blog
+        select id, category_id, title, summary,weight, header_img, content, status,support,tag, comment, create_by, update_by, create_time from bg_blog
     </sql>
 
     <select id="selectBlogList" resultMap="BlogResult">
@@ -38,9 +41,13 @@
         </if>
     </select>
 
-    <select id="selectBlogById" parameterType="Long" resultMap="BlogResult">
+    <select id="selectBlogById" resultMap="BlogResult">
         <include refid="selectBlogVo"/>
         where id = #{id} and delete_time is null
+    </select>
+
+    <select id="selectBlogTagList" resultType="java.lang.String">
+        select tag from bg_blog where tag like concat('%',#{query},'%')
     </select>
 
     <insert id="insertBlog" useGeneratedKeys="true" keyProperty="id">
@@ -53,6 +60,9 @@
             <if test="content != null  and content != ''">content,</if>
             <if test="status != null ">status,</if>
             <if test="comment != null ">comment,</if>
+            <if test="support != null ">support,</if>
+            <if test="weight != null ">weight,</if>
+            <if test="tag != null ">tag,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             <if test="updateBy != null  and updateBy != ''">update_by,</if>
             <if test="createTime != null ">create_time,</if>
@@ -68,6 +78,9 @@
             <if test="content != null  and content != ''">#{content},</if>
             <if test="status != null ">#{status},</if>
             <if test="comment != null ">#{comment},</if>
+            <if test="support != null ">#{support},</if>
+            <if test="weight != null ">#{weight},</if>
+            <if test="tag != null ">#{tag},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
             <if test="createTime != null ">#{createTime},</if>
@@ -86,6 +99,9 @@
             <if test="headerImg != null  and headerImg != ''">header_img = #{headerImg},</if>
             <if test="content != null  and content != ''">content = #{content},</if>
             <if test="status != null ">status = #{status},</if>
+            <if test="support != null ">support = #{support},</if>
+            <if test="weight != null ">weight = #{weight},</if>
+            <if test="tag != null ">tag = #{tag},</if>
             <if test="comment != null ">comment = #{comment},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>

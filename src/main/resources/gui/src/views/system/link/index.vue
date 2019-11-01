@@ -2,36 +2,16 @@
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
       <el-form-item label="友链名称">
-        <el-input
-          v-model="queryParams.title"
-          placeholder="请输入友链名称"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.title" placeholder="请输入友链名称" clearable size="small" style="width: 240px"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="友链描述">
-        <el-input
-          v-model="queryParams.description"
-          placeholder="请输入友链描述"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.description" placeholder="请输入友链描述" clearable size="small" style="width: 240px"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="创建时间">
-        <el-date-picker
-          v-model="dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -47,12 +27,8 @@
       <el-table-column label="友链描述" align="center" prop="description" :show-overflow-tooltip="true"/>
       <el-table-column label="显示" align="center">
         <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.display"
-            @change="handleDisplayChange(scope.row)"
-            active-color="#13ce66"
-            inactive-color="#ff4949">
-          </el-switch>
+          <el-switch v-model="scope.row.display" @change="handleDisplayChange(scope.row)" active-color="#13ce66"
+                     inactive-color="#ff4949"/>
         </template>
       </el-table-column>
       <el-table-column label="权重" align="center" prop="weight" :show-overflow-tooltip="true"/>
@@ -65,48 +41,27 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <div v-if="scope.row.status">
-            <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-edit"
-              @click="handleUpdate(scope.row)"
-            >修改
+            <el-button size="mini" type="text"
+                       @click="handleUpdate(scope.row)">修改
             </el-button>
-            <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-delete"
-              @click="handleDelete(scope.row)"
-            >删除
+            <el-button size="mini" type="text" icon="el-icon-delete"
+                       @click="handleDelete(scope.row)">删除
             </el-button>
           </div>
           <div v-else>
-            <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-check"
-              @click="handleStatus(scope.row,true)"
-            >通过
+            <el-button size="mini" type="text" icon="el-icon-check"
+                       @click="handleStatus(scope.row,true)">通过
             </el-button>
-            <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-close"
-              @click="handleStatus(scope.row,false)"
-            >拒绝
+            <el-button size="mini" type="text" icon="el-icon-close"
+                       @click="handleStatus(scope.row,false)">拒绝
             </el-button>
           </div>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+                @pagination="getList"/>
 
     <!-- 添加或修改分类对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px">
@@ -123,11 +78,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="显示" prop="display">
-              <el-switch
-                v-model="form.display"
-                active-color="#13ce66"
-                inactive-color="#ff4949">
-              </el-switch>
+              <el-switch v-model="form.display" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="16">
@@ -265,9 +216,13 @@
           type: "warning"
         }).then(function () {
           return changeLinkStatus(row.id, pass);
-        }).then(() => {
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess(text + "成功");
+          } else {
+            this.msgError(text + "失败");
+          }
           this.getList();
-          this.msgSuccess(text + "成功");
         }).catch(function () {
           row.status = row.status === false ? true : false;
         });
@@ -280,8 +235,12 @@
           type: "warning"
         }).then(function () {
           return changeLinkDisplay(row.id, row.display);
-        }).then(() => {
-          this.msgSuccess(text + "成功");
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess(text + "成功");
+          } else {
+            this.msgError(text + "失败");
+          }
         }).catch(function () {
           row.display = row.display === false ? true : false;
         });
@@ -322,9 +281,13 @@
           type: "warning"
         }).then(function () {
           return delLink(row.id);
-        }).then(() => {
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
           this.getList();
-          this.msgSuccess("删除成功");
         }).catch(function () {
         });
       }

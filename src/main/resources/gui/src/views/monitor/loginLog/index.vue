@@ -2,33 +2,15 @@
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
       <el-form-item label="登录地址">
-        <el-input
-          v-model="queryParams.ipaddr"
-          placeholder="请输入登录地址"
-          clearable
-          style="width: 240px;"
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.ipaddr" placeholder="请输入登录地址" clearable style="width: 240px;" size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="用户名称">
-        <el-input
-          v-model="queryParams.userName"
-          placeholder="请输入用户名称"
-          clearable
-          style="width: 240px;"
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.userName" placeholder="请输入用户名称" clearable style="width: 240px;" size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="状态">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="登录状态"
-          clearable
-          size="small"
-          style="width: 240px"
-        >
+        <el-select v-model="queryParams.status" placeholder="登录状态" clearable size="small" style="width: 240px">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -38,16 +20,8 @@
         </el-select>
       </el-form-item>
       <el-form-item label="登录时间">
-        <el-date-picker
-          v-model="dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>

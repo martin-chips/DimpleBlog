@@ -28,6 +28,10 @@ public class Blog extends BaseEntity {
      * 文章标题
      */
     private String title;
+    /**
+     * 标签
+     */
+    private String tag;
 
     /**
      * 摘要
@@ -53,4 +57,12 @@ public class Blog extends BaseEntity {
      * 是否允许评论,1表示允许,0表示不允许
      */
     private Boolean comment;
+    /**
+     * 推荐
+     */
+    private Boolean support;
+    /**
+     * 权重
+     */
+    private Long weight;
 }

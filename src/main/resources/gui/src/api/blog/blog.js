@@ -47,7 +47,7 @@ export function delBlog(id) {
 export function changeBlogSupport(id, support) {
   let data = {
     id: id,
-    support: !support
+    support: support
   }
   updateBlog(data);
 }
@@ -56,7 +56,15 @@ export function changeBlogSupport(id, support) {
 export function changeBlogComment(id, comment) {
   let data = {
     id: id,
-    comment: !comment
+    comment: comment
   }
-  updateBlog(data);
+  return updateBlog(data);
+}
+
+//获取Blog Tag
+export function listBlogTagList(query) {
+  return request({
+    url: '/blog/blog/tag/' + query,
+    method: 'get',
+  })
 }

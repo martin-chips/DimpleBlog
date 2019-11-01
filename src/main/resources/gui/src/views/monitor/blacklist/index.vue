@@ -2,45 +2,23 @@
   <div class="app-container">
     <el-form :inline="true">
       <el-form-item label="Ip">
-        <el-input
-          v-model="queryParams.ip"
-          placeholder="请输入Ip"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.ip" placeholder="请输入Ip" clearable size="small" style="width: 240px"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="封禁原因">
-        <el-input
-          v-model="queryParams.description"
-          placeholder="请输入封禁原因"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.description" placeholder="请输入封禁原因" clearable size="small" style="width: 240px"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="创建时间">
-        <el-date-picker
-          v-model="dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-        >新增
+        <el-button type="primary" icon="el-icon-search" size="mini"
+                   @click="handleQuery">搜索
+        </el-button>
+        <el-button type="primary" icon="el-icon-plus" size="mini"
+                   @click="handleAdd">新增
         </el-button>
       </el-form-item>
     </el-form>
@@ -63,31 +41,20 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
+          <el-button size="mini" type="text" icon="el-icon-edit"
+                     @click="handleUpdate(scope.row)"
           >修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
+          <el-button size="mini" type="text" icon="el-icon-delete"
+                     @click="handleDelete(scope.row)"
           >删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+                @pagination="getList"/>
 
     <!-- 添加或修改黑名单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px">
@@ -141,14 +108,12 @@
         },
         // 表单校验
         rules: {
-          roleName: [
-            {required: true, message: "角色名称不能为空", trigger: "blur"}
+          ip: [
+            {required: true, message: "IP不能为空", trigger: "blur"}
           ],
-          roleKey: [
-            {required: true, message: "权限字符不能为空", trigger: "blur"}
-          ],
-          roleSort: [
-            {required: true, message: "角色顺序不能为空", trigger: "blur"}
+          description: [
+            {required: true, message: "权限字符不能为空", trigger: "blur"},
+            {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'change'}
           ]
         }
       };
@@ -157,9 +122,8 @@
       this.getList();
     },
     methods: {
-      /** 查询角色列表 */
+      /** 查询黑名单列表 */
       getList() {
-        console.log("sss")
         this.loading = true;
         listBlacklist(this.addDateRange(this.queryParams, this.dateRange)).then(
           response => {
@@ -178,13 +142,8 @@
       reset() {
         this.form = {
           id: undefined,
-          roleName: undefined,
-          roleKey: undefined,
-          roleSort: 0,
-          status: "0",
-          menuIds: [],
-          deptIds: [],
-          remark: undefined
+          ip: undefined,
+          description: undefined
         };
         this.resetForm("form");
       },
@@ -244,9 +203,13 @@
           type: "warning"
         }).then(function () {
           return delBlacklist(row.id);
-        }).then(() => {
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
           this.getList();
-          this.msgSuccess("删除成功");
         }).catch(function () {
         });
       }

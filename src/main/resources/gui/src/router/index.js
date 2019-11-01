@@ -99,10 +99,15 @@ export const constantRoutes = [
     redirect: 'noRedirect',
     children: [
       {
-        path: 'blog/create',
+        path: 'blog/add',
         component: () => import('@/views/blog/blog/add'),
         name: '新增博文',
-        meta: {title: '新增博文', icon: ''}
+        meta: {title: '新增文章', noCache: true, activeMenu: '/blog/blog'},
+      }, {
+        path: 'blog/edit/:id(\\d+)',
+        component: () => import('@/views/blog/blog/edit'),
+        name: '修改博文',
+        meta: {title: '修改文章', activeMenu: '/blog/blog'},
       }
     ]
   }

@@ -5,33 +5,16 @@
       <el-col :span="20" :xs="24">
         <el-form :inline="true" label-width="68px">
           <el-form-item label="用户名称">
-            <el-input
-              v-model="queryParams.userName"
-              placeholder="请输入用户名称"
-              clearable
-              size="small"
-              style="width: 240px"
-              @keyup.enter.native="handleQuery"
-            />
+            <el-input v-model="queryParams.userName" placeholder="请输入用户名称" clearable size="small" style="width: 240px"
+                      @keyup.enter.native="handleQuery"/>
           </el-form-item>
           <el-form-item label="手机号码">
-            <el-input
-              v-model="queryParams.phonenumber"
-              placeholder="请输入手机号码"
-              clearable
-              size="small"
-              style="width: 240px"
-              @keyup.enter.native="handleQuery"
-            />
+            <el-input v-model="queryParams.phonenumber" placeholder="请输入手机号码" clearable size="small"
+                      style="width: 240px"
+                      @keyup.enter.native="handleQuery"/>
           </el-form-item>
           <el-form-item label="状态">
-            <el-select
-              v-model="queryParams.status"
-              placeholder="用户状态"
-              clearable
-              size="small"
-              style="width: 240px"
-            >
+            <el-select v-model="queryParams.status" placeholder="用户状态" clearable size="small" style="width: 240px">
               <el-option
                 v-for="dict in statusOptions"
                 :key="dict.dictValue"
@@ -41,21 +24,15 @@
             </el-select>
           </el-form-item>
           <el-form-item label="创建时间">
-            <el-date-picker
-              v-model="dateRange"
-              size="small"
-              style="width: 240px"
-              value-format="yyyy-MM-dd"
-              type="daterange"
-              range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-            ></el-date-picker>
+            <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd"
+                            type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
-                       >新增
+            <el-button type="primary" icon="el-icon-search" size="mini"
+                       @click="handleQuery">搜索
+            </el-button>
+            <el-button type="primary" icon="el-icon-plus" size="mini"
+                       @click="handleAdd">新增
             </el-button>
           </el-form-item>
         </el-form>
@@ -67,12 +44,8 @@
           <el-table-column label="手机号码" align="center" prop="phonenumber" width="120"/>
           <el-table-column label="状态" align="center">
             <template slot-scope="scope">
-              <el-switch
-                v-model="scope.row.status"
-                active-value="0"
-                inactive-value="1"
-                @change="handleStatusChange(scope.row)"
-              ></el-switch>
+              <el-switch v-model="scope.row.status" active-value="0" inactive-value="1"
+                         @change="handleStatusChange(scope.row)"/>
             </template>
           </el-table-column>
           <el-table-column label="创建时间" align="center" prop="createTime" width="160">
@@ -80,49 +53,23 @@
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            label="操作"
-            align="center"
-            width="180"
-            class-name="small-padding fixed-width"
-          >
+          <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-              <el-button
-                size="mini"
-                type="text"
-                icon="el-icon-edit"
-                @click="handleUpdate(scope.row)"
-
-              >修改
+              <el-button size="mini" type="text" icon="el-icon-edit"
+                         @click="handleUpdate(scope.row)">修改
               </el-button>
-              <el-button
-                v-if="scope.row.userId !== 1"
-                size="mini"
-                type="text"
-                icon="el-icon-delete"
-                @click="handleDelete(scope.row)"
-
-              >删除
+              <el-button v-if="scope.row.userId !== 1" size="mini" type="text" icon="el-icon-delete"
+                         @click="handleDelete(scope.row)">删除
               </el-button>
-              <el-button
-                size="mini"
-                type="text"
-                icon="el-icon-key"
-                @click="handleResetPwd(scope.row)"
-
-              >重置
+              <el-button size="mini" type="text" icon="el-icon-key"
+                         @click="handleResetPwd(scope.row)">重置
               </el-button>
             </template>
           </el-table-column>
         </el-table>
 
-        <pagination
-          v-show="total>0"
-          :total="total"
-          :page.sync="queryParams.pageNum"
-          :limit.sync="queryParams.pageSize"
-          @pagination="getList"
-        />
+        <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+                    @pagination="getList"/>
       </el-col>
     </el-row>
 
@@ -328,8 +275,12 @@
           type: "warning"
         }).then(function () {
           return changeUserStatus(row.userId, row.status);
-        }).then(() => {
-          this.msgSuccess(text + "成功");
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess(text + "成功");
+          } else {
+            this.msgError(text + "失败");
+          }
         }).catch(function () {
           row.status = row.status === "0" ? "1" : "0";
         });
@@ -432,9 +383,13 @@
           type: "warning"
         }).then(function () {
           return delUser(row.userId);
-        }).then(() => {
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败:" + response.msg);
+          }
           this.getList();
-          this.msgSuccess("删除成功");
         }).catch(function () {
         });
       }

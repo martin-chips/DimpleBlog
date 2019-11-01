@@ -2,22 +2,12 @@
   <div class="app-container">
     <el-form :inline="true">
       <el-form-item label="登录地址">
-        <el-input
-          v-model="queryParams.ipaddr"
-          placeholder="请输入登录地址"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.ipaddr" placeholder="请输入登录地址" clearable size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="用户名称">
-        <el-input
-          v-model="queryParams.userName"
-          placeholder="请输入用户名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.userName" placeholder="请输入用户名称" clearable size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -52,13 +42,11 @@
             type="text"
             icon="el-icon-delete"
             @click="handleForceLogout(scope.row)"
-
           >强退
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-
     <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>
   </div>
 </template>
@@ -110,9 +98,13 @@
           type: "warning"
         }).then(function () {
           return forceLogout(row.tokenId);
-        }).then(() => {
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess("强退成功");
+          } else {
+            this.msgError("强退失败");
+          }
           this.getList();
-          this.msgSuccess("强退成功");
         }).catch(function () {
         });
       }

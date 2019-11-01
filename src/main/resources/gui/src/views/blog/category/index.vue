@@ -2,42 +2,20 @@
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
       <el-form-item label="分类名称">
-        <el-input
-          v-model="queryParams.title"
-          placeholder="请输入分类名称"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.title" placeholder="请输入分类名称" clearable size="small" style="width: 240px"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="分类描述">
-        <el-input
-          v-model="queryParams.description"
-          placeholder="请输入分类描述"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.description" placeholder="请输入分类描述" clearable size="small" style="width: 240px"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="创建时间">
-        <el-date-picker
-          v-model="dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">
-          新增
-        </el-button>
+        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">新增</el-button>
       </el-form-item>
     </el-form>
 
@@ -47,12 +25,8 @@
       <el-table-column label="分类描述" align="center" prop="description" :show-overflow-tooltip="true"/>
       <el-table-column label="推荐" align="center">
         <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.support"
-            @change="handleSupportChange(scope.row)"
-            active-color="#13ce66"
-            inactive-color="#ff4949">
-          </el-switch>
+          <el-switch v-model="scope.row.support" active-color="#13ce66" inactive-color="#ff4949"
+                     @change="handleSupportChange(scope.row)"/>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -62,31 +36,19 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-          >修改
+          <el-button size="mini" type="text" icon="el-icon-edit"
+                     @click="handleUpdate(scope.row)">修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >删除
+          <el-button size="mini" type="text" icon="el-icon-delete"
+                     @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+      @pagination="getList"/>
 
     <!-- 添加或修改分类对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px">
@@ -98,11 +60,7 @@
           <el-input v-model="form.description" placeholder="请输入分类描述"/>
         </el-form-item>
         <el-form-item label="推荐" prop="support">
-          <el-switch
-            v-model="form.support"
-            active-color="#13ce66"
-            inactive-color="#ff4949">
-          </el-switch>
+          <el-switch v-model="form.support" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

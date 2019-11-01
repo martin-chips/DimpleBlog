@@ -2,13 +2,8 @@
   <div class="app-container">
     <el-form :inline="true">
       <el-form-item label="菜单名称">
-        <el-input
-          v-model="queryParams.menuName"
-          placeholder="请输入菜单名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.menuName" placeholder="请输入菜单名称" clearable size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="状态">
         <el-select v-model="queryParams.visible" placeholder="菜单状态" clearable size="small">
@@ -22,18 +17,14 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd" >
+        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">
           新增
         </el-button>
       </el-form-item>
     </el-form>
 
-    <el-table
-      v-loading="loading"
-      :data="menuList"
-      row-key="menuId"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-    >
+    <el-table v-loading="loading" :data="menuList" row-key="menuId"
+              :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="130px"></el-table-column>
       <el-table-column prop="icon" label="图标" align="center" width="100px">
         <template slot-scope="scope">
@@ -51,28 +42,14 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini"
-                     type="text"
-                     icon="el-icon-edit"
-                     @click="handleUpdate(scope.row)"
-
-          >修改
+          <el-button size="mini" type="text" icon="el-icon-edit"
+                     @click="handleUpdate(scope.row)">修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-plus"
-            @click="handleAdd(scope.row)"
-
-          >新增
+          <el-button size="mini" type="text" icon="el-icon-plus"
+                     @click="handleAdd(scope.row)">新增
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-
-          >删除
+          <el-button size="mini" type="text" icon="el-icon-delete"
+                     @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -103,21 +80,12 @@
           </el-col>
           <el-col :span="24">
             <el-form-item v-if="form.menuType != 'F'" label="菜单图标">
-              <el-popover
-                placement="bottom-start"
-                width="460"
-                trigger="click"
-                @show="$refs['iconSelect'].reset()"
-              >
+              <el-popover placement="bottom-start" width="460" trigger="click"
+                          @show="$refs['iconSelect'].reset()">
                 <IconSelect ref="iconSelect" @selected="selected"/>
                 <el-input slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly>
-                  <svg-icon
-                    v-if="form.icon"
-                    slot="prefix"
-                    :icon-class="form.icon"
-                    class="el-input__icon"
-                    style="height: 32px;width: 16px;"
-                  />
+                  <svg-icon v-if="form.icon" slot="prefix" :icon-class="form.icon" class="el-input__icon"
+                            style="height: 32px;width: 16px;"/>
                   <i v-else slot="prefix" class="el-icon-search el-input__icon"/>
                 </el-input>
               </el-popover>
@@ -329,9 +297,13 @@
           type: "warning"
         }).then(function () {
           return delMenu(row.menuId);
-        }).then(() => {
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
           this.getList();
-          this.msgSuccess("删除成功");
         }).catch(function () {
         });
       }

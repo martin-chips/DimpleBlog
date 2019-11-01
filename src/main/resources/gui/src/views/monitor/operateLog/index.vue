@@ -2,33 +2,15 @@
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
       <el-form-item label="系统模块">
-        <el-input
-          v-model="queryParams.title"
-          placeholder="请输入系统模块"
-          clearable
-          style="width: 240px;"
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.title" placeholder="请输入系统模块" clearable style="width: 240px;" size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="操作人员">
-        <el-input
-          v-model="queryParams.operName"
-          placeholder="请输入操作人员"
-          clearable
-          style="width: 240px;"
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.operName" placeholder="请输入操作人员" clearable style="width: 240px;" size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="类型">
-        <el-select
-          v-model="queryParams.businessType"
-          placeholder="操作类型"
-          clearable
-          size="small"
-          style="width: 240px"
-        >
+        <el-select v-model="queryParams.businessType" placeholder="操作类型" clearable size="small" style="width: 240px">
           <el-option
             v-for="dict in typeOptions"
             :key="dict.dictValue"
@@ -38,13 +20,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="状态">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="操作状态"
-          clearable
-          size="small"
-          style="width: 240px"
-        >
+        <el-select v-model="queryParams.status" placeholder="操作状态" clearable size="small" style="width: 240px">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -54,16 +30,8 @@
         </el-select>
       </el-form-item>
       <el-form-item label="操作时间">
-        <el-date-picker
-          v-model="dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -86,25 +54,16 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleView(scope.row,scope.index)"
-
+          <el-button size="mini" type="text" icon="el-icon-view"
+                     @click="handleView(scope.row,scope.index)"
           >详细
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+                @pagination="getList"/>
 
     <!-- 操作日志详细 -->
     <el-dialog title="操作日志详细" :visible.sync="open" width="700px">

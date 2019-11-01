@@ -2,22 +2,12 @@
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
       <el-form-item label="公告标题">
-        <el-input
-          v-model="queryParams.noticeTitle"
-          placeholder="请输入公告标题"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.noticeTitle" placeholder="请输入公告标题" clearable size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="操作人员">
-        <el-input
-          v-model="queryParams.createBy"
-          placeholder="请输入操作人员"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.createBy" placeholder="请输入操作人员" clearable size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="类型">
         <el-select v-model="queryParams.noticeType" placeholder="公告类型" clearable size="small">
@@ -31,7 +21,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd" >
+        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">
           新增
         </el-button>
       </el-form-item>
@@ -39,26 +29,9 @@
 
     <el-table v-loading="loading" :data="noticeList">
       <el-table-column label="序号" align="center" prop="noticeId" width="100"/>
-      <el-table-column
-        label="公告标题"
-        align="center"
-        prop="noticeTitle"
-        :show-overflow-tooltip="true"
-      />
-      <el-table-column
-        label="公告类型"
-        align="center"
-        prop="noticeType"
-        :formatter="typeFormat"
-        width="100"
-      />
-      <el-table-column
-        label="状态"
-        align="center"
-        prop="status"
-        :formatter="statusFormat"
-        width="100"
-      />
+      <el-table-column label="公告标题" align="center" prop="noticeTitle" :show-overflow-tooltip="true"/>
+      <el-table-column label="公告类型" align="center" prop="noticeType" :formatter="typeFormat" width="100"/>
+      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" width="100"/>
       <el-table-column label="创建者" align="center" prop="createBy" width="100"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="100">
         <template slot-scope="scope">
@@ -67,33 +40,18 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-
-          >修改
+          <el-button size="mini" type="text" icon="el-icon-edit"
+                     @click="handleUpdate(scope.row)">修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-
-          >删除
+          <el-button size="mini" type="text" icon="el-icon-delete"
+                     @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+                @pagination="getList"/>
 
     <!-- 添加或修改公告对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="780px">
@@ -287,9 +245,13 @@
           type: "warning"
         }).then(function () {
           return delNotice(row.noticeId);
-        }).then(() => {
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
           this.getList();
-          this.msgSuccess("删除成功");
         }).catch(function () {
         });
       }

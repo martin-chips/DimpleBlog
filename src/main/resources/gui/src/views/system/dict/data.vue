@@ -12,13 +12,8 @@
         </el-select>
       </el-form-item>
       <el-form-item label="字典标签">
-        <el-input
-          v-model="queryParams.dictLabel"
-          placeholder="请输入字典标签"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.dictLabel" placeholder="请输入字典标签" clearable size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="状态">
         <el-select v-model="queryParams.status" placeholder="数据状态" clearable size="small">
@@ -32,7 +27,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd" >
+        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">
           新增
         </el-button>
       </el-form-item>
@@ -52,33 +47,18 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-
-          >修改
+          <el-button size="mini" type="text" icon="el-icon-edit"
+                     @click="handleUpdate(scope.row)">修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-
-          >删除
+          <el-button size="mini" type="text" icon="el-icon-delete"
+                     @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+                @pagination="getList"/>
 
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px">
@@ -271,9 +251,13 @@
           type: "warning"
         }).then(function () {
           return delData(row.dictCode);
-        }).then(() => {
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
           this.getList();
-          this.msgSuccess("删除成功");
         }).catch(function () {
         });
       }

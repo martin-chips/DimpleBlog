@@ -2,32 +2,15 @@
   <div class="app-container">
     <el-form :inline="true">
       <el-form-item label="文章标题">
-        <el-input
-          v-model="queryParams.roleName"
-          placeholder="请输入文章标题"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.roleName" placeholder="请输入文章标题" clearable size="small" style="width: 240px"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="摘要">
-        <el-input
-          v-model="queryParams.roleKey"
-          placeholder="请输入摘要"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.roleKey" placeholder="请输入摘要" clearable size="small" style="width: 240px"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="状态">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="博客状态"
-          clearable
-          size="small"
-        >
+        <el-select v-model="queryParams.status" placeholder="博客状态" clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -37,12 +20,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="推荐">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="推荐"
-          clearable
-          size="small"
-        >
+        <el-select v-model="queryParams.status" placeholder="推荐" clearable size="small">
           <el-option
             v-for="dict in supportOptions"
             :key="dict.dictValue"
@@ -52,24 +30,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="创建时间">
-        <el-date-picker
-          v-model="dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <router-link to="blog/create" class="link-type">
-          <el-button
-            type="primary"
-            icon="el-icon-plus"
-            size="mini"
+        <router-link to="blog/add" class="link-type">
+          <el-button type="primary" icon="el-icon-plus" size="mini"
           >新增
           </el-button>
         </router-link>
@@ -83,22 +50,14 @@
       <el-table-column label="封面" prop="headerImg" width="120"/>
       <el-table-column label="评论" align="center" width="120">
         <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.comment"
-            active-value="0"
-            inactive-value="1"
-            @change="handleCommentChange(scope.row)"
-          ></el-switch>
+          <el-switch v-model="scope.row.comment"
+                     @change="handleCommentChange(scope.row)"/>
         </template>
       </el-table-column>
       <el-table-column label="推荐" align="center">
         <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.support"
-            @change="handleSupportChange(scope.row)"
-            active-color="#13ce66"
-            inactive-color="#ff4949">
-          </el-switch>
+          <el-switch v-model="scope.row.support" @change="handleSupportChange(scope.row)" active-color="#13ce66"
+                     inactive-color="#ff4949"/>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -108,37 +67,21 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-          >修改
+          <el-button type="text" size="mini" icon="el-icon-edit">
+            <router-link :to="'blog/edit/'+scope.row.id">编辑</router-link>
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >删除
-          </el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+                @pagination="getList"/>
   </div>
 </template>
 
 <script>
-  import {listBlog, getBlog, delBlog, addBlog, updateBlog, changeBlogSupport, changeComment} from "@/api/blog/blog";
-  import {changeBlogComment} from "../../../api/blog/blog";
+  import {listBlog, delBlog, changeBlogSupport, changeBlogComment} from "@/api/blog/blog";
 
   export default {
     data() {
@@ -211,17 +154,23 @@
       },
       // 博客状态修改
       handleCommentChange(row) {
+        console.log(row.comment);
         let text = row.comment ? "开启评论" : "关闭评论";
         this.$confirm('确认要"' + text + '""' + row.title + '"博客吗?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return changeBlogComment(row.roleId, row.comment);
-        }).then(() => {
-          this.msgSuccess(text + "成功");
+          return changeBlogComment(row.id, row.comment);
+        }).then((response) => {
+          console.log(response)
+          if (response.code == 200) {
+            this.msgSuccess(text + "成功");
+          } else {
+            this.msgError(text + "失败");
+          }
         }).catch(function () {
-          row.comment = row.comment ? true : false;
+          this.msgError(text + "失败");
         });
       },
       handleSupportChange(row) {
@@ -232,19 +181,20 @@
           type: "warning"
         }).then(function () {
           return changeBlogSupport(row.id, row.support);
-        }).then(() => {
-          this.msgSuccess(text + "成功");
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess(text + "成功");
+          } else {
+            this.msgError(text + "失败");
+          }
         }).catch(function () {
-          row.status = row.status === false ? true : false;
+          row.support = row.support === false ? true : false;
         });
       },
       /** 搜索按钮操作 */
       handleQuery() {
         this.queryParams.pageNum = 1;
         this.getList();
-      },
-      handleUpdate(row) {
-
       },
       /** 删除按钮操作 */
       handleDelete(row) {
@@ -253,10 +203,14 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return delBlog(row.roleId);
-        }).then(() => {
+          return delBlog(row.id);
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
           this.getList();
-          this.msgSuccess("删除成功");
         }).catch(function () {
         });
       }

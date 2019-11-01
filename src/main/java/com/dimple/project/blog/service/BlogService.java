@@ -58,4 +58,12 @@ public interface BlogService {
      * @return 结果
      */
     int deleteBlogById(Long id);
+
+    /**
+     * 获取blog的标签
+     *
+     * @param query 查询条件
+     * @return 标签集合
+     */
+    List<String> selectBlogTagList(String query);
 }

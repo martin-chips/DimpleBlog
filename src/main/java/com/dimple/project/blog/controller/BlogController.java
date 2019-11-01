@@ -43,7 +43,7 @@ public class BlogController extends BaseController {
 
     @PreAuthorize("@permissionService.hasPermission('blog:blog:add')")
     @Log(title = "博客管理", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
+    @PostMapping()
     public AjaxResult add(@RequestBody Blog blog) {
         return toAjax(blogService.insertBlog(blog));
     }
@@ -56,7 +56,7 @@ public class BlogController extends BaseController {
     }
 
     @PreAuthorize("@permissionService.hasPermission('blog:blog:query')")
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable Long id) {
         return AjaxResult.success(blogService.selectBlogById(id));
     }
@@ -74,4 +74,11 @@ public class BlogController extends BaseController {
     public AjaxResult remove(@PathVariable("id") Long id) {
         return toAjax(blogService.deleteBlogById(id));
     }
+
+    @PreAuthorize("@permissionService.hasPermission('blog:blog:edit')")
+    @GetMapping("tag/{query}")
+    public TableDataInfo getCommonTag(@PathVariable String query) {
+        return getDataTable(blogService.selectBlogTagList(query));
+    }
+
 }

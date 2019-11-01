@@ -59,4 +59,13 @@ public interface BlogMapper {
      * @return 结果
      */
     int deleteBlogByIds(@Param("ids") String[] ids, @Param("username") String username);
+
+    /**
+     * 获取Blog Tag List
+     *
+     * @param query tag
+     * @return TagList
+     */
+    List<String> selectBlogTagList(String query);
+
 }

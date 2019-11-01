@@ -2,36 +2,16 @@
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
       <el-form-item label="评论地点">
-        <el-input
-          v-model="queryParams.location"
-          placeholder="请输入评论地点"
-          clearable
-          style="width: 240px;"
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.location" placeholder="请输入评论地点" clearable style="width: 240px;" size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="昵称">
-        <el-input
-          v-model="queryParams.nickName"
-          placeholder="请输入昵称"
-          clearable
-          style="width: 240px;"
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.nickName" placeholder="请输入昵称" clearable style="width: 240px;" size="small"
+                  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="评论时间">
-        <el-date-picker
-          v-model="dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -54,38 +34,21 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleView(scope.row,scope.index)"
-          >详细
+          <el-button size="mini" type="text" icon="el-icon-view"
+                     @click="handleView(scope.row,scope.index)">详细
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-          >修改
+          <el-button size="mini" type="text" icon="el-icon-edit"
+                     @click="handleUpdate(scope.row)">修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >删除
+          <el-button size="mini" type="text" icon="el-icon-delete"
+                     @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+                @pagination="getList"/>
 
     <!-- 评论详细 -->
     <el-dialog title="评论详细" :visible.sync="open" width="700px">
@@ -205,9 +168,13 @@
           type: "warning"
         }).then(function () {
           return delComment(row.id);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
+        }).then((response) => {
+          if (response.code == 200) {
+            this.getList();
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
         }).catch(function () {
         });
       }
