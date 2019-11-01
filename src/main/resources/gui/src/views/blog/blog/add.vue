@@ -1,12 +1,12 @@
 <template>
-  <blog-detail :is-edit="true"/>
+  <blog-detail :is-edit="false"/>
 </template>
 
 <script>
   import BlogDetail from './BlogDetail'
 
   export default {
-    name: 'EditBlog',
+    name: 'AddBlog',
     components: {BlogDetail}
   }
 </script>

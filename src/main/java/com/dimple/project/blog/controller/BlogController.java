@@ -34,7 +34,7 @@ public class BlogController extends BaseController {
     private BlogService blogService;
 
     @PreAuthorize("@permissionService.hasPermission('blog:blog:list')")
-    @PostMapping("/list")
+    @GetMapping("/list")
     public TableDataInfo list(Blog blog) {
         startPage();
         List<Blog> list = blogService.selectBlogList(blog);

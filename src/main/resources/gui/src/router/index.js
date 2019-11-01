@@ -100,7 +100,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'blog/create',
-        component: () => import('@/views/blog/blog/create'),
+        component: () => import('@/views/blog/blog/add'),
         name: '新增博文',
         meta: {title: '新增博文', icon: ''}
       }

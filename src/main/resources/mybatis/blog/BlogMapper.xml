@@ -14,11 +14,7 @@
         <result property="status" column="status"/>
         <result property="comment" column="comment"/>
         <result property="createBy" column="create_by"/>
-        <result property="updateBy" column="update_by"/>
         <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="deleteBy" column="delete_by"/>
-        <result property="deleteTime" column="delete_time"/>
     </resultMap>
 
     <sql id="selectBlogVo">
