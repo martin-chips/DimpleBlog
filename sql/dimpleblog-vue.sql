@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v13.1.1 (64 bit)
-MySQL - 5.7.26 : Database - dimpleblog-vue
+SQLyog Enterprise v13.1.1 (64 bit)
+MySQL - 5.7.26-log : Database - dimpleblog-vue
 *********************************************************************
 */
 
@@ -21,101 +21,138 @@ USE `dimpleblog-vue`;
 DROP TABLE IF EXISTS `bg_blog`;
 
 CREATE TABLE `bg_blog` (
-                           `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-                           `category_id` bigint(20) DEFAULT NULL COMMENT '分类id',
-                           `title` varchar(150) DEFAULT NULL COMMENT '文章标题',
-                           `summary` varchar(256) DEFAULT NULL COMMENT '摘要',
-                           `header_img` varchar(256) DEFAULT NULL COMMENT '封面图片地址',
-                           `content` text COMMENT '正文内容',
-                           `status` tinyint(4) DEFAULT NULL COMMENT '文章状态,1表示已经发表,2表示草稿箱',
-                           `comment` tinyint(4) DEFAULT NULL COMMENT '是否允许评论,1表示允许,0表示不允许',
-                           `create_by` varchar(150) DEFAULT NULL,
-                           `update_by` varchar(150) DEFAULT NULL,
-                           `create_time` datetime DEFAULT NULL,
-                           `update_time` datetime DEFAULT NULL,
-                           `delete_by` varchar(150) DEFAULT NULL,
-                           `delete_time` datetime DEFAULT NULL,
-                           PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='博客表';
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `category_id` bigint(20) DEFAULT NULL COMMENT '分类id',
+  `title` varchar(150) DEFAULT NULL COMMENT '文章标题',
+  `summary` varchar(256) DEFAULT NULL COMMENT '摘要',
+  `header_img` varchar(256) DEFAULT NULL COMMENT '封面图片地址',
+  `tag` varchar(256) DEFAULT NULL COMMENT '标签数组',
+  `content` text COMMENT '正文内容',
+  `status` tinyint(4) DEFAULT NULL COMMENT '文章状态,1表示已经发表,2表示草稿箱',
+  `comment` tinyint(4) DEFAULT NULL COMMENT '是否允许评论,1表示允许,0表示不允许',
+  `support` tinyint(4) DEFAULT '0' COMMENT '推荐',
+  `weight` bigint(20) DEFAULT '1' COMMENT '权重',
+  `create_by` varchar(150) DEFAULT NULL,
+  `update_by` varchar(150) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `delete_time` datetime DEFAULT NULL,
+  `delete_by` varchar(150) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='博客表';
 
 /*Data for the table `bg_blog` */
+
+insert  into `bg_blog`(`id`,`category_id`,`title`,`summary`,`header_img`,`tag`,`content`,`status`,`comment`,`support`,`weight`,`create_by`,`update_by`,`create_time`,`delete_time`,`delete_by`,`update_time`) values
+(1,8,'22222222222222','作者是1233333333333333333','','测试博客,博客集合','1213213',1,1,1,1,NULL,NULL,NULL,NULL,NULL,'2019-11-01 17:21:12');
+
+/*Table structure for table `bg_category` */
+
+DROP TABLE IF EXISTS `bg_category`;
+
+CREATE TABLE `bg_category` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(128) DEFAULT NULL COMMENT '分类名称',
+  `description` varchar(256) DEFAULT NULL COMMENT '描述',
+  `support` tinyint(4) DEFAULT NULL COMMENT '是否推荐',
+  `create_by` varchar(128) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` varchar(128) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `delete_by` varchar(128) DEFAULT NULL,
+  `delete_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='分类表';
+
+/*Data for the table `bg_category` */
+
+insert  into `bg_category`(`id`,`title`,`description`,`support`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
+(6,'测试一号','这是描述',0,'admin','2019-11-01 15:11:51',NULL,NULL,NULL,NULL),
+(7,'测试2号','这是描述',1,'admin','2019-11-01 15:12:00',NULL,NULL,NULL,NULL),
+(8,'测试三号','这是描述',1,'admin','2019-11-01 15:12:09',NULL,NULL,NULL,NULL),
+(9,'测试4号','这是描述',1,'admin','2019-11-01 15:12:18',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `bg_comment` */
 
 DROP TABLE IF EXISTS `bg_comment`;
 
 CREATE TABLE `bg_comment` (
-                              `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                              `email` varchar(128) DEFAULT NULL COMMENT 'Email地址',
-                              `ip` varchar(50) DEFAULT NULL COMMENT 'IP地址\n',
-                              `location` varchar(128) DEFAULT NULL COMMENT '地理位置',
-                              `os` varchar(128) DEFAULT NULL COMMENT '系统',
-                              `browser` varchar(128) DEFAULT NULL COMMENT '浏览器',
-                              `parent_id` bigint(20) DEFAULT NULL COMMENT '父评论的id',
-                              `qq_num` varchar(128) DEFAULT NULL COMMENT 'QQ号码',
-                              `avatar` varchar(256) DEFAULT NULL COMMENT '头像地址',
-                              `page_id` bigint(20) DEFAULT NULL COMMENT '页面ID',
-                              `url` varchar(128) DEFAULT NULL COMMENT '页面的URL\n',
-                              `display` tinyint(4) DEFAULT NULL COMMENT '1表示显示,0表示不显示',
-                              `good` bigint(20) DEFAULT NULL COMMENT '点赞\n',
-                              `bad` bigint(20) DEFAULT NULL COMMENT '踩',
-                              `content` varchar(2048) DEFAULT NULL COMMENT '评论内容',
-                              `create_by` varchar(128) DEFAULT NULL,
-                              `create_time` datetime DEFAULT NULL,
-                              `update_by` varchar(128) DEFAULT NULL,
-                              `update_time` datetime DEFAULT NULL,
-                              `delete_by` varchar(128) DEFAULT NULL,
-                              `delete_time` datetime DEFAULT NULL,
-                              PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='评论表';
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nick_name` varchar(128) DEFAULT NULL COMMENT '昵称',
+  `email` varchar(128) DEFAULT NULL COMMENT 'Email地址',
+  `ip` varchar(50) DEFAULT NULL COMMENT 'IP地址\n',
+  `location` varchar(128) DEFAULT NULL COMMENT '地理位置',
+  `os` varchar(128) DEFAULT NULL COMMENT '系统',
+  `browser` varchar(128) DEFAULT NULL COMMENT '浏览器',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '父评论的id',
+  `qq_num` varchar(128) DEFAULT NULL COMMENT 'QQ号码',
+  `avatar` varchar(256) DEFAULT NULL COMMENT '头像地址',
+  `page_id` bigint(20) DEFAULT NULL COMMENT '页面ID',
+  `url` varchar(128) DEFAULT NULL COMMENT '页面的URL\n',
+  `display` tinyint(4) DEFAULT NULL COMMENT '1表示显示,0表示不显示',
+  `good` bigint(20) DEFAULT '0' COMMENT '点赞\n',
+  `bad` bigint(20) DEFAULT '0' COMMENT '踩',
+  `content` varchar(2048) DEFAULT NULL COMMENT '评论内容',
+  `create_by` varchar(128) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` varchar(128) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `delete_by` varchar(128) DEFAULT NULL,
+  `delete_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='评论表';
 
 /*Data for the table `bg_comment` */
+
+insert  into `bg_comment`(`id`,`nick_name`,`email`,`ip`,`location`,`os`,`browser`,`parent_id`,`qq_num`,`avatar`,`page_id`,`url`,`display`,`good`,`bad`,`content`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
+(1,'测试','bianxiaofeng@sohu.com','127.0.0.1','背景','windows','Chrome',NULL,'726567707','',1,NULL,1,11,11,'this is a content','admin','2019-10-30 16:37:33',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `sys_blacklist` */
 
 DROP TABLE IF EXISTS `sys_blacklist`;
 
 CREATE TABLE `sys_blacklist` (
-                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-                                 `ip` varchar(128) DEFAULT NULL COMMENT 'ip地址',
-                                 `description` varchar(256) DEFAULT NULL COMMENT '封禁描述',
-                                 `intercept_count` bigint(20) DEFAULT NULL COMMENT '封禁后再访问次数',
-                                 `last_access_url` varchar(256) DEFAULT NULL COMMENT '上次访问的url',
-                                 `last_access_time` datetime DEFAULT NULL COMMENT '上次访问时间',
-                                 `create_by` varchar(150) DEFAULT NULL,
-                                 `create_time` datetime DEFAULT NULL,
-                                 `update_by` varchar(150) DEFAULT NULL,
-                                 `update_time` datetime DEFAULT NULL,
-                                 `delete_by` varchar(150) DEFAULT NULL,
-                                 `delete_time` datetime DEFAULT NULL,
-                                 PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='系统黑名单';
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `ip` varchar(128) DEFAULT NULL COMMENT 'ip地址',
+  `description` varchar(256) DEFAULT NULL COMMENT '封禁描述',
+  `intercept_count` bigint(20) DEFAULT NULL COMMENT '封禁后再访问次数',
+  `last_access_url` varchar(256) DEFAULT NULL COMMENT '上次访问的url',
+  `last_access_time` datetime DEFAULT NULL COMMENT '上次访问时间',
+  `create_by` varchar(150) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` varchar(150) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `delete_by` varchar(150) DEFAULT NULL,
+  `delete_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='系统黑名单';
 
 /*Data for the table `sys_blacklist` */
 
 insert  into `sys_blacklist`(`id`,`ip`,`description`,`intercept_count`,`last_access_url`,`last_access_time`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
-(1,'11321','1',NULL,NULL,NULL,'admin','2019-10-24 18:39:37',NULL,NULL,NULL,NULL),
-(2,'45640','232',NULL,NULL,NULL,'admin','2019-10-24 18:44:05',NULL,NULL,NULL,NULL),
-(3,'45640','232',NULL,NULL,NULL,'admin','2019-10-24 18:44:05',NULL,NULL,NULL,NULL);
+(1,'11321','1',NULL,NULL,NULL,'admin','2019-10-24 18:39:37',NULL,NULL,'admin','2019-10-28 17:12:02'),
+(2,'45640','232',NULL,NULL,NULL,'admin','2019-10-24 18:44:05',NULL,NULL,'admin','2019-10-28 17:12:06'),
+(3,'45640','232',NULL,NULL,NULL,'admin','2019-10-24 18:44:05',NULL,NULL,'admin','2019-10-28 17:12:09'),
+(4,'121321','121312',NULL,NULL,NULL,'admin','2019-10-28 17:12:14',NULL,NULL,'admin','2019-10-28 17:12:16');
 
 /*Table structure for table `sys_config` */
 
 DROP TABLE IF EXISTS `sys_config`;
 
 CREATE TABLE `sys_config` (
-                              `config_id` int(5) NOT NULL AUTO_INCREMENT COMMENT '参数主键',
-                              `config_name` varchar(100) DEFAULT '' COMMENT '参数名称',
-                              `config_key` varchar(100) DEFAULT '' COMMENT '参数键名',
-                              `config_value` varchar(500) DEFAULT '' COMMENT '参数键值',
-                              `config_type` char(1) DEFAULT 'N' COMMENT '系统内置（Y是 N否）',
-                              `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                              `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                              `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                              `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                              `delete_by` varchar(64) DEFAULT '',
-                              `delete_time` datetime DEFAULT NULL,
-                              `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-                              PRIMARY KEY (`config_id`)
+  `config_id` int(5) NOT NULL AUTO_INCREMENT COMMENT '参数主键',
+  `config_name` varchar(100) DEFAULT '' COMMENT '参数名称',
+  `config_key` varchar(100) DEFAULT '' COMMENT '参数键名',
+  `config_value` varchar(500) DEFAULT '' COMMENT '参数键值',
+  `config_type` char(1) DEFAULT 'N' COMMENT '系统内置（Y是 N否）',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_by` varchar(64) DEFAULT '',
+  `delete_time` datetime DEFAULT NULL,
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`config_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='参数配置表';
 
 /*Data for the table `sys_config` */
@@ -131,24 +168,24 @@ insert  into `sys_config`(`config_id`,`config_name`,`config_key`,`config_value`,
 DROP TABLE IF EXISTS `sys_dict_data`;
 
 CREATE TABLE `sys_dict_data` (
-                                 `dict_code` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典编码',
-                                 `dict_sort` int(4) DEFAULT '0' COMMENT '字典排序',
-                                 `dict_label` varchar(100) DEFAULT '' COMMENT '字典标签',
-                                 `dict_value` varchar(100) DEFAULT '' COMMENT '字典键值',
-                                 `dict_type` varchar(100) DEFAULT '' COMMENT '字典类型',
-                                 `css_class` varchar(100) DEFAULT NULL COMMENT '样式属性（其他样式扩展）',
-                                 `list_class` varchar(100) DEFAULT NULL COMMENT '表格回显样式',
-                                 `is_default` char(1) DEFAULT 'N' COMMENT '是否默认（Y是 N否）',
-                                 `status` char(1) DEFAULT '0' COMMENT '状态（0正常 1停用）',
-                                 `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                                 `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                                 `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                                 `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                                 `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
-                                 `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
-                                 `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-                                 PRIMARY KEY (`dict_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='字典数据表';
+  `dict_code` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典编码',
+  `dict_sort` int(4) DEFAULT '0' COMMENT '字典排序',
+  `dict_label` varchar(100) DEFAULT '' COMMENT '字典标签',
+  `dict_value` varchar(100) DEFAULT '' COMMENT '字典键值',
+  `dict_type` varchar(100) DEFAULT '' COMMENT '字典类型',
+  `css_class` varchar(100) DEFAULT NULL COMMENT '样式属性（其他样式扩展）',
+  `list_class` varchar(100) DEFAULT NULL COMMENT '表格回显样式',
+  `is_default` char(1) DEFAULT 'N' COMMENT '是否默认（Y是 N否）',
+  `status` char(1) DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`dict_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='字典数据表';
 
 /*Data for the table `sys_dict_data` */
 
@@ -180,27 +217,33 @@ insert  into `sys_dict_data`(`dict_code`,`dict_sort`,`dict_label`,`dict_value`,`
 (25,8,'生成代码','8','sys_oper_type','','warning','N','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'生成操作'),
 (26,9,'清空数据','9','sys_oper_type','','danger','N','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'清空操作'),
 (27,1,'成功','0','sys_common_status','','primary','N','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'正常状态'),
-(28,2,'失败','1','sys_common_status','','danger','N','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'停用状态');
+(28,2,'失败','1','sys_common_status','','danger','N','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'停用状态'),
+(29,1,'草稿','false','bg_blog_status',NULL,NULL,'N','0','admin','2019-10-31 14:33:38','admin','2019-10-31 14:35:03','',NULL,'草稿箱'),
+(30,2,'发布','true','bg_blog_status',NULL,NULL,'N','0','admin','2019-10-31 14:34:45','admin','2019-10-31 14:34:53','',NULL,'已发布'),
+(31,1,'是','true','bg_blog_support',NULL,NULL,'N','0','admin','2019-10-31 14:46:49','',NULL,'',NULL,'推荐'),
+(32,2,'否','false','bg_blog_support',NULL,NULL,'N','0','admin','2019-10-31 14:47:22','',NULL,'',NULL,'不推荐'),
+(33,1,'开启','true','bg_blog_comment',NULL,NULL,'N','0','admin','2019-10-31 18:38:35','',NULL,'',NULL,'开启'),
+(34,2,'关闭','false','bg_blog_comment',NULL,NULL,'N','0','admin','2019-10-31 18:38:53','',NULL,'',NULL,'关闭');
 
 /*Table structure for table `sys_dict_type` */
 
 DROP TABLE IF EXISTS `sys_dict_type`;
 
 CREATE TABLE `sys_dict_type` (
-                                 `dict_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典主键',
-                                 `dict_name` varchar(100) DEFAULT '' COMMENT '字典名称',
-                                 `dict_type` varchar(100) DEFAULT '' COMMENT '字典类型',
-                                 `status` char(1) DEFAULT '0' COMMENT '状态（0正常 1停用）',
-                                 `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                                 `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                                 `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                                 `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                                 `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
-                                 `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
-                                 `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-                                 PRIMARY KEY (`dict_id`),
-                                 UNIQUE KEY `dict_type` (`dict_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='字典类型表';
+  `dict_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典主键',
+  `dict_name` varchar(100) DEFAULT '' COMMENT '字典名称',
+  `dict_type` varchar(100) DEFAULT '' COMMENT '字典类型',
+  `status` char(1) DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`dict_id`),
+  UNIQUE KEY `dict_type` (`dict_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='字典类型表';
 
 /*Data for the table `sys_dict_type` */
 
@@ -214,29 +257,32 @@ insert  into `sys_dict_type`(`dict_id`,`dict_name`,`dict_type`,`status`,`create_
 (7,'通知类型','sys_notice_type','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'通知类型列表'),
 (8,'通知状态','sys_notice_status','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'通知状态列表'),
 (9,'操作类型','sys_oper_type','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'操作类型列表'),
-(10,'系统状态','sys_common_status','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'登录状态列表');
+(10,'系统状态','sys_common_status','0','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'登录状态列表'),
+(11,'博客状态','bg_blog_status','0','admin','2019-10-31 14:15:39','',NULL,'',NULL,'博客状态列表'),
+(12,'博客推荐','bg_blog_support','0','admin','2019-10-31 14:46:33','',NULL,'',NULL,'博客推荐列表'),
+(13,'博客评论','bg_blog_comment','0','admin','2019-10-31 18:38:12','',NULL,'',NULL,'博客评论列表');
 
 /*Table structure for table `sys_job` */
 
 DROP TABLE IF EXISTS `sys_job`;
 
 CREATE TABLE `sys_job` (
-                           `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
-                           `job_name` varchar(64) NOT NULL DEFAULT '' COMMENT '任务名称',
-                           `job_group` varchar(64) NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
-                           `invoke_target` varchar(500) NOT NULL COMMENT '调用目标字符串',
-                           `cron_expression` varchar(255) DEFAULT '' COMMENT 'cron执行表达式',
-                           `misfire_policy` varchar(20) DEFAULT '3' COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
-                           `concurrent` char(1) DEFAULT '1' COMMENT '是否并发执行（0允许 1禁止）',
-                           `status` char(1) DEFAULT '0' COMMENT '状态（0正常 1暂停）',
-                           `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                           `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                           `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                           `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                           `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
-                           `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
-                           `remark` varchar(500) DEFAULT '' COMMENT '备注信息',
-                           PRIMARY KEY (`job_id`,`job_name`,`job_group`)
+  `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `job_name` varchar(64) NOT NULL DEFAULT '' COMMENT '任务名称',
+  `job_group` varchar(64) NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
+  `invoke_target` varchar(500) NOT NULL COMMENT '调用目标字符串',
+  `cron_expression` varchar(255) DEFAULT '' COMMENT 'cron执行表达式',
+  `misfire_policy` varchar(20) DEFAULT '3' COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
+  `concurrent` char(1) DEFAULT '1' COMMENT '是否并发执行（0允许 1禁止）',
+  `status` char(1) DEFAULT '0' COMMENT '状态（0正常 1暂停）',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
+  `remark` varchar(500) DEFAULT '' COMMENT '备注信息',
+  PRIMARY KEY (`job_id`,`job_name`,`job_group`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='定时任务调度表';
 
 /*Data for the table `sys_job` */
@@ -251,35 +297,63 @@ insert  into `sys_job`(`job_id`,`job_name`,`job_group`,`invoke_target`,`cron_exp
 DROP TABLE IF EXISTS `sys_job_log`;
 
 CREATE TABLE `sys_job_log` (
-                               `job_log_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
-                               `job_name` varchar(64) NOT NULL COMMENT '任务名称',
-                               `job_group` varchar(64) NOT NULL COMMENT '任务组名',
-                               `invoke_target` varchar(500) NOT NULL COMMENT '调用目标字符串',
-                               `job_message` varchar(500) DEFAULT NULL COMMENT '日志信息',
-                               `status` char(1) DEFAULT '0' COMMENT '执行状态（0正常 1失败）',
-                               `exception_info` varchar(2000) DEFAULT '' COMMENT '异常信息',
-                               `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                               PRIMARY KEY (`job_log_id`)
+  `job_log_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
+  `job_name` varchar(64) NOT NULL COMMENT '任务名称',
+  `job_group` varchar(64) NOT NULL COMMENT '任务组名',
+  `invoke_target` varchar(500) NOT NULL COMMENT '调用目标字符串',
+  `job_message` varchar(500) DEFAULT NULL COMMENT '日志信息',
+  `status` char(1) DEFAULT '0' COMMENT '执行状态（0正常 1失败）',
+  `exception_info` varchar(2000) DEFAULT '' COMMENT '异常信息',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`job_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务调度日志表';
 
 /*Data for the table `sys_job_log` */
+
+/*Table structure for table `sys_link` */
+
+DROP TABLE IF EXISTS `sys_link`;
+
+CREATE TABLE `sys_link` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `title` varchar(128) DEFAULT NULL COMMENT '友链名称',
+  `url` varchar(128) DEFAULT NULL COMMENT '友链地址',
+  `description` varchar(512) DEFAULT NULL COMMENT '友链描述',
+  `header_img` varchar(128) DEFAULT NULL COMMENT '网站图片',
+  `status` tinyint(4) DEFAULT '0' COMMENT '1表示审核通过,0表示未审核',
+  `display` tinyint(4) DEFAULT '0' COMMENT '是否显示友链',
+  `email` varchar(128) DEFAULT NULL COMMENT '站长邮箱地址',
+  `weight` bigint(20) DEFAULT '0' COMMENT '权重',
+  `create_by` varchar(128) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` varchar(128) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `delete_by` varchar(128) DEFAULT NULL,
+  `delete_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='友链表';
+
+/*Data for the table `sys_link` */
+
+insert  into `sys_link`(`id`,`title`,`url`,`description`,`header_img`,`status`,`display`,`email`,`weight`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
+(1,'1232222222222222','222','ewew','1',0,1,'21@email.com',122,'admin','2019-10-29 12:21:10','admin','2019-10-30 15:59:28','admin','2019-10-30 16:04:41');
 
 /*Table structure for table `sys_login_log` */
 
 DROP TABLE IF EXISTS `sys_login_log`;
 
 CREATE TABLE `sys_login_log` (
-                                 `info_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '访问ID',
-                                 `user_name` varchar(50) DEFAULT '' COMMENT '用户账号',
-                                 `ipaddr` varchar(50) DEFAULT '' COMMENT '登录IP地址',
-                                 `login_location` varchar(255) DEFAULT '' COMMENT '登录地点',
-                                 `browser` varchar(50) DEFAULT '' COMMENT '浏览器类型',
-                                 `os` varchar(50) DEFAULT '' COMMENT '操作系统',
-                                 `status` char(1) DEFAULT '0' COMMENT '登录状态（0成功 1失败）',
-                                 `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
-                                 `login_time` datetime DEFAULT NULL COMMENT '访问时间',
-                                 PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
+  `info_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '访问ID',
+  `user_name` varchar(50) DEFAULT '' COMMENT '用户账号',
+  `ipaddr` varchar(50) DEFAULT '' COMMENT '登录IP地址',
+  `login_location` varchar(255) DEFAULT '' COMMENT '登录地点',
+  `browser` varchar(50) DEFAULT '' COMMENT '浏览器类型',
+  `os` varchar(50) DEFAULT '' COMMENT '操作系统',
+  `status` char(1) DEFAULT '0' COMMENT '登录状态（0成功 1失败）',
+  `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
+  `login_time` datetime DEFAULT NULL COMMENT '访问时间',
+  PRIMARY KEY (`info_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
 
 /*Data for the table `sys_login_log` */
 
@@ -321,33 +395,62 @@ insert  into `sys_login_log`(`info_id`,`user_name`,`ipaddr`,`login_location`,`br
 (134,'admin','127.0.0.1','内网IP','Chrome','Windows 10','1','验证码已失效','2019-10-26 19:05:36'),
 (135,'admin','127.0.0.1','内网IP','Chrome','Windows 10','1','验证码已失效','2019-10-26 19:05:44'),
 (136,'admin','127.0.0.1','内网IP','Chrome','Windows 10','1','验证码已失效','2019-10-26 19:05:50'),
-(137,'admin','127.0.0.1','内网IP','Chrome','Windows 10','0','登录成功','2019-10-26 19:05:56');
+(137,'admin','127.0.0.1','内网IP','Chrome','Windows 10','0','登录成功','2019-10-26 19:05:56'),
+(138,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-28 10:46:07'),
+(139,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-10-28 10:47:45'),
+(140,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-28 10:47:51'),
+(141,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-10-28 10:50:11'),
+(142,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-28 10:51:00'),
+(143,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-28 10:58:46'),
+(144,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-28 11:10:05'),
+(145,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-28 17:06:19'),
+(146,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-29 09:28:32'),
+(147,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-29 11:26:57'),
+(148,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-10-29 12:15:45'),
+(149,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-29 12:15:50'),
+(150,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-29 12:18:33'),
+(151,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-29 13:44:52'),
+(152,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-29 16:54:58'),
+(153,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-29 18:19:01'),
+(154,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-30 15:23:52'),
+(155,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-31 13:36:35'),
+(156,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-31 16:16:18'),
+(157,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-10-31 17:52:22'),
+(158,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-01 09:48:32'),
+(159,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-01 10:15:35'),
+(160,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-01 11:56:04'),
+(161,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-01 13:47:42'),
+(162,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-01 14:59:30'),
+(163,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-01 14:59:37'),
+(164,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-01 14:59:55'),
+(165,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-01 16:21:04'),
+(166,'admin','127.0.0.1','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-01 17:13:39');
 
 /*Table structure for table `sys_menu` */
 
 DROP TABLE IF EXISTS `sys_menu`;
 
 CREATE TABLE `sys_menu` (
-                            `menu_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
-                            `menu_name` varchar(50) NOT NULL COMMENT '菜单名称',
-                            `parent_id` bigint(20) DEFAULT '0' COMMENT '父菜单ID',
-                            `order_num` int(4) DEFAULT '0' COMMENT '显示顺序',
-                            `path` varchar(200) DEFAULT '' COMMENT '路由地址',
-                            `component` varchar(255) DEFAULT NULL COMMENT '组件路径',
-                            `is_frame` int(1) DEFAULT '1' COMMENT '是否为外链（0是 1否）',
-                            `menu_type` char(1) DEFAULT '' COMMENT '菜单类型（0目录 1菜单 2按钮）',
-                            `visible` char(1) DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
-                            `perms` varchar(100) DEFAULT NULL COMMENT '权限标识',
-                            `icon` varchar(100) DEFAULT '#' COMMENT '菜单图标',
-                            `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                            `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                            `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                            `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
-                            `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
-                            `remark` varchar(500) DEFAULT '' COMMENT '备注',
-                            PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1072 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
+  `menu_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
+  `menu_name` varchar(50) NOT NULL COMMENT '菜单名称',
+  `parent_id` bigint(20) DEFAULT '0' COMMENT '父菜单ID',
+  `order_num` int(4) DEFAULT '0' COMMENT '显示顺序',
+  `path` varchar(200) DEFAULT '' COMMENT '路由地址',
+  `component` varchar(255) DEFAULT NULL COMMENT '组件路径',
+  `is_frame` int(1) DEFAULT '1' COMMENT '是否为外链（0是 1否）',
+  `menu_type` char(1) DEFAULT '' COMMENT '菜单类型（0目录 1菜单 2按钮）',
+  `visible` char(1) DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
+  `perms` varchar(100) DEFAULT NULL COMMENT '权限标识',
+  `icon` varchar(100) DEFAULT '#' COMMENT '菜单图标',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
+  `remark` varchar(500) DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`menu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1093 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
 
 /*Data for the table `sys_menu` */
 
@@ -425,27 +528,48 @@ insert  into `sys_menu`(`menu_id`,`menu_name`,`parent_id`,`order_num`,`path`,`co
 (1067,'博文管理',1066,1,'/blog/blog','blog/blog/index',1,'C','0','blog:blog:list','dict','admin','2019-10-24 10:26:41','admin','2019-10-24 14:39:17','',NULL,''),
 (1068,'评论管理',1066,4,'/blog/comment','blog/comment/index',1,'C','0','blog:comment:list','component','admin','2019-10-24 10:31:20','',NULL,'',NULL,''),
 (1069,'类别管理',1066,2,'/blog/category','blog/category/index',1,'C','0','blog:category:list','download','admin','2019-10-24 10:32:17','',NULL,'',NULL,''),
-(1070,'标签管理',1066,3,'/blog/tag','blog/tag/index',1,'C','0','blog:tag:list','education','admin','2019-10-24 10:32:49','',NULL,'',NULL,''),
-(1071,'黑名单',2,6,'/monitor/blacklist','monitor/blacklist/index',1,'C','0','monitor:blacklist:list','drag','admin','2019-10-24 16:49:08','',NULL,'',NULL,'');
+(1070,'标签管理',1066,3,'/blog/tag','blog/tag/index',1,'C','0','blog:tag:list','education','admin','2019-10-24 10:32:49','',NULL,'admin','2019-11-01 17:13:55',''),
+(1071,'黑名单',2,6,'/monitor/blacklist','monitor/blacklist/index',1,'C','0','monitor:blacklist:list','drag','admin','2019-10-24 16:49:08','',NULL,'',NULL,''),
+(1072,'友链管理',1,6,'/system/link','system/link/index',1,'C','0','system:link:list','404','admin','2019-10-29 11:27:42','',NULL,'',NULL,''),
+(1073,'博文查询',1067,1,'',NULL,1,'F','0','blog:blog:query','#','admin','2019-11-01 17:25:38','',NULL,'',NULL,''),
+(1074,'博文修改',1067,2,'',NULL,1,'F','0','blog:blog:edit','#','admin','2019-11-01 17:25:56','',NULL,'',NULL,''),
+(1075,'博文新增',1067,3,'',NULL,1,'F','0','blog:blog:add','#','admin','2019-11-01 17:26:14','',NULL,'',NULL,''),
+(1076,'博文删除',1067,4,'',NULL,1,'F','0','blog:blog:remove','#','admin','2019-11-01 17:26:39','',NULL,'',NULL,''),
+(1077,'类别新增',1069,1,'',NULL,1,'F','0','blog:category:add','#','admin','2019-11-01 17:27:09','',NULL,'',NULL,''),
+(1078,'类别删除',1069,2,'',NULL,1,'F','0','blog:category:remove','#','admin','2019-11-01 17:27:27','',NULL,'',NULL,''),
+(1079,'分类查询',1069,3,'',NULL,1,'F','0','blog:category:query','#','admin','2019-11-01 17:27:49','',NULL,'',NULL,''),
+(1080,'分类修改',1069,4,'',NULL,1,'F','0','blog:category:edit','#','admin','2019-11-01 17:28:09','',NULL,'',NULL,''),
+(1081,'评论新增',1068,1,'',NULL,1,'F','0','blog:comment:add','#','admin','2019-11-01 17:28:28','',NULL,'',NULL,''),
+(1082,'评论删除',1068,2,'',NULL,1,'F','0','blog:comment:remove','#','admin','2019-11-01 17:28:50','',NULL,'',NULL,''),
+(1083,'评论修改',1068,3,'',NULL,1,'F','0','blog:comment:edit','#','admin','2019-11-01 17:29:32','',NULL,'',NULL,''),
+(1084,'评论查询',1068,4,'',NULL,1,'F','0','blog:comment:query','#','admin','2019-11-01 17:29:51','',NULL,'',NULL,''),
+(1085,'友链新增',1072,1,'',NULL,1,'F','0','system:link:add','#','admin','2019-11-01 17:30:17','',NULL,'',NULL,''),
+(1086,'友链删除',1072,2,'',NULL,1,'F','0','system:link:remove','#','admin','2019-11-01 17:30:34','',NULL,'',NULL,''),
+(1087,'友链查询',1072,3,'',NULL,1,'F','0','system:link:query','#','admin','2019-11-01 17:30:52','',NULL,'',NULL,''),
+(1088,'友链修改',1072,4,'',NULL,1,'F','0','system:link:edit','#','admin','2019-11-01 17:31:08','',NULL,'',NULL,''),
+(1089,'黑名单新增',1071,1,'',NULL,1,'F','0','monitor:blacklist:add','#','admin','2019-11-01 17:31:37','',NULL,'',NULL,''),
+(1090,'黑名单修改',1071,2,'',NULL,1,'F','0','monitor:blacklist:edit','#','admin','2019-11-01 17:31:53','',NULL,'',NULL,''),
+(1091,'黑名单删除',1071,3,'',NULL,1,'F','0','monitor:blacklist:remove','#','admin','2019-11-01 17:32:10','',NULL,'',NULL,''),
+(1092,'黑名单查询',1071,4,'',NULL,1,'F','0','monitor:blacklist:query','#','admin','2019-11-01 17:32:24','',NULL,'',NULL,'');
 
 /*Table structure for table `sys_notice` */
 
 DROP TABLE IF EXISTS `sys_notice`;
 
 CREATE TABLE `sys_notice` (
-                              `notice_id` int(4) NOT NULL AUTO_INCREMENT COMMENT '公告ID',
-                              `notice_title` varchar(50) NOT NULL COMMENT '公告标题',
-                              `notice_type` char(1) NOT NULL COMMENT '公告类型（1通知 2公告）',
-                              `notice_content` varchar(2000) DEFAULT NULL COMMENT '公告内容',
-                              `status` char(1) DEFAULT '0' COMMENT '公告状态（0正常 1关闭）',
-                              `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                              `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                              `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                              `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                              `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
-                              `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
-                              `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-                              PRIMARY KEY (`notice_id`)
+  `notice_id` int(4) NOT NULL AUTO_INCREMENT COMMENT '公告ID',
+  `notice_title` varchar(50) NOT NULL COMMENT '公告标题',
+  `notice_type` char(1) NOT NULL COMMENT '公告类型（1通知 2公告）',
+  `notice_content` varchar(2000) DEFAULT NULL COMMENT '公告内容',
+  `status` char(1) DEFAULT '0' COMMENT '公告状态（0正常 1关闭）',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`notice_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='通知公告表';
 
 /*Data for the table `sys_notice` */
@@ -459,23 +583,23 @@ insert  into `sys_notice`(`notice_id`,`notice_title`,`notice_type`,`notice_conte
 DROP TABLE IF EXISTS `sys_operate_log`;
 
 CREATE TABLE `sys_operate_log` (
-                                   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '日志主键',
-                                   `title` varchar(50) DEFAULT '' COMMENT '模块标题',
-                                   `business_type` int(2) DEFAULT '0' COMMENT '业务类型（0其它 1新增 2修改 3删除）',
-                                   `method` varchar(100) DEFAULT '' COMMENT '方法名称',
-                                   `request_method` varchar(10) DEFAULT '' COMMENT '请求方式',
-                                   `operator_type` int(1) DEFAULT '0' COMMENT '操作类别（0其它 1后台用户 2手机端用户）',
-                                   `operate_name` varchar(50) DEFAULT '' COMMENT '操作人员',
-                                   `url` varchar(255) DEFAULT '' COMMENT '请求URL',
-                                   `ip` varchar(50) DEFAULT '' COMMENT '主机地址',
-                                   `location` varchar(255) DEFAULT '' COMMENT '操作地点',
-                                   `param` varchar(2000) DEFAULT '' COMMENT '请求参数',
-                                   `json_result` varchar(2000) DEFAULT '' COMMENT '返回参数',
-                                   `status` int(1) DEFAULT '0' COMMENT '操作状态（0正常 1异常）',
-                                   `error_msg` varchar(2000) DEFAULT '' COMMENT '错误消息',
-                                   `operate_time` datetime DEFAULT NULL COMMENT '操作时间',
-                                   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+  `title` varchar(50) DEFAULT '' COMMENT '模块标题',
+  `business_type` int(2) DEFAULT '0' COMMENT '业务类型（0其它 1新增 2修改 3删除）',
+  `method` varchar(100) DEFAULT '' COMMENT '方法名称',
+  `request_method` varchar(10) DEFAULT '' COMMENT '请求方式',
+  `operator_type` int(1) DEFAULT '0' COMMENT '操作类别（0其它 1后台用户 2手机端用户）',
+  `operate_name` varchar(50) DEFAULT '' COMMENT '操作人员',
+  `url` varchar(255) DEFAULT '' COMMENT '请求URL',
+  `ip` varchar(50) DEFAULT '' COMMENT '主机地址',
+  `location` varchar(255) DEFAULT '' COMMENT '操作地点',
+  `param` varchar(2000) DEFAULT '' COMMENT '请求参数',
+  `json_result` varchar(2000) DEFAULT '' COMMENT '返回参数',
+  `status` int(1) DEFAULT '0' COMMENT '操作状态（0正常 1异常）',
+  `error_msg` varchar(2000) DEFAULT '' COMMENT '错误消息',
+  `operate_time` datetime DEFAULT NULL COMMENT '操作时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=320 DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
 
 /*Data for the table `sys_operate_log` */
 
@@ -566,26 +690,157 @@ insert  into `sys_operate_log`(`id`,`title`,`business_type`,`method`,`request_me
 (185,'黑名单管理',1,'com.dimple.project.monitor.controller.SysBlacklistController.add()','POST',1,'admin','/monitor/blacklist','127.0.0.1','内网IP','{\"ip\":\"45640\",\"description\":\"232\",\"params\":{},\"createBy\":\"admin\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-24 18:44:05'),
 (186,'角色管理',2,'com.dimple.project.system.controller.SysRoleController.changeStatus()','PUT',1,'admin','/system/role/changeStatus','127.0.0.1','内网IP','{\"flag\":false,\"roleId\":2,\"admin\":false,\"params\":{},\"updateBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-26 14:39:42'),
 (187,'在线用户',3,'com.dimple.project.monitor.controller.SysUserOnlineController.forceLogout()','DELETE',1,'admin','/monitor/online/79c728f7-720c-48f6-842c-3dfdf6c52d34','192.168.0.102','内网IP','{tokenId=79c728f7-720c-48f6-842c-3dfdf6c52d34}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-26 14:41:04'),
-(188,'在线用户',3,'com.dimple.project.monitor.controller.SysUserOnlineController.forceLogout()','DELETE',1,NULL,'/monitor/online/c737fdcf-d79b-4b20-ba19-b778b29d6f06','192.168.0.102','内网IP','{tokenId=c737fdcf-d79b-4b20-ba19-b778b29d6f06}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-26 14:41:15');
+(188,'在线用户',3,'com.dimple.project.monitor.controller.SysUserOnlineController.forceLogout()','DELETE',1,NULL,'/monitor/online/c737fdcf-d79b-4b20-ba19-b778b29d6f06','192.168.0.102','内网IP','{tokenId=c737fdcf-d79b-4b20-ba19-b778b29d6f06}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-26 14:41:15'),
+(189,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/1','127.0.0.1','内网IP','{ids=1}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'array\' not found. Available parameters are [ids, deleteBy, param1, param2]','2019-10-28 17:07:44'),
+(190,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/1','127.0.0.1','内网IP','{ids=1}','null',1,'\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'admin\' in \'field list\'\r\n### The error may exist in file [E:\\Code\\SpringBoot\\DimpleBlog\\target\\classes\\mybatis\\monitor\\BlacklistMapper.xml]\r\n### The error may involve com.dimple.project.monitor.mapper.BlacklistMapper.deleteBlacklistByIds-Inline\r\n### The error occurred while setting parameters\r\n### SQL: update sys_blacklist set delete_by =admin , delete_time=sysdate() where id in          (               ?          )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'admin\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'admin\' in \'field list\'','2019-10-28 17:09:21'),
+(191,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/1','127.0.0.1','内网IP','{ids=1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-28 17:11:08'),
+(192,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/1','127.0.0.1','内网IP','{ids=1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-28 17:11:13'),
+(193,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/1','127.0.0.1','内网IP','{ids=1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-28 17:12:02'),
+(194,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/2','127.0.0.1','内网IP','{ids=2}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-28 17:12:06'),
+(195,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/3','127.0.0.1','内网IP','{ids=3}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-28 17:12:09'),
+(196,'黑名单管理',1,'com.dimple.project.monitor.controller.BlacklistController.add()','POST',1,'admin','/monitor/blacklist','127.0.0.1','内网IP','{\"ip\":\"121321\",\"description\":\"121312\",\"params\":{},\"createBy\":\"admin\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-28 17:12:14'),
+(197,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/4','127.0.0.1','内网IP','{ids=4}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-28 17:12:16'),
+(198,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"params\":{},\"createTime\":1572312523734}','null',1,'\r\n### Error updating database.  Cause: java.sql.SQLException: Column count doesn\'t match value count at row 1\r\n### The error may exist in file [E:\\Code\\SpringBoot\\DimpleBlog\\target\\classes\\mybatis\\blog\\CategoryMapper.xml]\r\n### The error may involve com.dimple.project.blog.mapper.CategoryMapper.insertCategory-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into bg_category          ( create_by,create_time )           values ( sysdate() )\r\n### Cause: java.sql.SQLException: Column count doesn\'t match value count at row 1\n; bad SQL grammar []; nested exception is java.sql.SQLException: Column count doesn\'t match value count at row 1','2019-10-29 09:28:43'),
+(199,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"params\":{},\"createBy\":\"admin\",\"createTime\":1572312643577,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:30:43'),
+(200,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"params\":{},\"createBy\":\"admin\",\"createTime\":1572312769984,\"id\":2}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:32:50'),
+(201,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"params\":{},\"createBy\":\"admin\",\"id\":3}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:33:50'),
+(202,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"111\",\"params\":{},\"title\":\"111\",\"createBy\":\"admin\",\"id\":4,\"support\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:36:05'),
+(203,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/1','127.0.0.1','内网IP','{ids=1}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'array\' not found. Available parameters are [ids, param1, username, param2]','2019-10-29 09:38:23'),
+(204,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/1','127.0.0.1','内网IP','{ids=1}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'array\' not found. Available parameters are [ids, param1, username, param2]','2019-10-29 09:39:09'),
+(205,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/1','127.0.0.1','内网IP','{ids=1}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [ids, param1, username, param2]','2019-10-29 09:40:19'),
+(206,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/1','127.0.0.1','内网IP','{ids=1}','null',1,'\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'delete_date\' in \'field list\'\r\n### The error may exist in file [E:\\Code\\SpringBoot\\DimpleBlog\\target\\classes\\mybatis\\blog\\CategoryMapper.xml]\r\n### The error may involve com.dimple.project.blog.mapper.CategoryMapper.deleteCategoryByIds-Inline\r\n### The error occurred while setting parameters\r\n### SQL: update bg_category set delete_date=sysdate(),delete_by=? where id in          (               ?          )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'delete_date\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'delete_date\' in \'field list\'','2019-10-29 09:41:00'),
+(207,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/1','127.0.0.1','内网IP','{ids=1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:42:07'),
+(208,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/1','127.0.0.1','内网IP','{ids=1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:51:05'),
+(209,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/4','127.0.0.1','内网IP','{ids=4}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:58:33'),
+(210,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/3','127.0.0.1','内网IP','{ids=3}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:58:35'),
+(211,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/2','127.0.0.1','内网IP','{ids=2}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:58:45'),
+(212,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"111\",\"params\":{},\"title\":\"11\",\"createBy\":\"admin\",\"id\":5,\"support\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 09:58:51'),
+(213,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"updateTime\":1572314876980,\"params\":{}}','{\"msg\":\"操作失败\",\"code\":500}',0,NULL,'2019-10-29 10:07:56'),
+(214,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"updateTime\":1572314951828,\"params\":{}}','{\"msg\":\"操作失败\",\"code\":500}',0,NULL,'2019-10-29 10:09:11'),
+(215,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"111\",\"updateTime\":1572315156164,\"params\":{},\"title\":\"11\",\"createBy\":\"admin\",\"createTime\":1572314330000,\"id\":5,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 10:12:36'),
+(216,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"111\",\"updateTime\":1572315160816,\"params\":{},\"title\":\"11\",\"createBy\":\"admin\",\"createTime\":1572314330000,\"id\":5,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 10:12:40'),
+(217,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"111\",\"updateTime\":1572315164181,\"params\":{},\"title\":\"11\",\"createBy\":\"admin\",\"createTime\":1572314330000,\"id\":5,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 10:12:44'),
+(218,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"24313412\",\"updateTime\":1572315169010,\"params\":{},\"title\":\"11\",\"createBy\":\"admin\",\"createTime\":1572314330000,\"id\":5,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 10:12:49'),
+(219,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"updateTime\":1572315592090,\"params\":{},\"id\":5,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 10:19:52'),
+(220,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"updateTime\":1572315598228,\"params\":{},\"id\":5,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 10:19:58'),
+(221,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"updateTime\":1572315664031,\"params\":{},\"id\":5,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 10:21:04'),
+(222,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','127.0.0.1','内网IP','{\"updateTime\":1572315664512,\"params\":{},\"id\":5,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 10:21:04'),
+(223,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"icon\":\"404\",\"orderNum\":\"6\",\"menuName\":\"友链管理\",\"params\":{},\"parentId\":1,\"path\":\"/system/link\",\"component\":\"system/link/index\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"C\",\"perms\":\"system:link:list\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 11:27:42'),
+(224,'友链管理',1,'com.dimple.project.system.controller.LinkController.add()','POST',1,'admin','/system/link','127.0.0.1','内网IP','{\"weight\":3,\"params\":{},\"title\":\"123\",\"url\":\"123\",\"createBy\":\"admin\",\"id\":1,\"email\":\"21\",\"headerImg\":\"1\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 12:21:10'),
+(225,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"display\":0,\"weight\":3,\"params\":{},\"title\":\"12322222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222\",\"url\":\"123\",\"createBy\":\"admin\",\"createTime\":1572322870000,\"updateBy\":\"admin\",\"id\":1,\"email\":\"21@email.com\",\"headerImg\":\"1\",\"status\":0}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:07:56'),
+(226,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"display\":false,\"weight\":22222222222,\"params\":{},\"title\":\"12322222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222\",\"url\":\"123\",\"createBy\":\"admin\",\"createTime\":1572322870000,\"updateBy\":\"admin\",\"id\":1,\"email\":\"21@email.com\",\"headerImg\":\"1\",\"status\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:11:05'),
+(227,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"display\":false,\"weight\":122,\"params\":{},\"title\":\"12322222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222\",\"url\":\"123\",\"createBy\":\"admin\",\"createTime\":1572322870000,\"updateBy\":\"admin\",\"id\":1,\"email\":\"21@email.com\",\"headerImg\":\"1\",\"status\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:11:11'),
+(228,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"display\":false,\"weight\":122,\"params\":{},\"title\":\"12322222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222\",\"url\":\"222\",\"createBy\":\"admin\",\"createTime\":1572322870000,\"updateBy\":\"admin\",\"id\":1,\"email\":\"21@email.com\",\"headerImg\":\"1\",\"status\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:11:15'),
+(229,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"display\":false,\"weight\":122,\"params\":{},\"title\":\"1232222222222222\",\"url\":\"222\",\"createBy\":\"admin\",\"createTime\":1572322870000,\"updateBy\":\"admin\",\"id\":1,\"email\":\"21@email.com\",\"headerImg\":\"1\",\"status\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:11:47'),
+(230,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"display\":false,\"weight\":122,\"params\":{},\"title\":\"1232222222222222\",\"url\":\"222\",\"createBy\":\"admin\",\"createTime\":1572322870000,\"updateBy\":\"admin\",\"id\":1,\"email\":\"21@email.com\",\"headerImg\":\"1\",\"status\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:12:04'),
+(231,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"display\":false,\"description\":\"ewew\",\"weight\":122,\"params\":{},\"title\":\"1232222222222222\",\"url\":\"222\",\"createBy\":\"admin\",\"createTime\":1572322870000,\"updateBy\":\"admin\",\"id\":1,\"email\":\"21@email.com\",\"headerImg\":\"1\",\"status\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:13:27'),
+(232,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:14:11'),
+(233,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:14:21'),
+(234,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"display\":true,\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 14:15:22'),
+(235,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 18:22:36'),
+(236,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 18:23:06'),
+(237,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 18:23:13'),
+(238,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 18:23:35'),
+(239,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 18:24:00'),
+(240,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 18:24:06'),
+(241,'友链管理',2,'com.dimple.project.system.controller.LinkController.edit()','PUT',1,'admin','/system/link','127.0.0.1','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-29 18:24:31'),
+(242,'友链管理',2,'com.dimple.project.system.controller.LinkController.handlePass()','PUT',1,'admin','/system/link/pass/1/true','127.0.0.1','内网IP','1 true','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-30 15:50:20'),
+(243,'友链管理',2,'com.dimple.project.system.controller.LinkController.handlePass()','PUT',1,'admin','/system/link/pass/1/true','127.0.0.1','内网IP','1 true','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-30 15:51:15'),
+(244,'友链管理',2,'com.dimple.project.system.controller.LinkController.handlePass()','PUT',1,'admin','/system/link/pass/1/true','127.0.0.1','内网IP','1 true','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-30 15:51:15'),
+(245,'友链管理',2,'com.dimple.project.system.controller.LinkController.handlePass()','PUT',1,'admin','/system/link/pass/1/true','127.0.0.1','内网IP','1 true','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-30 15:58:14'),
+(246,'友链管理',2,'com.dimple.project.system.controller.LinkController.handlePass()','PUT',1,'admin','/system/link/pass/1/true','127.0.0.1','内网IP','1 true','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-30 15:59:11'),
+(247,'友链管理',2,'com.dimple.project.system.controller.LinkController.handlePass()','PUT',1,'admin','/system/link/pass/1/true','127.0.0.1','内网IP','1 true','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-30 15:59:28'),
+(248,'友链管理',2,'com.dimple.project.system.controller.LinkController.handlePass()','PUT',1,'admin','/system/link/pass/1/false','127.0.0.1','内网IP','1 false','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-30 16:02:16'),
+(249,'友链管理',2,'com.dimple.project.system.controller.LinkController.handlePass()','PUT',1,'admin','/system/link/pass/1/false','127.0.0.1','内网IP','1 false','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-30 16:02:33'),
+(250,'友链管理',2,'com.dimple.project.system.controller.LinkController.handlePass()','PUT',1,'admin','/system/link/pass/1/false','127.0.0.1','内网IP','1 false','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-30 16:04:41'),
+(251,'字典类型',1,'com.dimple.project.system.controller.DictTypeController.add()','POST',1,'admin','/system/dict/type','127.0.0.1','内网IP','{\"remark\":\"博客状态列表\",\"params\":{},\"dictType\":\"bg_blog_status\",\"createBy\":\"admin\",\"dictName\":\"博客状态\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:15:39'),
+(252,'字典数据',1,'com.dimple.project.system.controller.DictDataController.add()','POST',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"true\",\"dictSort\":1,\"params\":{},\"dictType\":\"bg_blog_status\",\"dictLabel\":\"显示\",\"createBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:33:38'),
+(253,'字典数据',2,'com.dimple.project.system.controller.DictDataController.edit()','PUT',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"true\",\"dictSort\":1,\"remark\":\"显示\",\"params\":{},\"dictType\":\"bg_blog_status\",\"dictLabel\":\"显示\",\"createBy\":\"admin\",\"isDefault\":\"N\",\"createTime\":1572503618000,\"dictCode\":29,\"updateBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:33:50'),
+(254,'字典数据',2,'com.dimple.project.system.controller.DictDataController.edit()','PUT',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"false\",\"dictSort\":1,\"remark\":\"显示\",\"params\":{},\"dictType\":\"bg_blog_status\",\"dictLabel\":\"草稿箱\",\"createBy\":\"admin\",\"isDefault\":\"N\",\"createTime\":1572503618000,\"dictCode\":29,\"updateBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:34:26'),
+(255,'字典数据',2,'com.dimple.project.system.controller.DictDataController.edit()','PUT',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"false\",\"dictSort\":1,\"remark\":\"显示\",\"params\":{},\"dictType\":\"bg_blog_status\",\"dictLabel\":\"草稿\",\"createBy\":\"admin\",\"isDefault\":\"N\",\"createTime\":1572503618000,\"dictCode\":29,\"updateBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:34:32'),
+(256,'字典数据',1,'com.dimple.project.system.controller.DictDataController.add()','POST',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"true\",\"dictSort\":2,\"params\":{},\"dictType\":\"bg_blog_status\",\"dictLabel\":\"发布\",\"createBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:34:45'),
+(257,'字典数据',2,'com.dimple.project.system.controller.DictDataController.edit()','PUT',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"true\",\"dictSort\":2,\"remark\":\"已发布\",\"params\":{},\"dictType\":\"bg_blog_status\",\"dictLabel\":\"发布\",\"createBy\":\"admin\",\"isDefault\":\"N\",\"createTime\":1572503685000,\"dictCode\":30,\"updateBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:34:53'),
+(258,'字典数据',2,'com.dimple.project.system.controller.DictDataController.edit()','PUT',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"false\",\"dictSort\":1,\"remark\":\"草稿箱\",\"params\":{},\"dictType\":\"bg_blog_status\",\"dictLabel\":\"草稿\",\"createBy\":\"admin\",\"isDefault\":\"N\",\"createTime\":1572503618000,\"dictCode\":29,\"updateBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:35:03'),
+(259,'字典类型',1,'com.dimple.project.system.controller.DictTypeController.add()','POST',1,'admin','/system/dict/type','127.0.0.1','内网IP','{\"remark\":\"博客推荐列表\",\"params\":{},\"dictType\":\"bg_blog_support\",\"createBy\":\"admin\",\"dictName\":\"博客推荐\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:46:33'),
+(260,'字典数据',1,'com.dimple.project.system.controller.DictDataController.add()','POST',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"true\",\"dictSort\":1,\"remark\":\"推荐\",\"params\":{},\"dictType\":\"bg_blog_support\",\"dictLabel\":\"是\",\"createBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:46:49'),
+(261,'字典数据',1,'com.dimple.project.system.controller.DictDataController.add()','POST',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"false\",\"dictSort\":2,\"remark\":\"不推荐\",\"params\":{},\"dictType\":\"bg_blog_support\",\"dictLabel\":\"否\",\"createBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 14:47:22'),
+(262,'字典类型',1,'com.dimple.project.system.controller.DictTypeController.add()','POST',1,'admin','/system/dict/type','127.0.0.1','内网IP','{\"remark\":\"博客评论列表\",\"params\":{},\"dictType\":\"bg_blog_comment\",\"createBy\":\"admin\",\"dictName\":\"博客评论\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 18:38:12'),
+(263,'字典数据',1,'com.dimple.project.system.controller.DictDataController.add()','POST',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"true\",\"dictSort\":1,\"remark\":\"开启\",\"params\":{},\"dictType\":\"bg_blog_comment\",\"dictLabel\":\"开启\",\"createBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 18:38:35'),
+(264,'字典数据',1,'com.dimple.project.system.controller.DictDataController.add()','POST',1,'admin','/system/dict/data','127.0.0.1','内网IP','{\"dictValue\":\"false\",\"dictSort\":2,\"remark\":\"关闭\",\"params\":{},\"dictType\":\"bg_blog_comment\",\"dictLabel\":\"关闭\",\"createBy\":\"admin\",\"status\":\"0\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-10-31 18:38:53'),
+(265,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 14:52:59'),
+(266,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"这是描述\",\"params\":{},\"title\":\"测试一号\",\"createBy\":\"admin\",\"id\":6,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:11:51'),
+(267,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"这是描述\",\"params\":{},\"title\":\"测试2号\",\"createBy\":\"admin\",\"id\":7,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:12:00'),
+(268,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"这是描述\",\"params\":{},\"title\":\"测试三号\",\"createBy\":\"admin\",\"id\":8,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:12:09'),
+(269,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','127.0.0.1','内网IP','{\"description\":\"这是描述\",\"params\":{},\"title\":\"测试4号\",\"createBy\":\"admin\",\"id\":9,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:12:18'),
+(270,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false}','{\"msg\":\"操作失败\",\"code\":500}',0,NULL,'2019-11-01 15:12:44'),
+(271,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"summary\":\"作者是1233333333333333333\",\"weight\":1,\"params\":{},\"title\":\"22222222222222\",\"content\":\"1213213\",\"comment\":true,\"id\":1,\"tag\":\"测试博客,博客集合\",\"support\":true,\"categoryId\":8,\"headerImg\":\"\",\"status\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:33:38'),
+(272,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"summary\":\"作者是1233333333333333333\",\"weight\":1,\"params\":{},\"title\":\"22222222222222\",\"content\":\"1213213\",\"comment\":true,\"id\":1,\"tag\":\"测试博客,博客集合\",\"support\":true,\"categoryId\":8,\"headerImg\":\"\",\"status\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:36:58'),
+(273,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"summary\":\"作者是1233333333333333333\",\"weight\":1,\"params\":{},\"title\":\"22222222222222\",\"content\":\"1213213\",\"comment\":true,\"id\":1,\"tag\":\"测试博客,博客集合\",\"support\":true,\"categoryId\":8,\"headerImg\":\"\",\"status\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:37:00'),
+(274,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"summary\":\"作者是1233333333333333333\",\"weight\":1,\"params\":{},\"title\":\"22222222222222\",\"content\":\"1213213\",\"comment\":true,\"id\":1,\"tag\":\"测试博客,博客集合\",\"support\":true,\"categoryId\":8,\"headerImg\":\"\",\"status\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:37:02'),
+(275,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"summary\":\"作者是1233333333333333333\",\"weight\":1,\"params\":{},\"title\":\"22222222222222\",\"content\":\"1213213\",\"comment\":true,\"id\":1,\"tag\":\"测试博客,博客集合\",\"support\":true,\"categoryId\":8,\"headerImg\":\"\",\"status\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:37:03'),
+(276,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"summary\":\"作者是1233333333333333333\",\"weight\":1,\"params\":{},\"title\":\"22222222222222\",\"content\":\"1213213\",\"comment\":true,\"id\":1,\"tag\":\"测试博客,博客集合\",\"support\":true,\"categoryId\":8,\"headerImg\":\"\",\"status\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:37:03'),
+(277,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"summary\":\"作者是1233333333333333333\",\"weight\":1,\"params\":{},\"title\":\"22222222222222\",\"content\":\"1213213\",\"comment\":true,\"id\":1,\"tag\":\"测试博客,博客集合\",\"support\":true,\"categoryId\":8,\"headerImg\":\"\",\"status\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 15:37:08'),
+(278,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false}','{\"msg\":\"操作失败\",\"code\":500}',0,NULL,'2019-11-01 16:21:14'),
+(279,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false}','{\"msg\":\"操作失败\",\"code\":500}',0,NULL,'2019-11-01 16:31:07'),
+(280,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false}','{\"msg\":\"操作失败\",\"code\":500}',0,NULL,'2019-11-01 16:35:09'),
+(281,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false}','{\"msg\":\"操作失败\",\"code\":500}',0,NULL,'2019-11-01 16:35:24'),
+(282,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 16:37:28'),
+(283,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false}','{\"msg\":\"操作失败\",\"code\":500}',0,NULL,'2019-11-01 16:37:55'),
+(284,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false}','{\"msg\":\"操作失败\",\"code\":500}',0,NULL,'2019-11-01 16:43:34'),
+(285,'菜单管理',3,'com.dimple.project.system.controller.MenuController.remove()','DELETE',1,'admin','/system/menu/1070','127.0.0.1','内网IP','{menuId=1070}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:13:55'),
+(286,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:14:03'),
+(287,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:14:07'),
+(288,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:14:13'),
+(289,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:14:53'),
+(290,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:15:43'),
+(291,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:15:47'),
+(292,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:15:49'),
+(293,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:15:52'),
+(294,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:16:27'),
+(295,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:16:33'),
+(296,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:16:38'),
+(297,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:20:16'),
+(298,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":false,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:20:36'),
+(299,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','127.0.0.1','内网IP','{\"params\":{},\"comment\":true,\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:21:12'),
+(300,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"1\",\"menuName\":\"博文查询\",\"params\":{},\"parentId\":1067,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:blog:query\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:25:38'),
+(301,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"2\",\"menuName\":\"博文修改\",\"params\":{},\"parentId\":1067,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:blog:edit\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:25:56'),
+(302,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"3\",\"menuName\":\"博文新增\",\"params\":{},\"parentId\":1067,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:blog:add\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:26:14'),
+(303,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"4\",\"menuName\":\"博文删除\",\"params\":{},\"parentId\":1067,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:blog:remove\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:26:39'),
+(304,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"1\",\"menuName\":\"类别新增\",\"params\":{},\"parentId\":1069,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:category:add\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:27:09'),
+(305,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"2\",\"menuName\":\"类别删除\",\"params\":{},\"parentId\":1069,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:category:remove\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:27:27'),
+(306,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"3\",\"menuName\":\"分类查询\",\"params\":{},\"parentId\":1069,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:category:query\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:27:49'),
+(307,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"4\",\"menuName\":\"分类修改\",\"params\":{},\"parentId\":1069,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:category:edit\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:28:09'),
+(308,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"1\",\"menuName\":\"评论新增\",\"params\":{},\"parentId\":1068,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:comment:add\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:28:28'),
+(309,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"2\",\"menuName\":\"评论删除\",\"params\":{},\"parentId\":1068,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:comment:remove\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:28:50'),
+(310,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"3\",\"menuName\":\"评论修改\",\"params\":{},\"parentId\":1068,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:comment:edit\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:29:32'),
+(311,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"4\",\"menuName\":\"评论查询\",\"params\":{},\"parentId\":1068,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"blog:comment:query\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:29:51'),
+(312,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"1\",\"menuName\":\"友链新增\",\"params\":{},\"parentId\":1072,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"system:link:add\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:30:17'),
+(313,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"2\",\"menuName\":\"友链删除\",\"params\":{},\"parentId\":1072,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"system:link:remove\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:30:34'),
+(314,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"3\",\"menuName\":\"友链查询\",\"params\":{},\"parentId\":1072,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"system:link:query\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:30:52'),
+(315,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"4\",\"menuName\":\"友链修改\",\"params\":{},\"parentId\":1072,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"system:link:edit\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:31:08'),
+(316,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"1\",\"menuName\":\"黑名单新增\",\"params\":{},\"parentId\":1071,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"monitor:blacklist:add\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:31:37'),
+(317,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"2\",\"menuName\":\"黑名单修改\",\"params\":{},\"parentId\":1071,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"monitor:blacklist:edit\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:31:53'),
+(318,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"3\",\"menuName\":\"黑名单删除\",\"params\":{},\"parentId\":1071,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"monitor:blacklist:remove\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:32:10'),
+(319,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','127.0.0.1','内网IP','{\"visible\":\"0\",\"orderNum\":\"4\",\"menuName\":\"黑名单查询\",\"params\":{},\"parentId\":1071,\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"F\",\"perms\":\"monitor:blacklist:query\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-01 17:32:24');
 
 /*Table structure for table `sys_role` */
 
 DROP TABLE IF EXISTS `sys_role`;
 
 CREATE TABLE `sys_role` (
-                            `role_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
-                            `role_name` varchar(30) NOT NULL COMMENT '角色名称',
-                            `role_key` varchar(100) NOT NULL COMMENT '角色权限字符串',
-                            `role_sort` int(4) NOT NULL COMMENT '显示顺序',
-                            `status` char(1) NOT NULL COMMENT '角色状态（0正常 1停用）',
-                            `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                            `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                            `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                            `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
-                            `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
-                            `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-                            PRIMARY KEY (`role_id`)
+  `role_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `role_name` varchar(30) NOT NULL COMMENT '角色名称',
+  `role_key` varchar(100) NOT NULL COMMENT '角色权限字符串',
+  `role_sort` int(4) NOT NULL COMMENT '显示顺序',
+  `status` char(1) NOT NULL COMMENT '角色状态（0正常 1停用）',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色信息表';
 
 /*Data for the table `sys_role` */
@@ -600,9 +855,9 @@ insert  into `sys_role`(`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`c
 DROP TABLE IF EXISTS `sys_role_menu`;
 
 CREATE TABLE `sys_role_menu` (
-                                 `role_id` bigint(20) NOT NULL COMMENT '角色ID',
-                                 `menu_id` bigint(20) NOT NULL COMMENT '菜单ID',
-                                 PRIMARY KEY (`role_id`,`menu_id`)
+  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
+  `menu_id` bigint(20) NOT NULL COMMENT '菜单ID',
+  PRIMARY KEY (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色和菜单关联表';
 
 /*Data for the table `sys_role_menu` */
@@ -676,27 +931,27 @@ insert  into `sys_role_menu`(`role_id`,`menu_id`) values
 DROP TABLE IF EXISTS `sys_user`;
 
 CREATE TABLE `sys_user` (
-                            `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                            `dept_id` bigint(20) DEFAULT NULL COMMENT '部门ID',
-                            `user_name` varchar(30) NOT NULL COMMENT '用户账号',
-                            `nick_name` varchar(30) NOT NULL COMMENT '用户昵称',
-                            `user_type` varchar(2) DEFAULT '00' COMMENT '用户类型（00系统用户）',
-                            `email` varchar(50) DEFAULT '' COMMENT '用户邮箱',
-                            `phonenumber` varchar(11) DEFAULT '' COMMENT '手机号码',
-                            `sex` char(1) DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
-                            `avatar` varchar(100) DEFAULT '' COMMENT '头像地址',
-                            `password` varchar(100) DEFAULT '' COMMENT '密码',
-                            `status` char(1) DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
-                            `login_ip` varchar(50) DEFAULT '' COMMENT '最后登陆IP',
-                            `login_date` datetime DEFAULT NULL COMMENT '最后登陆时间',
-                            `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                            `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                            `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                            `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
-                            `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
-                            `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-                            PRIMARY KEY (`user_id`)
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门ID',
+  `user_name` varchar(30) NOT NULL COMMENT '用户账号',
+  `nick_name` varchar(30) NOT NULL COMMENT '用户昵称',
+  `user_type` varchar(2) DEFAULT '00' COMMENT '用户类型（00系统用户）',
+  `email` varchar(50) DEFAULT '' COMMENT '用户邮箱',
+  `phonenumber` varchar(11) DEFAULT '' COMMENT '手机号码',
+  `sex` char(1) DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
+  `avatar` varchar(100) DEFAULT '' COMMENT '头像地址',
+  `password` varchar(100) DEFAULT '' COMMENT '密码',
+  `status` char(1) DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
+  `login_ip` varchar(50) DEFAULT '' COMMENT '最后登陆IP',
+  `login_date` datetime DEFAULT NULL COMMENT '最后登陆时间',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 /*Data for the table `sys_user` */
@@ -711,18 +966,18 @@ insert  into `sys_user`(`user_id`,`dept_id`,`user_name`,`nick_name`,`user_type`,
 DROP TABLE IF EXISTS `sys_user_online`;
 
 CREATE TABLE `sys_user_online` (
-                                   `sessionId` varchar(50) NOT NULL DEFAULT '' COMMENT '用户会话id',
-                                   `user_name` varchar(50) DEFAULT '' COMMENT '用户账号',
-                                   `dept_name` varchar(50) DEFAULT '' COMMENT '部门名称',
-                                   `ipaddr` varchar(50) DEFAULT '' COMMENT '登录IP地址',
-                                   `login_location` varchar(255) DEFAULT '' COMMENT '登录地点',
-                                   `browser` varchar(50) DEFAULT '' COMMENT '浏览器类型',
-                                   `os` varchar(50) DEFAULT '' COMMENT '操作系统',
-                                   `status` varchar(10) DEFAULT '' COMMENT '在线状态on_line在线off_line离线',
-                                   `start_timestamp` datetime DEFAULT NULL COMMENT 'session创建时间',
-                                   `last_access_time` datetime DEFAULT NULL COMMENT 'session最后访问时间',
-                                   `expire_time` int(5) DEFAULT '0' COMMENT '超时时间，单位为分钟',
-                                   PRIMARY KEY (`sessionId`)
+  `sessionId` varchar(50) NOT NULL DEFAULT '' COMMENT '用户会话id',
+  `user_name` varchar(50) DEFAULT '' COMMENT '用户账号',
+  `dept_name` varchar(50) DEFAULT '' COMMENT '部门名称',
+  `ipaddr` varchar(50) DEFAULT '' COMMENT '登录IP地址',
+  `login_location` varchar(255) DEFAULT '' COMMENT '登录地点',
+  `browser` varchar(50) DEFAULT '' COMMENT '浏览器类型',
+  `os` varchar(50) DEFAULT '' COMMENT '操作系统',
+  `status` varchar(10) DEFAULT '' COMMENT '在线状态on_line在线off_line离线',
+  `start_timestamp` datetime DEFAULT NULL COMMENT 'session创建时间',
+  `last_access_time` datetime DEFAULT NULL COMMENT 'session最后访问时间',
+  `expire_time` int(5) DEFAULT '0' COMMENT '超时时间，单位为分钟',
+  PRIMARY KEY (`sessionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='在线用户记录';
 
 /*Data for the table `sys_user_online` */
@@ -732,9 +987,9 @@ CREATE TABLE `sys_user_online` (
 DROP TABLE IF EXISTS `sys_user_role`;
 
 CREATE TABLE `sys_user_role` (
-                                 `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-                                 `role_id` bigint(20) NOT NULL COMMENT '角色ID',
-                                 PRIMARY KEY (`user_id`,`role_id`)
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
+  PRIMARY KEY (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户和角色关联表';
 
 /*Data for the table `sys_user_role` */
