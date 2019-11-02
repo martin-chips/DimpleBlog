@@ -1,5 +1,6 @@
 package com.dimple.project.blog.controller;
 
+import com.dimple.common.utils.SecurityUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,13 +61,6 @@ public class BlogController extends BaseController {
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable Long id) {
         return AjaxResult.success(blogService.selectBlogById(id));
-    }
-
-    @PreAuthorize("@permissionService.hasPermission('blog:blog:remove')")
-    @Log(title = "博客管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable String ids) {
-        return toAjax(blogService.deleteBlogByIds(ids));
     }
 
     @PreAuthorize("@permissionService.hasPermission('blog:blog:remove')")

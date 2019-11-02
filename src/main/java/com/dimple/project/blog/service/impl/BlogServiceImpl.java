@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,11 +38,14 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public int insertBlog(Blog blog) {
+        blog.setCreateBy(SecurityUtils.getUsername());
+        blog.setCreateTime(new Date());
         return blogMapper.insertBlog(blog);
     }
 
     @Override
     public int updateBlog(Blog blog) {
+        blog.setUpdateBy(SecurityUtils.getUsername());
         return blogMapper.updateBlog(blog);
     }
 
@@ -65,6 +69,6 @@ public class BlogServiceImpl implements BlogService {
             String[] strings = ConvertUtils.toStrArray(s);
             tags.addAll(Stream.of(strings).filter(e -> e.contains(query)).collect(Collectors.toList()));
         }
-        return tags;
+        return tags.stream().distinct().collect(Collectors.toList());
     }
 }

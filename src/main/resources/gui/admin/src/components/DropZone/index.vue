@@ -203,6 +203,8 @@
 
 <style scoped>
   .dropzone {
+    white-space: nowrap;
+    display: inline-block;
     border: 2px solid #E5E5E5;
     font-family: 'Roboto', sans-serif;
     color: #777;
@@ -219,6 +221,7 @@
   }
 
   .dropzone .dz-image img {
+    display: inline-block;
     width: 100%;
     height: 100%;
   }

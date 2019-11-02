@@ -13,7 +13,7 @@
       <div class="createPost-main-container">
         <el-row>
           <el-row>
-            <el-col :span="16">
+            <el-col :span="18">
               <el-form-item prop="title" label="标题: " label-width="60px">
                 <el-input placeholder="请输入标题" v-model="form.title" clearable></el-input>
               </el-form-item>
@@ -66,9 +66,10 @@
                 </el-row>
               </div>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="6">
               <el-form-item prop="headerImg" label-width="60px" label="封面" class="postInfo-container-item">
                 <drop-zone id="myVueDropzone" url="https://httpbin.org/post" @dropzone-removedFile="dropzoneR"
+                           :defaultImg="form.headerImg"
                            @dropzone-success="dropzoneS"/>
               </el-form-item>
             </el-col>
@@ -179,7 +180,7 @@
         getBlog(id).then(response => {
           response.data.tag = response.data.tag.split(",");
           this.form = response.data;
-          this.setPageTitle();
+          // this.setPageTitle();
         })
       },
       setPageTitle() {
@@ -207,6 +208,11 @@
               updateBlog(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
+                  this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
+                    if (this.isActive(view)) {
+                      this.toLastView(visitedViews, view)
+                    }
+                  })
                 } else {
                   this.msgError(response.msg);
                 }

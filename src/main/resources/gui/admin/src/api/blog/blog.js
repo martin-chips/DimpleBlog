@@ -49,7 +49,7 @@ export function changeBlogSupport(id, support) {
     id: id,
     support: support
   }
-  updateBlog(data);
+  return updateBlog(data);
 }
 
 // 修改博客评论

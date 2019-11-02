@@ -1,0 +1,5 @@
+由于网速原因，执行npm install命令过程中，node-sass无法下载，那么可以使用淘宝镜像下载，具体命令如下：
+npm i node-sass --sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
+
+
+https://zcjun.com/476.html
