@@ -50,7 +50,7 @@ public interface DictTypeMapper {
      * @param dictId 字典ID
      * @return 结果
      */
-    int deleteDictTypeById(Long dictId,String loginUsername);
+    int deleteDictTypeById(Long dictId, String loginUsername);
 
     /**
      * 新增字典类型信息

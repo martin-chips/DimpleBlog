@@ -59,7 +59,7 @@ public interface DictDataMapper {
      * @param dictCode 字典数据ID
      * @return 结果
      */
-    int deleteDictDataById(Long dictCode,String loginUsername);
+    int deleteDictDataById(Long dictCode, String loginUsername);
 
     /**
      * 新增字典数据信息

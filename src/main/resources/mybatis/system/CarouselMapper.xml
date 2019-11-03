@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.system.mapper.CarouselMapper">
+
+    <resultMap type="com.dimple.project.system.domain.Carousel" id="SysCarouselMap">
+        <result property="id" column="id"/>
+        <result property="description" column="description"/>
+        <result property="click" column="click"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="display" column="display"/>
+        <result property="target" column="target"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="selectCarouselById" resultMap="SysCarouselMap">
+        select
+          id, description, click, img_url, display, target, create_by, create_time, update_by, update_time, delete_by, delete_time
+        from sys_carousel
+        where id = #{id}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectCarouselList" resultMap="SysCarouselMap">
+        select
+        id, description, click, img_url, display, target, create_by, create_time, update_by, update_time, delete_by,
+        delete_time
+        from sys_carousel
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="click != null">
+                and click = #{click}
+            </if>
+            <if test="imgUrl != null and imgUrl != ''">
+                and img_url = #{imgUrl}
+            </if>
+            <if test="display != null">
+                and display = #{display}
+            </if>
+            <if test="target != null">
+                and target = #{target}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="deleteBy != null and deleteBy != ''">
+                and delete_by = #{deleteBy}
+            </if>
+            <if test="deleteTime != null">
+                and delete_time = #{deleteTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insertCarousel" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_carousel(description, click, img_url, display, target, create_by, create_time, update_by, update_time, delete_by, delete_time)
+        values (#{description}, #{click}, #{imgUrl}, #{display}, #{target}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{deleteBy}, #{deleteTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="updateCarousel">
+        update sys_carousel
+        <set>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="click != null">
+                click = #{click},
+            </if>
+            <if test="imgUrl != null and imgUrl != ''">
+                img_url = #{imgUrl},
+            </if>
+            <if test="display != null">
+                display = #{display},
+            </if>
+            <if test="target != null">
+                target = #{target},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteBy != null and deleteBy != ''">
+                delete_by = #{deleteBy},
+            </if>
+            <if test="deleteTime != null">
+                delete_time = #{deleteTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteCarouselById">
+        delete from sys_carousel where id = #{id}
+    </delete>
+
+</mapper>

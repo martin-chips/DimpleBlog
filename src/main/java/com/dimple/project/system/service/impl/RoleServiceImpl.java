@@ -155,6 +155,6 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int deleteRoleById(Long roleId) {
         String loginUsername = SecurityUtils.getUsername();
-        return roleMapper.deleteRoleById(roleId,loginUsername);
+        return roleMapper.deleteRoleById(roleId, loginUsername);
     }
 }

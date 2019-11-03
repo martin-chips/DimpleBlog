@@ -62,7 +62,7 @@ public interface LinkService {
     /**
      * 处理友链申请
      *
-     * @param id      link id
+     * @param id   link id
      * @param pass
      * @return 结果
      */
