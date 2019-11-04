@@ -34,31 +34,32 @@
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <association property="category" javaType="com.dimple.project.blog.domain.Category">
-            <id property="id" column="id"/>
-            <result property="title" column="title"/>
-            <result property="description" column="description"/>
-            <result property="support" column="support"/>
-            <result property="createBy" column="create_by"/>
-            <result property="createTime" column="create_time"/>
+            <id property="id" column="c_id"/>
+            <result property="title" column="c_title"/>
+            <result property="description" column="c_description"/>
+            <result property="support" column="c_support"/>
+            <result property="createBy" column="c_create_by"/>
+            <result property="createTime" column="c_create_time"/>
         </association>
     </resultMap>
 
     <select id="selectBlogList" resultMap="BlogResultWithoutContent">
-        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.content, b.status,b.support,b.tag,
-        b.comment, b.create_by, b.create_time,c.id,c.title,c.description,c.support,c.create_by,c.create_time
+        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.tag,
+        b.comment, b.create_by, b.create_time,c.id c_id,c.title c_title,c.description c_description,c.support
+        c_support,c.create_by c_create_by,c.create_time c_create_time
         from bg_blog b ,bg_category c
-        where b.delete_time is null
+        where b.delete_time is null and b.category_id=c.id
         <if test="title != null and title != ''">
-            AND title like concat('%', #{title}, '%')
+            AND b.title like concat('%', #{title}, '%')
         </if>
         <if test="status != null and status != ''">
-            AND status = #{status}
+            AND b.status = #{status}
         </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            and date_format( b.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
         </if>
         <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            and date_format( b.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
 

@@ -44,15 +44,37 @@
     </el-form>
 
     <el-table v-loading="loading" :data="blogList">
-      <el-table-column label="博客主键" prop="id" width="120"/>
-      <el-table-column label="标题" prop="title" :show-overflow-tooltip="true" width="150"/>
+      <el-table-column label="博客主键" prop="id"/>
+      <el-table-column label="标题" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column label="分类" prop="category.title">
+        <template slot-scope="scope">
+          <el-popover trigger="hover" placement="right">
+            <p>名称: {{ scope.row.category.title }}</p>
+            <p>描述: {{ scope.row.category.description }}</p>
+            <p>推荐:
+              <el-switch
+                v-model="scope.row.category.support"
+                active-color="#13ce66"
+                disabled
+                inactive-color="#ff4949">
+              </el-switch>
+            </p>
+            <p>
+              创建时间:<span>{{ parseTime(scope.row.category.createTime) }}</span>
+            </p>
+            <div slot="reference" class="name-wrapper">
+              <el-tag effect="plain">{{ scope.row.category.title }}</el-tag>
+            </div>
+          </el-popover>
+        </template>
+      </el-table-column>
       <el-table-column label="摘要" prop="summary" :show-overflow-tooltip="true" width="180"/>
       <el-table-column label="封面" prop="headerImg" width="120">
         <template slot-scope="scope">
           <el-image
             style="width: 30px; height: 30px"
             :src="scope.row.headerImg"
-            :preview-src-list="previewImg(scope.row.headerImg)">
+            :preview-src-list="[scope.row.headerImg]">
           </el-image>
         </template>
       </el-table-column>
@@ -155,9 +177,6 @@
       });
     },
     methods: {
-      previewImg(url) {
-        return [url];
-      },
       /** 查询博客列表 */
       getList() {
         this.loading = true;

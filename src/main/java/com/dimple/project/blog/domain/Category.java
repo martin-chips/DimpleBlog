@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @className: Category
  * @description: 分类对象 bg_category
@@ -36,5 +38,7 @@ public class Category extends BaseEntity {
      * 是否推荐
      */
     private Boolean support;
+
+    private List<Blog> blogList;
 
 }

@@ -34,6 +34,54 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="关联博客" align="center">
+        <template slot-scope="scope">
+          <el-popover
+            placement="left"
+            width="600"
+            trigger="click">
+            <el-table :data="scope.row.blogList">
+              <el-table-column label="博客主键" prop="id"/>
+              <el-table-column label="标题" prop="title" :show-overflow-tooltip="true"/>
+              <el-table-column label="摘要" prop="summary" :show-overflow-tooltip="true"/>
+              <el-table-column label="封面" prop="headerImg" width="120">
+                <template slot-scope="scope">
+                  <el-image
+                    style="width: 30px; height: 30px"
+                    :src="scope.row.headerImg"
+                    :preview-src-list="[scope.row.headerImg]">
+                  </el-image>
+                </template>
+              </el-table-column>
+              <el-table-column label="评论" align="center">
+                <template slot-scope="scope">
+                  <el-switch v-model="scope.row.comment" disabled/>
+                </template>
+              </el-table-column>
+              <el-table-column label="推荐" align="center">
+                <template slot-scope="scope">
+                  <el-switch v-model="scope.row.support" disabled active-color="#13ce66"
+                             inactive-color="#ff4949"/>
+                </template>
+              </el-table-column>
+              <el-table-column label="权重" prop="weight" width="150" align="center">
+                <template slot-scope="scope">
+                  <el-rate v-model="scope.row.weight" :max="5" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" disabled
+                           :low-threshold="1" :high-threshold="5" style="display:inline-block"/>
+                </template>
+              </el-table-column>
+              <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+                <template slot-scope="scope">
+                  <span>{{ parseTime(scope.row.createTime) }}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-button size="mini" type="text" icon="el-icon-tickets" slot="reference">共 {{scope.row.blogList.length}}
+              条数据
+            </el-button>
+          </el-popover>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit"

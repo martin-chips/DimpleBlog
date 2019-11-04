@@ -13,30 +13,58 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
+    <resultMap type="com.dimple.project.blog.domain.Category" id="CategoryResultWithBlogList">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="support" column="support"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="blogList" ofType="com.dimple.project.blog.domain.Blog">
+            <id property="id" column="b_id"/>
+            <result property="title" column="b_title"/>
+            <result property="summary" column="b_summary"/>
+            <result property="headerImg" column="b_header_img"/>
+            <result property="status" column="b_status"/>
+            <result property="comment" column="b_comment"/>
+            <result property="tag" column="b_tag"/>
+            <result property="support" column="b_support"/>
+            <result property="weight" column="b_weight"/>
+            <result property="createBy" column="b_create_by"/>
+            <result property="createTime" column="b_create_time"/>
+        </collection>
+    </resultMap>
+
     <sql id="selectBgCategoryVo">
         select id, title, description, support, create_by, create_time from bg_category
     </sql>
 
     <select id="selectCategoryList" parameterType="com.dimple.project.blog.domain.Category"
-            resultMap="CategoryResult">
-        <include refid="selectBgCategoryVo"/>
-        where delete_time is null
+            resultMap="CategoryResultWithBlogList">
+        select c.id, c.title, c.description, c.support, c.create_by, c.create_time,
+        b.id b_id, b.title b_title,
+        b.summary b_summary,b.weight b_weight, b.header_img b_header_img, b.status b_status,b.support b_support,b.tag
+        b_tag,b.comment b_comment, b.create_by b_create_by, b.create_time b_create_time
+        from bg_category c
+        left join bg_blog b
+        on c.id = b.category_id and b.delete_time is null
+        where c.delete_time is null
         <if test="title != null and title != ''">
-            AND title like concat('%', #{title}, '%')
+            AND c.title like concat('%', #{title}, '%')
         </if>
         <if test="support != null and support != ''">
-            AND support = #{support}
+            AND c.support = #{support}
         </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            and date_format(c.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
         </if>
         <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            and date_format(c.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
 
-    <select id="selectCategoryById" parameterType="Long" resultMap="CategoryResult">
-        <include refid="selectBgCategoryVo"/>
+    <select id="selectCategoryById" resultMap="CategoryResult">
+        select id, title, description, support, create_by, create_time from bg_category
         where id = #{id}
     </select>
 
@@ -75,7 +103,7 @@
         update bg_category set delete_date=sysdate(),delete_by=#{username} where id = #{id}
     </delete>
 
-    <delete id="deleteCategoryByIds" parameterType="String">
+    <delete id="deleteCategoryByIds">
         update bg_category set delete_time=sysdate(),delete_by=#{username} where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
