@@ -70,4 +70,12 @@ public interface CommentMapper {
      */
     int incrementCommentBad(Long id);
 
+    /**
+     * 获取博客对应的评论的Map
+     *
+     * @param blogIdList blog的Id
+     * @return map
+     */
+    List<Comment> selectCommentListByPageId(@Param("blogIdList") List<Long> blogIdList);
+
 }

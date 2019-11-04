@@ -23,7 +23,12 @@
       <el-table-column label="昵称" align="center" prop="nickName"/>
       <el-table-column label="主机" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
       <el-table-column label="操作地点" align="center" prop="location"/>
-      <el-table-column label="显示" align="center" prop="display"/>
+      <el-table-column label="显示" align="center">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.display" active-color="#13ce66" inactive-color="#ff4949"
+                     @change="handleDisplayChange(scope.row)"/>
+        </template>
+      </el-table-column>
       <el-table-column label="内容" align="center" prop="content" :show-overflow-tooltip="true"/>
       <el-table-column label="点赞" align="center" prop="good"/>
       <el-table-column label="踩" align="center" prop="bad"/>
@@ -75,8 +80,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="显示：">
-              <div v-if="form.display === true">显示</div>
-              <div v-else-if="form.display === false">隐藏</div>
+              <el-switch v-model="form.display" active-color="#13ce66" inactive-color="#ff4949" disabled></el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -99,7 +103,8 @@
     listComment,
     getComment,
     delComment,
-    updateComment
+    updateComment,
+    changeCommentDisplay,
   } from "@/api/blog/comment";
 
   export default {
@@ -131,6 +136,20 @@
       this.getList();
     },
     methods: {
+      handleDisplayChange(row) {
+        let text = row.display ? "显示" : "隐藏";
+        this.$confirm('确认要' + text + '"' + row.title + '"评论吗?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          return changeCommentDisplay(row.id, row.display);
+        }).then(() => {
+          this.msgSuccess(text + "成功");
+        }).catch(function () {
+          row.display = row.display === false ? true : false;
+        });
+      },
       /** 查询登录日志 */
       getList() {
         this.loading = true;

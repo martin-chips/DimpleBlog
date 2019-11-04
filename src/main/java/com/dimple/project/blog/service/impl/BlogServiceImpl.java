@@ -3,13 +3,14 @@ package com.dimple.project.blog.service.impl;
 import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.blog.domain.Blog;
+import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.blog.mapper.BlogMapper;
+import com.dimple.project.blog.mapper.CommentMapper;
 import com.dimple.project.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,7 +25,9 @@ import java.util.stream.Stream;
 public class BlogServiceImpl implements BlogService {
 
     @Autowired
-    private BlogMapper blogMapper;
+    BlogMapper blogMapper;
+    @Autowired
+    CommentMapper commentMapper;
 
     @Override
     public Blog selectBlogById(Long id) {
@@ -33,13 +36,21 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Blog> selectBlogList(Blog blog) {
-        return blogMapper.selectBlogList(blog);
+        List<Blog> blogList = blogMapper.selectBlogList(blog);
+        if (blogList.isEmpty()) {
+            return blogList;
+        }
+        List<Long> blogIdList = blogList.stream().map(e -> e.getId()).collect(Collectors.toList());
+        List<Comment> commentList = commentMapper.selectCommentListByPageId(blogIdList);
+        for (Blog temp : blogList) {
+            temp.setCommentList(commentList.stream().filter(e -> e.getPageId().equals(temp.getId())).collect(Collectors.toList()));
+        }
+        return blogList;
     }
 
     @Override
     public int insertBlog(Blog blog) {
         blog.setCreateBy(SecurityUtils.getUsername());
-        blog.setCreateTime(new Date());
         return blogMapper.insertBlog(blog);
     }
 

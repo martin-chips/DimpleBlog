@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import {updateCategory} from "./category";
 
 // 查询评论列表
 export function listComment(query) {
@@ -32,4 +33,14 @@ export function delComment(id) {
     url: '/blog/comment/' + id,
     method: 'delete'
   })
+}
+
+
+// 修改评论显示
+export function changeCommentDisplay(id, display) {
+  let data = {
+    id: id,
+    support: diaplay
+  }
+  updateComment(data);
 }

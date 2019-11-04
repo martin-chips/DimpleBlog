@@ -225,7 +225,7 @@
         }).then(() => {
           this.msgSuccess(text + "成功");
         }).catch(function () {
-          row.status = row.status === false ? true : false;
+          row.support = row.support === false ? true : false;
         });
       },
       /** 提交按钮 */

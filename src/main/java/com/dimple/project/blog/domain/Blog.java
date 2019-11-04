@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @className: Blog
  * @description: 博客对象 bg_blog
@@ -72,4 +74,6 @@ public class Blog extends BaseEntity {
      * 分类
      */
     private Category category;
+
+    private List<Comment> commentList;
 }

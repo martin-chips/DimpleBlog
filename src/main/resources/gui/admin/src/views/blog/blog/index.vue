@@ -101,6 +101,37 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="评论" align="center">
+        <template slot-scope="scope">
+          <el-popover
+            placement="left"
+            width="600"
+            trigger="click">
+            <el-table v-loading="loading" :data="scope.row.commentList" style="width: 100%;">
+              <el-table-column label="评论编号" align="center" prop="id"/>
+              <el-table-column label="昵称" align="center" prop="nickName"/>
+              <el-table-column label="主机" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
+              <el-table-column label="操作地点" align="center" prop="location"/>
+              <el-table-column label="显示" align="center">
+                <template slot-scope="scope">
+                  <el-switch v-model="scope.row.display" active-color="#13ce66" inactive-color="#ff4949" disabled/>
+                </template>
+              </el-table-column>
+              <el-table-column label="内容" align="center" prop="content" :show-overflow-tooltip="true"/>
+              <el-table-column label="点赞" align="center" prop="good"/>
+              <el-table-column label="踩" align="center" prop="bad"/>
+              <el-table-column label="评论日期" align="center" prop="createTime" width="180">
+                <template slot-scope="scope">
+                  <span>{{ parseTime(scope.row.createTime) }}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-button size="mini" type="text" icon="el-icon-tickets" slot="reference">共 {{scope.row.commentList.length}}
+              条数据
+            </el-button>
+          </el-popover>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="text" size="mini" icon="el-icon-edit">
