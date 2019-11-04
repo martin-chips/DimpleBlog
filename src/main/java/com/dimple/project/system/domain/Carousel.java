@@ -1,7 +1,9 @@
 package com.dimple.project.system.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @className: Carousel
@@ -10,8 +12,10 @@ import lombok.Data;
  * @date: 11/02/19
  */
 @Data
+//序列化Json的时候,如果是Null则忽略
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
 public class Carousel extends BaseEntity {
-    private static final long serialVersionUID = 625546578481872329L;
 
     private Long id;
     /**

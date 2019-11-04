@@ -20,13 +20,34 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <sql id="selectBlogVo">
-        select id, category_id, title, summary,weight, header_img, content, status,support,tag, comment, create_by, update_by, create_time from bg_blog
-    </sql>
+    <resultMap id="BlogResultWithoutContent" type="com.dimple.project.blog.domain.Blog">
+        <result property="id" column="id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="title" column="title"/>
+        <result property="summary" column="summary"/>
+        <result property="headerImg" column="header_img"/>
+        <result property="status" column="status"/>
+        <result property="comment" column="comment"/>
+        <result property="tag" column="tag"/>
+        <result property="support" column="support"/>
+        <result property="weight" column="weight"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <association property="category" javaType="com.dimple.project.blog.domain.Category">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="description" column="description"/>
+            <result property="support" column="support"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+        </association>
+    </resultMap>
 
-    <select id="selectBlogList" resultMap="BlogResult">
-        <include refid="selectBlogVo"/>
-        where delete_time is null
+    <select id="selectBlogList" resultMap="BlogResultWithoutContent">
+        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.content, b.status,b.support,b.tag,
+        b.comment, b.create_by, b.create_time,c.id,c.title,c.description,c.support,c.create_by,c.create_time
+        from bg_blog b ,bg_category c
+        where b.delete_time is null
         <if test="title != null and title != ''">
             AND title like concat('%', #{title}, '%')
         </if>
@@ -42,7 +63,7 @@
     </select>
 
     <select id="selectBlogById" resultMap="BlogResult">
-        <include refid="selectBlogVo"/>
+        select id, category_id, title, summary, header_img, content, status, comment, create_by, update_by, create_time, update_time, delete_by, delete_time from bg_blog
         where id = #{id} and delete_time is null
     </select>
 

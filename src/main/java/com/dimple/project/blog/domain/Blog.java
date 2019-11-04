@@ -1,6 +1,7 @@
 package com.dimple.project.blog.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,8 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+//序列化Json的时候,如果是Null则忽略
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Blog extends BaseEntity {
 
     /**
@@ -65,4 +68,8 @@ public class Blog extends BaseEntity {
      * 权重
      */
     private Long weight;
+    /**
+     * 分类
+     */
+    private Category category;
 }

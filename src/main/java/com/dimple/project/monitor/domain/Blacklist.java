@@ -1,6 +1,7 @@
 package com.dimple.project.monitor.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.util.Date;
@@ -8,10 +9,12 @@ import java.util.Date;
 /**
  * @className: Blacklist
  * @description:
- * @author: Dimpleb
+ * @author: Dimple
  * @date: 10/24/19
  */
 @Data
+//序列化Json的时候,如果是Null则忽略
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Blacklist extends BaseEntity {
     /**
      * id

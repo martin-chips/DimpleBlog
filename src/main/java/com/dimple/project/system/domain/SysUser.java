@@ -1,6 +1,7 @@
 package com.dimple.project.system.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,8 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
+//序列化Json的时候,如果是Null则忽略
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SysUser extends BaseEntity {
 
     public SysUser(Long userId) {

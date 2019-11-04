@@ -49,7 +49,11 @@
       <el-table-column label="摘要" prop="summary" :show-overflow-tooltip="true" width="180"/>
       <el-table-column label="封面" prop="headerImg" width="120">
         <template slot-scope="scope">
-          <img :src="scope.row.headerImg" height="30px" width="50px"/>
+          <el-image
+            style="width: 30px; height: 30px"
+            :src="scope.row.headerImg"
+            :preview-src-list="previewImg(scope.row.headerImg)">
+          </el-image>
         </template>
       </el-table-column>
       <el-table-column label="评论" align="center">
@@ -151,6 +155,9 @@
       });
     },
     methods: {
+      previewImg(url) {
+        return [url];
+      },
       /** 查询博客列表 */
       getList() {
         this.loading = true;

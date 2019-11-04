@@ -1,6 +1,7 @@
 package com.dimple.project.system.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @date: 10/22/19
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Data
 public class RouterVo {
     /**
      * 路由名字
@@ -51,68 +53,4 @@ public class RouterVo {
      * 子路由
      */
     private List<RouterVo> children;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(String hidden) {
-        this.hidden = hidden;
-    }
-
-    public String getRedirect() {
-        return redirect;
-    }
-
-    public void setRedirect(String redirect) {
-        this.redirect = redirect;
-    }
-
-    public String getComponent() {
-        return component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
-    }
-
-    public Boolean getAlwaysShow() {
-        return alwaysShow;
-    }
-
-    public void setAlwaysShow(Boolean alwaysShow) {
-        this.alwaysShow = alwaysShow;
-    }
-
-    public MetaVo getMeta() {
-        return meta;
-    }
-
-    public void setMeta(MetaVo meta) {
-        this.meta = meta;
-    }
-
-    public List<RouterVo> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<RouterVo> children) {
-        this.children = children;
-    }
 }
