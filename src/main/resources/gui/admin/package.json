@@ -51,6 +51,8 @@
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
     "screenfull": "4.2.0",
+    "sockjs-client": "^1.4.0",
+    "stompjs": "^2.3.3",
     "vue": "2.6.10",
     "vue-count-to": "1.0.13",
     "vue-cropper": "0.4.9",
