@@ -1,12 +1,5 @@
 package com.dimple.project.system.controller;
 
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.ServletUtils;
 import com.dimple.framework.security.LoginUser;
@@ -17,6 +10,13 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.system.domain.Menu;
 import com.dimple.project.system.domain.SysUser;
 import com.dimple.project.system.service.MenuService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @className: LoginController
@@ -43,7 +43,7 @@ public class LoginController {
      *
      * @param username 用户名
      * @param password 密码
-     * @param captcha  验证码
+     * @param code  验证码
      * @param uuid     唯一标识
      * @return 结果
      */

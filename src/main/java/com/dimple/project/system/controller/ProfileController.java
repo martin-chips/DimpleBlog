@@ -2,10 +2,8 @@ package com.dimple.project.system.controller;
 
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.ServletUtils;
-import com.dimple.common.utils.file.FileUploadUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
-import com.dimple.framework.config.DimpleBlogConfig;
 import com.dimple.framework.security.LoginUser;
 import com.dimple.framework.security.service.TokenService;
 import com.dimple.framework.web.controller.BaseController;
@@ -14,15 +12,10 @@ import com.dimple.project.system.domain.SysUser;
 import com.dimple.project.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 /**
  * @className: ProfileController
@@ -76,23 +69,5 @@ public class ProfileController extends BaseController {
             return AjaxResult.error("新密码不能与旧密码相同");
         }
         return toAjax(userService.resetUserPwd(userName, SecurityUtils.encryptPassword(newPassword)));
-    }
-
-    /**
-     * 头像上传
-     */
-    @Log(title = "用户头像", businessType = BusinessType.UPDATE)
-    @PostMapping("/avatar")
-    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws IOException {
-        if (!file.isEmpty()) {
-            LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-            String avatar = FileUploadUtils.upload(DimpleBlogConfig.getAvatarPath(), file);
-            if (userService.updateUserAvatar(loginUser.getUsername(), avatar)) {
-                AjaxResult ajax = AjaxResult.success();
-                ajax.put("imgUrl", avatar);
-                return ajax;
-            }
-        }
-        return AjaxResult.error("上传图片异常，请联系管理员");
     }
 }

@@ -37,7 +37,7 @@
           <el-image
             style="width: 30px; height: 30px"
             :src="scope.row.imgUrl"
-            :preview-src-list="previewImg(scope.row.imgUrl)">
+            :preview-src-list="[scope.row.imgUrl]">
           </el-image>
         </template>
       </el-table-column>
@@ -71,10 +71,10 @@
     <el-dialog :title="title" :visible.sync="open" width="500px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="链接地址" prop="url">
-          <el-input maxlength="128" show-word-limit v-model="form.title" placeholder="请输入链接地址"/>
+          <el-input maxlength="128" show-word-limit v-model="form.url" placeholder="请输入链接地址"/>
         </el-form-item>
-        <el-form-item label="图片地址" prop="url">
-          <el-input maxlength="128" show-word-limit v-model="form.title" placeholder="请输入图片地址"/>
+        <el-form-item label="图片地址" prop="imgUrl">
+          <el-input maxlength="128" show-word-limit v-model="form.imgUrl" placeholder="请输入图片地址"/>
         </el-form-item>
         <el-form-item label="描述" prop="description">
           <el-input maxlength="512" show-word-limit v-model="form.description" placeholder="请输入描述"/>
@@ -91,9 +91,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="网站图标" prop="headerImg">
-          <el-input maxlength="128" show-word-limit v-model="form.headerImg" placeholder="请输入网站图标地址"/>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -105,12 +102,12 @@
 
 <script>
   import {
-    listCarsousel,
-    getCarsousel,
-    changeCarsouselDisplay,
-    delCarsousel,
-    addCarsousel,
-    updateCarsousel
+    listCarousel,
+    getCarousel,
+    changeCarouselDisplay,
+    delCarousel,
+    addCarousel,
+    updateCarousel
   } from "@/api/system/carousel";
 
   export default {
@@ -157,13 +154,10 @@
       this.getList();
     },
     methods: {
-      previewImg(url) {
-        return [url];
-      },
       /** 查询参数列表 */
       getList() {
         this.loading = true;
-        listCarsousel(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        listCarousel(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
             this.carouselList = response.rows;
             this.total = response.total;
             this.loading = false;
@@ -199,10 +193,10 @@
       /** 修改按钮操作 */
       handleUpdate(row) {
         this.reset();
-        getCarsousel(row.id).then(response => {
+        getCarousel(row.id).then(response => {
           this.form = response.data;
           this.open = true;
-          this.title = "修改分类";
+          this.title = "修改轮播图项";
         });
       },
       handleDisplayChange(row) {
@@ -212,7 +206,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return changeCarsouselDisplay(row.id, row.display);
+          return changeCarouselDisplay(row.id, row.display);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess(text + "成功");
@@ -228,7 +222,7 @@
         this.$refs["form"].validate(valid => {
           if (valid) {
             if (this.form.id != undefined) {
-              updateCarsousel(this.form).then(response => {
+              updateCarousel(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("修改成功");
                   this.open = false;
@@ -238,7 +232,7 @@
                 }
               });
             } else {
-              addCarsousel(this.form).then(response => {
+              addCarousel(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("新增成功");
                   this.open = false;
@@ -258,7 +252,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return delLink(row.id);
+          return delCarousel(row.id);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess("删除成功");

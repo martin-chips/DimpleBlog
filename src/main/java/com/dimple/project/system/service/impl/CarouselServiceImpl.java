@@ -1,5 +1,6 @@
 package com.dimple.project.system.service.impl;
 
+import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.system.domain.Carousel;
 import com.dimple.project.system.mapper.CarouselMapper;
 import com.dimple.project.system.service.CarouselService;
@@ -31,16 +32,19 @@ public class CarouselServiceImpl implements CarouselService {
 
     @Override
     public int insertCarousel(Carousel carousel) {
+        carousel.setCreateBy(SecurityUtils.getUsername());
         return carouselMapper.insertCarousel(carousel);
     }
 
     @Override
     public int updateCarousel(Carousel carousel) {
+        carousel.setUpdateBy(SecurityUtils.getUsername());
         return carouselMapper.updateCarousel(carousel);
     }
 
     @Override
     public int deleteCarouselById(Long id) {
-        return carouselMapper.deleteCarouselById(id);
+        String username = SecurityUtils.getUsername();
+        return carouselMapper.deleteCarouselById(id, username);
     }
 }

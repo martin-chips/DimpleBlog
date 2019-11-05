@@ -16,9 +16,9 @@ import permission from './directive/permission'
 
 import './assets/icons' // icon
 import './permission' // permission control
-import { getDicts } from "@/api/system/dict/data";
-import { getConfigKey } from "@/api/system/config";
-import { parseTime, resetForm, addDateRange, selectDictLabel } from "@/utils/dimple";
+import {getDicts} from "@/api/system/dict/data";
+import {getConfigKey} from "@/api/system/config";
+import {parseTime, resetForm, addDateRange, selectDictLabel} from "@/utils/dimple";
 import Pagination from "@/components/Pagination";
 
 // 全局方法挂载
@@ -30,12 +30,17 @@ Vue.prototype.addDateRange = addDateRange
 Vue.prototype.selectDictLabel = selectDictLabel
 
 Vue.prototype.msgSuccess = function (msg) {
-  this.$message({ showClose: true, message: msg, type: "success" });
+  this.$message({showClose: true, message: msg, type: "success"});
 }
 
 Vue.prototype.msgError = function (msg) {
-  this.$message({ showClose: true, message: msg, type: "error" });
+  this.$message({showClose: true, message: msg, type: "error"});
 }
+
+Vue.prototype.msgWarning = function (msg) {
+  this.$message({showClose: true, message: msg, type: "warning"});
+}
+
 
 Vue.prototype.msgInfo = function (msg) {
   this.$message.info(msg);

@@ -64,4 +64,8 @@ public class LoginLog extends BaseEntity {
      * 访问时间
      */
     private Date loginTime;
+    /**
+     * token 信息
+     */
+    private String token;
 }

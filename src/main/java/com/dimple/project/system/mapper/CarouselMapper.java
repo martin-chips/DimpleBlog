@@ -51,6 +51,6 @@ public interface CarouselMapper {
      * @param id 主键
      * @return 影响行数
      */
-    int deleteCarouselById(Long id);
+    int deleteCarouselById(@Param("id") Long id, @Param("username") String username);
 
 }

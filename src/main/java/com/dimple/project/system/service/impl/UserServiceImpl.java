@@ -4,6 +4,8 @@ import com.dimple.common.constant.UserConstants;
 import com.dimple.common.exception.CustomException;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.framework.security.LoginUser;
+import com.dimple.framework.security.service.TokenService;
 import com.dimple.project.system.domain.Role;
 import com.dimple.project.system.domain.SysUser;
 import com.dimple.project.system.domain.UserRole;
@@ -34,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    TokenService tokenService;
 
     @Override
     public List<SysUser> selectUserList(SysUser user) {
@@ -129,15 +134,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUserProfile(SysUser user) {
-        return userMapper.updateUser(user);
+        int result = userMapper.updateUser(user);
+        //更新redis缓存
+        refreshTokenClaims(user.getUserId());
+        return result;
     }
 
-
-    @Override
-    public boolean updateUserAvatar(String userName, String avatar) {
-        return userMapper.updateUserAvatar(userName, avatar) > 0;
+    /**
+     * 同步刷新Redis缓存
+     *
+     * @param id sys_user id
+     */
+    private void refreshTokenClaims(Long id) {
+        //更新redis缓存
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        loginUser.setUser(userMapper.selectUserById(id));
+        tokenService.refreshToken(loginUser);
     }
-
 
     @Override
     public int resetPwd(SysUser user) {

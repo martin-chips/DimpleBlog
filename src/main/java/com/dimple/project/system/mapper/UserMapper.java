@@ -53,15 +53,6 @@ public interface UserMapper {
     int updateUser(SysUser user);
 
     /**
-     * 修改用户头像
-     *
-     * @param userName 用户名
-     * @param avatar   头像地址
-     * @return 结果
-     */
-    int updateUserAvatar(@Param("userName") String userName, @Param("avatar") String avatar);
-
-    /**
      * 重置用户密码
      *
      * @param userName 用户名

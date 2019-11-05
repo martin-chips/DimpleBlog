@@ -92,31 +92,17 @@
             <if test="target != null">
                 target = #{target},
             </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
-            <if test="deleteBy != null and deleteBy != ''">
-                delete_by = #{deleteBy},
-            </if>
-            <if test="deleteTime != null">
-                delete_time = #{deleteTime},
-            </if>
+            update_time = sysdate()
         </set>
         where id = #{id}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteCarouselById">
-        delete from sys_carousel where id = #{id}
+        update sys_carousel set delete_time =sysdate(), delete_by=#{username} where id = #{id}
     </delete>
 
 </mapper>

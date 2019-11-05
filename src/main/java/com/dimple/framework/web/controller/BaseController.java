@@ -56,6 +56,16 @@ public class BaseController {
         }
     }
 
+    protected void startPage(Integer pageNum, Integer pageSize) {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        pageNum = pageNum == null ? pageDomain.getPageNum() : pageNum;
+        pageSize = pageSize == null ? pageDomain.getPageSize() : pageSize;
+        if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
+            String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
+            PageHelper.startPage(pageNum, pageSize, orderBy);
+        }
+    }
+
     /**
      * 响应请求分页数据
      */

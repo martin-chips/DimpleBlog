@@ -8,3 +8,13 @@ export function list(query) {
     params: query
   })
 }
+
+
+//获取当前用户的登录日志
+export function listCurrentUserLoginLog(query) {
+  return request({
+    url: '/monitor/loginLog',
+    method: 'get',
+    params: query
+  })
+}

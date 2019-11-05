@@ -1,6 +1,5 @@
 package com.dimple.project.system.controller;
 
-import com.dimple.common.utils.SecurityUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
@@ -52,7 +51,6 @@ public class CarouselController extends BaseController {
     @Log(title = "轮播图管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Carousel carousel) {
-        carousel.setCreateBy(SecurityUtils.getUsername());
         return toAjax(carouselService.insertCarousel(carousel));
     }
 
@@ -60,7 +58,6 @@ public class CarouselController extends BaseController {
     @Log(title = "轮播图管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Carousel carousel) {
-        carousel.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(carouselService.updateCarousel(carousel));
     }
 
