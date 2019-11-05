@@ -1,14 +1,6 @@
 package com.dimple.framework.redis;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
+import com.dimple.project.monitor.domain.RedisInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
@@ -16,6 +8,16 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @className: RedisCache
@@ -25,7 +27,7 @@ import org.springframework.stereotype.Component;
  */
 @SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
-public class RedisCache {
+public class RedisCacheService {
     @Autowired
     public RedisTemplate redisTemplate;
 
@@ -189,5 +191,32 @@ public class RedisCache {
      */
     public Collection<String> keys(String pattern) {
         return redisTemplate.keys(pattern);
+    }
+
+    /**
+     * 获取欧Redis的Properties
+     *
+     * @return properties
+     */
+    public List<RedisInfo> getRedisInfoList() {
+        Properties properties = redisTemplate.getConnectionFactory().getConnection().info();
+        List<RedisInfo> redisInfoList = new ArrayList<>();
+        for (Object key : properties.keySet()) {
+            String value = properties.get(key).toString();
+            RedisInfo redisInfo = new RedisInfo();
+            redisInfo.setKey(key.toString());
+            redisInfo.setValue(value);
+            redisInfoList.add(redisInfo);
+        }
+        return redisInfoList;
+    }
+
+    /**
+     * 返回RedisTemplate
+     *
+     * @return RedisTemplate
+     */
+    public RedisTemplate getRedisTemplate() {
+        return redisTemplate;
     }
 }

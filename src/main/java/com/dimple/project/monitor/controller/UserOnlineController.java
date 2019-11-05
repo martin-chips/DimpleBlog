@@ -4,7 +4,7 @@ import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
-import com.dimple.framework.redis.RedisCache;
+import com.dimple.framework.redis.RedisCacheService;
 import com.dimple.framework.security.LoginUser;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
@@ -37,15 +37,15 @@ public class UserOnlineController extends BaseController {
     private UserOnlineService userOnlineService;
 
     @Autowired
-    private RedisCache redisCache;
+    private RedisCacheService redisCacheService;
 
     @PreAuthorize("@permissionService.hasPermission('monitor:online:list')")
     @GetMapping("/list")
     public TableDataInfo list(String ip, String userName) {
-        Collection<String> keys = redisCache.keys(Constants.LOGIN_TOKEN_KEY + "*");
+        Collection<String> keys = redisCacheService.keys(Constants.LOGIN_TOKEN_KEY + "*");
         List<UserOnline> userOnlineList = new ArrayList<UserOnline>();
         for (String key : keys) {
-            LoginUser user = redisCache.getCacheObject(key);
+            LoginUser user = redisCacheService.getCacheObject(key);
             if (StringUtils.isNotEmpty(ip) && StringUtils.isNotEmpty(userName)) {
                 if (StringUtils.equals(ip, user.getIpaddr()) && StringUtils.equals(userName, user.getUsername())) {
                     userOnlineList.add(userOnlineService.selectOnlineByInfo(ip, userName, user));
@@ -74,7 +74,7 @@ public class UserOnlineController extends BaseController {
     @Log(title = "在线用户", businessType = BusinessType.DELETE)
     @DeleteMapping("/{tokenId}")
     public AjaxResult forceLogout(@PathVariable String tokenId) {
-        redisCache.deleteObject(Constants.LOGIN_TOKEN_KEY + tokenId);
+        redisCacheService.deleteObject(Constants.LOGIN_TOKEN_KEY + tokenId);
         return AjaxResult.success();
     }
 }

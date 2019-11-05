@@ -49,6 +49,8 @@
         queryParams: {
           pageNum: 1,
           pageSize: 10,
+          orderByColumn: "loginTime",
+          isAsc: "desc"
         },
       }
     },

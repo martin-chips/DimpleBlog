@@ -16,7 +16,7 @@ import com.dimple.common.exception.user.UserPasswordNotMatchException;
 import com.dimple.common.utils.MessageUtils;
 import com.dimple.framework.manager.AsyncManager;
 import com.dimple.framework.manager.factory.AsyncFactory;
-import com.dimple.framework.redis.RedisCache;
+import com.dimple.framework.redis.RedisCacheService;
 import com.dimple.framework.security.LoginUser;
 
 /**
@@ -34,7 +34,7 @@ public class SysLoginService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private RedisCache redisCache;
+    private RedisCacheService redisCacheService;
 
     /**
      * 登录验证
@@ -47,8 +47,8 @@ public class SysLoginService {
      */
     public String login(String username, String password, String code, String uuid) {
         String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
-        String captcha = redisCache.getCacheObject(verifyKey);
-        redisCache.deleteObject(verifyKey);
+        String captcha = redisCacheService.getCacheObject(verifyKey);
+        redisCacheService.deleteObject(verifyKey);
         if (captcha == null) {
             AsyncManager.me().execute(AsyncFactory.recordLoginLog(username, Constants.LOGIN_FAIL, MessageUtils.message("user.captcha.error")));
             throw new CaptchaExpireException();

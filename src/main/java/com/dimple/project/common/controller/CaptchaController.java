@@ -12,7 +12,7 @@ import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.IdUtils;
 import com.dimple.common.utils.VerifyCodeUtils;
 import com.dimple.common.utils.sign.Base64;
-import com.dimple.framework.redis.RedisCache;
+import com.dimple.framework.redis.RedisCacheService;
 import com.dimple.framework.web.domain.AjaxResult;
 
 /**
@@ -25,7 +25,7 @@ import com.dimple.framework.web.domain.AjaxResult;
 public class CaptchaController {
 
     @Autowired
-    private RedisCache redisCache;
+    private RedisCacheService redisCacheService;
 
     /**
      * 生成验证码
@@ -38,7 +38,7 @@ public class CaptchaController {
         String uuid = IdUtils.simpleUUID();
         String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
 
-        redisCache.setCacheObject(verifyKey, verifyCode, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
+        redisCacheService.setCacheObject(verifyKey, verifyCode, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
         // 生成图片
         int w = 111, h = 36;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

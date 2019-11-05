@@ -2,7 +2,6 @@ import request from '@/utils/request'
 
 // 查询黑名单列表
 export function listBlacklist(query) {
-  console.log(111)
   return request({
     url: '/monitor/blacklist/list',
     method: 'get',

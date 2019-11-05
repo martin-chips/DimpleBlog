@@ -1,6 +1,7 @@
 package com.dimple.project.monitor.service.impl;
 
 import com.dimple.common.utils.ConvertUtils;
+import com.dimple.framework.redis.RedisCacheService;
 import com.dimple.project.monitor.domain.LoginLog;
 import com.dimple.project.monitor.mapper.LoginLogMapper;
 import com.dimple.project.monitor.service.LoginLogService;
@@ -21,6 +22,9 @@ public class LoginLogServiceImpl implements LoginLogService {
     @Autowired
     private LoginLogMapper loginLogMapper;
 
+    @Autowired
+    RedisCacheService redisCacheService;
+
     /**
      * 新增系统登录日志
      *
@@ -39,6 +43,7 @@ public class LoginLogServiceImpl implements LoginLogService {
      */
     @Override
     public List<LoginLog> selectLoginLogList(LoginLog loginLog) {
+        redisCacheService.setCacheObject("1", 1);
         return loginLogMapper.selectLoginLogList(loginLog);
     }
 
