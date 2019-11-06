@@ -20,47 +20,43 @@
     },
     methods: {
       openSocket() {
-        if (this.stompClient == null) {
-          this.res = "<div style='color: #18d035;font-size: 14px'>通道连接成功,静默等待....</div>"
-          // this.$refs['logContainerDiv'].append();
-          // 建立连接对象
-          let socket = new SockJS('http://127.0.0.1:8080/websocket?token=kl');
-          // 获取STOMP子协议的客户端对象
-          this.stompClient = Stomp.over(socket);
-          this.stompClient.connect({token: 'kl'}, () => {
-            this.stompClient.subscribe('/topic/pullLogger', (event) => {
-                let content = JSON.parse(event.body);
-                let leverhtml = '';
-                let className = "<span style='color: #229379'>" + content.className + "</span>";
-                switch (content.level) {
-                  case 'INFO':
-                    leverhtml = "<span style='color: #90ad2b'>" + content.level + "</span>";
-                    break;
-                  case 'DEBUG':
-                    leverhtml = "<span style='color: #A8C023'>" + content.level + "</span>";
-                    break;
-                  case 'WARN':
-                    leverhtml = "<span style='color: #fffa1c'>" + content.level + "</span>";
-                    break;
-                  case 'ERROR':
-                    leverhtml = "<span style='color: #e3270e'>" + content.level + "</span>";
-                    break;
-                }
-                this.res += "<div style='color: #18d035;font-size: 14px'>" + content.timestamp + " " + leverhtml + " --- [" + content.threadName + "] " + className + " ：" + content.body + "</div>"
-                // this.$refs['logContainerDiv'].append(content.timestamp + " " + leverhtml + " --- [" + content.threadName + "] " + className + " ：" + content.body + "<br/>");
-                if (content.exception != "") {
-                  this.res += "<div>" + content.exception + "</div>"
-                  // this.$refs['logContainerDiv'].append();
-                }
-                if (content.cause != "") {
-                  this.res += "<div>" + content.cause + "</div>"
-                  // this.$refs['logContainerDiv'].append(content.cause);
-                }
-                // this.$refs['logContainer'].scrollTo(this.$refs['logContainerDiv'].height() - this.$refs['logContainer'].height());
-              },
-              {
-                token: "kltoen"
-              });
+
+        var stompClient = null;
+
+        if (stompClient == null) {
+          this.res = "连接成功,正在等在"
+          var socket = new SockJS('http://127.0.0.1:8080/websocket');
+          stompClient = Stomp.over(socket);
+          stompClient.connect({token: "kl"}, function (frame) {
+            stompClient.subscribe('/topic/pullLogger', function (event) {
+              var content = JSON.parse(event.body);
+              var leverhtml = '';
+              var className = '<span class="classnametext">' + content.className + '</span>';
+              switch (content.level) {
+                case 'INFO':
+                  leverhtml = '<span class="infotext">' + content.level + '</span>';
+                  break;
+                case 'DEBUG':
+                  leverhtml = '<span class="debugtext">' + content.level + '</span>';
+                  break;
+                case 'WARN':
+                  leverhtml = '<span class="warntext">' + content.level + '</span>';
+                  break;
+                case 'ERROR':
+                  leverhtml = '<span class="errortext">' + content.level + '</span>';
+                  break;
+              }
+              $("#log-container div").append("<p class='logp'>" + content.timestamp + " " + leverhtml + " --- [" + content.threadName + "] " + className + " ：" + content.body + "</p>");
+              if (content.exception != "") {
+                $("#log-container div").append("<p class='logp'>" + content.exception + "</p>");
+              }
+              if (content.cause != "") {
+                $("#log-container div").append("<p class='logp'>" + content.cause + "</p>");
+              }
+              $("#log-container").scrollTop($("#log-container div").height() - $("#log-container").height());
+            }, {
+              token: "kltoen"
+            });
           });
         }
       },

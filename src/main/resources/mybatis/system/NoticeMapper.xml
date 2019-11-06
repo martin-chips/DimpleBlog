@@ -5,7 +5,7 @@
 <mapper namespace="com.dimple.project.system.mapper.NoticeMapper">
 
     <resultMap type="com.dimple.project.system.domain.Notice" id="SysNoticeResult">
-        <result property="noticeId" column="notice_id"/>
+        <result property="id" column="id"/>
         <result property="noticeTitle" column="notice_title"/>
         <result property="noticeType" column="notice_type"/>
         <result property="noticeContent" column="notice_content"/>
@@ -18,13 +18,13 @@
     </resultMap>
 
     <sql id="selectNoticeVo">
-        select notice_id, notice_title, notice_type, notice_content, status, create_by, create_time, update_by, update_time, remark 
+        select id, notice_title, notice_type, notice_content, status, create_by, create_time, update_by, update_time, remark
 		from sys_notice
     </sql>
 
     <select id="selectNoticeById" parameterType="Long" resultMap="SysNoticeResult">
         <include refid="selectNoticeVo"/>
-        where notice_id = #{noticeId}
+        where id = #{id}
     </select>
 
     <select id="selectNoticeList" parameterType="com.dimple.project.system.domain.Notice"
@@ -72,11 +72,11 @@
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()
         </set>
-        where notice_id = #{noticeId}
+        where id = #{id}
     </update>
 
     <delete id="deleteNoticeById">
-        update sys_notice set delete_by =#{loginUsername} , delete_time= sysdate()  where notice_id = #{noticeId}
+        update sys_notice set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{id}
     </delete>
 
 </mapper>

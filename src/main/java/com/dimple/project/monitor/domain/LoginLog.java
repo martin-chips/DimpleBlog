@@ -23,7 +23,7 @@ public class LoginLog extends BaseEntity {
     /**
      * ID
      */
-    private Long infoId;
+    private Long id;
 
     /**
      * 用户账号
@@ -38,12 +38,12 @@ public class LoginLog extends BaseEntity {
     /**
      * 登录IP地址
      */
-    private String ipaddr;
+    private String ip;
 
     /**
      * 登录地点
      */
-    private String loginLocation;
+    private String location;
 
     /**
      * 浏览器类型

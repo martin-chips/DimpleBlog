@@ -151,9 +151,9 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public String checkMenuNameUnique(Menu menu) {
-        Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
+        Long menuId = StringUtils.isNull(menu.getId()) ? -1L : menu.getId();
         Menu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
-        if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != menuId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -224,7 +224,7 @@ public class MenuServiceImpl implements MenuService {
         Iterator<Menu> it = list.iterator();
         while (it.hasNext()) {
             Menu n = (Menu) it.next();
-            if (n.getParentId().longValue() == t.getMenuId().longValue()) {
+            if (n.getParentId().longValue() == t.getId().longValue()) {
                 tlist.add(n);
             }
         }

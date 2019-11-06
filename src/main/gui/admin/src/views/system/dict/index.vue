@@ -32,11 +32,11 @@
     </el-form>
 
     <el-table v-loading="loading" :data="typeList" style="width: 100%;">
-      <el-table-column label="字典主键" align="center" prop="dictId"/>
+      <el-table-column label="字典主键" align="center" prop="id"/>
       <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true"/>
       <el-table-column label="字典类型" align="center">
         <template slot-scope="scope">
-          <router-link :to="'/dict/type/data/' + scope.row.dictId" class="link-type">
+          <router-link :to="'/dict/type/data/' + scope.row.id" class="link-type">
             <span>{{ scope.row.dictType }}</span>
           </router-link>
         </template>
@@ -167,7 +167,7 @@
       // 表单重置
       reset() {
         this.form = {
-          dictId: undefined,
+          id: undefined,
           dictName: undefined,
           dictType: undefined,
           status: "0",
@@ -189,7 +189,7 @@
       /** 修改按钮操作 */
       handleUpdate(row) {
         this.reset();
-        getType(row.dictId).then(response => {
+        getType(row.id).then(response => {
           this.form = response.data;
           this.open = true;
           this.title = "修改字典类型";
@@ -199,7 +199,7 @@
       submitForm: function () {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            if (this.form.dictId != undefined) {
+            if (this.form.id != undefined) {
               updateType(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("修改成功");
@@ -230,7 +230,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return delType(row.dictId);
+          return delType(row.id);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess("删除成功");

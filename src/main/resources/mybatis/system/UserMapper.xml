@@ -5,7 +5,7 @@
 <mapper namespace="com.dimple.project.system.mapper.UserMapper">
 
     <resultMap type="com.dimple.project.system.domain.SysUser" id="SysUserResult">
-        <id property="userId" column="user_id"/>
+        <id property="id" column="id"/>
         <result property="userName" column="user_name"/>
         <result property="nickName" column="nick_name"/>
         <result property="email" column="email"/>
@@ -25,7 +25,7 @@
     </resultMap>
 
     <resultMap id="RoleResult" type="com.dimple.project.system.domain.Role">
-        <id property="roleId" column="role_id"/>
+        <id property="id" column="id"/>
         <result property="roleName" column="role_name"/>
         <result property="roleKey" column="role_key"/>
         <result property="roleSort" column="role_sort"/>
@@ -33,11 +33,11 @@
     </resultMap>
 
     <sql id="selectUserVo">
-        select u.user_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,u.delete_by,u.delete_time,
-        r.role_id, r.role_name, r.role_key, r.role_sort, r.status as role_status
+        select u.id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,u.delete_by,u.delete_time,
+        r.id, r.role_name, r.role_key, r.role_sort, r.status as role_status
         from sys_user u
-		    left join sys_user_role ur on u.user_id = ur.user_id
-		    left join sys_role r on r.role_id = ur.role_id
+		    left join sys_user_role ur on u.id = ur.user_id
+		    left join sys_role r on r.id = ur.role_id
     </sql>
 
     <select id="selectUserList" parameterType="com.dimple.project.system.domain.SysUser" resultMap="SysUserResult">
@@ -67,7 +67,7 @@
 
     <select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
         <include refid="selectUserVo"/>
-        where u.user_id = #{userId}
+        where u.id = #{id}
     </select>
 
     <select id="checkUserNameUnique" parameterType="String" resultType="int">
@@ -75,17 +75,17 @@
 	</select>
 
     <select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
-		select user_id, phonenumber from sys_user where phonenumber = #{phonenumber}
+		select id, phonenumber from sys_user where phonenumber = #{phonenumber}
 	</select>
 
     <select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
-		select user_id, email from sys_user where email = #{email}
+		select id, email from sys_user where email = #{email}
 	</select>
 
     <insert id="insertUser" parameterType="com.dimple.project.system.domain.SysUser" useGeneratedKeys="true"
-            keyProperty="userId">
+            keyProperty="id">
         insert into sys_user(
-        <if test="userId != null and userId != 0">user_id,</if>
+        <if test="id != null and id != 0">id,</if>
         <if test="userName != null and userName != ''">user_name,</if>
         <if test="nickName != null and nickName != ''">nick_name,</if>
         <if test="email != null and email != ''">email,</if>
@@ -98,7 +98,7 @@
         <if test="remark != null and remark != ''">remark,</if>
         create_time
         )values(
-        <if test="userId != null and userId != ''">#{userId},</if>
+        <if test="id != null and id != ''">#{id},</if>
         <if test="userName != null and userName != ''">#{userName},</if>
         <if test="nickName != null and nickName != ''">#{nickName},</if>
         <if test="email != null and email != ''">#{email},</if>
@@ -130,11 +130,11 @@
             <if test="remark != null">remark = #{remark},</if>
             update_time = sysdate()
         </set>
-        where user_id = #{userId}
+        where id = #{id}
     </update>
 
     <!--    <update id="updateUserStatus" parameterType="SysUser">-->
-    <!-- 		update sys_user set status = #{status} where user_id = #{userId}-->
+    <!-- 		update sys_user set status = #{status} where id = #{id}-->
     <!--	</update>-->
 
     <update id="updateUserAvatar" parameterType="com.dimple.project.system.domain.SysUser">
@@ -146,7 +146,7 @@
 	</update>
 
     <delete id="deleteUserById">
- 		update sys_user set delete_by =#{loginUsername} , delete_time= sysdate()  where user_id = #{userId}
+ 		update sys_user set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{id}
  	</delete>
 
 </mapper> 

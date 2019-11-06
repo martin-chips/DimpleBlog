@@ -25,7 +25,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public Config selectConfigById(Long configId) {
         Config config = new Config();
-        config.setConfigId(configId);
+        config.setId(configId);
         return configMapper.selectConfig(config);
     }
 
@@ -60,9 +60,9 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     public String checkConfigKeyUnique(Config config) {
-        Long configId = StringUtils.isNull(config.getConfigId()) ? -1L : config.getConfigId();
+        Long configId = StringUtils.isNull(config.getId()) ? -1L : config.getId();
         Config info = configMapper.checkConfigKeyUnique(config.getConfigKey());
-        if (StringUtils.isNotNull(info) && info.getConfigId().longValue() != configId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != configId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

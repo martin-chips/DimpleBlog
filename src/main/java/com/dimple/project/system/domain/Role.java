@@ -20,7 +20,7 @@ public class Role extends BaseEntity {
     /**
      * 角色ID
      */
-    private Long roleId;
+    private Long id;
 
     /**
      * 角色名称
@@ -53,8 +53,8 @@ public class Role extends BaseEntity {
     private Long[] menuIds;
 
 
-    public Role(Long roleId) {
-        this.roleId = roleId;
+    public Role(Long id) {
+        this.id = id;
     }
 
     public static boolean isAdmin(Long roleId) {
@@ -62,6 +62,6 @@ public class Role extends BaseEntity {
     }
 
     public boolean isAdmin() {
-        return isAdmin(this.roleId);
+        return isAdmin(this.id);
     }
 }

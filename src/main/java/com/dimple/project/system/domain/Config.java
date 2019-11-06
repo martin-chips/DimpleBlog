@@ -19,7 +19,7 @@ public class Config extends BaseEntity {
     /**
      * 参数主键
      */
-    private Long configId;
+    private Long id;
 
     /**
      * 参数名称

@@ -57,8 +57,8 @@ public class AsyncFactory {
                 // 封装对象
                 LoginLog loginLog = new LoginLog();
                 loginLog.setUserName(username);
-                loginLog.setIpaddr(ip);
-                loginLog.setLoginLocation(address);
+                loginLog.setIp(ip);
+                loginLog.setLocation(address);
                 loginLog.setBrowser(browser);
                 loginLog.setOs(os);
                 loginLog.setMsg(message);

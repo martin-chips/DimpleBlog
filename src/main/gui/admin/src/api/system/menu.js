@@ -10,9 +10,9 @@ export function listMenu(query) {
 }
 
 // 查询菜单详细
-export function getMenu(menuId) {
+export function getMenu(id) {
   return request({
-    url: '/system/menu/' + menuId,
+    url: '/system/menu/' + id,
     method: 'get'
   })
 }
@@ -26,9 +26,9 @@ export function treeselect() {
 }
 
 // 根据角色ID查询菜单下拉树结构
-export function roleMenuTreeselect(roleId) {
+export function roleMenuTreeselect(id) {
   return request({
-    url: '/system/menu/roleMenuTreeselect/' + roleId,
+    url: '/system/menu/roleMenuTreeselect/' + id,
     method: 'get'
   })
 }
@@ -52,9 +52,9 @@ export function updateMenu(data) {
 }
 
 // 删除菜单
-export function delMenu(menuId) {
+export function delMenu(id) {
   return request({
-    url: '/system/menu/' + menuId,
+    url: '/system/menu/' + id,
     method: 'delete'
   })
 }

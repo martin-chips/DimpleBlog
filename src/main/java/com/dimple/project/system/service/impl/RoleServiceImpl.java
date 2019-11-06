@@ -67,9 +67,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public String checkRoleNameUnique(Role role) {
-        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
+        Long roleId = StringUtils.isNull(role.getId()) ? -1L : role.getId();
         Role info = roleMapper.checkRoleNameUnique(role.getRoleName());
-        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != roleId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -77,9 +77,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public String checkRoleKeyUnique(Role role) {
-        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
+        Long roleId = StringUtils.isNull(role.getId()) ? -1L : role.getId();
         Role info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
-        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != roleId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -87,7 +87,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void checkRoleAllowed(Role role) {
-        if (StringUtils.isNotNull(role.getRoleId()) && role.isAdmin()) {
+        if (StringUtils.isNotNull(role.getId()) && role.isAdmin()) {
             throw new CustomException("不允许操作超级管理员角色");
         }
     }
@@ -106,7 +106,7 @@ public class RoleServiceImpl implements RoleService {
         // 修改角色信息
         roleMapper.updateRole(role);
         // 删除角色与菜单关联
-        roleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());
+        roleMenuMapper.deleteRoleMenuByRoleId(role.getId());
         return insertRoleMenu(role);
     }
 
@@ -135,7 +135,7 @@ public class RoleServiceImpl implements RoleService {
         List<RoleMenu> list = new ArrayList<RoleMenu>();
         for (Long menuId : role.getMenuIds()) {
             RoleMenu rm = new RoleMenu();
-            rm.setRoleId(role.getRoleId());
+            rm.setRoleId(role.getId());
             rm.setMenuId(menuId);
             list.add(rm);
         }

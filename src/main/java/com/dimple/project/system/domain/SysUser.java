@@ -20,14 +20,14 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SysUser extends BaseEntity {
 
-    public SysUser(Long userId) {
-        this.userId = userId;
+    public SysUser(Long id) {
+        this.id = id;
     }
 
     /**
      * 用户ID
      */
-    private Long userId;
+    private Long id;
 
     /**
      * 用户账号
@@ -95,7 +95,7 @@ public class SysUser extends BaseEntity {
     private Long[] roleIds;
 
     public boolean isAdmin() {
-        return isAdmin(this.userId);
+        return isAdmin(this.id);
     }
 
     public static boolean isAdmin(Long userId) {

@@ -23,7 +23,7 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="menuList" row-key="menuId"
+    <el-table v-loading="loading" :data="menuList" row-key="id"
               :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="130px"></el-table-column>
       <el-table-column prop="icon" label="图标" align="center" width="100px">
@@ -226,7 +226,7 @@
       // 表单重置
       reset() {
         this.form = {
-          menuId: undefined,
+          id: undefined,
           parentId: 0,
           menuName: undefined,
           icon: undefined,
@@ -246,7 +246,7 @@
         this.reset();
         this.getTreeselect();
         if (row != null) {
-          this.form.parentId = row.menuId;
+          this.form.parentId = row.id;
         }
         this.open = true;
         this.title = "添加菜单";
@@ -255,7 +255,7 @@
       handleUpdate(row) {
         this.reset();
         this.getTreeselect();
-        getMenu(row.menuId).then(response => {
+        getMenu(row.id).then(response => {
           this.form = response.data;
           this.open = true;
           this.title = "修改菜单";
@@ -265,7 +265,7 @@
       submitForm: function () {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            if (this.form.menuId != undefined) {
+            if (this.form.id != undefined) {
               updateMenu(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("修改成功");
@@ -296,7 +296,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return delMenu(row.menuId);
+          return delMenu(row.id);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess("删除成功");

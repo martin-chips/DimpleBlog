@@ -38,7 +38,7 @@
         </el-form>
 
         <el-table v-loading="loading" :data="userList">
-          <el-table-column label="用户编号" align="center" prop="userId"/>
+          <el-table-column label="用户编号" align="center" prop="id"/>
           <el-table-column label="用户名称" align="center" prop="userName"/>
           <el-table-column label="用户昵称" align="center" prop="nickName"/>
           <el-table-column label="手机号码" align="center" prop="phonenumber" width="120"/>
@@ -58,7 +58,7 @@
               <el-button size="mini" type="text" icon="el-icon-edit"
                          @click="handleUpdate(scope.row)">修改
               </el-button>
-              <el-button v-if="scope.row.userId !== 1" size="mini" type="text" icon="el-icon-delete"
+              <el-button v-if="scope.row.id !== 1" size="mini" type="text" icon="el-icon-delete"
                          @click="handleDelete(scope.row)">删除
               </el-button>
               <el-button size="mini" type="text" icon="el-icon-key"
@@ -98,7 +98,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password">
+            <el-form-item v-if="form.id == undefined" label="用户密码" prop="password">
               <el-input v-model="form.password" placeholder="请输入用户密码" type="password"/>
             </el-form-item>
           </el-col>
@@ -274,7 +274,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return changeUserStatus(row.userId, row.status);
+          return changeUserStatus(row.id, row.status);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess(text + "成功");
@@ -293,7 +293,7 @@
       // 表单重置
       reset() {
         this.form = {
-          userId: undefined,
+          id: undefined,
           userName: undefined,
           nickName: undefined,
           password: undefined,
@@ -323,7 +323,7 @@
       handleUpdate(row) {
         this.reset();
         this.getRoles();
-        getUser(row.userId).then(response => {
+        getUser(row.id).then(response => {
           this.form = response.data;
           this.form.roleIds = response.roleIds;
           this.open = true;
@@ -337,7 +337,7 @@
           confirmButtonText: "确定",
           cancelButtonText: "取消"
         }).then(({value}) => {
-          resetUserPwd(row.userId, value).then(response => {
+          resetUserPwd(row.id, value).then(response => {
             if (response.code === 200) {
               this.msgSuccess("修改成功，新密码是：" + value);
             } else {
@@ -351,7 +351,7 @@
       submitForm: function () {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            if (this.form.userId != undefined) {
+            if (this.form.id != undefined) {
               updateUser(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("修改成功");
@@ -382,7 +382,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return delUser(row.userId);
+          return delUser(row.id);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess("删除成功");

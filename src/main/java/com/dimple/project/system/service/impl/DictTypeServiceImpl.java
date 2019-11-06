@@ -61,16 +61,16 @@ public class DictTypeServiceImpl implements DictTypeService {
     @Override
     @Transactional
     public int updateDictType(DictType dictType) {
-        DictType oldDict = dictTypeMapper.selectDictTypeById(dictType.getDictId());
+        DictType oldDict = dictTypeMapper.selectDictTypeById(dictType.getId());
         dictDataMapper.updateDictDataType(oldDict.getDictType(), dictType.getDictType());
         return dictTypeMapper.updateDictType(dictType);
     }
 
     @Override
     public String checkDictTypeUnique(DictType dict) {
-        Long dictId = StringUtils.isNull(dict.getDictId()) ? -1L : dict.getDictId();
+        Long dictId = StringUtils.isNull(dict.getId()) ? -1L : dict.getId();
         DictType dictType = dictTypeMapper.checkDictTypeUnique(dict.getDictType());
-        if (StringUtils.isNotNull(dictType) && dictType.getDictId().longValue() != dictId.longValue()) {
+        if (StringUtils.isNotNull(dictType) && dictType.getId().longValue() != dictId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

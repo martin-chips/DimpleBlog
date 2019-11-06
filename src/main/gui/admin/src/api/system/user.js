@@ -10,9 +10,9 @@ export function listUser(query) {
 }
 
 // 查询用户详细
-export function getUser(userId) {
+export function getUser(id) {
   return request({
-    url: '/system/user/' + userId,
+    url: '/system/user/' + id,
     method: 'get'
   })
 }
@@ -36,17 +36,17 @@ export function updateUser(data) {
 }
 
 // 删除用户
-export function delUser(userId) {
+export function delUser(id) {
   return request({
-    url: '/system/user/' + userId,
+    url: '/system/user/' + id,
     method: 'delete'
   })
 }
 
 // 用户密码重置
-export function resetUserPwd(userId, password) {
+export function resetUserPwd(id, password) {
   const data = {
-    userId,
+    id: id,
     password
   }
   return request({
@@ -57,9 +57,9 @@ export function resetUserPwd(userId, password) {
 }
 
 // 用户状态修改
-export function changeUserStatus(userId, status) {
+export function changeUserStatus(id, status) {
   const data = {
-    userId,
+    userId: id,
     status
   }
   return request({

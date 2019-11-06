@@ -21,7 +21,7 @@ public class Menu extends BaseEntity {
     /**
      * 菜单ID
      */
-    private Long menuId;
+    private Long id;
 
     /**
      * 菜单名称

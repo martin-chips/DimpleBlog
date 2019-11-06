@@ -20,7 +20,7 @@ public class DictType extends BaseEntity {
     /**
      * 字典主键
      */
-    private Long dictId;
+    private Long id;
 
     /**
      * 字典名称

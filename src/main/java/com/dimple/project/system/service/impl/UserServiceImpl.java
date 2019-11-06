@@ -79,9 +79,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String checkPhoneUnique(SysUser user) {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
         SysUser info = userMapper.checkPhoneUnique(user.getPhonenumber());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != userId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -89,9 +89,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String checkEmailUnique(SysUser user) {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
         SysUser info = userMapper.checkEmailUnique(user.getEmail());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != userId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void checkUserAllowed(SysUser user) {
-        if (StringUtils.isNotNull(user.getUserId()) && user.isAdmin()) {
+        if (StringUtils.isNotNull(user.getId()) && user.isAdmin()) {
             throw new CustomException("不允许操作超级管理员用户");
         }
     }
@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public int updateUser(SysUser user) {
-        Long userId = user.getUserId();
+        Long userId = user.getId();
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
         // 新增用户与角色管理
@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
     public int updateUserProfile(SysUser user) {
         int result = userMapper.updateUser(user);
         //更新redis缓存
-        refreshTokenClaims(user.getUserId());
+        refreshTokenClaims(user.getId());
         return result;
     }
 
@@ -170,7 +170,7 @@ public class UserServiceImpl implements UserService {
             List<UserRole> list = new ArrayList<UserRole>();
             for (Long roleId : roles) {
                 UserRole ur = new UserRole();
-                ur.setUserId(user.getUserId());
+                ur.setUserId(user.getId());
                 ur.setRoleId(roleId);
                 list.add(ur);
             }

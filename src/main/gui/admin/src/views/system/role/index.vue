@@ -32,7 +32,7 @@
     </el-form>
 
     <el-table v-loading="loading" :data="roleList">
-      <el-table-column label="角色编号" prop="roleId" width="120"/>
+      <el-table-column label="角色编号" prop="id" width="120"/>
       <el-table-column label="角色名称" prop="roleName" :show-overflow-tooltip="true" width="150"/>
       <el-table-column label="权限字符" prop="roleKey" :show-overflow-tooltip="true" width="180"/>
       <el-table-column label="显示顺序" prop="roleSort" width="120"/>
@@ -191,8 +191,6 @@
         ],
         // 菜单列表
         menuOptions: [],
-        // 部门列表
-        deptOptions: [],
         // 查询参数
         queryParams: {
           pageNum: 1,
@@ -270,15 +268,15 @@
         return checkedKeys;
       },
       /** 根据角色ID查询菜单树结构 */
-      getRoleMenuTreeselect(roleId) {
-        roleMenuTreeselect(roleId).then(response => {
+      getRoleMenuTreeselect(id) {
+        roleMenuTreeselect(id).then(response => {
           this.getMenuTreeselect();
           this.$refs.menu.setCheckedKeys(response.data);
         });
       },
       /** 根据角色ID查询部门树结构 */
-      getRoleDeptTreeselect(roleId) {
-        roleDeptTreeselect(roleId).then(response => {
+      getRoleDeptTreeselect(id) {
+        roleDeptTreeselect(id).then(response => {
           this.getDeptTreeselect();
           this.$refs.dept.setCheckedKeys(response.data);
         });
@@ -291,7 +289,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return changeRoleStatus(row.roleId, row.status);
+          return changeRoleStatus(row.id, row.status);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess(text + "成功");
@@ -318,7 +316,7 @@
           this.$refs.tree.setCheckedKeys([]);
         }
         this.form = {
-          roleId: undefined,
+          id: undefined,
           roleName: undefined,
           roleKey: undefined,
           roleSort: 0,
@@ -345,9 +343,9 @@
       handleUpdate(row) {
         this.reset();
         this.$nextTick(() => {
-          this.getRoleMenuTreeselect(row.roleId);
+          this.getRoleMenuTreeselect(row.id);
         });
-        getRole(row.roleId).then(response => {
+        getRole(row.id).then(response => {
           this.form = response.data;
           this.open = true;
           this.title = "修改角色";
@@ -357,7 +355,7 @@
       submitForm: function () {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            if (this.form.roleId != undefined) {
+            if (this.form.id != undefined) {
               this.form.menuIds = this.getMenuAllCheckedKeys();
               updateRole(this.form).then(response => {
                 if (response.code === 200) {
@@ -385,7 +383,7 @@
       },
       /** 提交按钮（数据权限） */
       submitDataScope: function () {
-        if (this.form.roleId != undefined) {
+        if (this.form.id != undefined) {
           this.form.deptIds = this.getDeptAllCheckedKeys();
           dataScope(this.form).then(response => {
             if (response.code === 200) {
@@ -405,7 +403,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return delRole(row.roleId);
+          return delRole(row.id);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess("删除成功");

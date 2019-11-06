@@ -48,9 +48,9 @@ public class NoticeController extends BaseController {
      * 根据通知公告编号获取详细信息
      */
     @PreAuthorize("@permissionService.hasPermission('system:notice:query')")
-    @GetMapping(value = "/{noticeId}")
-    public AjaxResult getInfo(@PathVariable Long noticeId) {
-        return AjaxResult.success(noticeService.selectNoticeById(noticeId));
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable Long id) {
+        return AjaxResult.success(noticeService.selectNoticeById(id));
     }
 
     /**
@@ -80,8 +80,8 @@ public class NoticeController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:notice:remove')")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{noticeId}")
-    public AjaxResult remove(@PathVariable Long noticeId) {
-        return toAjax(noticeService.deleteNoticeById(noticeId));
+    @DeleteMapping("/{id}")
+    public AjaxResult remove(@PathVariable Long id) {
+        return toAjax(noticeService.deleteNoticeById(id));
     }
 }

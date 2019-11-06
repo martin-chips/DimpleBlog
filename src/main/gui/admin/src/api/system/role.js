@@ -10,9 +10,9 @@ export function listRole(query) {
 }
 
 // 查询角色详细
-export function getRole(roleId) {
+export function getRole(id) {
   return request({
-    url: '/system/role/' + roleId,
+    url: '/system/role/' + id,
     method: 'get'
   })
 }
@@ -45,9 +45,9 @@ export function dataScope(data) {
 }
 
 // 角色状态修改
-export function changeRoleStatus(roleId, status) {
+export function changeRoleStatus(id, status) {
   const data = {
-    roleId,
+    roleId: id,
     status
   }
   return request({
@@ -58,9 +58,9 @@ export function changeRoleStatus(roleId, status) {
 }
 
 // 删除角色
-export function delRole(roleId) {
+export function delRole(id) {
   return request({
-    url: '/system/role/' + roleId,
+    url: '/system/role/' + id,
     method: 'delete'
   })
 }

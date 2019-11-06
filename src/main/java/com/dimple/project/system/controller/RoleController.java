@@ -1,8 +1,14 @@
 package com.dimple.project.system.controller;
 
-import java.util.List;
-
+import com.dimple.common.constant.UserConstants;
+import com.dimple.common.utils.SecurityUtils;
+import com.dimple.framework.aspectj.lang.annotation.Log;
+import com.dimple.framework.aspectj.lang.enums.BusinessType;
+import com.dimple.framework.web.controller.BaseController;
+import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.Role;
+import com.dimple.project.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,14 +19,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.dimple.common.constant.UserConstants;
-import com.dimple.common.utils.SecurityUtils;
-import com.dimple.framework.aspectj.lang.annotation.Log;
-import com.dimple.framework.aspectj.lang.enums.BusinessType;
-import com.dimple.framework.web.controller.BaseController;
-import com.dimple.framework.web.domain.AjaxResult;
-import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.system.service.RoleService;
+
+import java.util.List;
 
 /**
  * @className: RoleController
@@ -46,9 +46,9 @@ public class RoleController extends BaseController {
      * 根据角色编号获取详细信息
      */
     @PreAuthorize("@permissionService.hasPermission('system:role:query')")
-    @GetMapping(value = "/{roleId}")
-    public AjaxResult getInfo(@PathVariable Long roleId) {
-        return AjaxResult.success(roleService.selectRoleById(roleId));
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable Long id) {
+        return AjaxResult.success(roleService.selectRoleById(id));
     }
 
     /**
@@ -113,10 +113,10 @@ public class RoleController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:role:remove')")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{roleId}")
-    public AjaxResult remove(@PathVariable Long roleId) {
-        roleService.checkRoleAllowed(new Role(roleId));
-        return toAjax(roleService.deleteRoleById(roleId));
+    @DeleteMapping("/{id}")
+    public AjaxResult remove(@PathVariable Long id) {
+        roleService.checkRoleAllowed(new Role(id));
+        return toAjax(roleService.deleteRoleById(id));
     }
 
     /**

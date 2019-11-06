@@ -53,10 +53,10 @@ public class UserController extends BaseController {
      * 根据用户编号获取详细信息
      */
     @PreAuthorize("@permissionService.hasPermission('system:user:query')")
-    @GetMapping(value = "/{userId}")
-    public AjaxResult getInfo(@PathVariable Long userId) {
-        AjaxResult ajax = AjaxResult.success(userService.selectUserById(userId));
-        ajax.put("roleIds", roleService.selectRoleListByUserId(userId));
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable Long id) {
+        AjaxResult ajax = AjaxResult.success(userService.selectUserById(id));
+        ajax.put("roleIds", roleService.selectRoleListByUserId(id));
         return ajax;
     }
 
@@ -101,10 +101,10 @@ public class UserController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:user:remove')")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{userId}")
-    public AjaxResult remove(@PathVariable Long userId) {
-        userService.checkUserAllowed(new SysUser(userId));
-        return toAjax(userService.deleteUserById(userId));
+    @DeleteMapping("/{id}")
+    public AjaxResult remove(@PathVariable Long id) {
+        userService.checkUserAllowed(new SysUser(id));
+        return toAjax(userService.deleteUserById(id));
     }
 
     /**

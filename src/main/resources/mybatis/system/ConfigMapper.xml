@@ -5,7 +5,7 @@
 <mapper namespace="com.dimple.project.system.mapper.ConfigMapper">
 
     <resultMap type="com.dimple.project.system.domain.Config" id="SysConfigResult">
-        <id property="configId" column="config_id"/>
+        <id property="id" column="id"/>
         <result property="configName" column="config_name"/>
         <result property="configKey" column="config_key"/>
         <result property="configValue" column="config_value"/>
@@ -17,15 +17,15 @@
     </resultMap>
 
     <sql id="selectConfigVo">
-        select config_id, config_name, config_key, config_value, config_type, create_by, create_time, update_by, update_time, remark 
+        select id, config_name, config_key, config_value, config_type, create_by, create_time, update_by, update_time, remark
 		from sys_config
     </sql>
 
     <!-- 查询条件 -->
     <sql id="sqlwhereSearch">
         <where>
-            <if test="configId !=null">
-                and config_id = #{configId}
+            <if test="id !=null">
+                and id = #{id}
             </if>
             <if test="configKey !=null and configKey != ''">
                 and config_key = #{configKey}
@@ -96,11 +96,11 @@
             <if test="remark != null">remark = #{remark},</if>
             update_time = sysdate()
         </set>
-        where config_id = #{configId}
+        where id = #{id}
     </update>
 
     <delete id="deleteConfigById">
-        update sys_config set delete_by =#{loginUsername} , delete_time= sysdate()  where config_id = #{configId}
+        update sys_config set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{id}
     </delete>
 
 </mapper>

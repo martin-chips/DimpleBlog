@@ -32,7 +32,7 @@
     </el-form>
 
     <el-table v-loading="loading" :data="configList">
-      <el-table-column label="参数主键" align="center" prop="configId"/>
+      <el-table-column label="参数主键" align="center" prop="id"/>
       <el-table-column label="参数名称" align="center" prop="configName" :show-overflow-tooltip="true"/>
       <el-table-column label="参数键名" align="center" prop="configKey" :show-overflow-tooltip="true"/>
       <el-table-column label="参数键值" align="center" prop="configValue"/>
@@ -48,9 +48,17 @@
           <el-button size="mini" type="text" icon="el-icon-edit"
                      @click="handleUpdate(scope.row)">修改
           </el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete"
-                     @click="handleDelete(scope.row)">删除
-          </el-button>
+          <el-popover :ref="scope.row.id" placement="top" width="180">
+            <p>确定删除本条数据吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消
+              </el-button>
+              <el-button :loading="loading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
+              </el-button>
+            </div>
+            <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除
+            </el-button>
+          </el-popover>
         </template>
       </el-table-column>
     </el-table>
@@ -188,7 +196,7 @@
       /** 修改按钮操作 */
       handleUpdate(row) {
         this.reset();
-        getConfig(row.configId).then(response => {
+        getConfig(row.id).then(response => {
           this.form = response.data;
           this.open = true;
           this.title = "修改参数";
@@ -198,7 +206,7 @@
       submitForm: function () {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            if (this.form.configId != undefined) {
+            if (this.form.id != undefined) {
               updateConfig(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("修改成功");
@@ -229,7 +237,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return delConfig(row.configId);
+          return delConfig(row.id);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess("删除成功");

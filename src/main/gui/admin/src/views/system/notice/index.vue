@@ -28,7 +28,7 @@
     </el-form>
 
     <el-table v-loading="loading" :data="noticeList">
-      <el-table-column label="序号" align="center" prop="noticeId" width="100"/>
+      <el-table-column label="序号" align="center" prop="id" width="100"/>
       <el-table-column label="公告标题" align="center" prop="noticeTitle" :show-overflow-tooltip="true"/>
       <el-table-column label="公告类型" align="center" prop="noticeType" :formatter="typeFormat" width="100"/>
       <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" width="100"/>
@@ -181,7 +181,7 @@
       // 表单重置
       reset() {
         this.form = {
-          noticeId: undefined,
+          id: undefined,
           noticeTitle: undefined,
           noticeType: undefined,
           noticeContent: undefined,
@@ -203,7 +203,7 @@
       /** 修改按钮操作 */
       handleUpdate(row) {
         this.reset();
-        getNotice(row.noticeId).then(response => {
+        getNotice(row.id).then(response => {
           this.form = response.data;
           this.open = true;
           this.title = "修改公告";
@@ -213,7 +213,7 @@
       submitForm: function () {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            if (this.form.noticeId != undefined) {
+            if (this.form.id != undefined) {
               updateNotice(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("修改成功");
@@ -244,7 +244,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return delNotice(row.noticeId);
+          return delNotice(row.id);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess("删除成功");
