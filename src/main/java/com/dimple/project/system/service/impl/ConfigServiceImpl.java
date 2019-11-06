@@ -55,6 +55,11 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     public int updateConfigByConfigKey(Config config) {
+        //校验是否存在当前配置
+        Config configDB = configMapper.selectConfig(config);
+        if (Objects.isNull(configDB)) {
+            return insertConfig(config);
+        }
         return configMapper.updateConfigByConfigKey(config);
     }
 

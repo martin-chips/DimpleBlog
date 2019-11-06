@@ -43,11 +43,11 @@ public class QiNiuConfig {
     private String type = "公开";
 
     public boolean check() {
-        return StringUtils.isEmpty(accessKey)
-                && StringUtils.isEmpty(secretKey)
-                && StringUtils.isEmpty(bucket)
-                && StringUtils.isEmpty(zone)
-                && StringUtils.isEmpty(host)
-                && StringUtils.isEmpty(type);
+        return StringUtils.isNotEmpty(accessKey)
+                && StringUtils.isNotEmpty(secretKey)
+                && StringUtils.isNotEmpty(bucket)
+                && StringUtils.isNotEmpty(zone)
+                && StringUtils.isNotEmpty(host)
+                && StringUtils.isNotEmpty(type);
     }
 }

@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
 
-    <el-tabs type="card">
-      <el-tab-pane label="Redis 管理">
+    <el-tabs v-model="activeName" style="padding-left: 8px;" @tab-click="tabClick">
+      <el-tab-pane label="Redis 管理" name="first">
         todo
       </el-tab-pane>
-      <el-tab-pane label="Redis 监控">
+      <el-tab-pane label="Redis 监控" name="second">
         <el-table max-height="800" :data="redisInfoList">
           <el-table-column prop="key" align="center" label="Key">
           </el-table-column>
@@ -26,7 +26,7 @@
     name: "index",
     data() {
       return {
-        activeNames: ['1'],
+        activeName: 'first',
         redisInfoList: []
       }
     },
@@ -38,6 +38,13 @@
         listRedisInfoList().then(response => {
           this.redisInfoList = response.data;
         });
+      },
+      tabClick(name) {
+        if (this.activeName === 'first') {
+          this.$refs.local.init()
+        } else {
+          this.$refs.qiNiu.init()
+        }
       }
     }
   }

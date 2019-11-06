@@ -64,9 +64,6 @@
         }
       }
     },
-    created() {
-      this.getConfig();
-    },
     methods: {
       getConfig() {
         getQiNiuConfig().then(response => {
@@ -77,11 +74,10 @@
         this.$refs['form'].validate((valid) => {
           if (valid) {
             this.loading = true
-            updateQiNiuConfig(this.form).then(res => {
+            updateQiNiuConfig(this.form).then(response => {
               if (response.code === 200) {
                 this.msgSuccess("修改成功");
                 this.open = false;
-                this.getList();
               } else {
                 this.msgError(response.msg);
               }

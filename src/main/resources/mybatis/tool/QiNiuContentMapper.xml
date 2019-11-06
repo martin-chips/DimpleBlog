@@ -13,6 +13,27 @@
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
+    <insert id="insertContent">
+        insert into tool_qi_niu_content(
+        <if test="name != null and name != ''">name,</if>
+        <if test="bucket != null and bucket != ''">bucket,</if>
+        <if test="size != null and size != ''">size,</if>
+        <if test="url != null and url != ''">url,</if>
+        <if test="suffix != null and suffix != ''">suffix,</if>
+        <if test="type != null and type != ''">type,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="name != null and name != ''">#{name},</if>
+        <if test="bucket != null and bucket != ''">#{bucket},</if>
+        <if test="size != null and size != ''">#{size},</if>
+        <if test="url != null and url != ''">#{url},</if>
+        <if test="suffix != null and suffix != ''">#{suffix},</if>
+        <if test="type != null and type != ''">#{type},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
 
     <!--查询单个-->
     <select id="selectContentById" resultMap="QiNiuContentMap">
@@ -27,7 +48,7 @@
         from tool_qi_niu_content
         <where>
             <if test="name != null and name != ''">
-                and name = #{name}
+                and name like concat('%',#{name},'%')
             </if>
             <if test="bucket != null and bucket != ''">
                 and bucket = #{bucket}
@@ -50,6 +71,9 @@
     <!--通过主键删除-->
     <delete id="deleteContentById">
        delete from tool_qi_niu_content where id=#{id}
+    </delete>
+    <delete id="clearContent">
+        TRUNCATE TABLE tool_qi_niu_content
     </delete>
 
 </mapper>

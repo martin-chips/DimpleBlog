@@ -25,9 +25,11 @@ import com.qiniu.util.Auth;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,8 +57,6 @@ public class QiNiuServiceImpl implements QiNiuService {
             return new QiNiuConfig();
         }
         QiNiuConfig qiNiuConfig = JSONObject.parseObject(configValue, QiNiuConfig.class);
-        //secretKey 打码
-        qiNiuConfig.setSecretKey("**************************");
         return qiNiuConfig;
     }
 
@@ -83,26 +83,29 @@ public class QiNiuServiceImpl implements QiNiuService {
         Auth auth = Auth.create(qiNiuConfig.getAccessKey(), qiNiuConfig.getSecretKey());
         //生成上传文件Token
         String upToken = auth.uploadToken(qiNiuConfig.getBucket());
+        QiNiuContent qiNiuContent = new QiNiuContent();
         try {
-            String key = file.getOriginalFilename();
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+            String key = FileUtils.getFileNameNoExtension(file.getOriginalFilename()) + df.format(new Date()) + "." + FileUtils.getExtensionName(file.getOriginalFilename());
             Response response = uploadManager.put(file.getBytes(), key, upToken);
             //解析
             DefaultPutRet defaultPutRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
             //将结果存入数据库
-            QiNiuContent qiNiuContent = new QiNiuContent();
             qiNiuContent.setSuffix(FileUtils.getExtensionName(defaultPutRet.key));
             qiNiuContent.setBucket(qiNiuConfig.getBucket());
             qiNiuContent.setType(qiNiuConfig.getType());
             qiNiuContent.setName(FileUtils.getFileNameNoExtension(defaultPutRet.key));
-            qiNiuContent.setUrl(qiNiuConfig.getHost() + "/" + defaultPutRet.key);
+            qiNiuContent.setUrl("http://" + qiNiuConfig.getHost() + "/" + defaultPutRet.key);
             qiNiuContent.setSize(FileUtils.getSizeString(Integer.parseInt(file.getSize() + "")));
+            qiNiuContentMapper.insertContent(qiNiuContent);
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
-        return null;
+        return qiNiuContent;
     }
 
     @Override
+    @Transactional
     public int synchronize() {
         QiNiuConfig qiNiuConfig = getQiNiuConfig();
         if (!qiNiuConfig.check()) {
@@ -120,23 +123,30 @@ public class QiNiuServiceImpl implements QiNiuService {
         String delimiter = "";
         //列举空间文件列表
         BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(qiNiuConfig.getBucket(), prefix, limit, delimiter);
-        List<QiNiuContent> qiNiuContentList = new ArrayList<>();
+        int count = 0;
         while (fileListIterator.hasNext()) {
             //处理获取的file list结果
             QiNiuContent qiNiuContent;
+            //删除所有数据
+            qiNiuContentMapper.clearContent();
             FileInfo[] items = fileListIterator.next();
-            for (FileInfo item : items) {
-                qiNiuContent = new QiNiuContent();
-                qiNiuContent.setSize(FileUtils.getSizeString(Integer.parseInt(item.fsize + "")));
-                qiNiuContent.setSuffix(FileUtils.getExtensionName(item.key));
-                qiNiuContent.setName(FileUtils.getFileNameNoExtension(item.key));
-                qiNiuContent.setType(qiNiuConfig.getType());
-                qiNiuContent.setBucket(qiNiuConfig.getBucket());
-                qiNiuContent.setUrl(qiNiuConfig.getHost() + "/" + item.key);
-                qiNiuContentList.add(qiNiuContent);
+            if (Objects.nonNull(items)) {
+                String username = SecurityUtils.getUsername();
+                for (FileInfo item : items) {
+                    qiNiuContent = new QiNiuContent();
+                    qiNiuContent.setSize(FileUtils.getSizeString(Integer.parseInt(item.fsize + "")));
+                    qiNiuContent.setSuffix(FileUtils.getExtensionName(item.key));
+                    qiNiuContent.setName(FileUtils.getFileNameNoExtension(item.key));
+                    qiNiuContent.setType(qiNiuConfig.getType());
+                    qiNiuContent.setBucket(qiNiuConfig.getBucket());
+                    qiNiuContent.setUrl("http://" + qiNiuConfig.getHost() + "/" + item.key);
+                    qiNiuContent.setCreateBy(username);
+                    count += qiNiuContentMapper.insertContent(qiNiuContent);
+                }
+
             }
         }
-        return qiNiuContentList.size();
+        return count;
     }
 
     @Override

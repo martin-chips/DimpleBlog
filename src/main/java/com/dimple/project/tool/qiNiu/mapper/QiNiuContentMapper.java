@@ -34,4 +34,18 @@ public interface QiNiuContentMapper {
      * @return 受影响的行数
      */
     int deleteContentById(Long id);
+
+    /**
+     * 插入数据
+     *
+     * @param qiNiuContent 数据实体
+     * @return 受影响的行数
+     */
+    int insertContent(QiNiuContent qiNiuContent);
+
+    /**
+     * 清空表中数据
+     */
+    void clearContent();
+
 }
