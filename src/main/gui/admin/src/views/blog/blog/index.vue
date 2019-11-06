@@ -231,7 +231,10 @@
             this.msgError("删除失败");
           }
           this.getList();
-        }).catch(function () {
+        }).catch(err => {
+          this.msgError("删除失败");
+          this.$refs[id].doClose()
+          this.loading = false;
         });
       },
       /** 查询博客列表 */

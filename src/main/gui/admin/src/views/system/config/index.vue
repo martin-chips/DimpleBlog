@@ -67,7 +67,7 @@
                 @pagination="getList"/>
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px">
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="参数名称" prop="configName">
           <el-input v-model="form.configName" placeholder="请输入参数名称"/>
@@ -163,7 +163,10 @@
             this.msgError("删除失败");
           }
           this.getList();
-        }).catch(function () {
+        }).catch(err => {
+          this.msgError("删除失败");
+          this.$refs[id].doClose()
+          this.loading = false;
         });
       },
       /** 查询参数列表 */
@@ -188,7 +191,7 @@
       // 表单重置
       reset() {
         this.form = {
-          configId: undefined,
+          id: undefined,
           configName: undefined,
           configKey: undefined,
           configValue: undefined,
@@ -261,6 +264,7 @@
           }
           this.getList();
         }).catch(function () {
+
         });
       }
     }

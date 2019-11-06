@@ -81,8 +81,8 @@
       </el-col>
     </el-row>
 
-    <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px">
+    <!-- 添加或修改用户对话框 -->
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
@@ -264,7 +264,10 @@
             this.msgError("删除失败");
           }
           this.getList();
-        }).catch(function () {
+        }).catch(err => {
+          this.msgError("删除失败");
+          this.$refs[id].doClose()
+          this.loading = false;
         });
       },
       /** 查询用户列表 */

@@ -55,9 +55,9 @@ public interface ConfigMapper {
     /**
      * 删除参数配置
      *
-     * @param configId      需要删除的数据ID
-     * @param loginUsername
+     * @param id            需要删除的数据ID
+     * @param loginUsername 操作者
      * @return 结果
      */
-    int deleteConfigById(@Param("configId") Long configId, @Param("loginUsername") String loginUsername);
+    int deleteConfigById(@Param("id") Long id, @Param("loginUsername") String loginUsername);
 }

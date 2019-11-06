@@ -1,10 +1,9 @@
 <template>
-  <el-dialog
+  <el-dialog :close-on-click-modal="false"
     class="update-avatar"
     title="更改头像"
     :width="width"
     top="50px"
-    :close-on-click-modal="false"
     :close-on-press-escape="false"
     :visible.sync="isVisible"
   >

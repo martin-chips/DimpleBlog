@@ -64,7 +64,7 @@
                 @pagination="getList"/>
 
     <!-- 添加或修改黑名单对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px">
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="Ip" prop="ip">
           <el-input v-model="form.ip" placeholder="请输入IP地址"/>
@@ -141,7 +141,10 @@
             this.msgError("删除失败");
           }
           this.getList();
-        }).catch(function () {
+        }).catch(err => {
+          this.msgError("删除失败");
+          this.$refs[id].doClose()
+          this.loading = false;
         });
       },
       /** 查询黑名单列表 */

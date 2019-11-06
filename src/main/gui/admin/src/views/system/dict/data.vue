@@ -68,8 +68,8 @@
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
                 @pagination="getList"/>
 
-    <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px">
+    <!-- 添加或修改字典对话框 -->
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="字典类型">
           <el-input v-model="form.dictType" :disabled="true"/>
@@ -171,7 +171,10 @@
             this.msgError("删除失败");
           }
           this.getList();
-        }).catch(function () {
+        }).catch(err => {
+          this.msgError("删除失败");
+          this.$refs[dictCode].doClose()
+          this.loading = false;
         });
       },
       /** 查询字典类型详细 */

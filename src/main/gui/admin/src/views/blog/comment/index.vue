@@ -64,7 +64,7 @@
                 @pagination="getList"/>
 
     <!-- 评论详细 -->
-    <el-dialog title="评论详细" :visible.sync="open" width="700px">
+    <el-dialog :close-on-click-modal="false" title="评论详细" :visible.sync="open" width="700px">
       <el-form ref="form" :model="form" label-width="100px" size="mini">
         <el-row>
           <el-col :span="12">
@@ -156,7 +156,10 @@
             this.msgError("删除失败");
           }
           this.getList();
-        }).catch(function () {
+        }).catch(err => {
+          this.msgError("删除失败");
+          this.$refs[id].doClose()
+          this.loading = false;
         });
       },
       handleDisplayChange(row) {

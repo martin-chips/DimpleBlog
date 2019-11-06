@@ -53,16 +53,16 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public int deleteConfigById(Long configId) {
+    public int deleteConfigById(Long id) {
         String loginUsername = SecurityUtils.getUsername();
-        return configMapper.deleteConfigById(configId, loginUsername);
+        return configMapper.deleteConfigById(id, loginUsername);
     }
 
     @Override
     public String checkConfigKeyUnique(Config config) {
-        Long configId = StringUtils.isNull(config.getId()) ? -1L : config.getId();
+        Long id = StringUtils.isNull(config.getId()) ? -1L : config.getId();
         Config info = configMapper.checkConfigKeyUnique(config.getConfigKey());
-        if (StringUtils.isNotNull(info) && info.getId().longValue() != configId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != id.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

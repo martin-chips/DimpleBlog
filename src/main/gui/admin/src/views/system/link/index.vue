@@ -72,7 +72,7 @@
                 @pagination="getList"/>
 
     <!-- 添加或修改分类对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px">
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="友链名称" prop="title">
           <el-input maxlength="128" show-word-limit v-model="form.title" placeholder="请输入友链名称"/>
@@ -183,7 +183,10 @@
             this.msgError("删除失败");
           }
           this.getList();
-        }).catch(function () {
+        }).catch(err => {
+          this.msgError("删除失败");
+          this.$refs[id].doClose()
+          this.loading = false;
         });
       },
       /** 查询参数列表 */

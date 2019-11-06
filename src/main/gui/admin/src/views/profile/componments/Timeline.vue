@@ -6,11 +6,11 @@
         <el-card>
           <p>
             <el-icon class="el-icon-link"/>
-            登录IP：{{ item.ipaddr }}
+            登录IP：{{ item.ip }}
           </p>
           <p>
             <el-icon class="el-icon-location-outline"/>
-            登录地点：{{ item.loginLocation }}
+            登录地点：{{ item.location }}
           </p>
           <p>
             <el-icon class="el-icon-bangzhu"/>
@@ -59,7 +59,6 @@
     },
     methods: {
       load() {
-        this.loading = true;
         setTimeout(() => {
           this.queryParams.pageNum++;
           this.getTimeLine();

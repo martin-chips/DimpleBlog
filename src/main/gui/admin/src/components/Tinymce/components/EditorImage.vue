@@ -3,7 +3,7 @@
     <el-button :style="{background:color,borderColor:color}" icon="el-icon-upload" size="mini" type="primary" @click=" dialogVisible=true">
       upload
     </el-button>
-    <el-dialog :visible.sync="dialogVisible">
+    <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible">
       <el-upload
         :multiple="true"
         :file-list="fileList"

@@ -134,6 +134,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUserProfile(SysUser user) {
+        user.setId(SecurityUtils.getLoginUser().getUser().getId());
         int result = userMapper.updateUser(user);
         //更新redis缓存
         refreshTokenClaims(user.getId());
