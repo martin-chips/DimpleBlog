@@ -33,9 +33,17 @@
         <jwt.version>0.9.1</jwt.version>
         <swagger.version>2.9.2</swagger.version>
         <oshi.version>4.1.1</oshi.version>
+        <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
     </properties>
 
     <dependencies>
+        <!--七牛云存储-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>${qiniu.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>

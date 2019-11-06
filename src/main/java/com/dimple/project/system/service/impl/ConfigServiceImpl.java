@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @className: ConfigServiceImpl
@@ -30,11 +31,11 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public Object selectConfigByKey(String configKey) {
+    public Config selectConfigByKey(String configKey) {
         Config config = new Config();
         config.setConfigKey(configKey);
         Config retConfig = configMapper.selectConfig(config);
-        return StringUtils.isNotNull(retConfig) ? retConfig.getConfigValue() : "";
+        return Objects.isNull(retConfig) ? new Config() : retConfig;
     }
 
     @Override
@@ -50,6 +51,11 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public int updateConfig(Config config) {
         return configMapper.updateConfig(config);
+    }
+
+    @Override
+    public int updateConfigByConfigKey(Config config) {
+        return configMapper.updateConfigByConfigKey(config);
     }
 
     @Override

@@ -6,10 +6,8 @@
 
     <resultMap type="com.dimple.project.system.domain.Config" id="SysConfigResult">
         <id property="id" column="id"/>
-        <result property="configName" column="config_name"/>
         <result property="configKey" column="config_key"/>
         <result property="configValue" column="config_value"/>
-        <result property="configType" column="config_type"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -17,7 +15,7 @@
     </resultMap>
 
     <sql id="selectConfigVo">
-        select id, config_name, config_key, config_value, config_type, create_by, create_time, update_by, update_time, remark
+        select id, config_key, config_value, create_by, create_time, update_by, update_time, remark
 		from sys_config
     </sql>
 
@@ -42,12 +40,6 @@
             resultMap="SysConfigResult">
         <include refid="selectConfigVo"/>
         where delete_time is null
-        <if test="configName != null and configName != ''">
-            AND config_name like concat('%', #{configName}, '%')
-        </if>
-        <if test="configType != null and configType != ''">
-            AND config_type = #{configType}
-        </if>
         <if test="configKey != null and configKey != ''">
             AND config_key like concat('%', #{configKey}, '%')
         </if>
@@ -67,7 +59,6 @@
 
     <insert id="insertConfig" parameterType="com.dimple.project.system.domain.Config">
         insert into sys_config (
-        <if test="configName != null and configName != '' ">config_name,</if>
         <if test="configKey != null and configKey != '' ">config_key,</if>
         <if test="configValue != null and configValue != '' ">config_value,</if>
         <if test="configType != null and configType != '' ">config_type,</if>
@@ -88,15 +79,23 @@
     <update id="updateConfig" parameterType="com.dimple.project.system.domain.Config">
         update sys_config
         <set>
-            <if test="configName != null and configName != ''">config_name = #{configName},</if>
             <if test="configKey != null and configKey != ''">config_key = #{configKey},</if>
             <if test="configValue != null and configValue != ''">config_value = #{configValue},</if>
-            <if test="configType != null and configType != ''">config_type = #{configType},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             <if test="remark != null">remark = #{remark},</if>
             update_time = sysdate()
         </set>
         where id = #{id}
+    </update>
+    <update id="updateConfigByConfigKey">
+        update sys_config
+        <set>
+            <if test="configValue != null and configValue != ''">config_value = #{configValue},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where config_key = #{configKey}
     </update>
 
     <delete id="deleteConfigById">

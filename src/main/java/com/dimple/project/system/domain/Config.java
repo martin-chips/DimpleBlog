@@ -1,7 +1,6 @@
 package com.dimple.project.system.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,19 +11,12 @@ import lombok.NoArgsConstructor;
  * @date: 10/22/19
  */
 @Data
-//序列化Json的时候,如果是Null则忽略
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 public class Config extends BaseEntity {
     /**
      * 参数主键
      */
     private Long id;
-
-    /**
-     * 参数名称
-     */
-    private String configName;
 
     /**
      * 参数键名
@@ -35,10 +27,4 @@ public class Config extends BaseEntity {
      * 参数键值
      */
     private String configValue;
-
-    /**
-     * 系统内置（Y是 N否）
-     */
-    private String configType;
-
 }

@@ -53,6 +53,13 @@ public interface ConfigMapper {
     int updateConfig(Config config);
 
     /**
+     * 根据Config Key 进行修改
+     *
+     * @return 受影响的行数
+     */
+    int updateConfigByConfigKey(Config config);
+
+    /**
      * 删除参数配置
      *
      * @param id            需要删除的数据ID

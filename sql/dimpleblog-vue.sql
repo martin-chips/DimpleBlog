@@ -65,15 +65,19 @@ CREATE TABLE `bg_category` (
   `delete_by` varchar(128) DEFAULT NULL,
   `delete_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='分类表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='分类表';
 
 /*Data for the table `bg_category` */
 
 insert  into `bg_category`(`id`,`title`,`description`,`support`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
-(6,'测试一号','这是描述',0,'admin','2019-11-01 15:11:51',NULL,NULL,NULL,NULL),
+(6,'测试一号','这是描述',0,'admin','2019-11-01 15:11:51',NULL,NULL,'admin','2019-11-06 14:14:52'),
 (7,'测试2号','这是描述',1,'admin','2019-11-01 15:12:00',NULL,NULL,NULL,NULL),
-(8,'测试三号','这是描述',1,'admin','2019-11-01 15:12:09',NULL,NULL,NULL,NULL),
-(9,'测试4号','这是描述',1,'admin','2019-11-01 15:12:18',NULL,NULL,'admin','2019-11-04 15:08:38');
+(8,'测试三号','这是描述',1,'admin','2019-11-01 15:12:09',NULL,NULL,'admin','2019-11-06 14:14:50'),
+(9,'测试4号','这是描述',1,'admin','2019-11-01 15:12:18',NULL,NULL,'admin','2019-11-04 15:08:38'),
+(10,'123213','21321321',0,'admin','2019-11-06 14:15:53',NULL,NULL,'admin','2019-11-06 14:25:40'),
+(11,'12321321','312321321',1,'admin','2019-11-06 14:15:57',NULL,NULL,'admin','2019-11-06 14:25:42'),
+(12,'12312321','321321321',1,'admin','2019-11-06 14:16:00',NULL,NULL,'admin','2019-11-06 14:16:36'),
+(13,'1111111111111','111111',0,'admin','2019-11-06 14:26:20',NULL,NULL,'admin','2019-11-06 14:26:22');
 
 /*Table structure for table `bg_comment` */
 
@@ -175,27 +179,25 @@ DROP TABLE IF EXISTS `sys_config`;
 
 CREATE TABLE `sys_config` (
   `id` int(5) NOT NULL AUTO_INCREMENT COMMENT '参数主键',
-  `config_name` varchar(100) DEFAULT '' COMMENT '参数名称',
   `config_key` varchar(100) DEFAULT '' COMMENT '参数键名',
   `config_value` varchar(500) DEFAULT '' COMMENT '参数键值',
-  `config_type` char(1) DEFAULT 'N' COMMENT '系统内置（Y是 N否）',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `delete_by` varchar(64) DEFAULT '',
   `delete_time` datetime DEFAULT NULL,
-  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='参数配置表';
 
 /*Data for the table `sys_config` */
 
-insert  into `sys_config`(`id`,`config_name`,`config_key`,`config_value`,`config_type`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`,`remark`) values
-(1,'主框架页-默认皮肤样式名称','sys.index.skinName','skin-blue','Y','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow'),
-(2,'用户管理-账号初始密码','sys.user.initPassword','123456','Y','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'初始化密码 123456'),
-(3,'主框架页-侧边栏主题','sys.index.sideTheme','theme-dark','Y','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'深色主题theme-dark，浅色主题theme-light'),
-(4,'12112','12121','12121','Y','admin','2019-10-23 14:41:55','',NULL,'admin','2019-10-23 14:43:06',NULL);
+insert  into `sys_config`(`id`,`config_key`,`config_value`,`remark`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
+(1,'sys.index.skinName','skin-blue','蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL),
+(2,'sys.user.initPassword','123456','初始化密码 123456','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL),
+(3,'sys.index.sideTheme','theme-dark','深色主题theme-dark，浅色主题theme-light','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','admin','2019-11-06 14:39:11'),
+(4,'12121','12121',NULL,'admin','2019-10-23 14:41:55','',NULL,'admin','2019-10-23 14:43:06');
 
 /*Table structure for table `sys_dict_data` */
 
@@ -387,9 +389,13 @@ CREATE TABLE `sys_login_log` (
   `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
   `login_time` datetime DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
 
 /*Data for the table `sys_login_log` */
+
+insert  into `sys_login_log`(`id`,`user_name`,`ip`,`location`,`browser`,`os`,`status`,`msg`,`login_time`) values
+(1,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-06 14:14:34'),
+(2,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-06 18:26:42');
 
 /*Table structure for table `sys_menu` */
 
@@ -560,9 +566,47 @@ CREATE TABLE `sys_operate_log` (
   `error_msg` varchar(2000) DEFAULT '' COMMENT '错误消息',
   `operate_time` datetime DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
 
 /*Data for the table `sys_operate_log` */
+
+insert  into `sys_operate_log`(`id`,`title`,`business_type`,`method`,`request_method`,`operator_type`,`operate_name`,`url`,`ip`,`location`,`param`,`json_result`,`status`,`error_msg`,`operate_time`) values
+(1,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/8','10.17.80.181','内网IP','{ids=8}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:14:50'),
+(2,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/6','10.17.80.181','内网IP','{ids=6}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:14:52'),
+(3,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','10.17.80.181','内网IP','{\"description\":\"21321321\",\"params\":{},\"title\":\"123213\",\"createBy\":\"admin\",\"id\":10,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:15:53'),
+(4,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','10.17.80.181','内网IP','{\"description\":\"312321321\",\"params\":{},\"title\":\"12321321\",\"createBy\":\"admin\",\"id\":11,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:15:57'),
+(5,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','10.17.80.181','内网IP','{\"description\":\"321321321\",\"params\":{},\"title\":\"12312321\",\"createBy\":\"admin\",\"id\":12,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:16:00'),
+(6,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/12','10.17.80.181','内网IP','{ids=12}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:16:36'),
+(7,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/10','10.17.80.181','内网IP','{ids=10}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:25:40'),
+(8,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/11','10.17.80.181','内网IP','{ids=11}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:25:42'),
+(9,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','10.17.80.181','内网IP','{\"description\":\"111111\",\"params\":{},\"title\":\"1111111111111\",\"createBy\":\"admin\",\"id\":13,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:26:20'),
+(10,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/13','10.17.80.181','内网IP','{ids=13}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:26:22'),
+(11,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:28:23'),
+(12,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:28:49'),
+(13,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:29:23'),
+(14,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:30:16'),
+(15,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:31:07'),
+(16,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:31:31'),
+(17,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:31:57'),
+(18,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:32:33'),
+(19,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:33:00'),
+(20,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:34:03'),
+(21,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:05'),
+(22,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:07'),
+(23,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:09'),
+(24,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:12'),
+(25,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:14'),
+(26,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/2','10.17.80.181','内网IP','{id=2}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:16'),
+(27,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:27'),
+(28,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:37:33'),
+(29,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:37:40'),
+(30,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:39:11'),
+(31,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":false,\"avatar\":\"lm_2.jpg\",\"params\":{}}','null',1,'','2019-11-06 14:46:56'),
+(32,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":false,\"avatar\":\"lm_1.jpg\",\"params\":{}}','null',1,'','2019-11-06 14:47:01'),
+(33,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":false,\"avatar\":\"hthz_8.jpeg\",\"params\":{}}','null',1,'','2019-11-06 14:47:44'),
+(34,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":false,\"avatar\":\"hthz_1.jpeg\",\"params\":{}}','null',1,'','2019-11-06 14:49:34'),
+(35,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":true,\"avatar\":\"hthz_3.jpg\",\"params\":{},\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:51:13'),
+(36,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":true,\"avatar\":\"hthz_4.jpeg\",\"params\":{},\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:51:17');
 
 /*Table structure for table `sys_role` */
 
@@ -687,7 +731,7 @@ CREATE TABLE `sys_user` (
   `nick_name` varchar(30) NOT NULL COMMENT '用户昵称',
   `user_type` varchar(2) DEFAULT '00' COMMENT '用户类型（00系统用户）',
   `email` varchar(50) DEFAULT '' COMMENT '用户邮箱',
-  `phonenumber` varchar(11) DEFAULT '' COMMENT '手机号码',
+  `phone` varchar(11) DEFAULT '' COMMENT '手机号码',
   `sex` char(1) DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
   `avatar` varchar(100) DEFAULT '' COMMENT '头像地址',
   `password` varchar(100) DEFAULT '' COMMENT '密码',
@@ -706,8 +750,8 @@ CREATE TABLE `sys_user` (
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`id`,`user_name`,`nick_name`,`user_type`,`email`,`phonenumber`,`sex`,`avatar`,`password`,`status`,`login_ip`,`login_date`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`,`remark`) values
-(1,'admin','Dimple','00','ry@163.com','15822222222','1','','$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2','0','127.0.0.1','2018-03-16 11:33:00','admin','2018-03-16 11:33:00','ry','2019-11-05 16:59:53','',NULL,'管理员'),
+insert  into `sys_user`(`id`,`user_name`,`nick_name`,`user_type`,`email`,`phone`,`sex`,`avatar`,`password`,`status`,`login_ip`,`login_date`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`,`remark`) values
+(1,'admin','Dimple','00','ry@163.com','15822222222','1','hthz_4.jpeg','$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2','0','127.0.0.1','2018-03-16 11:33:00','admin','2018-03-16 11:33:00','ry','2019-11-06 14:51:17','',NULL,'管理员'),
 (2,'test','测试','00','test@qq.com','15666666666','1','default.jpg','$2a$10$hSL8f.30KJkGq7nZ4W9.W.mgKQUmxq2Twq4o7a2FlWDiP6yVpC95S','0','127.0.0.1','2018-03-16 11:33:00','admin','2018-03-16 11:33:00','admin','2019-11-06 13:00:54','',NULL,'测试员'),
 (3,'admin1','11','00','network@artech.com','15923652363','0','default.jpg','$2a$10$hPifjlDc.5sEbalGlp4agOmlungpzq0tUpk62X04iJvaToyFaKLse','0','',NULL,'admin','2019-10-23 15:44:49','',NULL,'admin','2019-10-23 16:52:26','111');
 
@@ -726,6 +770,29 @@ CREATE TABLE `sys_user_role` (
 insert  into `sys_user_role`(`user_id`,`role_id`) values
 (1,1),
 (2,2);
+
+/*Table structure for table `tool_qi_niu_content` */
+
+DROP TABLE IF EXISTS `tool_qi_niu_content`;
+
+CREATE TABLE `tool_qi_niu_content` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) DEFAULT NULL COMMENT '七牛云文件名称',
+  `bucket` varchar(128) DEFAULT NULL COMMENT '空间',
+  `size` varchar(64) DEFAULT NULL COMMENT '文件大小',
+  `url` varchar(128) DEFAULT NULL COMMENT '文件访问地址',
+  `suffix` varchar(64) DEFAULT NULL COMMENT '文件后缀',
+  `type` varchar(64) DEFAULT NULL COMMENT '类型',
+  `create_by` varchar(128) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_by` varchar(128) DEFAULT NULL,
+  `delete_by` varchar(128) DEFAULT NULL,
+  `delete_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='七牛云数据本地缓存';
+
+/*Data for the table `tool_qi_niu_content` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

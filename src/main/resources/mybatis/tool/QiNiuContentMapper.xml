@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.tool.qiNiu.mapper.QiNiuContentMapper">
+
+    <resultMap type="com.dimple.project.tool.qiNiu.domain.QiNiuContent" id="QiNiuContentMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="bucket" column="bucket"/>
+        <result property="size" column="size"/>
+        <result property="url" column="url"/>
+        <result property="suffix" column="suffix"/>
+        <result property="type" column="type"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="selectContentById" resultMap="QiNiuContentMap">
+        select id, name, bucket, size, url, suffix, type, create_by, create_time
+        from tool_qi_niu_content
+        where id = #{id}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectContentList" resultMap="QiNiuContentMap">
+        select id, name, bucket, size, url, suffix, type, create_by, create_time
+        from tool_qi_niu_content
+        <where>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="bucket != null and bucket != ''">
+                and bucket = #{bucket}
+            </if>
+            <if test="suffix != null and suffix != ''">
+                and suffix = #{suffix}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <!--通过主键删除-->
+    <delete id="deleteContentById">
+       delete from tool_qi_niu_content where id=#{id}
+    </delete>
+
+</mapper>

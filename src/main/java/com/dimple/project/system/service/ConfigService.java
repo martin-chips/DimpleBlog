@@ -25,7 +25,7 @@ public interface ConfigService {
      * @param configKey 参数键名
      * @return 参数键值
      */
-    Object selectConfigByKey(String configKey);
+    Config selectConfigByKey(String configKey);
 
     /**
      * 查询参数配置列表
@@ -50,6 +50,14 @@ public interface ConfigService {
      * @return 结果
      */
     int updateConfig(Config config);
+
+    /**
+     * 根据ConfigKey 更新Config
+     *
+     * @param config config Key
+     * @return 受影响的行数
+     */
+    int updateConfigByConfigKey(Config config);
 
     /**
      * 删除参数配置信息
