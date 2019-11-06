@@ -9,7 +9,7 @@
         <result property="userName" column="user_name"/>
         <result property="nickName" column="nick_name"/>
         <result property="email" column="email"/>
-        <result property="phonenumber" column="phonenumber"/>
+        <result property="phone" column="phone"/>
         <result property="sex" column="sex"/>
         <result property="avatar" column="avatar"/>
         <result property="password" column="password"/>
@@ -33,7 +33,7 @@
     </resultMap>
 
     <sql id="selectUserVo">
-        select u.id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,u.delete_by,u.delete_time,
+        select u.id, u.user_name, u.nick_name, u.email, u.avatar, u.phone, u.password, u.sex, u.status, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,u.delete_by,u.delete_time,
         r.id, r.role_name, r.role_key, r.role_sort, r.status as role_status
         from sys_user u
 		    left join sys_user_role ur on u.id = ur.user_id
@@ -49,8 +49,8 @@
         <if test="status != null and status != ''">
             AND u.status = #{status}
         </if>
-        <if test="phonenumber != null and phonenumber != ''">
-            AND u.phonenumber like concat('%', #{phonenumber}, '%')
+        <if test="phone != null and phone != ''">
+            AND u.phone like concat('%', #{phone}, '%')
         </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
             AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
@@ -75,7 +75,7 @@
 	</select>
 
     <select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
-		select id, phonenumber from sys_user where phonenumber = #{phonenumber}
+		select id, phone from sys_user where phone = #{phone}
 	</select>
 
     <select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
@@ -90,7 +90,7 @@
         <if test="nickName != null and nickName != ''">nick_name,</if>
         <if test="email != null and email != ''">email,</if>
         <if test="avatar != null and avatar != ''">avatar,</if>
-        <if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
+        <if test="phone != null and phone != ''">phone,</if>
         <if test="sex != null and sex != ''">sex,</if>
         <if test="password != null and password != ''">password,</if>
         <if test="status != null and status != ''">status,</if>
@@ -103,7 +103,7 @@
         <if test="nickName != null and nickName != ''">#{nickName},</if>
         <if test="email != null and email != ''">#{email},</if>
         <if test="avatar != null and avatar != ''">#{avatar},</if>
-        <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+        <if test="phone != null and phone != ''">#{phone},</if>
         <if test="sex != null and sex != ''">#{sex},</if>
         <if test="password != null and password != ''">#{password},</if>
         <if test="status != null and status != ''">#{status},</if>
@@ -119,7 +119,7 @@
             <if test="userName != null and userName != ''">user_name = #{userName},</if>
             <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
             <if test="email != null and email != ''">email = #{email},</if>
-            <if test="phonenumber != null and phonenumber != ''">phonenumber = #{phonenumber},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
             <if test="sex != null and sex != ''">sex = #{sex},</if>
             <if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
             <if test="password != null and password != ''">password = #{password},</if>

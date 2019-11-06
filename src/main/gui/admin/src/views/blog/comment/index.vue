@@ -144,6 +144,21 @@
       this.getList();
     },
     methods: {
+      /** 单条删除 */
+      handleSubDelete(id) {
+        this.loading = true;
+        delComment(id).then((response) => {
+          this.$refs[id].doClose()
+          this.loading = false;
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
+          this.getList();
+        }).catch(function () {
+        });
+      },
       handleDisplayChange(row) {
         let text = row.display ? "显示" : "隐藏";
         this.$confirm('确认要' + text + '"' + row.title + '"评论吗?', "警告", {

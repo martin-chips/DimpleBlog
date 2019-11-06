@@ -162,6 +162,21 @@
       this.getList();
     },
     methods: {
+      /** 单条删除 */
+      handleSubDelete(id) {
+        this.loading = true;
+        delCarousel(id).then((response) => {
+          this.$refs[id].doClose()
+          this.loading = false;
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
+          this.getList();
+        }).catch(function () {
+        });
+      },
       /** 查询参数列表 */
       getList() {
         this.loading = true;

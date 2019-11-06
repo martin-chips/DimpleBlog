@@ -9,7 +9,7 @@
                       @keyup.enter.native="handleQuery"/>
           </el-form-item>
           <el-form-item label="手机号码">
-            <el-input v-model="queryParams.phonenumber" placeholder="请输入手机号码" clearable size="small"
+            <el-input v-model="queryParams.phone" placeholder="请输入手机号码" clearable size="small"
                       style="width: 240px"
                       @keyup.enter.native="handleQuery"/>
           </el-form-item>
@@ -41,7 +41,7 @@
           <el-table-column label="用户编号" align="center" prop="id"/>
           <el-table-column label="用户名称" align="center" prop="userName"/>
           <el-table-column label="用户昵称" align="center" prop="nickName"/>
-          <el-table-column label="手机号码" align="center" prop="phonenumber" width="120"/>
+          <el-table-column label="手机号码" align="center" prop="phone" width="120"/>
           <el-table-column label="状态" align="center">
             <template slot-scope="scope">
               <el-switch v-model="scope.row.status" active-value="0" inactive-value="1"
@@ -58,9 +58,17 @@
               <el-button size="mini" type="text" icon="el-icon-edit"
                          @click="handleUpdate(scope.row)">修改
               </el-button>
-              <el-button v-if="scope.row.id !== 1" size="mini" type="text" icon="el-icon-delete"
-                         @click="handleDelete(scope.row)">删除
-              </el-button>
+              <el-popover :ref="scope.row.id" placement="top" width="180">
+                <p>确定删除本条数据吗？</p>
+                <div style="text-align: right; margin: 0">
+                  <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消
+                  </el-button>
+                  <el-button :loading="loading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
+                  </el-button>
+                </div>
+                <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除
+                </el-button>
+              </el-popover>
               <el-button size="mini" type="text" icon="el-icon-key"
                          @click="handleResetPwd(scope.row)">重置
               </el-button>
@@ -83,8 +91,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="手机号码" prop="phonenumber">
-              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11"/>
+            <el-form-item label="手机号码" prop="phone">
+              <el-input v-model="form.phone" placeholder="请输入手机号码" maxlength="11"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -200,9 +208,8 @@
           pageNum: 1,
           pageSize: 10,
           userName: undefined,
-          phonenumber: undefined,
+          phone: undefined,
           status: undefined,
-          deptId: undefined
         },
         // 表单校验
         rules: {
@@ -222,7 +229,7 @@
               trigger: ["blur", "change"]
             }
           ],
-          phonenumber: [
+          phone: [
             {
               pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
               message: "请输入正确的手机号码",
@@ -245,6 +252,21 @@
       });
     },
     methods: {
+      /** 单条删除 */
+      handleSubDelete(id) {
+        this.loading = true;
+        delUser(id).then((response) => {
+          this.$refs[id].doClose()
+          this.loading = false;
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
+          this.getList();
+        }).catch(function () {
+        });
+      },
       /** 查询用户列表 */
       getList() {
         this.loading = true;
@@ -297,7 +319,7 @@
           userName: undefined,
           nickName: undefined,
           password: undefined,
-          phonenumber: undefined,
+          phone: undefined,
           email: undefined,
           sex: undefined,
           status: "0",

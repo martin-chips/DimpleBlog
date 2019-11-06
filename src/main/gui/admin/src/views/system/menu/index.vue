@@ -48,9 +48,17 @@
           <el-button size="mini" type="text" icon="el-icon-plus"
                      @click="handleAdd(scope.row)">新增
           </el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete"
-                     @click="handleDelete(scope.row)">删除
-          </el-button>
+          <el-popover :ref="scope.row.id" placement="top" width="180">
+            <p>确定删除本条数据吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消
+              </el-button>
+              <el-button :loading="loading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
+              </el-button>
+            </div>
+            <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除
+            </el-button>
+          </el-popover>
         </template>
       </el-table-column>
     </el-table>
@@ -193,6 +201,21 @@
       });
     },
     methods: {
+      /** 单条删除 */
+      handleSubDelete(id) {
+        this.loading = true;
+        delMenu(id).then((response) => {
+          this.$refs[id].doClose()
+          this.loading = false;
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
+          this.getList();
+        }).catch(function () {
+        });
+      },
       // 选择图标
       selected(name) {
         this.form.icon = name;

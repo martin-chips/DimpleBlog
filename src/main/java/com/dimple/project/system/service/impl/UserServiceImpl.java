@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String checkPhoneUnique(SysUser user) {
         Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
-        SysUser info = userMapper.checkPhoneUnique(user.getPhonenumber());
+        SysUser info = userMapper.checkPhoneUnique(user.getPhone());
         if (StringUtils.isNotNull(info) && info.getId().longValue() != userId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }

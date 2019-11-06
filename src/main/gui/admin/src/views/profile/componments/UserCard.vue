@@ -33,7 +33,7 @@
             <li class="list-group-item">
               <svg-icon icon-class="phone"/>
               手机号码
-              <div class="pull-right">{{ user.phonenumber }}</div>
+              <div class="pull-right">{{ user.phone }}</div>
             </li>
             <li class="list-group-item">
               <svg-icon icon-class="email"/>

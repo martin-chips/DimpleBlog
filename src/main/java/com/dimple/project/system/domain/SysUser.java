@@ -47,7 +47,7 @@ public class SysUser extends BaseEntity {
     /**
      * 手机号码
      */
-    private String phonenumber;
+    private String phone;
 
     /**
      * 用户性别

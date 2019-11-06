@@ -126,7 +126,8 @@
                 </template>
               </el-table-column>
             </el-table>
-            <el-button size="mini" type="text" icon="el-icon-tickets" slot="reference">共 {{scope.row.commentList.length}}
+            <el-button size="mini" type="text" icon="el-icon-tickets" slot="reference">共
+              {{scope.row.commentList.length}}
               条数据
             </el-button>
           </el-popover>
@@ -218,6 +219,21 @@
       });
     },
     methods: {
+      /** 单条删除 */
+      handleSubDelete(id) {
+        this.loading = true;
+        delBlog(id).then((response) => {
+          this.$refs[id].doClose()
+          this.loading = false;
+          if (response.code == 200) {
+            this.msgSuccess("删除成功");
+          } else {
+            this.msgError("删除失败");
+          }
+          this.getList();
+        }).catch(function () {
+        });
+      },
       /** 查询博客列表 */
       getList() {
         this.loading = true;
@@ -231,7 +247,6 @@
       },
       // 博客状态修改
       handleCommentChange(row) {
-        console.log(row.comment);
         let text = row.comment ? "开启评论" : "关闭评论";
         this.$confirm('确认要"' + text + '""' + row.title + '"博客吗?', "警告", {
           confirmButtonText: "确定",

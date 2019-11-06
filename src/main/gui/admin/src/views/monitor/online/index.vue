@@ -42,7 +42,7 @@
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消
               </el-button>
-              <el-button :loading="loading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
+              <el-button :loading="loading" type="primary" size="mini" @click="handleForceLogout(scope.row.tokenId)">确定
               </el-button>
             </div>
             <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除
@@ -95,20 +95,16 @@
         this.getList();
       },
       /** 强退按钮操作 */
-      handleForceLogout(row) {
-        this.$confirm('是否确认强退名称为"' + row.userName + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return forceLogout(row.tokenId);
-        }).then((response) => {
+      handleForceLogout(tokenId) {
+        this.loading = true
+        forceLogout(tokenId).then((response) => {
           if (response.code == 200) {
             this.msgSuccess("强退成功");
           } else {
             this.msgError("强退失败");
           }
           this.getList();
+          this.loading = false
         }).catch(function () {
         });
       }
