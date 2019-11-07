@@ -44,4 +44,13 @@ public interface LocalStorageMapper {
      * @return list
      */
     List<LocalStorage> selectLocalStorageList(LocalStorage localStorage);
+
+    /**
+     * 根据ID获取信息
+     *
+     * @return local storage
+     */
+    LocalStorage selectLocalStorageById();
+
+
 }

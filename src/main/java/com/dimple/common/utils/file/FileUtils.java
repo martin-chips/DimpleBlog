@@ -1,6 +1,9 @@
 package com.dimple.common.utils.file;
 
 import cn.hutool.core.io.FileUtil;
+import com.dimple.common.exception.file.FileNameLengthLimitExceededException;
+import com.dimple.common.exception.file.FileSizeLimitExceededException;
+import com.dimple.common.exception.file.InvalidExtensionException;
 import com.dimple.common.utils.IdUtils;
 import com.dimple.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +42,16 @@ public class FileUtils extends FileUtil {
      * 格式化小数
      */
     private static final DecimalFormat DF = new DecimalFormat("0.00");
+
+    /**
+     * 默认最大大小 50M
+     */
+    public static final long DEFAULT_MAX_SIZE = 50 * 1024 * 1024;
+
+    /**
+     * 默认的文件名最大长度 256
+     */
+    public static final int DEFAULT_FILE_NAME_LENGTH = 256;
 
     /**
      * 将multipartFile转为file
@@ -165,6 +178,74 @@ public class FileUtils extends FileUtil {
     }
 
     /**
+     * 上传文件
+     *
+     * @param file             文件
+     * @param filePath         文件路径
+     * @param allowedExtension 允许的类型
+     * @return 文件
+     * @throws InvalidExtensionException 类型校验失败
+     */
+    public static File upload(MultipartFile file, String filePath, String[] allowedExtension) throws InvalidExtensionException {
+        checkAllowExtension(file, allowedExtension);
+        checkFileSize(file);
+        return upload(file, filePath);
+    }
+
+    /**
+     * 检验文件的大小
+     *
+     * @param file 文件
+     */
+    private static void checkFileSize(MultipartFile file) {
+        long size = file.getSize();
+        if (DEFAULT_MAX_SIZE != -1 && size > DEFAULT_MAX_SIZE) {
+            throw new FileSizeLimitExceededException(DEFAULT_MAX_SIZE / 1024 / 1024);
+        }
+    }
+
+    /**
+     * 校验上传文件类型
+     *
+     * @param file             已经上传的文件
+     * @param allowedExtension 允许的类型
+     */
+    private static void checkAllowExtension(MultipartFile file, String[] allowedExtension) throws InvalidExtensionException {
+        String fileName = file.getOriginalFilename();
+        String extension = getExtensionName(fileName);
+        if (allowedExtension != null && !isAllowedExtension(extension, allowedExtension)) {
+            if (allowedExtension == MimeTypeUtils.IMAGE_EXTENSION) {
+                throw new InvalidExtensionException.InvalidImageExtensionException(allowedExtension, extension,
+                        fileName);
+            } else if (allowedExtension == MimeTypeUtils.FLASH_EXTENSION) {
+                throw new InvalidExtensionException.InvalidFlashExtensionException(allowedExtension, extension,
+                        fileName);
+            } else if (allowedExtension == MimeTypeUtils.MEDIA_EXTENSION) {
+                throw new InvalidExtensionException.InvalidMediaExtensionException(allowedExtension, extension,
+                        fileName);
+            } else {
+                throw new InvalidExtensionException(allowedExtension, extension, fileName);
+            }
+        }
+    }
+
+    /**
+     * 判断MIME类型是否是允许的MIME类型
+     *
+     * @param extension
+     * @param allowedExtension
+     * @return
+     */
+    private static final boolean isAllowedExtension(String extension, String[] allowedExtension) {
+        for (String str : allowedExtension) {
+            if (str.equalsIgnoreCase(extension)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * 上传文件到指定路径
      *
      * @param file     文件
@@ -172,6 +253,12 @@ public class FileUtils extends FileUtil {
      * @return 文件信息
      */
     public static File upload(MultipartFile file, String filePath) {
+        //校验文件名大小
+        int fileNameLength = file.getOriginalFilename().length();
+        if (fileNameLength > DEFAULT_FILE_NAME_LENGTH) {
+            throw new FileNameLengthLimitExceededException(DEFAULT_FILE_NAME_LENGTH);
+        }
+
         String name = getFileNameNoExtension(file.getOriginalFilename());
         String suffix = getExtensionName(file.getOriginalFilename());
         String nowStr = DateFormatUtils.format(new Date(), "yyyyMMddhhmmss");

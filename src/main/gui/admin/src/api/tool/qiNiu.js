@@ -9,7 +9,7 @@ export function listContent(query) {
   })
 }
 
-//删除
+//删除qi
 export function delContent(id) {
   return request({
     url: '/tool/qiNiu/' + id,

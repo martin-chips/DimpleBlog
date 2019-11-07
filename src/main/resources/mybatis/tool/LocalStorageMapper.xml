@@ -71,6 +71,11 @@
             and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
+    <select id="selectLocalStorageById" resultMap="LocalStorageMap">
+        select id, real_name, name, suffix, path, type, size, create_by, create_time
+        from tool_local_storage
+        where delete_time is null
+    </select>
 
     <!--通过主键删除-->
     <delete id="deleteLocalStorageById">

@@ -35,20 +35,22 @@
       </el-form-item>
     </el-form>
 
-    <!-- 文件上传 -->
-    <el-dialog :visible.sync="open" :close-on-click-modal="false" append-to-body width="500px" @close="doSubmit">
+    <!--上传图片-->
+    <el-dialog :visible.sync="dialog" :close-on-click-modal="false" append-to-body width="600px" @close="doSubmit">
       <el-upload
+        :on-preview="handlePictureCardPreview"
         :before-remove="handleBeforeRemove"
         :on-success="handleSuccess"
         :on-error="handleError"
-        :file-list="fileList"
         :headers="headers"
-        :action="uploadUrl"
-        class="upload-demo"
-        multiple>
-        <el-button size="small" type="primary">点击上传</el-button>
-        <div slot="tip" style="display: block;" class="el-upload__tip">请勿上传违法文件，且文件不超过15M</div>
+        :file-list="fileList"
+        :action="imagesUploadApi"
+        list-type="picture-card">
+        <i class="el-icon-plus"/>
       </el-upload>
+      <el-dialog :append-to-body="true" :visible.sync="dialogVisible">
+        <img :src="dialogImageUrl" width="100%" alt="">
+      </el-dialog>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="doSubmit">确认</el-button>
       </div>
@@ -63,12 +65,7 @@
       </el-table-column>
       <el-table-column prop="path" label="预览图">
         <template slot-scope="{row}">
-          <el-image
-            :src="row.url"
-            :preview-src-list="[row.url]"
-            fit="contain"
-            lazy
-            class="el-avatar">
+          <el-image :src="row.url" :preview-src-list="[row.url]" fit="contain" lazy class="el-avatar">
             <div slot="error">
               <i class="el-icon-document"/>
             </div>
@@ -86,10 +83,7 @@
       </el-table-column>
       <el-table-column label="操作" width="100px" align="center">
         <template slot-scope="scope">
-          <el-popover
-            :ref="scope.row.id"
-            placement="top"
-            width="180">
+          <el-popover :ref="scope.row.id" placement="top" width="180">
             <p>确定删除本条数据吗？</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
@@ -124,8 +118,6 @@
         uploadUrl: '',
         //上传文件需要用到的token
         headers: {'Authorization': 'Bearer ' + getToken()},
-        //上传文件的FileList
-        fileList: [],
         // 遮罩层
         loading: true,
         // 总条数
@@ -155,8 +147,7 @@
       init() {
         if (!this.ready) {
           this.uploadUrl = process.env.VUE_APP_BASE_API + "/tool/qiNiu"
-          // this.header = {'Authorization': 'Bearer ' + getToken()};
-          console.log(this.header)
+
           this.getList();
           this.ready = true;
         }
@@ -213,11 +204,17 @@
         });
       },
       handleSuccess(response, file, fileList) {
-        this.getList();
-        console.log(response)
-        const uid = file.uid
-        const id = response.id
-        this.files.push({uid, id})
+        if (response.code == 200) {
+          this.msgSuccess("上传成功");
+          const uid = file.uid;
+          const id = response.id;
+          this.files.push({uid, id});
+          this.getList();
+        } else {
+          this.msgError(response.msg)
+        }
+
+
       },
       handleBeforeRemove(file, fileList) {
         for (let i = 0; i < this.files.length; i++) {
@@ -230,13 +227,7 @@
       },
       // 监听上传失败
       handleError(e, file, fileList) {
-        console.log(e);
-        const msg = JSON.parse(e.message)
-        this.$notify({
-          title: msg.message,
-          type: 'error',
-          duration: 2500
-        })
+        this.msgError(e.msg);
       },
       doConfig() {
         const _this = this.$refs.config

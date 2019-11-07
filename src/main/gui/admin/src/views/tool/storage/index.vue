@@ -26,7 +26,7 @@
     methods: {
       tabClick(name) {
         if (this.activeName === 'first') {
-          this.$refs.local.init()
+          // this.$refs.local.init()
         } else {
           this.$refs.qiNiu.init()
         }

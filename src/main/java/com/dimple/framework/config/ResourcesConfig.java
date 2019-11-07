@@ -3,7 +3,8 @@ package com.dimple.framework.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import com.dimple.common.constant.Constants;
+
+import java.nio.file.Paths;
 
 /**
  * @className: ResourcesConfig
@@ -13,10 +14,12 @@ import com.dimple.common.constant.Constants;
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        /** 本地文件上传路径 */
-        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**").addResourceLocations("file:" + DimpleBlogConfig.getProfile() + "/");
+        //设置上传的文件的访问路径映射
+        String pathUtl = Paths.get(DimpleBlogConfig.getProfile()).normalize().toUri().toASCIIString();
+        registry.addResourceHandler("/file/**").addResourceLocations(pathUtl).setCachePeriod(0);
 
         /** swagger配置 */
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
