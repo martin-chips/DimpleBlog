@@ -74,7 +74,7 @@
     <select id="selectLocalStorageById" resultMap="LocalStorageMap">
         select id, real_name, name, suffix, path, type, size, create_by, create_time
         from tool_local_storage
-        where delete_time is null
+        where delete_time is null and id=#{id}
     </select>
 
     <!--通过主键删除-->

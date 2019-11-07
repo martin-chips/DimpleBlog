@@ -50,7 +50,7 @@ public interface LocalStorageMapper {
      *
      * @return local storage
      */
-    LocalStorage selectLocalStorageById();
+    LocalStorage selectLocalStorageById(Long id);
 
 
 }
