@@ -1,4 +1,4 @@
-package com.dimple.project.tool.qiNiu.service.impl;
+package com.dimple.project.tool.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -9,11 +9,11 @@ import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.file.FileUtils;
 import com.dimple.project.system.domain.Config;
 import com.dimple.project.system.service.ConfigService;
-import com.dimple.project.tool.qiNiu.domain.QiNiuConfig;
-import com.dimple.project.tool.qiNiu.domain.QiNiuContent;
-import com.dimple.project.tool.qiNiu.mapper.QiNiuContentMapper;
-import com.dimple.project.tool.qiNiu.service.QiNiuService;
-import com.dimple.project.tool.qiNiu.utils.QiNiuUtils;
+import com.dimple.project.tool.domain.QiNiuConfig;
+import com.dimple.project.tool.domain.QiNiuContent;
+import com.dimple.project.tool.mapper.QiNiuContentMapper;
+import com.dimple.project.tool.service.QiNiuService;
+import com.dimple.project.tool.utils.QiNiuUtils;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;

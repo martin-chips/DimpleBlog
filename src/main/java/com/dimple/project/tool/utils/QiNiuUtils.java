@@ -1,4 +1,4 @@
-package com.dimple.project.tool.qiNiu.utils;
+package com.dimple.project.tool.utils;
 
 import com.dimple.common.utils.file.FileUtils;
 import com.qiniu.storage.Region;

@@ -1,7 +1,10 @@
 package com.dimple.common.utils.file;
 
+import cn.hutool.core.io.FileUtil;
 import com.dimple.common.utils.IdUtils;
 import com.dimple.common.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -10,14 +13,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
+import java.util.Date;
 
 /**
  * @className: FileUtils
- * @description: 文件处理工具类
+ * @description: 文件处理工具类, 扩展 hutool 工具包
  * @author: Dimple
  * @date: 10/22/19
  */
-public class FileUtils {
+@Slf4j
+public class FileUtils extends FileUtil {
     /**
      * 定义GB的计算常量
      */
@@ -51,7 +56,7 @@ public class FileUtils {
             file = File.createTempFile(IdUtils.simpleUUID(), prefix);
             multipartFile.transferTo(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return file;
     }
@@ -159,4 +164,32 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 上传文件到指定路径
+     *
+     * @param file     文件
+     * @param filePath 路径
+     * @return 文件信息
+     */
+    public static File upload(MultipartFile file, String filePath) {
+        String name = getFileNameNoExtension(file.getOriginalFilename());
+        String suffix = getExtensionName(file.getOriginalFilename());
+        String nowStr = DateFormatUtils.format(new Date(), "yyyyMMddhhmmss");
+        try {
+            String fileName = name + nowStr + "." + suffix;
+            String path = filePath + fileName;
+            //getCanonicalPath会将文件路径解析为与操作系统相关的唯一的规范形式的字符串，而getAbsolutePath并不会
+            File dest = new File(path).getCanonicalFile();
+            // 检测是否存在目录
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            // 文件写入
+            file.transferTo(dest);
+            return dest;
+        } catch (IOException e) {
+            log.error("上传文件出错,{}", e.getMessage());
+        }
+        return null;
+    }
 }

@@ -1,4 +1,4 @@
-package com.dimple.project.tool.qiNiu.controller;
+package com.dimple.project.tool.controller;
 
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
@@ -6,9 +6,9 @@ import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.tool.qiNiu.domain.QiNiuConfig;
-import com.dimple.project.tool.qiNiu.domain.QiNiuContent;
-import com.dimple.project.tool.qiNiu.service.QiNiuService;
+import com.dimple.project.tool.domain.QiNiuConfig;
+import com.dimple.project.tool.domain.QiNiuContent;
+import com.dimple.project.tool.service.QiNiuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;

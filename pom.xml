@@ -34,9 +34,16 @@
         <swagger.version>2.9.2</swagger.version>
         <oshi.version>4.1.1</oshi.version>
         <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
+        <hutool.version>5.0.4</hutool.version>
     </properties>
 
     <dependencies>
+        <!--工具包-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
         <!--七牛云存储-->
         <dependency>
             <groupId>com.qiniu</groupId>
@@ -61,14 +68,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <!--
-             <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
-             -->
         </dependency>
 
         <!-- SpringBoot 测试 -->

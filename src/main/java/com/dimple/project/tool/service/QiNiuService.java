@@ -1,7 +1,7 @@
-package com.dimple.project.tool.qiNiu.service;
+package com.dimple.project.tool.service;
 
-import com.dimple.project.tool.qiNiu.domain.QiNiuConfig;
-import com.dimple.project.tool.qiNiu.domain.QiNiuContent;
+import com.dimple.project.tool.domain.QiNiuConfig;
+import com.dimple.project.tool.domain.QiNiuContent;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.dimple.project.tool.qiNiu.domain;
+package com.dimple.project.tool.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;

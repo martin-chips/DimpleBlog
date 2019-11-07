@@ -1,6 +1,6 @@
-package com.dimple.project.tool.qiNiu.mapper;
+package com.dimple.project.tool.mapper;
 
-import com.dimple.project.tool.qiNiu.domain.QiNiuContent;
+import com.dimple.project.tool.domain.QiNiuContent;
 
 import java.util.List;
 
