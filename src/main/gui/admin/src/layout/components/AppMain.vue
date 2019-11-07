@@ -5,11 +5,6 @@
         <router-view :key="key" />
       </keep-alive>
     </transition>
-    <div id="el-main-footer">
-      <span>© 2019 Dimple <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a></span>
-      <span> ⋅ </span>
-      <a href="http://www.beian.miit.gov.cn" target="_blank">蜀ICP备 19004343</a>
-    </div>
   </section>
 </template>
 

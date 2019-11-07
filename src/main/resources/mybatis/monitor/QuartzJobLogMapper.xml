@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dimple.project.tool.mapper.QuartzJobMapper">
+<mapper namespace="com.dimple.project.monitor.mapper.QuartzJobLogMapper">
 
-    <resultMap type="com.dimple.project.tool.domain.QuartzJob" id="QuartzJobMap">
+    <resultMap type="com.dimple.project.tool.domain.QuartzJobLog" id="QuartzJobLogMap">
         <result property="id" column="id"/>
         <result property="jobName" column="job_name"/>
         <result property="beanName" column="bean_name"/>
         <result property="methodName" column="method_name"/>
         <result property="methodParams" column="method_params"/>
         <result property="cronExpression" column="cron_expression"/>
+        <result property="exception" column="exception"/>
         <result property="status" column="status"/>
-        <result property="remark" column="remark"/>
-        <result property="createBy" column="create_by"/>
+        <result property="cost" column="cost"/>
         <result property="createTime" column="create_time"/>
+
     </resultMap>
 
-    <insert id="insertQuartzJob">
+    <insert id="insertQuartzJobLog">
         insert into tool_quartz_job(
         <if test="jobName != null and jobName != ''">job_name,</if>
         <if test="beanName != null and beanName != ''">bean_name,</if>
         <if test="methodName != null and methodName != ''">method_name,</if>
         <if test="methodParams != null and methodParams != ''">method_params,</if>
         <if test="cronExpression != null and cronExpression != ''">cron_expression,</if>
-        <if test="status null and status != ''">status,</if>
-        <if test="remark null and remark != ''">remark,</if>
-        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="exception != null and exception != ''">exception,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="cost != null and cost != ''">cost,</if>
         create_time
         )values(
         <if test="jobName != null and jobName != ''">#{jobName},</if>
@@ -32,49 +33,19 @@
         <if test="methodName != null and methodName != ''">#{methodName},</if>
         <if test="methodParams != null and methodParams != ''">#{methodParams},</if>
         <if test="cronExpression != null and cronExpression != ''">#{cronExpression},</if>
+        <if test="exception != null and exception != ''">#{exception},</if>
         <if test="status != null and status != ''">#{status},</if>
-        <if test="remark != null and remark != ''">#{remark},</if>
-        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="cost != null and cost != ''">#{cost},</if>
         sysdate()
         )
     </insert>
-    <update id="updateQuartzJob">
-        update tool_quartz_job
-        <set>
-            <if test="jobName != null and jobName != ''">
-                job_name = #{jobName},
-            </if>
-            <if test="beanName != null and beanName != ''">
-                bean_name = #{updateBy},
-            </if>
-            <if test="methodName != null and methodName != ''">
-                method_name = #{methodName},
-            </if>
-            <if test="methodParams != null and methodParams != ''">
-                method_params = #{methodParams},
-            </if>
-            <if test="cronExpression != null and cronExpression != ''">
-                cron_expression = #{cronExpression},
-            </if>
-            <if test="remark != null and remark != ''">
-                remark = #{remark},
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                update_by = #{updateBy},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-            update_time = sysdate()
-        </set>
-        where id = #{id}
-    </update>
+
 
     <!--通过实体作为筛选条件查询-->
-    <select id="selectQuartzJobList" resultMap="QuartzJobMap">
-        select id, job_name, bean_name, method_name, method_params, cron_expression, status, remark, create_time,
-        create_by
-        from tool_quartz_job
+    <select id="selectQuartzJobLogList" resultMap="QuartzJobLogMap">
+        select id, job_name, bean_name, method_name, method_params, cron_expression, exception, status, cost,
+        create_time
+        from tool_quartz_log
         where delete_time is null
         <if test="jobName != null and jobName != ''">
             and job_name like concat('%',#{jobName},'%')
@@ -98,17 +69,4 @@
             and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
-
-    <select id="selectQuartzJobById" resultMap="QuartzJobMap">
-        select id, job_name, bean_name, method_name, method_params, cron_expression, status, remark, create_time,
-        create_by
-        from tool_quartz_job
-        where delete_time is null and id=#{id}
-    </select>
-
-    <!--通过主键删除-->
-    <delete id="deleteQuartzJobById">
-      update tool_quartz_job set delete_time = sysdate(),delete_by=#{username} where id=#{id}
-    </delete>
-
 </mapper>

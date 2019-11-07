@@ -44,7 +44,7 @@
     "axios": "0.18.1",
     "dropzone": "^5.5.1",
     "echarts": "4.2.1",
-    "element-ui": "2.12.0",
+    "element-ui": "2.11.1",
     "fuse.js": "3.4.4",
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",

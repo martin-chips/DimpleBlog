@@ -674,7 +674,7 @@ insert  into `sys_operate_log`(`id`,`title`,`business_type`,`method`,`request_me
 
 /*Table structure for table `sys_quartz_log` */
 
-DROP TABLE IF EXISTS `sys_quartz_log`;
+DROP TABLE IF EXISTS tool_quartz_log;
 
 CREATE TABLE `sys_quartz_log` (
                                   `id` bigint(20) NOT NULL AUTO_INCREMENT,
