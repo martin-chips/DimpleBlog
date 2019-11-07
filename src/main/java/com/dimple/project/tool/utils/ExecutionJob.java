@@ -11,6 +11,7 @@ import org.quartz.JobExecutionException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Component;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -24,9 +25,10 @@ import java.util.concurrent.Future;
  */
 @Async
 @Slf4j
+@Component
 public class ExecutionJob extends QuartzJobBean {
 
-    ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean(ThreadPoolTaskExecutor.class);
+    ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringUtils.getBean("threadPoolTaskExecutor");
 
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {

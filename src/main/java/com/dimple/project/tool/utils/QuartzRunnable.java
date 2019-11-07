@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 /**
@@ -17,7 +16,7 @@ import java.util.concurrent.Callable;
  */
 @Slf4j
 public class QuartzRunnable implements Callable {
-    private Objects target;
+    private Object target;
     private Method method;
     private String param;
 

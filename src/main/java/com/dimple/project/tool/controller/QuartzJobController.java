@@ -42,6 +42,11 @@ public class QuartzJobController extends BaseController {
         return toAjax(quartzJonService.insertQuartzJob(quartzJob));
     }
 
+    @GetMapping("/{id}")
+    public AjaxResult add(@PathVariable Long id) {
+        return AjaxResult.success(quartzJonService.selectQuartzJobById(id));
+    }
+
     @PutMapping()
     public AjaxResult edit(@RequestBody QuartzJob quartzJob) {
         return toAjax(quartzJonService.updateQuartzJob(quartzJob));

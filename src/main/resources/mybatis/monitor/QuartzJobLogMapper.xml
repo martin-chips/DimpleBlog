@@ -17,7 +17,7 @@
     </resultMap>
 
     <insert id="insertQuartzJobLog">
-        insert into tool_quartz_job(
+        insert into tool_quartz_log(
         <if test="jobName != null and jobName != ''">job_name,</if>
         <if test="beanName != null and beanName != ''">bean_name,</if>
         <if test="methodName != null and methodName != ''">method_name,</if>

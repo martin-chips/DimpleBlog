@@ -45,7 +45,7 @@
                 job_name = #{jobName},
             </if>
             <if test="beanName != null and beanName != ''">
-                bean_name = #{updateBy},
+                bean_name = #{beanName},
             </if>
             <if test="methodName != null and methodName != ''">
                 method_name = #{methodName},

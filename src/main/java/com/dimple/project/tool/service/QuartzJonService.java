@@ -57,4 +57,12 @@ public interface QuartzJonService {
      * @return job list
      */
     List<QuartzJob> selectQuartzJobList(QuartzJob quartzJob);
+
+    /**
+     * 根据id查询Job
+     *
+     * @param id id
+     * @return job
+     */
+    QuartzJob selectQuartzJobById(Long id);
 }

@@ -86,4 +86,9 @@ public class QuartzJonServiceImpl implements QuartzJonService {
     public List<QuartzJob> selectQuartzJobList(QuartzJob quartzJob) {
         return quartzJobMapper.selectQuartzJobList(quartzJob);
     }
+
+    @Override
+    public QuartzJob selectQuartzJobById(Long id) {
+        return quartzJobMapper.selectQuartzJobById(id);
+    }
 }

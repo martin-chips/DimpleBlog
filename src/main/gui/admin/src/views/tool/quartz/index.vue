@@ -37,9 +37,9 @@
       <el-table-column :show-overflow-tooltip="true" prop="methodName" width="90px" label="执行方法"/>
       <el-table-column :show-overflow-tooltip="true" prop="params" width="80px" label="参数"/>
       <el-table-column :show-overflow-tooltip="true" prop="cronExpression" width="100px" label="cron表达式"/>
-      <el-table-column :show-overflow-tooltip="true" prop="isPause" width="90px" label="状态">
+      <el-table-column :show-overflow-tooltip="true" prop="status" width="90px" label="状态">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.isPause ? 'warning' : 'success'">{{ scope.row.isPause ? '已暂停' : '运行中' }}</el-tag>
+          <el-tag :type="scope.row.status ? 'success' : 'warning'">{{ scope.row.status ? '运行中' :'已暂停' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remark" label="描述"/>
@@ -52,14 +52,14 @@
                        align="center" fixed="right">
         <template slot-scope="scope">
           <el-button size="mini" style="margin-right: 3px;" type="text"
-                     @click="edit(scope.row)">编辑
+                     @click="handleUpdate(scope.row)">编辑
           </el-button>
           <el-button style="margin-left: -2px" type="text" size="mini"
                      @click="execute(scope.row.id)">执行
           </el-button>
           <el-button style="margin-left: 3px" type="text" size="mini"
-                     @click="updateStatus(scope.row.id,scope.row.isPause ? '恢复' : '暂停')">
-            {{ scope.row.isPause ? '恢复' : '暂停' }}
+                     @click="updateStatus(scope.row.id)">
+            {{ scope.row.status ? '暂停' : '运行' }}
           </el-button>
           <el-popover
             :ref="scope.row.id"
@@ -81,8 +81,8 @@
                 @pagination="getList"/>
 
     <!-- 添加或修改任务配置对话框 -->
-    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
-      <el-form ref="form" :model="form" :rules="rules" size="small" label-width="100px">
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px">
+      <el-form ref="form" :model="form" :rules="rules" size="small" label-width="10 0px">
         <el-form-item label="任务名称" prop="jobName">
           <el-input v-model="form.jobName" style="width: 460px;"/>
         </el-form-item>
@@ -99,8 +99,10 @@
           <el-input v-model="form.cronExpression" style="width: 460px;"/>
         </el-form-item>
         <el-form-item label="任务状态">
-          <el-radio v-model="form.isPause" label="false">启用</el-radio>
-          <el-radio v-model="form.isPause" label="true">暂停</el-radio>
+          <el-radio-group v-model="form.status">
+            <el-radio :label="false">暂停</el-radio>
+            <el-radio :label="true">运行</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="任务描述">
           <el-input v-model="form.remark" style="width: 460px;" rows="2" type="textarea"/>
@@ -115,7 +117,15 @@
 </template>
 
 <script>
-  import {listQuartzJob, delQuartzJob, getQuartzJob, addQuartzJob, updateQuartzJob} from "@/api/tool/quartz";
+  import {
+    listQuartzJob,
+    delQuartzJob,
+    updateQuartzStatus,
+    executeJob,
+    getQuartzJob,
+    addQuartzJob,
+    updateQuartzJob
+  } from "@/api/tool/quartz";
 
   export default {
     data() {
@@ -183,7 +193,16 @@
           this.loading = false;
         });
       },
-      /** 查询角色列表 */
+      /** 修改按钮操作 */
+      handleUpdate(row) {
+        this.reset();
+        getQuartzJob(row.id).then(response => {
+          this.form = response.data;
+          this.open = true;
+          this.title = "修改分类";
+        });
+      },
+      /** 查询任务列表 */
       getList() {
         this.loading = true;
         listQuartzJob(this.addDateRange(this.queryParams, this.dateRange)).then(
@@ -196,7 +215,7 @@
       },
       //执行任务
       execute(id) {
-        execution(id).then(response => {
+        executeJob(id).then(response => {
           if (response.code == 200) {
             this.msgSuccess("执行成功");
           } else {
@@ -206,10 +225,14 @@
           console.log(err.response.data.message)
         })
       },
-      updateStatus(id, status) {
-        updateIsPause(id).then(res => {
-          this.getList();
-          this.msgSuccess("更新成功");
+      updateStatus(id) {
+        updateQuartzStatus(id).then(res => {
+          if (res.code == 200) {
+            this.msgSuccess("更新成功");
+            this.getList();
+          } else {
+            this.msgError(res.msg);
+          }
         }).catch(err => {
           console.log(err.response.data.message)
         })
@@ -247,9 +270,6 @@
       /** 修改按钮操作 */
       handleUpdate(row) {
         this.reset();
-        this.$nextTick(() => {
-          this.getRoleMenuTreeselect(row.id);
-        });
         getQuartzJob(row.id).then(response => {
           this.form = response.data;
           this.open = true;

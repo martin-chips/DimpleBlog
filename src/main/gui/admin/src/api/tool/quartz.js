@@ -43,3 +43,20 @@ export function addQuartzJob(data) {
     data: data
   })
 }
+
+//执行任务
+export function executeJob(id) {
+  return request({
+    url: '/tool/quartz/exe/' + id,
+    method: 'put',
+  })
+}
+
+//更新任务状态
+export function updateQuartzStatus(id) {
+  return request({
+    url: '/tool/quartz/status/' + id,
+    method: 'put',
+  })
+}
+

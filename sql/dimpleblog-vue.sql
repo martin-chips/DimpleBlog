@@ -1,6 +1,6 @@
 /*
-SQLyog Enterprise v13.1.1 (64 bit)
-MySQL - 5.7.26-log : Database - dimpleblog-vue
+SQLyog Ultimate v13.1.1 (64 bit)
+MySQL - 5.7.26 : Database - dimpleblog-vue
 *********************************************************************
 */
 
@@ -299,54 +299,6 @@ insert  into `sys_dict_type`(`id`,`dict_name`,`dict_type`,`status`,`create_by`,`
 (12,'博客推荐','bg_blog_support','0','admin','2019-10-31 14:46:33','',NULL,'',NULL,'博客推荐列表'),
 (13,'博客评论','bg_blog_comment','0','admin','2019-10-31 18:38:12','',NULL,'',NULL,'博客评论列表');
 
-/*Table structure for table `sys_job` */
-
-DROP TABLE IF EXISTS `sys_job`;
-
-CREATE TABLE `sys_job` (
-                           `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
-                           `job_name` varchar(64) NOT NULL DEFAULT '' COMMENT '任务名称',
-                           `job_group` varchar(64) NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
-                           `invoke_target` varchar(500) NOT NULL COMMENT '调用目标字符串',
-                           `cron_expression` varchar(255) DEFAULT '' COMMENT 'cron执行表达式',
-                           `misfire_policy` varchar(20) DEFAULT '3' COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
-                           `concurrent` char(1) DEFAULT '1' COMMENT '是否并发执行（0允许 1禁止）',
-                           `status` char(1) DEFAULT '0' COMMENT '状态（0正常 1暂停）',
-                           `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                           `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                           `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                           `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                           `delete_by` varchar(64) DEFAULT '' COMMENT '刪除者',
-                           `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
-                           `remark` varchar(500) DEFAULT '' COMMENT '备注信息',
-                           PRIMARY KEY (`job_id`,`job_name`,`job_group`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='定时任务调度表';
-
-/*Data for the table `sys_job` */
-
-insert  into `sys_job`(`job_id`,`job_name`,`job_group`,`invoke_target`,`cron_expression`,`misfire_policy`,`concurrent`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`,`remark`) values
-(1,'系统默认（无参）','DEFAULT','ryTask.ryNoParams','0/10 * * * * ?','3','1','1','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,''),
-(2,'系统默认（有参）','DEFAULT','ryTask.ryParams(\'ry\')','0/15 * * * * ?','3','1','1','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,''),
-(3,'系统默认（多参）','DEFAULT','ryTask.ryMultipleParams(\'ry\', true, 2000L, 316.50D, 100)','0/20 * * * * ?','3','1','1','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'');
-
-/*Table structure for table `sys_job_log` */
-
-DROP TABLE IF EXISTS `sys_job_log`;
-
-CREATE TABLE `sys_job_log` (
-                               `job_log_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
-                               `job_name` varchar(64) NOT NULL COMMENT '任务名称',
-                               `job_group` varchar(64) NOT NULL COMMENT '任务组名',
-                               `invoke_target` varchar(500) NOT NULL COMMENT '调用目标字符串',
-                               `job_message` varchar(500) DEFAULT NULL COMMENT '日志信息',
-                               `status` char(1) DEFAULT '0' COMMENT '执行状态（0正常 1失败）',
-                               `exception_info` varchar(2000) DEFAULT '' COMMENT '异常信息',
-                               `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                               PRIMARY KEY (`job_log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务调度日志表';
-
-/*Data for the table `sys_job_log` */
-
 /*Table structure for table `sys_link` */
 
 DROP TABLE IF EXISTS `sys_link`;
@@ -390,22 +342,9 @@ CREATE TABLE `sys_login_log` (
                                  `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
                                  `login_time` datetime DEFAULT NULL COMMENT '访问时间',
                                  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
 
 /*Data for the table `sys_login_log` */
-
-insert  into `sys_login_log`(`id`,`user_name`,`ip`,`location`,`browser`,`os`,`status`,`msg`,`login_time`) values
-(1,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-06 14:14:34'),
-(2,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-06 18:26:42'),
-(3,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-07 12:06:47'),
-(4,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-07 13:35:25'),
-(5,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-07 14:03:37'),
-(6,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-07 14:04:41'),
-(7,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-07 14:04:45'),
-(8,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-07 14:06:41'),
-(9,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-07 14:23:01'),
-(10,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-07 16:21:30'),
-(11,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-07 16:56:52');
 
 /*Table structure for table `sys_menu` */
 
@@ -446,7 +385,7 @@ insert  into `sys_menu`(`id`,`menu_name`,`parent_id`,`order_num`,`path`,`compone
 (107,'通知公告',1,8,'notice','system/notice/index',1,'C','0','system:notice:list','message','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'通知公告菜单'),
 (108,'日志管理',2,9,'log','system/log/index',1,'M','0','','log','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'日志管理菜单'),
 (109,'在线用户',2,1,'online','monitor/online/index',1,'C','0','monitor:online:list','online','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'在线用户菜单'),
-(110,'定时任务',1095,2,'job','monitor/job/index',1,'C','0','monitor:job:list','job','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'定时任务菜单'),
+(110,'定时任务',1095,2,'tool/quartz','tool/quartz/index',1,'C','0','monitor:job:list','job','admin','2018-03-16 11:33:00','admin','2019-11-07 21:43:20','',NULL,'定时任务菜单'),
 (111,'数据监控',2,3,'druid','monitor/druid/index',1,'C','0','monitor:druid:list','druid','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'数据监控菜单'),
 (112,'服务监控',2,4,'server','monitor/server/index',1,'C','0','monitor:server:list','server','admin','2018-03-16 11:33:00','ry','2018-03-16 11:33:00','',NULL,'服务监控菜单'),
 (115,'系统接口',2,3,'swagger','monitor/swagger/index',1,'C','0','tool:swagger:list','swagger','admin','2018-03-16 11:33:00','admin','2019-10-24 10:21:02','',NULL,'系统接口菜单'),
@@ -576,121 +515,9 @@ CREATE TABLE `sys_operate_log` (
                                    `error_msg` varchar(2000) DEFAULT '' COMMENT '错误消息',
                                    `operate_time` datetime DEFAULT NULL COMMENT '操作时间',
                                    PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
 
 /*Data for the table `sys_operate_log` */
-
-insert  into `sys_operate_log`(`id`,`title`,`business_type`,`method`,`request_method`,`operator_type`,`operate_name`,`url`,`ip`,`location`,`param`,`json_result`,`status`,`error_msg`,`operate_time`) values
-(1,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/8','10.17.80.181','内网IP','{ids=8}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:14:50'),
-(2,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/6','10.17.80.181','内网IP','{ids=6}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:14:52'),
-(3,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','10.17.80.181','内网IP','{\"description\":\"21321321\",\"params\":{},\"title\":\"123213\",\"createBy\":\"admin\",\"id\":10,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:15:53'),
-(4,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','10.17.80.181','内网IP','{\"description\":\"312321321\",\"params\":{},\"title\":\"12321321\",\"createBy\":\"admin\",\"id\":11,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:15:57'),
-(5,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','10.17.80.181','内网IP','{\"description\":\"321321321\",\"params\":{},\"title\":\"12312321\",\"createBy\":\"admin\",\"id\":12,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:16:00'),
-(6,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/12','10.17.80.181','内网IP','{ids=12}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:16:36'),
-(7,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/10','10.17.80.181','内网IP','{ids=10}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:25:40'),
-(8,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/11','10.17.80.181','内网IP','{ids=11}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:25:42'),
-(9,'分类管理',1,'com.dimple.project.blog.controller.CategoryController.add()','POST',1,'admin','/blog/category','10.17.80.181','内网IP','{\"description\":\"111111\",\"params\":{},\"title\":\"1111111111111\",\"createBy\":\"admin\",\"id\":13,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:26:20'),
-(10,'分类管理',3,'com.dimple.project.blog.controller.CategoryController.remove()','DELETE',1,'admin','/blog/category/13','10.17.80.181','内网IP','{ids=13}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:26:22'),
-(11,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:28:23'),
-(12,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:28:49'),
-(13,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:29:23'),
-(14,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:30:16'),
-(15,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:31:07'),
-(16,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:31:31'),
-(17,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:31:57'),
-(18,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:32:33'),
-(19,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:33:00'),
-(20,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:34:03'),
-(21,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:05'),
-(22,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:07'),
-(23,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:09'),
-(24,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:12'),
-(25,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:14'),
-(26,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/2','10.17.80.181','内网IP','{id=2}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:16'),
-(27,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:35:27'),
-(28,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:37:33'),
-(29,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','null',1,'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'id\' not found. Available parameters are [loginUsername, configId, param1, param2]','2019-11-06 14:37:40'),
-(30,'参数管理',3,'com.dimple.project.system.controller.ConfigController.remove()','DELETE',1,'admin','/system/config/3','10.17.80.181','内网IP','{id=3}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:39:11'),
-(31,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":false,\"avatar\":\"lm_2.jpg\",\"params\":{}}','null',1,'','2019-11-06 14:46:56'),
-(32,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":false,\"avatar\":\"lm_1.jpg\",\"params\":{}}','null',1,'','2019-11-06 14:47:01'),
-(33,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":false,\"avatar\":\"hthz_8.jpeg\",\"params\":{}}','null',1,'','2019-11-06 14:47:44'),
-(34,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":false,\"avatar\":\"hthz_1.jpeg\",\"params\":{}}','null',1,'','2019-11-06 14:49:34'),
-(35,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":true,\"avatar\":\"hthz_3.jpg\",\"params\":{},\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:51:13'),
-(36,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":true,\"avatar\":\"hthz_4.jpeg\",\"params\":{},\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-06 14:51:17'),
-(37,'菜单管理',2,'com.dimple.project.system.controller.MenuController.edit()','PUT',1,'admin','/system/menu','10.17.80.181','内网IP','{\"visible\":\"0\",\"icon\":\"eye-open\",\"orderNum\":\"2\",\"menuName\":\"存储管理\",\"params\":{},\"parentId\":1095,\"path\":\"tool/storage\",\"component\":\"tool/storage/index\",\"children\":[],\"createTime\":1573008868000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuType\":\"C\",\"perms\":\"tool:storage:list\",\"id\":1097}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 12:07:52'),
-(38,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 12:55:02'),
-(39,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/1','10.17.80.181','内网IP','{id=1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:35:36'),
-(40,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:35:48'),
-(41,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:37:17'),
-(42,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:39:40'),
-(43,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/2','10.17.80.181','内网IP','{id=2}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:39:51'),
-(44,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/3','10.17.80.181','内网IP','{id=3}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:39:52'),
-(45,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/4','10.17.80.181','内网IP','{id=4}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:39:53'),
-(46,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','112312','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:40:08'),
-(47,'本地存储',2,'com.dimple.project.tool.controller.LocalStorageController.upload()','PUT',1,'admin','/tool/localStorage','10.17.80.181','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"name\":\"765\",\"id\":5}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:41:07'),
-(48,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 13:43:26'),
-(49,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/6','10.17.80.181','内网IP','{id=6}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:11:28'),
-(50,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/5','10.17.80.181','内网IP','{id=5}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:11:30'),
-(51,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:11:36'),
-(52,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/7','10.17.80.181','内网IP','{id=7}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:11:55'),
-(53,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:12:35'),
-(54,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/8','10.17.80.181','内网IP','{id=8}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:19:42'),
-(55,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:19:55'),
-(56,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/9','10.17.80.181','内网IP','{id=9}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:20:03'),
-(57,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:23:12'),
-(58,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/10','10.17.80.181','内网IP','{id=10}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:44:05'),
-(59,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:44:14'),
-(60,'本地存储',2,'com.dimple.project.tool.controller.LocalStorageController.upload()','PUT',1,'admin','/tool/localStorage','10.17.80.181','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"name\":\"navicat-keygen-for-x64111\",\"id\":11}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:44:41'),
-(61,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/11','10.17.80.181','内网IP','{id=11}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:44:54'),
-(62,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:45:00'),
-(63,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:49:20'),
-(64,'七牛云存储',2,'com.dimple.project.tool.controller.QiNiuController.synchronize()','POST',1,'admin','/tool/qiNiu/synchronize','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:50:04'),
-(65,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:50:07'),
-(66,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:50:39'),
-(67,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:51:09'),
-(68,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:52:25'),
-(69,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 14:52:54'),
-(70,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:55:55'),
-(71,'七牛云存储',2,'com.dimple.project.tool.controller.QiNiuController.synchronize()','POST',1,'admin','/tool/qiNiu/synchronize','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:55:59'),
-(72,'七牛云存储',2,'com.dimple.project.tool.controller.QiNiuController.synchronize()','POST',1,'admin','/tool/qiNiu/synchronize','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 14:56:10'),
-(73,'七牛云存储',2,'com.dimple.project.tool.controller.QiNiuController.synchronize()','POST',1,'admin','/tool/qiNiu/synchronize','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 15:20:44'),
-(74,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 16:04:52'),
-(75,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'七牛云配置信息不完整,请先填写七牛云配置信息','2019-11-07 16:06:17'),
-(76,'七牛云配置',2,'com.dimple.project.tool.controller.QiNiuController.edit()','PUT',1,'admin','/tool/qiNiu/config','10.17.80.181','内网IP','{\"bucket\":\"dimpleblog\",\"secretKey\":\"qtiuY6dS7bKEMBT_nhBnJYC_Bytos07TQ_dDXjM4\",\"accessKey\":\"adminBRR72W1AwFtqbAKVkpNIQl0vNz2UIhNsWT6MjpMG\",\"zone\":\"华南\",\"host\":\" q0jwwt1l6.bkt.clouddn.com\",\"type\":\"公开\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 16:12:00'),
-(77,'七牛云存储',2,'com.dimple.project.tool.controller.QiNiuController.synchronize()','POST',1,'admin','/tool/qiNiu/synchronize','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 16:12:28'),
-(78,'七牛云存储',2,'com.dimple.project.tool.controller.QiNiuController.synchronize()','POST',1,'admin','/tool/qiNiu/synchronize','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 16:12:48'),
-(79,'七牛云存储',2,'com.dimple.project.tool.controller.QiNiuController.synchronize()','POST',1,'admin','/tool/qiNiu/synchronize','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 16:13:36'),
-(80,'七牛云存储',2,'com.dimple.project.tool.controller.QiNiuController.synchronize()','POST',1,'admin','/tool/qiNiu/synchronize','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 16:13:40'),
-(81,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'','2019-11-07 16:17:03'),
-(82,'七牛云存储',10,'com.dimple.project.tool.controller.QiNiuController.upload()','POST',1,'admin','/tool/qiNiu','10.17.80.181','内网IP','','null',1,'','2019-11-07 16:18:02'),
-(83,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/12','10.17.80.181','内网IP','{id=12}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 16:19:08'),
-(84,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":true,\"avatar\":\"hthz_11.jpg\",\"params\":{},\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 17:01:38'),
-(85,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 17:26:51'),
-(86,'本地存储',10,'com.dimple.project.tool.controller.LocalStorageController.upload()','POST',1,'admin','/tool/localStorage','10.17.80.181','内网IP','','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 17:27:02'),
-(87,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/14','10.17.80.181','内网IP','{id=14}','null',1,'nested exception is org.apache.ibatis.exceptions.TooManyResultsException: Expected one result (or null) to be returned by selectOne(), but found: 2','2019-11-07 17:27:05'),
-(88,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/13','10.17.80.181','内网IP','{id=13}','null',1,'nested exception is org.apache.ibatis.exceptions.TooManyResultsException: Expected one result (or null) to be returned by selectOne(), but found: 2','2019-11-07 17:27:12'),
-(89,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/13','10.17.80.181','内网IP','{id=13}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 17:28:53'),
-(90,'本地存储',3,'com.dimple.project.tool.controller.LocalStorageController.delete()','DELETE',1,'admin','/tool/localStorage/14','10.17.80.181','内网IP','{id=14}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-07 17:28:56');
-
-/*Table structure for table `sys_quartz_log` */
-
-DROP TABLE IF EXISTS tool_quartz_log;
-
-CREATE TABLE `sys_quartz_log` (
-                                  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                                  `job_name` varchar(255) DEFAULT NULL COMMENT '任务名称',
-                                  `bean_name` varchar(255) DEFAULT NULL COMMENT 'Bean的名称',
-                                  `method_name` varchar(255) DEFAULT NULL COMMENT '方法名称',
-                                  `params` varchar(255) DEFAULT NULL COMMENT '参数',
-                                  `cron_expression` varchar(255) DEFAULT NULL COMMENT 'corn表达式',
-                                  `exception` text COMMENT '异常信息',
-                                  `status` tinyint(4) DEFAULT NULL COMMENT 'true表示成功,false表示失败',
-                                  `cost` bigint(20) DEFAULT NULL COMMENT '耗时',
-                                  `create_time` datetime DEFAULT NULL,
-                                  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
-/*Data for the table `sys_quartz_log` */
 
 /*Table structure for table `sys_role` */
 
@@ -942,9 +769,29 @@ CREATE TABLE `tool_quartz_job` (
 /*Data for the table `tool_quartz_job` */
 
 insert  into `tool_quartz_job`(`id`,`job_name`,`bean_name`,`method_name`,`method_params`,`cron_expression`,`status`,`remark`,`create_time`,`create_by`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
-(1,'更新访客记录','visitsTask','run',NULL,'0 0 0 * * ?',0,'每日0点创建新的访客记录','2019-01-08 14:53:31',NULL,NULL,NULL,NULL,NULL),
-(2,'测试1','testTask','run1','test','0/5 * * * * ?',1,'带参测试，多参使用json','2019-08-22 14:08:29',NULL,NULL,NULL,NULL,NULL),
-(3,'测试','testTask','run','','0/5 * * * * ?',1,'不带参测试','2019-09-26 16:44:39',NULL,NULL,NULL,NULL,NULL);
+(1,'更新访客记录','visitsTask','run',NULL,'0 0 0 * * ?',0,'每日0点创建新的访客记录','2019-01-08 14:53:31',NULL,NULL,'2019-11-07 23:16:22',NULL,NULL),
+(2,'测试1','testTask','run1','test','0/5 * * * * ?',0,'带参测试，多参使用json','2019-08-22 14:08:29',NULL,NULL,'2019-11-07 23:15:39',NULL,NULL),
+(3,'测试','testTask','run','','0/5 * * * * ?',0,'不带参测试','2019-09-26 16:44:39',NULL,NULL,'2019-11-07 23:15:38',NULL,NULL);
+
+/*Table structure for table `tool_quartz_log` */
+
+DROP TABLE IF EXISTS `tool_quartz_log`;
+
+CREATE TABLE `tool_quartz_log` (
+                                   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                   `job_name` varchar(255) DEFAULT NULL COMMENT '任务名称',
+                                   `bean_name` varchar(255) DEFAULT NULL COMMENT 'Bean的名称',
+                                   `method_name` varchar(255) DEFAULT NULL COMMENT '方法名称',
+                                   `method_params` varchar(255) DEFAULT NULL COMMENT '参数',
+                                   `cron_expression` varchar(255) DEFAULT NULL COMMENT 'corn表达式',
+                                   `exception` text COMMENT '异常信息',
+                                   `status` tinyint(4) DEFAULT NULL COMMENT 'true表示成功,false表示失败',
+                                   `cost` bigint(20) DEFAULT NULL COMMENT '耗时',
+                                   `create_time` datetime DEFAULT NULL,
+                                   PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='Job日志';
+
+/*Data for the table `tool_quartz_log` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
