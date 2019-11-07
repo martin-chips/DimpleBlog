@@ -38,6 +38,12 @@
     </properties>
 
     <dependencies>
+        <!-- quartz -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+        </dependency>
+
         <!--工具包-->
         <dependency>
             <groupId>cn.hutool</groupId>
