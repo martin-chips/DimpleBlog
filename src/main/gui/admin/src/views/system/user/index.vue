@@ -37,11 +37,11 @@
           </el-form-item>
         </el-form>
 
-        <el-table v-loading="loading" :data="userList">
+        <el-table v-loading="loading" :data="userList" style="width: 100%;">
           <el-table-column label="用户编号" align="center" prop="id"/>
           <el-table-column label="用户名称" align="center" prop="userName"/>
           <el-table-column label="用户昵称" align="center" prop="nickName"/>
-          <el-table-column label="手机号码" align="center" prop="phone" width="120"/>
+          <el-table-column label="手机号码" align="center" prop="phone"/>
           <el-table-column label="状态" align="center">
             <template slot-scope="scope">
               <el-switch v-model="scope.row.status" active-value="0" inactive-value="1"
@@ -186,7 +186,7 @@
         // 是否显示弹出层
         open: false,
         // 默认密码
-        initPassword: undefined,
+        initPassword: "123456",
         // 日期范围
         dateRange: [],
         // 状态数据字典
@@ -246,9 +246,6 @@
       });
       this.getDicts("sys_user_sex").then(response => {
         this.sexOptions = response.data;
-      });
-      this.getConfigKey("sys.user.initPassword").then(response => {
-        this.initPassword = response.data;
       });
     },
     methods: {

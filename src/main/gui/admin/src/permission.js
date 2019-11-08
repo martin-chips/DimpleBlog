@@ -1,20 +1,23 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
+import settings from "./store/modules/settings";
 
-NProgress.configure({ showSpinner: false })
+NProgress.configure({showSpinner: false})
 
 const whiteList = ['/login', '/auth-redirect', '/bind', '/register']
 
 router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title + ' - ' + settings.webName
+  }
   NProgress.start()
   if (getToken()) {
     /* has token*/
     if (to.path === '/login') {
-      next({ path: '/' })
+      next({path: '/'})
       NProgress.done()
     } else {
       if (store.getters.roles.length === 0) {
@@ -22,29 +25,18 @@ router.beforeEach((to, from, next) => {
         store.dispatch('GetInfo').then(res => {
           // 拉取user_info
           const roles = res.roles
-          store.dispatch('GenerateRoutes', { roles }).then(accessRoutes => {
-          // 测试 默认静态页面
-          // store.dispatch('permission/generateRoutes', { roles }).then(accessRoutes => {
-            // 根据roles权限生成可访问的路由表
-            accessRoutes.push({ path: '*', redirect: '/404', hidden: true })
+          store.dispatch('GenerateRoutes', {roles}).then(accessRoutes => {
+            accessRoutes.push({path: '*', redirect: '/404', hidden: true})
             router.addRoutes(accessRoutes) // 动态添加可访问路由表
-            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+            next({...to, replace: true}) // hack方法 确保addRoutes已完成
           })
         }).catch(err => {
-            store.dispatch('FedLogOut').then(() => {
-              Message.error(err)
-              next({ path: '/' })
-            })
+          store.dispatch('FedLogOut').then(() => {
+            location.reload() // 为了重新实例化vue-router对象 避免bug
           })
+        })
       } else {
         next()
-        // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
-        // if (hasPermission(store.getters.roles, to.meta.roles)) {
-        //   next()
-        // } else {
-        //   next({ path: '/401', replace: true, query: { noGoBack: true }})
-        // }
-        // 可删 ↑
       }
     }
   } else {
