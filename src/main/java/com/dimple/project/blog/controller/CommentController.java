@@ -10,6 +10,7 @@ import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,7 +52,7 @@ public class CommentController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('blog:comment:add')")
     @Log(title = "评论管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Comment comment) {
+    public AjaxResult add(@RequestBody @Validated Comment comment) {
         comment.setCreateBy(SecurityUtils.getUsername());
         return toAjax(commentService.insertComment(comment));
     }
@@ -59,7 +60,7 @@ public class CommentController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('blog:comment:edit')")
     @Log(title = "评论管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Comment comment) {
+    public AjaxResult edit(@RequestBody @Validated Comment comment) {
         comment.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(commentService.updateComment(comment));
     }

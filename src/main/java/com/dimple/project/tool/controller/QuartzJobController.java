@@ -2,10 +2,12 @@ package com.dimple.project.tool.controller;
 
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.framework.web.domain.BaseEntity;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.tool.domain.QuartzJob;
 import com.dimple.project.tool.service.QuartzJobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +40,7 @@ public class QuartzJobController extends BaseController {
     }
 
     @PostMapping()
-    public AjaxResult add(@RequestBody QuartzJob quartzJob) {
+    public AjaxResult add(@Validated @RequestBody QuartzJob quartzJob) {
         return toAjax(quartzJobService.insertQuartzJob(quartzJob));
     }
 
@@ -48,7 +50,7 @@ public class QuartzJobController extends BaseController {
     }
 
     @PutMapping()
-    public AjaxResult edit(@RequestBody QuartzJob quartzJob) {
+    public AjaxResult edit(@RequestBody @Validated(BaseEntity.Update.class) QuartzJob quartzJob) {
         return toAjax(quartzJobService.updateQuartzJob(quartzJob));
     }
 

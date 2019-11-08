@@ -4,6 +4,11 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * @className: Comment
@@ -21,14 +26,17 @@ public class Comment extends BaseEntity {
     /**
      * Email地址
      */
+    @Email(message = "Email地址不合法")
     private String email;
     /**
      * 昵称
      */
+    @Length(min = 1, max = 100, message = "昵称长度为{min}~{max}个字符")
     private String nickName;
     /**
      * IP地址
      */
+    @Pattern(regexp = "^((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}$", message = "IP地址不合法")
     private String ip;
     /**
      * 地理位置
@@ -49,10 +57,12 @@ public class Comment extends BaseEntity {
     /**
      * QQ号码
      */
+    @Length(max = 20, message = "QQ号码长度不能超过{max}")
     private String qqNum;
     /**
      * 头像地址
      */
+    @Length(max = 256, message = "头像地址长度不能超过{max}")
     private String avatar;
     /**
      * 页面ID
@@ -77,5 +87,6 @@ public class Comment extends BaseEntity {
     /**
      * 评论内容
      */
+    @NotNull(message = "内容不能为空")
     private String content;
 }

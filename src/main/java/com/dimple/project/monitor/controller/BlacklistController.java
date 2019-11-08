@@ -5,11 +5,13 @@ import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.framework.web.domain.BaseEntity;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.monitor.domain.Blacklist;
 import com.dimple.project.monitor.service.BlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,7 +62,7 @@ public class BlacklistController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('monitor:blacklist:add')")
     @Log(title = "黑名单管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Blacklist blacklist) {
+    public AjaxResult add(@RequestBody @Validated Blacklist blacklist) {
         blacklist.setCreateBy(SecurityUtils.getUsername());
         return toAjax(blacklistService.insertBlacklist(blacklist));
     }
@@ -71,7 +73,7 @@ public class BlacklistController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('monitor:blacklist:edit')")
     @Log(title = "黑名单管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Blacklist blacklist) {
+    public AjaxResult edit(@RequestBody @Validated(BaseEntity.Update.class) Blacklist blacklist) {
         blacklist.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(blacklistService.updateBlacklist(blacklist));
     }

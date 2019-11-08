@@ -55,6 +55,9 @@
         <if test="status != null and status != ''">
             AND b.status = #{status}
         </if>
+        <if test="support != null ">
+            AND b.support = #{support}
+        </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
             and date_format( b.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
         </if>
@@ -64,7 +67,7 @@
     </select>
 
     <select id="selectBlogById" resultMap="BlogResult">
-        select id, category_id, title, summary, header_img, content, status, comment, create_by, update_by, create_time, update_time, delete_by, delete_time from bg_blog
+        select id, category_id, title, summary, header_img, content,support, status, weight,tag,comment, create_by, create_time from bg_blog
         where id = #{id} and delete_time is null
     </select>
 

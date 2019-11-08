@@ -165,10 +165,12 @@
         // 表单校验
         rules: {
           title: [
-            {required: true, message: "分类名称不能为空", trigger: "blur"}
+            {required: true, message: "分类名称不能为空", trigger: "blur"},
+            {min: 3, max:50, message: '长度在 5 到 120 个字符', trigger: 'change'}
           ],
           description: [
-            {required: true, message: "分类描述不能为空", trigger: "blur"}
+            {required: true, message: "分类描述不能为空", trigger: "blur"},
+            {min: 10, max: 150, message: '长度在 10 到 256 个字符', trigger: 'change'}
           ]
         }
       };

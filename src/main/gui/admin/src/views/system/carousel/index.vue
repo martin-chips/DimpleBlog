@@ -149,7 +149,8 @@
             {required: true, message: "链接地址不能为空", trigger: "blur"}
           ],
           description: [
-            {required: true, message: "描述不能为空", trigger: "blur"}
+            {required: true, message: "描述不能为空", trigger: "blur"},
+            {min: 5, max: 150, message: '长度在 5 到 150 个字符', trigger: 'change'}
           ],
           imgUrl: [
             {required: true, message: "图片地址不能为空", trigger: "blur"},

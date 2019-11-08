@@ -2,7 +2,6 @@ package com.dimple.project.tool.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
-import net.sf.jsqlparser.statement.update.Update;
 
 import javax.validation.constraints.NotNull;
 
@@ -16,19 +15,22 @@ import javax.validation.constraints.NotNull;
 public class QuartzJob extends BaseEntity {
     public static final String JOB_KEY = "JOB_KEY";
 
-    @NotNull(groups = {Update.class})
+    @NotNull(groups = Update.class)
     private Long id;
     /**
      * 任务名
      */
+    @NotNull(message = "任务名不能为空")
     private String jobName;
     /**
      * Bean的名字
      */
+    @NotNull(message = "Bean名不能为空")
     private String beanName;
     /**
      * 方法名
      */
+    @NotNull(message = "方法名不能为空")
     private String methodName;
     /**
      * 参数
@@ -37,6 +39,7 @@ public class QuartzJob extends BaseEntity {
     /**
      * corn表达式
      */
+    @NotNull(message = "corn表达式不能为空")
     private String cronExpression;
     /**
      * 状态:false表示暂停,true表示运行
@@ -46,5 +49,4 @@ public class QuartzJob extends BaseEntity {
      * 备注
      */
     private String remark;
-
 }

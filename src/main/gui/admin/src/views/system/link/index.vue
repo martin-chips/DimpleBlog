@@ -149,13 +149,20 @@
         // 表单校验
         rules: {
           title: [
-            {required: true, message: "网站名称不能为空", trigger: "blur"}
+            {required: true, message: "网站名称不能为空", trigger: "blur"},
+            {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'change'}
           ],
           url: [
-            {required: true, message: "网站地址不能为空", trigger: "blur"}
+            {required: true, message: "网站地址不能为空", trigger: "blur"},
+            {type: 'url', message: '请输入正确的URL地址', trigger: ['blur', 'change']}
           ],
           headerImg: [
-            {required: true, message: "网站图标不能为空", trigger: "blur"}
+            {required: true, message: "网站图标不能为空", trigger: "blur"},
+            {type: 'url', message: '请输入正确的图片地址', trigger: ['blur', 'change']}
+          ],
+          description: [
+            {required: true, message: "描述不能为空", trigger: "blur"},
+            {min: 3, max: 500, message: '长度在 3 到 500 个字符', trigger: 'change'}
           ],
           weight: [
             {required: true, message: "权重不能为空", trigger: "blur"}

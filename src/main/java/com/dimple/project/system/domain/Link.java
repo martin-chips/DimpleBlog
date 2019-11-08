@@ -4,8 +4,11 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
 
-import java.util.Date;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 /**
  * @className: Link
@@ -22,26 +25,31 @@ public class Link extends BaseEntity {
     /**
      * id
      */
+    @NotNull(groups = {Update.class})
     private Long id;
 
     /**
      * 友链名称
      */
+    @Length(min = 3, max = 50, message = "名称长度为{min}~{max}")
     private String title;
 
     /**
      * 友链地址
      */
+    @URL(message = "请输入正确的Url地址")
     private String url;
 
     /**
      * 友链描述
      */
+    @Length(min = 3, max = 500, message = "友链描述长度为{min}~{max}")
     private String description;
 
     /**
      * 网站图片
      */
+    @URL(message = "请输入正确的网站图片地址")
     private String headerImg;
 
     /**
@@ -57,21 +65,12 @@ public class Link extends BaseEntity {
     /**
      * 站长邮箱地址
      */
+    @Email(message = "请输入正确的站长邮箱地址")
     private String email;
 
     /**
      * 权重
      */
     private Long weight;
-
-    /**
-     * $column.columnComment
-     */
-    private String deleteBy;
-
-    /**
-     * $column.columnComment
-     */
-    private Date deleteTime;
 
 }

@@ -4,11 +4,13 @@ import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.framework.web.domain.BaseEntity;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.Carousel;
 import com.dimple.project.system.service.CarouselService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,14 +52,14 @@ public class CarouselController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:carousel:add')")
     @Log(title = "轮播图管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Carousel carousel) {
+    public AjaxResult add(@RequestBody @Validated Carousel carousel) {
         return toAjax(carouselService.insertCarousel(carousel));
     }
 
     @PreAuthorize("@permissionService.hasPermission('system:carousel:edit')")
     @Log(title = "轮播图管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Carousel carousel) {
+    public AjaxResult edit(@RequestBody @Validated(BaseEntity.Update.class) Carousel carousel) {
         return toAjax(carouselService.updateCarousel(carousel));
     }
 

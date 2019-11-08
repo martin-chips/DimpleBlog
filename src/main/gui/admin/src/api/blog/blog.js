@@ -68,3 +68,22 @@ export function listBlogTagList(query) {
     method: 'get',
   })
 }
+
+
+// 新增博客草稿
+export function addBlogDraft(data) {
+  return request({
+    url: '/blog/blog/draft',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改博客草稿
+export function updateBlogDraft(data) {
+  return request({
+    url: '/blog/blog/draft',
+    method: 'put',
+    data: data
+  })
+}

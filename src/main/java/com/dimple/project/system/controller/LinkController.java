@@ -5,11 +5,13 @@ import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.framework.web.domain.BaseEntity;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.Link;
 import com.dimple.project.system.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,7 +52,7 @@ public class LinkController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('blog:link:add')")
     @Log(title = "友链管理", businessType = BusinessType.INSERT)
     @PostMapping()
-    public AjaxResult add(@RequestBody Link link) {
+    public AjaxResult add(@RequestBody @Validated Link link) {
         link.setCreateBy(SecurityUtils.getUsername());
         return toAjax(linkService.insertLink(link));
     }
@@ -58,7 +60,7 @@ public class LinkController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('blog:link:edit')")
     @Log(title = "友链管理", businessType = BusinessType.UPDATE)
     @PutMapping()
-    public AjaxResult edit(@RequestBody Link link) {
+    public AjaxResult edit(@RequestBody @Validated(BaseEntity.Update.class) Link link) {
         link.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(linkService.updateLink(link));
     }

@@ -1,19 +1,21 @@
 package com.dimple.framework.web.exception;
 
+import com.dimple.common.constant.HttpStatus;
+import com.dimple.common.exception.BaseException;
+import com.dimple.common.exception.CustomException;
+import com.dimple.common.utils.StringUtils;
+import com.dimple.framework.web.domain.AjaxResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import com.dimple.common.constant.HttpStatus;
-import com.dimple.common.exception.BaseException;
-import com.dimple.common.exception.CustomException;
-import com.dimple.common.exception.DemoModeException;
-import com.dimple.common.utils.StringUtils;
-import com.dimple.framework.web.domain.AjaxResult;
+
+import java.util.Objects;
 
 /**
  * @className: GlobalExceptionHandler
@@ -75,10 +77,18 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 演示模式异常
+     * 处理所有接口数据验证异常
      */
-    @ExceptionHandler(DemoModeException.class)
-    public AjaxResult demoModeException(DemoModeException e) {
-        return AjaxResult.error("演示模式，不允许操作");
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public AjaxResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        // 打印堆栈信息
+        log.error(e.getMessage(), e);
+        String[] str = Objects.requireNonNull(e.getBindingResult().getAllErrors().get(0).getCodes())[1].split("\\.");
+        String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        if ("不能为空".equals(message)) {
+            message = str[1] + ":" + message;
+        }
+        return AjaxResult.error(message);
     }
+
 }

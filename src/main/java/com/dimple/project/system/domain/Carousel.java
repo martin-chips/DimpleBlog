@@ -4,6 +4,10 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @className: Carousel
@@ -17,10 +21,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Carousel extends BaseEntity {
 
+    @NotNull(groups = {Update.class})
     private Long id;
     /**
      * 显示文本
      */
+    @Length(min = 5, max = 150, message = "描述长度为{min}~{max}")
     private String description;
     /**
      * 点击次数
@@ -29,14 +35,17 @@ public class Carousel extends BaseEntity {
     /**
      * 图片URL
      */
+    @URL(message = "URL不合法")
     private String imgUrl;
     /**
      * 是否显示
      */
+    @NotNull(message = "显示配置不能为空")
     private Boolean display;
     /**
      * 是否当前窗口打开
      */
+    @NotNull(message = "Target配置不能为空")
     private Boolean target;
 
 }

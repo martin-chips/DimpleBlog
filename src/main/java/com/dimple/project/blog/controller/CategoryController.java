@@ -10,6 +10,7 @@ import com.dimple.project.blog.domain.Category;
 import com.dimple.project.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +46,7 @@ public class CategoryController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('blog:category:add')")
     @Log(title = "分类管理", businessType = BusinessType.INSERT)
     @PostMapping()
-    public AjaxResult add(@RequestBody Category category) {
+    public AjaxResult add(@RequestBody @Validated Category category) {
         category.setCreateBy(SecurityUtils.getUsername());
         return toAjax(categoryService.insertCategory(category));
     }
@@ -59,7 +60,7 @@ public class CategoryController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('blog:category:edit')")
     @Log(title = "分类管理", businessType = BusinessType.UPDATE)
     @PutMapping()
-    public AjaxResult edit(@RequestBody Category category) {
+    public AjaxResult edit(@RequestBody @Validated Category category) {
         return toAjax(categoryService.updateCategory(category));
     }
 

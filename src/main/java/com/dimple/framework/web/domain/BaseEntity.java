@@ -77,4 +77,9 @@ public class BaseEntity implements Serializable {
         }
         return JSON.parseObject(params, Map.class);
     }
+
+    //更新实体的分组
+    public interface Update {
+    }
 }
+

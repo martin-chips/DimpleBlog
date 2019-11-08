@@ -4,7 +4,9 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -19,24 +21,24 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Category extends BaseEntity {
 
-    /**
-     * $column.columnComment
-     */
     private Long id;
 
     /**
      * 分类名称
      */
+    @Length(min = 3, max = 50, message = "分类名称长度为{min}~{max}个字符")
     private String title;
 
     /**
      * 描述
      */
+    @Length(min = 10, max = 150, message = "分类名称长度为{min}~{max}个字符")
     private String description;
 
     /**
      * 是否推荐
      */
+    @NotNull(message = "推荐设置不能为空")
     private Boolean support;
 
     private List<Blog> blogList;

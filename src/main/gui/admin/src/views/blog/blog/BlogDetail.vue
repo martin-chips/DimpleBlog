@@ -88,7 +88,7 @@
   import Sticky from '@/components/Sticky' // 粘性header组件
   import Tinymce from '@/components/Tinymce' //富文本
   import DropZone from '@/components/DropZone' // 上传文件组件
-  import {listBlogTagList, getBlog, addBlog, updateBlog} from "@/api/blog/blog";
+  import {listBlogTagList, getBlog, addBlog, updateBlog, addBlogDraft, updateBlogDraft} from "@/api/blog/blog";
   import {listCategory} from "@/api/blog/category";
 
   export default {
@@ -105,7 +105,8 @@
         form: {
           weight: 1,
           tag: [],
-          comment: true
+          comment: true,
+          support: false
         },
         loading: false,
         tempRoute: {},
@@ -178,7 +179,14 @@
       },
       fetchData(id) {
         getBlog(id).then(response => {
-          response.data.tag = response.data.tag.split(",");
+          if (response.code != 200) {
+            this.msgError(response.msg);
+            return;
+          }
+          console.log(response.data.tag);
+          if (typeof (response.data.tag) != 'undefined') {
+            response.data.tag = response.data.tag.split(",");
+          }
           this.form = response.data;
           // this.setPageTitle();
         })
@@ -193,7 +201,6 @@
             this.loading = true
             this.form.status = true
             this.form.tag = this.form.tag.join(",");
-            console.log(this.form);
             if (this.form.id == undefined) {
               addBlog(this.form).then(response => {
                 if (response.code === 200) {
@@ -208,7 +215,7 @@
               updateBlog(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
-                  this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
+                  this.$store.dispatch('tagsView/delView', view).then(({visitedViews}) => {
                     if (this.isActive(view)) {
                       this.toLastView(visitedViews, view)
                     }
@@ -220,7 +227,6 @@
                 this.form.tag = this.form.tag.split(",");
               });
             }
-
           }
         })
       },
@@ -234,17 +240,17 @@
         }
         this.form.status = false;
         if (this.form.id == undefined) {
-          addBlog(this.form).then(response => {
+          addBlogDraft(this.form).then(response => {
             if (response.code === 200) {
-              this.msgSuccess("发布成功");
+              this.msgSuccess("保存草稿成功");
             } else {
               this.msgError(response.msg);
             }
           });
         } else {
-          updateBlog(this.form).then(response => {
+          updateBlogDraft(this.form).then(response => {
             if (response.code === 200) {
-              this.msgSuccess("发布成功");
+              this.msgSuccess("保存草稿成功");
             } else {
               this.msgError(response.msg);
             }
