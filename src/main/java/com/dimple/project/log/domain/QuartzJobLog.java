@@ -1,5 +1,6 @@
 package com.dimple.project.log.domain;
 
+import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 
 /**
@@ -9,7 +10,7 @@ import lombok.Data;
  * @date: 11/07/19
  */
 @Data
-public class QuartzJobLog {
+public class QuartzJobLog extends BaseEntity {
 
     private Long id;
     /**
@@ -44,8 +45,4 @@ public class QuartzJobLog {
      * 花费的毫秒数
      */
     private Long cost;
-    /**
-     * 创建时间
-     */
-    private String createTime;
 }

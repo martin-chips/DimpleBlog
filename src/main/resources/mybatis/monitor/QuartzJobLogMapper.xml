@@ -46,7 +46,6 @@
         select id, job_name, bean_name, method_name, method_params, cron_expression, exception, status, cost,
         create_time
         from tool_quartz_log
-        where delete_time is null
         <if test="jobName != null and jobName != ''">
             and job_name like concat('%',#{jobName},'%')
         </if>
