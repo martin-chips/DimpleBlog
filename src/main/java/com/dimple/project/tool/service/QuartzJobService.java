@@ -10,7 +10,7 @@ import java.util.List;
  * @author: Dimple
  * @date: 11/07/19
  */
-public interface QuartzJonService {
+public interface QuartzJobService {
     /**
      * 新增定时任务
      *
@@ -65,4 +65,12 @@ public interface QuartzJonService {
      * @return job
      */
     QuartzJob selectQuartzJobById(Long id);
+
+    /**
+     * 获取运行状态为true的job
+     *
+     * @return job list
+     */
+    List<QuartzJob> selectRunningQuartzJobList();
+
 }

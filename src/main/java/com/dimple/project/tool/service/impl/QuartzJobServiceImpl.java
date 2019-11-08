@@ -4,7 +4,7 @@ import com.dimple.common.exception.CustomException;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.tool.domain.QuartzJob;
 import com.dimple.project.tool.mapper.QuartzJobMapper;
-import com.dimple.project.tool.service.QuartzJonService;
+import com.dimple.project.tool.service.QuartzJobService;
 import com.dimple.project.tool.utils.QuartzManage;
 import org.quartz.CronExpression;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.Objects;
  * @date: 11/07/19
  */
 @Service
-public class QuartzJonServiceImpl implements QuartzJonService {
+public class QuartzJobServiceImpl implements QuartzJobService {
 
     @Autowired
     QuartzJobMapper quartzJobMapper;
@@ -90,5 +90,10 @@ public class QuartzJonServiceImpl implements QuartzJonService {
     @Override
     public QuartzJob selectQuartzJobById(Long id) {
         return quartzJobMapper.selectQuartzJobById(id);
+    }
+
+    @Override
+    public List<QuartzJob> selectRunningQuartzJobList() {
+        return quartzJobMapper.selectRunningQuartzJobList();
     }
 }

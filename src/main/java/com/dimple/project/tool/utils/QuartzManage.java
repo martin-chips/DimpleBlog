@@ -34,9 +34,14 @@ public class QuartzManage {
     @Autowired
     Scheduler scheduler;
 
-
+    /**
+     * 添加任务
+     *
+     * @param quartzJob
+     */
     public void addJob(QuartzJob quartzJob) {
         try {
+            log.info("开始创建任务{}", quartzJob.getJobName());
             // 构建job信息
             JobDetail jobDetail = JobBuilder.newJob(ExecutionJob.class).
                     withIdentity(JOB_NAME + quartzJob.getId()).build();

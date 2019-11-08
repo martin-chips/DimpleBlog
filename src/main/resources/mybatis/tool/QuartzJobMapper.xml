@@ -106,6 +106,13 @@
         where delete_time is null and id=#{id}
     </select>
 
+    <select id="selectRunningQuartzJobList" resultMap="QuartzJobMap">
+        select id, job_name, bean_name, method_name, method_params, cron_expression, status, remark, create_time,
+        create_by
+        from tool_quartz_job
+        where delete_time is null and status=1
+    </select>
+
     <!--通过主键删除-->
     <delete id="deleteQuartzJobById">
       update tool_quartz_job set delete_time = sysdate(),delete_by=#{username} where id=#{id}

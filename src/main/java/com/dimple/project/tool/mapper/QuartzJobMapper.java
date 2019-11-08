@@ -51,4 +51,13 @@ public interface QuartzJobMapper {
      * @return list
      */
     List<QuartzJob> selectQuartzJobList(QuartzJob quartzJob);
+
+    /**
+     * 获取运行状态的job
+     *
+     * @return list
+     */
+    List<QuartzJob> selectRunningQuartzJobList();
+
+
 }

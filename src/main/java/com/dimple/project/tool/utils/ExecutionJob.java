@@ -4,7 +4,7 @@ import com.dimple.common.utils.spring.SpringUtils;
 import com.dimple.project.monitor.service.QuartzJobLogService;
 import com.dimple.project.tool.domain.QuartzJob;
 import com.dimple.project.tool.domain.QuartzJobLog;
-import com.dimple.project.tool.service.QuartzJonService;
+import com.dimple.project.tool.service.QuartzJobService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -34,7 +34,7 @@ public class ExecutionJob extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         QuartzJob quartzJob = (QuartzJob) context.getMergedJobDataMap().get(QuartzJob.JOB_KEY);
         // 获取spring bean
-        QuartzJonService quartzJobService = SpringUtils.getBean(QuartzJonService.class);
+        QuartzJobService quartzJobService = SpringUtils.getBean(QuartzJobService.class);
         QuartzJobLogService quartzJobLogService = SpringUtils.getBean(QuartzJobLogService.class);
 
         QuartzJobLog quartzJobLog = new QuartzJobLog();

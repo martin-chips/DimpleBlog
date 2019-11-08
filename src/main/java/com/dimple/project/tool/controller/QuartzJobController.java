@@ -4,7 +4,7 @@ import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.tool.domain.QuartzJob;
-import com.dimple.project.tool.service.QuartzJonService;
+import com.dimple.project.tool.service.QuartzJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,44 +28,44 @@ import java.util.List;
 public class QuartzJobController extends BaseController {
 
     @Autowired
-    QuartzJonService quartzJonService;
+    QuartzJobService quartzJobService;
 
     @GetMapping("/list")
     public TableDataInfo list(QuartzJob quartzJob) {
         startPage();
-        List<QuartzJob> quartzJobList = quartzJonService.selectQuartzJobList(quartzJob);
+        List<QuartzJob> quartzJobList = quartzJobService.selectQuartzJobList(quartzJob);
         return getDataTable(quartzJobList);
     }
 
     @PostMapping()
     public AjaxResult add(@RequestBody QuartzJob quartzJob) {
-        return toAjax(quartzJonService.insertQuartzJob(quartzJob));
+        return toAjax(quartzJobService.insertQuartzJob(quartzJob));
     }
 
     @GetMapping("/{id}")
     public AjaxResult add(@PathVariable Long id) {
-        return AjaxResult.success(quartzJonService.selectQuartzJobById(id));
+        return AjaxResult.success(quartzJobService.selectQuartzJobById(id));
     }
 
     @PutMapping()
     public AjaxResult edit(@RequestBody QuartzJob quartzJob) {
-        return toAjax(quartzJonService.updateQuartzJob(quartzJob));
+        return toAjax(quartzJobService.updateQuartzJob(quartzJob));
     }
 
     @DeleteMapping("{id}")
     public AjaxResult delete(@PathVariable Long id) {
-        return toAjax(quartzJonService.deleteQuartzJob(id));
+        return toAjax(quartzJobService.deleteQuartzJob(id));
     }
 
     @PutMapping("/exe/{id}")
     public AjaxResult execute(@PathVariable Long id) {
-        quartzJonService.executeQuartzJobById(id);
+        quartzJobService.executeQuartzJobById(id);
         return AjaxResult.success();
     }
 
     @PutMapping("/status/{id}")
     public AjaxResult updateQuartzJobStatus(@PathVariable Long id) {
-        return toAjax(quartzJonService.updateQuartzJobStatus(id));
+        return toAjax(quartzJobService.updateQuartzJobStatus(id));
     }
 
 }

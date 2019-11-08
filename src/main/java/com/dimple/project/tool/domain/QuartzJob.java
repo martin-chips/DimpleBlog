@@ -2,6 +2,9 @@ package com.dimple.project.tool.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
+import net.sf.jsqlparser.statement.update.Update;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @className: QuartzJob
@@ -13,6 +16,7 @@ import lombok.Data;
 public class QuartzJob extends BaseEntity {
     public static final String JOB_KEY = "JOB_KEY";
 
+    @NotNull(groups = {Update.class})
     private Long id;
     /**
      * 任务名
