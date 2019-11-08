@@ -1,4 +1,4 @@
-package com.dimple.project.tool.domain;
+package com.dimple.project.log.domain;
 
 import lombok.Data;
 

@@ -1,9 +1,9 @@
 package com.dimple.project.tool.utils;
 
 import com.dimple.common.utils.spring.SpringUtils;
-import com.dimple.project.monitor.service.QuartzJobLogService;
+import com.dimple.project.log.service.QuartzJobLogService;
 import com.dimple.project.tool.domain.QuartzJob;
-import com.dimple.project.tool.domain.QuartzJobLog;
+import com.dimple.project.log.domain.QuartzJobLog;
 import com.dimple.project.tool.service.QuartzJobService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;

@@ -1,6 +1,6 @@
-package com.dimple.project.monitor.service;
+package com.dimple.project.log.service;
 
-import com.dimple.project.monitor.domain.OperateLog;
+import com.dimple.project.log.domain.OperateLog;
 
 import java.util.List;
 

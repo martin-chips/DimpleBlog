@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dimple.project.monitor.mapper.LoginLogMapper">
+<mapper namespace="com.dimple.project.log.mapper.LoginLogMapper">
 
-    <resultMap type="com.dimple.project.monitor.domain.LoginLog" id="SysLoginLogResult">
+    <resultMap type="com.dimple.project.log.domain.LoginLog" id="SysLoginLogResult">
         <id property="id" column="id"/>
         <result property="userName" column="user_name"/>
         <result property="status" column="status"/>
@@ -16,12 +16,12 @@
         <result property="loginTime" column="login_time"/>
     </resultMap>
 
-    <insert id="insertLoginLog" parameterType="com.dimple.project.monitor.domain.LoginLog">
+    <insert id="insertLoginLog" parameterType="com.dimple.project.log.domain.LoginLog">
 		insert into sys_login_log (user_name, status, ip, location, browser, os, msg, login_time)
 		values (#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{msg}, sysdate())
 	</insert>
 
-    <select id="selectLoginLogList" parameterType="com.dimple.project.monitor.domain.LoginLog"
+    <select id="selectLoginLogList" parameterType="com.dimple.project.log.domain.LoginLog"
             resultMap="SysLoginLogResult">
         select id, user_name, ip, location, browser, os, status, msg, login_time from sys_login_log
         <where>

@@ -1,6 +1,6 @@
-package com.dimple.project.monitor.mapper;
+package com.dimple.project.log.mapper;
 
-import com.dimple.project.monitor.domain.LoginLog;
+import com.dimple.project.log.domain.LoginLog;
 
 import java.util.List;
 

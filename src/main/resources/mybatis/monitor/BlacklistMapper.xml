@@ -15,7 +15,7 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <insert id="insertBlacklist" parameterType="com.dimple.project.monitor.domain.LoginLog">
+    <insert id="insertBlacklist" parameterType="com.dimple.project.log.domain.LoginLog">
 		insert into sys_blacklist (ip, description, intercept_count, last_access_url, last_access_time, create_by, create_time)
 		values (#{ip}, #{description}, #{interceptCount}, #{lastAccessUrl}, #{lastAccessTime}, #{createBy}, sysdate())
 	</insert>

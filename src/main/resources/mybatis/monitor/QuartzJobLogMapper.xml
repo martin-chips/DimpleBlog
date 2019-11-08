@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dimple.project.monitor.mapper.QuartzJobLogMapper">
+<mapper namespace="com.dimple.project.log.mapper.QuartzJobLogMapper">
 
-    <resultMap type="com.dimple.project.tool.domain.QuartzJobLog" id="QuartzJobLogMap">
+    <resultMap type="com.dimple.project.log.domain.QuartzJobLog" id="QuartzJobLogMap">
         <result property="id" column="id"/>
         <result property="jobName" column="job_name"/>
         <result property="beanName" column="bean_name"/>

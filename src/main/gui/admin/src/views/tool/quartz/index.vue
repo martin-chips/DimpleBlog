@@ -31,13 +31,13 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="quartzJobList">
-      <el-table-column :show-overflow-tooltip="true" prop="jobName" width="100px" label="任务名称"/>
+    <el-table v-loading="loading" :data="quartzJobList" style="width: 100%;">
+      <el-table-column :show-overflow-tooltip="true" prop="jobName" label="任务名称"/>
       <el-table-column :show-overflow-tooltip="true" prop="beanName" label="Bean名称"/>
-      <el-table-column :show-overflow-tooltip="true" prop="methodName" width="90px" label="执行方法"/>
-      <el-table-column :show-overflow-tooltip="true" prop="params" width="80px" label="参数"/>
-      <el-table-column :show-overflow-tooltip="true" prop="cronExpression" width="100px" label="cron表达式"/>
-      <el-table-column :show-overflow-tooltip="true" prop="status" width="90px" label="状态">
+      <el-table-column :show-overflow-tooltip="true" prop="methodName" label="执行方法"/>
+      <el-table-column :show-overflow-tooltip="true" prop="methodParams" label="参数"/>
+      <el-table-column :show-overflow-tooltip="true" prop="cronExpression" label="cron表达式"/>
+      <el-table-column :show-overflow-tooltip="true" prop="status" label="状态">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status ? 'success' : 'warning'">{{ scope.row.status ? '运行中' :'已暂停' }}</el-tag>
         </template>
@@ -48,16 +48,15 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="180px"
-                       align="center" fixed="right">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="300px">
         <template slot-scope="scope">
-          <el-button size="mini" style="margin-right: 3px;" type="text"
-                     @click="handleUpdate(scope.row)">编辑
+          <el-button size="mini" type="text" icon="el-icon-edit"
+                     @click="handleUpdate(scope.row)">修改
           </el-button>
-          <el-button style="margin-left: -2px" type="text" size="mini"
+          <el-button type="text" size="mini" icon="el-icon-finished"
                      @click="execute(scope.row.id)">执行
           </el-button>
-          <el-button style="margin-left: 3px" type="text" size="mini"
+          <el-button type="text" size="mini" icon="el-icon-open"
                      @click="updateStatus(scope.row.id)">
             {{ scope.row.status ? '暂停' : '运行' }}
           </el-button>
@@ -71,7 +70,7 @@
               <el-button :loading="loading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
               </el-button>
             </div>
-            <el-button slot="reference" type="text" size="mini">删除</el-button>
+            <el-button slot="reference" type="text" size="mini" icon="el-icon-delete">删除</el-button>
           </el-popover>
         </template>
       </el-table-column>
@@ -246,13 +245,13 @@
       reset() {
         this.form = {
           id: undefined,
-          roleName: undefined,
-          roleKey: undefined,
-          roleSort: 0,
-          status: "0",
-          menuIds: [],
-          deptIds: [],
-          remark: undefined
+          jobName: undefined,
+          beanName: undefined,
+          methodName: undefined,
+          params: undefined,
+          cronExpression: undefined,
+          remark: undefined,
+          status: false,
         };
         this.resetForm("form");
       },

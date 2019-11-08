@@ -26,11 +26,11 @@ router.beforeEach((to, from, next) => {
           // 测试 默认静态页面
           // store.dispatch('permission/generateRoutes', { roles }).then(accessRoutes => {
             // 根据roles权限生成可访问的路由表
+            accessRoutes.push({ path: '*', redirect: '/404', hidden: true })
             router.addRoutes(accessRoutes) // 动态添加可访问路由表
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
           })
-        })
-          .catch(err => {
+        }).catch(err => {
             store.dispatch('FedLogOut').then(() => {
               Message.error(err)
               next({ path: '/' })

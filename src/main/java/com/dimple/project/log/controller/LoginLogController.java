@@ -1,10 +1,10 @@
-package com.dimple.project.monitor.controller;
+package com.dimple.project.log.controller;
 
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.monitor.domain.LoginLog;
-import com.dimple.project.monitor.service.LoginLogService;
+import com.dimple.project.log.domain.LoginLog;
+import com.dimple.project.log.service.LoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ import java.util.List;
  * @date: 10/22/19
  */
 @RestController
-@RequestMapping("/monitor/loginLog")
+@RequestMapping("/log/loginLog")
 public class LoginLogController extends BaseController {
     @Autowired
     private LoginLogService loginLogService;

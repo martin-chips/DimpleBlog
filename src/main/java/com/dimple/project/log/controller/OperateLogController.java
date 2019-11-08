@@ -1,9 +1,9 @@
-package com.dimple.project.monitor.controller;
+package com.dimple.project.log.controller;
 
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.monitor.domain.OperateLog;
-import com.dimple.project.monitor.service.OperateLogService;
+import com.dimple.project.log.domain.OperateLog;
+import com.dimple.project.log.service.OperateLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import java.util.List;
  * @date: 10/22/19
  */
 @RestController
-@RequestMapping("/monitor/operateLog")
+@RequestMapping("/log/operateLog")
 public class OperateLogController extends BaseController {
     @Autowired
     private OperateLogService operateLogService;

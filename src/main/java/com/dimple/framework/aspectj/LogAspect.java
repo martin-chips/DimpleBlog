@@ -12,7 +12,7 @@ import com.dimple.framework.manager.AsyncManager;
 import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.framework.security.LoginUser;
 import com.dimple.framework.security.service.TokenService;
-import com.dimple.project.monitor.domain.OperateLog;
+import com.dimple.project.log.domain.OperateLog;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;

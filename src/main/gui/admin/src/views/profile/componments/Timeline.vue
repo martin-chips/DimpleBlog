@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import {listCurrentUserLoginLog} from "@/api/monitor/loginLog";
+  import {listCurrentUserLoginLog} from "@/api/log/loginLog";
 
   export default {
     props: {

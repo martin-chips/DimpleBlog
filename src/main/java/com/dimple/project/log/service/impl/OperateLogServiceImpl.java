@@ -1,9 +1,9 @@
-package com.dimple.project.monitor.service.impl;
+package com.dimple.project.log.service.impl;
 
 import com.dimple.common.utils.ConvertUtils;
-import com.dimple.project.monitor.domain.OperateLog;
-import com.dimple.project.monitor.mapper.OperateLogMapper;
-import com.dimple.project.monitor.service.OperateLogService;
+import com.dimple.project.log.domain.OperateLog;
+import com.dimple.project.log.mapper.OperateLogMapper;
+import com.dimple.project.log.service.OperateLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

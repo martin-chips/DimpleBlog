@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
       <el-form-item label="登录地址">
-        <el-input v-model="queryParams.ipaddr" placeholder="请输入登录地址" clearable style="width: 240px;" size="small"
+        <el-input v-model="queryParams.location" placeholder="请输入登录地址" clearable style="width: 240px;" size="small"
                   @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="用户名称">
@@ -29,7 +29,7 @@
     </el-form>
 
     <el-table v-loading="loading" :data="list" style="width: 100%;">
-      <el-table-column label="访问编号" align="center" prop="infoId"/>
+      <el-table-column label="访问编号" align="center" prop="id"/>
       <el-table-column label="用户名称" align="center" prop="userName"/>
       <el-table-column label="登录地址" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
       <el-table-column label="登录地点" align="center" prop="location"/>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import {list} from "@/api/monitor/loginLog";
+  import {list} from "@/api/log/loginLog";
 
   export default {
     data() {

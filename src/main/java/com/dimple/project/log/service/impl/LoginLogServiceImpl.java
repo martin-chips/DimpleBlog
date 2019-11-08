@@ -1,10 +1,10 @@
-package com.dimple.project.monitor.service.impl;
+package com.dimple.project.log.service.impl;
 
 import com.dimple.common.utils.ConvertUtils;
 import com.dimple.framework.redis.RedisCacheService;
-import com.dimple.project.monitor.domain.LoginLog;
-import com.dimple.project.monitor.mapper.LoginLogMapper;
-import com.dimple.project.monitor.service.LoginLogService;
+import com.dimple.project.log.domain.LoginLog;
+import com.dimple.project.log.mapper.LoginLogMapper;
+import com.dimple.project.log.service.LoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

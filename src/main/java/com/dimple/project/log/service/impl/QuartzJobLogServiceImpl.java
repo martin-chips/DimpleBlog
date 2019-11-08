@@ -1,10 +1,12 @@
-package com.dimple.project.monitor.service.impl;
+package com.dimple.project.log.service.impl;
 
-import com.dimple.project.monitor.mapper.QuartzJobLogMapper;
-import com.dimple.project.monitor.service.QuartzJobLogService;
-import com.dimple.project.tool.domain.QuartzJobLog;
+import com.dimple.project.log.mapper.QuartzJobLogMapper;
+import com.dimple.project.log.service.QuartzJobLogService;
+import com.dimple.project.log.domain.QuartzJobLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @className: QuartzJobLogServiceImpl
@@ -22,4 +24,10 @@ public class QuartzJobLogServiceImpl implements QuartzJobLogService {
     public int insertQuartzJobLog(QuartzJobLog quartzJobLog) {
         return quartzJobLogMapper.insertQuartzJobLog(quartzJobLog);
     }
+
+    @Override
+    public List<QuartzJobLog> selectQuartzJobLogList(QuartzJobLog quartzJobLog) {
+        return quartzJobLogMapper.selectQuartzJobLogList(quartzJobLog);
+    }
+
 }

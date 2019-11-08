@@ -1,8 +1,8 @@
-package com.dimple.project.monitor.service;
+package com.dimple.project.log.service;
 
 import java.util.List;
 
-import com.dimple.project.monitor.domain.LoginLog;
+import com.dimple.project.log.domain.LoginLog;
 
 /**
  * @className: LoginLogService

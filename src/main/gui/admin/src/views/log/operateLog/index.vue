@@ -111,7 +111,7 @@
 </template>
 
 <script>
-  import {list} from "@/api/monitor/operateLog";
+  import {list} from "@/api/log/operateLog";
 
   export default {
     data() {

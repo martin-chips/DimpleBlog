@@ -1,4 +1,4 @@
-package com.dimple.project.monitor.domain;
+package com.dimple.project.log.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
