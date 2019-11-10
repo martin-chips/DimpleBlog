@@ -66,7 +66,7 @@ public class LogAspect {
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-        handleLog(joinPoint, e, null);
+        handleLog(joinPoint, e, null,System.currentTimeMillis()-startTime);
     }
 
     @Around("logPointCut()")
@@ -74,14 +74,13 @@ public class LogAspect {
         Object result;
         startTime = System.currentTimeMillis();
         result = joinPoint.proceed();
-        handleLog(joinPoint, null, result);
+        handleLog(joinPoint, null, result, System.currentTimeMillis() - startTime);
         return result;
     }
 
 
-    protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult) {
+    protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult, long cost) {
         try {
-            long endTime = System.currentTimeMillis();
             // 获得注解
             Log controllerLog = getAnnotationLog(joinPoint);
             if (controllerLog == null) {
@@ -99,7 +98,7 @@ public class LogAspect {
             operLog.setIp(ip);
             // 返回参数
             operLog.setJsonResult(JSON.toJSONString(jsonResult));
-            operLog.setCost(endTime - startTime);
+            operLog.setCost(cost);
             operLog.setUrl(ServletUtils.getRequest().getRequestURI());
             if (loginUser != null) {
                 operLog.setOperateName(loginUser.getUsername());
