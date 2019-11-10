@@ -25,17 +25,17 @@
 
     <el-table v-loading="loading" :data="menuList" row-key="id"
               :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-      <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="130px"></el-table-column>
-      <el-table-column prop="icon" label="图标" align="center" width="100px">
+      <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="icon" label="图标" align="center">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon"/>
         </template>
       </el-table-column>
-      <el-table-column prop="orderNum" label="排序" width="60px"></el-table-column>
-      <el-table-column prop="perms" label="权限标识" width="130px" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="component" label="组件路径" width="180px" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="visible" label="	可见" :formatter="visibleFormat" width="80px"></el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column prop="orderNum" label="排序"></el-table-column>
+      <el-table-column prop="perms" label="权限标识" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="visible" label="	可见" :formatter="visibleFormat"></el-table-column>
+      <el-table-column label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
@@ -155,184 +155,184 @@
 </template>
 
 <script>
-  import {listMenu, getMenu, treeselect, delMenu, addMenu, updateMenu} from "@/api/system/menu";
-  import Treeselect from "@riophae/vue-treeselect";
-  import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-  import IconSelect from "@/components/IconSelect";
+    import {listMenu, getMenu, treeselect, delMenu, addMenu, updateMenu} from "@/api/system/menu";
+    import Treeselect from "@riophae/vue-treeselect";
+    import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+    import IconSelect from "@/components/IconSelect";
 
-  export default {
-    components: {Treeselect, IconSelect},
-    data() {
-      return {
-        // 遮罩层
-        loading: true,
-        // 菜单表格树数据
-        menuList: [],
-        // 菜单树选项
-        menuOptions: undefined,
-        // 弹出层标题
-        title: "",
-        // 是否显示弹出层
-        open: false,
-        // 菜单状态数据字典
-        visibleOptions: [],
-        // 查询参数
-        queryParams: {
-          menuName: undefined,
-          visible: undefined
+    export default {
+        components: {Treeselect, IconSelect},
+        data() {
+            return {
+                // 遮罩层
+                loading: true,
+                // 菜单表格树数据
+                menuList: [],
+                // 菜单树选项
+                menuOptions: undefined,
+                // 弹出层标题
+                title: "",
+                // 是否显示弹出层
+                open: false,
+                // 菜单状态数据字典
+                visibleOptions: [],
+                // 查询参数
+                queryParams: {
+                    menuName: undefined,
+                    visible: undefined
+                },
+                // 表单参数
+                form: {},
+                // 表单校验
+                rules: {
+                    menuName: [
+                        {required: true, message: "菜单名称不能为空", trigger: "blur"}
+                    ],
+                    orderNum: [
+                        {required: true, message: "菜单顺序不能为空", trigger: "blur"}
+                    ]
+                }
+            };
         },
-        // 表单参数
-        form: {},
-        // 表单校验
-        rules: {
-          menuName: [
-            {required: true, message: "菜单名称不能为空", trigger: "blur"}
-          ],
-          orderNum: [
-            {required: true, message: "菜单顺序不能为空", trigger: "blur"}
-          ]
-        }
-      };
-    },
-    created() {
-      this.getList();
-      this.getDicts("sys_show_hide").then(response => {
-        this.visibleOptions = response.data;
-      });
-    },
-    methods: {
-      /** 单条删除 */
-      handleSubDelete(id) {
-        this.loading = true;
-        delMenu(id).then((response) => {
-          this.$refs[id].doClose()
-          this.loading = false;
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(err => {
-          this.msgError("删除失败");
-          this.$refs[id].doClose()
-          this.loading = false;
-        });
-      },
-      // 选择图标
-      selected(name) {
-        this.form.icon = name;
-      },
-      /** 查询菜单列表 */
-      getList() {
-        this.loading = true;
-        listMenu(this.queryParams).then(response => {
-          this.menuList = response.data;
-          this.loading = false;
-        });
-      },
-      /** 查询菜单下拉树结构 */
-      getTreeselect() {
-        treeselect().then(response => {
-          this.menuOptions = response.data;
-        });
-      },
-      // 菜单显示状态字典翻译
-      visibleFormat(row, column) {
-        if (row.menuType == "F") {
-          return "";
-        }
-        return this.selectDictLabel(this.visibleOptions, row.visible);
-      },
-      // 取消按钮
-      cancel() {
-        this.open = false;
-        this.reset();
-      },
-      // 表单重置
-      reset() {
-        this.form = {
-          id: undefined,
-          parentId: 0,
-          menuName: undefined,
-          icon: undefined,
-          menuType: "M",
-          orderNum: undefined,
-          isFrame: "1",
-          visible: "0"
-        };
-        this.resetForm("form");
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.getList();
-      },
-      /** 新增按钮操作 */
-      handleAdd(row) {
-        this.reset();
-        this.getTreeselect();
-        if (row != null) {
-          this.form.parentId = row.id;
-        }
-        this.open = true;
-        this.title = "添加菜单";
-      },
-      /** 修改按钮操作 */
-      handleUpdate(row) {
-        this.reset();
-        this.getTreeselect();
-        getMenu(row.id).then(response => {
-          this.form = response.data;
-          this.open = true;
-          this.title = "修改菜单";
-        });
-      },
-      /** 提交按钮 */
-      submitForm: function () {
-        this.$refs["form"].validate(valid => {
-          if (valid) {
-            if (this.form.id != undefined) {
-              updateMenu(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("修改成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
+        created() {
+            this.getList();
+            this.getDicts("sys_show_hide").then(response => {
+                this.visibleOptions = response.data;
+            });
+        },
+        methods: {
+            /** 单条删除 */
+            handleSubDelete(id) {
+                this.loading = true;
+                delMenu(id).then((response) => {
+                    this.$refs[id].doClose()
+                    this.loading = false;
+                    if (response.code == 200) {
+                        this.msgSuccess("删除成功");
+                    } else {
+                        this.msgError("删除失败");
+                    }
+                    this.getList();
+                }).catch(err => {
+                    this.msgError("删除失败");
+                    this.$refs[id].doClose()
+                    this.loading = false;
+                });
+            },
+            // 选择图标
+            selected(name) {
+                this.form.icon = name;
+            },
+            /** 查询菜单列表 */
+            getList() {
+                this.loading = true;
+                listMenu(this.queryParams).then(response => {
+                    this.menuList = response.data;
+                    this.loading = false;
+                });
+            },
+            /** 查询菜单下拉树结构 */
+            getTreeselect() {
+                treeselect().then(response => {
+                    this.menuOptions = response.data;
+                });
+            },
+            // 菜单显示状态字典翻译
+            visibleFormat(row, column) {
+                if (row.menuType == "F") {
+                    return "";
                 }
-              });
-            } else {
-              addMenu(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("新增成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
+                return this.selectDictLabel(this.visibleOptions, row.visible);
+            },
+            // 取消按钮
+            cancel() {
+                this.open = false;
+                this.reset();
+            },
+            // 表单重置
+            reset() {
+                this.form = {
+                    id: undefined,
+                    parentId: 0,
+                    menuName: undefined,
+                    icon: undefined,
+                    menuType: "M",
+                    orderNum: undefined,
+                    isFrame: "1",
+                    visible: "0"
+                };
+                this.resetForm("form");
+            },
+            /** 搜索按钮操作 */
+            handleQuery() {
+                this.getList();
+            },
+            /** 新增按钮操作 */
+            handleAdd(row) {
+                this.reset();
+                this.getTreeselect();
+                if (row != null) {
+                    this.form.parentId = row.id;
                 }
-              });
+                this.open = true;
+                this.title = "添加菜单";
+            },
+            /** 修改按钮操作 */
+            handleUpdate(row) {
+                this.reset();
+                this.getTreeselect();
+                getMenu(row.id).then(response => {
+                    this.form = response.data;
+                    this.open = true;
+                    this.title = "修改菜单";
+                });
+            },
+            /** 提交按钮 */
+            submitForm: function () {
+                this.$refs["form"].validate(valid => {
+                    if (valid) {
+                        if (this.form.id != undefined) {
+                            updateMenu(this.form).then(response => {
+                                if (response.code === 200) {
+                                    this.msgSuccess("修改成功");
+                                    this.open = false;
+                                    this.getList();
+                                } else {
+                                    this.msgError(response.msg);
+                                }
+                            });
+                        } else {
+                            addMenu(this.form).then(response => {
+                                if (response.code === 200) {
+                                    this.msgSuccess("新增成功");
+                                    this.open = false;
+                                    this.getList();
+                                } else {
+                                    this.msgError(response.msg);
+                                }
+                            });
+                        }
+                    }
+                });
+            },
+            /** 删除按钮操作 */
+            handleDelete(row) {
+                this.$confirm('是否确认删除名称为"' + row.menuName + '"的数据项?', "警告", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(function () {
+                    return delMenu(row.id);
+                }).then((response) => {
+                    if (response.code == 200) {
+                        this.msgSuccess("删除成功");
+                    } else {
+                        this.msgError("删除失败");
+                    }
+                    this.getList();
+                }).catch(function () {
+                });
             }
-          }
-        });
-      },
-      /** 删除按钮操作 */
-      handleDelete(row) {
-        this.$confirm('是否确认删除名称为"' + row.menuName + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return delMenu(row.id);
-        }).then((response) => {
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(function () {
-        });
-      }
-    }
-  };
+        }
+    };
 </script>

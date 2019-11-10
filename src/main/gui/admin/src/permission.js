@@ -3,7 +3,7 @@ import store from './store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import {getToken} from '@/utils/auth'
-import settings from "./store/modules/settings";
+import config from '@/config'
 
 NProgress.configure({showSpinner: false})
 
@@ -11,7 +11,7 @@ const whiteList = ['/login', '/auth-redirect', '/bind', '/register']
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
-    document.title = to.meta.title + ' - ' + settings.webName
+    document.title = to.meta.title + ' - ' + config.title
   }
   NProgress.start()
   if (getToken()) {
