@@ -96,4 +96,9 @@ public class OperateLog extends BaseEntity {
      * 操作时间
      */
     private Date operateTime;
+
+    /**
+     * 耗时
+     */
+    private Long cost;
 }

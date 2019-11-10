@@ -13,15 +13,15 @@ import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.framework.security.LoginUser;
 import com.dimple.framework.security.service.TokenService;
 import com.dimple.project.log.domain.OperateLog;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
@@ -37,8 +37,10 @@ import java.util.Map;
  */
 @Aspect
 @Component
+@Slf4j
 public class LogAspect {
-    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
+
+    private long startTime = 0L;
 
     // 配置织入点
     @Pointcut("@annotation(com.dimple.framework.aspectj.lang.annotation.Log)")
@@ -50,10 +52,11 @@ public class LogAspect {
      *
      * @param joinPoint 切点
      */
-    @AfterReturning(pointcut = "logPointCut()", returning = "jsonResult")
-    public void doAfterReturning(JoinPoint joinPoint, Object jsonResult) {
-        handleLog(joinPoint, null, jsonResult);
-    }
+    //@AfterReturning(pointcut = "logPointCut()", returning = "jsonResult")
+    //public void doAfterReturning(JoinPoint joinPoint, Object jsonResult) {
+    //    handleLog(joinPoint, null, jsonResult);
+    //}
+    //
 
     /**
      * 拦截异常操作
@@ -66,8 +69,19 @@ public class LogAspect {
         handleLog(joinPoint, e, null);
     }
 
+    @Around("logPointCut()")
+    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        Object result;
+        startTime = System.currentTimeMillis();
+        result = joinPoint.proceed();
+        handleLog(joinPoint, null, result);
+        return result;
+    }
+
+
     protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult) {
         try {
+            long endTime = System.currentTimeMillis();
             // 获得注解
             Log controllerLog = getAnnotationLog(joinPoint);
             if (controllerLog == null) {
@@ -85,7 +99,7 @@ public class LogAspect {
             operLog.setIp(ip);
             // 返回参数
             operLog.setJsonResult(JSON.toJSONString(jsonResult));
-
+            operLog.setCost(endTime - startTime);
             operLog.setUrl(ServletUtils.getRequest().getRequestURI());
             if (loginUser != null) {
                 operLog.setOperateName(loginUser.getUsername());

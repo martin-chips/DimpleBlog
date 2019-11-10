@@ -85,7 +85,7 @@ public class AsyncFactory {
             @Override
             public void run() {
                 // 远程查询操作地点
-                operLog.setLocation(AddressUtils.getRealAddressByIP(operLog.getIp()));
+                operLog.setLocation(AddressUtils.getCityInfoByIp(operLog.getIp()));
                 SpringUtils.getBean(OperateLogService.class).insertOperateLog(operLog);
             }
         };

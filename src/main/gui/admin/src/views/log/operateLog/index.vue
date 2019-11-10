@@ -47,6 +47,13 @@
       <el-table-column label="主机" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
       <el-table-column label="操作地点" align="center" prop="location"/>
       <el-table-column label="操作状态" align="center" prop="status" :formatter="statusFormat"/>
+      <el-table-column prop="cost" label="请求耗时" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.cost <= 300">{{ scope.row.cost }}ms</el-tag>
+          <el-tag v-else-if="scope.row.cost <= 1000" type="warning">{{ scope.row.time }}ms</el-tag>
+          <el-tag v-else type="danger">{{ scope.row.cost }}ms</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作日期" align="center" prop="operateTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.operateTime) }}</span>
@@ -111,77 +118,77 @@
 </template>
 
 <script>
-  import {list} from "@/api/log/operateLog";
+    import {list} from "@/api/log/operateLog";
 
-  export default {
-    data() {
-      return {
-        // 遮罩层
-        loading: true,
-        // 总条数
-        total: 0,
-        // 表格数据
-        list: [],
-        // 是否显示弹出层
-        open: false,
-        // 类型数据字典
-        typeOptions: [],
-        // 类型数据字典
-        statusOptions: [],
-        // 日期范围
-        dateRange: [],
-        // 表单参数
-        form: {},
-        // 查询参数
-        queryParams: {
-          pageNum: 1,
-          pageSize: 10,
-          title: undefined,
-          operName: undefined,
-          businessType: undefined,
-          status: undefined
+    export default {
+        data() {
+            return {
+                // 遮罩层
+                loading: true,
+                // 总条数
+                total: 0,
+                // 表格数据
+                list: [],
+                // 是否显示弹出层
+                open: false,
+                // 类型数据字典
+                typeOptions: [],
+                // 类型数据字典
+                statusOptions: [],
+                // 日期范围
+                dateRange: [],
+                // 表单参数
+                form: {},
+                // 查询参数
+                queryParams: {
+                    pageNum: 1,
+                    pageSize: 10,
+                    title: undefined,
+                    operName: undefined,
+                    businessType: undefined,
+                    status: undefined
+                }
+            };
+        },
+        created() {
+            this.getList();
+            this.getDicts("sys_oper_type").then(response => {
+                this.typeOptions = response.data;
+            });
+            this.getDicts("sys_common_status").then(response => {
+                this.statusOptions = response.data;
+            });
+        },
+        methods: {
+            /** 查询登录日志 */
+            getList() {
+                this.loading = true;
+                list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+                        this.list = response.rows;
+                        this.total = response.total;
+                        this.loading = false;
+                    }
+                );
+            },
+            // 操作日志状态字典翻译
+            statusFormat(row, column) {
+                return this.selectDictLabel(this.statusOptions, row.status);
+            },
+            // 操作日志类型字典翻译
+            typeFormat(row, column) {
+                return this.selectDictLabel(this.typeOptions, row.businessType);
+            },
+            /** 搜索按钮操作 */
+            handleQuery() {
+                this.queryParams.pageNum = 1;
+                this.getList();
+            },
+            /** 详细按钮操作 */
+            handleView(row) {
+                this.open = true;
+                this.form = row;
+            }
         }
-      };
-    },
-    created() {
-      this.getList();
-      this.getDicts("sys_oper_type").then(response => {
-        this.typeOptions = response.data;
-      });
-      this.getDicts("sys_common_status").then(response => {
-        this.statusOptions = response.data;
-      });
-    },
-    methods: {
-      /** 查询登录日志 */
-      getList() {
-        this.loading = true;
-        list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-            this.list = response.rows;
-            this.total = response.total;
-            this.loading = false;
-          }
-        );
-      },
-      // 操作日志状态字典翻译
-      statusFormat(row, column) {
-        return this.selectDictLabel(this.statusOptions, row.status);
-      },
-      // 操作日志类型字典翻译
-      typeFormat(row, column) {
-        return this.selectDictLabel(this.typeOptions, row.businessType);
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
-      },
-      /** 详细按钮操作 */
-      handleView(row) {
-        this.open = true;
-        this.form = row;
-      }
-    }
-  };
+    };
 </script>
 

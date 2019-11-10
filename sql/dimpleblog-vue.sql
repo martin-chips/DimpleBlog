@@ -1,6 +1,6 @@
 /*
-SQLyog Enterprise v13.1.1 (64 bit)
-MySQL - 5.7.26-log : Database - dimpleblog-vue
+SQLyog Ultimate v13.1.1 (64 bit)
+MySQL - 5.7.26 : Database - dimpleblog-vue
 *********************************************************************
 */
 
@@ -65,19 +65,49 @@ CREATE TABLE `bg_category` (
                                `delete_by` varchar(128) DEFAULT NULL,
                                `delete_time` datetime DEFAULT NULL,
                                PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='分类表';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='分类表';
 
 /*Data for the table `bg_category` */
 
 insert  into `bg_category`(`id`,`title`,`description`,`support`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
 (6,'测试一号','这是描述',0,'admin','2019-11-01 15:11:51',NULL,NULL,'admin','2019-11-06 14:14:52'),
-(7,'测试2号','这是描述',1,'admin','2019-11-01 15:12:00',NULL,NULL,NULL,NULL),
+(7,'测试2号','这是描述11111111111',1,'admin','2019-11-01 15:12:00',NULL,'2019-11-08 22:49:07','admin','2019-11-08 22:49:11'),
 (8,'测试三号','这是描述',1,'admin','2019-11-01 15:12:09',NULL,NULL,'admin','2019-11-06 14:14:50'),
 (9,'测试4号','这是描述',1,'admin','2019-11-01 15:12:18',NULL,NULL,'admin','2019-11-04 15:08:38'),
 (10,'123213','21321321',0,'admin','2019-11-06 14:15:53',NULL,NULL,'admin','2019-11-06 14:25:40'),
 (11,'12321321','312321321',1,'admin','2019-11-06 14:15:57',NULL,NULL,'admin','2019-11-06 14:25:42'),
 (12,'12312321','321321321',1,'admin','2019-11-06 14:16:00',NULL,NULL,'admin','2019-11-06 14:16:36'),
-(13,'1111111111111','111111',0,'admin','2019-11-06 14:26:20',NULL,NULL,'admin','2019-11-06 14:26:22');
+(13,'1111111111111','111111',0,'admin','2019-11-06 14:26:20',NULL,NULL,'admin','2019-11-06 14:26:22'),
+(14,'1212','2321231212132',0,'admin','2019-11-08 22:49:21',NULL,'2019-11-08 22:49:26','admin','2019-11-08 22:49:29'),
+(15,'1111111','111111111111111111',0,'admin','2019-11-08 22:50:07',NULL,NULL,'admin','2019-11-08 22:51:22'),
+(16,'11111111111111','111111111111111',1,'admin','2019-11-08 22:50:12',NULL,NULL,'admin','2019-11-08 22:51:24'),
+(17,'11111111111111111111','1111111111111111111',1,'admin','2019-11-08 22:50:16',NULL,NULL,'admin','2019-11-08 22:51:26'),
+(18,'111111111111111111','111111111111111',1,'admin','2019-11-08 22:50:20',NULL,NULL,'admin','2019-11-08 22:51:28'),
+(19,'111111111111111111111','111111111111111111',1,'admin','2019-11-08 22:50:24',NULL,NULL,'admin','2019-11-08 22:51:29'),
+(20,'1111111111111111111111','111111111111111111111111',1,'admin','2019-11-08 22:50:29',NULL,NULL,'admin','2019-11-08 22:51:31'),
+(21,'111111111111111111111111','11111111111111111111',1,'admin','2019-11-08 22:50:33',NULL,NULL,'admin','2019-11-08 22:51:33'),
+(22,'11111111111111111','1111111111111111111111',1,'admin','2019-11-08 22:50:38',NULL,NULL,'admin','2019-11-08 22:51:35'),
+(23,'11111111111111111','1111111111111111111111',1,'admin','2019-11-08 22:50:42',NULL,NULL,'admin','2019-11-08 22:51:36'),
+(24,'1111111111111111111111','1111111111111111111111',1,'admin','2019-11-08 22:50:45',NULL,'2019-11-08 23:18:37','admin','2019-11-08 23:32:07'),
+(25,'11111111111111111111111','111111111111111111111111111',1,'admin','2019-11-08 22:50:49',NULL,NULL,'admin','2019-11-08 23:28:56'),
+(26,'1111111111111111111111111','11111111111111111111111',1,'admin','2019-11-08 22:50:52',NULL,NULL,'admin','2019-11-08 23:32:06'),
+(27,'11111111111111111111111111','111111111111111111111111',1,'admin','2019-11-08 22:50:55',NULL,NULL,'admin','2019-11-08 23:32:02'),
+(28,'111111111111111111111111','11111111111111111111111111111111',1,'admin','2019-11-08 22:51:00',NULL,NULL,'admin','2019-11-08 23:32:04'),
+(29,'111111111111111','12312313231',1,'admin','2019-11-08 22:51:43',NULL,'2019-11-08 23:04:41','admin','2019-11-08 23:32:00'),
+(30,'11111111111111111111111111111','1111111111111111111111111',1,'admin','2019-11-08 22:51:46',NULL,NULL,'admin','2019-11-08 23:31:57'),
+(31,'112333333333333','333333333333333333',1,'admin','2019-11-08 22:51:52',NULL,NULL,'admin','2019-11-08 23:30:49'),
+(32,'33333333333333333333','33333333333333333333333333333',1,'admin','2019-11-08 22:51:56',NULL,NULL,'admin','2019-11-08 23:30:02'),
+(33,'333333333333333333333','3333333333333333333',1,'admin','2019-11-08 22:51:59',NULL,NULL,'admin','2019-11-08 23:18:26'),
+(34,'33333333333333333333333333333','33333333333333333',1,'admin','2019-11-08 22:52:03',NULL,NULL,'admin','2019-11-08 23:17:29'),
+(35,'1111111111','231312321321',0,'admin','2019-11-08 23:17:23',NULL,NULL,'admin','2019-11-08 23:17:28'),
+(36,'11111','1111111111111111111111',0,'admin','2019-11-08 23:32:12',NULL,NULL,'admin','2019-11-08 23:32:28'),
+(37,'111111111111111111111111','11111111111111111111111111111111',1,'admin','2019-11-08 23:32:17',NULL,NULL,'admin','2019-11-08 23:32:25'),
+(38,'111111111111','11111111111111111111111',1,'admin','2019-11-08 23:32:19',NULL,NULL,'admin','2019-11-08 23:32:23'),
+(39,'11111111','11111111111111111111',1,'admin','2019-11-08 23:33:03',NULL,'2019-11-09 00:30:04',NULL,NULL),
+(40,'324324','32432423432423',1,'admin','2019-11-09 00:02:07',NULL,NULL,'admin','2019-11-09 00:02:14'),
+(41,'12121','21323123213',0,'admin','2019-11-09 00:03:09',NULL,'2019-11-10 19:37:45',NULL,NULL),
+(42,'45465','45645621321312',1,'admin','2019-11-09 00:13:21',NULL,'2019-11-09 00:21:27','admin','2019-11-10 19:25:39'),
+(43,'321321312321321321','21321321321321',1,'admin','2019-11-09 00:16:43',NULL,NULL,'admin','2019-11-09 00:16:46');
 
 /*Table structure for table `bg_comment` */
 
@@ -112,7 +142,7 @@ CREATE TABLE `bg_comment` (
 /*Data for the table `bg_comment` */
 
 insert  into `bg_comment`(`id`,`nick_name`,`email`,`ip`,`location`,`os`,`browser`,`parent_id`,`qq_num`,`avatar`,`page_id`,`url`,`display`,`good`,`bad`,`content`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
-(1,'测试','bianxiaofeng@sohu.com','127.0.0.1','背景','windows','Chrome',NULL,'726567707','',4,NULL,1,11,11,'this is a content','admin','2019-10-30 16:37:33',NULL,NULL,NULL,NULL),
+(1,'测试','bianxiaofeng@sohu.com','127.0.0.1','背景','windows','Chrome',NULL,'726567707','',4,NULL,1,11,11,'this is a content','admin','2019-10-30 16:37:33',NULL,NULL,'admin','2019-11-08 20:21:53'),
 (2,'测试',NULL,NULL,'sas',NULL,NULL,NULL,NULL,NULL,4,'',NULL,0,0,'112113112',NULL,NULL,NULL,NULL,NULL,NULL),
 (3,'大傻蛋啥','1111',NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
@@ -370,12 +400,13 @@ CREATE TABLE `sys_link` (
                             `delete_by` varchar(128) DEFAULT NULL,
                             `delete_time` datetime DEFAULT NULL,
                             PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='友链表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='友链表';
 
 /*Data for the table `sys_link` */
 
 insert  into `sys_link`(`id`,`title`,`url`,`description`,`header_img`,`status`,`display`,`email`,`weight`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`) values
-(1,'1232222222222222','222','ewew','1',0,1,'21@email.com',122,'admin','2019-10-29 12:21:10','admin','2019-10-30 15:59:28','admin','2019-10-30 16:04:41');
+(1,'1232222222222222','222','ewew','1',0,1,'21@email.com',122,'admin','2019-10-29 12:21:10','admin','2019-10-30 15:59:28','admin','2019-10-30 16:04:41'),
+(2,'111','http://www.bianxiaofeng.com','1111','http://www.bianxiaofeng.com',0,0,'biianxiaofeng@sohu.com',11,'admin','2019-11-08 22:40:25',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `sys_login_log` */
 
@@ -392,7 +423,7 @@ CREATE TABLE `sys_login_log` (
                                  `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
                                  `login_time` datetime DEFAULT NULL COMMENT '访问时间',
                                  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
 
 /*Data for the table `sys_login_log` */
 
@@ -408,7 +439,94 @@ insert  into `sys_login_log`(`id`,`user_name`,`ip`,`location`,`browser`,`os`,`st
 (9,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 15:56:18'),
 (10,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-08 16:05:56'),
 (11,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 16:06:19'),
-(12,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 18:42:49');
+(12,'admin','10.17.80.181','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 18:42:49'),
+(13,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 20:21:21'),
+(14,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-08 20:21:21'),
+(15,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 21:34:53'),
+(16,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 21:44:46'),
+(17,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 21:45:05'),
+(18,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 21:45:41'),
+(19,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 21:46:23'),
+(20,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-08 21:47:14'),
+(21,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 21:47:18'),
+(22,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 21:47:52'),
+(23,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 21:49:40'),
+(24,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-08 22:24:27'),
+(25,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-09 20:00:20'),
+(26,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-09 20:56:58'),
+(27,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-09 21:21:32'),
+(28,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-09 21:22:03'),
+(29,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 21:34:09'),
+(30,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 21:36:07'),
+(31,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 21:36:28'),
+(32,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 21:36:57'),
+(33,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-09 22:50:00'),
+(34,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 22:56:53'),
+(35,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 22:57:00'),
+(36,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-09 23:18:32'),
+(37,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:22:06'),
+(38,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:23:46'),
+(39,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-09 23:25:48'),
+(40,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-09 23:28:32'),
+(41,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:28:38'),
+(42,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:29:25'),
+(43,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:30:43'),
+(44,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:30:55'),
+(45,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:31:11'),
+(46,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:42:41'),
+(47,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:45:48'),
+(48,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:46:00'),
+(49,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:47:27'),
+(50,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:50:42'),
+(51,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:51:32'),
+(52,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:51:50'),
+(53,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:52:38'),
+(54,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:53:53'),
+(55,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-09 23:58:02'),
+(56,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-10 00:02:36'),
+(57,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-10 00:03:06'),
+(58,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-10 00:03:18'),
+(59,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-10 00:05:02'),
+(60,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-10 00:05:23'),
+(61,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-10 00:06:41'),
+(62,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-10 00:08:36'),
+(63,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-10 00:09:02'),
+(64,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码错误','2019-11-10 00:09:09'),
+(65,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 00:12:27'),
+(66,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-10 00:12:59'),
+(67,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 00:18:40'),
+(68,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 00:40:34'),
+(69,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-10 00:48:31'),
+(70,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','用户不存在/密码错误','2019-11-10 00:51:14'),
+(71,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','用户不存在/密码错误','2019-11-10 00:51:37'),
+(72,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','用户不存在/密码错误','2019-11-10 00:51:58'),
+(73,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','用户不存在/密码错误','2019-11-10 00:53:31'),
+(74,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','用户不存在/密码错误','2019-11-10 00:55:54'),
+(75,NULL,'192.168.0.105','内网IP','Chrome 8','Windows 10','1','用户不存在/密码错误','2019-11-10 00:57:15'),
+(76,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 00:58:21'),
+(77,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-10 00:59:45'),
+(78,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 01:00:41'),
+(79,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-10 01:02:14'),
+(80,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 01:03:25'),
+(81,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-10 01:03:25'),
+(82,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 16:27:23'),
+(83,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-10 16:36:02'),
+(84,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 16:40:21'),
+(85,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 17:09:50'),
+(86,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:37:36'),
+(87,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 18:37:41'),
+(88,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','退出成功','2019-11-10 18:37:46'),
+(89,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:37:49'),
+(90,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:37:55'),
+(91,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:39:20'),
+(92,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:39:25'),
+(93,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:40:16'),
+(94,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:40:19'),
+(95,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:40:59'),
+(96,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:41:17'),
+(97,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:41:36'),
+(98,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','1','验证码已失效','2019-11-10 18:42:52'),
+(99,'admin','192.168.0.105','内网IP','Chrome 8','Windows 10','0','登录成功','2019-11-10 18:43:30');
 
 /*Table structure for table `sys_menu` */
 
@@ -579,25 +697,15 @@ CREATE TABLE `sys_operate_log` (
                                    `status` int(1) DEFAULT '0' COMMENT '操作状态（0正常 1异常）',
                                    `error_msg` varchar(2000) DEFAULT '' COMMENT '错误消息',
                                    `operate_time` datetime DEFAULT NULL COMMENT '操作时间',
+                                   `cost` bigint(20) DEFAULT NULL COMMENT '耗时,单位毫秒',
                                    PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
 
 /*Data for the table `sys_operate_log` */
 
-insert  into `sys_operate_log`(`id`,`title`,`business_type`,`method`,`request_method`,`operator_type`,`operate_name`,`url`,`ip`,`location`,`param`,`json_result`,`status`,`error_msg`,`operate_time`) values
-(1,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','10.17.80.181','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"comment\":false,\"id\":4}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 09:28:54'),
-(2,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','10.17.80.181','内网IP','{\"params\":{},\"updateBy\":\"admin\",\"id\":4,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 09:28:56'),
-(3,'博客管理',2,'com.dimple.project.blog.controller.BlogController.editDraft()','PUT',1,'admin','/blog/blog/draft','10.17.80.181','内网IP','{\"summary\":\"这是摘要,这是一个摘要这shi yige 摘要\",\"params\":{},\"title\":\"这是标题\",\"content\":\"<p><span style=\\\"color: #00ff00;\\\">这是一个HTML呀&nbsp;</span></p>\",\"createBy\":\"admin\",\"createTime\":1572669391000,\"updateBy\":\"admin\",\"comment\":false,\"id\":4,\"categoryId\":7,\"headerImg\":\"http://images.bianxiaofeng.com/75c0c7d78482671b30e81f3978bbb5f9\",\"status\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 10:42:56'),
-(4,'博客管理',2,'com.dimple.project.blog.controller.BlogController.editDraft()','PUT',1,'admin','/blog/blog/draft','10.17.80.181','内网IP','{\"summary\":\"这是摘要,这是一个摘要这shi yige 摘要\",\"params\":{},\"title\":\"这是标题\",\"content\":\"<p><span style=\\\"color: #00ff00;\\\">这是一个HTML呀&nbsp;</span></p>\",\"createBy\":\"admin\",\"createTime\":1572669391000,\"updateBy\":\"admin\",\"comment\":false,\"id\":4,\"categoryId\":7,\"headerImg\":\"http://images.bianxiaofeng.com/75c0c7d78482671b30e81f3978bbb5f9\",\"status\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 10:43:10'),
-(5,'博客管理',2,'com.dimple.project.blog.controller.BlogController.edit()','PUT',1,'admin','/blog/blog','10.17.80.181','内网IP','{\"summary\":\"这是摘要,这是一个摘要这shi yige 摘要\",\"weight\":3,\"params\":{},\"title\":\"这是标题\",\"content\":\"<p><span style=\\\"color: #00ff00;\\\">这是一个HTML呀&nbsp;</span></p>\",\"createBy\":\"admin\",\"createTime\":1572669391000,\"updateBy\":\"admin\",\"comment\":false,\"id\":4,\"tag\":\"多福多寿\",\"support\":true,\"categoryId\":7,\"headerImg\":\"http://images.bianxiaofeng.com/75c0c7d78482671b30e81f3978bbb5f9\",\"status\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 10:46:11'),
-(6,'个人信息',2,'com.dimple.project.system.controller.ProfileController.updateProfile()','PUT',1,'admin','/system/user/profile','10.17.80.181','内网IP','{\"admin\":true,\"avatar\":\"hthz_9.jpeg\",\"params\":{},\"id\":1}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 13:46:22'),
-(7,'菜单管理',1,'com.dimple.project.system.controller.MenuController.add()','POST',1,'admin','/system/menu','10.17.80.181','内网IP','{\"visible\":\"0\",\"icon\":\"dict\",\"orderNum\":\"3\",\"menuName\":\"任务日志\",\"params\":{},\"parentId\":108,\"path\":\"log/quartz\",\"component\":\"log/quartz/index\",\"createBy\":\"admin\",\"children\":[],\"isFrame\":\"1\",\"menuType\":\"C\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 16:23:22'),
-(8,'菜单管理',2,'com.dimple.project.system.controller.MenuController.edit()','PUT',1,'admin','/system/menu','10.17.80.181','内网IP','{\"visible\":\"0\",\"icon\":\"dict\",\"orderNum\":\"3\",\"menuName\":\"任务日志\",\"params\":{},\"parentId\":108,\"path\":\"log/quartz\",\"component\":\"log/quartzLog/index\",\"children\":[],\"createTime\":1573201402000,\"updateBy\":\"admin\",\"isFrame\":\"1\",\"menuType\":\"C\",\"perms\":\"\",\"id\":1099}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 16:23:37'),
-(9,'黑名单管理',1,'com.dimple.project.monitor.controller.BlacklistController.add()','POST',1,'admin','/monitor/blacklist','10.17.80.181','内网IP','{\"ip\":\"127.22.32.3\",\"description\":\"1231\",\"params\":{},\"createBy\":\"admin\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 18:59:19'),
-(10,'黑名单管理',1,'com.dimple.project.monitor.controller.BlacklistController.add()','POST',1,'admin','/monitor/blacklist','10.17.80.181','内网IP','{\"ip\":\"195.23.23.22\",\"description\":\"1513\",\"params\":{},\"createBy\":\"admin\"}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 19:00:16'),
-(11,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/10','10.17.80.181','内网IP','{ids=10}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 19:00:21'),
-(12,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/10','10.17.80.181','内网IP','{ids=10}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 19:00:23'),
-(13,'黑名单管理',3,'com.dimple.project.monitor.controller.BlacklistController.remove()','DELETE',1,'admin','/monitor/blacklist/11','10.17.80.181','内网IP','{ids=11}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-08 19:00:42');
+insert  into `sys_operate_log`(`id`,`title`,`business_type`,`method`,`request_method`,`operator_type`,`operate_name`,`url`,`ip`,`location`,`param`,`json_result`,`status`,`error_msg`,`operate_time`,`cost`) values
+(1,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','192.168.0.105','内网IP','{\"updateTime\":1573385831503,\"params\":{},\"id\":41,\"support\":true}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-10 19:37:11',139),
+(2,'分类管理',2,'com.dimple.project.blog.controller.CategoryController.edit()','PUT',1,'admin','/blog/category','192.168.0.105','内网IP','{\"updateTime\":1573385865117,\"params\":{},\"id\":41,\"support\":false}','{\"msg\":\"操作成功\",\"code\":200}',0,NULL,'2019-11-10 19:38:19',125);
 
 /*Table structure for table `sys_quartz_log` */
 
@@ -615,7 +723,7 @@ CREATE TABLE `sys_quartz_log` (
                                   `cost` bigint(20) DEFAULT NULL COMMENT '耗时',
                                   `create_time` datetime DEFAULT NULL,
                                   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 /*Data for the table `sys_quartz_log` */
 
