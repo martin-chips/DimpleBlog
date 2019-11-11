@@ -11,11 +11,11 @@ import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/dimple.scss' //
 import App from './App'
 import store from './store'
-import router from './router'
+import router from '@/router/routers'
 import permission from './directive/permission'
 
 import './assets/icons' // icon
-import './permission' // permission control
+import '@/router' // permission control
 import {getDicts} from "@/api/system/dict/data";
 import {getConfigKey} from "@/api/system/config";
 import {parseTime, resetForm, addDateRange, selectDictLabel} from "@/utils/dimple";

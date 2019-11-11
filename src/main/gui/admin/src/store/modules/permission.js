@@ -1,4 +1,4 @@
-import { constantRoutes } from '@/router'
+import { constantRoutes } from '@/router/routers'
 import { getRouters } from '@/api/menu'
 import Layout from '@/layout/index'
 
