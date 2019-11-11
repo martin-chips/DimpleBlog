@@ -15,11 +15,54 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">新增</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="categoryList">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+        >新增
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="success"
+          icon="el-icon-edit"
+          size="mini"
+          :disabled="single"
+          @click="handleUpdate(null)"
+        >修改
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="danger"
+          icon="el-icon-delete"
+          size="mini"
+          :loading="delLoading"
+          :disabled="multiple"
+          @click="handleDelete"
+        >删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+        >导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
       <el-table-column label="分类主键" align="center" prop="id"/>
       <el-table-column label="分类名称" align="center" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="分类描述" align="center" prop="description" :show-overflow-tooltip="true"/>
@@ -92,7 +135,7 @@
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消
               </el-button>
-              <el-button :loading="loading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
+              <el-button :loading="delLoading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
               </el-button>
             </div>
             <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除
@@ -104,7 +147,7 @@
 
     <pagination
       v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-      @pagination="getList"/>
+      @pagination="init"/>
 
     <!-- 添加或修改分类对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
@@ -128,176 +171,64 @@
 </template>
 
 <script>
-  import {
-    listCategory,
-    getCategory,
-    changeCategorySupport,
-    delCategory,
-    addCategory,
-    updateCategory
-  } from "@/api/blog/category";
+    import {
+        getCategory,
+        changeCategorySupport,
+    } from "@/api/blog/category";
+    import initData from '@/mixins/initData'
 
-  export default {
-    data() {
-      return {
-        // 遮罩层
-        loading: true,
-        // 总条数
-        total: 0,
-        // 参数表格数据
-        categoryList: [],
-        // 弹出层标题
-        title: "",
-        // 是否显示弹出层
-        open: false,
-        // 日期范围
-        dateRange: [],
-        // 查询参数
-        queryParams: {
-          pageNum: 1,
-          pageSize: 10,
-          title: undefined,
-          description: undefined,
-          support: undefined
+    export default {
+        mixins: [initData],
+        data() {
+            return {
+                // 弹出层标题
+                title: "",
+                // 查询参数
+                queryParams: {
+                    title: undefined,
+                    description: undefined,
+                    support: undefined
+                },
+                // 表单参数
+                form: {},
+                // 表单校验
+                rules: {
+                    title: [
+                        {required: true, message: "分类名称不能为空", trigger: "blur"},
+                        {min: 3, max: 50, message: '长度在 5 到 120 个字符', trigger: 'change'}
+                    ],
+                    description: [
+                        {required: true, message: "分类描述不能为空", trigger: "blur"},
+                        {min: 10, max: 150, message: '长度在 10 到 256 个字符', trigger: 'change'}
+                    ]
+                }
+            };
         },
-        // 表单参数
-        form: {},
-        // 表单校验
-        rules: {
-          title: [
-            {required: true, message: "分类名称不能为空", trigger: "blur"},
-            {min: 3, max:50, message: '长度在 5 到 120 个字符', trigger: 'change'}
-          ],
-          description: [
-            {required: true, message: "分类描述不能为空", trigger: "blur"},
-            {min: 10, max: 150, message: '长度在 10 到 256 个字符', trigger: 'change'}
-          ]
+        created() {
+            this.$nextTick(() => {
+                this.init()
+            })
+        },
+        methods: {
+            beforeInit() {
+                this.base = '/blog/category';
+                this.modelName = '分类'
+                return true
+            },
+            handleSupportChange(row) {
+                let text = row.support ? "启用" : "停用";
+                this.$confirm('确认要' + text + '"' + row.title + '"分类吗?', "警告", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(function () {
+                    return changeCategorySupport(row.id, row.support);
+                }).then(() => {
+                    this.msgSuccess(text + "成功");
+                }).catch(function () {
+                    row.support = row.support === false ? true : false;
+                });
+            },
         }
-      };
-    },
-    created() {
-      this.getList();
-    },
-    methods: {
-      /** 单条删除 */
-      handleSubDelete(id) {
-        this.loading = true;
-        delCategory(id).then((response) => {
-          this.$refs[id].doClose()
-          this.loading = false;
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(err => {
-          this.msgError("删除失败");
-          this.$refs[id].doClose()
-          this.loading = false;
-        });
-      },
-      /** 查询参数列表 */
-      getList() {
-        this.loading = true;
-        listCategory(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-            this.categoryList = response.rows;
-            this.total = response.total;
-            this.loading = false;
-          }
-        );
-      },
-      // 取消按钮
-      cancel() {
-        this.open = false;
-        this.reset();
-      },
-      // 表单重置
-      reset() {
-        this.form = {
-          id: undefined,
-          title: undefined,
-          description: undefined,
-          support: 1,
-        };
-        this.resetForm("form");
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
-      },
-      /** 新增按钮操作 */
-      handleAdd() {
-        this.reset();
-        this.open = true;
-        this.title = "添加分类";
-      },
-      /** 修改按钮操作 */
-      handleUpdate(row) {
-        this.reset();
-        getCategory(row.id).then(response => {
-          this.form = response.data;
-          this.open = true;
-          this.title = "修改分类";
-        });
-      },
-      handleSupportChange(row) {
-        let text = row.support ? "启用" : "停用";
-        this.$confirm('确认要' + text + '"' + row.title + '"分类吗?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return changeCategorySupport(row.id, row.support);
-        }).then(() => {
-          this.msgSuccess(text + "成功");
-        }).catch(function () {
-          row.support = row.support === false ? true : false;
-        });
-      },
-      /** 提交按钮 */
-      submitForm: function () {
-        this.$refs["form"].validate(valid => {
-          if (valid) {
-            if (this.form.id != undefined) {
-              updateCategory(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("修改成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
-                }
-              });
-            } else {
-              addCategory(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("新增成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
-                }
-              });
-            }
-          }
-        });
-      },
-      /** 删除按钮操作 */
-      handleDelete(row) {
-        this.$confirm('是否确认删除名称为"' + row.title + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return delCategory(row.id);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        }).catch(function () {
-        });
-      }
-    }
-  };
+    };
 </script>
