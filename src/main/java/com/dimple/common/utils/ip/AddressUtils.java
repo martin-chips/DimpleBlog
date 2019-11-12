@@ -1,6 +1,6 @@
 package com.dimple.common.utils.ip;
 
-import cn.hutool.core.io.resource.ClassPathResource;
+
 import com.alibaba.fastjson.JSONObject;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.file.FileUtils;
@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -54,7 +55,7 @@ public class AddressUtils {
             String path = "ip2region/ip2region.db";
             String name = "ip2region.db";
             DbConfig config = new DbConfig();
-            File file = FileUtils.inputStreamToFile(new ClassPathResource(path).getStream(), name);
+            File file = FileUtils.inputStreamToFile(new ClassPathResource(path).getInputStream(), name);
             DbSearcher searcher = new DbSearcher(config, file.getPath());
             Method method;
             method = searcher.getClass().getMethod("btreeSearch", String.class);

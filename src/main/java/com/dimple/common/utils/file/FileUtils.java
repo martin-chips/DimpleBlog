@@ -1,6 +1,5 @@
 package com.dimple.common.utils.file;
 
-import cn.hutool.core.io.FileUtil;
 import com.dimple.common.exception.file.FileNameLengthLimitExceededException;
 import com.dimple.common.exception.file.FileSizeLimitExceededException;
 import com.dimple.common.exception.file.InvalidExtensionException;
@@ -20,12 +19,12 @@ import java.util.Date;
 
 /**
  * @className: FileUtils
- * @description: 文件处理工具类, 扩展 hutool 工具包
+ * @description: 文件处理工具类
  * @author: Dimple
  * @date: 10/22/19
  */
 @Slf4j
-public class FileUtils extends FileUtil {
+public class FileUtils {
     /**
      * 定义GB的计算常量
      */
@@ -279,4 +278,50 @@ public class FileUtils extends FileUtil {
         }
         return null;
     }
+
+    /**
+     * 删除文件<br>
+     *
+     * @param file 文件对象
+     * @return 成功与否
+     * @throws RuntimeException IO异常
+     */
+    public static boolean del(File file) throws RuntimeException {
+        if (file == null || false == file.exists()) {
+            // 如果文件不存在或已被删除，此处返回true表示删除成功
+            return true;
+        }
+        if (file.isDirectory()) {
+            return false;
+        }
+        // 删除文件或清空后的目录
+        return file.delete();
+    }
+
+    /**
+     * 删除文件<br>
+     * 路径如果为相对路径，会转换为ClassPath路径！<br>
+     * 某个文件删除失败会终止删除操作
+     *
+     * @param fullFileOrDirPath 文件或者目录的路径
+     * @return 成功与否
+     * @throws RuntimeException IO异常
+     */
+    public static boolean del(String fullFileOrDirPath) throws RuntimeException {
+        return del(file(fullFileOrDirPath));
+    }
+
+    /**
+     * 创建File对象
+     *
+     * @param path 文件路径
+     * @return File
+     */
+    public static File file(String path) {
+        if (null == path) {
+            return null;
+        }
+        return new File(path);
+    }
+
 }
