@@ -53,14 +53,14 @@
       <el-table-column :show-overflow-tooltip="true" prop="methodName" label="执行方法"/>
       <el-table-column :show-overflow-tooltip="true" prop="methodParams" label="参数"/>
       <el-table-column :show-overflow-tooltip="true" prop="cronExpression" label="cron表达式"/>
-      <el-table-column prop="createTime" label="异常详情">
+      <el-table-column align="center" prop="cost" label="耗时">
         <template slot-scope="scope">
-          <el-button v-show="scope.row.exception" size="mini" type="text"
-                     @click="getExceptionInfo(scope.row.exception)">查看详情
-          </el-button>
+          <el-tag v-if="scope.row.cost ==null"><1ms</el-tag>
+          <el-tag v-else-if="scope.row.cost <= 300">{{ scope.row.cost }}ms</el-tag>
+          <el-tag v-else-if="scope.row.cost <= 1000" type="warning">{{ scope.row.cost }}ms</el-tag>
+          <el-tag v-else type="danger">{{ scope.row.cost }}ms</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" align="center" prop="cost" label="耗时(毫秒)"/>
       <el-table-column align="center" prop="isSuccess" label="状态">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status ? 'success' : 'danger'">{{ scope.row.status ? '成功' : '失败' }}</el-tag>
@@ -73,6 +73,9 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+          <el-button v-show="scope.row.exception" size="mini" type="text" icon="el-icon-circle-close"
+                     @click="getExceptionInfo(scope.row.exception)">查看异常日志
+          </el-button>
           <el-popover :ref="scope.row.id" placement="top" width="180">
             <p>确定删除本条数据吗？</p>
             <div style="text-align: right; margin: 0">
@@ -88,7 +91,7 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog :close-on-click-modal="false" title="操作日志详细" :visible.sync="open" width="700px">
+    <el-dialog :close-on-click-modal="false" title="任务日志异常详细" :visible.sync="open" width="700px">
       <span>
         {{ exception }}
       </span>
@@ -102,43 +105,43 @@
 </template>
 
 <script>
-  import {listQuartzJobLog} from "@/api/log/quartzLog";
-  import initData from '@/mixins/initData'
+    import {listQuartzJobLog} from "@/api/log/quartzLog";
+    import initData from '@/mixins/initData'
 
-  export default {
-    mixins: [initData],
-    data() {
-      return {
-        exception: '',
-        // 类型数据字典
-        statusOptions: [],
-        // 查询参数
-        queryParams: {
-          jobName: undefined,
-          methodName: undefined,
-          status: undefined
+    export default {
+        mixins: [initData],
+        data() {
+            return {
+                exception: '',
+                // 类型数据字典
+                statusOptions: [],
+                // 查询参数
+                queryParams: {
+                    jobName: undefined,
+                    methodName: undefined,
+                    status: undefined
+                }
+            };
+        },
+        created() {
+            this.$nextTick(() => {
+                this.init()
+            })
+            this.getDicts("sys_common_status").then(response => {
+                this.statusOptions = response.data;
+            });
+        },
+        methods: {
+            beforeInit() {
+                this.base = '/log/quartzLog';
+                this.modelName = '任务日志'
+                return true
+            },
+            getExceptionInfo(exception) {
+                this.exception = exception;
+                this.open = true;
+            },
         }
-      };
-    },
-    created() {
-      this.$nextTick(() => {
-        this.init()
-      })
-      this.getDicts("sys_common_status").then(response => {
-        this.statusOptions = response.data;
-      });
-    },
-    methods: {
-      beforeInit() {
-        this.base = '/log/quartzLog';
-        this.modelName = '任务日志'
-        return true
-      },
-      getExceptionInfo(exception) {
-        this.exception = exception;
-        this.open = true;
-      },
-    }
-  };
+    };
 </script>
 

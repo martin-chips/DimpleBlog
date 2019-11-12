@@ -29,9 +29,39 @@
                    @click="handleAdd">新增
         </el-button>
       </el-form-item>
+      <el-form-item>
+        <router-link to="/log/log/quartz" class="link-type">
+          <el-button type="info" icon="el-icon-tickets" size="mini">日志
+          </el-button>
+        </router-link>
+      </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="quartzJobList" style="width: 100%;">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="primary" icon="el-icon-plus" size="mini"
+                   @click="handleAdd">新增
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single"
+                   @click="handleUpdate(null)">修改
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple"
+                   @click="handleDelete">删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="warning" icon="el-icon-download" size="mini"
+                   @click="handleExport">导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
       <el-table-column :show-overflow-tooltip="true" prop="jobName" label="任务名称"/>
       <el-table-column :show-overflow-tooltip="true" prop="beanName" label="Bean名称"/>
       <el-table-column :show-overflow-tooltip="true" prop="methodName" label="执行方法"/>
@@ -77,7 +107,7 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+                @pagination="init"/>
 
     <!-- 添加或修改任务配置对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px">
@@ -116,195 +146,81 @@
 </template>
 
 <script>
-  import {
-    listQuartzJob,
-    delQuartzJob,
-    updateQuartzStatus,
-    executeJob,
-    getQuartzJob,
-    addQuartzJob,
-    updateQuartzJob
-  } from "@/api/tool/quartz";
+    import {
+        listQuartzJob,
+        delQuartzJob,
+        updateQuartzStatus,
+        executeJob,
+        getQuartzJob,
+        addQuartzJob,
+        updateQuartzJob
+    } from "@/api/tool/quartz";
+    import initData from '@/mixins/initData'
 
-  export default {
-    data() {
-      return {
-        // 遮罩层
-        loading: true,
-        // 总条数
-        total: 0,
-        // 角色表格数据
-        quartzJobList: [],
-        // 弹出层标题
-        title: "",
-        // 是否显示弹出层
-        open: false,
-        // 日期范围
-        dateRange: [],
-        // 状态数据字典
-        statusOptions: [],
-        // 查询参数
-        queryParams: {
-          pageNum: 1,
-          pageSize: 10,
-          jobName: undefined,
-          methodName: undefined,
-          status: undefined
+    export default {
+        mixins: [initData],
+        data() {
+            return {
+                // 状态数据字典
+                statusOptions: [],
+                // 查询参数
+                queryParams: {
+                    jobName: undefined,
+                    methodName: undefined,
+                    status: undefined
+                },
+                // 表单校验
+                rules: {
+                    jobName: [
+                        {required: true, message: '请输入任务名称', trigger: 'blur'}
+                    ],
+                    beanName: [
+                        {required: true, message: '请输入Bean名称', trigger: 'blur'}
+                    ],
+                    methodName: [
+                        {required: true, message: '请输入方法名称', trigger: 'blur'}
+                    ],
+                    cronExpression: [
+                        {required: true, message: '请输入Cron表达式', trigger: 'blur'}
+                    ]
+                }
+            };
         },
-        // 表单参数
-        form: {},
-        // 表单校验
-        rules: {
-          jobName: [
-            {required: true, message: '请输入任务名称', trigger: 'blur'}
-          ],
-          beanName: [
-            {required: true, message: '请输入Bean名称', trigger: 'blur'}
-          ],
-          methodName: [
-            {required: true, message: '请输入方法名称', trigger: 'blur'}
-          ],
-          cronExpression: [
-            {required: true, message: '请输入Cron表达式', trigger: 'blur'}
-          ]
-        }
-      };
-    },
-    created() {
-      this.getList();
-    },
-    methods: {
-      /** 单条删除 */
-      handleSubDelete(id) {
-        this.loading = true;
-        delQuartzJob(id).then((response) => {
-          this.$refs[id].doClose()
-          this.loading = false;
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(err => {
-          this.msgError("删除失败");
-          this.$refs[id].doClose()
-          this.loading = false;
-        });
-      },
-      /** 修改按钮操作 */
-      handleUpdate(row) {
-        this.reset();
-        getQuartzJob(row.id).then(response => {
-          this.form = response.data;
-          this.open = true;
-          this.title = "修改分类";
-        });
-      },
-      /** 查询任务列表 */
-      getList() {
-        this.loading = true;
-        listQuartzJob(this.addDateRange(this.queryParams, this.dateRange)).then(
-          response => {
-            this.quartzJobList = response.rows;
-            this.total = response.total;
-            this.loading = false;
-          }
-        );
-      },
-      //执行任务
-      execute(id) {
-        executeJob(id).then(response => {
-          if (response.code == 200) {
-            this.msgSuccess("执行成功");
-          } else {
-            this.msgError("执行失败");
-          }
-        }).catch(err => {
-          console.log(err.response.data.message)
-        })
-      },
-      updateStatus(id) {
-        updateQuartzStatus(id).then(res => {
-          if (res.code == 200) {
-            this.msgSuccess("更新成功");
-            this.getList();
-          } else {
-            this.msgError(res.msg);
-          }
-        }).catch(err => {
-          console.log(err.response.data.message)
-        })
-      },
-      // 取消按钮
-      cancel() {
-        this.open = false;
-        this.reset();
-      },
-      // 表单重置
-      reset() {
-        this.form = {
-          id: undefined,
-          jobName: undefined,
-          beanName: undefined,
-          methodName: undefined,
-          params: undefined,
-          cronExpression: undefined,
-          remark: undefined,
-          status: false,
-        };
-        this.resetForm("form");
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
-      },
-      /** 新增按钮操作 */
-      handleAdd() {
-        this.reset();
-        this.open = true;
-        this.title = "添加任务";
-      },
-      /** 修改按钮操作 */
-      handleUpdate(row) {
-        this.reset();
-        getQuartzJob(row.id).then(response => {
-          this.form = response.data;
-          this.open = true;
-          this.title = "修改任务";
-        });
-      },
-      /** 提交按钮 */
-      submitForm: function () {
-        this.$refs["form"].validate(valid => {
-          if (valid) {
-            if (this.form.id != undefined) {
-              this.form.menuIds = this.getMenuAllCheckedKeys();
-              updateQuartzJob(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("修改成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
-                }
-              });
-            } else {
-              this.form.menuIds = this.getMenuAllCheckedKeys();
-              addQuartzJob(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("新增成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
-                }
-              });
+        created() {
+            this.$nextTick(() => {
+                this.init()
+            })
+        },
+        methods: {
+            beforeInit() {
+                this.base = '/tool/quartz';
+                this.modelName = '定时任务'
+                return true
+            },
+            //执行任务
+            execute(id) {
+                executeJob(id).then(response => {
+                    if (response.code == 200) {
+                        this.msgSuccess("执行成功");
+                    } else {
+                        this.msgError("执行失败");
+                    }
+                }).catch(err => {
+                    console.log(err.response.data.message)
+                })
+            },
+            updateStatus(id) {
+                updateQuartzStatus(id).then(res => {
+                    if (res.code == 200) {
+                        this.msgSuccess("更新成功");
+                        this.getList();
+                    } else {
+                        this.msgError(res.msg);
+                    }
+                }).catch(err => {
+                    console.log(err.response.data.message)
+                })
             }
-          }
-        });
-      },
-    }
-  };
+        }
+    };
 </script>

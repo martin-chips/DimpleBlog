@@ -23,8 +23,8 @@
         <if test="methodParams != null and methodParams != ''">method_params,</if>
         <if test="cronExpression != null and cronExpression != ''">cron_expression,</if>
         <if test="exception != null and exception != ''">exception,</if>
-        <if test="status != null and status != ''">status,</if>
-        <if test="cost != null and cost != ''">cost,</if>
+        <if test="status != null">status,</if>
+        <if test="cost != null">cost,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         )values(
@@ -34,8 +34,8 @@
         <if test="methodParams != null and methodParams != ''">#{methodParams},</if>
         <if test="cronExpression != null and cronExpression != ''">#{cronExpression},</if>
         <if test="exception != null and exception != ''">#{exception},</if>
-        <if test="status != null and status != ''">#{status},</if>
-        <if test="cost != null and cost != ''">#{cost},</if>
+        <if test="status != null ">#{status},</if>
+        <if test="cost != null">#{cost},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )

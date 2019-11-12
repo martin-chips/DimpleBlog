@@ -7,10 +7,12 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item"/>
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect"/>
-
+        <el-tooltip content="搜索" effect="dark" placement="bottom">
+          <search id="header-search" class="right-menu-item"/>
+        </el-tooltip>
+        <el-tooltip content="全屏" effect="dark" placement="bottom">
+          <screenfull id="screenfull" class="right-menu-item hover-effect"/>
+        </el-tooltip>
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect"/>
         </el-tooltip>
@@ -39,56 +41,56 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import Breadcrumb from '@/components/Breadcrumb'
-  import Hamburger from '@/components/Hamburger'
-  import Screenfull from '@/components/Screenfull'
-  import SizeSelect from '@/components/SizeSelect'
-  import Search from '@/components/HeaderSearch'
+    import {mapGetters} from 'vuex'
+    import Breadcrumb from '@/components/Breadcrumb'
+    import Hamburger from '@/components/Hamburger'
+    import Screenfull from '@/components/Screenfull'
+    import SizeSelect from '@/components/SizeSelect'
+    import Search from '@/components/HeaderSearch'
 
-  export default {
-    components: {
-      Breadcrumb,
-      Hamburger,
-      Screenfull,
-      SizeSelect,
-      Search,
-    },
-    computed: {
-      ...mapGetters([
-        'sidebar',
-        'avatar',
-        'device'
-      ]),
-      setting: {
-        get() {
-          return this.$store.state.settings.showSettings
+    export default {
+        components: {
+            Breadcrumb,
+            Hamburger,
+            Screenfull,
+            SizeSelect,
+            Search,
         },
-        set(val) {
-          this.$store.dispatch('settings/changeSetting', {
-            key: 'showSettings',
-            value: val
-          })
+        computed: {
+            ...mapGetters([
+                'sidebar',
+                'avatar',
+                'device'
+            ]),
+            setting: {
+                get() {
+                    return this.$store.state.settings.showSettings
+                },
+                set(val) {
+                    this.$store.dispatch('settings/changeSetting', {
+                        key: 'showSettings',
+                        value: val
+                    })
+                }
+            }
+        },
+        methods: {
+            toggleSideBar() {
+                this.$store.dispatch('app/toggleSideBar')
+            },
+            async logout() {
+                this.$confirm('确定注销并退出系统吗？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$store.dispatch('LogOut').then(() => {
+                        location.reload()
+                    })
+                })
+            }
         }
-      }
-    },
-    methods: {
-      toggleSideBar() {
-        this.$store.dispatch('app/toggleSideBar')
-      },
-      async logout() {
-        this.$confirm('确定注销并退出系统吗？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$store.dispatch('LogOut').then(() => {
-            location.reload()
-          })
-        })
-      }
     }
-  }
 </script>
 
 <style lang="scss" scoped>

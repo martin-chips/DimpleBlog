@@ -28,7 +28,7 @@
         <if test="ip != null and ip != ''">
             AND ip like concat('%', #{ip}, '%')
         </if>
-        <if test="status != null and status != ''">
+        <if test="status != null ">
             AND status = #{status}
         </if>
         <if test="userName != null and userName != ''">

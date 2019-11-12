@@ -29,9 +29,9 @@ public class LoginLog extends BaseEntity {
     private String userName;
 
     /**
-     * 登录状态 0成功 1失败
+     * 登录状态 true成功 false失败
      */
-    private String status;
+    private Boolean status;
 
     /**
      * 登录IP地址

@@ -171,62 +171,62 @@
 </template>
 
 <script>
-  import {
-    getCategory,
-    changeCategorySupport,
-  } from "@/api/blog/category";
-  import initData from '@/mixins/initData'
+    import {
+        getCategory,
+        changeCategorySupport,
+    } from "@/api/blog/category";
+    import initData from '@/mixins/initData'
 
-  export default {
-    mixins: [initData],
-    data() {
-      return {
-        // 查询参数
-        queryParams: {
-          title: undefined,
-          description: undefined,
-          support: undefined
+    export default {
+        mixins: [initData],
+        data() {
+            return {
+                // 查询参数
+                queryParams: {
+                    title: undefined,
+                    description: undefined,
+                    support: undefined
+                },
+                // 表单参数
+                form: {},
+                // 表单校验
+                rules: {
+                    title: [
+                        {required: true, message: "分类名称不能为空", trigger: "blur"},
+                        {min: 3, max: 50, message: '长度在 5 到 120 个字符', trigger: 'change'}
+                    ],
+                    description: [
+                        {required: true, message: "分类描述不能为空", trigger: "blur"},
+                        {min: 10, max: 150, message: '长度在 10 到 256 个字符', trigger: 'change'}
+                    ]
+                }
+            };
         },
-        // 表单参数
-        form: {},
-        // 表单校验
-        rules: {
-          title: [
-            {required: true, message: "分类名称不能为空", trigger: "blur"},
-            {min: 3, max: 50, message: '长度在 5 到 120 个字符', trigger: 'change'}
-          ],
-          description: [
-            {required: true, message: "分类描述不能为空", trigger: "blur"},
-            {min: 10, max: 150, message: '长度在 10 到 256 个字符', trigger: 'change'}
-          ]
+        created() {
+            this.$nextTick(() => {
+                this.init()
+            })
+        },
+        methods: {
+            beforeInit() {
+                this.base = '/blog/category';
+                this.modelName = '分类'
+                return true
+            },
+            handleSupportChange(row) {
+                let text = row.support ? "启用" : "停用";
+                this.$confirm('确认要' + text + '"' + row.title + '"分类吗?', "警告", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(function () {
+                    return changeCategorySupport(row.id, row.support);
+                }).then(() => {
+                    this.msgSuccess(text + "成功");
+                }).catch(function () {
+                    row.support = row.support === false ? true : false;
+                });
+            },
         }
-      };
-    },
-    created() {
-      this.$nextTick(() => {
-        this.init()
-      })
-    },
-    methods: {
-      beforeInit() {
-        this.base = '/blog/category';
-        this.modelName = '分类'
-        return true
-      },
-      handleSupportChange(row) {
-        let text = row.support ? "启用" : "停用";
-        this.$confirm('确认要' + text + '"' + row.title + '"分类吗?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return changeCategorySupport(row.id, row.support);
-        }).then(() => {
-          this.msgSuccess(text + "成功");
-        }).catch(function () {
-          row.support = row.support === false ? true : false;
-        });
-      },
-    }
-  };
+    };
 </script>

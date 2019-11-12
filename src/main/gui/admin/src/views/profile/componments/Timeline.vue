@@ -1,7 +1,7 @@
 <template>
   <div class="block">
     <el-timeline style="height: 600px; overflow: auto" :loading="loading" v-infinite-scroll="load">
-      <el-timeline-item v-for="(item,index) of timeline" :key="index" :timestamp="parseTime(item.loginTime)"
+      <el-timeline-item v-for="(item,index) of timeline" :key="index" :timestamp="parseTime(item.createTime)"
                         placement="top">
         <el-card>
           <p>
@@ -49,7 +49,7 @@
         queryParams: {
           pageNum: 1,
           pageSize: 10,
-          orderByColumn: "loginTime",
+          orderByColumn: "createTime",
           isAsc: "desc"
         },
       }

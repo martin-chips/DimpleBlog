@@ -7,7 +7,6 @@ import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.ip.IpUtils;
 import com.dimple.common.utils.spring.SpringUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
-import com.dimple.framework.aspectj.lang.enums.BusinessStatus;
 import com.dimple.framework.manager.AsyncManager;
 import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.framework.security.LoginUser;
@@ -66,7 +65,7 @@ public class LogAspect {
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-        handleLog(joinPoint, e, null,System.currentTimeMillis()-startTime);
+        handleLog(joinPoint, e, null, System.currentTimeMillis() - startTime);
     }
 
     @Around("logPointCut()")
@@ -92,7 +91,7 @@ public class LogAspect {
 
             // *========数据库日志=========*//
             OperateLog operLog = new OperateLog();
-            operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
+            operLog.setStatus(true);
             // 请求的地址
             String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
             operLog.setIp(ip);
@@ -105,7 +104,7 @@ public class LogAspect {
             }
 
             if (e != null) {
-                operLog.setStatus(BusinessStatus.FAIL.ordinal());
+                operLog.setStatus(false);
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
             // 设置方法名称

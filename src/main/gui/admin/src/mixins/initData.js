@@ -33,6 +33,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderByColumn: "createTime",
+        isAsc: "desc"
         //此处和具体的组件合并后可以设置查询参数
       },
       //操作延时时间
@@ -103,6 +105,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.form = {}
       this.open = true;
       this.title = "添加" + this.modelName;
     },
@@ -140,22 +143,15 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
-      this.reset();
+      this.form = {}
     },
     // 表单重置
     reset() {
-      this.form = {
-        id: undefined,
-        title: undefined,
-        description: undefined,
-        support: 1,
-      };
       this.resetForm("form");
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       const data = row || this.row;
-      this.reset();
       this.form = data;
       this.open = true;
       this.title = "修改" + this.modelName;

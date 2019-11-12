@@ -44,7 +44,6 @@ public class LoginLogServiceImpl implements LoginLogService {
      */
     @Override
     public List<LoginLog> selectLoginLogList(LoginLog loginLog) {
-        redisCacheService.setCacheObject("1", 1);
         return loginLogMapper.selectLoginLogList(loginLog);
     }
 

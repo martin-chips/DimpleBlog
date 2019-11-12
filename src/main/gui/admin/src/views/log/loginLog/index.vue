@@ -54,11 +54,15 @@
       <el-table-column label="登录地点" align="center" prop="location"/>
       <el-table-column label="浏览器" align="center" prop="browser"/>
       <el-table-column label="操作系统" align="center" prop="os"/>
-      <el-table-column label="登录状态" align="center" prop="status" :formatter="statusFormat"/>
-      <el-table-column label="操作信息" align="center" prop="msg"/>
-      <el-table-column label="登录日期" align="center" prop="loginTime" width="180">
+      <el-table-column align="center" prop="status" label="登录状态">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.loginTime) }}</span>
+          <el-tag :type="scope.row.status ? 'success' : 'danger'">{{ scope.row.status ? '成功' : '失败' }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作信息" align="center" prop="msg"/>
+      <el-table-column label="登录日期" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -85,39 +89,35 @@
 </template>
 
 <script>
-  import {list} from "@/api/log/loginLog";
-  import initData from '@/mixins/initData'
+    import {list} from "@/api/log/loginLog";
+    import initData from '@/mixins/initData'
 
-  export default {
-    mixins: [initData],
-    data() {
-      return {
-        // 状态数据字典
-        statusOptions: [],
-        // 查询参数
-        queryParams: {
-          ip: undefined,
-          userName: undefined,
-          status: undefined
+    export default {
+        mixins: [initData],
+        data() {
+            return {
+                // 状态数据字典
+                statusOptions: [],
+                // 查询参数
+                queryParams: {
+                    ip: undefined,
+                    userName: undefined,
+                    status: undefined
+                }
+            };
+        },
+        created() {
+            this.$nextTick(() => {
+                this.init()
+            })
+        },
+        methods: {
+            beforeInit() {
+                this.base = '/log/loginLog';
+                this.modelName = '登录日志'
+                return true
+            },
         }
-      };
-    },
-    created() {
-      this.$nextTick(() => {
-        this.init()
-      })
-    },
-    methods: {
-      beforeInit() {
-        this.base = '/log/loginLog';
-        this.modelName = '登录日志'
-        return true
-      },
-      // 登录状态字典翻译
-      statusFormat(row, column) {
-        return this.selectDictLabel(this.statusOptions, row.status);
-      }
-    }
-  };
+    };
 </script>
 

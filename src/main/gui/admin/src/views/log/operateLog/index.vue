@@ -65,11 +65,16 @@
       <el-table-column label="操作人员" align="center" prop="operateName"/>
       <el-table-column label="主机" align="center" prop="ip" :show-overflow-tooltip="true"/>
       <el-table-column label="操作地点" align="center" prop="location"/>
-      <el-table-column label="操作状态" align="center" prop="status" :formatter="statusFormat"/>
+      <el-table-column align="center" prop="status" label="登录状态">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status ? 'success' : 'danger'">{{ scope.row.status ? '成功' : '失败' }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="cost" label="请求耗时" align="center">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.cost <= 300">{{ scope.row.cost }}ms</el-tag>
-          <el-tag v-else-if="scope.row.cost <= 1000" type="warning">{{ scope.row.time }}ms</el-tag>
+          <el-tag v-if="scope.row.cost ==null"><1ms</el-tag>
+          <el-tag v-else-if="scope.row.cost <= 300">{{ scope.row.cost }}ms</el-tag>
+          <el-tag v-else-if="scope.row.cost <= 1000" type="warning">{{ scope.row.cost }}ms</el-tag>
           <el-tag v-else type="danger">{{ scope.row.cost }}ms</el-tag>
         </template>
       </el-table-column>
@@ -127,15 +132,14 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="操作状态：">
-              <div v-if="form.status === 0">正常</div>
-              <div v-else-if="form.status === 1">失败</div>
+              <el-tag :type="form.status ? 'success' : 'danger'">{{ form.status ? '成功' : '失败' }}</el-tag>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="操作时间：">{{ parseTime(form.createTime) }}</el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="异常信息：" v-if="form.status === 1">{{ form.errorMsg }}</el-form-item>
+            <el-form-item label="异常信息：" v-if="form.status === false">{{ form.errorMsg }}</el-form-item>
           </el-col>
         </el-row>
       </el-form>
@@ -147,57 +151,57 @@
 </template>
 
 <script>
-  import {list} from "@/api/log/operateLog";
-  import initData from '@/mixins/initData'
+    import {list} from "@/api/log/operateLog";
+    import initData from '@/mixins/initData'
 
-  export default {
-    mixins: [initData],
-    data() {
-      return {
-        // 类型数据字典
-        typeOptions: [],
-        // 类型数据字典
-        statusOptions: [],
-        // 查询参数
-        queryParams: {
-          title: undefined,
-          operName: undefined,
-          businessType: undefined,
-          status: undefined
+    export default {
+        mixins: [initData],
+        data() {
+            return {
+                // 类型数据字典
+                typeOptions: [],
+                // 类型数据字典
+                statusOptions: [],
+                // 查询参数
+                queryParams: {
+                    title: undefined,
+                    operName: undefined,
+                    businessType: undefined,
+                    status: undefined
+                }
+            };
+        },
+        created() {
+            this.$nextTick(() => {
+                this.init()
+            })
+            this.getDicts("sys_oper_type").then(response => {
+                this.typeOptions = response.data;
+            });
+            this.getDicts("sys_common_status").then(response => {
+                this.statusOptions = response.data;
+            });
+        },
+        methods: {
+            beforeInit() {
+                this.base = '/log/operateLog';
+                this.modelName = '操作日志'
+                return true
+            },
+            // 操作日志状态字典翻译
+            statusFormat(row, column) {
+                return this.selectDictLabel(this.statusOptions, row.status);
+            },
+            // 操作日志类型字典翻译
+            typeFormat(row, column) {
+                return this.selectDictLabel(this.typeOptions, row.businessType);
+            },
+            /** 详细按钮操作 */
+            handleView(row) {
+                this.open = true;
+                this.form = row;
+            }
         }
-      };
-    },
-    created() {
-      this.$nextTick(() => {
-        this.init()
-      })
-      this.getDicts("sys_oper_type").then(response => {
-        this.typeOptions = response.data;
-      });
-      this.getDicts("sys_common_status").then(response => {
-        this.statusOptions = response.data;
-      });
-    },
-    methods: {
-      beforeInit() {
-        this.base = '/log/operateLog';
-        this.modelName = '操作日志'
-        return true
-      },
-      // 操作日志状态字典翻译
-      statusFormat(row, column) {
-        return this.selectDictLabel(this.statusOptions, row.status);
-      },
-      // 操作日志类型字典翻译
-      typeFormat(row, column) {
-        return this.selectDictLabel(this.typeOptions, row.businessType);
-      },
-      /** 详细按钮操作 */
-      handleView(row) {
-        this.open = true;
-        this.form = row;
-      }
-    }
-  };
+    };
 </script>
 

@@ -81,9 +81,9 @@ public class OperateLog extends BaseEntity {
     private String jsonResult;
 
     /**
-     * 操作状态（0正常 1异常）
+     * 操作状态（true正常 false异常）
      */
-    private Integer status;
+    private Boolean status;
 
     /**
      * 错误消息

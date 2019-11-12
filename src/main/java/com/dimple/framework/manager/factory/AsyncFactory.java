@@ -35,7 +35,7 @@ public class AsyncFactory {
      * @return 任务task
      */
     public static TimerTask recordLoginLog(final String username, final String status, final String message,
-                                             final Object... args) {
+                                           final Object... args) {
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         final String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
         return new TimerTask() {
@@ -64,9 +64,9 @@ public class AsyncFactory {
                 loginLog.setMsg(message);
                 // 日志状态
                 if (Constants.LOGIN_SUCCESS.equals(status) || Constants.LOGOUT.equals(status)) {
-                    loginLog.setStatus(Constants.SUCCESS);
+                    loginLog.setStatus(true);
                 } else if (Constants.LOGIN_FAIL.equals(status)) {
-                    loginLog.setStatus(Constants.FAIL);
+                    loginLog.setStatus(false);
                 }
                 // 插入数据
                 SpringUtils.getBean(LoginLogService.class).insertLoginLog(loginLog);
