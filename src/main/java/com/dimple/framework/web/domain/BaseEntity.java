@@ -19,7 +19,6 @@ import java.util.Map;
 @Data
 public class BaseEntity implements Serializable {
 
-
     /**
      * 搜索值
      */

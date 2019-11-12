@@ -130,5 +130,5 @@ public interface UserService {
      * @param userId 用户ID
      * @return 结果
      */
-    int deleteUserById(Long userId);
+    int deleteUserByIds(String userId);
 }

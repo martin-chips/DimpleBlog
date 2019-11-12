@@ -80,8 +80,8 @@ public class NoticeController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:notice:remove')")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{id}")
-    public AjaxResult remove(@PathVariable Long id) {
-        return toAjax(noticeService.deleteNoticeById(id));
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable String ids ) {
+        return toAjax(noticeService.deleteNoticeByIds(ids));
     }
 }

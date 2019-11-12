@@ -108,15 +108,11 @@ public class RoleController extends BaseController {
         return toAjax(roleService.updateRoleStatus(role));
     }
 
-    /**
-     * 删除岗位
-     */
     @PreAuthorize("@permissionService.hasPermission('system:role:remove')")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{id}")
-    public AjaxResult remove(@PathVariable Long id) {
-        roleService.checkRoleAllowed(new Role(id));
-        return toAjax(roleService.deleteRoleById(id));
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable String ids) {
+        return toAjax(roleService.deleteRoleByIds(ids));
     }
 
     /**

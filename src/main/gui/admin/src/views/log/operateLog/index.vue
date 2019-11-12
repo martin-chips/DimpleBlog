@@ -38,13 +38,32 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" style="width: 100%;">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple"
+                   @click="handleDelete">删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading"
+                   @click="handleClean">清空
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="warning" icon="el-icon-download" size="mini"
+                   @click="handleExport">导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
       <el-table-column label="日志编号" align="center" prop="id"/>
       <el-table-column label="系统模块" align="center" prop="title"/>
       <el-table-column label="操作类型" align="center" prop="businessType" :formatter="typeFormat"/>
       <el-table-column label="请求方式" align="center" prop="requestMethod"/>
       <el-table-column label="操作人员" align="center" prop="operateName"/>
-      <el-table-column label="主机" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
+      <el-table-column label="主机" align="center" prop="ip" :show-overflow-tooltip="true"/>
       <el-table-column label="操作地点" align="center" prop="location"/>
       <el-table-column label="操作状态" align="center" prop="status" :formatter="statusFormat"/>
       <el-table-column prop="cost" label="请求耗时" align="center">
@@ -54,23 +73,33 @@
           <el-tag v-else type="danger">{{ scope.row.cost }}ms</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作日期" align="center" prop="operateTime" width="180">
+      <el-table-column label="操作日期" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.operateTime) }}</span>
+          <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view"
-                     @click="handleView(scope.row,scope.index)"
-          >详细
+                     @click="handleView(scope.row,scope.index)">详细
           </el-button>
+          <el-popover :ref="scope.row.id" placement="top" width="180">
+            <p>确定删除本条数据吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消
+              </el-button>
+              <el-button :loading="delLoading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
+              </el-button>
+            </div>
+            <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除
+            </el-button>
+          </el-popover>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+                @pagination="init"/>
 
     <!-- 操作日志详细 -->
     <el-dialog :close-on-click-modal="false" title="操作日志详细" :visible.sync="open" width="700px">
@@ -103,7 +132,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="操作时间：">{{ parseTime(form.operateTime) }}</el-form-item>
+            <el-form-item label="操作时间：">{{ parseTime(form.createTime) }}</el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="异常信息：" v-if="form.status === 1">{{ form.errorMsg }}</el-form-item>
@@ -118,77 +147,57 @@
 </template>
 
 <script>
-    import {list} from "@/api/log/operateLog";
+  import {list} from "@/api/log/operateLog";
+  import initData from '@/mixins/initData'
 
-    export default {
-        data() {
-            return {
-                // 遮罩层
-                loading: true,
-                // 总条数
-                total: 0,
-                // 表格数据
-                list: [],
-                // 是否显示弹出层
-                open: false,
-                // 类型数据字典
-                typeOptions: [],
-                // 类型数据字典
-                statusOptions: [],
-                // 日期范围
-                dateRange: [],
-                // 表单参数
-                form: {},
-                // 查询参数
-                queryParams: {
-                    pageNum: 1,
-                    pageSize: 10,
-                    title: undefined,
-                    operName: undefined,
-                    businessType: undefined,
-                    status: undefined
-                }
-            };
-        },
-        created() {
-            this.getList();
-            this.getDicts("sys_oper_type").then(response => {
-                this.typeOptions = response.data;
-            });
-            this.getDicts("sys_common_status").then(response => {
-                this.statusOptions = response.data;
-            });
-        },
-        methods: {
-            /** 查询登录日志 */
-            getList() {
-                this.loading = true;
-                list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-                        this.list = response.rows;
-                        this.total = response.total;
-                        this.loading = false;
-                    }
-                );
-            },
-            // 操作日志状态字典翻译
-            statusFormat(row, column) {
-                return this.selectDictLabel(this.statusOptions, row.status);
-            },
-            // 操作日志类型字典翻译
-            typeFormat(row, column) {
-                return this.selectDictLabel(this.typeOptions, row.businessType);
-            },
-            /** 搜索按钮操作 */
-            handleQuery() {
-                this.queryParams.pageNum = 1;
-                this.getList();
-            },
-            /** 详细按钮操作 */
-            handleView(row) {
-                this.open = true;
-                this.form = row;
-            }
+  export default {
+    mixins: [initData],
+    data() {
+      return {
+        // 类型数据字典
+        typeOptions: [],
+        // 类型数据字典
+        statusOptions: [],
+        // 查询参数
+        queryParams: {
+          title: undefined,
+          operName: undefined,
+          businessType: undefined,
+          status: undefined
         }
-    };
+      };
+    },
+    created() {
+      this.$nextTick(() => {
+        this.init()
+      })
+      this.getDicts("sys_oper_type").then(response => {
+        this.typeOptions = response.data;
+      });
+      this.getDicts("sys_common_status").then(response => {
+        this.statusOptions = response.data;
+      });
+    },
+    methods: {
+      beforeInit() {
+        this.base = '/log/operateLog';
+        this.modelName = '操作日志'
+        return true
+      },
+      // 操作日志状态字典翻译
+      statusFormat(row, column) {
+        return this.selectDictLabel(this.statusOptions, row.status);
+      },
+      // 操作日志类型字典翻译
+      typeFormat(row, column) {
+        return this.selectDictLabel(this.typeOptions, row.businessType);
+      },
+      /** 详细按钮操作 */
+      handleView(row) {
+        this.open = true;
+        this.form = row;
+      }
+    }
+  };
 </script>
 

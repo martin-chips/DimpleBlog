@@ -1,6 +1,7 @@
 package com.dimple.project.log.mapper;
 
 import com.dimple.project.log.domain.OperateLog;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -29,21 +30,22 @@ public interface OperateLogMapper {
     /**
      * 批量删除系统操作日志
      *
-     * @param ids 需要删除的数据
+     * @param ids      需要删除的数据
+     * @param username
      * @return 结果
      */
-    int deleteOperateLogByIds(String[] ids);
+    int deleteOperateLogByIds(@Param("ids") Long[] ids, @Param("username") String username);
 
     /**
      * 查询操作日志详细
      *
-     * @param operId 操作ID
+     * @param id 操作ID
      * @return 操作日志对象
      */
-    OperateLog selectOperateLogById(Long operId);
+    OperateLog selectOperateLogById(Long id);
 
     /**
      * 清空操作日志
      */
-    void cleanOperateLog();
+    void cleanOperateLog(String username);
 }

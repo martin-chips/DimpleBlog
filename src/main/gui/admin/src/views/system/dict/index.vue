@@ -25,13 +25,35 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">
-          新增
-        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="typeList" style="width: 100%;">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="primary" icon="el-icon-plus" size="mini"
+                   @click="handleAdd">新增
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single"
+                   @click="handleUpdate(null)">修改
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple"
+                   @click="handleDelete">删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="warning" icon="el-icon-download" size="mini"
+                   @click="handleExport">导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
       <el-table-column label="字典主键" align="center" prop="id"/>
       <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true"/>
       <el-table-column label="字典类型" align="center">
@@ -51,8 +73,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit"
-                     @click="handleUpdate(scope.row)"
-          >修改
+                     @click="handleUpdate(scope.row)">修改
           </el-button>
           <el-popover :ref="scope.row.id" placement="top" width="180">
             <p>确定删除本条数据吗？</p>
@@ -70,7 +91,7 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+                @pagination="init"/>
 
     <!-- 添加或修改字典对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
@@ -105,34 +126,20 @@
 
 <script>
   import {listType, getType, delType, addType, updateType} from "@/api/system/dict/type";
+  import initData from '@/mixins/initData'
 
   export default {
+    mixins: [initData],
     data() {
       return {
-        // 遮罩层
-        loading: true,
-        // 总条数
-        total: 0,
-        // 字典表格数据
-        typeList: [],
-        // 弹出层标题
-        title: "",
-        // 是否显示弹出层
-        open: false,
         // 状态数据字典
         statusOptions: [],
-        // 日期范围
-        dateRange: [],
         // 查询参数
         queryParams: {
-          pageNum: 1,
-          pageSize: 10,
           dictName: undefined,
           dictType: undefined,
           status: undefined
         },
-        // 表单参数
-        form: {},
         // 表单校验
         rules: {
           dictName: [
@@ -145,127 +152,23 @@
       };
     },
     created() {
-      this.getList();
+      this.$nextTick(() => {
+        this.init()
+      })
       this.getDicts("sys_normal_disable").then(response => {
         this.statusOptions = response.data;
       });
     },
     methods: {
-      /** 单条删除 */
-      handleSubDelete(id) {
-        this.loading = true;
-        delType(id).then((response) => {
-          this.$refs[id].doClose()
-          this.loading = false;
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(err => {
-          this.msgError("删除失败");
-          this.$refs[id].doClose()
-          this.loading = false;
-        });
-      },
-      /** 查询字典类型列表 */
-      getList() {
-        this.loading = true;
-        listType(this.addDateRange(this.queryParams, this.dateRange)).then(
-          response => {
-            this.typeList = response.rows;
-            this.total = response.total;
-            this.loading = false;
-          }
-        );
+      beforeInit() {
+        this.base = '/system/dict/type';
+        this.modelName = '字典'
+        return true
       },
       // 字典状态字典翻译
       statusFormat(row, column) {
         return this.selectDictLabel(this.statusOptions, row.status);
       },
-      // 取消按钮
-      cancel() {
-        this.open = false;
-        this.reset();
-      },
-      // 表单重置
-      reset() {
-        this.form = {
-          id: undefined,
-          dictName: undefined,
-          dictType: undefined,
-          status: "0",
-          remark: undefined
-        };
-        this.resetForm("form");
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
-      },
-      /** 新增按钮操作 */
-      handleAdd() {
-        this.reset();
-        this.open = true;
-        this.title = "添加字典类型";
-      },
-      /** 修改按钮操作 */
-      handleUpdate(row) {
-        this.reset();
-        getType(row.id).then(response => {
-          this.form = response.data;
-          this.open = true;
-          this.title = "修改字典类型";
-        });
-      },
-      /** 提交按钮 */
-      submitForm: function () {
-        this.$refs["form"].validate(valid => {
-          if (valid) {
-            if (this.form.id != undefined) {
-              updateType(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("修改成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
-                }
-              });
-            } else {
-              addType(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("新增成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
-                }
-              });
-            }
-          }
-        });
-      },
-      /** 删除按钮操作 */
-      handleDelete(row) {
-        this.$confirm('是否确认删除名称为"' + row.dictName + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return delType(row.id);
-        }).then((response) => {
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("刪除失败");
-          }
-          this.getList();
-        }).catch(function () {
-        });
-      }
     }
   };
 </script>

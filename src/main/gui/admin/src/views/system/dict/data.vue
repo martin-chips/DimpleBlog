@@ -27,13 +27,35 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">
-          新增
-        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="dataList" style="width: 100%;">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="primary" icon="el-icon-plus" size="mini"
+                   @click="handleAdd">新增
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single"
+                   @click="handleUpdate(null)">修改
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple"
+                   @click="handleDelete">删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="warning" icon="el-icon-download" size="mini"
+                   @click="handleExport">导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
       <el-table-column label="字典编码" align="center" prop="dictCode"/>
       <el-table-column label="字典标签" align="center" prop="dictLabel"/>
       <el-table-column label="字典键值" align="center" prop="dictValue"/>
@@ -66,7 +88,7 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+                @pagination="init"/>
 
     <!-- 添加或修改字典对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
@@ -108,34 +130,22 @@
 <script>
   import {listData, getData, delData, addData, updateData} from "@/api/system/dict/data";
   import {listType, getType} from "@/api/system/dict/type";
+  import initData from '@/mixins/initData'
 
   export default {
+    mixins: [initData],
     data() {
       return {
-        // 遮罩层
-        loading: true,
-        // 总条数
-        total: 0,
-        // 字典表格数据
-        dataList: [],
-        // 弹出层标题
-        title: "",
-        // 是否显示弹出层
-        open: false,
         // 状态数据字典
         statusOptions: [],
         // 类型数据字典
         typeOptions: [],
         // 查询参数
         queryParams: {
-          pageNum: 1,
-          pageSize: 10,
           dictName: undefined,
           dictType: undefined,
           status: undefined
         },
-        // 表单参数
-        form: {},
         // 表单校验
         rules: {
           dictLabel: [
@@ -159,24 +169,6 @@
       });
     },
     methods: {
-      /** 单条删除 */
-      handleSubDelete(dictCode) {
-        this.loading = true;
-        delData(dictCode).then((response) => {
-          this.$refs[id].doClose()
-          this.loading = false;
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(err => {
-          this.msgError("删除失败");
-          this.$refs[dictCode].doClose()
-          this.loading = false;
-        });
-      },
       /** 查询字典类型详细 */
       getType(dictId) {
         getType(dictId).then(response => {
@@ -202,28 +194,6 @@
       // 数据状态字典翻译
       statusFormat(row, column) {
         return this.selectDictLabel(this.statusOptions, row.status);
-      },
-      // 取消按钮
-      cancel() {
-        this.open = false;
-        this.reset();
-      },
-      // 表单重置
-      reset() {
-        this.form = {
-          dictCode: undefined,
-          dictLabel: undefined,
-          dictValue: undefined,
-          dictSort: 0,
-          status: "0",
-          remark: undefined
-        };
-        this.resetForm("form");
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
       },
       /** 新增按钮操作 */
       handleAdd() {
@@ -267,24 +237,6 @@
               });
             }
           }
-        });
-      },
-      /** 删除按钮操作 */
-      handleDelete(row) {
-        this.$confirm('是否确认删除名称为"' + row.dictLabel + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return delData(row.dictCode);
-        }).then((response) => {
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(function () {
         });
       }
     }

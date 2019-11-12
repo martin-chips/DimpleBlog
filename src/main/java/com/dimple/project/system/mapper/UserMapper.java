@@ -64,10 +64,10 @@ public interface UserMapper {
     /**
      * 通过用户ID删除用户
      *
-     * @param userId 用户ID
+     * @param ids 用户ID
      * @return 结果
      */
-    int deleteUserById(@Param("userId") Long userId, @Param("loginUsername") String loginUsername);
+    int deleteUserByIds(@Param("ids") Long[] ids, @Param("loginUsername") String loginUsername);
 
     /**
      * 校验用户名称是否唯一

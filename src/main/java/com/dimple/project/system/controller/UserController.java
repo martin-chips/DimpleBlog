@@ -101,10 +101,9 @@ public class UserController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:user:remove')")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{id}")
-    public AjaxResult remove(@PathVariable Long id) {
-        userService.checkUserAllowed(new SysUser(id));
-        return toAjax(userService.deleteUserById(id));
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable String ids) {
+        return toAjax(userService.deleteUserByIds(ids));
     }
 
     /**

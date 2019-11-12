@@ -28,7 +28,26 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" style="width: 100%;">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple"
+                   @click="handleDelete">删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading"
+                   @click="handleClean">清空
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="warning" icon="el-icon-download" size="mini"
+                   @click="handleExport">导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
       <el-table-column :show-overflow-tooltip="true" prop="jobName" label="任务名称"/>
       <el-table-column :show-overflow-tooltip="true" prop="beanName" label="Bean名称"/>
       <el-table-column :show-overflow-tooltip="true" prop="methodName" label="执行方法"/>
@@ -52,6 +71,21 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-popover :ref="scope.row.id" placement="top" width="180">
+            <p>确定删除本条数据吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消
+              </el-button>
+              <el-button :loading="delLoading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
+              </el-button>
+            </div>
+            <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除
+            </el-button>
+          </el-popover>
+        </template>
+      </el-table-column>
     </el-table>
 
     <el-dialog :close-on-click-modal="false" title="操作日志详细" :visible.sync="open" width="700px">
@@ -60,37 +94,26 @@
       </span>
     </el-dialog>
 
-    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" style="margin-top: 8px;"
-                @pagination="getList"/>
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+                style="margin-top: 8px;"
+                @pagination="init"/>
 
   </div>
 </template>
 
 <script>
   import {listQuartzJobLog} from "@/api/log/quartzLog";
+  import initData from '@/mixins/initData'
 
   export default {
+    mixins: [initData],
     data() {
       return {
-        // 遮罩层
-        loading: true,
         exception: '',
-        // 总条数
-        total: 0,
-        // 表格数据
-        list: [],
-        // 是否显示弹出层
-        open: false,
         // 类型数据字典
         statusOptions: [],
-        // 日期范围
-        dateRange: [],
-        // 表单参数
-        form: {},
         // 查询参数
         queryParams: {
-          pageNum: 1,
-          pageSize: 10,
           jobName: undefined,
           methodName: undefined,
           status: undefined
@@ -98,30 +121,22 @@
       };
     },
     created() {
-      this.getList();
+      this.$nextTick(() => {
+        this.init()
+      })
       this.getDicts("sys_common_status").then(response => {
         this.statusOptions = response.data;
       });
     },
     methods: {
-      /** 查询登录日志 */
-      getList() {
-        this.loading = true;
-        listQuartzJobLog(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-            this.list = response.rows;
-            this.total = response.total;
-            this.loading = false;
-          }
-        );
+      beforeInit() {
+        this.base = '/log/quartzLog';
+        this.modelName = '任务日志'
+        return true
       },
       getExceptionInfo(exception) {
         this.exception = exception;
         this.open = true;
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
       },
     }
   };

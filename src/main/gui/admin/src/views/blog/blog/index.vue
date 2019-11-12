@@ -20,7 +20,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="推荐">
-        <el-select v-model="queryParams.status" placeholder="推荐" clearable size="small">
+        <el-select v-model="queryParams.support" placeholder="推荐" clearable size="small">
           <el-option
             v-for="dict in supportOptions"
             :key="dict.dictValue"
@@ -35,15 +35,51 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <router-link to="blog/add" class="link-type">
-          <el-button type="primary" icon="el-icon-plus" size="mini"
-          >新增
-          </el-button>
-        </router-link>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="blogList">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <router-link to="blog/add" class="link-type">
+          <el-button type="primary" icon="el-icon-plus" size="mini">新增
+          </el-button>
+        </router-link>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="success"
+          icon="el-icon-edit"
+          size="mini"
+          :disabled="single"
+          @click="handleUpdate(null)"
+        >修改
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="danger"
+          icon="el-icon-delete"
+          size="mini"
+          :loading="delLoading"
+          :disabled="multiple"
+          @click="handleDelete"
+        >删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+        >导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
       <el-table-column label="博客主键" prop="id"/>
       <el-table-column label="标题" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="分类" prop="category.title">
@@ -143,7 +179,7 @@
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消
               </el-button>
-              <el-button :loading="loading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
+              <el-button :loading="delLoading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
               </el-button>
             </div>
             <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除
@@ -154,46 +190,28 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+                @pagination="init"/>
   </div>
 </template>
 
 <script>
   import {listBlog, delBlog, changeBlogSupport, changeBlogComment} from "@/api/blog/blog";
+  import initData from '@/mixins/initData'
 
   export default {
+    mixins: [initData],
     data() {
       return {
-        // 遮罩层
-        loading: true,
-        // 总条数
-        total: 0,
-        // 博客表格数据
-        blogList: [],
-        // 弹出层标题
-        title: "",
-        // 是否显示弹出层
-        open: false,
-        // 日期范围
-        dateRange: [],
         // 状态数据字典
         statusOptions: [],
         //推荐数据字典
         supportOptions: [],
         // 查询参数
         queryParams: {
-          pageNum: 1,
-          pageSize: 10,
           title: undefined,
           summary: undefined,
           status: undefined,
           comment: undefined
-        },
-        // 表单参数
-        form: {},
-        defaultProps: {
-          children: "children",
-          label: "label"
         },
         // 表单校验
         rules: {
@@ -210,43 +228,21 @@
       };
     },
     created() {
-      this.getList();
-      this.getDicts("bg_blog_status").then(response => {
-        this.statusOptions = response.data;
-      });
-      this.getDicts("bg_blog_support").then(response => {
-        this.supportOptions = response.data;
-      });
+      this.$nextTick(() => {
+        this.init();
+        this.getDicts("bg_blog_status").then(response => {
+          this.statusOptions = response.data;
+        });
+        this.getDicts("bg_blog_support").then(response => {
+          this.supportOptions = response.data;
+        });
+      })
     },
     methods: {
-      /** 单条删除 */
-      handleSubDelete(id) {
-        this.loading = true;
-        delBlog(id).then((response) => {
-          this.$refs[id].doClose()
-          this.loading = false;
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(err => {
-          this.msgError("删除失败");
-          this.$refs[id].doClose()
-          this.loading = false;
-        });
-      },
-      /** 查询博客列表 */
-      getList() {
-        this.loading = true;
-        listBlog(this.addDateRange(this.queryParams, this.dateRange)).then(
-          response => {
-            this.blogList = response.rows;
-            this.total = response.total;
-            this.loading = false;
-          }
-        );
+      beforeInit() {
+        this.base = '/blog/blog';
+        this.modelName = '博客'
+        return true
       },
       // 博客状态修改
       handleCommentChange(row) {
@@ -258,7 +254,6 @@
         }).then(function () {
           return changeBlogComment(row.id, row.comment);
         }).then((response) => {
-          console.log(response)
           if (response.code == 200) {
             this.msgSuccess(text + "成功");
           } else {
@@ -284,29 +279,6 @@
           }
         }).catch(function () {
           row.support = row.support === false ? true : false;
-        });
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
-      },
-      /** 删除按钮操作 */
-      handleDelete(row) {
-        this.$confirm('是否确认删除名称为"' + row.title + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return delBlog(row.id);
-        }).then((response) => {
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(function () {
         });
       }
     }

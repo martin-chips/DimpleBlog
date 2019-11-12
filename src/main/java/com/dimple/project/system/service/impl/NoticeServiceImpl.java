@@ -1,5 +1,6 @@
 package com.dimple.project.system.service.impl;
 
+import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.system.domain.Notice;
 import com.dimple.project.system.mapper.NoticeMapper;
@@ -41,8 +42,8 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public int deleteNoticeById(Long noticeId) {
+    public int deleteNoticeByIds(String ids) {
         String loginUsername = SecurityUtils.getUsername();
-        return noticeMapper.deleteNoticeById(noticeId, loginUsername);
+        return noticeMapper.deleteNoticeByIds(ConvertUtils.toLongArray(ids), loginUsername);
     }
 }

@@ -1,6 +1,7 @@
 package com.dimple.project.log.mapper;
 
 import com.dimple.project.log.domain.LoginLog;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -32,13 +33,14 @@ public interface LoginLogMapper {
      * @param ids 需要删除的数据
      * @return 结果
      */
-    int deleteLoginLogByIds(String[] ids);
+    int deleteLoginLogByIds(@Param("ids") String[] ids, @Param("username") String username);
 
     /**
      * f
      * 清空系统登录日志
      *
+     * @param username 操作者
      * @return 结果
      */
-    int cleanLoginLog();
+    int cleanLoginLog(String username);
 }

@@ -46,7 +46,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public int deleteLinkByIds(String ids) {
         String username = SecurityUtils.getUsername();
-        return linkMapper.deleteLinkByIds(ConvertUtils.toStrArray(ids), username);
+        return linkMapper.deleteLinkByIds(ConvertUtils.toLongArray(ids), username);
     }
 
     @Override

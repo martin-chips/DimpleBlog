@@ -1,6 +1,7 @@
 package com.dimple.project.log.service.impl;
 
 import com.dimple.common.utils.ConvertUtils;
+import com.dimple.common.utils.SecurityUtils;
 import com.dimple.framework.redis.RedisCacheService;
 import com.dimple.project.log.domain.LoginLog;
 import com.dimple.project.log.mapper.LoginLogMapper;
@@ -55,7 +56,8 @@ public class LoginLogServiceImpl implements LoginLogService {
      */
     @Override
     public int deleteLoginLogByIds(String ids) {
-        return loginLogMapper.deleteLoginLogByIds(ConvertUtils.toStrArray(ids));
+        String username = SecurityUtils.getUsername();
+        return loginLogMapper.deleteLoginLogByIds(ConvertUtils.toStrArray(ids), username);
     }
 
     /**
@@ -63,6 +65,6 @@ public class LoginLogServiceImpl implements LoginLogService {
      */
     @Override
     public void cleanLoginLog() {
-        loginLogMapper.cleanLoginLog();
+        loginLogMapper.cleanLoginLog(SecurityUtils.getUsername());
     }
 }

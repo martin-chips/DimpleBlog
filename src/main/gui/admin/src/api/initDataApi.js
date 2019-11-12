@@ -9,10 +9,18 @@ export function list(url, params) {
   })
 }
 
-//通用的表格单条数据删除
-export function del(url, id) {
+//通用的表格数据删除
+export function del(url, ids) {
   return request({
-    url: url + "/" + id,
+    url: url + "/" + ids,
+    method: 'delete',
+  })
+}
+
+//通用表格数据清空
+export function clean(url) {
+  return request({
+    url: url + "/clean",
     method: 'delete',
   })
 }

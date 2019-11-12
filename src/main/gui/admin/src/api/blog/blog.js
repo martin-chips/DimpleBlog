@@ -49,8 +49,13 @@ export function changeBlogSupport(id, support) {
     id: id,
     support: support
   }
-  return updateBlog(data);
+  return request({
+    url: '/blog/blog/support',
+    method: 'put',
+    data: data
+  })
 }
+
 
 // 修改博客评论
 export function changeBlogComment(id, comment) {
@@ -58,7 +63,11 @@ export function changeBlogComment(id, comment) {
     id: id,
     comment: comment
   }
-  return updateBlog(data);
+  return request({
+    url: '/blog/blog/comment',
+    method: 'put',
+    data: data
+  })
 }
 
 //获取Blog Tag

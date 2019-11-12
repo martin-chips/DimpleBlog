@@ -30,12 +30,6 @@
         <if test="description != null and description != ''">
             and description = #{description}
         </if>
-        <if test="click != null">
-            and click = #{click}
-        </if>
-        <if test="imgUrl != null and imgUrl != ''">
-            and img_url = #{imgUrl}
-        </if>
         <if test="display != null">
             and display = #{display}
         </if>
@@ -52,8 +46,21 @@
 
     <!--新增所有列-->
     <insert id="insertCarousel" keyProperty="id" useGeneratedKeys="true">
-        insert into sys_carousel(description, click, img_url, display, target, create_by, create_time, update_by, update_time, delete_by, delete_time)
-        values (#{description}, #{click}, #{imgUrl}, #{display}, #{target}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{deleteBy}, #{deleteTime})
+        insert into sys_carousel (
+        <if test="description != null and description != '' ">description,</if>
+        <if test="imageUrl != null and imageUrl != '' ">img_url,</if>
+        <if test="display != null and display != ''">display,</if>
+        <if test="target != null and target != ''">target,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="description != null and description != ''">#{description},</if>
+        <if test="imageUrl != null and imageUrl != ''">#{imageUrl},</if>
+        <if test="display != null and display != ''">#{display},</if>
+        <if test="target != null and target != ''">#{target},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
     </insert>
 
     <!--通过主键修改数据-->

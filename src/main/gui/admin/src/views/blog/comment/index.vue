@@ -15,13 +15,33 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" style="width: 100%;">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single"
+                   @click="handleUpdate(null)">修改
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple"
+                   @click="handleDelete">删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="warning" icon="el-icon-download" size="mini"
+                   @click="handleExport">导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
       <el-table-column label="评论编号" align="center" prop="id"/>
       <el-table-column label="昵称" align="center" prop="nickName"/>
-      <el-table-column label="主机" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
+      <el-table-column label="主机" align="center" prop="ip" :show-overflow-tooltip="true"/>
       <el-table-column label="操作地点" align="center" prop="location"/>
       <el-table-column label="显示" align="center">
         <template slot-scope="scope">
@@ -61,7 +81,7 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+                @pagination="init"/>
 
     <!-- 评论详细 -->
     <el-dialog :close-on-click-modal="false" title="评论详细" :visible.sync="open" width="700px">
@@ -114,26 +134,14 @@
     updateComment,
     changeCommentDisplay,
   } from "@/api/blog/comment";
+  import initData from '@/mixins/initData'
 
   export default {
+    mixins: [initData],
     data() {
       return {
-        // 遮罩层
-        loading: true,
-        // 总条数
-        total: 0,
-        // 表格数据
-        list: [],
-        // 是否显示弹出层
-        open: false,
-        // 日期范围
-        dateRange: [],
-        // 表单参数
-        form: {},
         // 查询参数
         queryParams: {
-          pageNum: 1,
-          pageSize: 10,
           nickName: undefined,
           display: undefined,
           location: undefined,
@@ -141,26 +149,15 @@
       };
     },
     created() {
-      this.getList();
+      this.$nextTick(() => {
+        this.init()
+      })
     },
     methods: {
-      /** 单条删除 */
-      handleSubDelete(id) {
-        this.loading = true;
-        delComment(id).then((response) => {
-          this.$refs[id].doClose()
-          this.loading = false;
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(err => {
-          this.msgError("删除失败");
-          this.$refs[id].doClose()
-          this.loading = false;
-        });
+      beforeInit() {
+        this.base = '/blog/comment';
+        this.modelName = '评论'
+        return true
       },
       handleDisplayChange(row) {
         let text = row.display ? "显示" : "隐藏";
@@ -176,53 +173,11 @@
           row.display = row.display === false ? true : false;
         });
       },
-      /** 查询登录日志 */
-      getList() {
-        this.loading = true;
-        listComment(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-            this.list = response.rows;
-            this.total = response.total;
-            this.loading = false;
-          }
-        );
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
-      },
       /** 详细按钮操作 */
       handleView(row) {
         this.open = true;
         this.form = row;
       },
-      /** 修改按钮操作 */
-      handleUpdate(row) {
-        this.reset();
-        getComment(row.id).then(response => {
-          this.form = response.data;
-          this.open = true;
-          this.title = "修改分类";
-        });
-      },
-      /** 删除按钮操作 */
-      handleDelete(row) {
-        this.$confirm('是否确认删除名称为"' + row.nickName + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return delComment(row.id);
-        }).then((response) => {
-          if (response.code == 200) {
-            this.getList();
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-        }).catch(function () {
-        });
-      }
     }
   };
 </script>

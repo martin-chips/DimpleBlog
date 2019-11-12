@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * @className: LoginLog
  * @description: 系统访问记录表 sys_loginLog
@@ -60,10 +58,6 @@ public class LoginLog extends BaseEntity {
      */
     private String msg;
 
-    /**
-     * 访问时间
-     */
-    private Date loginTime;
     /**
      * token 信息
      */

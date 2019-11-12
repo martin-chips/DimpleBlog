@@ -145,8 +145,11 @@
  		update sys_user set password = #{password} where user_name = #{userName}
 	</update>
 
-    <delete id="deleteUserById">
- 		update sys_user set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{id}
- 	</delete>
+    <delete id="deleteUserByIds">
+        update sys_user set delete_by =#{loginUsername} , delete_time= sysdate() where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper> 

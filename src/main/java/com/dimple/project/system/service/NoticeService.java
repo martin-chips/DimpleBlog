@@ -49,5 +49,5 @@ public interface NoticeService {
      * @param noticeId 公告ID
      * @return 结果
      */
-    int deleteNoticeById(Long noticeId);
+    int deleteNoticeByIds(String noticeId);
 }

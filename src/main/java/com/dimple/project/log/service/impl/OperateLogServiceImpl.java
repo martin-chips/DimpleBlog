@@ -1,6 +1,7 @@
 package com.dimple.project.log.service.impl;
 
 import com.dimple.common.utils.ConvertUtils;
+import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.log.domain.OperateLog;
 import com.dimple.project.log.mapper.OperateLogMapper;
 import com.dimple.project.log.service.OperateLogService;
@@ -49,7 +50,8 @@ public class OperateLogServiceImpl implements OperateLogService {
      */
     @Override
     public int deleteOperateLogByIds(String ids) {
-        return operateLogMapper.deleteOperateLogByIds(ConvertUtils.toStrArray(ids));
+        String username = SecurityUtils.getUsername();
+        return operateLogMapper.deleteOperateLogByIds(ConvertUtils.toLongArray(ids), username);
     }
 
     /**
@@ -68,6 +70,6 @@ public class OperateLogServiceImpl implements OperateLogService {
      */
     @Override
     public void cleanOperateLog() {
-        operateLogMapper.cleanOperateLog();
+        operateLogMapper.cleanOperateLog(SecurityUtils.getUsername());
     }
 }

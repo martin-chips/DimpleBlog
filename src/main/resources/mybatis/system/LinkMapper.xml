@@ -101,7 +101,7 @@
 
     <delete id="deleteLinkByIds">
         update sys_link set delete_time = sysdate() , delete_by =#{username} where id in
-        <foreach item="id" collection="id" open="(" separator="," close=")">
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>

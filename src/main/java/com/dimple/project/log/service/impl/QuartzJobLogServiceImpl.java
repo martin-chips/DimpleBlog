@@ -1,5 +1,7 @@
 package com.dimple.project.log.service.impl;
 
+import com.dimple.common.utils.ConvertUtils;
+import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.log.mapper.QuartzJobLogMapper;
 import com.dimple.project.log.service.QuartzJobLogService;
 import com.dimple.project.log.domain.QuartzJobLog;
@@ -30,4 +32,15 @@ public class QuartzJobLogServiceImpl implements QuartzJobLogService {
         return quartzJobLogMapper.selectQuartzJobLogList(quartzJobLog);
     }
 
+    @Override
+    public int deleteQuartzJobLogByIds(String ids) {
+        String username = SecurityUtils.getUsername();
+        return quartzJobLogMapper.deleteQuartzJobLogByIds(ConvertUtils.toLongArray(ids), username);
+    }
+
+    @Override
+    public void cleanQuartzJobLog() {
+        String username = SecurityUtils.getUsername();
+        quartzJobLogMapper.cleanQuartzJobLog(username);
+    }
 }

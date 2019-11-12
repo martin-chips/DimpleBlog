@@ -94,9 +94,9 @@ public interface RoleMapper {
     /**
      * 通过角色ID删除角色
      *
-     * @param roleId 角色ID
+     * @param ids 角色ID
      * @return 结果
      */
-    int deleteRoleById(@Param("roleId") Long roleId, @Param("loginUsername") String loginUsername);
+    int deleteRoleByIds(@Param("ids") Long[] ids, @Param("username") String username);
 
 }

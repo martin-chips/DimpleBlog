@@ -4,8 +4,6 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @className: OperateLog
  * @description: 操作日志记录表 SysOperateLog
@@ -91,11 +89,6 @@ public class OperateLog extends BaseEntity {
      * 错误消息
      */
     private String errorMsg;
-
-    /**
-     * 操作时间
-     */
-    private Date operateTime;
 
     /**
      * 耗时

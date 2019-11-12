@@ -70,6 +70,20 @@ public class BlogController extends BaseController {
         return toAjax(blogService.updateBlog(blog));
     }
 
+    @PreAuthorize("@permissionService.hasPermission('blog:blog:edit')")
+    @Log(title = "博客管理", businessType = BusinessType.UPDATE)
+    @PutMapping("support")
+    public AjaxResult editSupport(@RequestBody Blog blog) {
+        return toAjax(blogService.updateBlog(blog));
+    }
+
+    @PreAuthorize("@permissionService.hasPermission('blog:blog:edit')")
+    @Log(title = "博客管理", businessType = BusinessType.UPDATE)
+    @PutMapping("comment")
+    public AjaxResult editComment(@RequestBody Blog blog) {
+        return toAjax(blogService.updateBlog(blog));
+    }
+
     @PreAuthorize("@permissionService.hasPermission('blog:blog:query')")
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable Long id) {

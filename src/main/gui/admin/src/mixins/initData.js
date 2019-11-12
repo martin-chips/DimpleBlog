@@ -1,8 +1,10 @@
-import {list, del, add, update, get} from "@/api/initDataApi";
+import {list, del, add, update, clean} from "@/api/initDataApi";
 
 export default {
   data() {
     return {
+      //弹框的标题
+      title: '',
       //类别
       modalName: '',
       // 选中数组
@@ -74,7 +76,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.row = selection[0];
-      this.ids = selection.map(item => item.id)
+      this.ids = selection.map(item => item.id);
       this.single = selection.length != 1
       this.multiple = !selection.length
     },
@@ -184,5 +186,29 @@ export default {
         $this.delLoading = false
       })
     },
+    /**清空数据*/
+    handleClean() {
+      this.delLoading = true;
+      let $this = this
+      this.$confirm('是否确认清空所有数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        clean($this.base).then(response => {
+          $this.delLoading = false
+          if (response.code == 200) {
+            $this.init();
+            $this.msgSuccess("清空成功");
+          } else {
+            $this.msgError("清空失败:" + response.msg);
+          }
+        }).catch(err => {
+          $this.delLoading = false
+        })
+      }).catch(err => {
+        $this.delLoading = false
+      })
+    }
   }
 }

@@ -1,23 +1,24 @@
 <template>
-  <div class="tags-view-container">
+  <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
       <router-link
         v-for="tag in visitedViews"
         ref="tag"
+        :key="tag.path"
         :class="isActive(tag)?'active':''"
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        :key="tag.path"
         tag="span"
         class="tags-view-item"
         @click.middle.native="closeSelectedTag(tag)"
-        @contextmenu.prevent.native="openMenu(tag,$event)">
+        @contextmenu.prevent.native="openMenu(tag,$event)"
+      >
         {{ tag.title }}
         <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)">刷新</li>
-      <li v-if="!(selectedTag.meta&&selectedTag.meta.affix)" @click="closeSelectedTag(selectedTag)">关闭</li>
+      <li @click="refreshSelectedTag(selectedTag)">刷新页面</li>
+      <li v-if="!(selectedTag.meta&&selectedTag.meta.affix)" @click="closeSelectedTag(selectedTag)">关闭当前</li>
       <li @click="closeOthersTags">关闭其他</li>
       <li @click="closeAllTags(selectedTag)">关闭所有</li>
     </ul>
@@ -27,7 +28,7 @@
 <script>
   import ScrollPane from './ScrollPane'
   import path from 'path'
-  import { constantRouterMap } from '@/router/routers'
+
   export default {
     components: { ScrollPane },
     data() {
@@ -35,18 +36,21 @@
         visible: false,
         top: 0,
         left: 0,
-        affixTags: [],
-        selectedTag: {}
+        selectedTag: {},
+        affixTags: []
       }
     },
     computed: {
       visitedViews() {
         return this.$store.state.tagsView.visitedViews
+      },
+      routes() {
+        return this.$store.state.permission.routes
       }
     },
     watch: {
       $route() {
-        this.addViewTags()
+        this.addTags()
         this.moveToCurrentTag()
       },
       visible(value) {
@@ -59,7 +63,7 @@
     },
     mounted() {
       this.initTags()
-      this.addViewTags()
+      this.addTags()
     },
     methods: {
       isActive(route) {
@@ -87,18 +91,18 @@
         return tags
       },
       initTags() {
-        const affixTags = this.affixTags = this.filterAffixTags(constantRouterMap)
+        const affixTags = this.affixTags = this.filterAffixTags(this.routes)
         for (const tag of affixTags) {
           // Must have tag name
           if (tag.name) {
-            this.$store.dispatch('addVisitedView', tag)
+            this.$store.dispatch('tagsView/addVisitedView', tag)
           }
         }
       },
-      addViewTags() {
+      addTags() {
         const { name } = this.$route
         if (name) {
-          this.$store.dispatch('addView', this.$route)
+          this.$store.dispatch('tagsView/addView', this.$route)
         }
         return false
       },
@@ -110,7 +114,7 @@
               this.$refs.scrollPane.moveToTarget(tag)
               // when query is different then update
               if (tag.to.fullPath !== this.$route.fullPath) {
-                this.$store.dispatch('updateVisitedView', this.$route)
+                this.$store.dispatch('tagsView/updateVisitedView', this.$route)
               }
               break
             }
@@ -118,7 +122,7 @@
         })
       },
       refreshSelectedTag(view) {
-        this.$store.dispatch('delCachedView', view).then(() => {
+        this.$store.dispatch('tagsView/delCachedView', view).then(() => {
           const { fullPath } = view
           this.$nextTick(() => {
             this.$router.replace({
@@ -128,25 +132,20 @@
         })
       },
       closeSelectedTag(view) {
-        this.$store.dispatch('delView', view).then(({ visitedViews }) => {
+        this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
           if (this.isActive(view)) {
-            const latestView = visitedViews.slice(-1)[0]
-            if (latestView) {
-              this.$router.push(latestView)
-            } else {
-              this.$router.push('/')
-            }
+            this.toLastView(visitedViews, view)
           }
         })
       },
       closeOthersTags() {
         this.$router.push(this.selectedTag)
-        this.$store.dispatch('delOthersViews', this.selectedTag).then(() => {
+        this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
           this.moveToCurrentTag()
         })
       },
       closeAllTags(view) {
-        this.$store.dispatch('delAllViews').then(({ visitedViews }) => {
+        this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
           if (this.affixTags.some(tag => tag.path === view.path)) {
             return
           }
@@ -160,7 +159,7 @@
         } else {
           // now the default is to redirect to the home page if there is no tags-view,
           // you can adjust it according to your needs.
-          if (view.name === '首页') {
+          if (view.name === 'Dashboard') {
             // to reload home page
             this.$router.replace({ path: '/redirect' + view.fullPath })
           } else {
@@ -174,11 +173,13 @@
         const offsetWidth = this.$el.offsetWidth // container width
         const maxLeft = offsetWidth - menuMinWidth // left boundary
         const left = e.clientX - offsetLeft + 15 // 15: margin right
+
         if (left > maxLeft) {
           this.left = maxLeft
         } else {
           this.left = left
         }
+
         this.top = e.clientY
         this.visible = true
         this.selectedTag = tag
@@ -190,7 +191,7 @@
   }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
   .tags-view-container {
     height: 34px;
     width: 100%;
@@ -237,7 +238,7 @@
   .contextmenu {
     margin: 0;
     background: #fff;
-    z-index: 100;
+    z-index: 3000;
     position: absolute;
     list-style-type: none;
     padding: 5px 0;
@@ -258,7 +259,7 @@
   }
 </style>
 
-<style rel="stylesheet/scss" lang="scss">
+<style lang="scss">
   //reset element css of el-icon-close
   .tags-view-wrapper {
   .tags-view-item {

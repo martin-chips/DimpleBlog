@@ -12,6 +12,7 @@ import com.dimple.project.system.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,9 +75,9 @@ public class LinkController extends BaseController {
 
     @PreAuthorize("@permissionService.hasPermission('blog:link:remove')")
     @Log(title = "友链管理", businessType = BusinessType.DELETE)
-    @PutMapping("/{id}")
-    public AjaxResult delete(@PathVariable Long id) {
-        return toAjax(linkService.deleteLinkById(id));
+    @DeleteMapping("/{ids}")
+    public AjaxResult delete(@PathVariable String ids) {
+        return toAjax(linkService.deleteLinkByIds(ids));
     }
 
 

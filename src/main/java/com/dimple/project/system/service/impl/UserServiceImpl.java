@@ -2,6 +2,7 @@ package com.dimple.project.system.service.impl;
 
 import com.dimple.common.constant.UserConstants;
 import com.dimple.common.exception.CustomException;
+import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.security.LoginUser;
@@ -183,10 +184,15 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public int deleteUserById(Long userId) {
-        // 删除用户与角色关联
-        userRoleMapper.deleteUserRoleByUserId(userId);
+    @Transactional
+    public int deleteUserByIds(String ids) {
+        Long[] userIds = ConvertUtils.toLongArray(ids);
+        for (Long userId : userIds) {
+            checkUserAllowed(new SysUser(userId));
+            // 删除用户与角色关联
+            userRoleMapper.deleteUserRoleByUserId(userId);
+        }
         String loginUsername = SecurityUtils.getUsername();
-        return userMapper.deleteUserById(userId, loginUsername);
+        return userMapper.deleteUserByIds(userIds, loginUsername);
     }
 }

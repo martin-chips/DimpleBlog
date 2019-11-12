@@ -28,7 +28,26 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" style="width: 100%;">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple"
+                   @click="handleDelete">删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading"
+                   @click="handleClean">清空
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="warning" icon="el-icon-download" size="mini"
+                   @click="handleExport">导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
       <el-table-column label="访问编号" align="center" prop="id"/>
       <el-table-column label="用户名称" align="center" prop="userName"/>
       <el-table-column label="登录地址" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
@@ -42,38 +61,41 @@
           <span>{{ parseTime(scope.row.loginTime) }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-popover :ref="scope.row.id" placement="top" width="180">
+            <p>确定删除本条数据吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消
+              </el-button>
+              <el-button :loading="delLoading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定
+              </el-button>
+            </div>
+            <el-button slot="reference" type="text" icon="el-icon-delete" size="mini">删除
+            </el-button>
+          </el-popover>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+      @pagination="init"/>
   </div>
 </template>
 
 <script>
   import {list} from "@/api/log/loginLog";
+  import initData from '@/mixins/initData'
 
   export default {
+    mixins: [initData],
     data() {
       return {
-        // 遮罩层
-        loading: true,
-        // 总条数
-        total: 0,
-        // 表格数据
-        list: [],
         // 状态数据字典
         statusOptions: [],
-        // 日期范围
-        dateRange: [],
         // 查询参数
         queryParams: {
-          pageNum: 1,
-          pageSize: 10,
           ip: undefined,
           userName: undefined,
           status: undefined
@@ -81,30 +103,19 @@
       };
     },
     created() {
-      this.getList();
-      this.getDicts("sys_common_status").then(response => {
-        this.statusOptions = response.data;
-      });
+      this.$nextTick(() => {
+        this.init()
+      })
     },
     methods: {
-      /** 查询登录日志列表 */
-      getList() {
-        this.loading = true;
-        list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-            this.list = response.rows;
-            this.total = response.total;
-            this.loading = false;
-          }
-        );
+      beforeInit() {
+        this.base = '/log/loginLog';
+        this.modelName = '登录日志'
+        return true
       },
       // 登录状态字典翻译
       statusFormat(row, column) {
         return this.selectDictLabel(this.statusOptions, row.status);
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
       }
     }
   };

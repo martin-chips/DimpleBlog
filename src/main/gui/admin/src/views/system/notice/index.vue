@@ -21,19 +21,41 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">
-          新增
-        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="noticeList">
-      <el-table-column label="序号" align="center" prop="id" width="100"/>
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="primary" icon="el-icon-plus" size="mini"
+                   @click="handleAdd">新增
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single"
+                   @click="handleUpdate(null)">修改
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple"
+                   @click="handleDelete">删除
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="warning" icon="el-icon-download" size="mini"
+                   @click="handleExport">导出
+        </el-button>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" align="center"/>
+      <el-table-column label="序号" align="center" prop="id"/>
       <el-table-column label="公告标题" align="center" prop="noticeTitle" :show-overflow-tooltip="true"/>
-      <el-table-column label="公告类型" align="center" prop="noticeType" :formatter="typeFormat" width="100"/>
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" width="100"/>
-      <el-table-column label="创建者" align="center" prop="createBy" width="100"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="100">
+      <el-table-column label="公告类型" align="center" prop="noticeType" :formatter="typeFormat"/>
+      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat"/>
+      <el-table-column label="创建者" align="center" prop="createBy"/>
+      <el-table-column label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
@@ -59,7 +81,7 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+                @pagination="init"/>
 
     <!-- 添加或修改公告对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="780px">
@@ -112,37 +134,25 @@
 <script>
   import {listNotice, getNotice, delNotice, addNotice, updateNotice} from "@/api/system/notice";
   import Editor from '@/components/Editor';
+  import initData from '@/mixins/initData'
 
   export default {
+    mixins: [initData],
     components: {
       Editor
     },
     data() {
       return {
-        // 遮罩层
-        loading: true,
-        // 总条数
-        total: 0,
-        // 公告表格数据
-        noticeList: [],
-        // 弹出层标题
-        title: "",
-        // 是否显示弹出层
-        open: false,
         // 类型数据字典
         statusOptions: [],
         // 状态数据字典
         typeOptions: [],
         // 查询参数
         queryParams: {
-          pageNum: 1,
-          pageSize: 10,
           noticeTitle: undefined,
           createBy: undefined,
           status: undefined
         },
-        // 表单参数
-        form: {},
         // 表单校验
         rules: {
           noticeTitle: [
@@ -155,7 +165,9 @@
       };
     },
     created() {
-      this.getList();
+      this.$nextTick(() => {
+        this.init()
+      })
       this.getDicts("sys_notice_status").then(response => {
         this.statusOptions = response.data;
       });
@@ -164,32 +176,10 @@
       });
     },
     methods: {
-      /** 单条删除 */
-      handleSubDelete(id) {
-        this.loading = true;
-        delNotice(id).then((response) => {
-          this.$refs[id].doClose()
-          this.loading = false;
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(err => {
-          this.msgError("删除失败");
-          this.$refs[id].doClose()
-          this.loading = false;
-        });
-      },
-      /** 查询公告列表 */
-      getList() {
-        this.loading = true;
-        listNotice(this.queryParams).then(response => {
-          this.noticeList = response.rows;
-          this.total = response.total;
-          this.loading = false;
-        });
+      beforeInit() {
+        this.base = '/system/notice';
+        this.modelName = '公告'
+        return true
       },
       // 公告状态字典翻译
       statusFormat(row, column) {
@@ -199,88 +189,6 @@
       typeFormat(row, column) {
         return this.selectDictLabel(this.typeOptions, row.noticeType);
       },
-      // 取消按钮
-      cancel() {
-        this.open = false;
-        this.reset();
-      },
-      // 表单重置
-      reset() {
-        this.form = {
-          id: undefined,
-          noticeTitle: undefined,
-          noticeType: undefined,
-          noticeContent: undefined,
-          status: "0"
-        };
-        this.resetForm("form");
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1;
-        this.getList();
-      },
-      /** 新增按钮操作 */
-      handleAdd() {
-        this.reset();
-        this.open = true;
-        this.title = "添加公告";
-      },
-      /** 修改按钮操作 */
-      handleUpdate(row) {
-        this.reset();
-        getNotice(row.id).then(response => {
-          this.form = response.data;
-          this.open = true;
-          this.title = "修改公告";
-        });
-      },
-      /** 提交按钮 */
-      submitForm: function () {
-        this.$refs["form"].validate(valid => {
-          if (valid) {
-            if (this.form.id != undefined) {
-              updateNotice(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("修改成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
-                }
-              });
-            } else {
-              addNotice(this.form).then(response => {
-                if (response.code === 200) {
-                  this.msgSuccess("新增成功");
-                  this.open = false;
-                  this.getList();
-                } else {
-                  this.msgError(response.msg);
-                }
-              });
-            }
-          }
-        });
-      },
-      /** 删除按钮操作 */
-      handleDelete(row) {
-        this.$confirm('是否确认删除公告标题为"' + row.noticeTitle + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return delNotice(row.id);
-        }).then((response) => {
-          if (response.code == 200) {
-            this.msgSuccess("删除成功");
-          } else {
-            this.msgError("删除失败");
-          }
-          this.getList();
-        }).catch(function () {
-        });
-      }
     }
   };
 </script>

@@ -47,8 +47,8 @@ public interface NoticeMapper {
     /**
      * 批量删除公告
      *
-     * @param noticeId 公告ID
+     * @param ids 公告ID
      * @return 结果
      */
-    int deleteNoticeById(@Param("noticeId") Long noticeId, @Param("loginUsername") String loginUsername);
+    int deleteNoticeByIds(@Param("ids") Long[] ids, @Param("loginUsername") String loginUsername);
 }

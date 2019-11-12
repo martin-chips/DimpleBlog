@@ -75,8 +75,11 @@
         where id = #{id}
     </update>
 
-    <delete id="deleteNoticeById">
-        update sys_notice set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{id}
+    <delete id="deleteNoticeByIds">
+        update sys_notice set delete_by =#{loginUsername} , delete_time= sysdate() where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
 
 </mapper>

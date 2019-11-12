@@ -58,5 +58,5 @@ public interface LinkMapper {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteLinkByIds(@Param("ids") String[] ids, @Param("username") String username);
+    int deleteLinkByIds(@Param("ids") Long[] ids, @Param("username") String username);
 }

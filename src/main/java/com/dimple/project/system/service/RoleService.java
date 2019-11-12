@@ -112,5 +112,5 @@ public interface RoleService {
      * @param roleId 角色ID
      * @return 结果
      */
-    int deleteRoleById(Long roleId);
+    int deleteRoleByIds(String roleId);
 }

@@ -1,6 +1,7 @@
 package com.dimple.project.log.mapper;
 
 import com.dimple.project.log.domain.QuartzJobLog;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -26,4 +27,20 @@ public interface QuartzJobLogMapper {
      * @return list
      */
     List<QuartzJobLog> selectQuartzJobLogList(QuartzJobLog quartzJobLog);
+
+    /**
+     * 根据id删除数据
+     *
+     * @param ids      id数组
+     * @param username 操作者
+     * @return 受影响的行数
+     */
+    int deleteQuartzJobLogByIds(@Param("ids") Long[] ids, @Param("username") String username);
+
+    /**
+     * 清空日志
+     *
+     * @param username 操作者
+     */
+    void cleanQuartzJobLog(String username);
 }

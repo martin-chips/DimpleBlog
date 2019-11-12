@@ -2,12 +2,14 @@ package com.dimple.project.system.service.impl;
 
 import com.dimple.common.constant.UserConstants;
 import com.dimple.common.exception.CustomException;
+import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.project.system.domain.Role;
 import com.dimple.project.system.domain.RoleMenu;
 import com.dimple.project.system.mapper.RoleMapper;
 import com.dimple.project.system.mapper.RoleMenuMapper;
+import com.dimple.project.system.mapper.UserRoleMapper;
 import com.dimple.project.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,9 +31,10 @@ import java.util.Set;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
-
     @Autowired
     private RoleMenuMapper roleMenuMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     @Override
     public List<Role> selectRoleList(Role role) {
@@ -145,16 +148,21 @@ public class RoleServiceImpl implements RoleService {
         return rows;
     }
 
-
-    /**
-     * 通过角色ID删除角色
-     *
-     * @param roleId 角色ID
-     * @return 结果
-     */
     @Override
-    public int deleteRoleById(Long roleId) {
+    public int deleteRoleByIds(String ids) {
+        Long[] roleIds = ConvertUtils.toLongArray(ids);
+        for (Long roleId : roleIds) {
+            checkRoleAllowed(new Role(roleId));
+            Role role = selectRoleById(roleId);
+            if (countUserRoleByRoleId(roleId) > 0) {
+                throw new CustomException(String.format("%1$s已分配,不能删除", role.getRoleName()));
+            }
+        }
         String loginUsername = SecurityUtils.getUsername();
-        return roleMapper.deleteRoleById(roleId, loginUsername);
+        return roleMapper.deleteRoleByIds(roleIds, loginUsername);
+    }
+
+    public int countUserRoleByRoleId(Long roleId) {
+        return userRoleMapper.countUserRoleByRoleId(roleId);
     }
 }

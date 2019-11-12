@@ -13,45 +13,44 @@
         <result property="browser" column="browser"/>
         <result property="os" column="os"/>
         <result property="msg" column="msg"/>
-        <result property="loginTime" column="login_time"/>
+        <result property="createTime" column="create_time"/>
     </resultMap>
 
     <insert id="insertLoginLog" parameterType="com.dimple.project.log.domain.LoginLog">
-		insert into sys_login_log (user_name, status, ip, location, browser, os, msg, login_time)
-		values (#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{msg}, sysdate())
+		insert into sys_login_log (user_name, status, ip, location, browser, os, msg, create_time,create_by)
+		values (#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{msg}, sysdate(),#{createBy})
 	</insert>
 
     <select id="selectLoginLogList" parameterType="com.dimple.project.log.domain.LoginLog"
             resultMap="SysLoginLogResult">
-        select id, user_name, ip, location, browser, os, status, msg, login_time from sys_login_log
-        <where>
-            <if test="ip != null and ip != ''">
-                AND ip like concat('%', #{ip}, '%')
-            </if>
-            <if test="status != null and status != ''">
-                AND status = #{status}
-            </if>
-            <if test="userName != null and userName != ''">
-                AND user_name like concat('%', #{userName}, '%')
-            </if>
-            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-                and date_format(login_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
-            </if>
-            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-                and date_format(login_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
-            </if>
-        </where>
+        select id, user_name, ip, location, browser, os, status, msg, create_time from sys_login_log
+        where delete_time is null
+        <if test="ip != null and ip != ''">
+            AND ip like concat('%', #{ip}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        <if test="userName != null and userName != ''">
+            AND user_name like concat('%', #{userName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
     </select>
 
-    <delete id="deleteLoginLogByIds" parameterType="String">
-        delete from sys_login_log where id in
-        <foreach collection="array" item="id" open="(" separator="," close=")">
+    <delete id="deleteLoginLogByIds">
+        update sys_login_log set delete_by = #{username},delete_time =sysdate() where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
 
     <update id="cleanLoginLog">
-        truncate table sys_login_log
+          update sys_login_log set delete_by = #{username},delete_time =sysdate()
     </update>
 
 </mapper> 

@@ -25,4 +25,17 @@ public interface QuartzJobLogService {
      * @return list
      */
     List<QuartzJobLog> selectQuartzJobLogList(QuartzJobLog quartzJobLog);
+
+    /**
+     * 根据id删除日志
+     *
+     * @param ids id集合
+     * @return 受影响的行数
+     */
+    int deleteQuartzJobLogByIds(String ids);
+
+    /**
+     * 清空日志
+     */
+    void cleanQuartzJobLog();
 }
