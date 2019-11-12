@@ -3,18 +3,18 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
       <h3 class="title">{{$store.state.settings.title}}</h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
+        <el-input v-model="loginForm.username" type="text" autocomplete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon"/>
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码"
+        <el-input v-model="loginForm.password" type="password" autocomplete="off" placeholder="密码"
                   @keyup.enter.native="handleLogin">
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon"/>
         </el-input>
       </el-form-item>
       <el-form-item prop="code">
-        <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 63%"
+        <el-input v-model="loginForm.code" autocomplete="off" placeholder="验证码" style="width: 63%"
                   @keyup.enter.native="handleLogin">
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon"/>
         </el-input>

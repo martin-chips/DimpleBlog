@@ -3,10 +3,16 @@ import {debounce} from '@/utils'
 export default {
   data() {
     return {
-      $_sidebarElm: null
+      $_sidebarElm: null,
+      $_resizeHandler: null
     }
   },
   mounted() {
+    this.$_resizeHandler = debounce(() => {
+      if (this.chart) {
+        this.chart.resize()
+      }
+    }, 100)
     this.$_initResizeEvent()
     this.$_initSidebarResizeEvent()
   },
@@ -23,13 +29,6 @@ export default {
     this.$_destroySidebarResizeEvent()
   },
   methods: {
-    $_resizeHandler() {
-      return debounce(() => {
-        if (this.chart) {
-          this.chart.resize()
-        }
-      }, 100)()
-    },
     $_initResizeEvent() {
       window.addEventListener('resize', this.$_resizeHandler)
     },
