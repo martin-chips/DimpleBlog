@@ -144,7 +144,7 @@
       this.getCategory();
     },
     methods: {
-      //获取标签集合
+      //查询标签
       getRemoteTagList(query) {
         if (query !== '') {
           this.loading = true;
@@ -163,9 +163,12 @@
       },
       //获取文章分类
       getCategory() {
-        listCategory().then(
-          response => {
-            this.categoryOptions = response.rows;
+        listCategory().then(response => {
+            if (response.code == 200) {
+              this.categoryOptions = response.rows;
+            } else {
+              this.msgError(response.msg);
+            }
           }
         );
       },
@@ -183,48 +186,40 @@
             this.msgError(response.msg);
             return;
           }
-          console.log(response.data.tag);
           if (typeof (response.data.tag) != 'undefined') {
             response.data.tag = response.data.tag.split(",");
           }
           this.form = response.data;
-          // this.setPageTitle();
         })
-      },
-      setPageTitle() {
-        const title = '编辑文章'
-        document.title = `${title} - ${this.form.id}`
       },
       submitBlog() {
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading = true
             this.form.status = true
-            this.form.tag = this.form.tag.join(",");
-            if (this.form.id == undefined) {
-              addBlog(this.form).then(response => {
+            let obj = JSON.parse(JSON.stringify(this.form));
+            obj.tag = obj.tag.join(",");
+            if (obj.id == undefined) {
+              addBlog(obj).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
+                  this.$store.dispatch('tagsView/delView', this.$route)
+                  this.$router.push({path: '/blog/blog'})
                 } else {
                   this.msgError(response.msg);
                 }
                 this.loading = false;
-                this.form.tag = this.form.tag.split(",");
               });
             } else {
-              updateBlog(this.form).then(response => {
+              updateBlog(obj).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
-                  this.$store.dispatch('tagsView/delView', view).then(({visitedViews}) => {
-                    if (this.isActive(view)) {
-                      this.toLastView(visitedViews, view)
-                    }
-                  })
+                  this.$store.dispatch('tagsView/delView', this.$route)
+                  this.$router.push({path: '/blog/blog'})
                 } else {
                   this.msgError(response.msg);
                 }
                 this.loading = false;
-                this.form.tag = this.form.tag.split(",");
               });
             }
           }
@@ -238,9 +233,11 @@
           })
           return
         }
-        this.form.status = false;
-        if (this.form.id == undefined) {
-          addBlogDraft(this.form).then(response => {
+        let obj = JSON.parse(JSON.stringify(this.form));
+        obj.tag = obj.tag.join(",");
+        obj.status = false;
+        if (obj.id == undefined) {
+          addBlogDraft(obj).then(response => {
             if (response.code === 200) {
               this.msgSuccess("保存草稿成功");
             } else {
@@ -248,7 +245,7 @@
             }
           });
         } else {
-          updateBlogDraft(this.form).then(response => {
+          updateBlogDraft(obj).then(response => {
             if (response.code === 200) {
               this.msgSuccess("保存草稿成功");
             } else {
