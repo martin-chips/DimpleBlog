@@ -89,11 +89,7 @@
             <if test="weight != null ">weight,</if>
             <if test="tag != null ">tag,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
-            <if test="updateBy != null  and updateBy != ''">update_by,</if>
-            <if test="createTime != null ">create_time,</if>
-            <if test="updateTime != null ">update_time,</if>
-            <if test="deleteBy != null  and deleteBy != ''">delete_by,</if>
-            <if test="deleteTime != null ">delete_time,</if>
+            create_time
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="categoryId != null ">#{categoryId},</if>
@@ -107,11 +103,7 @@
             <if test="weight != null ">#{weight},</if>
             <if test="tag != null ">#{tag},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
-            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
-            <if test="createTime != null ">#{createTime},</if>
-            <if test="updateTime != null ">#{updateTime},</if>
-            <if test="deleteBy != null  and deleteBy != ''">#{deleteBy},</if>
-            <if test="deleteTime != null ">#{deleteTime},</if>
+            sysdate()
         </trim>
     </insert>
 
