@@ -11,10 +11,21 @@ export function getSiteInfo(query) {
 }
 
 //获取所有分类
-export function getMenu() {
+export function listCategories() {
   return request({
-    url: '/f/menu',
+    url: '/f/categories',
     method: 'get',
   })
 }
+
+//获取所有的菜单
+export function listMenus() {
+  return request({
+    url: '/f/menus',
+    method: 'get',
+  })
+}
+
+
+
 

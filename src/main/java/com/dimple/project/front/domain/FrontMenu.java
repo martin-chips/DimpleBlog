@@ -29,5 +29,5 @@ public class FrontMenu {
     /**
      * 路径
      */
-    private String path;
+    private String url;
 }

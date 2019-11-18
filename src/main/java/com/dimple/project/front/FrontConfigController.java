@@ -3,11 +3,13 @@ package com.dimple.project.front;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.blog.domain.Category;
 import com.dimple.project.blog.service.CategoryService;
+import com.dimple.project.front.domain.FrontMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,9 +43,23 @@ public class FrontConfigController {
         return AjaxResult.success(site);
     }
 
-    @GetMapping("/category")
-    public AjaxResult category() {
+    @GetMapping("/categories")
+    public AjaxResult categories() {
         List<Category> categories = categoryService.selectSupportCategory();
         return AjaxResult.success(categories);
+    }
+
+    @GetMapping("/menus")
+    public AjaxResult menu() {
+        FrontMenu frontMenu = new FrontMenu("时光轴", 1, false, "/archive");
+        FrontMenu frontMenu1 = new FrontMenu("友链", 2, true, "/link");
+        FrontMenu frontMenu2 = new FrontMenu("留言", 3, true, "/leaveComment");
+        FrontMenu frontMenu3 = new FrontMenu("关于", 4, true, "/about");
+        List<FrontMenu> menuList = new ArrayList<>();
+        menuList.add(frontMenu);
+        menuList.add(frontMenu1);
+        menuList.add(frontMenu2);
+        menuList.add(frontMenu3);
+        return AjaxResult.success(menuList);
     }
 }

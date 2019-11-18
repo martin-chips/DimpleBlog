@@ -18,6 +18,7 @@ export default {
     UPDATE_CATEGORIES(state, categories) {
       state.categories = categories;
     },
+    //更新主题
     UPDATE_SITE_THEME(state, siteTheme) {
       if (siteTheme === state.siteTheme) return;
       try {
@@ -39,7 +40,7 @@ export default {
     }
   },
   actions: {
-    // 获取所有的分类
+    // 获取所有的菜单
     GET_MENUS({state, commit}, params) {
       return new Promise((resolve, reject) => {
         getMenu().then((response) => {
@@ -50,6 +51,7 @@ export default {
         });
       });
     },
+    //获取分类
     GET_CATEGORIES({state, commit}, params) {
       return new Promise((resolve, reject) => {
         getMenu().then((response) => {
