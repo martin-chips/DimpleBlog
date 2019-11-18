@@ -33,6 +33,6 @@ public class JobRunner implements ApplicationRunner {
         log.info("开始注入定时任务");
         List<QuartzJob> quartzJobList = quartzJobService.selectRunningQuartzJobList();
         quartzJobList.forEach(quartzManage::addJob);
-        log.info("任务注入完成");
+        log.info("任务注入完成,数量{}",quartzJobList.size());
     }
 }

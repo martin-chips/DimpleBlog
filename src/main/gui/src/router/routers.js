@@ -112,15 +112,25 @@ export const constantRoutes = [
   }
 ]
 
+import SimpleHeader from "../front/components/header/SimpleHeader/SimpleHeader";
+import footer from "../front/components/footer/footer";
+
+//组件
+import HomeContent from "../front/components/content/HomeContent";
+
 //前台路由
 export const frontRoutes = [
   {
     path: '/',
-    component: () => import('@/views/front/index'),
+    component: () => import('@/front/components/index'),
     children: [
       {
         path: '',
-        component: () => import('@/views/front/home'),
+        components: {
+          header: SimpleHeader,
+          content: HomeContent,
+          footer: footer
+        },
       },
       {
         path: '/category',

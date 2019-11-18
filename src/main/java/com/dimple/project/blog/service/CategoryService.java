@@ -58,4 +58,11 @@ public interface CategoryService {
      * @return 结果
      */
     int deleteCategoryById(Long id);
+
+    /**
+     * 获取support的分类
+     *
+     * @return list
+     */
+    List<Category> selectSupportCategory();
 }

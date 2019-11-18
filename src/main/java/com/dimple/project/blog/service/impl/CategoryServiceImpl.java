@@ -54,4 +54,9 @@ public class CategoryServiceImpl implements CategoryService {
         String username = SecurityUtils.getUsername();
         return bgCategoryMapper.deleteCategoryById(id, username);
     }
+
+    @Override
+    public List<Category> selectSupportCategory() {
+        return bgCategoryMapper.selectSupportCategoryList();
+    }
 }

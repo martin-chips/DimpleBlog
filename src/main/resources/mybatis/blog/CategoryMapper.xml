@@ -67,6 +67,9 @@
         select id, title, description, support, create_by, create_time from bg_category
         where id = #{id}
     </select>
+    <select id="selectSupportCategoryList" resultType="com.dimple.project.blog.domain.Category">
+        select id, title, description, support, create_by, create_time from bg_category where support=1
+    </select>
 
     <insert id="insertCategory" parameterType="com.dimple.project.blog.domain.Category" useGeneratedKeys="true"
             keyProperty="id">

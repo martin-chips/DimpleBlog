@@ -59,4 +59,12 @@ public interface CategoryMapper {
      * @return 结果
      */
     int deleteCategoryByIds(@Param("ids") String[] ids, @Param("username") String username);
+
+    /**
+     * 获取所有的support的分类
+     *
+     * @return list
+     */
+    List<Category> selectSupportCategoryList();
+
 }
