@@ -60,11 +60,6 @@
 </template>
 
 <script>
-    import {
-        mapState,
-        mapMutations
-    } from 'vuex';
-
     export default {
         name: 'side-bar',
         props: {

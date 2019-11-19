@@ -29,6 +29,8 @@
         <result property="status" column="status"/>
         <result property="comment" column="comment"/>
         <result property="tag" column="tag"/>
+        <result property="like" column="like"/>
+        <result property="click" column="click"/>
         <result property="support" column="support"/>
         <result property="weight" column="weight"/>
         <result property="createBy" column="create_by"/>
@@ -44,7 +46,7 @@
     </resultMap>
 
     <select id="selectBlogList" resultMap="BlogResultWithoutContent">
-        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.tag,
+        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.tag,b.like,b.click,
         b.comment, b.create_by, b.create_time,c.id c_id,c.title c_title,c.description c_description,c.support
         c_support,c.create_by c_create_by,c.create_time c_create_time
         from bg_blog b ,bg_category c

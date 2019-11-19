@@ -26,6 +26,54 @@ export function listMenus() {
   })
 }
 
+//获取网站信息
+export function getBloggerInfo() {
+  return request({
+    url: '/f/bloggerInfo',
+    method: 'get',
+  })
+}
+
+//获取推荐内容
+export function listRecommend() {
+  return request({
+    url: '/f/support',
+    method: 'get',
+  })
+}
+
+//获取最热内容
+export function listHot() {
+  return request({
+    url: '/f/hot',
+    method: 'get',
+  })
+}
+
+//获取友链
+export function listFriendLinks() {
+  return request({
+    url: '/f/link',
+    method: 'get',
+  })
+}
+
+//获取标签
+export function listTag() {
+  return request({
+    url: '/f/tag',
+    method: 'get',
+  })
+}
+
+// 查询博客列表
+export function listBlog(query) {
+  return request({
+    url: '/f/blog',
+    method: 'get',
+    params: query
+  })
+}
 
 
 

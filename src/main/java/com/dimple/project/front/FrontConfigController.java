@@ -1,9 +1,14 @@
 package com.dimple.project.front;
 
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Category;
+import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.blog.service.CategoryService;
 import com.dimple.project.front.domain.FrontMenu;
+import com.dimple.project.front.domain.Tag;
+import com.dimple.project.system.domain.Link;
+import com.dimple.project.system.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,5 +66,58 @@ public class FrontConfigController {
         menuList.add(frontMenu2);
         menuList.add(frontMenu3);
         return AjaxResult.success(menuList);
+    }
+
+    @GetMapping("bloggerInfo")
+    public AjaxResult bloggerInfo() {
+        Map<String, Object> bloggerInfo = new HashMap<>();
+        bloggerInfo.put("name", "bianxiaofeng");
+        bloggerInfo.put("desc ", "this is a desc");
+        return AjaxResult.success(bloggerInfo);
+    }
+
+    @Autowired
+    BlogService blogService;
+
+    @GetMapping("/support")
+    public AjaxResult support() {
+        Blog blog = new Blog();
+        blog.setSupport(true);
+        List<Blog> blogList = blogService.selectBlogList(blog);
+        return AjaxResult.success(blogList);
+    }
+
+    @GetMapping("/hot")
+    public AjaxResult hot() {
+        Blog blog = new Blog();
+        blog.setSupport(true);
+        List<Blog> blogList = blogService.selectBlogList(blog);
+        return AjaxResult.success(blogList);
+    }
+
+    @GetMapping("/blog")
+    public AjaxResult blog() {
+        return AjaxResult.success(blogService.selectBlogList(new Blog()));
+    }
+
+    @Autowired
+    LinkService linkService;
+
+    @GetMapping("/link")
+    public AjaxResult link() {
+        Link link = new Link();
+        link.setStatus(true);
+
+        List<Link> links = linkService.selectLinkList(link);
+        return AjaxResult.success(links);
+    }
+
+    @GetMapping("/tag")
+    public AjaxResult tag() {
+        List<Tag> tagList = new ArrayList<>();
+        tagList.add(new Tag("A", 1L));
+        tagList.add(new Tag("A1", 2L));
+        tagList.add(new Tag("A2", 3L));
+        return AjaxResult.success(tagList);
     }
 }

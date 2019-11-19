@@ -7,25 +7,23 @@
       <span class="sub-title">{{subTitle}}</span>
       <span class="view-more" v-if="to !== undefined" @click="tipAction">
         <a>
-          {{tipText ? tipText : "查看更多"}} <i-icon type="arrow-right-b"></i-icon>
+          {{tipText ? tipText : "查看更多"}} <i class="el-icon-caret-right"></i>
         </a>
       </span>
     </div>
     <div class="menu">
       <ul class="list clearfix" v-if="controlMenus.length > 0">
         <li v-for="menu in controlMenus" :key="menu.title">
-          <a :class="{ active: menu.selected }" @click="menusControl(menu)">{{ menuTitle(menu) }}</a>
+          <a :class="{ active: menu.selected }" @click="menusControl(menu)">{{menu.title}}</a>
         </li>
       </ul>
       <div class="date-picker" v-if="withTimeSelect">
-        <i-date-picker type="daterange" :options="datePickerOptions" confirm :split-panels="true" placement="bottom-end"
-                       placeholder="选择日期区间" @on-clear="clearDateSelect"
-                       @on-ok="comfirmDateSelect" @on-change="changeDate"
-                       style="width: 180px;"></i-date-picker>
+        <el-date-picker @change="changeDate" size="small" style="width: 180px;" value-format="yyyy-MM-dd"
+                        type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </div>
       <div class="refresh" v-if="withRefresh">
         <a @click="refresh" title="刷新">
-          <i-icon type="refresh"></i-icon>
+          <i class="el-icon-refresh-right"></i>
         </a>
       </div>
     </div>
@@ -33,81 +31,77 @@
 </template>
 
 <script>
-    export default {
-        name: 'section-title',
-        props: {
-            mainTitle: '',
-            subTitle: '',
-            tipText: {
-                default: undefined
-            },
-            menus: {
-                Type: Array,
-                default: undefined
-            },
-            to: {
-                Type: Object,
-                default: undefined
-            },
-            withRefresh: {
-                Type: Boolean,
-                default: false
-            },
-            withTimeSelect: {
-                Type: Boolean,
-                default: false
-            },
-            datePickerOptions: undefined
-        },
-        data() {
-            return {
-                copiedMenus: undefined,
-                selectedDateRange: []
-            };
-        },
-        computed: {
-            controlMenus: function () {
-                // 复制一份内部menus使用
-                if (this.copiedMenus === undefined || this.menus !== undefined) {
-                    this.copiedMenus = [].concat(JSON.parse(JSON.stringify(this.menus)));
-                    return this.copiedMenus;
-                } else {
-                    return [];
-                }
-            }
-        },
-        methods: {
-            menuTitle(menu) {
-                return menu.selected ? (menu.selectedTitle !== undefined ? this.$t(menu.selectedTitle) : this.$t(menu.title)) : this.$t(menu.title);
-            },
-            refresh() {
-                this.copiedMenus = undefined;
-                this.$emit('refresh');
-            },
-            tipAction() {
-                this.$emit('tipAction');
-                this.$router.push(this.to);
-            },
-            menusControl(menu) {
-                menu.selected = !menu.selected;
-                this.$emit('menusControl', [menu.method, menu.selected]);
-            },
-            clearDateSelect() {
-                this.$emit('clearDateSelect');
-            },
-            changeDate(dateRange) {
-                this.selectedDateRange = dateRange;
-            },
-            comfirmDateSelect() {
-                this.$emit('comfirmDateSelect', this.selectedDateRange);
-            }
+  export default {
+    name: 'section-title',
+    props: {
+      mainTitle: '',
+      subTitle: '',
+      tipText: {
+        default: undefined
+      },
+      menus: {
+        Type: Array,
+        default: undefined
+      },
+      to: {
+        Type: Object,
+        default: undefined
+      },
+      withRefresh: {
+        Type: Boolean,
+        default: false
+      },
+      withTimeSelect: {
+        Type: Boolean,
+        default: false
+      }
+    },
+    data() {
+      return {
+        copiedMenus: undefined,
+        selectedDateRange: []
+      };
+    },
+    computed: {
+      controlMenus: function () {
+        // 复制一份内部menus使用
+        if (this.copiedMenus === undefined || this.menus !== undefined) {
+          this.copiedMenus = [].concat(JSON.parse(JSON.stringify(this.menus)));
+          return this.copiedMenus;
+        } else {
+          return [];
         }
+      }
+    },
+    methods: {
+      refresh() {
+        this.copiedMenus = undefined;
+        this.$emit('refresh');
+      },
+      tipAction() {
+        this.$emit('tipAction');
+        this.$router.push(this.to);
+      },
+      menusControl(menu) {
+        menu.selected = !menu.selected;
+        this.$emit('menusControl', [menu.method, menu.selected]);
+      },
+      clearDateSelect() {
+        this.$emit('clearDateSelect');
+      },
+      changeDate(dateRange) {
+        this.selectedDateRange = dateRange;
+      },
+      confirmDateSelect() {
+        this.$emit('confirmDateSelect', this.selectedDateRange);
+      }
     }
-    ;
+  }
+  ;
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/theme.styl";
+  @import "../common/stylus/theme.styl";
   .section-title
     display flex
     justify-content space-between

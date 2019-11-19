@@ -1,4 +1,5 @@
 import AES from 'crypto-js/aes';
+import {LineBreakMode} from "@/utils/front/const.js";
 
 /**
  * 按社交方式格式化时间
@@ -154,4 +155,58 @@ export function scrollTop(el, from = 0, to, duration = 500) {
 
   scroll(from, to, step);
 }
+
+
+export const mixin = {
+  data() {
+    return {};
+  },
+  methods: {
+    // 滚动到评论区域
+    scrollToComments() {
+      try {
+        let commentEle = document.querySelector('#comments');
+        const sTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const commentEleSTop = commentEle.offsetTop;
+        scrollTop(window, sTop, commentEleSTop, Math.max((commentEleSTop - sTop) / 10, 1000));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },
+  filters: {
+    // 用于格式化时间的过滤器
+    socialDate: function (formattedDate) {
+      return socialDateFormat(formattedDate);
+    },
+    // 用于处理行尾省略号的过滤器
+    textLineBreak: function (text, maxLength, lineBreakMode) {
+      if (text === undefined || text === null || text.length === 0) {
+        return '';
+      }
+      if (lineBreakMode === null || lineBreakMode === undefined) {
+        lineBreakMode = LineBreakMode.EllipsisTruncatingTail;
+      }
+      switch (lineBreakMode) {
+        case LineBreakMode.WrappingTruncatingTail:
+          return text.substr(0, maxLength);
+        case LineBreakMode.WrappingTruncatingHead:
+          return text.substr(-maxLength);
+        case LineBreakMode.EllipsisTruncatingTail:
+          return text.substr(0, maxLength) + (text.length > maxLength ? '...' : '');
+        case LineBreakMode.EllipsisTruncatingMiddle:
+          let resultText = text.substr(0, maxLength);
+          if (text.length > maxLength) {
+            return resultText.substr(0, parseInt(maxLength / 2)) + '...' + resultText.substr(parseInt(maxLength / 2));
+          }
+          return resultText;
+        case LineBreakMode.EllipsisTruncatingHead:
+          return (text.length > maxLength ? '...' : '') + text.substr(-maxLength);
+      }
+      return text;
+    }
+  }
+};
+
+
 

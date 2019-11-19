@@ -89,6 +89,14 @@ public class Blog extends BaseEntity {
      * 分类
      */
     private Category category;
+    /**
+     * 点赞数
+     */
+    private Long like;
+    /**
+     * 点击数
+     */
+    private Long click;
 
     private List<Comment> commentList;
 

@@ -1,11 +1,12 @@
 import {saveToLocal} from '@/utils/front/utils';
-import {getSiteInfo, getMenu} from '@/api/front/front.js'
+import {listCategories, listMenus} from '@/api/front/front.js'
 
 export default {
   namespaced: true,
   state: {
-    menus: {},
-    categories: [],
+    menus: null,
+    categories: null,
+    bloggerInfo: null,
     siteTheme: 'default',
     ExpandLeftColumn: false
   },
@@ -43,7 +44,7 @@ export default {
     // 获取所有的菜单
     GET_MENUS({state, commit}, params) {
       return new Promise((resolve, reject) => {
-        getMenu().then((response) => {
+        listMenus().then((response) => {
           commit('UPDATE_MENUS', response.data);
           resolve(response);
         }).catch((error) => {
@@ -54,14 +55,14 @@ export default {
     //获取分类
     GET_CATEGORIES({state, commit}, params) {
       return new Promise((resolve, reject) => {
-        getMenu().then((response) => {
+        listCategories().then((response) => {
           commit('UPDATE_CATEGORIES', response.data);
           resolve(response);
         }).catch((error) => {
           reject(error);
         });
       });
-    }
+    },
   }
 }
 

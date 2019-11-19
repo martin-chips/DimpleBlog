@@ -9,6 +9,8 @@ import getters from './getters'
 
 //前台
 import base from './modules/front/base';
+import common from './modules/front/common';
+import home from './modules/front/home';
 
 Vue.use(Vuex)
 
@@ -20,7 +22,9 @@ const store = new Vuex.Store({
     permission,
     settings,
     //前台
-    base
+    base,
+    home,
+    common,
   },
   getters
 })
