@@ -1,6 +1,6 @@
 <template>
   <div class="simple-header">
-    <head-room :speed="600" :zIndex="1003" style="width: 100%;">
+    <head-room :speed="600" :zIndex="1003" style="position: fixed;">
       <header>
         <div id="mobile-bar">
           <router-link class="logo" to="/">

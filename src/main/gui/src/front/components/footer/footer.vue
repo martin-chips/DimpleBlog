@@ -5,18 +5,19 @@
         <el-tooltip :content="ExpandLeftColumn ? '通栏阅读' : '退出通栏'"
                     placement="left"
                     v-show="showExpandMenu">
-          <i :class="ExpandLeftColumn ? 'el-icon-s-grid' : 'el-icon-menu'"
-             @click.native.stop.prevent="toggleExpand"></i>
+          <el-link :class="ExpandLeftColumn ? 'el-icon-s-grid' : 'el-icon-menu'" class="icon"
+             @click.native.stop.prevent="toggleExpand"></el-link>
         </el-tooltip>
-        <i class="el-icon-caret-top"
+        <el-link class="el-icon-caret-top icon"
            @mouseover.native="setButtonState('top', true, true)"
-           @mouseleave.native="setButtonState('top', false)"></i>
-        <i class="el-icon-caret-bottom"
+           @mouseleave.native="setButtonState('top', false)"></el-link>
+        <el-link class="el-icon-caret-bottom icon"
            @click.native.stop.prevent="scrollDown"
            @mouseover.native="setButtonState('bottom', true, true)"
-           @mouseleave.native="setButtonState('bottom', false)"></i>
+           @mouseleave.native="setButtonState('bottom', false)"></el-link>
       </div>
     </el-backtop>
+
     <p class="copyright">
       <a href="http://www.miibeian.gov.cn/">{{ $store.state.settings.F_ICP }}</a>
       <span>|</span>
@@ -124,7 +125,7 @@
       text-align center
       border-radius 2px
 
-      i.icon
+      a.icon
         display block
         margin-bottom 5px
         padding 6px 12px

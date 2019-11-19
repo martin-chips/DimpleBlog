@@ -1,7 +1,7 @@
 <template>
   <div class="article-list-cell">
     <el-row type="flex">
-      <el-col :xs="24" :sm="textSpan" :md="textSpan"
+      <el-col :xs="24" :sm="textSpan" :md="textSpan" :lg="textSpan"
               style="padding-left: 0;padding-right: 0;">
         <div class="text-wrapper">
           <h4 class="title">
@@ -34,7 +34,7 @@
           </p>
         </div>
       </el-col>
-      <el-col :xs="0" :sm="imgSpan" :md="imgSpan" style="padding-left: 0;padding-right: 0;">
+      <el-col :xs="0" :sm="imgSpan" :md="imgSpan" :lg="imgSpan" style="padding-left: 0;padding-right: 0;">
         <div class="img-wrapper" :class="themeClass">
           <img :src="article.headerImg" alt="">
         </div>
@@ -61,12 +61,18 @@
     },
     data() {
       return {
-        articleType: 1,
+        // articleType: 2,
       }
     },
     computed: {
+      articleType: function () {
+        if (this.article.headerImg == null) {
+          return 0;
+        } else {
+          return 1;
+        }
+      },
       textOrderType: function () {
-        console.log(parseInt(this.articleType))
         return parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE ? 2 : 1;
       },
       imgOrderType: function () {
