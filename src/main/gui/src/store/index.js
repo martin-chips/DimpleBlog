@@ -11,6 +11,7 @@ import getters from './getters'
 import base from './modules/front/base';
 import common from './modules/front/common';
 import home from './modules/front/home';
+import timeline from './modules/front/timeline';
 
 Vue.use(Vuex)
 
@@ -25,6 +26,7 @@ const store = new Vuex.Store({
     base,
     home,
     common,
+    timeline
   },
   getters
 })

@@ -2,10 +2,10 @@
   <div class="tag-wall">
     <panel title="标签墙">
       <div slot="content" class="content">
-        <i-tag :color="tag.color" type="dot" v-for="tag in tags" :key="tag.id" style="margin: 0 5px 5px 0;"
+        <el-tag :color="tag.color" type="dot" v-for="tag in tags" :key="tag.id" style="margin: 0 5px 5px 0;"
                class="dot-tag">
           {{tag.title}} [{{ tag.count }}]
-        </i-tag>
+        </el-tag>
       </div>
     </panel>
   </div>
@@ -16,6 +16,7 @@
     mapState,
     mapActions
   } from 'vuex';
+
   import Panel from "./Panel";
 
   export default {

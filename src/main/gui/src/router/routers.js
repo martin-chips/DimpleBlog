@@ -117,6 +117,7 @@ import footer from "../front/components/footer/footer";
 
 //组件
 import HomeContent from "../front/components/content/HomeContent";
+import TimeLineContent from "../front/components/content/TimeLineContent";
 
 //前台路由
 export const frontRoutes = [
@@ -150,7 +151,11 @@ export const frontRoutes = [
       },
       {
         path: '/archive',
-        component: () => import('@/views/front/archive'),
+        components: {
+          header: SimpleHeader,
+          content: TimeLineContent,
+          footer: footer
+        },
       },
     ]
   },

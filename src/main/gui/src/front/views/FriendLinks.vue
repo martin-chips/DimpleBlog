@@ -1,5 +1,5 @@
 <template>
-  <div class="friend-links" v-if="friendLinks.length > 0">
+  <div class="friend-links">
     <panel title="友链">
       <ul class="link-list" slot="content">
         <li v-for="friendLink in friendLinks">
@@ -8,7 +8,7 @@
                  :class="{'no-pic': friendLink.headerImg === null || friendLink.headerImg.length === 0}" alt="">
             <div class="right">
               <p class="title">{{ friendLink.title }}</p>
-              <p class="link">{{ friendLink.url }}</p>
+              <p class="link">{{ friendLink.description }}</p>
             </div>
           </a>
         </li>
@@ -22,7 +22,7 @@
     mapState,
     mapActions
   } from 'vuex';
-  import Panel from 'Panel';
+  import Panel from "./Panel";
 
   export default {
     name: 'friend-links',

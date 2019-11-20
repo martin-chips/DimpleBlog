@@ -20,7 +20,10 @@
       <el-col :xs="24" :sm="24" :md="24" :lg="7">
         <div class="layout-right" v-if="showPage">
           <About/>
-
+          <Recommend style="margin-top:15px;"/>
+          <Hot style="margin-top:15px;"/>
+          <TagWall style="margin-top:15px;"/>
+          <FriendLinks style="margin-top:15px;"/>
         </div>
       </el-col>
     </el-row>
@@ -36,6 +39,10 @@
   import SectionTitle from "../../views/SectionTitle";
   import ArticleListCell from "../../views/article/ArticleListCell";
   import About from "../../views/About";
+  import TagWall from "../../views/TagWall";
+  import FriendLinks from "../../views/FriendLinks";
+  import Hot from "../../views/Hot";
+  import Recommend from "../../views/Recommend";
 
   export default {
     name: 'home-content',
@@ -119,7 +126,7 @@
       },
     },
     components: {
-      SectionTitle, ArticleListCell, About
+      SectionTitle, ArticleListCell, About, TagWall, FriendLinks, Hot, Recommend
     }
   };
 </script>

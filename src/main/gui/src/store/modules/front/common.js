@@ -1,8 +1,6 @@
-
 import {listRecommend, listHot, listFriendLinks, listTag} from '@/api/front/front.js'
 
-export default () => {
-  return {
+export default {
     namespaced: true,
     state: {
       recommends: [],
@@ -29,7 +27,7 @@ export default () => {
       GET_RECOMMENDS(store, params) {
         return new Promise((resolve, reject) => {
           listRecommend().then((response) => {
-            store.commit('UPDATE_RECOMMENDS', response.data.results);
+            store.commit('UPDATE_RECOMMENDS', response.data);
             resolve(response);
           }).catch((error) => {
             reject(error);
@@ -40,7 +38,7 @@ export default () => {
       GET_HOTS(store, params) {
         return new Promise((resolve, reject) => {
           listHot().then((response) => {
-            store.commit('UPDATE_HOTS', response.data.results);
+            store.commit('UPDATE_HOTS', response.data);
             resolve(response);
           }).catch((error) => {
             reject(error);
@@ -70,5 +68,4 @@ export default () => {
         });
       }
     }
-  };
-};
+}
