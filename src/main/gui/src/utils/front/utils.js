@@ -1,5 +1,6 @@
 import AES from 'crypto-js/aes';
 import {LineBreakMode} from "@/utils/front/const.js";
+import {mapState} from "vuex";
 
 /**
  * 按社交方式格式化时间
@@ -156,7 +157,6 @@ export function scrollTop(el, from = 0, to, duration = 500) {
   scroll(from, to, step);
 }
 
-
 export const mixin = {
   data() {
     return {};
@@ -174,6 +174,11 @@ export const mixin = {
       }
     }
   },
+  // computed: {
+  //   ...mapState({
+  //     categories: state => state.base.categories
+  //   })
+  // },
   filters: {
     // 用于格式化时间的过滤器
     socialDate: function (formattedDate) {

@@ -4,15 +4,10 @@
       <el-col :xs="24" :sm="24" :md="24" :lg="17">
         <div class="layout-left">
           <!-- 文章 -->
-          <SectionTitle
-            mainTitle="文章"
-            subTitle="Article"
-            :menus="articlesTitleMenus"
-            to="/"
-            :withRefresh="true"
-            :withTimeSelect="false"
-            @refresh="refreshArticles"
-            @menusControl="artclesMenusControl">
+          <SectionTitle mainTitle="文章" subTitle="Article" :menus="articlesTitleMenus" :to="'/articles'" :withRefresh="true"
+                        :withTimeSelect="false"
+                        @refresh="refreshArticles"
+                        @menusControl="artclesMenusControl">
           </SectionTitle>
           <ArticleListCell v-for="article in articles" :article="article" :key="article.id"></ArticleListCell>
         </div>

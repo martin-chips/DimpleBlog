@@ -2,7 +2,6 @@ import request from '@/utils/request'
 
 // 获取网站信息
 export function getSiteInfo(query) {
-  console.log('1111111111111111111111')
   return request({
     url: '/f/siteInfo',
     method: 'get',
@@ -67,7 +66,7 @@ export function listTag() {
 }
 
 // 查询博客列表
-export function listBlog(query) {
+export function listBlogBaseInfo(query) {
   return request({
     url: '/f/blog',
     method: 'get',

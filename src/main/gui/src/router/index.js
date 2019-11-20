@@ -8,7 +8,7 @@ import config from '@/config'
 NProgress.configure({showSpinner: false})
 
 const whiteList = [
-  '/login', '/auth-redirect', '/bind', '/register', '/', '/category', '/leaveComment', '/link', '/about', '/archive'
+  '/login', '/auth-redirect', '/bind', '/register', '/', '/category', '/leaveComment', '/link', '/about', '/archive', '/articles'
 ]
 
 router.beforeEach((to, from, next) => {

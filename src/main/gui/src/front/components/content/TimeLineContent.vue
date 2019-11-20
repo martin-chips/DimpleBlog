@@ -100,7 +100,7 @@
     },
     methods: {
       ...mapMutations({
-        clearTimelineInfo: 'timeline/CLAER_TIMELINE_INFO'
+        clearTimelineInfo: 'timeline/CLEAR_TIMELINE_INFO'
       }),
       ...mapActions({
         getTimelineInfo: 'timeline/GET_TIMELINE_INFO'

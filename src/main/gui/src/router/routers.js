@@ -118,6 +118,7 @@ import footer from "../front/components/footer/footer";
 //组件
 import HomeContent from "../front/components/content/HomeContent";
 import TimeLineContent from "../front/components/content/TimeLineContent";
+import ArticleHomeContent from "../front/components/content/ArticleHomeContent";
 
 //前台路由
 export const frontRoutes = [
@@ -134,8 +135,12 @@ export const frontRoutes = [
         },
       },
       {
-        path: '/category',
-        component: () => import('@/views/front/category'),
+        path: '/articles',
+        components: {
+          header: SimpleHeader,
+          content: ArticleHomeContent,
+          footer: footer
+        },
       },
       {
         path: '/link',
@@ -164,5 +169,5 @@ export const frontRoutes = [
 export default new Router({
   mode: 'history', // 去掉url中的#
   scrollBehavior: () => ({y: 0}),
-  routes: constantRoutes.concat(frontRoutes)
+  routes: frontRoutes.concat(constantRoutes)
 })

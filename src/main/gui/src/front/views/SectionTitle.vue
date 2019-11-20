@@ -5,10 +5,10 @@
       <span class="main-title">{{mainTitle}}</span>
       <span class="vertical-line"></span>
       <span class="sub-title">{{subTitle}}</span>
-      <span class="view-more" v-if="to !== undefined" @click="tipAction">
-        <a>
-          {{tipText ? tipText : "查看更多"}} <i class="el-icon-caret-right"></i>
-        </a>
+      <span class="view-more" v-if="to !== undefined">
+         <router-link :to="to">
+             {{tipText ? tipText : "查看更多"}} <i class="el-icon-caret-right"></i>
+         </router-link>
       </span>
     </div>
     <div class="menu">
@@ -32,7 +32,7 @@
 
 <script>
   export default {
-    name: 'section-title',
+    name: 'SectionTitle',
     props: {
       mainTitle: '',
       subTitle: '',

@@ -1,4 +1,4 @@
-import {listBlog} from '@/api/front/front.js'
+import {listBlogBaseInfo} from '@/api/front/front.js'
 
 export default {
   namespaced: true,
@@ -14,7 +14,7 @@ export default {
     // 获取文章基本信息
     GET_ARTICLES_BASE_INFO({state, commit}, params) {
       return new Promise((resolve, reject) => {
-        listBlog(params).then((response) => {
+        listBlogBaseInfo(params).then((response) => {
           commit('UPDATE_ARTICLES_BASE_INFO', response.data);
           resolve(response);
         }).catch((error) => {
