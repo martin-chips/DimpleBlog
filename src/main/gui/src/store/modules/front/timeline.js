@@ -10,9 +10,9 @@ export default {
   mutations: {
     UPDATE_TIMELINE_INFO(state, datas) {
       // 记录已有的post数量
-      state.totalCount += datas.length;
+      state.totalCount += datas.rows.length;
       // 根据年月来分发更新timeline
-      datas.map((post) => {
+      datas.rows.map((post) => {
         // 按年月分批
         let addYear = new Date(post.createTime).getFullYear();
         let addMonth = new Date(post.createTime).getMonth();
@@ -29,10 +29,9 @@ export default {
       });
       state.timeline = Object.assign({}, state.timeline);
       // 判断是否还有更多
-      // state.noMoreData = state.totalCount >= datas.count;
+      state.noMoreData = state.totalCount >= datas.total;
     },
     CLEAR_TIMELINE_INFO(state) {
-      console.log('clear timeline');
       state.timeline = {};
       state.totalCount = 0;
       state.noMoreData = false;
@@ -42,13 +41,13 @@ export default {
     // 获取文章详细信息
     GET_TIMELINE_INFO({state, commit}, {params, reset}) {
       return new Promise((resolve, reject) => {
-        listBlogBaseInfo().then((response) => {
+        listBlogBaseInfo(params).then((response) => {
           // 更新timeline
           if (reset) {
             // 如果是重置，则先删除原有数据
             commit('CLEAR_TIMELINE_INFO');
           }
-          commit('UPDATE_TIMELINE_INFO', response.data);
+          commit('UPDATE_TIMELINE_INFO', response);
           // commit('UPDATE_DOCUMENT_TITLE', '时间轴', {root: true});
           // commit('UPDATE_DOCUMENT_DESCRIPTION', '时间轴', {root: true});
           // commit('UPDATE_DOCUMENT_KEYWORDS', '时间轴', {root: true});

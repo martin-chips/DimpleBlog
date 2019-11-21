@@ -4,10 +4,11 @@
       <el-col :xs="24" :sm="24" :md="24" :lg="17">
         <div class="layout-left">
           <!-- 文章 -->
-          <SectionTitle mainTitle="文章" subTitle="Article" :menus="articlesTitleMenus" :to="'/articles'" :withRefresh="true"
+          <SectionTitle mainTitle="文章" subTitle="Article" :menus="articlesTitleMenus" :to="'/articles'"
+                        :withRefresh="true"
                         :withTimeSelect="false"
                         @refresh="refreshArticles"
-                        @menusControl="artclesMenusControl">
+                        @menusControl="articlesMenusControl">
           </SectionTitle>
           <ArticleListCell v-for="article in articles" :article="article" :key="article.id"></ArticleListCell>
         </div>
@@ -44,9 +45,9 @@
     data() {
       return {
         // 文章
-        mostCommentArticles: undefined,
-        hotArticles: undefined,
-        recommendArticles: undefined,
+        mostComment: undefined,
+        hot: undefined,
+        recommend: undefined,
         articlesTitleMenus: [
           {title: "最多评论", selected: false, method: 'mostComment'},
           {title: "最热", selected: false, method: 'hot'},
@@ -66,9 +67,9 @@
       if (this.$store.state.home.articles.length === 0) {
         this.getArticlesBaseInfo({
           params: {
-            is_recommend: this.recommendArticles,
-            is_hot: this.hotArticles,
-            ordering: this.mostCommentArticles,
+            is_recommend: this.recommend,
+            is_hot: this.hot,
+            ordering: this.mostComment,
             limit: 30,
             offset: 0
           }
@@ -84,39 +85,37 @@
         getArticlesBaseInfo: 'home/GET_ARTICLES_BASE_INFO',
       }),
       refreshArticles() {
-        this.mostCommentArticles = undefined;
-        this.hotArticles = undefined;
-        this.recommendArticles = undefined;
-        this.getArticlesBaseInfo({
-          params: {
-            is_recommend: this.recommendArticles,
-            is_hot: this.hotArticles,
-            ordering: this.mostCommentArticles,
-            limit: 30,
-            offset: 0
-          }
-        });
+        this.mostComment = undefined;
+        this.hot = undefined;
+        this.recommend = undefined;
+        this.getArticlesBaseInfo();
       },
-      artclesMenusControl(params) {
+      articlesMenusControl(params) {
         switch (params[0]) {
           case 'mostComment':
-            this.mostCommentArticles = params[1] ? '-comment_num' : undefined;
+            this.mostComment = params[1] ? 'commentCount' : undefined;
             break;
           case 'hot':
-            this.hotArticles = params[1] ? true : undefined;
+            this.hot = params[1] ? 'click' : undefined;
             break;
           case 'recommend':
-            this.recommendArticles = params[1] ? true : undefined;
+            this.recommend = params[1] ? true : undefined;
             break;
         }
+        // 排序条件
+        let orderings = [];
+        if (this.mostComment !== undefined) {
+          orderings.push(this.mostComment);
+        }
+        if (this.hot !== undefined) {
+          orderings.push(this.hot);
+        }
         this.getArticlesBaseInfo({
-          params: {
-            is_recommend: this.recommendArticles,
-            is_hot: this.hotArticles,
-            ordering: this.mostCommentArticles,
-            limit: 5,
-            offset: 0
-          }
+          support: this.recommend,
+          orderByColumn: orderings.toString(),
+          isAsc: this.timeSorted ? 'asc' : 'desc',
+          pageNum: 1,
+          pageSize: 10
         });
       },
     },

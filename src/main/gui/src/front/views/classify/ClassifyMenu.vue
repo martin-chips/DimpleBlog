@@ -33,7 +33,7 @@
           activeNode.classList.remove('active');
         }
         event.target.classList.add('active');
-        this.selectCategory(category.id);
+        this.selectCategory(category == undefined ? undefined : category.id);
       },
       selectCategory(categoryId) {
         this.$emit('selectCategory', categoryId);

@@ -15,8 +15,6 @@ export default {
         return true;
       }));
       // 判断是否还有更多
-      console.log(state.totalCount)
-      console.log(datas.total)
       state.noMoreData = state.totalCount >= datas.total;
     },
     CLEAR_ARTICLES_BASE_INFO(state) {

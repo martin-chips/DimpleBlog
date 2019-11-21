@@ -10,8 +10,7 @@
                         :withTimeSelect="true"
                         @refresh="refresh"
                         @menusControl="menusControl"
-                        @comfirmDateSelect="dateSelect"
-                        @clearDateSelect="dateSelectClear">
+                        @comfirmDateSelect="confirmDateSelect">
           </SectionTitle>
           <div v-for="year in sortedYearKeys(timeline)" v-if="Object.keys(timeline).length > 0">
             <ArchiveListTimeTitle :date="year+'年'"
@@ -25,7 +24,7 @@
                                :key="post.id"></ArchiveListCell>
             </div>
           </div>
-          <!--          <browse-more @browseMore="browseMore" :noMoreData="noMoreData" ref="browseMore"></browse-more>-->
+          <BrowseMore @browseMore="browseMore" :noMoreData="noMoreData" ref="browseMore"></BrowseMore>
         </div>
       </el-col>
       <el-col :xs="0" :sm="7" :md="7" :lg="7">
@@ -50,19 +49,25 @@
   import ArchiveListCell from "../../views/archive/ArchiveListCell";
   import Recommend from "../../views/Recommend";
   import Hot from "../../views/Hot";
+  import BrowseMore from "../../views/BrowseMore";
+  import {
+    DefaultLimitSize,
+    MaxLimitSize,
+    SectionTitleDefaultMenus,
+  } from '@/utils/front/const';
 
   export default {
     name: 'TimeLineContent',
-    components: {SectionTitle, ArchiveListTimeTitle, ArchiveListCell, Recommend, Hot},
+    components: {SectionTitle, ArchiveListTimeTitle, ArchiveListCell, BrowseMore, Recommend, Hot},
     data() {
       return {
-        top_category: undefined,
+        selected_category: undefined,
         // 排序
         timeSorted: false,
         mostComment: undefined,
         recommend: undefined,
-        limit_size: 100,
-        page: 0,
+        pageSize: 30,
+        pageNum: 1,
         menus: [
           {
             title: '顺序',
@@ -73,7 +78,7 @@
           {title: '最多评论', selected: false, method: 'mostComment'},
           {title: '推荐', selected: false, method: 'recommend'}
         ],
-        selectedDateRange: []
+        dateRange: []
       };
     },
     beforeRouteLeave(to, from, next) {
@@ -83,8 +88,6 @@
     },
     mounted() {
       if (Object.keys(this.$store.state.timeline.timeline).length === 0) {
-        console.log('non ssr');
-        // 未SSR的情况
         this.updateTimeLineInfo(true);
       }
     },
@@ -106,38 +109,26 @@
         getTimelineInfo: 'timeline/GET_TIMELINE_INFO'
       }),
       browseMore() {
-        this.page++;
+        this.pageNum++;
         this.updateTimeLineInfo(false);
       },
       updateTimeLineInfo(reset) {
         // 排序条件
         let orderings = [];
-        if (this.timeSorted) {
-          orderings.push('add_time');
-        } else {
-          orderings.push('-add_time');
-        }
         if (this.mostComment !== undefined) {
-          if (this.mostComment) {
-            orderings.push('comment_num');
-          } else {
-            orderings.push('-comment_num');
-          }
+          orderings.push(this.mostComment ? 'commentCount' : '-commentCount');
         }
-        this.getTimelineInfo({
-          params: {
-            params: {
-              top_category: this.top_category,
-              ordering: orderings.toString(),
-              is_recommend: this.recommend,
-              time_min: this.selectedDateRange[0],
-              time_max: this.selectedDateRange[1],
-              limit: this.limit_size,
-              offset: this.page * this.limit_size
-            }
-          },
-          reset
-        }).then(response => {
+        let params = {
+          categoryId: this.selected_category,
+          orderByColumn: orderings.toString(),
+          isAsc: this.timeSorted ? 'asc' : 'desc',
+          support: this.recommend,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          beginTime: this.dateRange[0],
+          endTime: this.dateRange[1]
+        };
+        this.getTimelineInfo({params, reset}).then(response => {
           this.$refs.browseMore.stopLoading();
         }).catch(error => {
           this.$refs.browseMore.stopLoading();
@@ -157,17 +148,17 @@
         });
       },
       selectCategory(categoryId) {
-        this.top_category = categoryId;
-        this.page = 0;
+        this.selected_category = categoryId;
+        this.pageNum = 0;
         this.updateTimeLineInfo(true);
       },
       refresh() {
-        this.top_category = undefined;
+        this.selected_category = undefined;
         this.timeSorted = false;
         this.mostComment = undefined;
         this.recommend = undefined;
         this.page = 0;
-        this.selectedDateRange = [];
+        this.dateRange = [];
         this.updateTimeLineInfo(true);
       },
       menusControl(params) {
@@ -183,24 +174,15 @@
             break;
         }
         // 清空原数据
-        this.page = 0;
+        this.pageNum = 1;
         this.updateTimeLineInfo(true);
       },
-      dateSelect(dateRange) {
-        this.selectedDateRange = [dateRange[0], dateAdd(dateRange[1], 60 * 60 * 24 * 1000)];
-        this.page = 0;
-        this.limit_size = MaxLimitSize;
-        this.updateTimeLineInfo(true);
-      },
-      dateSelectClear() {
-        this.selectedDateRange = [];
-        this.page = 0;
-        this.limit_size = 100;
+      confirmDateSelect(dateRange) {
+        this.dateRange = dateRange;
         this.updateTimeLineInfo(true);
       }
-    },
-
-  };
+    }
+  }
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">

@@ -107,7 +107,6 @@
       updateArticlesInfo(reset) {
         // 排序条件
         let orderings = [];
-        // orderings.push(this.timeSorted ? 'b.createTime' : '-b.createTime');
         if (this.mostComment !== undefined) {
           orderings.push(this.mostComment ? 'commentCount' : '-commentCount');
         }
