@@ -51,7 +51,7 @@ export default {
       }
       return new Promise((resolve, reject) => {
         this.loading = true
-        list(this.base, this.queryParams).then(response => {
+        list(this.base, this.addDateRange(this.queryParams, this.dateRange)).then(response => {
           this.total = response.total
           this.list = response.rows
           setTimeout(() => {

@@ -100,6 +100,8 @@ public class Blog extends BaseEntity {
 
     private List<Comment> commentList;
 
+    private Long commentCount;
+
     /**
      * 发布的校验规则
      */

@@ -14,11 +14,12 @@
     <div class="menu">
       <ul class="list clearfix" v-if="controlMenus.length > 0">
         <li v-for="menu in controlMenus" :key="menu.title">
-          <a :class="{ active: menu.selected }" @click="menusControl(menu)">{{menu.title}}</a>
+          <a :class="{ active: menu.selected }" @click="menusControl(menu)">{{menuTitle(menu)}}</a>
         </li>
       </ul>
       <div class="date-picker" v-if="withTimeSelect">
-        <el-date-picker @change="changeDate" size="small" style="width: 180px;" value-format="yyyy-MM-dd"
+        <el-date-picker v-model="selectedDateRange" @change="changeDate" size="small" style="width: 180px;"
+                        value-format="yyyy-MM-dd"
                         type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </div>
       <div class="refresh" v-if="withRefresh">
@@ -74,10 +75,15 @@
       }
     },
     methods: {
+      menuTitle(menu) {
+        return menu.selected ? (menu.selectedTitle !== undefined ? menu.selectedTitle : menu.title) : menu.title;
+      },
+      //刷新
       refresh() {
         this.copiedMenus = undefined;
         this.$emit('refresh');
       },
+      //跳转
       tipAction() {
         this.$emit('tipAction');
         this.$router.push(this.to);
@@ -86,13 +92,8 @@
         menu.selected = !menu.selected;
         this.$emit('menusControl', [menu.method, menu.selected]);
       },
-      clearDateSelect() {
-        this.$emit('clearDateSelect');
-      },
       changeDate(dateRange) {
-        this.selectedDateRange = dateRange;
-      },
-      confirmDateSelect() {
+        this.selectedDateRange = dateRange ? dateRange : [];
         this.$emit('confirmDateSelect', this.selectedDateRange);
       }
     }

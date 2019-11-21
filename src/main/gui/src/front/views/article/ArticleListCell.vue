@@ -26,7 +26,7 @@
               <a><i class="el-icon-view"></i> {{article.click}} 阅读</a>
             </span>
             <span class="comments">
-              <a><i class="el-icon-chat-dot-square"></i> {{article.commentList.length}} 评论</a>
+              <a><i class="el-icon-chat-dot-square"></i> {{article.commentCount}} 评论</a>
             </span>
             <span class="likes">
               <a @click="likePost(article)"><i class="el-icon-star-on"></i> {{article.like}} 赞</a>

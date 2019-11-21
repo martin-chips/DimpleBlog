@@ -1,10 +1,13 @@
 package com.dimple.project.front;
 
+import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Category;
 import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.blog.service.CategoryService;
+import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.front.domain.FrontMenu;
 import com.dimple.project.front.domain.Tag;
 import com.dimple.project.system.domain.Link;
@@ -27,7 +30,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/f")
-public class FrontConfigController {
+public class FrontConfigController extends BaseController {
 
     @Autowired
     CategoryService categoryService;
@@ -80,25 +83,26 @@ public class FrontConfigController {
     BlogService blogService;
 
     @GetMapping("/support")
-    public AjaxResult support() {
-        Blog blog = new Blog();
-        blog.setSupport(true);
-        List<Blog> blogList = blogService.selectBlogList(blog);
-        return AjaxResult.success(blogList);
+    public TableDataInfo support(BlogQuery blogQuery) {
+        startPage();
+        List<Blog> blogList = blogService.selectBlogList(blogQuery);
+        return getDataTable(blogList);
     }
 
     @GetMapping("/hot")
-    public AjaxResult hot() {
-        Blog blog = new Blog();
-        blog.setSupport(true);
-        List<Blog> blogList = blogService.selectBlogList(blog);
-        return AjaxResult.success(blogList);
+    public TableDataInfo hot(BlogQuery blogQuery) {
+        startPage();
+        List<Blog> blogList = blogService.selectBlogList(blogQuery);
+        return getDataTable(blogList);
     }
 
     @GetMapping("/blog")
-    public AjaxResult blog() {
-        return AjaxResult.success(blogService.selectBlogList(new Blog()));
+    public TableDataInfo blog(BlogQuery blogQuery) {
+        startPage();
+        List<Blog> blogList = blogService.selectBlogList(blogQuery);
+        return getDataTable(blogList);
     }
+
 
     @Autowired
     LinkService linkService;

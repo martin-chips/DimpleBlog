@@ -13,6 +13,7 @@
         <result property="content" column="content"/>
         <result property="status" column="status"/>
         <result property="comment" column="comment"/>
+        <result property="commentCount" column="comment_count"/>
         <result property="tag" column="tag"/>
         <result property="support" column="support"/>
         <result property="weight" column="weight"/>
@@ -75,6 +76,27 @@
 
     <select id="selectBlogTagList" resultType="java.lang.String">
         select tag from bg_blog where tag like concat('%',#{query},'%')
+    </select>
+
+    <select id="selectBlogListQuery" resultMap="BlogResult">
+        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.tag,b.like,b.click,
+        b.comment, b.create_time,count(c.id) as comment_count
+        from bg_blog b left join bg_comment c
+        on b.id=c.page_id
+        where b.delete_time is null
+        <if test="categoryId != null">
+            AND b.category_id =#{categoryId}
+        </if>
+        <if test="support != null ">
+            AND b.support = #{support}
+        </if>
+        <if test="beginTime != null "><!-- 开始时间检索 -->
+            and date_format( b.create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test="endTime != null "><!-- 结束时间检索 -->
+            and date_format( b.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+        group by b.id
     </select>
 
     <insert id="insertBlog" useGeneratedKeys="true" keyProperty="id">

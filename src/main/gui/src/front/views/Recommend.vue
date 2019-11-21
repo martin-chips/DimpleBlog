@@ -20,7 +20,7 @@
               <a @click="likePost(first)"><i class="el-icon-star-on"></i> {{ first.like }} </a>
             </span>
             <span class="comments"><a><i
-              class="el-icon-chat-dot-square"></i>{{ first.commentList.length }} </a>
+              class="el-icon-chat-dot-square"></i>{{ first.commentCount }} </a>
             </span>
             <span class="readings"><a><i class="el-icon-view"></i> {{ first.click }} </a></span>
           </p>
@@ -41,7 +41,7 @@
                 <a @click="likePost(article)"><i class="el-icon-star-on"></i>  {{ article.like}} </a>
               </span>
               <span class="comments">
-                <a><i class="el-icon-chat-dot-square"></i> {{ article.commentList.length}} </a>
+                <a><i class="el-icon-chat-dot-square"></i> {{ article.commentCount}} </a>
               </span>
               <span class="readings">
                 <a><i class="el-icon-view"></i> {{ article.click}} </a>
@@ -77,11 +77,11 @@
       ...mapState({
         recommends: state => state.common.recommends
       }),
-      first:{
-        get(){
+      first: {
+        get() {
           return this.articleSlice(0, 1)[0];
         },
-        set(val){
+        set(val) {
 
         }
       }

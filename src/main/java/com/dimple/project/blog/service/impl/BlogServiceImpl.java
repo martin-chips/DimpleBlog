@@ -7,6 +7,7 @@ import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.blog.mapper.BlogMapper;
 import com.dimple.project.blog.mapper.CommentMapper;
 import com.dimple.project.blog.service.BlogService;
+import com.dimple.project.front.domain.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,5 +82,10 @@ public class BlogServiceImpl implements BlogService {
             tags.addAll(Stream.of(strings).filter(e -> e.contains(query)).collect(Collectors.toList()));
         }
         return tags.stream().distinct().collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Blog> selectBlogList(BlogQuery blogQuery) {
+        return blogMapper.selectBlogListQuery(blogQuery);
     }
 }

@@ -34,18 +34,20 @@ export function getBloggerInfo() {
 }
 
 //获取推荐内容
-export function listRecommend() {
+export function listRecommend(query) {
   return request({
     url: '/f/support',
     method: 'get',
+    params: query
   })
 }
 
 //获取最热内容
-export function listHot() {
+export function listHot(query) {
   return request({
     url: '/f/hot',
     method: 'get',
+    params: query
   })
 }
 

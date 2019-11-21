@@ -1,6 +1,7 @@
 package com.dimple.project.blog.mapper;
 
 import com.dimple.project.blog.domain.Blog;
+import com.dimple.project.front.domain.BlogQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -68,4 +69,11 @@ public interface BlogMapper {
      */
     List<String> selectBlogTagList(String query);
 
+    /**
+     * 前台查询blog
+     *
+     * @param blogQuery blog查询条件
+     * @return list
+     */
+    List<Blog> selectBlogListQuery(BlogQuery blogQuery);
 }

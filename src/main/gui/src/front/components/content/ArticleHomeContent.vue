@@ -3,26 +3,25 @@
     <el-row>
       <el-col :xs="24" :sm="17" :md="17" :lg="17">
         <div class="layout-left">
-          <classify-menu :categorys="categoriesInfo" @selectCategory="selectCategory"
-                         :defaultCategory="selected_category"></classify-menu>
-          <section-title :mainTitle="'文章列表'"
-                         :subTitle="'Article List'"
-                         :menus="menus"
-                         :withRefresh="true"
-                         :withTimeSelect="true"
-                         @refresh="refresh"
-                         @menusControl="menusControl"
-                         @comfirmDateSelect="dateSelect"
-                         @clearDateSelect="dateSelectClear">
-          </section-title>
+          <ClassifyMenu v-if="categories !=null " :categories="categoriesInfo"
+                        @selectCategory="selectCategory"></ClassifyMenu>
+          <SectionTitle :mainTitle="'文章列表'"
+                        :subTitle="'Article List'"
+                        :menus="menus"
+                        :withRefresh="true"
+                        :withTimeSelect="true"
+                        @refresh="refresh"
+                        @menusControl="menusControl"
+                        @confirmDateSelect="confirmDateSelect">
+          </SectionTitle>
           <article-list-cell v-for="article in articles" :article="article" :key="article.id"></article-list-cell>
           <BrowseMore @browseMore="browseMore" :noMoreData="noMoreData" ref="browseMore"></BrowseMore>
         </div>
       </el-col>
       <el-col :xs="0" :sm="7" :md="7" :lg="7">
         <div class="layout-right">
-          <!--          <recommend></recommend>-->
-          <!--          <tag-wall style="margin-top: 15px;"></tag-wall>-->
+          <Recommend></Recommend>
+          <TagWall style="margin-top: 15px;"></TagWall>
         </div>
       </el-col>
     </el-row>
@@ -40,6 +39,8 @@
   import ClassifyMenu from "../../views/classify/ClassifyMenu";
   import SectionTitle from "../../views/SectionTitle";
   import BrowseMore from "../../views/BrowseMore";
+  import Recommend from "../../views/Recommend";
+  import TagWall from "../../views/TagWall";
 
   import {
     DefaultLimitSize,
@@ -47,13 +48,10 @@
     SectionTitleDefaultMenus,
   } from '@/utils/front/const';
 
-  // mixin
-  // import {mixin} from '@/utils/front/utils';
-
   export default {
     name: 'ArticleHomeContent',
     components: {
-      ClassifyMenu, ArticleListCell, SectionTitle, BrowseMore
+      ClassifyMenu, ArticleListCell, SectionTitle, BrowseMore, Recommend, TagWall
     },
     data() {
       return {
@@ -62,19 +60,15 @@
         mostComment: undefined,
         recommend: undefined,
         pageSize: DefaultLimitSize,
-        pageNum: 0,
+        pageNum: 1,
         menus: SectionTitleDefaultMenus,
-        selectedDateRange: []
+        dateRange: []
       };
     },
     beforeRouteLeave(to, from, next) {
       // 导航离开时清空vuex中数据
       this.clearArticlesBaseInfo();
       next();
-    },
-    created() {
-      // 设置默认的分类id
-      this.selected_category = this.categoriesInfo[0].id;
     },
     mounted() {
       if (this.$store.state.articleHome.articles.length === 0) {
@@ -83,11 +77,17 @@
     },
     computed: {
       ...mapState({
-        categories: state => state.base.categories,
+        // categories: state => state.base.categories,
         articles: state => state.articleHome.articles,
         noMoreData: state => state.articleHome.noMoreData
       }),
-      categoriesInfo: function () {
+      categories() {
+        return this.$store.state.base.categories;
+      },
+      categoriesInfo() {
+        if (this.categories == null) {
+          return [];
+        }
         return this.categories.filter((category) => {
           return 1 == 1;
         });
@@ -107,32 +107,21 @@
       updateArticlesInfo(reset) {
         // 排序条件
         let orderings = [];
-        if (this.timeSorted) {
-          orderings.push('add_time');
-        } else {
-          orderings.push('-add_time');
-        }
+        // orderings.push(this.timeSorted ? 'b.createTime' : '-b.createTime');
         if (this.mostComment !== undefined) {
-          if (this.mostComment) {
-            orderings.push('comment_num');
-          } else {
-            orderings.push('-comment_num');
-          }
+          orderings.push(this.mostComment ? 'commentCount' : '-commentCount');
         }
-        this.getArticlesBaseInfo({
-          params: {
-            params: {
-              top_category: this.selected_category,
-              ordering: orderings.toString(),
-              is_recommend: this.recommend,
-              time_min: this.selectedDateRange[0],
-              time_max: this.selectedDateRange[1],
-              limit: this.limit_size,
-              offset: this.page * this.limit_size
-            }
-          },
-          reset
-        }).then(response => {
+        let params = {
+          categoryId: this.selected_category,
+          orderByColumn: orderings.toString(),
+          isAsc: this.timeSorted ? 'asc' : 'desc',
+          support: this.recommend,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          beginTime: this.dateRange[0],
+          endTime: this.dateRange[1]
+        };
+        this.getArticlesBaseInfo({params, reset}).then(response => {
           this.$refs.browseMore.stopLoading();
         }).catch(error => {
           this.$refs.browseMore.stopLoading();
@@ -140,11 +129,11 @@
         });
       },
       browseMore() {
-        this.page++;
+        this.pageNum++;
         this.updateArticlesInfo();
       },
       selectCategory(categoryId) {
-        this.page = 0;
+        this.pageNum = 1;
         this.selected_category = categoryId;
         this.updateArticlesInfo(true);
       },
@@ -153,8 +142,8 @@
         this.timeSorted = false;
         this.mostComment = undefined;
         this.recommend = undefined;
-        this.page = 0;
-        this.selectedDateRange = [];
+        this.pageNum = 1;
+        this.dateRange = [];
         this.updateArticlesInfo(true);
       },
       menusControl(params) {
@@ -170,19 +159,11 @@
             break;
         }
         // 清空原数据
-        this.page = 0;
+        this.pageNum = 1;
         this.updateArticlesInfo(true);
       },
-      dateSelect(dateRange) {
-        this.selectedDateRange = [dateRange[0], dateAdd(dateRange[1], 60 * 60 * 24 * 1000)];
-        this.page = 0;
-        this.limit_size = MaxLimitSize;
-        this.updateArticlesInfo(true);
-      },
-      dateSelectClear() {
-        this.selectedDateRange = [];
-        this.page = 0;
-        this.limit_size = DefaultLimitSize;
+      confirmDateSelect(dateRange) {
+        this.dateRange = dateRange;
         this.updateArticlesInfo(true);
       }
     },

@@ -158,9 +158,6 @@ export function scrollTop(el, from = 0, to, duration = 500) {
 }
 
 export const mixin = {
-  data() {
-    return {};
-  },
   methods: {
     // 滚动到评论区域
     scrollToComments() {
@@ -174,6 +171,7 @@ export const mixin = {
       }
     }
   },
+
   // computed: {
   //   ...mapState({
   //     categories: state => state.base.categories

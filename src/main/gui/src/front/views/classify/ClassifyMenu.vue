@@ -1,11 +1,11 @@
 <template>
-  <div class="classify-bar" v-if="categories !== undefined">
+  <div class="classify-bar" v-if="categories !== null">
     <p class="level level-one">
       <span class="title">分类：</span>
       <span class="class">
         <a class="active" @click="choseLevel(undefined, $event)">全部</a>
-        <a class="name" :id="'id' + category.id" @click="choseLevel(category, $event)"
-           v-for="category in this.categories" :key="category.id">{{ category.name }}</a>
+        <a class="name" :id="'id' + category.id" @click="choseLevel(category, $event)" :title="category.description"
+           v-for="category in this.categories" :key="category.id">{{ category.title }}</a>
       </span>
     </p>
   </div>
@@ -14,26 +14,18 @@
 <script type="text/ecmascript-6">
 
   export default {
-    name: 'classify-menu',
+    name: 'ClassifyMenu',
     props: {
-      defaultCategory: {
-        Type: Number,
-        default: null
-      },
       categories: {
         Type: Object,
         default: undefined
       }
     },
     data() {
-      return {
-        selectCategory: undefined,
-      };
+      return {};
     },
     methods: {
       choseLevel(category, event) {
-        // 更新子菜单
-        let level = parseInt(event.target.dataset.level);
         // 更新样式
         let pNode = event.target.parentNode;
         let activeNode = pNode.querySelector('.active');
@@ -41,6 +33,7 @@
           activeNode.classList.remove('active');
         }
         event.target.classList.add('active');
+        this.selectCategory(category.id);
       },
       selectCategory(categoryId) {
         this.$emit('selectCategory', categoryId);

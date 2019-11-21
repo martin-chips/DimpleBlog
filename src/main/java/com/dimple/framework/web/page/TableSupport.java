@@ -1,6 +1,7 @@
 package com.dimple.framework.web.page;
 
 import com.dimple.common.utils.ServletUtils;
+import com.dimple.common.utils.StringUtils;
 
 /**
  * @className: TableSupport
@@ -36,8 +37,8 @@ public class TableSupport {
         PageDomain pageDomain = new PageDomain();
         pageDomain.setPageNum(ServletUtils.getParameterToInt(PAGE_NUM));
         pageDomain.setPageSize(ServletUtils.getParameterToInt(PAGE_SIZE));
-        pageDomain.setOrderByColumn(ServletUtils.getParameter(ORDER_BY_COLUMN));
-        pageDomain.setIsAsc(ServletUtils.getParameter(IS_ASC));
+        pageDomain.setOrderByColumn(StringUtils.isEmpty(ServletUtils.getParameter(ORDER_BY_COLUMN)) ? "createTime" : ServletUtils.getParameter(ORDER_BY_COLUMN));
+        pageDomain.setIsAsc(StringUtils.isEmpty(ServletUtils.getParameter(IS_ASC)) ? "desc" : ServletUtils.getParameter(IS_ASC));
         return pageDomain;
     }
 

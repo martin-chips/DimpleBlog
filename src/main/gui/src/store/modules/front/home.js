@@ -15,7 +15,7 @@ export default {
     GET_ARTICLES_BASE_INFO({state, commit}, params) {
       return new Promise((resolve, reject) => {
         listBlogBaseInfo(params).then((response) => {
-          commit('UPDATE_ARTICLES_BASE_INFO', response.data);
+          commit('UPDATE_ARTICLES_BASE_INFO', response.rows);
           resolve(response);
         }).catch((error) => {
           reject(error);
