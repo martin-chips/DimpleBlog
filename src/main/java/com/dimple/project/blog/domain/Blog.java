@@ -94,6 +94,10 @@ public class Blog extends BaseEntity {
      */
     private List<Tag> tagList;
     /**
+     * 标签名集合
+     */
+    private List<String> tagTitleList;
+    /**
      * 评论集合
      */
     private List<Comment> commentList;
@@ -101,6 +105,7 @@ public class Blog extends BaseEntity {
      * 评论数量
      */
     private Long commentCount;
+
 
     /**
      * 发布的校验规则

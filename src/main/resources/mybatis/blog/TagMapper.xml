@@ -45,6 +45,11 @@
     </select>
 
 
+    <select id="selectTagByTitle" resultType="com.dimple.project.blog.domain.Tag">
+        select id,color,title from bg_tag where title=#{title}
+    </select>
+
+
     <insert id="insertTag" parameterType="com.dimple.project.blog.domain.Tag" useGeneratedKeys="true"
             keyProperty="id">
         insert into bg_tag

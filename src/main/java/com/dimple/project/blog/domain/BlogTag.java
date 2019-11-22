@@ -13,4 +13,9 @@ public class BlogTag {
     private Long id;
     private Long blogId;
     private Long tagId;
+
+    public BlogTag(Long blogId, Long tagId) {
+        this.blogId = blogId;
+        this.tagId = tagId;
+    }
 }

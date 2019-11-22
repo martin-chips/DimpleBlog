@@ -35,4 +35,9 @@ public class Tag extends BaseEntity {
         this.title = title;
         this.count = count;
     }
+
+    public Tag(String title, String color) {
+        this.color = color;
+        this.title = title;
+    }
 }

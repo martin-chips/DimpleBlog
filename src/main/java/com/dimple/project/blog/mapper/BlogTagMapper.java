@@ -1,7 +1,6 @@
 package com.dimple.project.blog.mapper;
 
 import com.dimple.project.blog.domain.BlogTag;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +16,5 @@ public interface BlogTagMapper {
 
     int deleteBlogTagByBlogId(Long blogId);
 
-    int insertBlogTag(@Param("blogId") Long blogId, @Param("tagId") Long tagId);
+    int insertBlogTag(BlogTag blogTag);
 }

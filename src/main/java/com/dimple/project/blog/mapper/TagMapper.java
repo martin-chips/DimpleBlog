@@ -60,4 +60,11 @@ public interface TagMapper {
      */
     List<Tag> selectTagListByBlogId(Long id);
 
+    /**
+     * 根据title查询tag
+     *
+     * @param tag tag title
+     * @return tag
+     */
+    Tag selectTagByTitle(String tag);
 }

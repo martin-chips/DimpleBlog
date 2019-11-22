@@ -10,10 +10,13 @@
             <span class="special" v-if="article.support">推荐</span>
           </h4>
           <div class="tags">
-            <el-tag :type="tag.type" effect="plain" v-for="tag in tags" :key="tag.id" class="border-tag"
-                    style="margin: 2px 4px 2px 0">
-              {{tag.label}}
-            </el-tag>
+           <a>
+             <el-tag effect="plain" v-for="tag in article.tagList" :key="tag.id" class="border-tag" size="small"
+                     :style="{borderColor:tag.color,color:tag.color} "
+                     style="margin: 2px 4px 2px 0">
+               {{tag.title}}
+             </el-tag>
+           </a>
           </div>
           <p class="desc">{{article.summary | textLineBreak(90) }}
             <a @click.prevent="gotoPostDetail(article)" :href="`/article/${article.id}`"> 查看更多

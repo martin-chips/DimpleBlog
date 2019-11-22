@@ -104,8 +104,8 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="摘要" prop="summary" :show-overflow-tooltip="true" width="180"/>
-      <el-table-column label="封面" prop="headerImg" width="120">
+      <el-table-column label="摘要" prop="summary" :show-overflow-tooltip="true"/>
+      <el-table-column label="封面" prop="headerImg">
         <template slot-scope="scope">
           <el-image
             style="width: 30px; height: 30px"
@@ -126,13 +126,13 @@
                      inactive-color="#ff4949"/>
         </template>
       </el-table-column>
-      <el-table-column label="权重" prop="weight" width="150" align="center">
+      <el-table-column label="权重" prop="weight" align="center">
         <template slot-scope="scope">
           <el-rate v-model="scope.row.weight" :max="5" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" disabled
                    :low-threshold="1" :high-threshold="5" style="display:inline-block"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>

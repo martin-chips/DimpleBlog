@@ -5,6 +5,7 @@ import com.dimple.common.utils.ObjectUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.project.blog.domain.Blog;
+import com.dimple.project.blog.domain.BlogTag;
 import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.blog.domain.Tag;
 import com.dimple.project.blog.mapper.BlogMapper;
@@ -42,7 +43,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog selectBlogById(Long id) {
         Blog blog = blogMapper.selectBlogById(id);
-        blog.setTagList(tagMapper.selectTagListByBlogId(id));
+        blog.setTagTitleList(getTagTitleListByBlogId(id));
         return blog;
     }
 
@@ -57,10 +58,21 @@ public class BlogServiceImpl implements BlogService {
         List<Comment> commentList = commentMapper.selectCommentListByPageId(blogIdList);
         for (Blog temp : blogList) {
             temp.setCommentList(commentList.stream().filter(e -> e.getPageId().equals(temp.getId())).collect(Collectors.toList()));
-            List<Tag> tagList = tagMapper.selectTagListByBlogId(temp.getId());
-            temp.setTagList(tagList);
+            temp.setTagTitleList(getTagTitleListByBlogId(temp.getId()));
         }
         return blogList;
+    }
+
+    /**
+     * 根据id获取title集合
+     *
+     * @param blogId blog的id
+     * @return title集合
+     */
+    private List<String> getTagTitleListByBlogId(Long blogId) {
+        List<Tag> tagList = tagMapper.selectTagListByBlogId(blogId);
+        List<String> tagTitleList = tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
+        return tagTitleList;
     }
 
     @Override
@@ -78,20 +90,17 @@ public class BlogServiceImpl implements BlogService {
     private void updateBlogTagMapping(Blog blog) {
         //删除该blogId下的所有关联
         blogTagMapper.deleteBlogTagByBlogId(blog.getId());
-        List<Tag> tagList = blog.getTagList();
-        if (ObjectUtils.isNotEmpty(tagList)) {
-            for (Tag tag : tagList) {
-                //如果有id,直接插入关联表
-                if (ObjectUtils.isNotEmpty(tag.getId())) {
-                    blogTagMapper.insertBlogTag(blog.getId(), tag.getId());
+        List<String> tagTitleList = blog.getTagTitleList();
+        if (ObjectUtils.isNotEmpty(tagTitleList)) {
+            for (String title : tagTitleList) {
+                //搜索所有的该tag
+                Tag tag = tagMapper.selectTagByTitle(title);
+                if (tag != null) {
+                    blogTagMapper.insertBlogTag(new BlogTag(blog.getId(), tag.getId()));
                 } else {
-                    //创建tag
-                    Tag temp = new Tag();
-                    temp.setTitle(tag.getTitle());
-                    temp.setColor(StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 0.5));
-                    temp.setCreateBy(SecurityUtils.getUsername());
-                    tagMapper.insertTag(tag);
-                    blogTagMapper.insertBlogTag(blog.getId(), temp.getId());
+                    Tag temp = new Tag(title, StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 0.5));
+                    tagMapper.insertTag(temp);
+                    blogTagMapper.insertBlogTag(new BlogTag(blog.getId(), temp.getId()));
                 }
             }
         }
@@ -129,15 +138,19 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Tag> selectBlogTagList(String query) {
+    public List<String> selectBlogTagList(String query) {
         Tag tag = new Tag();
         tag.setTitle(query);
         List<Tag> tagList = tagMapper.selectTagList(tag);
-        return tagList;
+        return tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
     }
 
     @Override
     public List<Blog> selectBlogList(BlogQuery blogQuery) {
-        return blogMapper.selectBlogListQuery(blogQuery);
+        List<Blog> blogList = blogMapper.selectBlogListQuery(blogQuery);
+        for (Blog blog : blogList) {
+            blog.setTagList(tagMapper.selectTagListByBlogId(blog.getId()));
+        }
+        return blogList;
     }
 }

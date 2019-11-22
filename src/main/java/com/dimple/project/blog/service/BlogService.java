@@ -1,7 +1,6 @@
 package com.dimple.project.blog.service;
 
 import com.dimple.project.blog.domain.Blog;
-import com.dimple.project.blog.domain.Tag;
 import com.dimple.project.front.domain.BlogQuery;
 
 import java.util.List;
@@ -65,9 +64,9 @@ public interface BlogService {
      * 获取blog的标签
      *
      * @param query 查询条件
-     * @return 标签集合
+     * @return 标签名集合
      */
-    List<Tag> selectBlogTagList(String query);
+    List<String> selectBlogTagList(String query);
 
     /**
      * 前台查询blog列表
