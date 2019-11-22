@@ -14,7 +14,6 @@
         <result property="status" column="status"/>
         <result property="comment" column="comment"/>
         <result property="commentCount" column="comment_count"/>
-        <result property="tag" column="tag"/>
         <result property="support" column="support"/>
         <result property="weight" column="weight"/>
         <result property="createBy" column="create_by"/>
@@ -29,7 +28,6 @@
         <result property="headerImg" column="header_img"/>
         <result property="status" column="status"/>
         <result property="comment" column="comment"/>
-        <result property="tag" column="tag"/>
         <result property="like" column="like"/>
         <result property="click" column="click"/>
         <result property="support" column="support"/>
@@ -47,7 +45,7 @@
     </resultMap>
 
     <select id="selectBlogList" resultMap="BlogResultWithoutContent">
-        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.tag,b.like,b.click,
+        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.like,b.click,
         b.comment, b.create_by, b.create_time,c.id c_id,c.title c_title,c.description c_description,c.support
         c_support,c.create_by c_create_by,c.create_time c_create_time
         from bg_blog b ,bg_category c
@@ -70,16 +68,13 @@
     </select>
 
     <select id="selectBlogById" resultMap="BlogResult">
-        select id, category_id, title, summary, header_img, content,support, status, weight,tag,comment, create_by, create_time from bg_blog
+        select id, category_id, title, summary, header_img, content,support, status, weight,comment, create_by, create_time from bg_blog
         where id = #{id} and delete_time is null
     </select>
 
-    <select id="selectBlogTagList" resultType="java.lang.String">
-        select tag from bg_blog where tag like concat('%',#{query},'%')
-    </select>
 
     <select id="selectBlogListQuery" resultMap="BlogResult">
-        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.tag,b.like,b.click,
+        select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.like,b.click,
         b.comment, b.create_time,count(c.id) as comment_count
         from bg_blog b left join bg_comment c
         on b.id=c.page_id
@@ -111,7 +106,6 @@
             <if test="comment != null ">comment,</if>
             <if test="support != null ">support,</if>
             <if test="weight != null ">weight,</if>
-            <if test="tag != null ">tag,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             create_time
         </trim>
@@ -125,7 +119,6 @@
             <if test="comment != null ">#{comment},</if>
             <if test="support != null ">#{support},</if>
             <if test="weight != null ">#{weight},</if>
-            <if test="tag != null ">#{tag},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             sysdate()
         </trim>
@@ -142,7 +135,6 @@
             <if test="status != null ">status = #{status},</if>
             <if test="support != null ">support = #{support},</if>
             <if test="weight != null ">weight = #{weight},</if>
-            <if test="tag != null ">tag = #{tag},</if>
             <if test="comment != null ">comment = #{comment},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>

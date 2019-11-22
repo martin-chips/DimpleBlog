@@ -22,9 +22,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Blog extends BaseEntity {
 
-    /**
-     * id
-     */
     private Long id;
 
     /**
@@ -38,11 +35,6 @@ public class Blog extends BaseEntity {
      */
     @Length(min = 3, max = 50, message = "文章标题不能为空，且长度为{min}~{max}个字符", groups = {Publish.class, Draft.class})
     private String title;
-    /**
-     * 标签
-     */
-    @NotNull(message = "标签不能为空", groups = {Publish.class})
-    private String tag;
 
     /**
      * 摘要
@@ -97,9 +89,17 @@ public class Blog extends BaseEntity {
      * 点击数
      */
     private Long click;
-
+    /**
+     * 标签集合
+     */
+    private List<Tag> tagList;
+    /**
+     * 评论集合
+     */
     private List<Comment> commentList;
-
+    /**
+     * 评论数量
+     */
     private Long commentCount;
 
     /**

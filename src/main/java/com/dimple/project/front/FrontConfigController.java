@@ -5,11 +5,11 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Category;
+import com.dimple.project.blog.domain.Tag;
 import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.blog.service.CategoryService;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.front.domain.FrontMenu;
-import com.dimple.project.front.domain.Tag;
 import com.dimple.project.system.domain.Link;
 import com.dimple.project.system.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,9 +119,9 @@ public class FrontConfigController extends BaseController {
     @GetMapping("/tag")
     public AjaxResult tag() {
         List<Tag> tagList = new ArrayList<>();
-        tagList.add(new Tag("A", 1L));
-        tagList.add(new Tag("A1", 2L));
-        tagList.add(new Tag("A2", 3L));
+        tagList.add(new Tag("A", "", 1L));
+        tagList.add(new Tag("A1", "", 2L));
+        tagList.add(new Tag("A2", "", 3L));
         return AjaxResult.success(tagList);
     }
 }

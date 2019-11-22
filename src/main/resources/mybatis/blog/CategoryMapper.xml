@@ -27,7 +27,6 @@
             <result property="headerImg" column="b_header_img"/>
             <result property="status" column="b_status"/>
             <result property="comment" column="b_comment"/>
-            <result property="tag" column="b_tag"/>
             <result property="support" column="b_support"/>
             <result property="weight" column="b_weight"/>
             <result property="createBy" column="b_create_by"/>
@@ -43,8 +42,7 @@
             resultMap="CategoryResultWithBlogList">
         select c.id, c.title, c.description, c.support, c.create_by, c.create_time,
         b.id b_id, b.title b_title,
-        b.summary b_summary,b.weight b_weight, b.header_img b_header_img, b.status b_status,b.support b_support,b.tag
-        b_tag,b.comment b_comment, b.create_by b_create_by, b.create_time b_create_time
+        b.summary b_summary,b.weight b_weight, b.header_img b_header_img, b.status b_status,b.support b_support,b.comment b_comment, b.create_by b_create_by, b.create_time b_create_time
         from bg_category c
         left join bg_blog b
         on c.id = b.category_id and b.delete_time is null

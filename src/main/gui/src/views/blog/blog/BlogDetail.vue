@@ -54,12 +54,14 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="16">
-                    <el-form-item label-width="60px" label="标签: " prop="tag">
+                    <el-form-item label-width="60px" label="标签: " prop="tagList">
                       <el-select
-                        style="width:100%" v-model="form.tag" multiple default-first-option filterable remote
+                        value-key="title"
+                        style="width:100%" v-model="form.tagList" multiple default-first-option filterable remote
                         :loading="loading"
                         :remote-method="getRemoteTagList" allow-create placeholder="请选择文章标签">
-                        <el-option v-for="item in blogTagOptions" :key="item" :label="item" :value="item"></el-option>
+                        <el-option v-for="item in blogTagOptions" :key="item.id" :label="item.title"
+                                   :value="item.title"/>
                       </el-select>
                     </el-form-item>
                   </el-col>
@@ -113,9 +115,10 @@
         imagesUploadApi: '',
         //上传文件需要用到的token
         headers: {'Authorization': 'Bearer ' + getToken()},
+        list: '',
         form: {
           weight: 1,
-          tag: [],
+          tagList: '',
           comment: true,
           support: false
         },
@@ -166,9 +169,9 @@
           this.loading = true;
           setTimeout(() => {
             this.loading = false;
-            listBlogTagList(query).then(
-              response => {
+            listBlogTagList(query).then(response => {
                 this.blogTagOptions = response.rows;
+                console.log(this.blogTagOptions)
                 this.loading = false;
               }
             );
@@ -202,8 +205,9 @@
             this.msgError(response.msg);
             return;
           }
-          if (typeof (response.data.tag) != 'undefined') {
-            response.data.tag = response.data.tag.split(",");
+          if (typeof (response.data.tagList) != 'undefined') {
+            response.data.tags = response.data.tagList.map(e => e.title);
+            this.list = response.data.tagList;
           }
           this.form = response.data;
         })

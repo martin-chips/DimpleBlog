@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.blog.mapper.BlogTagMapper">
+
+    <insert id="insertBlogTag" useGeneratedKeys="true" keyProperty="id">
+        insert into bg_blog_tag(blog_id,tag_id) values (#{blogId},#{tagId})
+    </insert>
+
+    <delete id="deleteBlogTagByBlogId">
+        delete from bg_blog_tag where blog_id=#{id}
+    </delete>
+
+    <select id="selectBlogTagList" resultType="com.dimple.project.blog.domain.BlogTag">
+        select id,blog_id,tag_id from bg_blog_tag
+        <where>
+            <if test="blogId != null">
+                AND blog_id =#{blogId}
+            </if>
+            <if test="tagId != null">
+                AND tag_id =#{tagId}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
