@@ -1,18 +1,17 @@
 package com.dimple.framework.security.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 import com.dimple.common.enums.UserStatus;
 import com.dimple.common.exception.BaseException;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.security.LoginUser;
 import com.dimple.project.system.domain.SysUser;
 import com.dimple.project.system.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  * @className: UserDetailsServiceImpl
@@ -21,8 +20,8 @@ import com.dimple.project.system.service.UserService;
  * @date: 10/22/19
  */
 @Service
+@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
     private UserService userService;

@@ -1,13 +1,12 @@
 package com.dimple.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @className: ThreadUtils
@@ -15,8 +14,8 @@ import org.slf4j.LoggerFactory;
  * @author: Dimple
  * @date: 10/22/19
  */
+@Slf4j
 public class ThreadUtils {
-    private static final Logger logger = LoggerFactory.getLogger(ThreadUtils.class);
 
     /**
      * sleep等待,单位为毫秒
@@ -43,7 +42,7 @@ public class ThreadUtils {
                 if (!pool.awaitTermination(120, TimeUnit.SECONDS)) {
                     pool.shutdownNow();
                     if (!pool.awaitTermination(120, TimeUnit.SECONDS)) {
-                        logger.info("Pool did not terminate");
+                        log.info("Pool did not terminate");
                     }
                 }
             } catch (InterruptedException ie) {
@@ -72,7 +71,7 @@ public class ThreadUtils {
             }
         }
         if (t != null) {
-            logger.error(t.getMessage(), t);
+            log.error(t.getMessage(), t);
         }
     }
 }

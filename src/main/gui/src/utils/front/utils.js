@@ -1,5 +1,6 @@
 import AES from 'crypto-js/aes';
 import {LineBreakMode} from "@/utils/front/const.js";
+import ENCUTF8 from 'crypto-js/enc-utf8';
 import {mapState} from "vuex";
 
 /**

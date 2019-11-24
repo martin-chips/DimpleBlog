@@ -68,13 +68,11 @@ public class FrontConfigController extends BaseController {
         FrontMenu frontMenu1 = new FrontMenu("友链", 2, true, "/link");
         FrontMenu frontMenu2 = new FrontMenu("留言", 3, true, "/leaveComment");
         FrontMenu frontMenu3 = new FrontMenu("关于", 4, true, "/about");
-        FrontMenu frontMenu4 = new FrontMenu("后台首页", 5, true, "/index");
         List<FrontMenu> menuList = new ArrayList<>();
         menuList.add(frontMenu);
         menuList.add(frontMenu1);
         menuList.add(frontMenu2);
         menuList.add(frontMenu3);
-        menuList.add(frontMenu4);
         return AjaxResult.success(menuList);
     }
 

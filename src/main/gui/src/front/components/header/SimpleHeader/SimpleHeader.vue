@@ -38,6 +38,15 @@
                 {{item.title}}
               </router-link>
             </li>
+            <li class="switches">
+              <el-button-group>
+                <el-button :icon="isDark?'el-icon-cloudy-and-sunny':'el-icon-sunny'" plain class="ivu-btn-ghost"
+                           size="mini" @click="toggleTheme"></el-button>
+                <el-button class="ivu-btn-ghost" icon="el-icon-monitor" plain @click="toIndex"
+                           size="mini">
+                </el-button>
+              </el-button-group>
+            </li>
           </ul>
         </div>
       </header>
@@ -51,6 +60,8 @@
     import SideBar from "./SideBar";
     import {headroom} from 'vue-headroom';
     import {mapState, mapMutations, mapActions} from 'vuex';
+    import {loadFromLocal} from '@/utils/front/utils';
+
 
     export default {
         name: 'simple-header',
@@ -64,21 +75,41 @@
         mounted() {
             if (!this.$store.state.base.categories) this.getCategories();
             if (!this.$store.state.base.menus) this.getMenus();
+            // 获取皮肤信息
+            this.checkTheme();
         },
         computed: {
             ...mapState({
                 categories: state => state.base.categories,
-                menus: state => state.base.menus
+                menus: state => state.base.menus,
+                siteTheme: state => state.base.siteTheme
             }),
+            isDark: function () {
+                return this.siteTheme === 'dark';
+            }
         },
         methods: {
             ...mapMutations({
-                // updateSiteTheme: 'base/UPDATE_SITE_THEME'
+                updateSiteTheme: 'base/UPDATE_SITE_THEME'
             }),
             ...mapActions({
                 getCategories: 'base/GET_CATEGORIES',
                 getMenus: 'base/GET_MENUS'
             }),
+            //跳转到后台首页
+            toIndex() {
+                this.$router.push({path: '/index'});
+            },
+            //切换主题
+            toggleTheme() {
+                console.log(this.siteTheme)
+                this.updateSiteTheme(this.siteTheme === 'dark' ? 'default' : 'dark');
+            },
+            checkTheme() {
+                const theme = loadFromLocal('siteConfig', 'theme', 'default');
+                console.log(theme)
+                this.updateSiteTheme(theme);
+            },
             rootRouterLink(category) {
                 let router = {};
                 router.name = category.category_type;

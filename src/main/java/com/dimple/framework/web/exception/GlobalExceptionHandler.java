@@ -5,8 +5,7 @@ import com.dimple.common.exception.BaseException;
 import com.dimple.common.exception.CustomException;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.web.domain.AjaxResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,8 +23,8 @@ import java.util.Objects;
  * @date: 10/22/19
  */
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
-    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * 基础异常

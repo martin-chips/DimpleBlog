@@ -10,8 +10,7 @@ import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.framework.web.page.TableSupport;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -26,8 +25,8 @@ import java.util.List;
  * @author: Dimple
  * @date: 10/22/19
  */
+@Slf4j
 public class BaseController {
-    protected final Logger logger = LoggerFactory.getLogger(BaseController.class);
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型

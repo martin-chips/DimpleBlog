@@ -1,19 +1,18 @@
 package com.dimple.framework.aspectj;
 
-import java.lang.reflect.Method;
-
+import com.dimple.common.utils.StringUtils;
+import com.dimple.framework.aspectj.lang.annotation.DataSource;
+import com.dimple.framework.datasource.DynamicDataSourceContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import com.dimple.common.utils.StringUtils;
-import com.dimple.framework.aspectj.lang.annotation.DataSource;
-import com.dimple.framework.datasource.DynamicDataSourceContextHolder;
+
+import java.lang.reflect.Method;
 
 /**
  * @className: DataSourceAspect
@@ -24,8 +23,8 @@ import com.dimple.framework.datasource.DynamicDataSourceContextHolder;
 @Aspect
 @Order(1)
 @Component
+@Slf4j
 public class DataSourceAspect {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Pointcut("@annotation(com.dimple.framework.aspectj.lang.annotation.DataSource)"
             + "|| @within(com.dimple.framework.aspectj.lang.annotation.DataSource)")

@@ -1,7 +1,6 @@
 package com.dimple.framework.datasource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @className: DynamicDataSourceContextHolder
@@ -9,8 +8,8 @@ import org.slf4j.LoggerFactory;
  * @author: Dimple
  * @date: 10/22/19
  */
+@Slf4j
 public class DynamicDataSourceContextHolder {
-    public static final Logger log = LoggerFactory.getLogger(DynamicDataSourceContextHolder.class);
 
     /**
      * 使用ThreadLocal维护变量，ThreadLocal为每个使用该变量的线程提供独立的变量副本，
