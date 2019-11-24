@@ -18,7 +18,7 @@
         </li>
       </ul>
       <div class="date-picker" v-if="withTimeSelect">
-        <el-date-picker v-model="selectedDateRange" @change="changeDate" size="small" style="width: 180px;"
+        <el-date-picker v-model="selectedDateRange" @change="changeDate" size="small" style="width: 240px;"
                         value-format="yyyy-MM-dd"
                         type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </div>
@@ -32,73 +32,73 @@
 </template>
 
 <script>
-  export default {
-    name: 'SectionTitle',
-    props: {
-      mainTitle: '',
-      subTitle: '',
-      tipText: {
-        default: undefined
-      },
-      menus: {
-        Type: Array,
-        default: undefined
-      },
-      to: {
-        Type: Object,
-        default: undefined
-      },
-      withRefresh: {
-        Type: Boolean,
-        default: false
-      },
-      withTimeSelect: {
-        Type: Boolean,
-        default: false
-      }
-    },
-    data() {
-      return {
-        copiedMenus: undefined,
-        selectedDateRange: []
-      };
-    },
-    computed: {
-      controlMenus: function () {
-        // 复制一份内部menus使用
-        if (this.copiedMenus === undefined || this.menus !== undefined) {
-          this.copiedMenus = [].concat(JSON.parse(JSON.stringify(this.menus)));
-          return this.copiedMenus;
-        } else {
-          return [];
+    export default {
+        name: 'SectionTitle',
+        props: {
+            mainTitle: '',
+            subTitle: '',
+            tipText: {
+                default: undefined
+            },
+            menus: {
+                Type: Array,
+                default: undefined
+            },
+            to: {
+                Type: Object,
+                default: undefined
+            },
+            withRefresh: {
+                Type: Boolean,
+                default: false
+            },
+            withTimeSelect: {
+                Type: Boolean,
+                default: false
+            }
+        },
+        data() {
+            return {
+                copiedMenus: undefined,
+                selectedDateRange: []
+            };
+        },
+        computed: {
+            controlMenus: function () {
+                // 复制一份内部menus使用
+                if (this.copiedMenus === undefined || this.menus !== undefined) {
+                    this.copiedMenus = [].concat(JSON.parse(JSON.stringify(this.menus)));
+                    return this.copiedMenus;
+                } else {
+                    return [];
+                }
+            }
+        },
+        methods: {
+            menuTitle(menu) {
+                return menu.selected ? (menu.selectedTitle !== undefined ? menu.selectedTitle : menu.title) : menu.title;
+            },
+            //刷新
+            refresh() {
+                this.copiedMenus = undefined;
+                this.$emit('refresh');
+            },
+            //跳转
+            tipAction() {
+                this.$emit('tipAction');
+                this.$router.push(this.to);
+            },
+            menusControl(menu) {
+                menu.selected = !menu.selected;
+                this.$emit('menusControl', [menu.method, menu.selected]);
+            },
+            changeDate(dateRange) {
+                this.selectedDateRange = dateRange ? dateRange : [];
+                this.$emit('confirmDateSelect', this.selectedDateRange);
+            }
         }
-      }
-    },
-    methods: {
-      menuTitle(menu) {
-        return menu.selected ? (menu.selectedTitle !== undefined ? menu.selectedTitle : menu.title) : menu.title;
-      },
-      //刷新
-      refresh() {
-        this.copiedMenus = undefined;
-        this.$emit('refresh');
-      },
-      //跳转
-      tipAction() {
-        this.$emit('tipAction');
-        this.$router.push(this.to);
-      },
-      menusControl(menu) {
-        menu.selected = !menu.selected;
-        this.$emit('menusControl', [menu.method, menu.selected]);
-      },
-      changeDate(dateRange) {
-        this.selectedDateRange = dateRange ? dateRange : [];
-        this.$emit('confirmDateSelect', this.selectedDateRange);
-      }
     }
-  }
-  ;
+    ;
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
@@ -182,7 +182,7 @@
               border-bottom 2px solid $default-link-hover-color
 
       .date-picker
-        width 180px
+        width 240px
         margin-left 15px
         font-size 13px
 

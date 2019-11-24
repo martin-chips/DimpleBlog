@@ -72,8 +72,9 @@ export default {
     // 获取标签墙
     GET_TAGS(store, params) {
       return new Promise((resolve, reject) => {
+        console.log(params)
         listTag().then((response) => {
-          store.commit('UPDATE_TAGS', response.data);
+          store.commit('UPDATE_TAGS', response.rows);
           resolve(response);
         }).catch((error) => {
           reject(error);

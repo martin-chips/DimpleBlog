@@ -136,6 +136,7 @@ export const frontRoutes = [
       },
       {
         path: '/articles',
+        name: 'articles',
         components: {
           header: SimpleHeader,
           content: ArticleHomeContent,

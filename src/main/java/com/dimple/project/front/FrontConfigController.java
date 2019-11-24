@@ -8,6 +8,7 @@ import com.dimple.project.blog.domain.Category;
 import com.dimple.project.blog.domain.Tag;
 import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.blog.service.CategoryService;
+import com.dimple.project.blog.service.TagService;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.front.domain.FrontMenu;
 import com.dimple.project.system.domain.Link;
@@ -34,6 +35,10 @@ public class FrontConfigController extends BaseController {
 
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    TagService tagService;
+    @Autowired
+    BlogService blogService;
 
     @GetMapping("siteInfo")
     public AjaxResult siteInfo() {
@@ -63,11 +68,13 @@ public class FrontConfigController extends BaseController {
         FrontMenu frontMenu1 = new FrontMenu("友链", 2, true, "/link");
         FrontMenu frontMenu2 = new FrontMenu("留言", 3, true, "/leaveComment");
         FrontMenu frontMenu3 = new FrontMenu("关于", 4, true, "/about");
+        FrontMenu frontMenu4 = new FrontMenu("后台首页", 5, true, "/index");
         List<FrontMenu> menuList = new ArrayList<>();
         menuList.add(frontMenu);
         menuList.add(frontMenu1);
         menuList.add(frontMenu2);
         menuList.add(frontMenu3);
+        menuList.add(frontMenu4);
         return AjaxResult.success(menuList);
     }
 
@@ -79,8 +86,6 @@ public class FrontConfigController extends BaseController {
         return AjaxResult.success(bloggerInfo);
     }
 
-    @Autowired
-    BlogService blogService;
 
     @GetMapping("/support")
     public TableDataInfo support(BlogQuery blogQuery) {
@@ -111,17 +116,15 @@ public class FrontConfigController extends BaseController {
     public AjaxResult link() {
         Link link = new Link();
         link.setStatus(true);
-
         List<Link> links = linkService.selectLinkList(link);
         return AjaxResult.success(links);
     }
 
+
     @GetMapping("/tag")
-    public AjaxResult tag() {
-        List<Tag> tagList = new ArrayList<>();
-        tagList.add(new Tag("A", "", 1L));
-        tagList.add(new Tag("A1", "", 2L));
-        tagList.add(new Tag("A2", "", 3L));
-        return AjaxResult.success(tagList);
+    public TableDataInfo tag() {
+        startPage();
+        List<Tag> tagList = tagService.selectTagList(new Tag());
+        return getDataTable(tagList);
     }
 }

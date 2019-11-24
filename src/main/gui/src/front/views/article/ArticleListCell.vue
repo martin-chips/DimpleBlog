@@ -10,13 +10,13 @@
             <span class="special" v-if="article.support">推荐</span>
           </h4>
           <div class="tags">
-           <a>
-             <el-tag effect="plain" v-for="tag in article.tagList" :key="tag.id" class="border-tag" size="small"
-                     :style="{borderColor:tag.color,color:tag.color} "
-                     style="margin: 2px 4px 2px 0">
-               {{tag.title}}
-             </el-tag>
-           </a>
+            <a>
+              <el-tag effect="plain" v-for="tag in article.tagList" :key="tag.id" class="border-tag" size="small"
+                      :style="{borderColor:tag.color,color:tag.color} "
+                      style="margin: 2px 4px 2px 0">
+                {{tag.title}}
+              </el-tag>
+            </a>
           </div>
           <p class="desc">{{article.summary | textLineBreak(90) }}
             <a @click.prevent="gotoPostDetail(article)" :href="`/article/${article.id}`"> 查看更多
@@ -47,137 +47,137 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {mixin} from '@/utils/front/utils';
-  import {LineBreakMode} from "@/utils/front/const.js";
-  import {socialDateFormat} from "../../../utils/front/utils";
+    import {mixin} from '@/utils/front/utils';
+    import {LineBreakMode} from "@/utils/front/const.js";
+    import {socialDateFormat} from "../../../utils/front/utils";
 
-  const ARTICLE_TYPE_NO_IMAGE = 0;
-  const ARTICLE_TYPE_NORMAL_IMAGE = 1;
-  const ARTICLE_TYPE_BIG_IMAGE = 2;
-  export default {
-    name: 'article-list-cell',
-    mixins: [mixin],
-    props: {
-      article: {
-        Type: Object
-      }
-    },
-    data() {
-      return {
-        // articleType: 2,
-      }
-    },
-    computed: {
-      articleType: function () {
-        if (this.article.headerImg == null) {
-          return 0;
-        } else {
-          return 1;
-        }
-      },
-      textOrderType: function () {
-        return parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE ? 2 : 1;
-      },
-      imgOrderType: function () {
-        return parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE ? 1 : 2;
-      },
-      textSpan: function () {
-        switch (parseInt(this.articleType)) {
-          case ARTICLE_TYPE_NO_IMAGE:
-            return 24;
-          case ARTICLE_TYPE_NORMAL_IMAGE:
-            return 17;
-          case ARTICLE_TYPE_BIG_IMAGE:
-            return 24;
-          default:
-            return 24;
-        }
-      },
-      imgSpan: function () {
-        switch (parseInt(this.articleType)) {
-          case ARTICLE_TYPE_NO_IMAGE:
-            return 0;
-          case ARTICLE_TYPE_NORMAL_IMAGE:
-            return 7;
-          case ARTICLE_TYPE_BIG_IMAGE:
-            return 24;
-          default:
-            return 0;
-        }
-      },
-      themeClass: function () {
-        if (parseInt(this.article.front_image_type) === ARTICLE_TYPE_BIG_IMAGE) {
-          return 'big-image';
-        } else {
-          return '';
-        }
-      },
-      tags: function () {
-        let tags = this.article.tag.split(",");
-        let tagArray = []
-        for (let i = 0; i < tags.length; i++) {
-          let temp = {};
-          if (i % 5 == 0) {
-            temp.type = '';
-          } else if (i % 5 == 1) {
-            temp.type = 'success';
-          } else if (i % 5 == 2) {
-            temp.type = 'info';
-          } else if (i % 5 == 3) {
-            temp.type = 'danger';
-          } else if (i % 5 == 4) {
-            temp.type = 'warning';
-          }
-          temp.label = tags[i];
-          tagArray[i] = temp;
-        }
-        return tagArray;
-      }
-    },
-    methods: {
-      gotoPostDetail(post) {
-        this.$router.push({
-          name: post.post_type,
-          params: {id: post.id},
-        });
-      },
-      likePost(post) {
-
-      }
-    },
-    filters: {
-      // 用于格式化时间的过滤器
-      socialDate: function (formattedDate) {
-        return socialDateFormat(formattedDate);
-      },
-      // 用于处理行尾省略号的过滤器
-      textLineBreak: function (text, maxLength, lineBreakMode) {
-        if (text === undefined || text === null || text.length === 0) {
-          return '';
-        }
-        if (lineBreakMode === null || lineBreakMode === undefined) {
-          lineBreakMode = LineBreakMode.EllipsisTruncatingTail;
-        }
-        switch (lineBreakMode) {
-          case LineBreakMode.WrappingTruncatingTail:
-            return text.substr(0, maxLength);
-          case LineBreakMode.WrappingTruncatingHead:
-            return text.substr(-maxLength);
-          case LineBreakMode.EllipsisTruncatingTail:
-            return text.substr(0, maxLength) + (text.length > maxLength ? '...' : '');
-          case LineBreakMode.EllipsisTruncatingMiddle:
-            let resultText = text.substr(0, maxLength);
-            if (text.length > maxLength) {
-              return resultText.substr(0, parseInt(maxLength / 2)) + '...' + resultText.substr(parseInt(maxLength / 2));
+    const ARTICLE_TYPE_NO_IMAGE = 0;
+    const ARTICLE_TYPE_NORMAL_IMAGE = 1;
+    const ARTICLE_TYPE_BIG_IMAGE = 2;
+    export default {
+        name: 'article-list-cell',
+        mixins: [mixin],
+        props: {
+            article: {
+                Type: Object
             }
-            return resultText;
-          case LineBreakMode.EllipsisTruncatingHead:
-            return (text.length > maxLength ? '...' : '') + text.substr(-maxLength);
+        },
+        data() {
+            return {
+                // articleType: 2,
+            }
+        },
+        computed: {
+            articleType: function () {
+                if (this.article.headerImg == null) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            },
+            textOrderType: function () {
+                return parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE ? 2 : 1;
+            },
+            imgOrderType: function () {
+                return parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE ? 1 : 2;
+            },
+            textSpan: function () {
+                switch (parseInt(this.articleType)) {
+                    case ARTICLE_TYPE_NO_IMAGE:
+                        return 24;
+                    case ARTICLE_TYPE_NORMAL_IMAGE:
+                        return 17;
+                    case ARTICLE_TYPE_BIG_IMAGE:
+                        return 24;
+                    default:
+                        return 24;
+                }
+            },
+            imgSpan: function () {
+                switch (parseInt(this.articleType)) {
+                    case ARTICLE_TYPE_NO_IMAGE:
+                        return 0;
+                    case ARTICLE_TYPE_NORMAL_IMAGE:
+                        return 7;
+                    case ARTICLE_TYPE_BIG_IMAGE:
+                        return 24;
+                    default:
+                        return 0;
+                }
+            },
+            themeClass: function () {
+                if (parseInt(this.article.front_image_type) === ARTICLE_TYPE_BIG_IMAGE) {
+                    return 'big-image';
+                } else {
+                    return '';
+                }
+            },
+            tags: function () {
+                let tags = this.article.tag.split(",");
+                let tagArray = []
+                for (let i = 0; i < tags.length; i++) {
+                    let temp = {};
+                    if (i % 5 == 0) {
+                        temp.type = '';
+                    } else if (i % 5 == 1) {
+                        temp.type = 'success';
+                    } else if (i % 5 == 2) {
+                        temp.type = 'info';
+                    } else if (i % 5 == 3) {
+                        temp.type = 'danger';
+                    } else if (i % 5 == 4) {
+                        temp.type = 'warning';
+                    }
+                    temp.label = tags[i];
+                    tagArray[i] = temp;
+                }
+                return tagArray;
+            }
+        },
+        methods: {
+            gotoPostDetail(post) {
+                this.$router.push({
+                    name: post.post_type,
+                    params: {id: post.id},
+                });
+            },
+            likePost(post) {
+
+            }
+        },
+        filters: {
+            // 用于格式化时间的过滤器
+            socialDate: function (formattedDate) {
+                return socialDateFormat(formattedDate);
+            },
+            // 用于处理行尾省略号的过滤器
+            textLineBreak: function (text, maxLength, lineBreakMode) {
+                if (text === undefined || text === null || text.length === 0) {
+                    return '';
+                }
+                if (lineBreakMode === null || lineBreakMode === undefined) {
+                    lineBreakMode = LineBreakMode.EllipsisTruncatingTail;
+                }
+                switch (lineBreakMode) {
+                    case LineBreakMode.WrappingTruncatingTail:
+                        return text.substr(0, maxLength);
+                    case LineBreakMode.WrappingTruncatingHead:
+                        return text.substr(-maxLength);
+                    case LineBreakMode.EllipsisTruncatingTail:
+                        return text.substr(0, maxLength) + (text.length > maxLength ? '...' : '');
+                    case LineBreakMode.EllipsisTruncatingMiddle:
+                        let resultText = text.substr(0, maxLength);
+                        if (text.length > maxLength) {
+                            return resultText.substr(0, parseInt(maxLength / 2)) + '...' + resultText.substr(parseInt(maxLength / 2));
+                        }
+                        return resultText;
+                    case LineBreakMode.EllipsisTruncatingHead:
+                        return (text.length > maxLength ? '...' : '') + text.substr(-maxLength);
+                }
+                return text;
+            }
         }
-        return text;
-      }
-    }
-  };
+    };
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">

@@ -48,64 +48,64 @@
 
 <script>
 
-  import SideBar from "./SideBar";
-  import {headroom} from 'vue-headroom';
-  import {mapState, mapMutations, mapActions} from 'vuex';
+    import SideBar from "./SideBar";
+    import {headroom} from 'vue-headroom';
+    import {mapState, mapMutations, mapActions} from 'vuex';
 
-  export default {
-    name: 'simple-header',
-    data() {
-      return {
-        searchKeyWords: '',
-        searchResult: [],
-        showMobileSearchView: false
-      };
-    },
-    mounted() {
-      if (!this.$store.state.base.categories) this.getCategories();
-      if (!this.$store.state.base.menus) this.getMenus();
-    },
-    computed: {
-      ...mapState({
-        categories: state => state.base.categories,
-        menus: state => state.base.menus
-      }),
-    },
-    methods: {
-      ...mapMutations({
-        // updateSiteTheme: 'base/UPDATE_SITE_THEME'
-      }),
-      ...mapActions({
-        getCategories: 'base/GET_CATEGORIES',
-        getMenus: 'base/GET_MENUS'
-      }),
-      rootRouterLink(category) {
-        let router = {};
-        router.name = category.category_type;
-        return router;
-      },
-      routerLink(category) {
-        let router = {};
-        router.name = category.title;
-        router.params = {};
-        router.params['id'] = category.id;
-        return router;
-      },
-      showMobileMenu() {
-        // 显示手机端的菜单
-        let sidebar = this.$refs.sidebar;
-        sidebar.toggleSideBar();
-      },
-      showSearchView() {
-        this.showMobileSearchView = !this.showMobileSearchView;
-      },
-    },
-    components: {
-      'head-room': headroom,
-      'side-bar': SideBar,
-      // 'search-view': SearchView
-    }
-  };
+    export default {
+        name: 'simple-header',
+        data() {
+            return {
+                searchKeyWords: '',
+                searchResult: [],
+                showMobileSearchView: false
+            };
+        },
+        mounted() {
+            if (!this.$store.state.base.categories) this.getCategories();
+            if (!this.$store.state.base.menus) this.getMenus();
+        },
+        computed: {
+            ...mapState({
+                categories: state => state.base.categories,
+                menus: state => state.base.menus
+            }),
+        },
+        methods: {
+            ...mapMutations({
+                // updateSiteTheme: 'base/UPDATE_SITE_THEME'
+            }),
+            ...mapActions({
+                getCategories: 'base/GET_CATEGORIES',
+                getMenus: 'base/GET_MENUS'
+            }),
+            rootRouterLink(category) {
+                let router = {};
+                router.name = category.category_type;
+                return router;
+            },
+            routerLink(category) {
+                let router = {};
+                router.name = "articles";
+                router.params = {};
+                router.params['id'] = category.id;
+                return router;
+            },
+            showMobileMenu() {
+                // 显示手机端的菜单
+                let sidebar = this.$refs.sidebar;
+                sidebar.toggleSideBar();
+            },
+            showSearchView() {
+                this.showMobileSearchView = !this.showMobileSearchView;
+            },
+        },
+        components: {
+            'head-room': headroom,
+            'side-bar': SideBar,
+            // 'search-view': SearchView
+        }
+    };
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
