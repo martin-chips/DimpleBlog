@@ -68,7 +68,7 @@
     </select>
 
     <select id="selectBlogById" resultMap="BlogResult">
-        select id, category_id, title, summary, header_img, content,support, status, weight,comment, create_by, create_time from bg_blog
+        select id, category_id, title, summary, header_img, content,support,click,`like`,status, weight,comment, create_by, create_time,update_time from bg_blog
         where id = #{id} and delete_time is null
     </select>
 

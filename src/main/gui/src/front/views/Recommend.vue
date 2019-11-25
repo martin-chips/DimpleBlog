@@ -10,17 +10,17 @@
             </a>
           </p>
           <div class="tags">
-            <i-tag :color="tag.color" type="border" v-for="tag in first.tags" :key="tag.id"
+            <el-tag :color="tag.color" type="border" v-for="tag in first.tags" :key="tag.id"
                    class="border-tag"> {{tag.title}}
-            </i-tag>
+            </el-tag>
           </div>
           <p class="info">
             <span class="time"><a>{{ articleSlice(0, 1)[0].createTime | socialDate }}</a></span>
             <span class="likes">
               <a @click="likePost(first)"><i class="el-icon-star-on"></i> {{ first.like }} </a>
             </span>
-            <span class="comments"><a><i
-              class="el-icon-chat-dot-square"></i>{{ first.commentCount }} </a>
+            <span class="comments"><a>
+              <i class="el-icon-chat-dot-square"></i>{{ first.commentCount }} </a>
             </span>
             <span class="readings"><a><i class="el-icon-view"></i> {{ first.click }} </a></span>
           </p>
@@ -55,56 +55,56 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {
-    mapState,
-    mapActions
-  } from 'vuex';
-  import Panel from "./Panel";
+    import {
+        mapState,
+        mapActions
+    } from 'vuex';
+    import Panel from "./Panel";
 
-  import {LineBreakMode} from "@/utils/front/const.js";
-  import {socialDateFormat} from "@/utils/front/utils";
-  import {mixin} from '@/utils/front/utils';
+    import {LineBreakMode} from "@/utils/front/const.js";
+    import {socialDateFormat} from "@/utils/front/utils";
+    import {mixin} from '@/utils/front/utils';
 
-  export default {
-    name: 'recommend',
-    mixins: [mixin],
-    mounted() {
-      if (!this.$store.state.common.recommends || this.$store.state.common.recommends.length === 0) {
-        this['common/GET_RECOMMENDS']();
-      }
-    },
-    computed: {
-      ...mapState({
-        recommends: state => state.common.recommends
-      }),
-      first: {
-        get() {
-          return this.articleSlice(0, 1)[0];
+    export default {
+        name: 'recommend',
+        mixins: [mixin],
+        mounted() {
+            if (!this.$store.state.common.recommends || this.$store.state.common.recommends.length === 0) {
+                this['common/GET_RECOMMENDS']();
+            }
         },
-        set(val) {
+        computed: {
+            ...mapState({
+                recommends: state => state.common.recommends
+            }),
+            first: {
+                get() {
+                    return this.articleSlice(0, 1)[0];
+                },
+                set(val) {
 
+                }
+            }
+        },
+        methods: {
+            ...mapActions(['common/GET_RECOMMENDS']),
+            gotoPostDetail(post) {
+
+            },
+            likePost(post) {
+
+            },
+            routerInfos(post) {
+
+            },
+            articleSlice(start, end) {
+                return this.recommends.slice(start, end);
+            }
+        },
+        components: {
+            'panel': Panel
         }
-      }
-    },
-    methods: {
-      ...mapActions(['common/GET_RECOMMENDS']),
-      gotoPostDetail(post) {
-
-      },
-      likePost(post) {
-
-      },
-      routerInfos(post) {
-
-      },
-      articleSlice(start, end) {
-        return this.recommends.slice(start, end);
-      }
-    },
-    components: {
-      'panel': Panel
-    }
-  };
+    };
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">

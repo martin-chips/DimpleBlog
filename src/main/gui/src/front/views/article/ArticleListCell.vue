@@ -137,7 +137,7 @@
         methods: {
             gotoPostDetail(post) {
                 this.$router.push({
-                    name: post.post_type,
+                    name: "article",
                     params: {id: post.id},
                 });
             },
