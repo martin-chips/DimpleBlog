@@ -3,8 +3,8 @@
     <p class="level level-one">
       <span class="title">分类：</span>
       <span class="class">
-        <a class="active" @click="choseLevel(undefined, $event)">全部</a>
-        <a class="name" :id="'id' + category.id" @click="choseLevel(category, $event)" :title="category.description"
+        <a class="active" @click="selectCategory(undefined, $event)">全部</a>
+        <a class="name" :id="'id' + category.id" @click="selectCategory(category, $event)" :title="category.description"
            v-for="category in this.categories" :key="category.id">{{ category.title }}</a>
       </span>
     </p>
@@ -19,23 +19,48 @@
       categories: {
         Type: Object,
         default: undefined
+      },
+      defaultCategoryId: {
+        default: undefined
       }
     },
     data() {
       return {};
     },
+    mounted() {
+      console.log(this.defaultCategoryId)
+      this.setDefaultCategory(this.defaultCategoryId)
+    },
+    watch: {
+      defaultCategoryId(val) {
+        console.log(val)
+      }
+    },
     methods: {
-      choseLevel(category, event) {
-        // 更新样式
+      selectCategory(category, event) {
         let pNode = event.target.parentNode;
         let activeNode = pNode.querySelector('.active');
         if (activeNode) {
           activeNode.classList.remove('active');
         }
         event.target.classList.add('active');
-        this.selectCategory(category == undefined ? undefined : category.id);
+        this.selectCategoryCall(category == undefined ? undefined : category.id);
       },
-      selectCategory(categoryId) {
+      setDefaultCategory(categoryId) {
+        if (categoryId == undefined) {
+          return
+        }
+        let target = document.getElementById('id' + categoryId);
+        let pNode = target.parentNode;
+        let activeNode = pNode.querySelector('.active');
+        if (activeNode) {
+          activeNode.classList.remove('active');
+        }
+        target.classList.add('active');
+        this.selectCategoryCall(categoryId)
+      },
+      //调用父级方法
+      selectCategoryCall(categoryId) {
         this.$emit('selectCategory', categoryId);
       }
     },

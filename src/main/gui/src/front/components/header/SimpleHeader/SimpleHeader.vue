@@ -117,7 +117,7 @@
             },
             routerLink(category) {
                 let router = {};
-                router.name = "articles";
+                router.name = "articles/category";
                 router.params = {};
                 router.params['id'] = category.id;
                 return router;

@@ -144,6 +144,18 @@ export const frontRoutes = [
         },
       },
       {
+        path: '/articles/category/:id',
+        name: 'articles/category',
+        components: {
+          header: SimpleHeader,
+          content: ArticleHomeContent,
+          footer: footer
+        },
+        meta: {
+          title: '文章列表',
+        }
+      },
+      {
         path: '/link',
         component: () => import('@/views/front/link'),
       },
