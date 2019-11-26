@@ -84,7 +84,7 @@
         </el-row>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="form.content" :height="400"/>
+          <mavonEditor v-model="form.content" ref="editor" @change="mavonChangeHandle" style="height: 400px"/>
         </el-form-item>
       </div>
     </el-form>
@@ -93,15 +93,17 @@
 
 <script>
   import Sticky from '@/components/Sticky' // 粘性header组件
-  import Tinymce from '@/components/Tinymce' //富文本
+  import {mavonEditor} from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
   import DropZone from '@/components/DropZone' // 上传文件组件
   import {listBlogTagList, getBlog, addBlog, updateBlog, addBlogDraft, updateBlogDraft} from "@/api/blog/blog";
   import {listCategory} from "@/api/blog/category";
   import {getToken} from '@/utils/auth'
+  import marked from 'marked'
 
   export default {
     name: 'BlogDetail',
-    components: {Tinymce, DropZone, Sticky},
+    components: { DropZone, Sticky, mavonEditor},
     props: {
       isEdit: {
         type: Boolean,
@@ -206,11 +208,18 @@
           this.form = response.data;
         })
       },
+      mavonChangeHandle(context, render) {
+        console.log(marked(context))
+      },
       submitBlog() {
+        this.form.htmlContent = marked(this.form.content);
+        console.log(this.form.htmlContent)
+        return
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading = true
             this.form.status = true
+
             let obj = JSON.parse(JSON.stringify(this.form));
             if (obj.id == undefined) {
               addBlog(obj).then(response => {

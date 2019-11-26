@@ -46,13 +46,22 @@
           <div class="sidebar-toc-list" ref="list" v-show="showToc">
             <div class="site-nav">
               <p>
-                <i type="ios-flower-outline"></i>
-                <!--                {{ $t('article.typeName') + $t('others.toc') }}-->
+                <i class="el-icon-tickets"></i>
+                文章目录
               </p>
             </div>
             <div id="sidebar-toc" class="list" @click.prevent></div>
           </div>
         </div>
+      </div>
+      <div class="sidebar-operate-area" @click.stop>
+        <el-button-group>
+          <el-button :icon="isDark?'el-icon-cloudy-and-sunny':'el-icon-sunny'" plain class="ivu-btn-ghost"
+                     size="mini" @click="toggleTheme"></el-button>
+          <el-button class="ivu-btn-ghost" icon="el-icon-monitor" plain @click="toIndex"
+                     size="mini">
+          </el-button>
+        </el-button-group>
       </div>
     </div>
     <div class="mask" @click.prevent="toggleSideBar"></div>
@@ -60,65 +69,80 @@
 </template>
 
 <script>
-    export default {
-        name: 'side-bar',
-        props: {
-            categories: {
-                Type: Array,
-                default: []
-            },
-            menus: {
-                Type: Array,
-                default: []
-            }
-        },
-        data() {
-            return {
-                show: false,
-                showNav: false
-            };
-        },
-        beforeRouteUpdate(to, from, next) {
-            next();
-            console.log(this.$route.path);
-        },
-        computed: {
-            isDark: function () {
-                return this.siteTheme === 'dark';
-            },
-            showToc: function () {
-                return (this.$route.name === 'article' ||
-                    this.$route.name === 'book' ||
-                    this.$route.name === 'book/note' ||
-                    this.$route.name === 'movie' ||
-                    this.$route.name === 'album'
-                );
-            }
-        },
-        methods: {
-            rootRouterLink(category) {
-                let router = {};
-                router.name = category.category_type;
-                return router;
-            },
-            routerLink(category) {
-                let router = {};
-                router.name = category.category_type;
-                router.params = {};
-                router.params['id'] = category.id;
-                return router;
-            },
-            toggleSideBar() {
-                this.show = !this.show;
-                this.showNav = !(this.$route.name === 'article' ||
-                    this.$route.name === 'book' ||
-                    this.$route.name === 'book/note' ||
-                    this.$route.name === 'movie' ||
-                    this.$route.name === 'album'
-                );
-            },
-        }
-    };
+  import {mapState, mapMutations, mapActions} from 'vuex';
+
+  export default {
+    name: 'side-bar',
+    props: {
+      categories: {
+        Type: Array,
+        default: []
+      },
+      menus: {
+        Type: Array,
+        default: []
+      }
+    },
+    data() {
+      return {
+        show: false,
+        showNav: false
+      };
+    },
+    beforeRouteUpdate(to, from, next) {
+      next();
+      console.log(this.$route.path);
+    },
+    computed: {
+      ...mapState({
+        siteTheme: state => state.base.siteTheme
+      }),
+      isDark: function () {
+        return this.siteTheme === 'dark';
+      },
+      showToc: function () {
+        return (this.$route.name === 'article' ||
+          this.$route.name === 'book' ||
+          this.$route.name === 'book/note' ||
+          this.$route.name === 'movie' ||
+          this.$route.name === 'album'
+        );
+      }
+    },
+    methods: {
+      ...mapMutations({
+        updateSiteTheme: 'base/UPDATE_SITE_THEME'
+      }),
+      //跳转到后台首页
+      toIndex() {
+        this.$router.push({path: '/index'});
+      },
+      rootRouterLink(category) {
+        let router = {};
+        router.name = category.category_type;
+        return router;
+      },
+      routerLink(category) {
+        let router = {};
+        router.name = category.category_type;
+        router.params = {};
+        router.params['id'] = category.id;
+        return router;
+      },
+      toggleSideBar() {
+        this.show = !this.show;
+        this.showNav = !(this.$route.name === 'article' ||
+          this.$route.name === 'book' ||
+          this.$route.name === 'book/note' ||
+          this.$route.name === 'movie' ||
+          this.$route.name === 'album'
+        );
+      },
+      toggleTheme() {
+        this.updateSiteTheme(this.siteTheme === 'dark' ? 'default' : 'dark');
+      }
+    }
+  };
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">

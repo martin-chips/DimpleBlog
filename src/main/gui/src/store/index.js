@@ -13,6 +13,7 @@ import common from './modules/front/common';
 import home from './modules/front/home';
 import timeline from './modules/front/timeline';
 import articleHome from './modules/front/articleHome';
+import article from "./modules/front/article";
 
 Vue.use(Vuex)
 
@@ -28,7 +29,8 @@ const store = new Vuex.Store({
     home,
     common,
     timeline,
-    articleHome
+    articleHome,
+    article
   },
   getters
 })

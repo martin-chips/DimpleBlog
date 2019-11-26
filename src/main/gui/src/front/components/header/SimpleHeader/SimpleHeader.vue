@@ -107,7 +107,6 @@
             },
             checkTheme() {
                 const theme = loadFromLocal('siteConfig', 'theme', 'default');
-                console.log(theme)
                 this.updateSiteTheme(theme);
             },
             rootRouterLink(category) {

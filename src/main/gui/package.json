@@ -47,6 +47,7 @@
     "element-ui": "2.12.0",
     "fuse.js": "3.4.4",
     "js-cookie": "2.2.0",
+    "mavon-editor": "^2.7.7",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
@@ -61,7 +62,9 @@
     "vue-quill-editor": "3.0.6",
     "vue-router": "3.0.2",
     "vue-splitpane": "1.0.4",
-    "vuex": "3.1.0"
+    "highlight.js": "^9.12.0",
+    "vuex": "3.1.0",
+    "marked": "^0.6.1"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",
