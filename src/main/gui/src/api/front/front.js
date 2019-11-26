@@ -76,5 +76,12 @@ export function listBlogBaseInfo(query) {
   })
 }
 
+// 查询博客列表
+export function BlogDetail(id) {
+  return request({
+    url: '/f/blog/' + id,
+    method: 'get',
+  })
+}
 
 

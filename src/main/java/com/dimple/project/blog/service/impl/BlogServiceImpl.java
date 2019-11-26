@@ -153,4 +153,11 @@ public class BlogServiceImpl implements BlogService {
         }
         return blogList;
     }
+
+    @Override
+    public Blog selectBlogDetailById(Long id) {
+        Blog blog = blogMapper.selectBlogById(id);
+        blog.setTagList(tagMapper.selectTagListByBlogId(id));
+        return blog;
+    }
 }

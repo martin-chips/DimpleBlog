@@ -75,4 +75,12 @@ public interface BlogService {
      * @return list
      */
     List<Blog> selectBlogList(BlogQuery blogQuery);
+
+    /**
+     * 获取前台现实的Blog
+     * @param id id
+     * @return blog
+     */
+    Blog selectBlogDetailById(Long id);
+
 }

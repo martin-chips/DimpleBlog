@@ -119,6 +119,7 @@ import footer from "../front/components/footer/footer";
 import HomeContent from "../front/components/content/HomeContent";
 import TimeLineContent from "../front/components/content/TimeLineContent";
 import ArticleHomeContent from "../front/components/content/ArticleHomeContent";
+import ArticleContent from "../front/components/content/ArticleContent";
 
 //前台路由
 export const frontRoutes = [
@@ -174,6 +175,19 @@ export const frontRoutes = [
           content: TimeLineContent,
           footer: footer
         },
+      },
+      {
+        path: 'article/:id',
+        name: 'article',
+        components: {
+          header: SimpleHeader,
+          content: ArticleContent,
+          footer: footer
+        },
+        meta: {
+          title: '文章详情',
+          need_log: false
+        }
       },
     ]
   },
