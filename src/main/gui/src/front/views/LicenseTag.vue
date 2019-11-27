@@ -14,7 +14,12 @@
         props: {
             license: {
                 Type: Object,
-                default: undefined
+                default: {
+                    color:'rgb(235, 158, 5)',
+                    name:'CC BY-SA 4.0',
+                    desc: '转载如有更改，请联系博主。',
+                    link: ''
+                }
             }
         }
     };

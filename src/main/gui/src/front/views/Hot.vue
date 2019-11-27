@@ -10,17 +10,17 @@
             </a>
           </p>
           <div class="tags">
-            <i-tag :color="tag.color" type="border" v-for="tag in first.tags" :key="tag.id"
+            <el-tag :color="tag.color" type="border" v-for="tag in first.tags" :key="tag.id"
                    class="border-tag">{{tag}}
-            </i-tag>
+            </el-tag>
           </div>
           <p class="info">
             <span class="time"><a>{{ first.createTime | socialDate }}</a></span>
             <span class="likes">
-              <a @click="likePost(first)"><i class="el-icon-star-on"></i> {{ first.like }} </a>
+              <a @click="likePost(first)"><i class="el-icon-mouse"></i> {{ first.like }} </a>
             </span>
             <span class="comments">
-              <a><i class="el-icon-chat-dot-square"></i>{{ first.commentCount }} </a>
+              <a><i class="el-icon-edit-outline"></i>{{ first.commentCount }} </a>
             </span>
             <span class="readings"><a><i class="el-icon-view"></i> {{ first.click }} </a></span>
           </p>
@@ -38,10 +38,10 @@
             <p class="info">
               <span class="time">{{ article.createTime | socialDate }}</span>
               <span class="likes">
-                <a @click="likePost(article)"><i class="el-icon-star-on"></i>  {{ article.like}} </a>
+                <a @click="likePost(article)"><i class="el-icon-mouse"></i>  {{ article.like}} </a>
               </span>
               <span class="comments">
-                <a><i class="el-icon-chat-dot-square"></i> {{ article.commentCount}} </a>
+                <a><i class="el-icon-edit-outline"></i> {{ article.commentCount}} </a>
               </span>
               <span class="readings">
                 <a><i class="el-icon-view"></i> {{ article.click}} </a>
@@ -91,6 +91,10 @@
     methods: {
       ...mapActions(['common/GET_HOTS']),
       gotoPostDetail(post) {
+          this.$router.push({
+              name: "article",
+              params: {id: post.id},
+          });
       },
       likePost(post) {
 

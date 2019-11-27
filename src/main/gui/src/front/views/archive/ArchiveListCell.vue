@@ -34,7 +34,10 @@
         this.showDesc = !this.showDesc;
       },
       gotoPostDetail(post) {
-        let routerInfos = this.routerInfos(post);
+          this.$router.push({
+              name: "article",
+              params: {id: post.id},
+          });
       },
       routerInfos(post) {
 

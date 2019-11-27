@@ -25,12 +25,12 @@
           </span>
           <span class="comments">
             <a @click="scrollToComments">
-              <i class="el-icon-chat-dot-square"></i> {{article.comment_num}} 评论
+              <i class="el-icon-edit-outline"></i> {{article.comment_num}} 评论
             </a>
           </span>
           <span class="likes">
             <a @click="likePost(article)">
-              <i class="el-icon-star-on"></i> {{article.like}} 赞
+              <i class="el-icon-mouse"></i> {{article.like}} 赞
             </a>
           </span>
         </p>

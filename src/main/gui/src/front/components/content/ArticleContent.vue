@@ -105,17 +105,7 @@
       refreshContent() {
         this.$nextTick(() => {
           this.addTocScrollSpy();
-          this.addCodeLineNumber();
         });
-      },
-      addCodeLineNumber () {
-        // 添加行号
-        let blocks = this.$refs.article.querySelectorAll('pre code')
-        blocks.forEach((block) => {
-          window.hljs.highlightBlock(block)
-          // 去前后空格并添加行号
-          block.innerHTML = '<ul><li>' + block.innerHTML.replace(/(^\s*)|(\s*$)/g, '').replace(/\n/g, '\n</li><li>') + '\n</li></ul>'
-        })
       },
       addTocScrollSpy() {
         /* eslint-disable */

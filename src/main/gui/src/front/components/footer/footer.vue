@@ -5,7 +5,7 @@
         <el-tooltip :content="ExpandLeftColumn ? '通栏阅读' : '退出通栏'"
                     placement="left"
                     v-show="showExpandMenu">
-          <el-link :class="ExpandLeftColumn ? 'el-icon-s-grid' : 'el-icon-menu'" class="icon"
+          <el-link :class="ExpandLeftColumn ? 'el-icon-lock' : 'el-icon-unlock'" class="icon"
                    @click.native.stop.prevent="toggleExpand"></el-link>
         </el-tooltip>
         <el-link class="el-icon-caret-top icon"

@@ -5,7 +5,7 @@
         <div class="top">
           <p class="title">
             <a @click.prevent="gotoPostDetail(first)"
-               :href="`article/${first.id}`">
+               :href="`/article/${first.id}`">
               {{ first.title }}
             </a>
           </p>
@@ -17,10 +17,10 @@
           <p class="info">
             <span class="time"><a>{{ articleSlice(0, 1)[0].createTime | socialDate }}</a></span>
             <span class="likes">
-              <a @click="likePost(first)"><i class="el-icon-star-on"></i> {{ first.like }} </a>
+              <a @click="likePost(first)"><i class="el-icon-mouse"></i> {{ first.like }} </a>
             </span>
             <span class="comments"><a>
-              <i class="el-icon-chat-dot-square"></i>{{ first.commentCount }} </a>
+              <i class="el-icon-edit-outline"></i>{{ first.commentCount }} </a>
             </span>
             <span class="readings"><a><i class="el-icon-view"></i> {{ first.click }} </a></span>
           </p>
@@ -33,15 +33,15 @@
         <ul class="others">
           <li v-for="article in articleSlice(1)">
             <p class="title">
-              <a @click.prevent="gotoPostDetail(article)" :href="`article/${article.id}`">{{article.title}}</a>
+              <a @click.prevent="gotoPostDetail(article)" :href="`/article/${article.id}`">{{article.title}}</a>
             </p>
             <p class="info">
               <span class="time">{{ article.createTime | socialDate }}</span>
               <span class="likes">
-                <a @click="likePost(article)"><i class="el-icon-star-on"></i>  {{ article.like}} </a>
+                <a @click="likePost(article)"><i class="el-icon-mouse"></i>  {{ article.like}} </a>
               </span>
               <span class="comments">
-                <a><i class="el-icon-chat-dot-square"></i> {{ article.commentCount}} </a>
+                <a><i class="el-icon-edit-outline"></i> {{ article.commentCount}} </a>
               </span>
               <span class="readings">
                 <a><i class="el-icon-view"></i> {{ article.click}} </a>
@@ -89,12 +89,12 @@
         methods: {
             ...mapActions(['common/GET_RECOMMENDS']),
             gotoPostDetail(post) {
-
+                this.$router.push({
+                    name: "article",
+                    params: {id: post.id},
+                });
             },
             likePost(post) {
-
-            },
-            routerInfos(post) {
 
             },
             articleSlice(start, end) {
