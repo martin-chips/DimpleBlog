@@ -24,16 +24,12 @@
         default: undefined
       }
     },
-    data() {
-      return {};
-    },
     mounted() {
-      console.log(this.defaultCategoryId)
       this.setDefaultCategory(this.defaultCategoryId)
     },
     watch: {
       defaultCategoryId(val) {
-        console.log(val)
+        this.setDefaultCategory(val)
       }
     },
     methods: {

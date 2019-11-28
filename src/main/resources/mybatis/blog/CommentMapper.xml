@@ -167,7 +167,7 @@
         update bg_comment set delete_by=#{username},delete_time =sysdate() where id = #{id}
     </delete>
 
-    <select id="selectCommentListByPageId" resultMap="CommentMap">
+    <select id="selectCommentListByPageIds" resultMap="CommentMap">
         select id, email, ip, location, os, browser, parent_id, qq_num,nick_name, avatar, page_id, url, display, good,
         bad,
         content,
@@ -176,5 +176,12 @@
         <foreach item="id" collection="blogIdList" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </select>
+    <select id="selectCommentListByPageId" resultType="com.dimple.project.blog.domain.Comment">
+        select id, email, ip, location, os, browser, parent_id, qq_num,nick_name, avatar, page_id, url, display, good,
+        bad,
+        content,
+        create_by, create_time
+        from bg_comment where delete_time is null and page_id =#{id}
     </select>
 </mapper>

@@ -89,4 +89,6 @@ public class Comment extends BaseEntity {
      */
     @NotNull(message = "内容不能为空")
     private String content;
+
+    private Comment subComment;
 }

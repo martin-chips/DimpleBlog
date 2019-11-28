@@ -10,14 +10,16 @@
             </a>
           </p>
           <div class="tags">
-            <el-tag :color="tag.color" type="border" v-for="tag in first.tags" :key="tag.id"
-                   class="border-tag"> {{tag.title}}
-            </el-tag>
+            <a v-for="tag in first.tagList">
+              <el-tag :style="{borderColor:tag.color,color:tag.color} " effect="plain" :hit="true" size="small"
+                      :key="tag.id" style="margin: 2px 4px 2px 0" class="border-tag"> {{tag.title}}
+              </el-tag>
+            </a>
           </div>
           <p class="info">
             <span class="time"><a>{{ articleSlice(0, 1)[0].createTime | socialDate }}</a></span>
             <span class="likes">
-              <a @click="likePost(first)"><i class="el-icon-mouse"></i> {{ first.like }} </a>
+              <a @click="likePost(first)"><svg-icon icon-class="like" /> {{ first.like }} </a>
             </span>
             <span class="comments"><a>
               <i class="el-icon-edit-outline"></i>{{ first.commentCount }} </a>
@@ -38,7 +40,7 @@
             <p class="info">
               <span class="time">{{ article.createTime | socialDate }}</span>
               <span class="likes">
-                <a @click="likePost(article)"><i class="el-icon-mouse"></i>  {{ article.like}} </a>
+                <a @click="likePost(article)"><svg-icon icon-class="like" /> {{ article.like}} </a>
               </span>
               <span class="comments">
                 <a><i class="el-icon-edit-outline"></i> {{ article.commentCount}} </a>
@@ -55,56 +57,59 @@
 </template>
 
 <script type="text/ecmascript-6">
-    import {
-        mapState,
-        mapActions
-    } from 'vuex';
-    import Panel from "./Panel";
+  import {
+    mapState,
+    mapActions
+  } from 'vuex';
+  import Panel from "./Panel";
+  import {LikeBlog} from '@/api/front/front';
+  import {mixin} from '@/utils/front/utils';
 
-    import {LineBreakMode} from "@/utils/front/const.js";
-    import {socialDateFormat} from "@/utils/front/utils";
-    import {mixin} from '@/utils/front/utils';
-
-    export default {
-        name: 'recommend',
-        mixins: [mixin],
-        mounted() {
-            if (!this.$store.state.common.recommends || this.$store.state.common.recommends.length === 0) {
-                this['common/GET_RECOMMENDS']();
-            }
+  export default {
+    name: 'recommend',
+    mixins: [mixin],
+    mounted() {
+      if (!this.$store.state.common.recommends || this.$store.state.common.recommends.length === 0) {
+        this['common/GET_RECOMMENDS']();
+      }
+    },
+    computed: {
+      ...mapState({
+        recommends: state => state.common.recommends
+      }),
+      first: {
+        get() {
+          return this.articleSlice(0, 1)[0];
         },
-        computed: {
-            ...mapState({
-                recommends: state => state.common.recommends
-            }),
-            first: {
-                get() {
-                    return this.articleSlice(0, 1)[0];
-                },
-                set(val) {
+        set(val) {
 
-                }
-            }
-        },
-        methods: {
-            ...mapActions(['common/GET_RECOMMENDS']),
-            gotoPostDetail(post) {
-                this.$router.push({
-                    name: "article",
-                    params: {id: post.id},
-                });
-            },
-            likePost(post) {
-
-            },
-            articleSlice(start, end) {
-                return this.recommends.slice(start, end);
-            }
-        },
-        components: {
-            'panel': Panel
         }
-    };
+      }
+    },
+    methods: {
+      ...mapActions(['common/GET_RECOMMENDS']),
+      gotoPostDetail(post) {
+        this.$router.push({
+          name: "article",
+          params: {id: post.id},
+        });
+      },
+      likePost(post) {
+        LikeBlog(post.id).then((response) => {
+          post.like += 1;
+          this.msgSuccess("点赞 +1");
+        }).catch((error) => {
+          console.log(error);
+        });
+      },
+      articleSlice(start, end) {
+        return this.recommends.slice(start, end);
+      }
+    },
+    components: {
+      'panel': Panel
+    }
+  };
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">

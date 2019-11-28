@@ -1,7 +1,7 @@
 <template>
   <div class="timeline-content layout-content">
     <el-row>
-      <el-col :xs="24" :sm="17" :md="17" :lg="17">
+      <el-col :xs="24" :sm="17" :md="24" :lg="17">
         <div class="layout-left">
           <SectionTitle :mainTitle="'存档时光'"
                         :subTitle="'Timeline'"
@@ -27,7 +27,7 @@
           <BrowseMore @browseMore="browseMore" :noMoreData="noMoreData" ref="browseMore"></BrowseMore>
         </div>
       </el-col>
-      <el-col :xs="0" :sm="7" :md="7" :lg="7">
+      <el-col :xs="24" :sm="24" :md="24" :lg="7">
         <div class="layout-right">
           <Recommend style="margin-top:15px;"/>
           <Hot style="margin-top:15px;"/>

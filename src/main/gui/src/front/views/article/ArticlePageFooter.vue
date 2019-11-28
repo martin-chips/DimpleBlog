@@ -1,31 +1,32 @@
 <template>
   <div class="article-page-footer" v-if="article != undefined">
     <license-tag :license="article.license"></license-tag>
-    <!--    <social-section :article="article"></social-section>-->
+    <social-section :article="article"></social-section>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-    import LicenseTag from "../LicenseTag";
-    // import SocialSection from '@/components/views/Comment/SocialSection';
-    export default {
-        name: 'ArticlePageFooter',
-        props: {
-            article: {
-                Type: Object,
-                default: undefined
-            }
-        },
-        methods: {
-            onSubmit() {
-                console.log('submit!');
-            }
-        },
-        components: {
-            'license-tag': LicenseTag,
-            // 'social-section': SocialSection
-        }
-    };
+  import LicenseTag from "../LicenseTag";
+  import SocialSection from "../comment/SocialSection";
+
+  export default {
+    name: 'ArticlePageFooter',
+    props: {
+      article: {
+        Type: Object,
+        default: undefined
+      }
+    },
+    methods: {
+      onSubmit() {
+        console.log('submit!');
+      }
+    },
+    components: {
+      'license-tag': LicenseTag,
+      'social-section': SocialSection
+    }
+  };
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">

@@ -1,6 +1,7 @@
 package com.dimple.project.blog.service;
 
 import com.dimple.project.blog.domain.Blog;
+import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.front.domain.BlogQuery;
 
 import java.util.List;
@@ -78,9 +79,25 @@ public interface BlogService {
 
     /**
      * 获取前台现实的Blog
+     *
      * @param id id
      * @return blog
      */
     Blog selectBlogDetailById(Long id);
 
+    /**
+     * 增加blog的like数量
+     *
+     * @param id blog id
+     * @return 受影响的行数
+     */
+    int incrementBlogLike(Long id);
+
+    /**
+     * 获取blog对应的comment
+     *
+     * @param id id
+     * @return list
+     */
+    List<Comment> selectBlogCommentListByBlogId(Long id);
 }

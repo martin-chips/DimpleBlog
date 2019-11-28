@@ -166,7 +166,7 @@
           support: undefined
         },
         // 表单参数
-        form: {},
+        form: {support: false},
         // 表单校验
         rules: {
           title: [

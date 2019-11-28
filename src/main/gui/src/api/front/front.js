@@ -84,4 +84,11 @@ export function BlogDetail(id) {
   })
 }
 
+//点赞博客
+export function LikeBlog(id) {
+  return request({
+    url: '/f/blog/like/' + id,
+    method: 'put',
+  })
+}
 

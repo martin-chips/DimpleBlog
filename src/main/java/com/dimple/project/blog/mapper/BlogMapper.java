@@ -68,4 +68,28 @@ public interface BlogMapper {
      * @return list
      */
     List<Blog> selectBlogListQuery(BlogQuery blogQuery);
+
+    /**
+     * 新增blog的like
+     *
+     * @param id id
+     * @return 受影响的行数
+     */
+    int incrementBlogLike(Long id);
+
+    /**
+     * 增加blog的click数量
+     *
+     * @param id id
+     */
+    void incrementBlogClick(Long id);
+
+    /**
+     * 查询博客
+     *
+     * @param id 博客ID
+     * @return 博客
+     */
+    Blog selectBlogByIdQuery(Long id);
+
 }

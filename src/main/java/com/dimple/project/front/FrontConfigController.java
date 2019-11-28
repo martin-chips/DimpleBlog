@@ -16,6 +16,7 @@ import com.dimple.project.system.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -129,5 +130,21 @@ public class FrontConfigController extends BaseController {
         startPage();
         List<Tag> tagList = tagService.selectTagList(new Tag());
         return getDataTable(tagList);
+    }
+
+    /**
+     * 点赞博客
+     */
+    @PutMapping("/blog/like/{id}")
+    public AjaxResult likeBlog(@PathVariable Long id) {
+        return AjaxResult.success(blogService.incrementBlogLike(id));
+    }
+
+    /**
+     * 获取blog comment
+     */
+    @GetMapping("/blog/comment/{id}")
+    public AjaxResult commentBlog(@PathVariable Long id) {
+        return AjaxResult.success(blogService.selectBlogCommentListByBlogId(id));
     }
 }

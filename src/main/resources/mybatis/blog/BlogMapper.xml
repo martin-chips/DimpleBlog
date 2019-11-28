@@ -11,6 +11,7 @@
         <result property="summary" column="summary"/>
         <result property="headerImg" column="header_img"/>
         <result property="content" column="content"/>
+        <result property="htmlContent" column="html_content"/>
         <result property="status" column="status"/>
         <result property="comment" column="comment"/>
         <result property="commentCount" column="comment_count"/>
@@ -18,6 +19,8 @@
         <result property="weight" column="weight"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <resultMap id="BlogResultWithoutContent" type="com.dimple.project.blog.domain.Blog">
@@ -34,6 +37,8 @@
         <result property="weight" column="weight"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
         <association property="category" javaType="com.dimple.project.blog.domain.Category">
             <id property="id" column="c_id"/>
             <result property="title" column="c_title"/>
@@ -75,7 +80,7 @@
 
     <select id="selectBlogListQuery" resultMap="BlogResult">
         select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.like,b.click,
-        b.comment, b.create_time,count(c.id) as comment_count
+        b.comment, b.create_time,b.update_time,count(c.id) as comment_count
         from bg_blog b left join bg_comment c
         on b.id=c.page_id
         where b.delete_time is null
@@ -93,6 +98,11 @@
         </if>
         group by b.id
     </select>
+    <select id="selectBlogByIdQuery" resultMap="BlogResult">
+        select id, category_id, title, summary, header_img, html_content as content,support,click,`like`,status, weight,comment, create_by, create_time,update_time
+        from bg_blog
+        where id = #{id} and delete_time is null
+    </select>
 
     <insert id="insertBlog" useGeneratedKeys="true" keyProperty="id">
         insert into bg_blog
@@ -102,6 +112,7 @@
             <if test="summary != null  and summary != ''">summary,</if>
             <if test="headerImg != null  and headerImg != ''">header_img,</if>
             <if test="content != null  and content != ''">content,</if>
+            <if test="htmlContent != null  and htmlContent != ''">html_content,</if>
             <if test="status != null ">status,</if>
             <if test="comment != null ">comment,</if>
             <if test="support != null ">support,</if>
@@ -115,6 +126,7 @@
             <if test="summary != null  and summary != ''">#{summary},</if>
             <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
             <if test="content != null  and content != ''">#{content},</if>
+            <if test="htmlContent != null  and htmlContent != ''">#{htmlContent},</if>
             <if test="status != null ">#{status},</if>
             <if test="comment != null ">#{comment},</if>
             <if test="support != null ">#{support},</if>
@@ -132,6 +144,7 @@
             <if test="summary != null  and summary != ''">summary = #{summary},</if>
             <if test="headerImg != null  and headerImg != ''">header_img = #{headerImg},</if>
             <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="htmlContent != null  and htmlContent != ''">html_content = #{htmlContent},</if>
             <if test="status != null ">status = #{status},</if>
             <if test="support != null ">support = #{support},</if>
             <if test="weight != null ">weight = #{weight},</if>
@@ -141,6 +154,13 @@
             update_time=sysdate()
         </trim>
         where id = #{id}
+    </update>
+
+    <update id="incrementBlogLike">
+        update bg_blog set `like`=`like`+1 where id=#{id}
+    </update>
+    <update id="incrementBlogClick">
+         update bg_blog set click=click+1 where id=#{id}
     </update>
 
     <delete id="deleteBlogById">

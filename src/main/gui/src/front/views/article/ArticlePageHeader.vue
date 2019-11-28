@@ -2,9 +2,11 @@
   <div class="article-page-header" v-if="article !== undefined">
     <div class="status">
       <div class="tags">
-        <el-tag :style="{borderColor:tag.color,color:tag.color} " v-for="tag in article.tagList" :key="tag.id"
-                class="dot-tag">{{tag.title}}
-        </el-tag>
+        <a v-for="tag in article.tagList">
+          <el-tag :style="{borderColor:tag.color,color:tag.color} " effect="plain" size="small" :hit="true"
+                  :key="tag.id" style="margin: 2px 4px 2px 0" class="border-tag">{{tag.title}}
+          </el-tag>
+        </a>
       </div>
     </div>
     <p class="title">{{article.title}}</p>
@@ -25,12 +27,12 @@
           </span>
           <span class="comments">
             <a @click="scrollToComments">
-              <i class="el-icon-edit-outline"></i> {{article.comment_num}} 评论
+              <i class="el-icon-edit-outline"></i> {{article.commentList.length}} 评论
             </a>
           </span>
           <span class="likes">
             <a @click="likePost(article)">
-              <i class="el-icon-mouse"></i> {{article.like}} 赞
+              <svg-icon icon-class="like" /> {{article.like}} 赞
             </a>
           </span>
         </p>
@@ -43,34 +45,33 @@
 </template>
 
 <script type="text/ecmascript-6">
-    // mixin
-    import {mixin} from '@/utils/front/utils';
+  // mixin
+  import {mixin} from '@/utils/front/utils';
+  import {LikeBlog} from '@/api/front/front';
 
-    export default {
-        name: 'ArticlePageHeader',
-        props: {
-            article: {
-                Type: Object,
-                default: undefined
-            },
-            languages: {
-                Type: []
-            }
-        },
-        mixins: [mixin],
-        methods: {
-            likePost(post) {
-                // API.addPostLike({
-                //     post_id: post.id
-                // }).then((response) => {
-                //     post.like_num += 1;
-                //     this.$Message.success('点赞成功');
-                // }).catch((error) => {
-                //     console.log(error);
-                // });
-            }
-        }
-    };
+  export default {
+    name: 'ArticlePageHeader',
+    props: {
+      article: {
+        Type: Object,
+        default: undefined
+      },
+      languages: {
+        Type: []
+      }
+    },
+    mixins: [mixin],
+    methods: {
+      likePost(post) {
+        LikeBlog(post.id).then((response) => {
+          post.like += 1;
+          this.msgSuccess("点赞 +1");
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
+    }
+  };
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">

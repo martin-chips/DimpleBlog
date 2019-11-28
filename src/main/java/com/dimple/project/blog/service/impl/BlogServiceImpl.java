@@ -55,7 +55,7 @@ public class BlogServiceImpl implements BlogService {
         }
         List<Long> blogIdList = blogList.stream().map(e -> e.getId()).collect(Collectors.toList());
         //设置comment信息
-        List<Comment> commentList = commentMapper.selectCommentListByPageId(blogIdList);
+        List<Comment> commentList = commentMapper.selectCommentListByPageIds(blogIdList);
         for (Blog temp : blogList) {
             temp.setCommentList(commentList.stream().filter(e -> e.getPageId().equals(temp.getId())).collect(Collectors.toList()));
             temp.setTagTitleList(getTagTitleListByBlogId(temp.getId()));
@@ -98,7 +98,7 @@ public class BlogServiceImpl implements BlogService {
                 if (tag != null) {
                     blogTagMapper.insertBlogTag(new BlogTag(blog.getId(), tag.getId()));
                 } else {
-                    Tag temp = new Tag(title, StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 0.5));
+                    Tag temp = new Tag(title, StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 1));
                     tagMapper.insertTag(temp);
                     blogTagMapper.insertBlogTag(new BlogTag(blog.getId(), temp.getId()));
                 }
@@ -156,8 +156,40 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog selectBlogDetailById(Long id) {
-        Blog blog = blogMapper.selectBlogById(id);
+        Blog blog = blogMapper.selectBlogByIdQuery(id);
         blog.setTagList(tagMapper.selectTagListByBlogId(id));
+        //设置评论
+        List<Comment> commentList = getCommentListByPageId(id);
+        blog.setCommentList(commentList);
+        //设置点击数量+1
+        blogMapper.incrementBlogClick(id);
         return blog;
+    }
+
+    /**
+     * 获取评论
+     *
+     * @param id id
+     * @return 评论列表
+     */
+    private List<Comment> getCommentListByPageId(Long id) {
+        List<Comment> commentList = commentMapper.selectCommentListByPageId(id);
+        for (Comment comment : commentList) {
+            if (comment.getParentId() != null) {
+                comment.setSubComment(commentMapper.selectCommentById(comment.getPageId()));
+            }
+        }
+        return commentList;
+    }
+
+    @Override
+    public int incrementBlogLike(Long id) {
+        return blogMapper.incrementBlogLike(id);
+    }
+
+    @Override
+    public List<Comment> selectBlogCommentListByBlogId(Long id) {
+        commentMapper.selectCommentListByPageId(id);
+        return null;
     }
 }

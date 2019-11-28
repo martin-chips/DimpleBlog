@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.book.mapper.NoteMapper">
+
+    <resultMap type="com.dimple.project.book.entity.Note" id="NoteMap">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="content" column="content"/>
+        <result property="htmlContent" column="html_content"/>
+        <result property="click" column="click"/>
+        <result property="like" column="like"/>
+        <result property="chapter" column="chapter"/>
+        <result property="bookId" column="book_id"/>
+        <result property="headerImg" column="header_img"/>
+        <result property="support" column="support"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteBy" column="delete_by"/>
+        <result property="deleteTime" column="delete_time"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="selectNoteById" resultMap="NoteMap">
+        select
+          id, title, description, content, html_content, click, like, chapter, book_id, header_img, support, create_by, create_time, update_by, update_time
+        from bk_note
+        where id = #{id} and delete_time is null
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectNoteList" resultMap="NoteMap">
+        select
+        id, title, description, content, html_content, click, like, chapter, book_id, header_img, support, create_by,
+        create_time, update_by, update_time, delete_by, delete_time
+        from bk_note
+        where delete_time is null
+        <if test="title != null and title != ''">
+            and title = #{title}
+        </if>
+        <if test="chapter != null and chapter != ''">
+            and chapter = #{chapter}
+        </if>
+        <if test="bookId != null">
+            and book_id = #{bookId}
+        </if>
+        <if test="support != null">
+            and support = #{support}
+        </if>
+        <if test="beginTime != null "><!-- 开始时间检索 -->
+            and date_format( b.create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test="endTime != null "><!-- 结束时间检索 -->
+            and date_format( b.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insertNote" keyProperty="id" useGeneratedKeys="true">
+        insert into bk_note
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null ">title,</if>
+            <if test="description != null  and description != ''">description,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="html_content != null  and html_content != ''">htmlContent,</if>
+            <if test="chapter != null  and chapter != ''">chapter,</if>
+            <if test="bookId null ">book_id,</if>
+            <if test="headerImg != null ">header_img,</if>
+            <if test="support != null ">support,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null ">#{title},</if>
+            <if test="description != null  and description != ''">#{description},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="html_content != null  and html_content != ''">#{htmlContent},</if>
+            <if test="chapter != null  and chapter != ''">#{chapter},</if>
+            <if test="bookId != null ">#{bookId},</if>
+            <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
+            <if test="support != null ">#{support},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            sysdate()
+        </trim>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="updateNote">
+        update bk_note
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="htmlContent != null">
+                html_content = #{htmlContent},
+            </if>
+            <if test="chapter != null and chapter != ''">
+                chapter = #{chapter},
+            </if>
+            <if test="bookId != null">
+                book_id = #{bookId},
+            </if>
+            <if test="headerImg != null and headerImg != ''">
+                header_img = #{headerImg},
+            </if>
+            <if test="support != null">
+                support = #{support},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            update_time=sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteNoteByIds">
+        update bk_note set delete_time =sysdate() ,delete_by=#{username} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,7 +1,7 @@
 <template>
   <div class="article-home-content layout-content">
     <el-row>
-      <el-col :xs="24" :sm="24" :md="17" :lg="17">
+      <el-col :xs="24" :sm="24" :md="24" :lg="17">
         <div class="layout-left">
           <ClassifyMenu v-if="categories !=null " :categories="categoriesInfo" :defaultCategoryId="selected_category"
                         @selectCategory="selectCategory"></ClassifyMenu>
@@ -18,7 +18,7 @@
           <BrowseMore @browseMore="browseMore" :noMoreData="noMoreData" ref="browseMore"></BrowseMore>
         </div>
       </el-col>
-      <el-col :xs="0" :sm="7" :md="7" :lg="7">
+      <el-col :xs="24" :sm="24" :md="24" :lg="7">
         <div class="layout-right">
           <Recommend></Recommend>
           <TagWall style="margin-top: 15px;"></TagWall>
@@ -143,7 +143,7 @@
         this.updateArticlesInfo(true);
       },
       refresh() {
-        this.selected_category = undefined;
+        // this.selected_category = undefined;
         this.timeSorted = false;
         this.mostComment = undefined;
         this.recommend = undefined;

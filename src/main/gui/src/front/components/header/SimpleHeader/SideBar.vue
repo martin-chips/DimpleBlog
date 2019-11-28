@@ -91,7 +91,6 @@
     },
     beforeRouteUpdate(to, from, next) {
       next();
-      console.log(this.$route.path);
     },
     computed: {
       ...mapState({

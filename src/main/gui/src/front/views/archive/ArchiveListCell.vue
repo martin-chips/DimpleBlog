@@ -7,7 +7,7 @@
           {{post.title}}
         </a>
         <a class="see-desc" @click.stop="seeDesc" :class="{show: showDesc}">{{ showDesc ? '隐藏摘要' : '显示摘要' }}
-          <i type="android-arrow-dropup-circle"></i>
+          <i class="el-icon-caret-top"></i>
         </a>
         <p class="desc" :class="{show: showDesc}">{{post.summary}}</p>
       </div>
@@ -34,10 +34,10 @@
         this.showDesc = !this.showDesc;
       },
       gotoPostDetail(post) {
-          this.$router.push({
-              name: "article",
-              params: {id: post.id},
-          });
+        this.$router.push({
+          name: "article",
+          params: {id: post.id},
+        });
       },
       routerInfos(post) {
 

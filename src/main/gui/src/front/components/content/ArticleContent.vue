@@ -1,7 +1,7 @@
 <template>
   <div class="article-content layout-content" v-if="article">
     <el-row>
-      <el-col :xs="24" :sm="ExpandLeftColumn ? 24 : 17" :md="ExpandLeftColumn ? 24 : 17"
+      <el-col :xs="24" :sm="24" :md="ExpandLeftColumn ? 24 : 17"
               :lg="ExpandLeftColumn ? 24 : 17">
         <div class="layout-left" v-if="article">
           <article-page-header :article="article"></article-page-header>
@@ -10,9 +10,12 @@
               <div class="detail" v-if="article">
                 <article class="typo container article-main-content" v-highlight v-html="article.content">
                 </article>
-                <div class="detail-footer">
+                <div class="detail-footer" v-if="article.updateTime !=null">
                   以上内容添加于 {{ article.createTime | socialDate }} &nbsp;&nbsp;&nbsp;
                   更新于 {{ article.updateTime | socialDate }}
+                </div>
+                <div class="detail-footer" v-if="article.updateTime ==null">
+                  以上内容添加于 {{ article.createTime | socialDate }} &nbsp;&nbsp;&nbsp;
                 </div>
               </div>
             </div>

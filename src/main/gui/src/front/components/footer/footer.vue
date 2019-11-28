@@ -2,11 +2,13 @@
   <div class="common-footer">
     <el-backtop :height="300" :bottom="bottom" :right="right">
       <div class="top">
-        <el-tooltip :content="ExpandLeftColumn ? '通栏阅读' : '退出通栏'"
+        <el-tooltip :content="ExpandLeftColumn ? '退出通栏' : '通栏阅读'"
                     placement="left"
                     v-show="showExpandMenu">
-          <el-link :class="ExpandLeftColumn ? 'el-icon-lock' : 'el-icon-unlock'" class="icon"
-                   @click.native.stop.prevent="toggleExpand"></el-link>
+          <el-link @click.native.stop.prevent="toggleExpand" class="icon">
+            <svg-icon v-if="ExpandLeftColumn"  icon-class="exit-fullscreen"/>
+            <svg-icon v-else  icon-class="fullscreen"/>
+          </el-link>
         </el-tooltip>
         <el-link class="el-icon-caret-top icon"
                  @mouseover.native="setButtonState('top', true, true)"
@@ -30,88 +32,88 @@
 </template>
 
 <script type="text/ecmascript-6">
-    import {
-        mapState,
-        mapMutations
-    } from 'vuex';
-    import {scrollTop} from '@/utils/front/utils.js';
+  import {
+    mapState,
+    mapMutations
+  } from 'vuex';
+  import {scrollTop} from '@/utils/front/utils.js';
 
-    export default {
-        name: 'common-footer',
-        data() {
-            return {
-                bottom: 120,
-                right: 20,
-                topBtnMouseOver: false,
-                bottomBtnMouseOver: false,
-                animationFrameId: undefined
-            };
-        },
-        mounted() {
-            if (document.body.clientWidth <= 1200) {
-                this.bottom = 20;
-            }
-        },
-        computed: {
-            ...mapState({
-                ExpandLeftColumn: state => state.base.ExpandLeftColumn
-            }),
-            showExpandMenu: function () {
-                try {
-                    return (this.$route.name === 'article' ||
-                        this.$route.name === 'book' ||
-                        this.$route.name === 'book/note' ||
-                        this.$route.name === 'movie' ||
-                        this.$route.name === 'album'
-                    ) && document.body.clientWidth >= 1200;
-                } catch (error) {
-                    return true;
-                }
-            }
-        },
-        methods: {
-            ...mapMutations({
-                updateExpandLeftColumn: 'base/UPDATE_EXPAND_LEFT_COLUMN'
-            }),
-            setButtonState(position, state, start) {
-                this[(Object.is(position, 'bottom') ? 'bottomBtnMouseOver' : 'topBtnMouseOver')] = state;
-                window.cancelAnimationFrame(this.animationFrameId);
-                start && this.slowMoveToAnyWhere();
-            },
-            slowMoveToAnyWhere() {
-                const step = () => {
-                    let targetScrollY = window.scrollY;
-                    const currentScrollY = document.body.scrollHeight - window.innerHeight;
-                    if (this.bottomBtnMouseOver) targetScrollY += 1;
-                    if (this.topBtnMouseOver) targetScrollY -= 1;
-                    if (targetScrollY < 0) {
-                        targetScrollY = 0;
-                    } else if (targetScrollY >= currentScrollY) {
-                        targetScrollY = currentScrollY;
-                    }
-                    const canScrollTo = targetScrollY > 0 && targetScrollY < currentScrollY;
-                    if (!canScrollTo) return false;
-                    window.scrollTo(0, targetScrollY);
-                    if (this.bottomBtnMouseOver || this.topBtnMouseOver) {
-                        this.animationFrameId = window.requestAnimationFrame(step);
-                    } else {
-                        window.cancelAnimationFrame(this.animationFrameId);
-                        return false;
-                    }
-                };
-                this.animationFrameId = window.requestAnimationFrame(step);
-            },
-            scrollDown() {
-                if (document.body.clientWidth >= 1200) {
-                    const sTop = document.documentElement.scrollTop || document.body.scrollTop;
-                    scrollTop(window, sTop, sTop + 500, 1000);
-                }
-            },
-            toggleExpand() {
-                this.updateExpandLeftColumn(!this.ExpandLeftColumn);
-            }
+  export default {
+    name: 'common-footer',
+    data() {
+      return {
+        bottom: 120,
+        right: 20,
+        topBtnMouseOver: false,
+        bottomBtnMouseOver: false,
+        animationFrameId: undefined
+      };
+    },
+    mounted() {
+      if (document.body.clientWidth <= 1200) {
+        this.bottom = 20;
+      }
+    },
+    computed: {
+      ...mapState({
+        ExpandLeftColumn: state => state.base.ExpandLeftColumn
+      }),
+      showExpandMenu: function () {
+        try {
+          return (this.$route.name === 'article' ||
+            this.$route.name === 'book' ||
+            this.$route.name === 'book/note' ||
+            this.$route.name === 'movie' ||
+            this.$route.name === 'album'
+          ) && document.body.clientWidth >= 1200;
+        } catch (error) {
+          return true;
         }
-    };
+      }
+    },
+    methods: {
+      ...mapMutations({
+        updateExpandLeftColumn: 'base/UPDATE_EXPAND_LEFT_COLUMN'
+      }),
+      setButtonState(position, state, start) {
+        this[(Object.is(position, 'bottom') ? 'bottomBtnMouseOver' : 'topBtnMouseOver')] = state;
+        window.cancelAnimationFrame(this.animationFrameId);
+        start && this.slowMoveToAnyWhere();
+      },
+      slowMoveToAnyWhere() {
+        const step = () => {
+          let targetScrollY = window.scrollY;
+          const currentScrollY = document.body.scrollHeight - window.innerHeight;
+          if (this.bottomBtnMouseOver) targetScrollY += 1;
+          if (this.topBtnMouseOver) targetScrollY -= 1;
+          if (targetScrollY < 0) {
+            targetScrollY = 0;
+          } else if (targetScrollY >= currentScrollY) {
+            targetScrollY = currentScrollY;
+          }
+          const canScrollTo = targetScrollY > 0 && targetScrollY < currentScrollY;
+          if (!canScrollTo) return false;
+          window.scrollTo(0, targetScrollY);
+          if (this.bottomBtnMouseOver || this.topBtnMouseOver) {
+            this.animationFrameId = window.requestAnimationFrame(step);
+          } else {
+            window.cancelAnimationFrame(this.animationFrameId);
+            return false;
+          }
+        };
+        this.animationFrameId = window.requestAnimationFrame(step);
+      },
+      scrollDown() {
+        if (document.body.clientWidth >= 1200) {
+          const sTop = document.documentElement.scrollTop || document.body.scrollTop;
+          scrollTop(window, sTop, sTop + 500, 1000);
+        }
+      },
+      toggleExpand() {
+        this.updateExpandLeftColumn(!this.ExpandLeftColumn);
+      }
+    }
+  };
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
@@ -165,4 +167,7 @@
 
         &:hover
           color $default-link-hover-color
+  //去除移动上去的白底
+  .el-backtop,.el-backtop:hover
+    background #ccc0
 </style>

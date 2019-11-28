@@ -10,14 +10,16 @@
             </a>
           </p>
           <div class="tags">
-            <el-tag :color="tag.color" type="border" v-for="tag in first.tags" :key="tag.id"
-                   class="border-tag">{{tag}}
-            </el-tag>
+            <a v-for="tag in first.tagList">
+              <el-tag :style="{borderColor:tag.color,color:tag.color} " effect="plain" size="small" :key="tag.id" :hit="true"
+                      style="margin: 2px 4px 2px 0" class="border-tag">{{tag.title}}
+              </el-tag>
+            </a>
           </div>
           <p class="info">
             <span class="time"><a>{{ first.createTime | socialDate }}</a></span>
             <span class="likes">
-              <a @click="likePost(first)"><i class="el-icon-mouse"></i> {{ first.like }} </a>
+              <a @click="likePost(first)"><svg-icon icon-class="like" /> {{ first.like }} </a>
             </span>
             <span class="comments">
               <a><i class="el-icon-edit-outline"></i>{{ first.commentCount }} </a>
@@ -38,7 +40,7 @@
             <p class="info">
               <span class="time">{{ article.createTime | socialDate }}</span>
               <span class="likes">
-                <a @click="likePost(article)"><i class="el-icon-mouse"></i>  {{ article.like}} </a>
+                <a @click="likePost(article)"><svg-icon icon-class="like" />  {{ article.like}} </a>
               </span>
               <span class="comments">
                 <a><i class="el-icon-edit-outline"></i> {{ article.commentCount}} </a>
@@ -60,9 +62,8 @@
     mapActions
   } from 'vuex';
   import Panel from "./Panel";
-  import {LineBreakMode} from "@/utils/front/const.js";
-  import {socialDateFormat} from "@/utils/front/utils";
   import {mixin} from '@/utils/front/utils';
+  import {LikeBlog} from "@/api/front/front";
 
   export default {
     name: 'hot',
@@ -76,11 +77,11 @@
       ...mapState({
         hots: state => state.common.hots
       }),
-      first:{
-        get(){
+      first: {
+        get() {
           return this.articleSlice(0, 1)[0];
         },
-        set(val){
+        set(val) {
 
         }
       }
@@ -91,13 +92,18 @@
     methods: {
       ...mapActions(['common/GET_HOTS']),
       gotoPostDetail(post) {
-          this.$router.push({
-              name: "article",
-              params: {id: post.id},
-          });
+        this.$router.push({
+          name: "article",
+          params: {id: post.id},
+        });
       },
       likePost(post) {
-
+        LikeBlog(post.id).then((response) => {
+          post.like += 1;
+          this.msgSuccess("点赞 +1");
+        }).catch((error) => {
+          console.log(error);
+        });
       },
       articleSlice(start, end) {
         return this.hots.slice(start, end);

@@ -84,7 +84,8 @@
         </el-row>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <mavonEditor v-model="form.content" ref="editor" @change="mavonChangeHandle" style="height: 400px"/>
+          <mavonEditor v-model="form.content" ref="editor" @change="mavonChangeHandle"
+                       style="min-height: 500px;"/>
         </el-form-item>
       </div>
     </el-form>
@@ -103,7 +104,7 @@
 
   export default {
     name: 'BlogDetail',
-    components: { DropZone, Sticky, mavonEditor},
+    components: {DropZone, Sticky, mavonEditor},
     props: {
       isEdit: {
         type: Boolean,
@@ -213,13 +214,10 @@
       },
       submitBlog() {
         this.form.htmlContent = marked(this.form.content);
-        console.log(this.form.htmlContent)
-        return
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading = true
             this.form.status = true
-
             let obj = JSON.parse(JSON.stringify(this.form));
             if (obj.id == undefined) {
               addBlog(obj).then(response => {
@@ -230,6 +228,8 @@
                 } else {
                   this.msgError(response.msg);
                 }
+                this.loading = false;
+              }).catch(error => {
                 this.loading = false;
               });
             } else {
@@ -242,12 +242,15 @@
                   this.msgError(response.msg);
                 }
                 this.loading = false;
+              }).catch(error => {
+                this.loading = false;
               });
             }
           }
         })
       },
       draftBlog() {
+        this.form.htmlContent = marked(this.form.content);
         if (this.form.content.length === 0 || this.form.title.length === 0) {
           this.$message({
             message: '请填写必要的标题和内容',
@@ -256,7 +259,6 @@
           return
         }
         let obj = JSON.parse(JSON.stringify(this.form));
-        obj.tag = obj.tag.join(",");
         obj.status = false;
         if (obj.id == undefined) {
           addBlogDraft(obj).then(response => {

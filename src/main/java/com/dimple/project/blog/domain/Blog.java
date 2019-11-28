@@ -46,8 +46,8 @@ public class Blog extends BaseEntity {
     /**
      * 封面图片地址
      */
-    @NotNull(message = "封面不能为空", groups = {Publish.class})
-    @Length(max = 256, message = "封面地址不能超过256个字符", groups = {Publish.class})
+    //@NotNull(message = "封面不能为空", groups = {Publish.class})
+    //@Length(max = 256, message = "封面地址不能超过256个字符", groups = {Publish.class})
     private String headerImg;
 
     /**
@@ -55,6 +55,10 @@ public class Blog extends BaseEntity {
      */
     @NotNull(message = "正文内容不能为空", groups = {Publish.class, Draft.class})
     private String content;
+    /**
+     * HTML 格式化后的内容
+     */
+    private String htmlContent;
 
     /**
      * 文章状态,1表示已经发表,0表示草稿箱

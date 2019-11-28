@@ -76,6 +76,13 @@ public interface CommentMapper {
      * @param blogIdList blog的Id
      * @return map
      */
-    List<Comment> selectCommentListByPageId(@Param("blogIdList") List<Long> blogIdList);
+    List<Comment> selectCommentListByPageIds(@Param("blogIdList") List<Long> blogIdList);
 
+    /**
+     * 获取page id对应的comment
+     *
+     * @param id pageId
+     * @return comment list
+     */
+    List<Comment> selectCommentListByPageId(Long id);
 }
