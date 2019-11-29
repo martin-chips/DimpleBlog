@@ -26,7 +26,7 @@
             </a>
           </span>
           <span class="comments">
-            <a @click="scrollToComments">
+            <a @click="scrollToComments('#comments')">
               <i class="el-icon-edit-outline"></i> {{article.commentList.length}} 评论
             </a>
           </span>

@@ -66,4 +66,12 @@ public interface CommentService {
      * @return 受影响的行数
      */
     int incrementCommentBad(Long id);
+
+    /**
+     * 根据PageId获取所有的评论
+     *
+     * @param id pageId
+     * @return comment list
+     */
+    List<Comment> selectCommentListByPageId(Long id);
 }

@@ -5,9 +5,11 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Category;
+import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.blog.domain.Tag;
 import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.blog.service.CategoryService;
+import com.dimple.project.blog.service.CommentService;
 import com.dimple.project.blog.service.TagService;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.front.domain.FrontMenu;
@@ -140,11 +142,15 @@ public class FrontConfigController extends BaseController {
         return AjaxResult.success(blogService.incrementBlogLike(id));
     }
 
+    @Autowired
+    CommentService commentService;
+
     /**
-     * 获取blog comment
+     * 获取pageId的comment
      */
-    @GetMapping("/blog/comment/{id}")
+    @GetMapping("/comment/{id}")
     public AjaxResult commentBlog(@PathVariable Long id) {
-        return AjaxResult.success(blogService.selectBlogCommentListByBlogId(id));
+        List<Comment> commentList = commentService.selectCommentListByPageId(id);
+        return AjaxResult.success(commentList);
     }
 }

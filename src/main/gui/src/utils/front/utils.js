@@ -161,9 +161,9 @@ export function scrollTop(el, from = 0, to, duration = 500) {
 export const mixin = {
   methods: {
     // 滚动到评论区域
-    scrollToComments() {
+    scrollToComments(selector) {
       try {
-        let commentEle = document.querySelector('#comments');
+        let commentEle = document.querySelector(selector);
         const sTop = document.documentElement.scrollTop || document.body.scrollTop;
         const commentEleSTop = commentEle.offsetTop;
         scrollTop(window, sTop, commentEleSTop, Math.max((commentEleSTop - sTop) / 10, 1000));

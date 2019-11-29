@@ -1,6 +1,7 @@
 <template>
   <div class="social-section" id="comments" v-if="article != undefined" ref="socialSection">
-    <i-spin size="large" v-if="showSpin" fix style="z-index: 99;"></i-spin>
+    <i size="large" v-if="showSpin" fix style="z-index: 99;"></i>
+
     <div class="comment-area">
       <div class="editor" :class="{spread: spreadEditor}">
         <custom-mavon-editor :post="article"
@@ -11,33 +12,32 @@
     </div>
 
     <div class="comment-list" v-if="comments.length > 0">
-      <div v-for="comment_level1 in comments" :key="comment_level1.id">
+      <div v-for="comment in comments" :key="comment.id">
         <comment-cell-list :theme="theme"
                            :post="article"
-                           :commentLevel="comment_level1.comment_level"
-                           :comment="comment_level1"
+                           :commentLevel="1"
+                           :comment="comment"
                            @publishedComment="publishedComment"></comment-cell-list>
-        <comment-cell-list v-for="comment_level2 in comment_level1.sub_comment"
-                           :key="comment_level2.id"
+        <comment-cell-list v-for="subComment in comment.subCommentList"
+                           :key="subComment.id"
                            :theme="theme"
+                           style="border-left:0.2rem solid #dadada"
                            :post="article"
-                           :commentLevel="comment_level2.comment_level"
-                           :comment="comment_level2"
+                           :commentLevel="2"
+                           :comment="subComment"
                            @publishedComment="publishedComment"></comment-cell-list>
-        <browse-more @browseMore="showMoreSubComments(comment_level1)"
-                     v-if="comment_level1.sub_comment && comment_level1.comment_num > comment_level1.sub_comment.length"></browse-more>
       </div>
-      <browse-more @browseMore="getCommentInfo" ref="browseMore"></browse-more>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import CustomMavonEditor from '@/components/views/CustomMavonEditor';
-  import CommentListCell from '@/components/views/Comment/CommentListCell';
-  import BrowseMore from '@/components/views/BrowseMore';
-  // API
-  import API from 'API';
+
+  import CustomMavonEditor from '../CustomMavonEditor';
+  import CommentListCell from './CommentListCell';
+  import BrowseMore from '../BrowseMore';
+
+  import {listComment, goodComment, badComment} from '@/api/front/front'
 
   const COMMENT_DEFAULT_LIMIT = 10;
   export default {
@@ -56,48 +56,31 @@
       return {
         comments: [],
         totalCount: 0,
-        noMoreData: false,
         spreadEditor: false,
         name: '',
         select: 'email',
         email: '',
         mobile: '',
         showSpin: true,
-        dataLoaded: false
+        dataLoaded: false,
+        pageNum: 1,
+        pageSize: 10,
       };
     },
-    created() {
-      this.getCommentInfo();
+    watch: {
+      article: function (val) {
+        if (val != undefined) {
+          this.$nextTick(() => {
+            this.getCommentInfo()
+          });
+        }
+      }
     },
     methods: {
       getCommentInfo() {
-        API.getCommentInfo({
-          params: {
-            post_id: this.article.id,
-            comment_level: 0,
-            limit: COMMENT_DEFAULT_LIMIT,
-            offset: this.comments.length
-          }
-        }).then((response) => {
-          this.totalCount += response.data.results.length;
-          this.noMoreData = this.totalCount >= response.data.count;
-          this.comments = this.comments.concat(response.data.results);
-          this.$nextTick(() => {
-            if (this.$refs.browseMore) {
-              this.$refs.browseMore.stopLoading(this.noMoreData);
-            }
-          });
+        listComment(this.article.id).then((response) => {
+          this.comments = response.data;
           this.showSpin = false;
-        }).catch((error) => {
-          console.log(error);
-        });
-      },
-      likePost(post) {
-        API.addPostLike({
-          post_id: post.id
-        }).then((response) => {
-          post.like_num += 1;
-          this.$Message.success('点赞成功');
         }).catch((error) => {
           console.log(error);
         });
@@ -173,7 +156,7 @@
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus" scoped>
-  @import "../.././../common/stylus/theme.styl";
+  @import "../../common/stylus/theme.styl";
   .social-section
     position relative
     margin-top 10px

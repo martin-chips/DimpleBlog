@@ -92,3 +92,26 @@ export function LikeBlog(id) {
   })
 }
 
+//获取评论
+export function listComment(pageId) {
+  return request({
+    url: '/f/comment/' + pageId,
+    method: 'get',
+  })
+}
+
+//点赞评论
+export function goodComment(id) {
+  return request({
+    url: '/f/comment/good/' + id,
+    method: 'put',
+  })
+}
+
+//踩评论
+export function badComment(id) {
+  return request({
+    url: '/f/comment/bad/' + id,
+    method: 'put',
+  })
+}
