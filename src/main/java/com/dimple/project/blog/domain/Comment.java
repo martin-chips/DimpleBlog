@@ -9,10 +9,12 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 /**
  * @className: Comment
- * @description:
+ * @description: 因为只设置为二级回复, 那么超过二级的回复会被直接并入二级
+ * parentId为null的为第一级回复,那么接下来的所有parentId不为null的为第二级回复.
  * @author: Dimple
  * @date: 10/24/19
  */
@@ -55,6 +57,10 @@ public class Comment extends BaseEntity {
      */
     private Long parentId;
     /**
+     * 回复的id
+     */
+    private Long replyId;
+    /**
      * QQ号码
      */
     @Length(max = 20, message = "QQ号码长度不能超过{max}")
@@ -89,6 +95,18 @@ public class Comment extends BaseEntity {
      */
     @NotNull(message = "内容不能为空")
     private String content;
+    /**
+     * Html评论内容
+     */
+    private String htmlContent;
 
-    private Comment subComment;
+    private Comment parentComment;
+    /**
+     * 子评论
+     */
+    private List<Comment> subCommentList;
+    /**
+     * 回复的NickName
+     */
+    private String replyNickName;
 }

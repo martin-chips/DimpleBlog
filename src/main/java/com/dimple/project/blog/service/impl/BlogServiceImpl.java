@@ -176,7 +176,7 @@ public class BlogServiceImpl implements BlogService {
         List<Comment> commentList = commentMapper.selectCommentListByPageId(id);
         for (Comment comment : commentList) {
             if (comment.getParentId() != null) {
-                comment.setSubComment(commentMapper.selectCommentById(comment.getPageId()));
+                comment.setParentComment(commentMapper.selectCommentById(comment.getParentId()));
             }
         }
         return commentList;
@@ -189,7 +189,6 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Comment> selectBlogCommentListByBlogId(Long id) {
-        commentMapper.selectCommentListByPageId(id);
-        return null;
+        return getCommentListByPageId(id);
     }
 }

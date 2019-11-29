@@ -14,6 +14,7 @@
         <result property="avatar" column="avatar"/>
         <result property="nickName" column="nick_name"/>
         <result property="pageId" column="page_id"/>
+        <result property="replyId" column="reply_id"/>
         <result property="url" column="url"/>
         <result property="display" column="display"/>
         <result property="good" column="good"/>
@@ -177,10 +178,10 @@
             #{id}
         </foreach>
     </select>
-    <select id="selectCommentListByPageId" resultType="com.dimple.project.blog.domain.Comment">
+    <select id="selectCommentListByPageId" resultMap="CommentMap">
         select id, email, ip, location, os, browser, parent_id, qq_num,nick_name, avatar, page_id, url, display, good,
-        bad,
-        content,
+        bad,reply_id,
+        html_content as content,
         create_by, create_time
         from bg_comment where delete_time is null and page_id =#{id}
     </select>
