@@ -25,6 +25,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -184,12 +186,22 @@ public class LogAspect {
         String params = "";
         if (paramsArray != null && paramsArray.length > 0) {
             for (int i = 0; i < paramsArray.length; i++) {
-                if (!(paramsArray[i] instanceof MultipartFile)) {
+                if (!isFilterObject(paramsArray[i])) {
                     Object jsonObj = JSON.toJSON(paramsArray[i]);
                     params += jsonObj.toString() + " ";
                 }
             }
         }
         return params.trim();
+    }
+
+    /**
+     * 判断是否需要过滤的对象。
+     *
+     * @param o 对象信息。
+     * @return 如果是需要过滤的对象，则返回true；否则返回false。
+     */
+    public boolean isFilterObject(final Object o) {
+        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse;
     }
 }

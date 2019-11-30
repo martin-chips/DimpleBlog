@@ -115,3 +115,20 @@ export function badComment(id) {
     method: 'put',
   })
 }
+
+//根据QQ获取信息
+export function getInfoByQQ(qqNum) {
+  return request({
+    url: '/f/comment/qqNum/' + qqNum,
+    method: 'get',
+  })
+}
+
+//新增评论
+export function insertComment(comment) {
+  return request({
+    url: '/f/comment',
+    method: 'post',
+    data:comment
+  })
+}

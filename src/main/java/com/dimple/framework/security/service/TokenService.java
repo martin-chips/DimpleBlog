@@ -1,13 +1,5 @@
 package com.dimple.framework.security.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.IdUtils;
 import com.dimple.common.utils.ServletUtils;
@@ -20,6 +12,14 @@ import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @className: TokenService
@@ -70,6 +70,16 @@ public class TokenService {
     }
 
     /**
+     * 删除用户身份信息
+     */
+    public void delLoginUser(String token) {
+        if (StringUtils.isNotEmpty(token)) {
+            String userKey = getTokenKey(token);
+            redisCacheService.deleteObject(userKey);
+        }
+    }
+
+    /**
      * 创建令牌
      *
      * @param loginUser 用户信息
@@ -89,7 +99,7 @@ public class TokenService {
     /**
      * 验证令牌有效期，相差不足20分钟，自动刷新缓存
      *
-     * @param token 令牌
+     * @param loginUser 令牌
      * @return 令牌
      */
     public void verifyToken(LoginUser loginUser) {

@@ -75,12 +75,6 @@
           return 1;
         }
       },
-      textOrderType: function () {
-        return parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE ? 2 : 1;
-      },
-      imgOrderType: function () {
-        return parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE ? 1 : 2;
-      },
       textSpan: function () {
         switch (parseInt(this.articleType)) {
           case ARTICLE_TYPE_NO_IMAGE:

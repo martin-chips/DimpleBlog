@@ -1,7 +1,7 @@
 <template>
   <div class="home-content layout-content">
     <el-row>
-      <el-col :xs="24" :sm="24" :md="24" :lg="17">
+      <el-col :xs="24" :sm="24" :md="17" :lg="17">
         <div class="layout-left">
           <!-- 文章 -->
           <SectionTitle mainTitle="文章" subTitle="Article" :menus="articlesTitleMenus" :to="'/articles'"

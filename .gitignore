@@ -3,3 +3,4 @@ target
 
 src/main/gui/node_modules
 src/main/gui/package-lock.json
+src/main/gui/dist

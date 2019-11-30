@@ -1,7 +1,7 @@
 <template>
   <div class="article-content layout-content" v-if="article">
     <el-row>
-      <el-col :xs="24" :sm="24" :md="ExpandLeftColumn ? 24 : 17"
+      <el-col :xs="24" :sm="ExpandLeftColumn ? 24 : 17" :md="ExpandLeftColumn ? 24 : 17"
               :lg="ExpandLeftColumn ? 24 : 17">
         <div class="layout-left" v-if="article">
           <article-page-header :article="article"></article-page-header>

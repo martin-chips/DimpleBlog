@@ -1,14 +1,5 @@
 package com.dimple.framework.security.handle;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import com.alibaba.fastjson.JSON;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.constant.HttpStatus;
@@ -19,6 +10,15 @@ import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.framework.security.LoginUser;
 import com.dimple.framework.security.service.TokenService;
 import com.dimple.framework.web.domain.AjaxResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @className: LogoutSuccessHandlerImpl
@@ -42,6 +42,8 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         LoginUser loginUser = tokenService.getLoginUser(request);
         if (StringUtils.isNotNull(loginUser)) {
             String userName = loginUser.getUsername();
+            // 删除用户缓存记录
+            tokenService.delLoginUser(loginUser.getToken());
             // 记录用户退出日志
             AsyncManager.me().execute(AsyncFactory.recordLoginLog(userName, Constants.LOGOUT, "退出成功"));
         }

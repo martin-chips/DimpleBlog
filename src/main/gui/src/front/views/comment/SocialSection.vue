@@ -5,7 +5,8 @@
     <div class="comment-area">
       <div class="editor" :class="{spread: spreadEditor}">
         <custom-mavon-editor :post="article"
-                             :theme="theme"
+                             :replyId="undefined"
+                             :parentId="undefined"
                              @valueChanged="valueChanged"
                              @publishedComment="publishedComment"></custom-mavon-editor>
       </div>
@@ -13,14 +14,12 @@
 
     <div class="comment-list" v-if="comments.length > 0">
       <div v-for="comment in comments" :key="comment.id">
-        <comment-cell-list :theme="theme"
-                           :post="article"
+        <comment-cell-list :post="article"
                            :commentLevel="1"
                            :comment="comment"
                            @publishedComment="publishedComment"></comment-cell-list>
         <comment-cell-list v-for="subComment in comment.subCommentList"
                            :key="subComment.id"
-                           :theme="theme"
                            style="border-left:0.2rem solid #dadada"
                            :post="article"
                            :commentLevel="2"
@@ -35,8 +34,6 @@
 
   import CustomMavonEditor from '../CustomMavonEditor';
   import CommentListCell from './CommentListCell';
-  import BrowseMore from '../BrowseMore';
-
   import {listComment, goodComment, badComment} from '@/api/front/front'
 
   const COMMENT_DEFAULT_LIMIT = 10;
@@ -46,25 +43,13 @@
       article: {
         Type: Object,
         default: undefined
-      },
-      theme: {
-        Type: String,
-        default: ''
       }
     },
     data() {
       return {
         comments: [],
-        totalCount: 0,
         spreadEditor: false,
-        name: '',
-        select: 'email',
-        email: '',
-        mobile: '',
         showSpin: true,
-        dataLoaded: false,
-        pageNum: 1,
-        pageSize: 10,
       };
     },
     watch: {
@@ -131,26 +116,10 @@
         recursiveCommentyIds = recursiveCommentyIds.reverse();
         return parentComment;
       },
-      showMoreSubComments(parentComment) {
-        API.getCommentInfo({
-          params: {
-            post_id: this.article.id,
-            parent_comment: parentComment.id,
-            limit: COMMENT_DEFAULT_LIMIT,
-            offset: parentComment.sub_comment.length,
-            ordering: 'add_time'
-          }
-        }).then((response) => {
-          parentComment.sub_comment = parentComment.sub_comment.concat(response.data.results);
-        }).catch((error) => {
-          console.log(error);
-        });
-      }
     },
     components: {
       'custom-mavon-editor': CustomMavonEditor,
       'comment-cell-list': CommentListCell,
-      'browse-more': BrowseMore
     }
   };
 </script>
@@ -199,11 +168,10 @@
     .comment-area
       .editor
         margin 15px 0 10px
-        height 200px
         transition height 0.7s
 
         &.spread
-          height 450px
+          height 300px
 
     > .ivu-menu
       z-index 0

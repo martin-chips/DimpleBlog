@@ -1,52 +1,81 @@
 <template>
-  <div class="custom-mavon-editor" :class="theme">
-    <div class="operate">
-      <el-row>
-        <el-col :xs="8" :sm="8" :md="6" :lg="6" style="padding-left: 0; padding-right: 7.5px;">
-          <el-input v-model="nickName" placeholder="请输入昵称" size="large">
-            <span slot="prepend">昵称</span>
-          </el-input>
-        </el-col>
-        <el-col :xs="16" :sm="16" :md="12" :lg="11" style="padding-left: 0; padding-right: 0;">
-          <el-input v-model="email" placeholder="请输入邮箱" size="large">
-            <span slot="prepend">邮箱地址</span>
-          </el-input>
-        </el-col>
-      </el-row>
-    </div>
-    <div class="editor-area">
-      <!--      <i-spin size="large" v-if="!post.is_commentable" fix style="z-index: 1001;">-->
-      <!--        {{ post.is_commentable ? '' : $t('comments.commentClosed') }}-->
-      <!--      </i-spin>-->
-      <mavon-editor v-model="origin_content"
-                    v-if="showEditor"
-                    style="height: 100%; min-height: 50px; min-width: 200px; z-index: 1000;"
-                    :codeStyle="codeStyle"
-                    :editable="post.comment"
-                    :toolbarsFlag="toolbarsFlag"
-                    :subfield="subfield"
-                    :placeholder="placeholderText"
-                    :toolbars="toolbars"
-                    @change="change"
-                    @imgAdd="addImage"
-                    @save="saveEditorContent"
-                    ref="mavonEditor"></mavon-editor>
-    </div>
-    <div class="bottom-area">
-      <div class="comment-tip">
-        <a href="https://guides.github.com/features/mastering-markdown/" target="_blank">
-          <i class=el-icon-orange></i>
-          支持Markdown</a>
+  <el-form ref="form" :model="form" :rules="rules"
+           v-loading="false"
+           element-loading-text="拼命加载中"
+           element-loading-spinner=""
+           element-loading-background="rgba(0, 0, 0, 0.8)">
+    <div class="custom-mavon-editor" >
+      <div class="operate">
+        <el-row>
+          <el-col :xs="18" :sm="10" :md="10" :lg="10">
+            <el-form-item prop="qqNum">
+              <el-input placeholder="推荐输入QQ号码自动填充" v-model="form.qqNum" clearable @blur="getInfoByQQ">
+                <span slot="prepend">Q  Q</span>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="4" :sm="4" :md="4" :lg="4">
+            <el-form-item prop="avatar" style="margin-left:1rem">
+              <el-image
+                v-if="form.avatar"
+                style="width: 1.89rem; height: 1.89rem; border-radius: 10rem;"
+                :src="form.avatar"
+                :preview-src-list="[form.avatar]">
+              </el-image>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="18" :sm="10" :md="10" :lg="10">
+            <el-form-item prop="nickName">
+              <el-input v-model="form.nickName" placeholder="请输入昵称" clearable>
+                <span slot="prepend">昵称</span>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :xs="18" :sm="10" :md="10" :lg="10">
+            <el-form-item prop="email">
+              <el-input v-model="form.email" placeholder="请输入邮箱" size="large" clearable>
+                <span slot="prepend">邮箱</span>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="4" :sm="4" :md="4" :lg="4">
+            <el-form-item prop="reply" style="padding-left: 1rem">
+              <el-checkbox v-model="form.reply">邮件通知</el-checkbox>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </div>
-      <div class="publish-area">
-        <el-button size="default" :type="buttonType" :loading="publishing" @click="send"
-                   :disabled="!post.comment">
-          <span v-if="!publishing">发布</span>
-          <span v-else>发布中</span>
-        </el-button>
+      <div class="editor-area">
+        <mavon-editor v-model="form.content"
+                      v-if="showEditor"
+                      style="height: 100%; min-height: 50px; min-width: 200px; z-index: 1000;"
+                      :codeStyle="codeStyle"
+                      :editable="post.comment"
+                      :toolbarsFlag="toolbarsFlag"
+                      :subfield="false"
+                      :placeholder="placeholderText"
+                      :toolbars="toolbars"
+                      @change="change"
+                      ref="mavonEditor"></mavon-editor>
+      </div>
+      <div class="bottom-area">
+        <div class="comment-tip">
+          <a href="https://guides.github.com/features/mastering-markdown/" target="_blank">
+            <svg-icon icon-class="markdown" />
+            支持Markdown</a>
+        </div>
+        <div class="publish-area">
+          <el-button size="default" :type="buttonType" :loading="publishing" @click="send"
+                     :disabled="!post.comment">
+            <span v-if="!publishing">发布</span>
+            <span v-else>发布中</span>
+          </el-button>
+        </div>
       </div>
     </div>
-  </div>
+  </el-form>
 </template>
 
 <script type="text/ecmascript-6">
@@ -56,6 +85,8 @@
   import MavonEditor from 'mavon-editor';
   import 'mavon-editor/dist/css/index.css';
 
+  import {getInfoByQQ, insertComment} from '@/api/front/front'
+  import marked from "marked";
 
   export default {
     name: 'custom-mavon-editor',
@@ -68,26 +99,30 @@
         Type: Object,
         default: undefined
       },
-      theme: {
-        Type: String,
-        default: ''
-      },
-      subfield: {
-        default: false
-      },
-      placeholder: {
-        default: undefined
+      replyId: {}, parentId: {},
+      url: {
+        default: window.location.href
       }
     },
     data() {
       return {
-        guest: undefined,
-        reply_to: undefined,
-        nickName: '',
-        email: '',
-        mobile: '',
-        origin_content: '',
-        select: 'email',
+        form: {
+          nickName: '',
+          qqNum: '',
+          email: '',
+          avatar: '',
+          reply: true
+        },
+        rules: {
+          nickName: [
+            {required: true, message: "昵称不能为空", trigger: "blur"},
+            {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'change'}
+          ],
+          email: [
+            {required: true, message: "邮箱不能为空", trigger: "blur"},
+            {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
+          ]
+        },
         showEditor: false,
         valueChanged: false,
         toolbarsFlag: false,
@@ -134,7 +169,7 @@
         siteTheme: state => state.base.siteTheme
       }),
       buttonType: function () {
-        return this.theme === 'dark-theme' ? 'warning' : 'primary';
+        return this.siteTheme === 'dark' ? 'warning' : 'primary';
       },
       codeStyle: {
         get: function () {
@@ -153,9 +188,30 @@
       }
     },
     methods: {
+      getInfoByQQ() {
+        if (this.form.qqNum != '') {
+          getInfoByQQ(this.form.qqNum).then(response => {
+            console.log(response);
+            if (response.code == 200) {
+              if (response.data.nickName == '') {
+                this.msgError("获取信息失败,请手动填写");
+                this.form.avatar = '';
+              } else {
+                this.msgInfo("获取信息成功");
+                this.form.nickName = response.data.nickName;
+                this.form.email = response.data.email;
+                this.form.avatar = response.data.avatar;
+                console.log(this.form);
+              }
+            }
+          }).catch(error => {
+            console.log(error);
+          })
+        }
+      },
       comment_level: function () {
-        if (this.replyToComment === undefined) return 0;
-        return 1;
+        if (this.replyToComment === undefined) return 1;
+        return 2;
       },
       reply_to_author: function () {
         if (this.replyToComment === undefined) return null;
@@ -188,17 +244,6 @@
             this.listenWindowWidth();
           }
         }
-      },
-      addImage(pos, $file) {
-        uploadFile($file, 'comment', (hash, fileURL) => {
-          this.$refs.mavonEditor.$img2Url(pos, fileURL);
-        }, (error) => {
-          console.log(error);
-        });
-      },
-      saveEditorContent(origin, formatted) {
-        console.log(origin, formatted);
-        saveToLocal('comment_temp', `${this.$route.fullPath}-${this.reply_to}`, origin);
       },
       listenWindowWidth() {
         // 此方法用于监听窗口宽度变化,改变编辑器菜单
@@ -253,152 +298,34 @@
         }
       },
       send() {
-        if (this.nickName.length === 0) {
-          this.msgError('您需要填写昵称');
-          return;
-        }
-        if (this.email.length === 0) {
-          this.msgError('您需要填写您的邮箱');
-          return;
-        }
-        if (this.origin_content.length === 0) {
-          this.msgError('您需要填写评论内容');
-          return;
-        }
-        console.log('replyToComment', this.replyToComment);
-        if (!(loadFromLocal('comment_auth', 'email', '') === this.email &&
-          loadFromLocal('comment_auth', 'verified', false) &&
-          loadFromLocal('comment_auth', 'author_id', undefined) !== undefined &&
-          loadFromLocal('comment_auth', 'nick_name', undefined) !== undefined)) {
-          // 该邮箱在本地没有评论记录,需要验证邮箱
-          this.publishing = true;
-          let that = this;
-          API.getEmailCode({
-            nick_name: this.nickName,
-            email: this.email
-          }).then((response) => {
-            this.checkEmail();
-          }).catch((error) => {
-            console.log(error.data.email[0]);
-            that.$Notice.error({
-              title: '验证码发送失败',
-              desc: error.data.email[0]
-            });
-            // 关闭loading状态
-            that.publishing = false;
-          });
-        } else {
-          // 该邮箱在本地有评论记录,直接评论
-          this.guest = loadFromLocal('comment_auth', 'author_id', undefined);
-          this.publish();
-        }
-      },
-      checkEmail() {
-        let that = this;
-        this.$Modal.confirm({
-          render: (h) => {
-            let children = [];
-            children.push(h('h2', {
-              domProps: {
-                innerHTML: '提示'
-              },
-              'class': {
-                'modal-title': true
-              }
-            }));
-            children.push(h('p', {
-              domProps: {
-                innerHTML: '第一次评论需要验证您的邮箱有效性，已经向您的邮箱发送了验证码，请输入验证码验证后再进行评论'
-              },
-              'class': {
-                'modal-message': true
-              }
-            }));
-            children.push(h('i-input', {
-              props: {
-                value: this.value,
-                autofocus: true,
-                placeholder: '请输入验证码'
-              },
-              'class': {
-                'modal-input': true
-              },
-              on: {
-                input: (value) => {
-                  this.email_code = value;
-                }
-              }
-            }));
-            return h('div', {}, children);
-          },
-          onCancel: () => {
-            // 关闭loading状态
-            this.publishing = false;
-          },
-          onOk: () => {
-            API.verifyEmailCode({
-              params: {
-                email: that.email,
-                nick_name: that.nickName,
-                code: this.email_code
-              }
-            }).then((response) => {
-              this.guest = response.data.guest;
-              saveToLocal('comment_auth', 'email', this.email);
-              saveToLocal('comment_auth', 'verified', true);
-              saveToLocal('comment_auth', 'author_id', this.guest);
-              saveToLocal('comment_auth', 'nick_name', this.nickName);
-              this.publish();
-            }).catch((error) => {
-              that.$Notice.error({
-                title: '验证码验证失败',
-                desc: error.error,
-                onClose: () => {
-                  that.checkEmail();
-                }
-              });
-            });
+        this.$refs['form'].validate(valid => {
+          if (valid) {
+            //操作
+            this.publish();
           }
         });
       },
       publish() {
         let that = this;
-        API.addCommentInfo({
-          detail: {
-            origin_content: this.origin_content
-          },
-          author: this.guest,
-          reply_to_author: this.reply_to_author(),
-          comment_level: this.comment_level(),
-          is_active: true,
-          post: this.post.id,
-          parent_comment: this.parent_comment(),
-          reply_to_comment: this.reply_to_comment()
-        }).then((response) => {
+        this.form.htmlContent = marked(this.form.content);
+        this.form.replyId = this.replyId;
+        this.form.parentId = this.parentId;
+        this.form.pageId = this.post.id;
+        this.form.url = this.url;
+        let obj = JSON.parse(JSON.stringify(this.form));
+        console.log(obj);
+        insertComment(obj).then((response) => {
           // 清空评论框内容
-          this.origin_content = '';
+          this.form.content = '';
           // 关闭loading状态
           this.publishing = false;
-          this.$Notice.success({
-            title: '提示',
-            desc: '发送评论成功'
-          });
-          let comment = response.data;
-          comment.author = {
-            id: this.guest,
-            nick_name: this.nickName
-          };
-          comment.reply_to_author = this.replyToComment ? this.replyToComment.author : null;
-          comment.sub_comment = [];
-          this.$emit('publishedComment', comment);
+          this.msgSuccess("评论成功")
+          this.$emit('publishedComment');
         }).catch((error) => {
           console.log(error);
           // 关闭loading状态
           that.publishing = false;
-          that.$Notice.error({
-            title: '发送评论失败',
-            desc: error.error
-          });
+          that.msgError("评论失败");
         });
       }
     },
@@ -430,7 +357,7 @@
     .operate
       margin-bottom 15px
 
-      .ivu-input-group-prepend
+      .el-input-group__prepend
         background $default-border-color
 
         span
@@ -485,6 +412,9 @@
     &.dark-theme
       .operate
         margin-bottom 15px
+
+      .el-input-group__prepend
+        background $default-border-color
 
         .i-dropdown-link
           display block

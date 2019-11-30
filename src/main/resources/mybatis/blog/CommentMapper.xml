@@ -79,11 +79,14 @@
         <if test="url != null and url != ''">url,</if>
         <if test="display != null and display != ''">display,</if>
         <if test="content != null and content != ''">content,</if>
+        <if test="htmlContent != null and htmlContent != ''">html_content,</if>
+        <if test="replyId != null ">reply_id,</if>
+        <if test="reply != null ">reply,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         )values(
         <if test="email != null and email != ''">#{email},</if>
-        <if test="nickName != null and nickName != ''">#{nickName},</if>
+        <if test="ip != null and ip != ''">#{ip},</if>
         <if test="location != null and location != ''">#{location},</if>
         <if test="os != null and os != ''">#{os},</if>
         <if test="browser != null and browser != ''">#{browser},</if>
@@ -95,6 +98,9 @@
         <if test="url != null and url != ''">#{url},</if>
         <if test="display != null and display != ''">#{display},</if>
         <if test="content != null and content != ''">#{content},</if>
+        <if test="htmlContent != null and htmlContent != ''">#{htmlContent},</if>
+        <if test="replyId != null">#{replyId},</if>
+        <if test="reply != null">#{reply},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )
@@ -157,10 +163,10 @@
         where id = #{id}
     </update>
     <update id="incrementCommentGood">
-        update bg_comment set good+=1 where id=#{id}
+        update bg_comment set good=good+1 where id=#{id}
     </update>
     <update id="incrementCommentBad">
-        update bg_comment set bad+=1 where id=#{id}
+        update bg_comment set bad=bad+1 where id=#{id}
     </update>
 
     <!--通过主键删除-->
@@ -183,6 +189,6 @@
         bad,reply_id,
         html_content as content,
         create_by, create_time
-        from bg_comment where delete_time is null and page_id =#{id}
+        from bg_comment where delete_time is null and page_id =#{id} order by create_time desc
     </select>
 </mapper>

@@ -61,6 +61,10 @@ public class Comment extends BaseEntity {
      */
     private Long replyId;
     /**
+     * 接收回复邮件
+     */
+    private Boolean reply;
+    /**
      * QQ号码
      */
     @Length(max = 20, message = "QQ号码长度不能超过{max}")

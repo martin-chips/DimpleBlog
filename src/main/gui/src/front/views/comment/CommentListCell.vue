@@ -35,22 +35,27 @@
                      ref="content"></div>
                 <div class="operate-area" :class="theme">
                   <span class="like" @click="likeComment(comment)">
-                    <i type="thumbsup"></i> {{ comment.good }}
+                   <a>
+                      <svg-icon icon-class="like"/>  {{ comment.good }}
+                   </a>
                   </span>
                   <span class="unlike" @click="unlikeComment(comment)">
-                    <i type="thumbsdown"></i> {{ comment.bad }}
+                   <a>
+                     <svg-icon icon-class="unlike"/>  {{ comment.bad }}
+                   </a>
                   </span>
                   <span class="reply">
                     <a @click="displayEditor">
-                      <i type="forward"></i> 回复
+                      <i class="el-icon-chat-dot-square"></i> 回复
                     </a>
                   </span>
                 </div>
                 <div class="comment-area" v-show="showEditor">
                   <div class="reply-editor" :class="{spread: spreadEditor}">
                     <custom-mavon-editor :post="post"
+                                         :replyId="comment.id"
+                                         :parentId="commentLevel==1?comment.id:comment.parentId"
                                          :replyToComment="comment"
-                                         :theme="theme"
                                          @valueChanged="valueChanged"
                                          @publishedComment="publishedComment"></custom-mavon-editor>
                   </div>
@@ -68,6 +73,7 @@
   import CustomMavonEditor from '../CustomMavonEditor';
   // mixin
   import {mixin} from '@/utils/front/utils';
+  import {goodComment, badComment} from "@/api/front/front";
 
   const CELL_LEFT_SPAN = {
     'xs': 3,
@@ -92,10 +98,6 @@
         Type: Object,
         default: undefined
       },
-      theme: {
-        Type: String,
-        default: ''
-      },
       commentLevel: {
         type: Number,
         default: 0
@@ -110,7 +112,7 @@
     },
     computed: {
       showEditor() {
-        
+
       }
     },
     methods: {
@@ -135,17 +137,25 @@
       },
       displayEditor() {
         this.showEditor = !this.showEditor;
-        //去除父组件显示的editor
-        this.$emit('displayEditor');
       },
       publishedComment(comment) {
         this.$emit('publishedComment', comment);
       },
       likeComment(comment) {
-
+        goodComment(comment.id).then(response => {
+          comment.good += 1;
+          this.msgSuccess("点赞 +1");
+        }).catch(error => {
+          console.log(error)
+        });
       },
       unlikeComment(comment) {
-
+        badComment(comment.id).then(response => {
+          comment.bad += 1;
+          this.msgSuccess("鄙视 +1");
+        }).catch(error => {
+          console.log(error)
+        });
       }
     },
     components: {

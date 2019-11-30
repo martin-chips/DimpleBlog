@@ -3,13 +3,16 @@ package com.dimple.framework.manager.factory;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.LogUtils;
 import com.dimple.common.utils.ServletUtils;
+import com.dimple.common.utils.SpiderUtils;
 import com.dimple.common.utils.ip.AddressUtils;
 import com.dimple.common.utils.ip.IpUtils;
 import com.dimple.common.utils.spring.SpringUtils;
 import com.dimple.project.log.domain.LoginLog;
 import com.dimple.project.log.domain.OperateLog;
+import com.dimple.project.log.domain.VisitLog;
 import com.dimple.project.log.service.LoginLogService;
 import com.dimple.project.log.service.OperateLogService;
+import com.dimple.project.log.service.VisitLogService;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 
@@ -86,6 +89,28 @@ public class AsyncFactory {
                 // 远程查询操作地点
                 operLog.setLocation(AddressUtils.getCityInfoByIp(operLog.getIp()));
                 SpringUtils.getBean(OperateLogService.class).insertOperateLog(operLog);
+            }
+        };
+    }
+
+    /**
+     * 异步记录访问日志
+     *
+     * @param visitLog 访问日志
+     * @return timeTask
+     */
+    public static TimerTask recordVisitLog(final VisitLog visitLog) {
+        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        //获取爬虫类型
+        final String spider = SpiderUtils.parseUserAgent(ServletUtils.getUserAgent());
+        return new TimerTask() {
+            @Override
+            public void run() {
+                visitLog.setOs(userAgent.getOperatingSystem().getName());
+                visitLog.setSpider(spider);
+                visitLog.setBrowser(userAgent.getBrowser().getName());
+                visitLog.setLocation(AddressUtils.getCityInfoByIp(visitLog.getIp()));
+                SpringUtils.getBean(VisitLogService.class).insertVisitLog(visitLog);
             }
         };
     }
