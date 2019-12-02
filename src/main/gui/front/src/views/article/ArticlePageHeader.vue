@@ -2,7 +2,7 @@
     <div class="article-page-header" v-if="article !== undefined">
         <div class="status">
             <div class="tags">
-                <Tag color="blue" v-for="tag in article.tagList" class="dot-tag"
+                <Tag color="primary" v-for="tag in article.tagList" class="dot-tag"
                      :key="tag.id">{{tag.title}}
                 </Tag>
             </div>
@@ -20,7 +20,7 @@
                 <p class="operate_info">
                   <span class="readings">
                     <a>
-                      <Icon type="ios-eye" /> {{article.click}} 阅读
+                      <Icon type="ios-eye"/> {{article.click}} 阅读
                     </a>
                   </span>
                     <span class="comments">
@@ -63,7 +63,7 @@
             likePost(post) {
                 LikeBlog(post.id).then((response) => {
                     post.like += 1;
-                    this.msgSuccess("点赞 +1");
+                    this.$Message.success("点赞 +1");
                 }).catch((error) => {
                     console.log(error);
                 });

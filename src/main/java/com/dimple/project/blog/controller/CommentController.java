@@ -67,8 +67,8 @@ public class CommentController extends BaseController {
 
     @PreAuthorize("@permissionService.hasPermission('system:config:remove')")
     @Log(title = "评论管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{id}")
-    public AjaxResult remove(@PathVariable Long id) {
-        return toAjax(commentService.deleteCommentById(id));
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable String ids) {
+        return toAjax(commentService.deleteCommentByIds(ids));
     }
 }

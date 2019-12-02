@@ -7,7 +7,7 @@
             <span class="sub-title">{{subTitle}}</span>
             <span class="view-more" v-if="to !== undefined">
          <router-link :to="to">
-             {{tipText ? tipText : "查看更多"}} <i class="el-icon-caret-right"></i>
+             {{tipText ? tipText : "查看更多"}}<Icon type="md-arrow-dropright" />
          </router-link>
       </span>
         </div>
@@ -26,7 +26,7 @@
             </div>
             <div class="refresh" v-if="withRefresh">
                 <a @click="refresh" title="刷新">
-                    <i class="el-icon-refresh-right"></i>
+                    <Icon type="md-refresh"/>
                 </a>
             </div>
         </div>

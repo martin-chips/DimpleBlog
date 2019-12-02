@@ -17,7 +17,7 @@
                     </div>
                     <p class="desc">{{article.summary | textLineBreak(90) }}
                         <a @click.prevent="gotoPostDetail(article)" :href="`/article/${article.id}`"> 查看更多
-                            <Icon type="arrow-right-b"></Icon>
+                            <Icon type="md-arrow-dropright"/>
                         </a>
                     </p>
                     <p class="operate_info">
@@ -62,23 +62,23 @@
         },
         data() {
             return {
-                // articleType: 2,
+                articleType: 2,
             }
         },
         computed: {
             textOrderType: function () {
-                return parseInt(this.article.front_image_type) === ARTICLE_TYPE_BIG_IMAGE ? 2 : 1;
+                return parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE ? 2 : 1;
             },
             imgOrderType: function () {
-                return parseInt(this.article.front_image_type) === ARTICLE_TYPE_BIG_IMAGE ? 1 : 2;
+                return parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE ? 1 : 2;
             },
-            articleType: function () {
-                if (this.article.headerImg == null) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            },
+            // articleType: function () {
+            //     if (this.article.headerImg == null) {
+            //         return 0;
+            //     } else {
+            //         return 1;
+            //     }
+            // },
             textSpan: function () {
                 switch (parseInt(this.articleType)) {
                     case ARTICLE_TYPE_NO_IMAGE:
@@ -104,7 +104,7 @@
                 }
             },
             themeClass: function () {
-                if (parseInt(this.article.front_image_type) === ARTICLE_TYPE_BIG_IMAGE) {
+                if (parseInt(this.articleType) === ARTICLE_TYPE_BIG_IMAGE) {
                     return 'big-image';
                 } else {
                     return '';
@@ -121,7 +121,7 @@
             likePost(post) {
                 LikeBlog(post.id).then((response) => {
                     post.like += 1;
-                    this.msgSuccess("点赞 +1");
+                    this.$Message.success("点赞 +1");
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -168,26 +168,21 @@
         margin-bottom 10px
         background-color $default-cell-background-color
         border 1px solid $default-border-color
-
         img
             width 100%
             transition: All 0.4s ease-in-out
             transform: scale(1.0)
             zoom: 1.0
-
         &:hover
             border 1px solid $default-border-hover-color
-
             img
                 transform: scale(1.05)
                 zoom: 1.02
-
         .text-wrapper
             padding 20px 20px 0 20px
             text-align left
             @media only screen and (max-width: 768px)
                 padding 10px 10px 0 10px
-
             .title
                 font-size 20px
                 font-weight 100
@@ -196,15 +191,12 @@
                     font-size 17px
                     line-height 23px
                 word-wrap break-word
-
                 a
                     color $default-title-color
                     cursor pointer
-
                     &:hover
                         color $default-title-hover-color
                         text-decoration underline
-
                 span.special
                     border-radius $border-radius
                     font-size 12px
@@ -215,10 +207,8 @@
                     color $default-background-color
                     background $iview-secondary-warning-color
                     cursor pointer
-
             .tags
                 margin 8px 0
-
             .desc
                 font-size 14px
                 line-height 20px
@@ -226,29 +216,22 @@
                 color $default-desc-color
                 @media only screen and (max-width: 768px)
                     font-size 13px
-
                 a
                     font-weight 500
                     color $default-desc-hover-color
                     cursor pointer
-
                     &:hover
                         text-decoration underline
-
             .operate_info
                 font-size 14px
                 margin 15px 0 20px
-
                 span
                     margin-right 8px
-
                     a
                         color $default-info-color
                         cursor pointer
-
                         &:hover
                             color $default-info-hover-color
-
                     + span
                         margin-left 8px
                 @media only screen and (max-width: 768px)
@@ -256,16 +239,13 @@
                     margin 10px 0
                     span
                         margin-right 4px
-
                         + span
                             margin-left 4px
-
         .img-wrapper
             padding-bottom: 85%
             width 100%
             height 0
             overflow hidden
-
             &.big-image
                 padding-bottom 26%
                 box-shadow 1px 1px 1px $default-border-color

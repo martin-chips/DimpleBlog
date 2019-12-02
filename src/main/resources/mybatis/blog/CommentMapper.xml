@@ -174,7 +174,10 @@
 
     <!--通过主键删除-->
     <delete id="deleteCommentById">
-        update bg_comment set delete_by=#{username},delete_time =sysdate() where id = #{id}
+        update bg_comment set delete_time=sysdate(),delete_by=#{username} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
 
     <select id="selectCommentListByPageIds" resultMap="CommentMap">

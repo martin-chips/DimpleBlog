@@ -4,32 +4,48 @@
             <div class="operate">
                 <Row>
                     <Col :xs="10" :sm="10" :md="10" :lg="10" style="padding-left: 0; padding-right: 7.5px;">
-                        <Input placeholder="推荐输入QQ号码自动填充" v-model="form.qqNum" clearable @blur="getInfoByQQ"
-                               size="default">
-                            <span slot="prepend">Q  Q</span>
-                        </Input>
+                        <FormItem prop="qqNum">
+                            <Input placeholder="推荐输入QQ号码自动填充" v-model="form.qqNum" clearable @on-blur="getInfoByQQ"
+                                   :disabled="!post.comment"
+                                   number
+                                   size="default">
+                                <span slot="prepend">Q  Q</span>
+                            </Input>
+                        </FormItem>
                     </Col>
                     <Col :xs="4" :sm="4" :md="4" :lg="4" style="padding-left: 0; padding-right: 0;">
-                        <Avatar icon="ios-person" :src="form.avatar==undefined?'':form.avatar"/>
+                        <FormItem prop="avatar">
+                            <Avatar icon="ios-person" :src="form.avatar==undefined?'':form.avatar"/>
+                        </FormItem>
                     </Col>
                     <Col :xs="10" :sm="10" :md="10" :lg="10">
-                        <Input v-model="form.nickName" placeholder="请输入昵称" size="default">
-                            <span slot="prepend">昵称</span>
-                        </Input>
+                        <FormItem prop="nickName">
+                            <Input v-model="form.nickName" placeholder="请输入昵称" size="default" :disabled="!post.comment">
+                                <span slot="prepend">昵称</span>
+                            </Input>
+                        </FormItem>
                     </Col>
                 </Row>
-                <Row style="margin-top: 0.3rem">
+                <br>
+                <Row>
                     <Col :xs="10" :sm="10" :md="10" :lg="10">
-                        <Input v-model="form.email" placeholder="请输入邮箱" size="default">
-                            <span slot="prepend">邮箱</span>
-                        </Input>
+                        <FormItem prop="email">
+                            <Input v-model="form.email" placeholder="请输入邮箱" size="default" :disabled="!post.comment">
+                                <span slot="prepend">邮箱</span>
+                            </Input>
+                        </FormItem>
                     </Col>
-                    <Col :xs="4" :sm="4" :md="4" :lg="4" style="padding-left: 7.5px">
-                        <Checkbox v-model="form.reply" size="default" border>邮件通知</Checkbox>
+                    <Col :xs="4" :sm="4" :md="4" :lg="4">
+                        <FormItem prop="reply">
+                            <Checkbox v-model="form.reply" style=" margin: 5% 8%;" :disabled="!post.comment">邮件通知</Checkbox>
+                        </FormItem>
                     </Col>
                 </Row>
             </div>
             <div class="editor-area">
+                <Spin size="large" v-if="!post.comment" fix style="z-index: 1001;">
+                    {{ post.comment ? '' : "该文章关闭了评论功能" }}
+                </Spin>
                 <mavon-editor v-model="form.content"
                               v-if="showEditor"
                               style="height: 100%; min-height: 50px; min-width: 200px; z-index: 1000;"
@@ -45,7 +61,7 @@
             <div class="bottom-area">
                 <div class="comment-tip">
                     <a href="https://guides.github.com/features/mastering-markdown/" target="_blank">
-                        <Icon type="social-markdown"/>
+                        <Icon type="logo-markdown" />
                         支持Markdown
                     </a>
                 </div>
@@ -170,10 +186,10 @@
                         console.log(response);
                         if (response.code == 200) {
                             if (response.data.nickName == '') {
-                                this.msgError("获取信息失败,请手动填写");
+                                this.$Message.error("获取信息失败,请手动填写");
                                 this.form.avatar = '';
                             } else {
-                                this.msgInfo("获取信息成功");
+                                this.$Message.info("获取信息成功");
                                 this.form.nickName = response.data.nickName;
                                 this.form.email = response.data.email;
                                 this.form.avatar = response.data.avatar;
@@ -261,6 +277,7 @@
                 }
             },
             send() {
+                console.log(1)
                 this.$refs['form'].validate(valid => {
                     if (valid) {
                         let that = this;
@@ -274,7 +291,7 @@
                             if (response.code == 200) {
                                 // 清空评论框内容
                                 this.form = {};
-                                this.msgSuccess("评论成功");
+                                this.$Message.success("评论成功");
                                 this.$emit('reloadCommentList');
                             } else {
                                 this.msgError("评论失败,请重新再试!");
@@ -309,25 +326,74 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
     @import "../common/stylus/theme.styl";
-    .custom-mavon-editor
+    .
+    custom-mavon-editor
+    position relative
+    height 100%
+    width 100%
+    display flex
+    flex-direction column
+    .operate
+        margin-bottom 15px
+        .ivu-checkbox-wrapper,
+            background $default-border-color
+            span
+                color $default-desc-color
+        .ivu-input-group-prepend,
+            background $default-border-color
+
+            span
+                color $default-desc-color
+
+        .ivu-input
+            background $default-background-color
+            color $default-desc-color
+
+        .i-dropdown-link
+            display block
+            height 36px
+            line-height 36px
+            text-align right
+            font-size 15px
+            color $default-desc-hover-color
+
+            &:hover
+                cursor pointer
+
+    .editor-area
         position relative
+        flex 1
+        padding 2px
         height 100%
-        width 100%
-        display flex
-        flex-direction column
+        min-height 50px
+        min-width 200px
+        // 编辑器区域
 
-        .operate
-            margin-bottom 15px
+        .markdown-body
+            background $default-background-color
 
-            .el-input-group__prepend
-                background $default-border-color
+            .v-note-op
+                background $default-background-hover-color
 
-                span
-                    color $default-desc-color
-
-            .ivu-input
+            textarea
                 background $default-background-color
                 color $default-desc-color
+
+            .v-show-content
+                background $default-background-color
+                color $default-desc-color
+
+    .bottom-area
+        display flex
+        padding-top 15px
+        justify-content space-between
+
+        .publish-area
+            display flex
+
+    &.dark-theme
+        .operate
+            margin-bottom 15px
 
             .i-dropdown-link
                 display block
@@ -335,67 +401,18 @@
                 line-height 36px
                 text-align right
                 font-size 15px
-                color $default-desc-hover-color
+                color $color-gradually-gray-61
 
                 &:hover
+                    color $iview-secondary-warning-color
+                    border-bottom 2px solid $iview-secondary-warning-color
                     cursor pointer
 
-        .editor-area
-            position relative
-            flex 1
-            padding 2px
-            height 100%
-            min-height 50px
-            min-width 200px
-            // 编辑器区域
-
-            .markdown-body
-                background $default-background-color
-
-                .v-note-op
-                    background $default-background-hover-color
-
-                textarea
-                    background $default-background-color
-                    color $default-desc-color
-
-                .v-show-content
-                    background $default-background-color
-                    color $default-desc-color
-
         .bottom-area
-            display flex
-            padding-top 15px
-            justify-content space-between
-
-            .publish-area
-                display flex
-
-        &.dark-theme
-            .operate
-                margin-bottom 15px
-
-            .el-input-group__prepend
-                background $default-border-color
-
-                .i-dropdown-link
-                    display block
-                    height 36px
-                    line-height 36px
-                    text-align right
-                    font-size 15px
-                    color $color-gradually-gray-61
+            .comment-tip
+                a
+                    color $default-link-color
 
                     &:hover
-                        color $iview-secondary-warning-color
-                        border-bottom 2px solid $iview-secondary-warning-color
-                        cursor pointer
-
-            .bottom-area
-                .comment-tip
-                    a
-                        color $default-link-color
-
-                        &:hover
-                            color $default-link-hover-color
+                        color $default-link-hover-color
 </style>

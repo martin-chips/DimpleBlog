@@ -46,10 +46,10 @@ public interface CommentService {
     /**
      * 根据id删除comment
      *
-     * @param id id
+     * @param ids  ids
      * @return 受影响的行数
      */
-    int deleteCommentById(Long id);
+    int deleteCommentByIds(String ids);
 
     /**
      * 评论点赞

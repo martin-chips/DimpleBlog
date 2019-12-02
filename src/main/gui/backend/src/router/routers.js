@@ -53,11 +53,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/index',
+    path: '',
     component: Layout,
+    redirect: 'index',
     children: [
       {
-        path: '',
+        path: 'index',
         component: () => import('@/views/index'),
         name: '首页',
         meta: {title: '首页', icon: 'dashboard', noCache: true, affix: true}
@@ -112,89 +113,8 @@ export const constantRoutes = [
   }
 ]
 
-import SimpleHeader from "../front/components/header/SimpleHeader/SimpleHeader";
-import footer from "../front/components/footer/footer";
-
-//组件
-import HomeContent from "../front/components/content/HomeContent";
-import TimeLineContent from "../front/components/content/TimeLineContent";
-import ArticleHomeContent from "../front/components/content/ArticleHomeContent";
-import ArticleContent from "../front/components/content/ArticleContent";
-
-//前台路由
-export const frontRoutes = [
-  {
-    path: '/',
-    component: () => import('@/front/components/index'),
-    children: [
-      {
-        path: '',
-        components: {
-          header: SimpleHeader,
-          content: HomeContent,
-          footer: footer
-        },
-      },
-      {
-        path: '/articles',
-        name: 'articles',
-        components: {
-          header: SimpleHeader,
-          content: ArticleHomeContent,
-          footer: footer
-        },
-      },
-      {
-        path: '/articles/category/:id',
-        name: 'articles/category',
-        components: {
-          header: SimpleHeader,
-          content: ArticleHomeContent,
-          footer: footer
-        },
-        meta: {
-          title: '文章列表',
-        }
-      },
-      {
-        path: '/link',
-        component: () => import('@/views/front/link'),
-      },
-      {
-        path: '/leaveComment',
-        component: () => import('@/views/front/leaveComment'),
-      },
-      {
-        path: '/about',
-        component: () => import('@/views/front/about'),
-      },
-      {
-        path: '/archive',
-        components: {
-          header: SimpleHeader,
-          content: TimeLineContent,
-          footer: footer
-        },
-      },
-      {
-        path: 'article/:id',
-        name: 'article',
-        components: {
-          header: SimpleHeader,
-          content: ArticleContent,
-          footer: footer
-        },
-        meta: {
-          title: '文章详情',
-          need_log: false
-        }
-      },
-    ]
-  },
-]
-
 export default new Router({
   mode: 'history', // 去掉url中的#
   scrollBehavior: () => ({y: 0}),
-  routes: frontRoutes.concat(constantRoutes)
+  routes: constantRoutes
 })

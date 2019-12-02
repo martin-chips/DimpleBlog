@@ -8,12 +8,8 @@ import config from '@/config'
 NProgress.configure({showSpinner: false})
 
 const whiteList = [
-  '/login', '/auth-redirect', '/bind', '/register', '/', '/category', '/leaveComment', '/link', '/about', '/archive', '/articles'
+  '/login', '/auth-redirect', '/bind', '/register', '/',
 ]
-
-const whiteRouterName = [
-  'articles', 'articles/category','article'
-];
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
@@ -50,9 +46,7 @@ router.beforeEach((to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       // 在免登录白名单，直接进入
       next()
-    } else if (whiteRouterName.indexOf(to.name) !== -1) {
-      next()
-    } else {
+    }  else {
       next(`/login?redirect=${to.path}`); // 否则全部重定向到登录页
       NProgress.done();
     }

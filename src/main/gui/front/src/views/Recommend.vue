@@ -10,7 +10,7 @@
                         </a>
                     </p>
                     <div class="tags">
-                        <Tag v-for="tag in first.tagList" :color="tag.color"
+                        <Tag v-for="tag in first.tagList" :color="tag.color" type="border"
                              :key="tag.id" class="border-tag"> {{tag.title}}
                         </Tag>
                     </div>
@@ -24,10 +24,10 @@
             </span>
                         <span class="readings"><a><Icon type="ios-eye"/> {{ first.click }} </a></span>
                     </p>
-                    <!--          <div class="img" v-if="articleSlice(0, 1)[0].front_image">-->
-                    <!--            <img :src="articleSlice(0, 1)[0].front_image" :alt="articleSlice(0, 1)[0].title">-->
-                    <!--          </div>-->
-                    <p class="desc" v-if="articleSlice(0, 1)[0].summary">
+                    <div class="img" v-if="first.headerImg">
+                        <img :src="first.headerImg" :alt="first.title">
+                    </div>
+                    <p class="desc" v-if="first.summary">
                         {{ first.summary |textLineBreak(60) }}</p>
                 </div>
                 <ul class="others">
@@ -95,7 +95,7 @@
             likePost(post) {
                 LikeBlog(post.id).then((response) => {
                     post.like += 1;
-                    this.msgSuccess("点赞 +1");
+                    this.$Message.success("点赞 +1");
                 }).catch((error) => {
                     console.log(error);
                 });

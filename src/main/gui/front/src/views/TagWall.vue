@@ -3,6 +3,7 @@
         <panel title="标签墙">
             <div slot="content" class="content">
                 <Tag v-for="tag in tags" type="dot" style="margin: 0 5px 5px 0;"
+                     :color="tag.color"
                      :key="tag.id" class="dot-tag">
                     {{tag.title+' [ '+tag.count+' ]'}}
                 </Tag>

@@ -11,12 +11,6 @@ const state = {
   showFooter: config.showFooter,
   footerTxt: config.footerTxt,
   caseNumber: config.caseNumber,
-  F_ICP: config.F_ICP,
-  F_Copyright: config.F_Copyright,
-  F_Copyright_Desc: config.F_Copyright_Desc,
-  F_Copyright_Desc_En: config.F_Copyright_Desc_En,
-  F_Title: config.F_Title,
-  F_Title_Desc: config.F_Title_Desc,
 }
 
 const mutations = {

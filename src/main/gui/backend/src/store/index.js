@@ -7,14 +7,6 @@ import permission from './modules/permission'
 import settings from './modules/settings'
 import getters from './getters'
 
-//前台
-import base from './modules/front/base';
-import common from './modules/front/common';
-import home from './modules/front/home';
-import timeline from './modules/front/timeline';
-import articleHome from './modules/front/articleHome';
-import article from "./modules/front/article";
-
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -24,13 +16,6 @@ const store = new Vuex.Store({
     tagsView,
     permission,
     settings,
-    //前台
-    base,
-    home,
-    common,
-    timeline,
-    articleHome,
-    article
   },
   getters
 })

@@ -7,7 +7,7 @@
                     {{post.title}}
                 </a>
                 <a class="see-desc" @click.stop="seeDesc" :class="{show: showDesc}">{{ showDesc ? '隐藏摘要' : '显示摘要' }}
-                    <i class="el-icon-caret-top"></i>
+                    <Icon type="md-arrow-dropup" />
                 </a>
                 <p class="desc" :class="{show: showDesc}">{{post.summary}}</p>
             </div>

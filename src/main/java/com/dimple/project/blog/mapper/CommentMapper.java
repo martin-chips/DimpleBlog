@@ -48,11 +48,11 @@ public interface CommentMapper {
     /**
      * 通过主键删除数据
      *
-     * @param id       主键
+     * @param ids       主键
      * @param username
      * @return 影响行数
      */
-    int deleteCommentById(@Param("id") Long id, @Param("username") String username);
+    int deleteCommentById(@Param("ids") Long[] ids, @Param("username") String username);
 
     /**
      * 评论点赞

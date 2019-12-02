@@ -13,6 +13,7 @@
                         <Tag :color="tag.color"
                              v-for="tag in first.tagList"
                              :key="tag.id"
+                             type="border"
                              class="border-tag">{{tag.title}}
                         </Tag>
                     </div>
@@ -100,7 +101,7 @@
             likePost(post) {
                 LikeBlog(post.id).then((response) => {
                     post.like += 1;
-                    this.msgSuccess("点赞 +1");
+                    this.$Message.success("点赞 +1");
                 }).catch((error) => {
                     console.log(error);
                 });

@@ -1,5 +1,6 @@
 package com.dimple.project.blog.service.impl;
 
+import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.ObjectUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.blog.domain.Comment;
@@ -47,9 +48,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public int deleteCommentById(Long id) {
+    public int deleteCommentByIds(String ids) {
         String username = SecurityUtils.getUsername();
-        return commentMapper.deleteCommentById(id, username);
+        return commentMapper.deleteCommentById(ConvertUtils.toLongArray(ids), username);
     }
 
     @Override
