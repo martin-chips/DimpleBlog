@@ -1,0 +1,79 @@
+import SimpleHeader from "../components/header/SimpleHeader/SimpleHeader";
+import HomeContent from "../components/content/HomeContent";
+import Footer from "../components/footer/Footer";
+import Index from "../components/Index"
+
+import ArticleHomeContent from "../components/content/ArticleHomeContent";
+import TimeLineContent from "../components/content/TimeLineContent";
+import ArticleContent from "../components/content/ArticleContent";
+
+export default [
+    {
+        path: '/',
+        component: Index,
+        children: [
+            {
+                path: '',
+                components: {
+                    header: SimpleHeader,
+                    content: HomeContent,
+                    footer: Footer
+                },
+            },
+            {
+                path: '/articles',
+                name: 'articles',
+                components: {
+                    header: SimpleHeader,
+                    content: ArticleHomeContent,
+                    footer: Footer
+                },
+            },
+            {
+                path: '/articles/category/:id',
+                name: 'articles/category',
+                components: {
+                    header: SimpleHeader,
+                    content: ArticleHomeContent,
+                    footer: Footer
+                },
+                meta: {
+                    title: '文章列表',
+                }
+            },
+            // {
+            //     path: '/link',
+            //     component: () => import('@/views/front/link'),
+            // },
+            // {
+            //     path: '/leaveComment',
+            //     component: () => import('@/views/front/leaveComment'),
+            // },
+            // {
+            //     path: '/about',
+            //     component: () => import('@/views/front/about'),
+            // },
+            {
+                path: '/archive',
+                components: {
+                    header: SimpleHeader,
+                    content: TimeLineContent,
+                    footer: Footer
+                },
+            },
+            {
+                path: 'article/:id',
+                name: 'article',
+                components: {
+                    header: SimpleHeader,
+                    content: ArticleContent,
+                    footer: Footer
+                },
+                meta: {
+                    title: '文章详情',
+                    need_log: false
+                }
+            },
+        ]
+    }
+];

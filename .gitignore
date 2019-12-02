@@ -1,6 +1,8 @@
 .idea
 target
 
-src/main/gui/node_modules
-src/main/gui/package-lock.json
-src/main/gui/dist
+/src/main/gui/backend/node_modules/
+/src/main/gui/backend/package-lock.json
+
+/src/main/gui/front/node_modules/
+/src/main/gui/front/package-lock.json
