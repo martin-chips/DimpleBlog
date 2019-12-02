@@ -12,13 +12,13 @@
                 <div class="sidebar-menus">
                     <div class="site-nav">
                         <p>
-                            <i class="el-icon-map-location"></i>
+                            <Icon type="ios-map" />
                             网站导航
                         </p>
-                        <Switch v-model="showNav">
+                        <i-switch v-model="showNav">
                             <span slot="open">开启</span>
                             <span slot="close">关闭</span>
-                        </Switch>
+                        </i-switch>
                     </div>
                     <ul class="nav-menu" :class="{'hide': !showNav}">
                         <!-- 类别导航 -->
@@ -46,7 +46,7 @@
                     <div class="sidebar-toc-list" ref="list" v-show="showToc">
                         <div class="site-nav">
                             <p>
-                                <i class="el-icon-tickets"></i>
+                                <Icon type="ios-list-box" />
                                 文章目录
                             </p>
                         </div>

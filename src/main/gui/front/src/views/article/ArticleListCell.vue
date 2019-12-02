@@ -62,7 +62,7 @@
         },
         data() {
             return {
-                articleType: 2,
+                articleType: 1,
             }
         },
         computed: {

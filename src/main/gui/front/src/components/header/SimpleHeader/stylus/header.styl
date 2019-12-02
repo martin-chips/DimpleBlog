@@ -47,6 +47,7 @@ body
           margin-right 15px
         &.switches
           .ivu-btn
+            border-color #dddee1
             i::before, span
               color $default-info-color
           &:hover
@@ -134,7 +135,7 @@ body
       height $mobile-header-inner-height
       top "calc((%s - %s) / 2)" % ($mobile-header-height $mobile-header-inner-height)
       left 12px
-      background url(/../../../../assets/icons/menu.png) center center no-repeat
+      background url("~@/assets/icons/menu.png") center center no-repeat
       background-size 24px
     .logo
       position absolute
@@ -159,7 +160,7 @@ body
       height $mobile-header-inner-height
       top "calc((%s - %s) / 2)" % ($mobile-header-height $mobile-header-inner-height)
       right 12px
-      background url(/../../../../assets/icons/search.png) center center no-repeat
+      background url("~@/assets/icons/search.png") center center no-repeat
       background-size 24px
 
 body.dark

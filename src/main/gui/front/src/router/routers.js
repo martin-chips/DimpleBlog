@@ -13,7 +13,7 @@ export default [
         component: Index,
         children: [
             {
-                path: '',
+                path: '/',
                 components: {
                     header: SimpleHeader,
                     content: HomeContent,

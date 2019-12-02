@@ -11,7 +11,7 @@
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
-    @import "./common/stylus/index.styl";
+    @import "./common/stylus/reset.styl";
     #app
         -webkit-font-smoothing antialiased
         -moz-osx-font-smoothing grayscale

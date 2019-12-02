@@ -7,7 +7,7 @@
                     <article-page-content v-highlight>
                         <div class="article-details" id="article-main-page" slot="content" ref="article">
                             <div class="detail" v-if="article">
-                                <article class="typo container article-main-content"
+                                <article class="typo container article-main-content" v-highlight
                                          v-html="article.content">
                                 </article>
                                 <div class="detail-footer" v-if="article.updateTime !=null">

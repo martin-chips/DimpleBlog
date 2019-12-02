@@ -10,13 +10,18 @@
 
 <script>
     export default {
-        name: 'index'
+        name: 'index',
+        //创建前设置
+        beforeCreate () {
+            document.body.classList.add("custom-scrollbar")
+        },
     };
+
 </script>
 
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
-    @import "../common/stylus/theme-config.styl";
+    /*@import "../common/stylus/theme-config.styl";*/
     @import "../common/stylus/index.styl";
     .main-wrapper
         width 100%
