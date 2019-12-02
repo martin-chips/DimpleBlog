@@ -4,7 +4,7 @@
            element-loading-text="拼命加载中"
            element-loading-spinner=""
            element-loading-background="rgba(0, 0, 0, 0.8)">
-    <div class="custom-mavon-editor" >
+    <div class="custom-mavon-editor">
       <div class="operate">
         <el-row>
           <el-col :xs="18" :sm="10" :md="10" :lg="10">
@@ -55,7 +55,7 @@
                       :editable="post.comment"
                       :toolbarsFlag="toolbarsFlag"
                       :subfield="false"
-                      :placeholder="placeholderText"
+                      placeholder="请输入评论"
                       :toolbars="toolbars"
                       @change="change"
                       ref="mavonEditor"></mavon-editor>
@@ -63,8 +63,9 @@
       <div class="bottom-area">
         <div class="comment-tip">
           <a href="https://guides.github.com/features/mastering-markdown/" target="_blank">
-            <svg-icon icon-class="markdown" />
-            支持Markdown</a>
+            <svg-icon icon-class="markdown"/>
+            支持Markdown
+          </a>
         </div>
         <div class="publish-area">
           <el-button size="default" :type="buttonType" :loading="publishing" @click="send"
@@ -87,6 +88,7 @@
 
   import {getInfoByQQ, insertComment} from '@/api/front/front'
   import marked from "marked";
+  import {listComment, goodComment, badComment} from '@/api/front/front'
 
   export default {
     name: 'custom-mavon-editor',
@@ -179,13 +181,6 @@
           this.updateSiteTheme(newTheme);
         }
       },
-      placeholderText: function () {
-        if (this.placeholder !== undefined && this.placeholder.length > 0) {
-          return this.placeholder;
-        } else {
-          return "请输入评论";
-        }
-      }
     },
     methods: {
       getInfoByQQ() {
@@ -212,19 +207,6 @@
       comment_level: function () {
         if (this.replyToComment === undefined) return 1;
         return 2;
-      },
-      reply_to_author: function () {
-        if (this.replyToComment === undefined) return null;
-        return this.replyToComment.author.id;
-      },
-      parent_comment: function () {
-        if (this.replyToComment === undefined) return null;
-        if (this.replyToComment.parent_comment === null) return this.replyToComment.id;
-        return this.replyToComment.parent_comment;
-      },
-      reply_to_comment: function () {
-        if (this.replyToComment === undefined) return null;
-        return this.replyToComment.id;
       },
       change(value) {
         if (value.length > 0) {
@@ -300,34 +282,33 @@
       send() {
         this.$refs['form'].validate(valid => {
           if (valid) {
-            //操作
-            this.publish();
+            let that = this;
+            this.form.htmlContent = marked(this.form.content);
+            this.form.replyId = this.replyId;
+            this.form.parentId = this.parentId;
+            this.form.pageId = this.post.id;
+            this.form.url = this.url;
+            let obj = JSON.parse(JSON.stringify(this.form));
+            insertComment(obj).then((response) => {
+              if (response.code == 200) {
+                // 清空评论框内容
+                this.form = {};
+                this.msgSuccess("评论成功");
+                this.$emit('reloadCommentList');
+              } else {
+                this.msgError("评论失败,请重新再试!");
+              }
+              // 关闭loading状态
+              this.publishing = false;
+            }).catch((error) => {
+              console.log(error);
+              // 关闭loading状态
+              that.publishing = false;
+              that.msgError("评论失败");
+            });
           }
         });
       },
-      publish() {
-        let that = this;
-        this.form.htmlContent = marked(this.form.content);
-        this.form.replyId = this.replyId;
-        this.form.parentId = this.parentId;
-        this.form.pageId = this.post.id;
-        this.form.url = this.url;
-        let obj = JSON.parse(JSON.stringify(this.form));
-        console.log(obj);
-        insertComment(obj).then((response) => {
-          // 清空评论框内容
-          this.form.content = '';
-          // 关闭loading状态
-          this.publishing = false;
-          this.msgSuccess("评论成功")
-          this.$emit('publishedComment');
-        }).catch((error) => {
-          console.log(error);
-          // 关闭loading状态
-          that.publishing = false;
-          that.msgError("评论失败");
-        });
-      }
     },
     mounted() {
       // 显示编辑器

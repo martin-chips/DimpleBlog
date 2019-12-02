@@ -27,12 +27,12 @@
           </span>
           <span class="comments">
             <a @click="scrollToComments('#comments')">
-              <i class="el-icon-edit-outline"></i> {{article.commentList.length}} 评论
+              <i class="el-icon-edit-outline"></i> {{article.commentCount}} 评论
             </a>
           </span>
           <span class="likes">
             <a @click="likePost(article)">
-              <svg-icon icon-class="like" /> {{article.like}} 赞
+              <svg-icon icon-class="like"/> {{article.like}} 赞
             </a>
           </span>
         </p>

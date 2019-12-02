@@ -1,5 +1,6 @@
 package com.dimple.common.utils.http;
 
+import com.dimple.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.net.ssl.HostnameVerifier;
@@ -31,11 +32,12 @@ public class HttpUtils {
     /**
      * 向指定 URL 发送GET方法的请求
      *
-     * @param url   发送请求的 URL
-     * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+     * @param url         发送请求的 URL
+     * @param param       请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+     * @param charsetName 字符编码
      * @return 所代表远程资源的响应结果
      */
-    public static String sendGet(String url, String param) {
+    public static String sendGet(String url, String param, String charsetName) {
         StringBuilder result = new StringBuilder();
         BufferedReader in = null;
         try {
@@ -47,7 +49,7 @@ public class HttpUtils {
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             connection.connect();
-            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StringUtils.isEmpty(charsetName) ? charsetName : ""));
             String line;
             while ((line = in.readLine()) != null) {
                 result.append(line);

@@ -278,7 +278,7 @@
               margin-left 4px
 
     .img-wrapper
-      padding-bottom: 85%
+      padding-bottom: 60%
       width 100%
       height 0
       overflow hidden

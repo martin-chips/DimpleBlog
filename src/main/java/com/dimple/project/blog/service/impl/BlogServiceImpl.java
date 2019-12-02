@@ -158,9 +158,6 @@ public class BlogServiceImpl implements BlogService {
     public Blog selectBlogDetailById(Long id) {
         Blog blog = blogMapper.selectBlogByIdQuery(id);
         blog.setTagList(tagMapper.selectTagListByBlogId(id));
-        //设置评论
-        List<Comment> commentList = getCommentListByPageId(id);
-        blog.setCommentList(commentList);
         //设置点击数量+1
         blogMapper.incrementBlogClick(id);
         return blog;

@@ -1,5 +1,6 @@
 package com.dimple.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +14,7 @@ import com.dimple.framework.security.LoginUser;
  * @author: Dimple
  * @date: 10/22/19
  */
+@Slf4j
 public class SecurityUtils {
     /**
      * 获取用户账户
@@ -33,6 +35,19 @@ public class SecurityUtils {
             return (LoginUser) getAuthentication().getPrincipal();
         } catch (Exception e) {
             throw new CustomException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    /**
+     * 判断当前用户数是不是admin
+     */
+    public static boolean isAdmin() {
+        try {
+            LoginUser loginUser = (LoginUser) getAuthentication().getPrincipal();
+            return loginUser.getUser().isAdmin();
+        } catch (Exception e) {
+            //ignore it
+            return false;
         }
     }
 

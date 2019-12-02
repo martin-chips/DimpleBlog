@@ -103,6 +103,10 @@ public class Comment extends BaseEntity {
      * Html评论内容
      */
     private String htmlContent;
+    /**
+     * true代表为站长回复,false代表不是
+     */
+    private Boolean adminReply;
 
     private Comment parentComment;
     /**

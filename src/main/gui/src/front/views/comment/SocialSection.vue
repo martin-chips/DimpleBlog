@@ -8,7 +8,7 @@
                              :replyId="undefined"
                              :parentId="undefined"
                              @valueChanged="valueChanged"
-                             @publishedComment="publishedComment"></custom-mavon-editor>
+                             @reloadCommentList="getCommentInfo"></custom-mavon-editor>
       </div>
     </div>
 
@@ -16,15 +16,14 @@
       <div v-for="comment in comments" :key="comment.id">
         <comment-cell-list :post="article"
                            :commentLevel="1"
-                           :comment="comment"
-                           @publishedComment="publishedComment"></comment-cell-list>
+                           @reloadCommentList="getCommentInfo"
+                           :comment="comment"></comment-cell-list>
         <comment-cell-list v-for="subComment in comment.subCommentList"
                            :key="subComment.id"
-                           style="border-left:0.2rem solid #dadada"
                            :post="article"
+                           @reloadCommentList="getCommentInfo"
                            :commentLevel="2"
-                           :comment="subComment"
-                           @publishedComment="publishedComment"></comment-cell-list>
+                           :comment="subComment"></comment-cell-list>
       </div>
     </div>
   </div>
@@ -63,6 +62,9 @@
     },
     methods: {
       getCommentInfo() {
+        if (this.article == undefined) {
+          return
+        }
         listComment(this.article.id).then((response) => {
           this.comments = response.data;
           this.showSpin = false;
@@ -71,51 +73,8 @@
         });
       },
       valueChanged(flag) {
-        console.log(flag);
         this.spreadEditor = flag;
-      },
-      publishedComment(comment) {
-        console.log(comment);
-        if (comment.parent_comment === null) {
-          // 根评论为空,表示是一级评论
-          this.comments.unshift(comment);
-        } else {
-          // 否则是子级评论
-          let parentComment = this.getParentComment(comment.parent_comment);
-          if (parentComment !== null) {
-            if (parentComment.sub_comment === null || parentComment.sub_comment === undefined) {
-              parentComment.sub_comment = [];
-            }
-            parentComment.sub_comment.push(comment);
-          }
-        }
-      },
-      getParentComment(parentCommentId) {
-        let recursiveComments = [];
-        let recursiveCommentyIds = [];
-        var recursiveComment = function (comments, parentCommentId) {
-          if (parentCommentId === null || parentCommentId === undefined) return null;
-          for (let index = 0; index < comments.length; index++) {
-            let comment = comments[index];
-            if (comment.id === parentCommentId) {
-              recursiveComments.push(comment);
-              recursiveCommentyIds.push(comment.id);
-              return comment;
-            } else if (comment.sub_comment && comment.sub_comment.length > 0) {
-              let result = recursiveComment(comment.sub_comment, parentCommentId);
-              if (result) {
-                recursiveComments.push(comment);
-                recursiveCommentyIds.push(comment.id);
-                return result;
-              }
-            }
-          }
-        };
-        let parentComment = recursiveComment(this.comments, parentCommentId);
-        recursiveComments = recursiveComments.reverse();
-        recursiveCommentyIds = recursiveCommentyIds.reverse();
-        return parentComment;
-      },
+      }
     },
     components: {
       'custom-mavon-editor': CustomMavonEditor,

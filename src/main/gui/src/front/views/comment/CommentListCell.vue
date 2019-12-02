@@ -14,26 +14,26 @@
                     :lg="cellRightSpan('lg')" :xl="cellRightSpan('xl')">
               <div class="content">
                 <p class="title">
-                  <span class="name" :class="theme">
+                  <span class="name">
                     <a>{{ comment.nickName }}</a>
                   </span>
-                  <span class="name-tag"
-                        v-if="comment.nickName !== undefined && comment.nickName=='Dimple'">作者Dimple回复
+                  <span class="name-tag" v-if="comment.adminReply">
+                    站长
                   </span>
-                  <span class="reply-icon" :class="theme" v-if="comment.replyNickName != undefined">
+                  <span class="reply-icon" v-if="comment.replyNickName != undefined">
                     <svg-icon icon-class="forward"></svg-icon>
                   </span>
-                  <span class="reply-name" :class="theme" v-if="comment.replyNickName != undefined">
-                    <a @click="scrollToComments('#comment_'+comment.id)">{{ comment.replyNickName }}</a>
+                  <span class="reply-name" v-if="comment.replyNickName != undefined">
+                    <a>{{ comment.replyNickName }}</a>
                   </span>
                   <span class="name-tag"
-                        v-if="comment.replyNickName != undefined && comment.replyNickName==='Dimple'">作者回复</span>
+                        v-if="comment.replyNickName != undefined && comment.adminReply==true">站长</span>
                   <span class="time">{{ comment.createTime | socialDate }}</span>
                 </p>
-                <div class="comment-main-content" :class="theme" v-if="comment.content"
+                <div class="comment-main-content" v-if="comment.content"
                      v-html="comment.content"
                      ref="content"></div>
-                <div class="operate-area" :class="theme">
+                <div class="operate-area">
                   <span class="like" @click="likeComment(comment)">
                    <a>
                       <svg-icon icon-class="like"/>  {{ comment.good }}
@@ -57,7 +57,7 @@
                                          :parentId="commentLevel==1?comment.id:comment.parentId"
                                          :replyToComment="comment"
                                          @valueChanged="valueChanged"
-                                         @publishedComment="publishedComment"></custom-mavon-editor>
+                                         @reloadCommentList="reloadCommentList"></custom-mavon-editor>
                   </div>
                 </div>
               </div>
@@ -110,12 +110,11 @@
         spreadEditor: false
       };
     },
-    computed: {
-      showEditor() {
-
-      }
-    },
     methods: {
+      reloadCommentList() {
+        this.$emit('reloadCommentList');
+        this.showEditor = false;
+      },
       cellSpan(size) {
         var span = {};
         span['offset'] = CELL_LEFT_SPAN[size] * parseInt(this.comment.comment_level);
@@ -137,9 +136,6 @@
       },
       displayEditor() {
         this.showEditor = !this.showEditor;
-      },
-      publishedComment(comment) {
-        this.$emit('publishedComment', comment);
       },
       likeComment(comment) {
         goodComment(comment.id).then(response => {
@@ -175,7 +171,7 @@
       text-align center
 
       img
-        border-radius $border-radius
+        border-radius 100%
         width 100%
 
     .content

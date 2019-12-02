@@ -99,9 +99,10 @@
         group by b.id
     </select>
     <select id="selectBlogByIdQuery" resultMap="BlogResult">
-        select id, category_id, title, summary, header_img, html_content as content,support,click,`like`,status, weight,comment, create_by, create_time,update_time
-        from bg_blog
-        where id = #{id} and delete_time is null
+        select b.id, b.category_id, b.title, b.summary, b.header_img, b.html_content as content,b.support,b.click,b.like,b.status, b.weight,b.comment, b.create_by, b.create_time,b.update_time,count(c.id) as comment_count
+        from bg_blog b left join bg_comment c
+        on b.id=c.page_id
+        where b.id = #{id} and b.delete_time is null and b.status=1
     </select>
 
     <insert id="insertBlog" useGeneratedKeys="true" keyProperty="id">

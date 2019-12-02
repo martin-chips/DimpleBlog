@@ -37,6 +37,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int insertComment(Comment comment) {
+        comment.setAdminReply(SecurityUtils.isAdmin());
         return commentMapper.insertComment(comment);
     }
 

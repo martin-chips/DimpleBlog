@@ -47,7 +47,7 @@ public class FrontConfigController extends BaseController {
     /**
      * QQ 头像和昵称查询地址
      */
-    private static final String QQ_QUERY_URL = "https://users.qzone.qq.com/fcg-bin/cgi_get_portrait.fcg";
+    private static final String QQ_QUERY_URL = "https://r.qzone.qq.com/fcg-bin/cgi_get_portrait.fcg";
 
     @Autowired
     CategoryService categoryService;
@@ -188,7 +188,7 @@ public class FrontConfigController extends BaseController {
      */
     @GetMapping("comment/qqNum/{qqNum}")
     public AjaxResult getByQQNum(@PathVariable Long qqNum) {
-        String json = HttpUtils.sendGet(QQ_QUERY_URL, "uins=" + qqNum);
+        String json = HttpUtils.sendGet(QQ_QUERY_URL, "uins=" + qqNum,"GBK");
         Map<String, String> qqInfo = new HashMap<>();
         if (!StringUtils.isEmpty(json)) {
             json = json.replaceAll("portraitCallBack|\\\\s*|\\t|\\r|\\n", "");

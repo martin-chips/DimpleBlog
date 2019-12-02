@@ -17,11 +17,6 @@
         default: undefined
       }
     },
-    methods: {
-      onSubmit() {
-        console.log('submit!');
-      }
-    },
     components: {
       'license-tag': LicenseTag,
       'social-section': SocialSection

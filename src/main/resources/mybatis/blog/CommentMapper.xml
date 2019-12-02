@@ -19,6 +19,7 @@
         <result property="display" column="display"/>
         <result property="good" column="good"/>
         <result property="bad" column="bad"/>
+        <result property="adminReply" column="admin_reply"/>
         <result property="content" column="content"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -82,6 +83,7 @@
         <if test="htmlContent != null and htmlContent != ''">html_content,</if>
         <if test="replyId != null ">reply_id,</if>
         <if test="reply != null ">reply,</if>
+        <if test="adminReply != null ">admin_reply,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         )values(
@@ -101,6 +103,7 @@
         <if test="htmlContent != null and htmlContent != ''">#{htmlContent},</if>
         <if test="replyId != null">#{replyId},</if>
         <if test="reply != null">#{reply},</if>
+        <if test="adminReply != null">#{adminReply},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )
@@ -175,7 +178,8 @@
     </delete>
 
     <select id="selectCommentListByPageIds" resultMap="CommentMap">
-        select id, email, ip, location, os, browser, parent_id, qq_num,nick_name, avatar, page_id, url, display, good,
+        select id, email, ip, location, os, browser, parent_id, qq_num,nick_name, avatar, page_id, url, display,
+        good,admin_reply,
         bad,
         content,
         create_by, create_time
@@ -185,7 +189,7 @@
         </foreach>
     </select>
     <select id="selectCommentListByPageId" resultMap="CommentMap">
-        select id, email, ip, location, os, browser, parent_id, qq_num,nick_name, avatar, page_id, url, display, good,
+        select id, email, ip, location, os, browser, parent_id, qq_num,nick_name, avatar, page_id, url, display, good,admin_reply,
         bad,reply_id,
         html_content as content,
         create_by, create_time
