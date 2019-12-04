@@ -6,10 +6,10 @@
             <span class="vertical-line"></span>
             <span class="sub-title">{{subTitle}}</span>
             <span class="view-more" v-if="to !== undefined">
-         <router-link :to="to">
-             {{tipText ? tipText : "查看更多"}}<Icon type="md-arrow-dropright" />
-         </router-link>
-      </span>
+                 <router-link :to="to">
+                     {{tipText ? tipText : "查看更多"}}<Icon type="md-arrow-dropright" />
+                 </router-link>
+             </span>
         </div>
         <div class="menu">
             <ul class="list clearfix" v-if="controlMenus.length > 0">

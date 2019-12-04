@@ -29,7 +29,8 @@ import {
     Form,
     Input,
     Avatar,
-    Card
+    Card,
+    Divider
 } from 'view-design'
 
 Vue.component('Row', Row)
@@ -51,6 +52,8 @@ Vue.component('Form', Form)
 Vue.component('Input', Input)
 Vue.component('Avatar', Avatar)
 Vue.component('Card', Card)
+Vue.component('Divider', Divider)
+
 
 Vue.use(Vuex);
 

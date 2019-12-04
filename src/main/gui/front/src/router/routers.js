@@ -7,7 +7,7 @@ import ArticleHomeContent from "../components/content/ArticleHomeContent";
 import TimeLineContent from "../components/content/TimeLineContent";
 import ArticleContent from "../components/content/ArticleContent";
 import LinkContent from "../components/content/LinkContent";
-
+import Error404 from "../views/error/Error404";
 export default [
     {
         path: '/',
@@ -84,5 +84,9 @@ export default [
                 }
             },
         ]
+    },
+    {
+        path: '*',
+        component: Error404,
     }
 ];
