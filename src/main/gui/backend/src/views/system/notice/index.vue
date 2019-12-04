@@ -118,7 +118,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="内容">
-              <Editor v-model="form.noticeContent"/>
+<!--              <Editor v-model="form.noticeContent"/>-->
             </el-form-item>
           </el-col>
         </el-row>
@@ -133,13 +133,13 @@
 
 <script>
   import {listNotice, getNotice, delNotice, addNotice, updateNotice} from "@/api/system/notice";
-  import Editor from '@/components/Editor';
+  // import Editor from '@/components/Editor';
   import initData from '@/mixins/initData'
 
   export default {
     mixins: [initData],
     components: {
-      Editor
+      // Editor
     },
     data() {
       return {

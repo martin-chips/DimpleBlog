@@ -12,6 +12,7 @@
         <result property="exception" column="exception"/>
         <result property="status" column="status"/>
         <result property="cost" column="cost"/>
+        <result property="result" column="result"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
 
@@ -25,6 +26,7 @@
         <if test="exception != null and exception != ''">exception,</if>
         <if test="status != null">status,</if>
         <if test="cost != null">cost,</if>
+        <if test="result != null and result != ''">result,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         )values(
@@ -36,6 +38,7 @@
         <if test="exception != null and exception != ''">#{exception},</if>
         <if test="status != null ">#{status},</if>
         <if test="cost != null">#{cost},</if>
+        <if test="result != null and result != ''">#{result},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )

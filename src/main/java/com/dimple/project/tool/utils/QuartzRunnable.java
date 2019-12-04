@@ -33,11 +33,12 @@ public class QuartzRunnable implements Callable {
     @Override
     public Object call() throws Exception {
         ReflectionUtils.makeAccessible(method);
+        Object result;
         if (StringUtils.isNotEmpty(param)) {
-            method.invoke(target, param);
+            result = method.invoke(target, param);
         } else {
-            method.invoke(target);
+            result = method.invoke(target);
         }
-        return null;
+        return result;
     }
 }

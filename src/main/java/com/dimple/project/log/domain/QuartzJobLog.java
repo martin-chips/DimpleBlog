@@ -45,4 +45,8 @@ public class QuartzJobLog extends BaseEntity {
      * 花费的毫秒数
      */
     private Long cost;
+    /**
+     * 返回值
+     */
+    private String result;
 }

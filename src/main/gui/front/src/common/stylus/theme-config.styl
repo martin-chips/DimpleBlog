@@ -1,4 +1,5 @@
 @import "theme.styl";
+
 // ======================== 默认主题 ==========================
 body
   position relative
@@ -69,7 +70,7 @@ body.dark
           color $dark-info-color
           &:hover
             i::before, span
-             color $dark-info-color
+              color $dark-info-color
     .title
       color $dark-title-color
     .info, .operate_info
@@ -292,13 +293,16 @@ body.dark
       .markdown-body
         background $dark-background-color
         .v-note-op
-          background $dark-background-hover-color
+          background $dark-background-hover-color!important
         textarea
           background $dark-background-color
           color $dark-desc-color
         .v-show-content
           background $dark-background-color
           color $dark-desc-color
+        .content-input-wrapper
+          background $dark-background-color!important
+          color $dark-desc-color!important
         pre
           background rgba($dark-background-hover-color, 0.25)
           div

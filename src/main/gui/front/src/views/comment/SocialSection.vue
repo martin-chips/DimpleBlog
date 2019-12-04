@@ -83,58 +83,46 @@
     };
 </script>
 
-<style lang="stylus" type="text/stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
     @import "../../common/stylus/theme.styl";
     .social-section
         position relative
         margin-top 10px
-
         .dark-theme
             background #000
-
             &::after
                 display none
-
             .ivu-menu-item
                 &:hover
                     color $iview-secondary-warning-color
                     border-bottom 2px solid $iview-secondary-warning-color
-
             .ivu-menu-item-active
                 color $iview-secondary-warning-color
                 border-bottom 2px solid $iview-secondary-warning-color
-
             .ivu-menu-submenu
                 &:hover
                     color $iview-secondary-warning-color
                     border-bottom 2px solid $iview-secondary-warning-color
-
         .content
             margin 15px 0
-
             .likes
                 margin-bottom 20px
-
                 a
                     display inline-block
                     margin-right 10px
-
                     img
                         border-radius $border-radius
                         width 40px
                         height 40px
-
         .comment-area
             .editor
                 margin 15px 0 10px
+                height 400px
                 transition height 0.7s
-
                 &.spread
-                    height 300px
-
+                    height 450px
         > .ivu-menu
             z-index 0
-
         .comment-list
             padding 15px
             background $default-background-color

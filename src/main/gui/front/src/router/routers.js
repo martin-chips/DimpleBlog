@@ -6,6 +6,7 @@ import Index from "../components/Index"
 import ArticleHomeContent from "../components/content/ArticleHomeContent";
 import TimeLineContent from "../components/content/TimeLineContent";
 import ArticleContent from "../components/content/ArticleContent";
+import LinkContent from "../components/content/LinkContent";
 
 export default [
     {
@@ -41,10 +42,18 @@ export default [
                     title: '文章列表',
                 }
             },
-            // {
-            //     path: '/link',
-            //     component: () => import('@/views/front/link'),
-            // },
+            {
+                path: 'link',
+                name: 'link',
+                components: {
+                    header: SimpleHeader,
+                    content: LinkContent,
+                    footer: Footer
+                },
+                meta: {
+                    title: '文章列表',
+                }
+            },
             // {
             //     path: '/leaveComment',
             //     component: () => import('@/views/front/leaveComment'),

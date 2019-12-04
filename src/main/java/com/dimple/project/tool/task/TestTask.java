@@ -11,7 +11,8 @@ public class TestTask {
         log.info("执行成功");
     }
 
-    public void run1(String str) {
-        log.info("执行成功，参数为： {}" + str);
+    public String run1(String str) {
+        log.info("执行成功，参数为： {}", str);
+        return "这是返回值";
     }
 }

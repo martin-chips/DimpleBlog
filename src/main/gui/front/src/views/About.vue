@@ -43,17 +43,6 @@
         margin-top 0
         background-color $default-background-color
         border 1px solid $default-border-color
-        @media only screen and (max-width: $responsive-sm)
-            display block
-            order 10
-            margin-top 15px
-        @media screen and (min-width: $responsive-sm)
-            display none
-        @media screen and (min-width: $responsive-md)
-            display none
-        @media screen and (min-width: $responsive-lg)
-            display block
-            order 0
 
         img.background
             position absolute
@@ -97,10 +86,8 @@
                 padding 8px
                 max-width 60px
                 max-height 60px
-
                 a
                     display block
-
                     img
                         width 100%
 

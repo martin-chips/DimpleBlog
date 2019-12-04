@@ -2,25 +2,65 @@ import Vue from 'vue'
 import App from './App.vue'
 import Vuex from 'vuex'
 
-import ViewUI from 'view-design';
-import 'view-design/dist/styles/iview.css';
-// import '@/assets/iview.min.css';
-
 import store from './store'
-
 import Router from '@/router/index.js';
 
+import 'view-design/dist/styles/iview.css';
+// iView UI 组件引入
+import {
+    Row,
+    Col,
+    Button,
+    Progress,
+    Tag,
+    Icon,
+    Affix,
+    Rate,
+    Modal,
+    Message,
+    Notice,
+    Tooltip,
+    ButtonGroup,
+    Switch,
+    BackTop,
+    Spin,
+    Checkbox,
+    FormItem,
+    Form,
+    Input,
+    Avatar,
+    Card
+} from 'view-design'
+
+Vue.component('Row', Row)
+Vue.component('Col', Col)
+Vue.component('Button', Button)
+Vue.component('Progress', Progress)
+Vue.component('Tag', Tag)
+Vue.component('Icon', Icon)
+Vue.component('Affix', Affix)
+Vue.component('Rate', Rate)
+Vue.component('Tooltip', Tooltip)
+Vue.component('ButtonGroup', ButtonGroup)
+Vue.component('i-switch', Switch)
+Vue.component('BackTop', BackTop)
+Vue.component('Spin', Spin)
+Vue.component('Checkbox', Checkbox)
+Vue.component('FormItem', FormItem)
+Vue.component('Form', Form)
+Vue.component('Input', Input)
+Vue.component('Avatar', Avatar)
+Vue.component('Card', Card)
+
 Vue.use(Vuex);
-Vue.use(ViewUI);
 
 Vue.config.productionTip = false
 
-Vue.prototype.$Modal = ViewUI.Modal;
-Vue.prototype.$Message = ViewUI.Message;
-Vue.prototype.$Notice = ViewUI.Notice;
+Vue.prototype.$Modal = Modal
+Vue.prototype.$Message = Message
+Vue.prototype.$Notice = Notice
 
 import hljs from 'highlight.js' //导入代码高亮文件
-// import 'highlight.js/styles/monokai-sublime.css'  //导入代码高亮样式
 
 //自定义一个代码高亮指令
 Vue.directive('highlight',function (el) {

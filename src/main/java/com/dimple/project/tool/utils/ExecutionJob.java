@@ -1,9 +1,9 @@
 package com.dimple.project.tool.utils;
 
 import com.dimple.common.utils.spring.SpringUtils;
+import com.dimple.project.log.domain.QuartzJobLog;
 import com.dimple.project.log.service.QuartzJobLogService;
 import com.dimple.project.tool.domain.QuartzJob;
-import com.dimple.project.log.domain.QuartzJobLog;
 import com.dimple.project.tool.service.QuartzJobService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
@@ -49,8 +49,10 @@ public class ExecutionJob extends QuartzJobBean {
             // 执行任务
             log.info("任务准备执行，任务名称：{}", quartzJob.getJobName());
             QuartzRunnable task = new QuartzRunnable(quartzJob.getBeanName(), quartzJob.getMethodName(), quartzJob.getMethodParams());
-            Future<?> future = threadPoolTaskExecutor.submit(task);
-            future.get();
+            Future<Object> future = threadPoolTaskExecutor.submit(task);
+            Object result = future.get();
+            log.info("任务返回值:{}", result);
+            quartzJobLog.setResult(result.toString());
             long times = System.currentTimeMillis() - startTime;
             quartzJobLog.setCost(times);
             // 任务状态

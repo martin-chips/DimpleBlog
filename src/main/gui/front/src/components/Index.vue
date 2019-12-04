@@ -1,8 +1,8 @@
 <template>
     <div class="main-wrapper">
         <router-view name="header" keep-alive></router-view>
-        <transition name="el-fade-in-linear">
-            <router-view name="content" class="transition-box"></router-view>
+        <transition name="fade" :duration="100">
+            <router-view name="content"></router-view>
         </transition>
         <router-view name="footer" keep-alive></router-view>
     </div>
@@ -11,17 +11,13 @@
 <script>
     export default {
         name: 'index',
-        //创建前设置
-        beforeCreate () {
-            document.body.classList.add("custom-scrollbar")
-        },
     };
 
 </script>
 
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
-    /*@import "../common/stylus/theme-config.styl";*/
+    @import "../common/stylus/theme-config.styl";
     @import "../common/stylus/index.styl";
     .main-wrapper
         width 100%

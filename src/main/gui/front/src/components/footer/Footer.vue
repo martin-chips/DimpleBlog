@@ -10,10 +10,10 @@
                     </Icon>
                 </Tooltip>
 
-                <Icon type="md-arrow-dropdown" class="icon"
+                <Icon type="md-arrow-dropup" class="icon"
                       @mouseover.native="setButtonState('top', true, true)"
                       @mouseleave.native="setButtonState('top', false)"></Icon>
-                <Icon type="md-arrow-dropup" class="icon"
+                <Icon type="md-arrow-dropdown" class="icon"
                       @click.native.stop.prevent="scrollDown"
                       @mouseover.native="setButtonState('bottom', true, true)"
                       @mouseleave.native="setButtonState('bottom', false)"></Icon>
