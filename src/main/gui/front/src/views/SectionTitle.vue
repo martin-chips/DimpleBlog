@@ -7,7 +7,7 @@
             <span class="sub-title">{{subTitle}}</span>
             <span class="view-more" v-if="to !== undefined">
                  <router-link :to="to">
-                     {{tipText ? tipText : "查看更多"}}<Icon type="md-arrow-dropright" />
+                     {{tipText ? tipText : "查看更多"}}<Icon type="md-arrow-dropright"/>
                  </router-link>
              </span>
         </div>
@@ -18,11 +18,10 @@
                 </li>
             </ul>
             <div class="date-picker" v-if="withTimeSelect">
-                <DatePicker v-model="selectedDateRange" type="daterange" :options="datePickerOptions" confirm
-                            :split-panels="true" placement="bottom-end"
-                            placeholder="请选择日期" @on-clear="clearDateSelect"
-                            @on-ok="comfirmDateSelect" @on-change="changeDate"
-                            style="width: 180px;"/>
+                <DatePicker type="daterange" :options="datePickerOptions" confirm :split-panels="true"
+                            placement="bottom-end" placeholder="请选择日期" @on-clear="clearDateSelect"
+                            @on-ok="confirmDateSelect" @on-change="changeDate"
+                            style="width: 180px;"></DatePicker>
             </div>
             <div class="refresh" v-if="withRefresh">
                 <a @click="refresh" title="刷新">
@@ -57,7 +56,8 @@
             withTimeSelect: {
                 Type: Boolean,
                 default: false
-            }
+            },
+            datePickerOptions: undefined
         },
         data() {
             return {
@@ -94,8 +94,13 @@
                 menu.selected = !menu.selected;
                 this.$emit('menusControl', [menu.method, menu.selected]);
             },
+            clearDateSelect() {
+                this.$emit('clearDateSelect');
+            },
             changeDate(dateRange) {
-                this.selectedDateRange = dateRange ? dateRange : [];
+                this.selectedDateRange = dateRange;
+            },
+            confirmDateSelect() {
                 this.$emit('confirmDateSelect', this.selectedDateRange);
             }
         }
@@ -184,7 +189,7 @@
                             border-bottom 2px solid $default-link-hover-color
 
             .date-picker
-                width 240px
+                width 180px
                 margin-left 15px
                 font-size 13px
 

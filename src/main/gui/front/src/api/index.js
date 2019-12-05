@@ -59,6 +59,15 @@ export function listFriendLinks() {
     })
 }
 
+//新增友链
+export function insertFriendLink(data) {
+    return request({
+        url: '/f/link',
+        method: 'post',
+        data: data
+    })
+}
+
 //获取标签
 export function listTag() {
     return request({

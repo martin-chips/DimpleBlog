@@ -10,7 +10,8 @@
                                   :withTimeSelect="true"
                                   @refresh="refresh"
                                   @menusControl="menusControl"
-                                  @comfirmDateSelect="confirmDateSelect">
+                                  @confirmDateSelect="dateSelect"
+                                  @clearDateSelect="dateSelectClear">
                     </SectionTitle>
                     <div v-for="year in sortedYearKeys(timeline)" v-if="Object.keys(timeline).length > 0">
                         <ArchiveListTimeTitle :date="year+'年'"
@@ -175,6 +176,16 @@
             confirmDateSelect(dateRange) {
                 this.dateRange = dateRange;
                 this.updateTimeLineInfo(true);
+            },
+            dateSelect(dateRange) {
+
+            },
+            dateSelectClear() {
+                console.log(111111)
+                // this.selectedDateRange = [];
+                // this.page = 0;
+                // this.limit_size = DefaultLimitSize * 10;
+                // this.updateTimeLineInfo(true);
             }
         }
     }

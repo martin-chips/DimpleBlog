@@ -8,7 +8,7 @@
                  :class="{'no-pic': friendLink.headerImg === null || friendLink.headerImg.length === 0}" alt="">
             <div class="right">
               <p class="title">{{ friendLink.title }}</p>
-              <p class="link">{{ friendLink.description }}</p>
+              <p class="link" >{{ friendLink.description }}</p>
             </div>
           </a>
         </li>
@@ -66,8 +66,7 @@
             transform: translate(30px, 0)
             transition: all 0.2s ease-in-out
 
-            .link
-              color $default-link-color
+
 
           img
             flex 0 0 50px
@@ -92,7 +91,6 @@
             p
               flex 1
               text-align left
-
               &.title
                 height 35px
                 line-height 45px

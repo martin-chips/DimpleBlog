@@ -30,7 +30,8 @@ import {
     Input,
     Avatar,
     Card,
-    Divider
+    Divider,
+    DatePicker
 } from 'view-design'
 
 Vue.component('Row', Row)
@@ -53,6 +54,7 @@ Vue.component('Input', Input)
 Vue.component('Avatar', Avatar)
 Vue.component('Card', Card)
 Vue.component('Divider', Divider)
+Vue.component('DatePicker', DatePicker)
 
 
 Vue.use(Vuex);
@@ -70,6 +72,7 @@ Vue.directive('highlight',function (el) {
     let highlight = el.querySelectorAll('pre code');
     highlight.forEach((block)=>{
         hljs.highlightBlock(block)
+        block.classList.add("custom-scrollbar")
     })
 })
 

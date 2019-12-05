@@ -11,6 +11,11 @@
 <script>
     export default {
         name: 'index',
+        //创建前设置
+        beforeCreate () {
+            document.body.classList.add("custom-scrollbar")
+            document.body.classList.add("custom-scrollbar")
+        },
     };
 
 </script>

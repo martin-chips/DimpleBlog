@@ -277,7 +277,6 @@
                 }
             },
             send() {
-                console.log(1)
                 this.$refs['form'].validate(valid => {
                     if (valid) {
                         let that = this;
@@ -326,93 +325,72 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
     @import "../common/stylus/theme.styl";
-    .
-    custom-mavon-editor
-    position relative
-    height 100%
-    width 100%
-    display flex
-    flex-direction column
-    .operate
-        margin-bottom 15px
-        .ivu-checkbox-wrapper,
-            background $default-border-color
-            span
-                color $default-desc-color
-        .ivu-input-group-prepend,
-            background $default-border-color
-
-            span
-                color $default-desc-color
-
-        .ivu-input
-            background $default-background-color
-            color $default-desc-color
-
-        .i-dropdown-link
-            display block
-            height 36px
-            line-height 36px
-            text-align right
-            font-size 15px
-            color $default-desc-hover-color
-
-            &:hover
-                cursor pointer
-
-    .editor-area
+    .custom-mavon-editor
         position relative
-        flex 1
-        padding 2px
         height 100%
-        min-height 50px
-        min-width 200px
-        // 编辑器区域
-
-        .markdown-body
-            background $default-background-color
-
-            .v-note-op
-                background $default-background-hover-color
-
-            textarea
-                background $default-background-color
-                color $default-desc-color
-
-            .v-show-content
-                background $default-background-color
-                color $default-desc-color
-
-    .bottom-area
+        width 100%
         display flex
-        padding-top 15px
-        justify-content space-between
-
-        .publish-area
-            display flex
-
-    &.dark-theme
+        flex-direction column
         .operate
             margin-bottom 15px
-
+            .ivu-input-group-prepend
+                background $default-border-color
+                span
+                    color $default-desc-color
+            .ivu-input
+                background $default-background-color
+                color $default-desc-color
             .i-dropdown-link
                 display block
                 height 36px
                 line-height 36px
                 text-align right
                 font-size 15px
-                color $color-gradually-gray-61
-
+                color $default-desc-hover-color
                 &:hover
-                    color $iview-secondary-warning-color
-                    border-bottom 2px solid $iview-secondary-warning-color
                     cursor pointer
-
+        .editor-area
+            position relative
+            flex 1
+            padding 2px
+            height 100%
+            min-height 50px
+            min-width 200px
+            // 编辑器区域
+            .markdown-body
+                background $default-background-color
+                .v-note-op
+                    background $default-background-hover-color
+                textarea
+                    background $default-background-color
+                    color $default-desc-color
+                .v-show-content
+                    background $default-background-color
+                    color $default-desc-color
         .bottom-area
-            .comment-tip
-                a
-                    color $default-link-color
-
+            display flex
+            padding-top 15px
+            justify-content space-between
+            .publish-area
+                display flex
+        &.dark
+            .operate
+                margin-bottom 15px
+                .i-dropdown-link
+                    display block
+                    height 36px
+                    line-height 36px
+                    text-align right
+                    font-size 15px
+                    color $color-gradually-gray-61
                     &:hover
-                        color $default-link-hover-color
+                        color $iview-secondary-warning-color
+                        border-bottom 2px solid $iview-secondary-warning-color
+                        cursor pointer
+            .bottom-area
+                .comment-tip
+                    a
+                        color $default-link-color
+                        &:hover
+                            color $default-link-hover-color
 </style>

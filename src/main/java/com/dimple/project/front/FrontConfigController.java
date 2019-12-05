@@ -141,6 +141,16 @@ public class FrontConfigController extends BaseController {
         return AjaxResult.success(links);
     }
 
+    /**
+     * 申请link
+     */
+    @PostMapping("/link")
+    public AjaxResult insertLink(@RequestBody Link link) {
+        link.setStatus(false);
+        link.setDisplay(false);
+        return toAjax(linkService.insertLink(link));
+    }
+
     @GetMapping("/tag")
     public TableDataInfo tag() {
         startPage();
@@ -188,7 +198,7 @@ public class FrontConfigController extends BaseController {
      */
     @GetMapping("comment/qqNum/{qqNum}")
     public AjaxResult getByQQNum(@PathVariable Long qqNum) {
-        String json = HttpUtils.sendGet(QQ_QUERY_URL, "uins=" + qqNum,"GBK");
+        String json = HttpUtils.sendGet(QQ_QUERY_URL, "uins=" + qqNum, "GBK");
         Map<String, String> qqInfo = new HashMap<>();
         if (!StringUtils.isEmpty(json)) {
             json = json.replaceAll("portraitCallBack|\\\\s*|\\t|\\r|\\n", "");
