@@ -82,7 +82,7 @@
         select b.id, b.category_id, b.title, b.summary,b.weight, b.header_img, b.status,b.support,b.like,b.click,
         b.comment, b.create_time,b.update_time,count(c.id) as comment_count
         from bg_blog b left join bg_comment c
-        on b.id=c.page_id
+        on b.id=c.page_id and c.delete_time is null
         where b.delete_time is null
         <if test="categoryId != null">
             AND b.category_id =#{categoryId}

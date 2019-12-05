@@ -1,80 +1,69 @@
 <template>
-    <Form ref="form" :model="form" :rules="rules">
-        <div class="custom-mavon-editor">
-            <div class="operate">
-                <Row>
-                    <Col :xs="10" :sm="10" :md="10" :lg="10" style="padding-left: 0; padding-right: 7.5px;">
-                        <FormItem prop="qqNum">
-                            <Input placeholder="推荐输入QQ号码自动填充" v-model="form.qqNum" clearable @on-blur="getInfoByQQ"
-                                   :disabled="!post.comment"
-                                   number
-                                   size="default">
-                                <span slot="prepend">Q  Q</span>
-                            </Input>
-                        </FormItem>
-                    </Col>
-                    <Col :xs="4" :sm="4" :md="4" :lg="4" style="padding-left: 0; padding-right: 0;">
-                        <FormItem prop="avatar">
-                            <Avatar icon="ios-person" :src="form.avatar==undefined?'':form.avatar"/>
-                        </FormItem>
-                    </Col>
-                    <Col :xs="10" :sm="10" :md="10" :lg="10">
-                        <FormItem prop="nickName">
-                            <Input v-model="form.nickName" placeholder="请输入昵称" size="default" :disabled="!post.comment">
-                                <span slot="prepend">昵称</span>
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <br>
-                <Row>
-                    <Col :xs="10" :sm="10" :md="10" :lg="10">
-                        <FormItem prop="email">
-                            <Input v-model="form.email" placeholder="请输入邮箱" size="default" :disabled="!post.comment">
-                                <span slot="prepend">邮箱</span>
-                            </Input>
-                        </FormItem>
-                    </Col>
-                    <Col :xs="4" :sm="4" :md="4" :lg="4">
-                        <FormItem prop="reply">
-                            <Checkbox v-model="form.reply" style=" margin: 5% 8%;" :disabled="!post.comment">邮件通知</Checkbox>
-                        </FormItem>
-                    </Col>
-                </Row>
+    <div class="custom-mavon-editor">
+        <div class="operate">
+            <Row>
+                <Col :xs="10" :sm="10" :md="10" :lg="10" style="padding-left: 0; padding-right: 7.5px;">
+                    <Input placeholder="推荐输入QQ号码自动填充" v-model="form.qqNum" clearable @on-blur="getInfoByQQ"
+                           :disabled="!post.comment"
+                           number
+                           size="default">
+                        <span slot="prepend">Q  Q</span>
+                    </Input>
+                </Col>
+                <Col :xs="4" :sm="4" :md="4" :lg="4" style="padding-left: 0; padding-right: 0;">
+                    <Avatar icon="ios-person" :src="form.avatar==undefined?'':form.avatar"/>
+                </Col>
+                <Col :xs="10" :sm="10" :md="10" :lg="10">
+                    <Input v-model="form.nickName" placeholder="请输入昵称" size="default" :disabled="!post.comment">
+                        <span slot="prepend">昵称</span>
+                    </Input>
+                </Col>
+            </Row>
+            <br>
+            <Row>
+                <Col :xs="10" :sm="10" :md="10" :lg="10">
+                    <Input v-model="form.email" placeholder="请输入邮箱" size="default" :disabled="!post.comment">
+                        <span slot="prepend">邮箱</span>
+                    </Input>
+                </Col>
+                <Col :xs="4" :sm="4" :md="4" :lg="4">
+                    <Checkbox v-model="form.reply" style=" margin: 5% 8%;" :disabled="!post.comment">邮件通知</Checkbox>
+                </Col>
+            </Row>
+        </div>
+
+        <div class="editor-area">
+            <Spin size="large" v-if="!post.comment" fix style="z-index: 1001;">
+                {{ post.comment ? '' : "该文章关闭了评论功能" }}
+            </Spin>
+            <mavon-editor v-model="form.content"
+                          v-if="showEditor"
+                          style="height: 100%; min-height: 50px; min-width: 200px; z-index: 1000;"
+                          :codeStyle="codeStyle"
+                          :editable="post.comment"
+                          :toolbarsFlag="toolbarsFlag"
+                          :subfield="false"
+                          placeholder="请输入评论"
+                          :toolbars="toolbars"
+                          @change="change"
+                          ref="mavonEditor"></mavon-editor>
+        </div>
+        <div class="bottom-area">
+            <div class="comment-tip">
+                <a href="https://guides.github.com/features/mastering-markdown/" target="_blank">
+                    <Icon type="logo-markdown"/>
+                    支持Markdown
+                </a>
             </div>
-            <div class="editor-area">
-                <Spin size="large" v-if="!post.comment" fix style="z-index: 1001;">
-                    {{ post.comment ? '' : "该文章关闭了评论功能" }}
-                </Spin>
-                <mavon-editor v-model="form.content"
-                              v-if="showEditor"
-                              style="height: 100%; min-height: 50px; min-width: 200px; z-index: 1000;"
-                              :codeStyle="codeStyle"
-                              :editable="post.comment"
-                              :toolbarsFlag="toolbarsFlag"
-                              :subfield="false"
-                              placeholder="请输入评论"
-                              :toolbars="toolbars"
-                              @change="change"
-                              ref="mavonEditor"></mavon-editor>
-            </div>
-            <div class="bottom-area">
-                <div class="comment-tip">
-                    <a href="https://guides.github.com/features/mastering-markdown/" target="_blank">
-                        <Icon type="logo-markdown" />
-                        支持Markdown
-                    </a>
-                </div>
-                <div class="publish-area">
-                    <Button size="default" :type="buttonType" :loading="publishing" @click="send"
-                            :disabled="!post.comment">
-                        <span v-if="!publishing">发布</span>
-                        <span v-else>发布中</span>
-                    </Button>
-                </div>
+            <div class="publish-area">
+                <Button size="default" :type="buttonType" :loading="publishing" @click="send"
+                        :disabled="!post.comment">
+                    <span v-if="!publishing">发布</span>
+                    <span v-else>发布中</span>
+                </Button>
             </div>
         </div>
-    </Form>
+    </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -331,15 +320,19 @@
         width 100%
         display flex
         flex-direction column
+
         .operate
             margin-bottom 15px
             .ivu-input-group-prepend
                 background $default-border-color
+
                 span
                     color $default-desc-color
+
             .ivu-input
                 background $default-background-color
                 color $default-desc-color
+
             .i-dropdown-link
                 display block
                 height 36px
@@ -347,8 +340,10 @@
                 text-align right
                 font-size 15px
                 color $default-desc-hover-color
+
                 &:hover
                     cursor pointer
+
         .editor-area
             position relative
             flex 1
@@ -357,22 +352,29 @@
             min-height 50px
             min-width 200px
             // 编辑器区域
+
             .markdown-body
                 background $default-background-color
+
                 .v-note-op
                     background $default-background-hover-color
+
                 textarea
                     background $default-background-color
                     color $default-desc-color
+
                 .v-show-content
                     background $default-background-color
                     color $default-desc-color
+
         .bottom-area
             display flex
             padding-top 15px
             justify-content space-between
+
             .publish-area
                 display flex
+
         &.dark
             .operate
                 margin-bottom 15px
@@ -383,14 +385,17 @@
                     text-align right
                     font-size 15px
                     color $color-gradually-gray-61
+
                     &:hover
                         color $iview-secondary-warning-color
                         border-bottom 2px solid $iview-secondary-warning-color
                         cursor pointer
+
             .bottom-area
                 .comment-tip
                     a
                         color $default-link-color
+
                         &:hover
                             color $default-link-hover-color
 </style>

@@ -22,7 +22,7 @@
                     站长
                   </span>
                                     <span class="reply-icon" v-if="comment.replyNickName != undefined">
-                    <Icon type="ios-at"></Icon>
+                    &nbsp;<Icon type="ios-at"></Icon>
                   </span>
                                     <span class="reply-name" v-if="comment.replyNickName != undefined">
                     <a>{{ comment.replyNickName }}</a>
@@ -35,21 +35,21 @@
                                      v-html="comment.content"
                                      ref="content"></div>
                                 <div class="operate-area">
-                  <span class="like" @click="likeComment(comment)">
-                   <a>
-                     <Icon type="ios-heart"/>  {{ comment.good }}
-                   </a>
-                  </span>
+                                  <span class="like" @click="likeComment(comment)">
+                                   <a>
+                                     <Icon type="ios-heart"/>  {{ comment.good }}
+                                   </a>
+                                  </span>
                                     <span class="unlike" @click="unlikeComment(comment)">
-                   <a>
-                     <Icon type="ios-thumbs-down"/>    {{ comment.bad }}
-                   </a>
-                  </span>
+                                 <a>
+                                     <Icon type="ios-thumbs-down"/>    {{ comment.bad }}
+                                   </a>
+                                     </span>
                                     <span class="reply">
-                    <a @click="displayEditor">
-                        <Icon type="ios-redo"/>  回复
-                    </a>
-                  </span>
+                                    <a @click="displayEditor">
+                                        <Icon type="ios-redo"/>  回复
+                                    </a>
+                                  </span>
                                 </div>
                                 <div class="comment-area" v-show="showEditor">
                                     <div class="reply-editor" :class="{spread: spreadEditor}">
@@ -167,35 +167,27 @@
     .comment-list-cell
         position relative
         text-align left
-
         .avatar
             text-align center
-
             img
                 border-radius 100%
                 width 100%
-
         .content
             margin 5px 0 20px
-
             .title
                 font-size 0
                 margin-bottom 5px
                 line-height 18px
-
                 .name
                     a
                         font-size 15px
                         color $default-title-hover-color
                         font-weight 700
-
                         &:hover
                             text-decoration underline
-
                     &.dark-theme
                         a
                             color $iview-secondary-warning-color
-
                 .name-tag
                     font-size 10px
                     background-color $default-info-color
@@ -203,82 +195,62 @@
                     margin 0 5px
                     color #fff
                     border-radius $border-radius
-
                 .reply-icon
                     font-size 15px
                     color $default-info-color
-
                 .reply-name
                     font-size 15px
                     margin 0 5px
-
                     a
                         color $default-link-color
-
                         &:hover
                             color $default-link-hover-color
-
                     &.dark-theme
                         a
                             color $color-gradually-gray-71
-
                             &:hover
                                 color $iview-secondary-warning-color
                                 text-decoration underline
-
                 .time
                     font-size 13px
                     color $default-info-color
                     margin-left 8px
-
             .comment-main-content
                 font-size 16px
                 line-height 24px
                 margin 10px 0 15px
                 word-wrap break-word
                 word-break break-all
-
                 &.dark-theme
                     color $color-gradually-gray-71
-
         .operate-area
             margin-top 8px
             font-size 14px
-
             span
                 margin-right 10px
-
             .i-dropdown-link
                 cursor pointer
-
             .like, .unlike
                 color $default-info-color
                 font-weight 300
                 cursor pointer
-
             .reply
                 cursor pointer
-
             &.dark-theme
                 .i-dropdown-link
                     &:hover
                         color $iview-secondary-warning-color
-
                 .reply
                     a
                         color $iview-secondary-warning-color
-
         .comment-area
             margin-bottom 10px
-
             .reply-editor
                 margin-top 15px
                 height 200px
                 transition height 0.7s
-
                 &.spread
                     height 300px
-
             p.comment-tip
                 a
                     font-size 14px

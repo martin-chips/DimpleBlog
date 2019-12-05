@@ -12,4 +12,8 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/article.styl";
+  a
+    color #7e8c8d
+    text-decoration none
+    -webkit-backface-visibility hidden
 </style>

@@ -195,26 +195,34 @@
 
     body.dark
         .link-content
-            .link-title,.link-desc
+            .link-title, .link-desc
                 color $dark-info-color
+
             .ivu-card-bordered, .ivu-card-head
                 border 1px solid $dark-border-color
+
             .ivu-form-item-label
             .ivu-input
             .ivu-input-group-append
                 background $dark-background-color
                 color $dark-desc-color
+
             .ivu-card
                 background-color $dark-cell-background-color
+
             .desc
                 background $dark-background-color
                 color $dark-info-color
+
             .ivu-divider
                 color $dark-info-color
+
                 &:before, &:after
                     border-top 1px solid $dark-border-color!important
+
                 h4
                     color $dark-title-color
+
     .ivu-card-body
         padding 7px !important
 
@@ -228,6 +236,7 @@
         line-height inherit
         text-overflow ellipsis
         white-space nowrap
+
     .link-desc
         padding-bottom 3px
         overflow hidden

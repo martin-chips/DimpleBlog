@@ -117,7 +117,7 @@
         .comment-area
             .editor
                 margin 15px 0 10px
-                height 400px
+                height 200px
                 transition height 0.7s
                 &.spread
                     height 450px
