@@ -251,8 +251,8 @@
             margin-bottom 10px
             .reply-editor
                 margin-top 15px
-                height 200px
-                transition height 0.7s
+                height 250px
+                transition height 0.9s
                 &.spread
                     height 300px
             p.comment-tip

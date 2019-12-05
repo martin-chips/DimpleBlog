@@ -26,7 +26,7 @@
                         <span slot="prepend">邮箱</span>
                     </Input>
                 </Col>
-                <Col :xs="4" :sm="4" :md="4" :lg="4">
+                <Col :xs="6" :sm="6" :md="6" :lg="6">
                     <Checkbox v-model="form.reply" style=" margin: 5% 8%;" :disabled="!post.comment">邮件通知</Checkbox>
                 </Col>
             </Row>
@@ -337,17 +337,6 @@
                 background $default-background-color
                 color $default-desc-color
 
-            .i-dropdown-link
-                display block
-                height 36px
-                line-height 36px
-                text-align right
-                font-size 15px
-                color $default-desc-hover-color
-
-                &:hover
-                    cursor pointer
-
         .editor-area
             position relative
             flex 1
@@ -361,7 +350,7 @@
                 background $default-background-color
 
                 .v-note-op
-                    background $default-background-hover-color
+                    background $default-background-hover-color!important
 
                 textarea
                     background $default-background-color

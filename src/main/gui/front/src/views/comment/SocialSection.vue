@@ -117,10 +117,10 @@
         .comment-area
             .editor
                 margin 15px 0 10px
-                height 200px
-                transition height 0.7s
+                height 250px
+                transition height 0.9s
                 &.spread
-                    height 450px
+                    height 350px
         > .ivu-menu
             z-index 0
         .comment-list
