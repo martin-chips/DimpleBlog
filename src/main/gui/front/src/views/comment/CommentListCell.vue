@@ -167,6 +167,10 @@
     .comment-list-cell
         position relative
         text-align left
+        a
+            color #7e8c8d
+            text-decoration none
+            -webkit-backface-visibility hidden
         .avatar
             text-align center
             img

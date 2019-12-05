@@ -320,6 +320,10 @@
         width 100%
         display flex
         flex-direction column
+        a
+            color #7e8c8d
+            text-decoration none
+            -webkit-backface-visibility hidden
 
         .operate
             margin-bottom 15px
