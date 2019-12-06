@@ -55,10 +55,11 @@
                 </div>
             </div>
             <div class="sidebar-operate-area" @click.stop>
-                <ButtonGroup>
-                    <Button style="width:30px;" :icon="isDark ? 'ios-sunny' : 'ios-moon'"
-                            @click="toggleTheme"></Button>
-                    <Button style="width:40px;" @click="toIndex">
+                <ButtonGroup size="small">
+                    <Button style="width:30px;" :icon="isDark ? 'ios-sunny' : 'ios-moon'" ghost
+                            @click="toggleTheme">
+                    </Button>
+                    <Button style="width:40px;" icon="ios-log-in" @click="toIndex" ghost>
                     </Button>
                 </ButtonGroup>
             </div>

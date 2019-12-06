@@ -14,7 +14,6 @@
         //创建前设置
         beforeCreate () {
             document.body.classList.add("custom-scrollbar")
-            document.body.classList.add("custom-scrollbar")
         },
     };
 

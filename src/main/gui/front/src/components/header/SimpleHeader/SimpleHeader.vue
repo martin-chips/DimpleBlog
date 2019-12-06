@@ -43,9 +43,6 @@
                                 <Button style="width:30px;" :icon="isDark ? 'ios-sunny' : 'ios-moon'" ghost
                                         @click="toggleTheme">
                                 </Button>
-                                <Button style="width:30px;" icon="logo-github" ghost
-                                        @click="toggleTheme">
-                                </Button>
                                 <Button style="width:40px;" icon="ios-log-in" @click="toIndex" ghost>
                                 </Button>
                             </ButtonGroup>
