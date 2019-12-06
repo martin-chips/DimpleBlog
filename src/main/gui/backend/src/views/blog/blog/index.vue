@@ -48,16 +48,6 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="success"
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate(null)"
-        >修改
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="danger"
           icon="el-icon-delete"
           size="mini"
@@ -146,7 +136,7 @@
             <el-table v-loading="loading" :data="scope.row.commentList" style="width: 100%;">
               <el-table-column label="评论编号" align="center" prop="id"/>
               <el-table-column label="昵称" align="center" prop="nickName"/>
-              <el-table-column label="主机" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
+              <el-table-column label="主机" align="center" prop="ip" :show-overflow-tooltip="true"/>
               <el-table-column label="操作地点" align="center" prop="location"/>
               <el-table-column label="显示" align="center">
                 <template slot-scope="scope">

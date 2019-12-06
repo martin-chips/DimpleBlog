@@ -23,6 +23,9 @@ public class Carousel extends BaseEntity {
 
     @NotNull(groups = {Update.class})
     private Long id;
+
+    @NotNull(message = "标题不能为空")
+    private String title;
     /**
      * 显示文本
      */
@@ -36,7 +39,7 @@ public class Carousel extends BaseEntity {
      * 图片URL
      */
     @URL(message = "URL不合法")
-    private String imgUrl;
+    private String headerImg;
     /**
      * 是否显示
      */
@@ -45,7 +48,10 @@ public class Carousel extends BaseEntity {
     /**
      * 是否当前窗口打开
      */
-    @NotNull(message = "Target配置不能为空")
+    @NotNull(message = "target配置不能为空")
     private Boolean target;
+
+    @NotNull(message = "URL不能为空")
+    private String url;
 
 }

@@ -117,7 +117,6 @@
               .dispatch("Login", this.loginForm)
               .then(() => {
                 this.$router.push({path: this.redirect || "/"});
-                this.loading = false;
               })
               .catch(() => {
                 this.getCode();

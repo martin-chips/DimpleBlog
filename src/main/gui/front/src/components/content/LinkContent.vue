@@ -52,11 +52,11 @@
                         </div>
                     </Divider>
                     <div style="width: 60%">
-                        <Form ref="form" :model="form" :rules="rules" :label-width="100">
+                        <Form ref="form" :model="form" :rules="rules" :label-width="120">
                             <FormItem prop="url" label="网站地址">
                                 <Input v-model="form.url" placeholder="网站地址">
                                     <Tooltip content="输入网址自动查询" placement="top" slot="append">
-                                        <Button icon="ios-search"></Button>
+                                        <Button @click="searchSiteInfo()" icon="ios-search"></Button>
                                     </Tooltip>
                                 </Input>
                             </FormItem>
@@ -154,6 +154,11 @@
             });
         },
         methods: {
+            searchSiteInfo(){
+                this.$Notice.warning({
+                    title: '网站信息查询失败,请手动输入',
+                });
+            },
             handleSubmit() {
                 this.$refs['form'].validate(valid => {
                     if (valid) {

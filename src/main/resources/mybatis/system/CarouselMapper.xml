@@ -4,9 +4,11 @@
 
     <resultMap type="com.dimple.project.system.domain.Carousel" id="SysCarouselMap">
         <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="url" column="url"/>
         <result property="description" column="description"/>
         <result property="click" column="click"/>
-        <result property="imgUrl" column="img_url"/>
+        <result property="headerImg" column="header_img"/>
         <result property="display" column="display"/>
         <result property="target" column="target"/>
         <result property="createBy" column="create_by"/>
@@ -16,7 +18,7 @@
     <!--查询单个-->
     <select id="selectCarouselById" resultMap="SysCarouselMap">
         select
-          id, description, click, img_url, display, target, create_by, create_time
+          id, description, click, header_img, display, target, create_by, create_time,title,url
         from sys_carousel
         where id = #{id} and delete_time is null
     </select>
@@ -24,7 +26,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectCarouselList" resultMap="SysCarouselMap">
         select
-        id, description, click, img_url, display, target, create_by, create_time
+        id,title, description, click, header_img, display, target, create_by, create_time,url
         from sys_carousel
         where delete_time is null
         <if test="description != null and description != ''">
@@ -48,16 +50,20 @@
     <insert id="insertCarousel" keyProperty="id" useGeneratedKeys="true">
         insert into sys_carousel (
         <if test="description != null and description != '' ">description,</if>
-        <if test="imageUrl != null and imageUrl != '' ">img_url,</if>
+        <if test="headerImg != null and headerImg != '' ">header_img,</if>
         <if test="display != null and display != ''">display,</if>
         <if test="target != null and target != ''">target,</if>
+        <if test="url != null and url != ''">url,</if>
+        <if test="title != null and title != ''">title,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         )values(
         <if test="description != null and description != ''">#{description},</if>
-        <if test="imageUrl != null and imageUrl != ''">#{imageUrl},</if>
+        <if test="headerImg != null and headerImg != ''">#{headerImg},</if>
         <if test="display != null and display != ''">#{display},</if>
         <if test="target != null and target != ''">#{target},</if>
+        <if test="url != null and url != ''">#{url},</if>
+        <if test="title != null and title != ''">#{title},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )
@@ -70,17 +76,20 @@
             <if test="description != null and description != ''">
                 description = #{description},
             </if>
-            <if test="click != null">
-                click = #{click},
-            </if>
-            <if test="imgUrl != null and imgUrl != ''">
-                img_url = #{imgUrl},
+            <if test="headerImg != null and headerImg != ''">
+                header_img = #{headerImg},
             </if>
             <if test="display != null">
                 display = #{display},
             </if>
             <if test="target != null">
                 target = #{target},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
             </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},

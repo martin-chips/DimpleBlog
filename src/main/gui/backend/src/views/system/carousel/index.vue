@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
-      <el-form-item label="友链名称">
-        <el-input v-model="queryParams.title" placeholder="请输入友链名称" clearable size="small" style="width: 240px"
+      <el-form-item label="标题">
+        <el-input v-model="queryParams.title" placeholder="请输入轮播图标题" clearable size="small" style="width: 240px"
                   @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="友链描述">
-        <el-input v-model="queryParams.description" placeholder="请输入友链描述" clearable size="small" style="width: 240px"
+      <el-form-item label="描述">
+        <el-input v-model="queryParams.description" placeholder="请输入轮播图描述" clearable size="small" style="width: 240px"
                   @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="创建时间">
@@ -46,6 +46,7 @@
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
       <el-table-column label="轮播组件" align="center" prop="id"/>
+      <el-table-column label="轮播标题" align="center" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="链接地址" align="center" prop="url" :show-overflow-tooltip="true"/>
       <el-table-column label="描述内容" align="center" prop="description" :show-overflow-tooltip="true"/>
       <el-table-column label="点击次数" align="center" prop="click"/>
@@ -55,19 +56,19 @@
                      inactive-color="#ff4949"/>
         </template>
       </el-table-column>
-      <el-table-column label="图片" align="center" prop="imgUrl">
+      <el-table-column label="图片" align="center" prop="headerImg">
         <template slot-scope="scope">
           <el-image
             style="width: 30px; height: 30px"
-            :src="scope.row.imgUrl"
-            :preview-src-list="[scope.row.imgUrl]">
+            :src="scope.row.headerImg"
+            :preview-src-list="[scope.row.headerImg]">
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="当前窗口打开" align="center" prop="target">
+      <el-table-column label="新窗口打开" align="center" prop="target">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.target"
-                     @change="handleCommentChange(scope.row)"/>
+                     @change="handleTargetChange(scope.row)"/>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -100,25 +101,31 @@
 
     <!-- 添加或修改分类对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="链接地址" prop="url">
-          <el-input maxlength="128" show-word-limit v-model="form.url" placeholder="请输入链接地址"/>
+      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="form.title" placeholder="请输入标题"/>
         </el-form-item>
-        <el-form-item label="图片地址" prop="imgUrl">
-          <el-input maxlength="128" show-word-limit v-model="form.imgUrl" placeholder="请输入图片地址"/>
+        <el-form-item label="链接地址" prop="url">
+          <el-input v-model="form.url" placeholder="请输入链接地址"/>
+        </el-form-item>
+        <el-form-item label="图片地址" prop="headerImg">
+          <el-input v-model="form.headerImg" placeholder="请输入图片地址"/>
         </el-form-item>
         <el-form-item label="描述" prop="description">
-          <el-input maxlength="512" show-word-limit v-model="form.description" placeholder="请输入描述"/>
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="form.description"
+                    placeholder="请输入描述"/>
         </el-form-item>
         <el-row>
           <el-col :span="8">
             <el-form-item label="显示" prop="display">
-              <el-switch v-model="form.display" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+              <el-switch v-model="form.display" active-color="#13ce66"
+                         inactive-color="#ff4949"></el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="16">
-            <el-form-item label="当前窗口打开" prop="target">
-              <el-switch v-model="form.target" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            <el-form-item label="新窗口打开" prop="target">
+              <el-switch v-model="form.target" active-color="#13ce66"
+                         inactive-color="#ff4949"></el-switch>
             </el-form-item>
           </el-col>
         </el-row>
@@ -133,12 +140,8 @@
 
 <script>
   import {
-    listCarousel,
-    getCarousel,
     changeCarouselDisplay,
-    delCarousel,
-    addCarousel,
-    updateCarousel
+    changeCarouselTarget
   } from "@/api/system/carousel";
   import initData from '@/mixins/initData'
 
@@ -146,6 +149,10 @@
     mixins: [initData],
     data() {
       return {
+        formReset: {
+          target: false,
+          display: true
+        },
         // 查询参数
         queryParams: {
           url: undefined,
@@ -157,11 +164,15 @@
           url: [
             {required: true, message: "链接地址不能为空", trigger: "blur"}
           ],
+          title: [
+            {required: true, message: "标题不能为空", trigger: "blur"},
+            {min: 2, max: 60, message: '长度在 5 到 60 个字符', trigger: 'change'}
+          ],
           description: [
             {required: true, message: "描述不能为空", trigger: "blur"},
             {min: 5, max: 150, message: '长度在 5 到 150 个字符', trigger: 'change'}
           ],
-          imgUrl: [
+          headerImg: [
             {required: true, message: "图片地址不能为空", trigger: "blur"},
             {type: 'url', message: '请输入正确的图片地址', trigger: ['blur', 'change']}
           ]
@@ -180,7 +191,7 @@
         return true
       },
       handleDisplayChange(row) {
-        let text = row.support ? "显示" : "隐藏";
+        let text = row.display ? "显示" : "隐藏";
         this.$confirm('确认要' + text + '"' + row.title + '"数据项吗?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -195,6 +206,24 @@
           }
         }).catch(function () {
           row.display = row.display === false ? true : false;
+        });
+      },
+      handleTargetChange(row) {
+        let text = row.target ? "当前窗口打开" : "新窗口打开";
+        this.$confirm('确认要' + text + '"' + row.title + '"数据项吗?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          return changeCarouselTarget(row.id, row.target);
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess(text + "成功");
+          } else {
+            this.msgError(text + "失败");
+          }
+        }).catch(function () {
+          row.target = row.target === false ? true : false;
         });
       },
     }

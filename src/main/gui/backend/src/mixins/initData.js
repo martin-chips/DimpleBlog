@@ -14,7 +14,7 @@ export default {
       // 非多个禁用
       multiple: true,
       //选中行数据
-      row: undefined,
+      row: {},
       // 表格遮罩层
       loading: true,
       //删除按钮遮罩层
@@ -27,6 +27,8 @@ export default {
       open: false,
       // 日期范围
       dateRange: [],
+      //用来重置表单的form,有些属性清空不了
+      formReset: {},
       // 表单参数
       form: {},
       // 查询参数
@@ -105,7 +107,6 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.form = {}
       this.open = true;
       this.title = "添加" + this.modelName;
     },
@@ -114,10 +115,11 @@ export default {
       if (this.$refs[refName] == undefined) {
         refName = 'form';
       }
+      let obj = JSON.parse(JSON.stringify(this.form));
       this.$refs[refName].validate(valid => {
         if (valid) {
           if (this.form.id != undefined) {
-            update(this.base, this.form).then(response => {
+            update(this.base, obj).then(response => {
               if (response.code === 200) {
                 this.msgSuccess("修改成功");
                 this.open = false;
@@ -127,7 +129,7 @@ export default {
               }
             });
           } else {
-            add(this.base, this.form).then(response => {
+            add(this.base, obj).then(response => {
               if (response.code === 200) {
                 this.msgSuccess("新增成功");
                 this.open = false;
@@ -143,11 +145,11 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
-      this.form = {}
+      this.reset();
     },
     // 表单重置
     reset() {
-      this.resetForm("form");
+      this.form = this.formReset;
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

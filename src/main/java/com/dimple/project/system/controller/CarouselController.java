@@ -63,6 +63,26 @@ public class CarouselController extends BaseController {
         return toAjax(carouselService.updateCarousel(carousel));
     }
 
+    @PreAuthorize("@permissionService.hasPermission('system:carousel:edit')")
+    @Log(title = "轮播图管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/{id}/display/{display}")
+    public AjaxResult changeDisplay(@PathVariable Long id, @PathVariable Boolean display) {
+        Carousel carousel = new Carousel();
+        carousel.setDisplay(display);
+        carousel.setId(id);
+        return toAjax(carouselService.updateCarousel(carousel));
+    }
+
+    @PreAuthorize("@permissionService.hasPermission('system:carousel:edit')")
+    @Log(title = "轮播图管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/{id}/target/{target}")
+    public AjaxResult changeTarget(@PathVariable Long id, @PathVariable Boolean target) {
+        Carousel carousel = new Carousel();
+        carousel.setTarget(target);
+        carousel.setId(id);
+        return toAjax(carouselService.updateCarousel(carousel));
+    }
+
     @PreAuthorize("@permissionService.hasPermission('system:carousel:remove')")
     @Log(title = "轮播图管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")

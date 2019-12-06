@@ -1,35 +1,37 @@
 <template>
     <div class="custom-mavon-editor">
         <div class="operate">
-            <Row>
-                <Col :xs="10" :sm="10" :md="10" :lg="10" style="padding-left: 0; padding-right: 7.5px;">
-                    <Input placeholder="推荐输入QQ号码自动填充" v-model="form.qqNum" clearable @on-blur="getInfoByQQ"
-                           :disabled="!post.comment"
-                           number
-                           size="default">
-                        <span slot="prepend">Q  Q</span>
-                    </Input>
-                </Col>
-                <Col :xs="4" :sm="4" :md="4" :lg="4" style="padding-left: 0; padding-right: 0;">
-                    <Avatar icon="ios-person" :src="form.avatar==undefined?'':form.avatar"/>
-                </Col>
-                <Col :xs="10" :sm="10" :md="10" :lg="10">
-                    <Input v-model="form.nickName" placeholder="请输入昵称" size="default" :disabled="!post.comment">
-                        <span slot="prepend">昵称</span>
-                    </Input>
-                </Col>
-            </Row>
-            <br>
-            <Row>
-                <Col :xs="10" :sm="10" :md="10" :lg="10">
-                    <Input v-model="form.email" placeholder="请输入邮箱" size="default" :disabled="!post.comment">
-                        <span slot="prepend">邮箱</span>
-                    </Input>
-                </Col>
-                <Col :xs="6" :sm="6" :md="6" :lg="6">
-                    <Checkbox v-model="form.reply" style=" margin: 5% 8%;" :disabled="!post.comment">邮件通知</Checkbox>
-                </Col>
-            </Row>
+            <Form>
+                <Row>
+                    <Col :xs="10" :sm="10" :md="10" :lg="10" style="padding-left: 0; padding-right: 7.5px;">
+                        <Input placeholder="推荐输入QQ号码自动填充" v-model="form.qqNum" clearable @on-blur="getInfoByQQ"
+                               :disabled="!post.comment"
+                               number
+                               size="default">
+                            <span slot="prepend">Q  Q</span>
+                        </Input>
+                    </Col>
+                    <Col :xs="4" :sm="4" :md="4" :lg="4" style="padding-left: 0; padding-right: 0;">
+                        <Avatar icon="ios-person" :src="form.avatar==undefined?'':form.avatar"/>
+                    </Col>
+                    <Col :xs="10" :sm="10" :md="10" :lg="10">
+                        <Input v-model="form.nickName" placeholder="请输入昵称" size="default" :disabled="!post.comment">
+                            <span slot="prepend">昵称</span>
+                        </Input>
+                    </Col>
+                </Row>
+                <br>
+                <Row>
+                    <Col :xs="10" :sm="10" :md="10" :lg="10">
+                        <Input v-model="form.email" placeholder="请输入邮箱" size="default" :disabled="!post.comment">
+                            <span slot="prepend">邮箱</span>
+                        </Input>
+                    </Col>
+                    <Col :xs="6" :sm="6" :md="6" :lg="6">
+                        <Checkbox v-model="form.reply" style=" margin: 5% 8%;" :disabled="!post.comment">邮件通知</Checkbox>
+                    </Col>
+                </Row>
+            </Form>
         </div>
 
         <div class="editor-area">
@@ -87,7 +89,8 @@
                 Type: Object,
                 default: undefined
             },
-            replyId: {}, parentId: {},
+            replyId: {},
+            parentId: {},
             url: {
                 default: window.location.href
             }
@@ -266,35 +269,49 @@
                 }
             },
             send() {
-                this.$refs['form'].validate(valid => {
-                    if (valid) {
-                        let that = this;
-                        this.form.htmlContent = marked(this.form.content);
-                        this.form.replyId = this.replyId;
-                        this.form.parentId = this.parentId;
-                        this.form.pageId = this.post.id;
-                        this.form.url = this.url;
-                        let obj = JSON.parse(JSON.stringify(this.form));
-                        insertComment(obj).then((response) => {
-                            if (response.code == 200) {
-                                // 清空评论框内容
-                                this.form = {};
-                                this.$Message.success("评论成功");
-                                this.$emit('reloadCommentList');
-                            } else {
-                                this.msgError("评论失败,请重新再试!");
-                            }
-                            // 关闭loading状态
-                            this.publishing = false;
-                        }).catch((error) => {
-                            console.log(error);
-                            // 关闭loading状态
-                            that.publishing = false;
-                            that.msgError("评论失败");
-                        });
+                if (this.form.nickName.length === 0) {
+                    this.$Notice.warning({
+                        title: '您需要填写昵称',
+                    });
+                    return;
+                }
+                if (this.form.email.length === 0) {
+                    this.$Notice.warning({
+                        title: '您需要填写邮箱',
+                    });
+                    return;
+                }
+                if (this.form.content.length === 0) {
+                    this.$Notice.warning({
+                        title: '您需要填写内容',
+                    });
+                    return;
+                }
+                let that = this;
+                this.form.htmlContent = marked(this.form.content);
+                this.form.replyId = this.replyId;
+                this.form.parentId = this.parentId;
+                this.form.pageId = this.post.id;
+                this.form.url = this.url;
+                let obj = JSON.parse(JSON.stringify(this.form));
+                insertComment(obj).then((response) => {
+                    if (response.code == 200) {
+                        // 清空评论框内容
+                        this.form = {};
+                        this.$Message.success("评论成功");
+                        this.$emit('reloadCommentList');
+                    } else {
+                        this.msgError("评论失败,请重新再试!");
                     }
+                    // 关闭loading状态
+                    this.publishing = false;
+                }).catch((error) => {
+                    console.log(error);
+                    // 关闭loading状态
+                    that.publishing = false;
+                    that.msgError("评论失败");
                 });
-            },
+            }
         },
         mounted() {
             // 显示编辑器
