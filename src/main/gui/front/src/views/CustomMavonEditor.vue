@@ -327,7 +327,7 @@
 
         .operate
             margin-bottom 15px
-            .ivu-input-group-prepend
+            .ivu-input-group-prepend,
                 background $default-border-color
 
                 span

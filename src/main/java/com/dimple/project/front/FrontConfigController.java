@@ -18,7 +18,9 @@ import com.dimple.project.blog.service.CommentService;
 import com.dimple.project.blog.service.TagService;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.front.domain.FrontMenu;
+import com.dimple.project.system.domain.Carousel;
 import com.dimple.project.system.domain.Link;
+import com.dimple.project.system.service.CarouselService;
 import com.dimple.project.system.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -210,5 +212,16 @@ public class FrontConfigController extends BaseController {
             qqInfo.put("nickName", array.getString(6));
         }
         return AjaxResult.success(qqInfo);
+    }
+
+    @Autowired
+    CarouselService carouselService;
+
+    @GetMapping("carousel")
+    public AjaxResult getCarousel() {
+        Carousel carousel = new Carousel();
+        carousel.setDisplay(true);
+        List<Carousel> carouselList = carouselService.selectCarouselList(carousel);
+        return AjaxResult.success(carouselList);
     }
 }

@@ -1,5 +1,11 @@
 <template>
     <div class="home-content layout-content">
+        <div class="banner" style="margin-bottom:20px;">
+            <div class="bracket"></div>
+            <div class="target">
+                <HomeBanner></HomeBanner>
+            </div>
+        </div>
         <Row>
             <Col :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
                 <div class="layout-left">
@@ -39,6 +45,7 @@
     import FriendLinks from "../../views/FriendLinks";
     import Hot from "../../views/Hot";
     import Recommend from "../../views/Recommend";
+    import HomeBanner from "../../views/HomeBanner";
 
     export default {
         name: 'home-content',
@@ -120,11 +127,30 @@
             },
         },
         components: {
-            SectionTitle, ArticleListCell, About, TagWall, FriendLinks, Hot, Recommend
+            SectionTitle, ArticleListCell, About, TagWall, FriendLinks, Hot, Recommend,HomeBanner
         }
     };
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
+    .home-content
+        .banner
+            position relative
+            width 100%
+            overflow hidden
 
+            .bracket
+                margin-top 25%
+                @media only screen and (max-width: $responsive-sm)
+                    margin-top 38%
+
+            .target
+                position absolute
+                top 0
+                bottom 0
+                left 0
+                right 0
+
+        .thumb-cards
+            margin-top 15px
 </style>

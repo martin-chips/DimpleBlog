@@ -5,7 +5,8 @@ export default {
   state: {
     articles: [],
     totalCount: 0,
-    noMoreData: false
+    noMoreData: false,
+    bannerArticles: [],
   },
   mutations: {
     UPDATE_ARTICLES_BASE_INFO(state, datas) {
@@ -16,11 +17,15 @@ export default {
       }));
       // 判断是否还有更多
       state.noMoreData = state.totalCount >= datas.total;
+      state.bannerArticles = state.bannerArticles.concat(datas.rows.filter((article) => {
+        return article.support;
+      }));
     },
     CLEAR_ARTICLES_BASE_INFO(state) {
       state.articles = [];
       state.totalCount = 0;
       state.noMoreData = false;
+      state.bannerArticles = [];
     }
   },
   actions: {

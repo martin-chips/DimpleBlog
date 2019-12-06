@@ -87,7 +87,8 @@
             ...mapState({
                 // categories: state => state.base.categories,
                 articles: state => state.articleHome.articles,
-                noMoreData: state => state.articleHome.noMoreData
+                noMoreData: state => state.articleHome.noMoreData,
+                bannerArticles: state => state.articleHome.bannerArticles,
             }),
             categories() {
                 return this.$store.state.base.categories;
@@ -180,24 +181,4 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
     @import "../../common/stylus/theme.styl";
-    .article-home-content
-        .banner
-            position relative
-            width 100%
-            overflow hidden
-
-            .bracket
-                margin-top 25%
-                @media only screen and (max-width: $responsive-sm)
-                    margin-top 38%
-
-            .target
-                position absolute
-                top 0
-                bottom 0
-                left 0
-                right 0
-
-        .thumb-cards
-            margin-top 15px
 </style>

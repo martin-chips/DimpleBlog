@@ -141,3 +141,11 @@ export function insertComment(comment) {
         data: comment
     })
 }
+
+//获取轮播图
+export function listCarousel() {
+    return request({
+        url: '/f/carousel',
+        method: 'get',
+    })
+}

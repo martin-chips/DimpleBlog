@@ -7,8 +7,8 @@
             <img :src="friendLink.headerImg"
                  :class="{'no-pic': friendLink.headerImg === null || friendLink.headerImg.length === 0}" alt="">
             <div class="right">
-              <p class="title">{{ friendLink.title }}</p>
-              <p class="link" >{{ friendLink.description }}</p>
+              <p class="title" :title="friendLink.title">{{ friendLink.title }}</p>
+              <p class="link" :title="friendLink.description">{{ friendLink.description }}</p>
             </div>
           </a>
         </li>
