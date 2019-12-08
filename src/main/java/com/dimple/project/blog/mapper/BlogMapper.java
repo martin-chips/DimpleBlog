@@ -92,4 +92,11 @@ public interface BlogMapper {
      */
     Blog selectBlogByIdQuery(Long id);
 
+    /**
+     * 根据categoryId获取所有的blog
+     *
+     * @param ids category ids
+     * @return blog list
+     */
+    List<Blog> selectBlogListByCategoryIds(@Param("ids") List<Long> ids);
 }

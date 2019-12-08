@@ -8,7 +8,8 @@
                         <Col :xs="cellLeftSpan('xs')" :sm="cellLeftSpan('sm')" :md="cellLeftSpan('md')"
                              :lg="cellLeftSpan('lg')" :xl="cellLeftSpan('xl')">
                             <div class="avatar">
-                                <img :src="comment.avatar" alt="">
+                                <img src="../../assets/default_head_img.gif" v-if="comment.avatar==undefined"  alt="">
+                                <img :src="comment.avatar" v-else alt="">
                             </div>
                         </Col>
                         <Col :xs="cellRightSpan('xs')" :sm="cellRightSpan('sm')" :md="cellRightSpan('md')"

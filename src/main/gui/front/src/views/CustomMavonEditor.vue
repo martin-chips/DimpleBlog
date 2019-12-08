@@ -40,6 +40,7 @@
             </Spin>
             <mavon-editor v-model="form.content"
                           v-if="showEditor"
+                          :autofocus="false"
                           style="height: 100%; min-height: 50px; min-width: 200px; z-index: 1000;"
                           :codeStyle="codeStyle"
                           :editable="post.comment"

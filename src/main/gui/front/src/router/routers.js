@@ -8,6 +8,7 @@ import TimeLineContent from "../components/content/TimeLineContent";
 import ArticleContent from "../components/content/ArticleContent";
 import LinkContent from "../components/content/LinkContent";
 import Error404 from "../views/error/Error404";
+import LeaveCommentContent from "../components/content/LeaveCommentContent";
 export default [
     {
         path: '/',
@@ -35,7 +36,7 @@ export default [
                 name: 'articles/category',
                 components: {
                     header: SimpleHeader,
-                    content: ArticleHomeContent,
+                    content: LeaveCommentContent,
                     footer: Footer
                 },
                 meta: {
@@ -54,10 +55,15 @@ export default [
                     title: '文章列表',
                 }
             },
-            // {
-            //     path: '/leaveComment',
-            //     component: () => import('@/views/front/leaveComment'),
-            // },
+            {
+                path: '/leaveComment',
+                name: 'leaveComment',
+                components: {
+                    header: SimpleHeader,
+                    content: LinkContent,
+                    footer: Footer
+                },
+            },
             // {
             //     path: '/about',
             //     component: () => import('@/views/front/about'),

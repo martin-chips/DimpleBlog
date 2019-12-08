@@ -105,6 +105,16 @@
         where b.id = #{id} and b.delete_time is null and b.status=1
     </select>
 
+
+    <select id="selectBlogListByCategoryIds" resultMap="BlogResultWithoutContent">
+        select  id ,category_id, title,summary,weight, header_img, status,support,comment, create_by, create_time
+        from bg_blog
+        where delete_time is null and category_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
     <insert id="insertBlog" useGeneratedKeys="true" keyProperty="id">
         insert into bg_blog
         <trim prefix="(" suffix=")" suffixOverrides=",">

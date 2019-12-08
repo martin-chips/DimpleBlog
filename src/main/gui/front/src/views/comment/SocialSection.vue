@@ -12,8 +12,8 @@
             </div>
         </div>
 
-        <div class="comment-list" v-if="comments.length > 0">
-            <div v-for="comment in comments" :key="comment.id">
+        <div class="comment-list" v-if="article.commentList.length>0">
+            <div v-for="comment in article.commentList" :key="comment.id">
                 <comment-cell-list :post="article"
                                    :commentLevel="1"
                                    @reloadCommentList="getCommentInfo"
@@ -33,7 +33,7 @@
 
     import CustomMavonEditor from '../CustomMavonEditor';
     import CommentListCell from './CommentListCell';
-    import {listComment, goodComment, badComment} from '@/api'
+    import {listComment} from '@/api'
 
     const COMMENT_DEFAULT_LIMIT = 10;
     export default {
@@ -46,27 +46,14 @@
         },
         data() {
             return {
-                comments: [],
                 spreadEditor: false,
                 showSpin: true,
             };
         },
-        watch: {
-            article: function (val) {
-                if (val != undefined) {
-                    this.$nextTick(() => {
-                        this.getCommentInfo()
-                    });
-                }
-            }
-        },
         methods: {
             getCommentInfo() {
-                if (this.article == undefined) {
-                    return
-                }
-                listComment(this.article.id).then((response) => {
-                    this.comments = response.data;
+                listComment(this.$route.params.id).then((response) => {
+                    this.article.commentList = response.data;
                     this.showSpin = false;
                 }).catch((error) => {
                     console.log(error);

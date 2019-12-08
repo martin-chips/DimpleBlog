@@ -33,14 +33,14 @@ public class Blog extends BaseEntity {
     /**
      * 文章标题
      */
-    @Length(min = 3, max = 50, message = "文章标题不能为空，且长度为{min}~{max}个字符", groups = {Publish.class, Draft.class})
+    @Length(min = 3, max = 100, message = "文章标题不能为空，且长度为{min}~{max}个字符", groups = {Publish.class, Draft.class})
     private String title;
 
     /**
      * 摘要
      */
     @NotNull(message = "摘要不能为空", groups = {Publish.class})
-    @Length(min = 10, max = 150, message = "摘要长度为{min}~{max}个字符", groups = {Publish.class})
+    @Length(min = 10, max = 250, message = "摘要长度为{min}~{max}个字符", groups = {Publish.class})
     private String summary;
 
     /**

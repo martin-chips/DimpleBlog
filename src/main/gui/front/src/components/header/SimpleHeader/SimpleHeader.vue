@@ -4,13 +4,13 @@
             <header>
                 <div id="mobile-bar">
                     <router-link class="logo" to="/">
-                        <img src="https://bianxiaofeng.com/front/images/logo.png"/>
+                        <img src="../../../assets/logo.png"/>
                     </router-link>
                     <a class="menu-button" @click="showMobileMenu"></a>
                 </div>
                 <div id="header" class="show">
                     <router-link id="logo" to="/">
-                        <img src="https://bianxiaofeng.com/front/images/logo.png">
+                        <img src="../../../assets/logo.png">
                         <div class="info">
                             <span class="name">{{$store.state.settings.F_Title}}}</span>
                             <span class="desc">{{$store.state.settings.F_Title_Desc}}</span>

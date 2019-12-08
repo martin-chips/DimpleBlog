@@ -132,11 +132,11 @@
         rules: {
           title: [
             {required: true, message: "文章标题不能为空", trigger: "blur"},
-            {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'change'}
+            {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'change'}
           ],
           summary: [
             {required: true, message: "文章摘要不能为空", trigger: "blur"},
-            {min: 10, max: 150, message: '长度在 10 到 150 个字符', trigger: 'change'}
+            {min: 10, max: 250, message: '长度在 10 到 250 个字符', trigger: 'change'}
           ],
           categoryId: [
             {required: true, message: "文章分类不能为空", trigger: "change"}
