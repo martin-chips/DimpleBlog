@@ -54,12 +54,13 @@
                                 </div>
                                 <div class="comment-area" v-show="showEditor">
                                     <div class="reply-editor" :class="{spread: spreadEditor}">
-                                        <custom-mavon-editor :post="post"
-                                                             :replyId="comment.id"
-                                                             :parentId="commentLevel==1?comment.id:comment.parentId"
-                                                             :replyToComment="comment"
-                                                             @valueChanged="valueChanged"
-                                                             @reloadCommentList="reloadCommentList"></custom-mavon-editor>
+                                        <CustomMavonEditor :pageId="pageId"
+                                                           :allowComment="allowComment"
+                                                           :replyId="comment.id"
+                                                           :parentId="commentLevel==1?comment.id:comment.parentId"
+                                                           :replyToComment="comment"
+                                                           @valueChanged="valueChanged"
+                                                           @reloadCommentList="reloadCommentList"></CustomMavonEditor>
                                     </div>
                                 </div>
                             </div>
@@ -90,10 +91,14 @@
         'lg': 24 - CELL_LEFT_SPAN['lg']
     };
     export default {
-        name: 'comment-list-cell',
+        name: 'CommentListCell',
         props: {
-            post: {
-                Type: Object,
+            pageId: {
+                type: Number,
+                default: undefined
+            },
+            allowComment:{
+                type:Boolean,
                 default: undefined
             },
             comment: {
@@ -157,7 +162,7 @@
             }
         },
         components: {
-            'custom-mavon-editor': CustomMavonEditor
+             CustomMavonEditor
         }
     };
 </script>

@@ -5,8 +5,6 @@
                 <Row>
                     <Col :xs="10" :sm="10" :md="10" :lg="10" style="padding-left: 0; padding-right: 7.5px;">
                         <Input placeholder="推荐输入QQ号码自动填充" v-model="form.qqNum" clearable @on-blur="getInfoByQQ"
-                               :disabled="!post.comment"
-                               number
                                size="default">
                             <span slot="prepend">Q  Q</span>
                         </Input>
@@ -15,7 +13,7 @@
                         <Avatar icon="ios-person" :src="form.avatar==undefined?'':form.avatar"/>
                     </Col>
                     <Col :xs="10" :sm="10" :md="10" :lg="10">
-                        <Input v-model="form.nickName" placeholder="请输入昵称" size="default" :disabled="!post.comment">
+                        <Input v-model="form.nickName" placeholder="(必填)请输入昵称" size="default">
                             <span slot="prepend">昵称</span>
                         </Input>
                     </Col>
@@ -23,27 +21,27 @@
                 <br>
                 <Row>
                     <Col :xs="10" :sm="10" :md="10" :lg="10">
-                        <Input v-model="form.email" placeholder="请输入邮箱" size="default" :disabled="!post.comment">
+                        <Input v-model="form.email" placeholder="(必填)请输入邮箱" size="default">
                             <span slot="prepend">邮箱</span>
                         </Input>
                     </Col>
                     <Col :xs="6" :sm="6" :md="6" :lg="6">
-                        <Checkbox v-model="form.reply" style=" margin: 5% 8%;" :disabled="!post.comment">邮件通知</Checkbox>
+                        <Checkbox v-model="form.reply" style=" margin: 5% 8%;">邮件通知</Checkbox>
                     </Col>
                 </Row>
             </Form>
         </div>
 
         <div class="editor-area">
-            <Spin size="large" v-if="!post.comment" fix style="z-index: 1001;">
-                {{ post.comment ? '' : "该文章关闭了评论功能" }}
+            <Spin size="large" v-if="!allowComment" fix style="z-index: 1001;">
+                {{ allowComment ? '' : "该文章关闭了评论功能" }}
             </Spin>
             <mavon-editor v-model="form.content"
                           v-if="showEditor"
                           :autofocus="false"
                           style="height: 100%; min-height: 50px; min-width: 200px; z-index: 1000;"
                           :codeStyle="codeStyle"
-                          :editable="post.comment"
+                          :editable="allowComment"
                           :toolbarsFlag="toolbarsFlag"
                           :subfield="false"
                           placeholder="请输入评论"
@@ -60,7 +58,7 @@
             </div>
             <div class="publish-area">
                 <Button size="default" :type="buttonType" :loading="publishing" @click="send"
-                        :disabled="!post.comment">
+                        :disabled="!allowComment">
                     <span v-if="!publishing">发布</span>
                     <span v-else>发布中</span>
                 </Button>
@@ -80,18 +78,33 @@
     import marked from "marked";
 
     export default {
-        name: 'custom-mavon-editor',
+        name: 'CustomMavonEditor',
         props: {
-            post: {
-                Type: Object,
+            //页面Id
+            pageId: {
+                type: Number,
                 default: undefined
             },
+            //是否允许评论
+            allowComment: {
+                type: Boolean,
+                default: undefined
+            },
+            //回复评论的级别
             replyToComment: {
                 Type: Object,
                 default: undefined
             },
-            replyId: {},
-            parentId: {},
+            //回复的commentId
+            replyId: {
+                Type: Number,
+                default: undefined
+            },
+            //回复的父级Id
+            parentId: {
+                Type: Number,
+                default: undefined
+            },
             url: {
                 default: window.location.href
             }
@@ -292,7 +305,7 @@
                 this.form.htmlContent = marked(this.form.content);
                 this.form.replyId = this.replyId;
                 this.form.parentId = this.parentId;
-                this.form.pageId = this.post.id;
+                this.form.pageId = this.pageId;
                 this.form.url = this.url;
                 let obj = JSON.parse(JSON.stringify(this.form));
                 insertComment(obj).then((response) => {
@@ -323,6 +336,7 @@
             window.onresize = function temp() {
                 that.listenWindowWidth();
             };
+            console.log(typeof this.comment)
         },
         components: {
             'mavon-editor': MavonEditor.mavonEditor

@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
@@ -33,12 +32,12 @@ public class Comment extends BaseEntity {
     /**
      * 昵称
      */
+    @NotNull(message = "昵称不能为空")
     @Length(min = 1, max = 100, message = "昵称长度为{min}~{max}个字符")
     private String nickName;
     /**
      * IP地址
      */
-    @Pattern(regexp = "^((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}$", message = "IP地址不合法")
     private String ip;
     /**
      * 地理位置
@@ -102,6 +101,7 @@ public class Comment extends BaseEntity {
     /**
      * Html评论内容
      */
+    @NotNull(message = "内容不能为空")
     private String htmlContent;
     /**
      * true代表为站长回复,false代表不是

@@ -60,7 +60,7 @@ export default [
                 name: 'leaveComment',
                 components: {
                     header: SimpleHeader,
-                    content: LinkContent,
+                    content: LeaveCommentContent,
                     footer: Footer
                 },
             },

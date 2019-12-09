@@ -1,29 +1,32 @@
 <template>
-    <div class="social-section" id="comments" v-if="article != undefined" ref="socialSection">
-        <i size="large" v-if="showSpin" fix style="z-index: 99;"></i>
+    <div class="social-section" id="comments" v-if="pageId != undefined" ref="socialSection">
+        <Spin size="large" v-if="showSpin" fix style="z-index: 101;"><Slot></Slot></Spin>
 
         <div class="comment-area">
             <div class="editor" :class="{spread: spreadEditor}">
-                <custom-mavon-editor :post="article"
-                                     :replyId="undefined"
-                                     :parentId="undefined"
-                                     @valueChanged="valueChanged"
-                                     @reloadCommentList="getCommentInfo"></custom-mavon-editor>
+                <CustomMavonEditor :pageId="pageId"
+                                   :replyId="undefined"
+                                   :allowComment="allowComment"
+                                   :parentId="undefined"
+                                   @valueChanged="valueChanged"
+                                   @reloadCommentList="getCommentInfo"/>
             </div>
         </div>
 
-        <div class="comment-list" v-if="article.commentList.length>0">
-            <div v-for="comment in article.commentList" :key="comment.id">
-                <comment-cell-list :post="article"
-                                   :commentLevel="1"
-                                   @reloadCommentList="getCommentInfo"
-                                   :comment="comment"></comment-cell-list>
-                <comment-cell-list v-for="subComment in comment.subCommentList"
-                                   :key="subComment.id"
-                                   :post="article"
-                                   @reloadCommentList="getCommentInfo"
-                                   :commentLevel="2"
-                                   :comment="subComment"></comment-cell-list>
+        <div class="comment-list" v-if="commentList.length>0">
+            <div v-for="comment in commentList" :key="comment.id">
+                <CommentListCell :pageId="pageId"
+                                 :commentLevel="1"
+                                 :allowComment="allowComment"
+                                 @reloadCommentList="getCommentInfo"
+                                 :comment="comment"/>
+                <CommentListCell v-for="subComment in comment.subCommentList"
+                                 :key="subComment.id"
+                                 :allowComment="allowComment"
+                                 :pageId="pageId"
+                                 @reloadCommentList="getCommentInfo"
+                                 :commentLevel="2"
+                                 :comment="subComment"/>
             </div>
         </div>
     </div>
@@ -37,10 +40,18 @@
 
     const COMMENT_DEFAULT_LIMIT = 10;
     export default {
-        name: 'social-section',
+        name: 'SocialSection',
         props: {
-            article: {
-                Type: Object,
+            pageId: {
+                Type: Number,
+                default: undefined
+            },
+            commentList: {
+                type: Array,
+                default: undefined
+            },
+            allowComment: {
+                type: Boolean,
                 default: undefined
             }
         },
@@ -52,8 +63,8 @@
         },
         methods: {
             getCommentInfo() {
-                listComment(this.$route.params.id).then((response) => {
-                    this.article.commentList = response.data;
+                listComment(this.pageId).then((response) => {
+                    this.commentList = response.data;
                     this.showSpin = false;
                 }).catch((error) => {
                     console.log(error);
@@ -64,8 +75,7 @@
             }
         },
         components: {
-            'custom-mavon-editor': CustomMavonEditor,
-            'comment-cell-list': CommentListCell,
+             CustomMavonEditor,CommentListCell,
         }
     };
 </script>

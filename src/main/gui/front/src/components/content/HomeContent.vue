@@ -1,9 +1,9 @@
 <template>
     <div class="home-content layout-content">
-        <div class="banner" style="margin-bottom:20px;">
+        <div class="banner" style="margin-bottom:20px;" v-if="carouselList.length>0">
             <div class="bracket"></div>
             <div class="target">
-                <HomeBanner></HomeBanner>
+                <HomeBanner :carouselList="carouselList"></HomeBanner>
             </div>
         </div>
         <Row>
@@ -46,11 +46,14 @@
     import Hot from "../../views/Hot";
     import Recommend from "../../views/Recommend";
     import HomeBanner from "../../views/HomeBanner";
+    import {listCarousel} from '@/api'
+
 
     export default {
         name: 'home-content',
         data() {
             return {
+                carouselList: [],
                 // 文章
                 mostComment: undefined,
                 hot: undefined,
@@ -71,6 +74,9 @@
             }
         },
         beforeMount() {
+            listCarousel().then(response=>{
+                this.carouselList = response.data;
+            });
             if (this.$store.state.home.articles.length === 0) {
                 this.getArticlesBaseInfo({
                     params: {
@@ -84,6 +90,10 @@
             }
         },
         mounted() {
+            this.$Modal.info({
+                title: 'title',
+                content:'content'
+            })
             // 更新首页meta信息
             // this.updateHomeMeta();
         },

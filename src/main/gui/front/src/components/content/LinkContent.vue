@@ -243,7 +243,7 @@
         white-space nowrap
 
     .link-desc
-        padding-bottom 3px
+        /*padding-bottom 3px*/
         overflow hidden
         display inline
         text-overflow ellipsis

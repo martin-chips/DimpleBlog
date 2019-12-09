@@ -43,7 +43,6 @@
     import 'swiper/dist/css/swiper.css'
 
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
-    import {listCarousel} from '@/api'
 
     export default {
         name: 'article-home-banner',
@@ -51,10 +50,15 @@
             swiper,
             swiperSlide
         },
+        props: {
+            carouselList: {
+                type: Array,
+                default: undefined
+            }
+        },
         mixins: [mixin],
         data() {
             return {
-                list: [],
                 leftSwiperOption: {
                     lazy: true,
                     centeredSlides: true,
@@ -79,11 +83,6 @@
                 }
             };
         },
-        created() {
-            listCarousel().then(response=>{
-                this.list = response.data;
-            });
-        },
         mounted() {
             this.$nextTick(() => {
                 const rightSwiper = this.$refs.rightSwiper.swiper;
@@ -92,10 +91,6 @@
                 leftSwiper.controller.control = rightSwiper;
             })
         },
-        methods: {
-            gotoPostDetail(post) {
-            }
-        }
     };
 </script>
 

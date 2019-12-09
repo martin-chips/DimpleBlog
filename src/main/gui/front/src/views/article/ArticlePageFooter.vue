@@ -1,7 +1,9 @@
 <template>
   <div class="article-page-footer" v-if="article != undefined">
-    <license-tag :license="article.license"></license-tag>
-    <social-section :article="article"></social-section>
+    <LicenseTag :license="article.license"/>
+    <SocialSection :pageId="article.id"
+                   :commentList="article.commentList"
+                   :allowComment="article.comment"/>
   </div>
 </template>
 
@@ -18,8 +20,7 @@
       }
     },
     components: {
-      'license-tag': LicenseTag,
-      'social-section': SocialSection
+      LicenseTag, SocialSection
     }
   };
 </script>

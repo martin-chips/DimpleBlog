@@ -31,7 +31,7 @@ import {
     Avatar,
     Card,
     Divider,
-    DatePicker
+    DatePicker,
 } from 'view-design'
 
 Vue.component('Row', Row)
