@@ -9,8 +9,33 @@
 </template>
 
 <script>
+    import {listNotice} from "@/api"
     export default {
         name: 'index',
+
+        created() {
+            listNotice().then(response => {
+                let list = response.data;
+                for (let i = 0; i < list.length; i++) {
+                    let obj = list[i];
+                    //通知
+                    if (obj.noticeType === "1") {
+                        this.$Notice.info({
+                            title: obj.noticeTitle,
+                            desc: obj.noticeContent
+                        });
+                    } else {
+                        //公告
+                        this.$Modal.info({
+                            title: obj.noticeTitle,
+                            content: obj.noticeContent,
+                            okText:'我知道了',
+                            scrollable:true,
+                        })
+                    }
+                }
+            });
+        },
         //创建前设置
         beforeCreate () {
             document.body.classList.add("custom-scrollbar")

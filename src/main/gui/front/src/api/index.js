@@ -149,3 +149,11 @@ export function listCarousel() {
         method: 'get',
     })
 }
+
+//获取提示
+export function listNotice() {
+    return request({
+        url: '/f/notice',
+        method: 'get',
+    })
+}

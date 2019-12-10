@@ -34,7 +34,7 @@
 
         <div class="editor-area">
             <Spin size="large" v-if="!allowComment" fix style="z-index: 1001;">
-                {{ allowComment ? '' : "该文章关闭了评论功能" }}
+                该文章关闭了评论功能
             </Spin>
             <mavon-editor v-model="form.content"
                           v-if="showEditor"

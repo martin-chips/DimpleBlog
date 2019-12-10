@@ -90,10 +90,6 @@
             }
         },
         mounted() {
-            this.$Modal.info({
-                title: 'title',
-                content:'content'
-            })
             // 更新首页meta信息
             // this.updateHomeMeta();
         },

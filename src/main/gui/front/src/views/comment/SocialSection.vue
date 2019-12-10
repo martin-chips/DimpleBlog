@@ -1,6 +1,6 @@
 <template>
     <div class="social-section" id="comments" v-if="pageId != undefined" ref="socialSection">
-        <Spin size="large" v-if="showSpin" fix style="z-index: 101;"><Slot></Slot></Spin>
+        <Spin size="large" v-if="!allowComment" fix style="z-index: 101;"><Slot></Slot></Spin>
 
         <div class="comment-area">
             <div class="editor" :class="{spread: spreadEditor}">

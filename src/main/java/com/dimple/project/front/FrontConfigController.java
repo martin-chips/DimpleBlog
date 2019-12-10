@@ -20,8 +20,10 @@ import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.front.domain.FrontMenu;
 import com.dimple.project.system.domain.Carousel;
 import com.dimple.project.system.domain.Link;
+import com.dimple.project.system.domain.Notice;
 import com.dimple.project.system.service.CarouselService;
 import com.dimple.project.system.service.LinkService;
+import com.dimple.project.system.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -223,5 +225,15 @@ public class FrontConfigController extends BaseController {
         carousel.setDisplay(true);
         List<Carousel> carouselList = carouselService.selectCarouselList(carousel);
         return AjaxResult.success(carouselList);
+    }
+
+    @Autowired
+    NoticeService noticeService;
+    @GetMapping("notice")
+    public AjaxResult getNotice() {
+        Notice notice = new Notice();
+        notice.setStatus("0");
+        List<Notice> notices = noticeService.selectNoticeList(notice);
+        return AjaxResult.success(notices);
     }
 }
