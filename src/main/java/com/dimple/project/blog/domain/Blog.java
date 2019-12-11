@@ -49,6 +49,10 @@ public class Blog extends BaseEntity {
     //@NotNull(message = "封面不能为空", groups = {Publish.class})
     //@Length(max = 256, message = "封面地址不能超过256个字符", groups = {Publish.class})
     private String headerImg;
+    /**
+     * 封面类型(1表示普通,0表示没有,2表示大图)
+     */
+    private Integer headerImgType;
 
     /**
      * 正文内容

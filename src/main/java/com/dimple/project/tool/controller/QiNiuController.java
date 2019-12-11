@@ -37,7 +37,7 @@ public class QiNiuController extends BaseController {
     @Autowired
     QiNiuService qiNiuService;
 
-    @GetMapping
+    @GetMapping("/list")
     @PreAuthorize("@permissionService.hasPermission('tool:qiNiu:list')")
     public TableDataInfo list(QiNiuContent qiNiuContent) {
         startPage();

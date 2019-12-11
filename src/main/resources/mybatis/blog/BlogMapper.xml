@@ -122,6 +122,7 @@
             <if test="title != null  and title != ''">title,</if>
             <if test="summary != null  and summary != ''">summary,</if>
             <if test="headerImg != null  and headerImg != ''">header_img,</if>
+            <if test="headerImgType != null  and headerImgType != ''">header_img_type,</if>
             <if test="content != null  and content != ''">content,</if>
             <if test="htmlContent != null  and htmlContent != ''">html_content,</if>
             <if test="status != null ">status,</if>
@@ -136,6 +137,7 @@
             <if test="title != null  and title != ''">#{title},</if>
             <if test="summary != null  and summary != ''">#{summary},</if>
             <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
+            <if test="headerImgType != null  and headerImgType != ''">#{headerImgType},</if>
             <if test="content != null  and content != ''">#{content},</if>
             <if test="htmlContent != null  and htmlContent != ''">#{htmlContent},</if>
             <if test="status != null ">#{status},</if>
@@ -154,6 +156,7 @@
             <if test="title != null  and title != ''">title = #{title},</if>
             <if test="summary != null  and summary != ''">summary = #{summary},</if>
             <if test="headerImg != null  and headerImg != ''">header_img = #{headerImg},</if>
+            <if test="headerImgType != null  and headerImgType != ''">header_img_type = #{headerImgType},</if>
             <if test="content != null  and content != ''">content = #{content},</if>
             <if test="htmlContent != null  and htmlContent != ''">html_content = #{htmlContent},</if>
             <if test="status != null ">status = #{status},</if>
