@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dimple.common.constant.ConfigKey;
 import com.dimple.common.exception.CustomException;
+import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.file.FileUtils;
@@ -150,27 +151,31 @@ public class QiNiuServiceImpl implements QiNiuService {
     }
 
     @Override
-    public int delete(Long id) {
+    public int deleteQiNiuContent(String ids) {
         QiNiuConfig qiNiuConfig = getQiNiuConfig();
         if (!qiNiuConfig.check()) {
             throw new CustomException("七牛云配置信息不完整,请先填写七牛云配置信息");
         }
+        Long[] idArray = ConvertUtils.toLongArray(ids);
         //查询
-        QiNiuContent qiNiuContent = qiNiuContentMapper.selectContentById(id);
-        if (Objects.isNull(qiNiuContent) || StringUtils.isEmpty(qiNiuContent.getName())) {
-            throw new CustomException("数据异常");
+        List<QiNiuContent> qiNiuContentList = qiNiuContentMapper.selectContentByIds(idArray);
+
+        for (QiNiuContent qiNiuContent : qiNiuContentList) {
+            if (Objects.isNull(qiNiuContent) || StringUtils.isEmpty(qiNiuContent.getName())) {
+                throw new CustomException("数据异常");
+            }
+            //构造一个带指定Zone对象的配置类
+            Configuration cfg = new Configuration(QiNiuUtils.getRegion(qiNiuConfig.getZone()));
+            Auth auth = Auth.create(qiNiuConfig.getAccessKey(), qiNiuConfig.getSecretKey());
+            BucketManager bucketManager = new BucketManager(auth, cfg);
+            try {
+                bucketManager.delete(qiNiuContent.getBucket(), qiNiuContent.getName());
+            } catch (QiniuException e) {
+                log.error("删除七牛云图片出错,{},", e.getMessage(), e);
+                //出错后删除本地数据库文件
+            }
         }
-        //构造一个带指定Zone对象的配置类
-        Configuration cfg = new Configuration(QiNiuUtils.getRegion(qiNiuConfig.getZone()));
-        Auth auth = Auth.create(qiNiuConfig.getAccessKey(), qiNiuConfig.getSecretKey());
-        BucketManager bucketManager = new BucketManager(auth, cfg);
-        try {
-            bucketManager.delete(qiNiuContent.getBucket(), qiNiuContent.getName());
-        } catch (QiniuException e) {
-            log.error("删除七牛云图片出错,{},", e.getMessage(), e);
-            //出错后删除本地数据库文件
-        }
-        return qiNiuContentMapper.deleteContentById(id);
+        return qiNiuContentMapper.deleteContentByIds(idArray);
     }
 
     @Override

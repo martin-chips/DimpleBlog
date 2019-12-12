@@ -47,7 +47,7 @@ public interface QiNiuService {
      * @param id 文件的Id
      * @return 受影响的行数
      */
-    int delete(Long id);
+    int deleteQiNiuContent(String id);
 
     /**
      * 获取下载文件的Url地址

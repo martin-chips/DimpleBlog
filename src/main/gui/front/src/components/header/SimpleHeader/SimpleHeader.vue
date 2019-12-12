@@ -19,7 +19,7 @@
                     <ul id="nav">
                         <!-- 类别导航 -->
                         <li class="nav-dropdown-container">
-                            <router-link class="nav-link" to="/">
+                            <router-link class="nav-link" to="#">
                                 分类 <span class="arrow"></span>
                             </router-link>
                             <ul class="nav-dropdown">
