@@ -3,9 +3,9 @@
         <div class="main-area">
             <div class="top-wrapper" @touchmove.stop>
                 <div class="top-area">
-                    <img src="https://www.bianxiaofeng.com/front/images/leaveComment-bg.png" alt="">
+                    <img src="http://localhost/static/img/background.c7c666dc.jpg" alt="">
                     <div class="site-info">
-                        <h1 class="site-name">{{$store.state.settings.F_Title}}}</h1>
+                        <h1 class="site-name">{{$store.state.settings.F_Title}}</h1>
                         <h1 class="site-desc">{{ $store.state.settings.F_Title_Desc }}</h1>
                     </div>
                 </div>
@@ -16,8 +16,8 @@
                             网站导航
                         </p>
                         <i-switch v-model="showNav">
-                            <span slot="open">开启</span>
-                            <span slot="close">关闭</span>
+                            <span slot="open">开</span>
+                            <span slot="close">关</span>
                         </i-switch>
                     </div>
                     <ul class="nav-menu" :class="{'hide': !showNav}">
@@ -123,7 +123,7 @@
             },
             routerLink(category) {
                 let router = {};
-                router.name = category.category_type;
+                router.name = "articles/category";
                 router.params = {};
                 router.params['id'] = category.id;
                 return router;

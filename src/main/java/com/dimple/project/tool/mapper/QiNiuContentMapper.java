@@ -1,6 +1,7 @@
 package com.dimple.project.tool.mapper;
 
 import com.dimple.project.tool.domain.QiNiuContent;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,12 +29,20 @@ public interface QiNiuContentMapper {
     QiNiuContent selectContentById(Long id);
 
     /**
+     * 根据Ids获取Content List
+     *
+     * @param ids Long
+     * @return List
+     */
+    List<QiNiuContent> selectContentByIds(@Param("ids") Long[] ids);
+
+    /**
      * 根据Id删除文件
      *
-     * @param id id
+     * @param ids id
      * @return 受影响的行数
      */
-    int deleteContentById(Long id);
+    int deleteContentByIds(@Param("ids") Long[] ids);
 
     /**
      * 插入数据

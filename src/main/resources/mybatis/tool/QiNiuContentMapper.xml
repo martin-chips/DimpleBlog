@@ -13,7 +13,7 @@
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
-    <insert id="insertContent">
+    <insert id="insertContent" useGeneratedKeys="true" keyProperty="id">
         insert into tool_qi_niu_content(
         <if test="name != null and name != ''">name,</if>
         <if test="bucket != null and bucket != ''">bucket,</if>
@@ -67,10 +67,21 @@
             </if>
         </where>
     </select>
+    <select id="selectContentByIds" resultType="com.dimple.project.tool.domain.QiNiuContent">
+        select id, name, bucket, size, url, suffix, type, create_by, create_time
+        from tool_qi_niu_content
+        where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
     <!--通过主键删除-->
-    <delete id="deleteContentById">
-       delete from tool_qi_niu_content where id=#{id}
+    <delete id="deleteContentByIds">
+        delete from tool_qi_niu_content where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
     <delete id="clearContent">
         TRUNCATE TABLE tool_qi_niu_content

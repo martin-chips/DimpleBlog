@@ -79,11 +79,11 @@ public class QiNiuController extends BaseController {
         return AjaxResult.success();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @PreAuthorize("@permissionService.hasPermission('tool:qiNiu:remove')")
     @Log(title = "七牛云存储", businessType = BusinessType.DELETE)
-    public AjaxResult delete(@PathVariable Long id) {
-        return toAjax(qiNiuService.delete(id));
+    public AjaxResult delete(@PathVariable String ids) {
+        return toAjax(qiNiuService.deleteQiNiuContent(ids));
     }
 
     @GetMapping("/download/{id}")

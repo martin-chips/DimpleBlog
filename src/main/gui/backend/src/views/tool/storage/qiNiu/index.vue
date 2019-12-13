@@ -31,7 +31,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button :icon="icon" class="filter-item" size="mini" type="warning"
-                   @click="handleSynchronizre">同步数据
+                   @click="handleSynchronize">{{buttonName}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -98,21 +98,20 @@
                 @pagination="init"/>
 
     <!--上传图片-->
-    <el-dialog :visible.sync="dialog" :close-on-click-modal="false" append-to-body width="600px" @close="doSubmit">
+    <el-dialog :visible.sync="open" :close-on-click-modal="false" append-to-body width="600px" @close="doSubmit"
+               title="上传图片">
       <el-upload
-        :on-preview="handlePictureCardPreview"
-        :before-remove="handleBeforeRemove"
-        :on-success="handleSuccess"
-        :on-error="handleError"
-        :headers="headers"
-        :file-list="fileList"
+        drag
         :action="imagesUploadApi"
-        list-type="picture-card">
-        <i class="el-icon-plus"/>
+        :headers="headers"
+        :on-remove="handleRemove"
+        :file-list="fileList"
+        list-type="picture"
+        multiple>
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="el-upload__tip" slot="tip">只能上传图片文件，且不超过500kb</div>
       </el-upload>
-      <el-dialog :append-to-body="true" :visible.sync="dialogVisible">
-        <img :src="dialogImageUrl" width="100%" alt="">
-      </el-dialog>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="doSubmit">确认</el-button>
       </div>
@@ -122,7 +121,7 @@
 
 <script>
   import QiNiuConfig from "./QiNiuConfig";
-  import {listContent, delContent, downloadContent, syncContent} from "@/api/tool/qiNiu";
+  import {downloadContent, syncContent} from "@/api/tool/qiNiu";
   import {getToken} from '@/utils/auth'
   import initData from '@/mixins/initData'
 
@@ -131,6 +130,13 @@
     mixins: [initData],
     data() {
       return {
+        imageDialog: false,
+        imagesUploadApi: '',
+        buttonName: '同步数据',
+        //文件列表
+        fileList: [],
+        //上传图片Dialog
+        open: false,
         //是否已经加载过了
         ready: false,
         //上传文件地址
@@ -149,61 +155,50 @@
     created() {
       this.$nextTick(() => {
         this.init();
-        this.uploadUrl = process.env.VUE_APP_BASE_API + "/tool/qiNiu"
+        this.imagesUploadApi = process.env.VUE_APP_BASE_API + "/tool/qiNiu"
       })
     },
     methods: {
+      beforeInit() {
+        this.base = '/tool/qiNiu';
+        this.modelName = '七牛云'
+        return true
+      },
       /** 下载 */
       download(id) {
         downloadContent(id);
       },
       /**刷新*/
-      handleSynchronizre() {
+      handleSynchronize() {
         this.icon = 'el-icon-loading'
         this.buttonName = '同步中'
         syncContent().then(res => {
           this.icon = 'el-icon-refresh'
           this.buttonName = '同步数据'
           this.msgSuccess("同步成功")
-          this.getList()
+          this.init();
         }).catch(err => {
           this.icon = 'el-icon-refresh'
           this.buttonName = '同步数据'
-          console.log(err.response.data.message)
+          this.msgError("同步失败")
+          console.log(err.response.msg)
         })
       },
       handleSuccess(response, file, fileList) {
         if (response.code == 200) {
           this.msgSuccess("上传成功");
-          const uid = file.uid;
-          const id = response.id;
-          this.files.push({uid, id});
-          this.getList();
         } else {
           this.msgError(response.msg)
         }
       },
-      handleBeforeRemove(file, fileList) {
-        for (let i = 0; i < this.files.length; i++) {
-          if (this.files[i].uid === file.uid) {
-            del(this.files[i].id).then(res => {
-            })
-            return true
-          }
-        }
-      },
-      // 监听上传失败
-      handleError(e, file, fileList) {
-        this.msgError(e.msg);
+      handleRemove(file, fileList) {
+        let id = this.file.response.data.id;
+        handleSubDelete(id);
       },
       handleConfig() {
-        const _this = this.$refs.config
-        _this.getConfig()
-        _this.dialog = true
-      },
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url
-        this.dialogVisible = true
+        const _this = this.$refs.config;
+        _this.getConfig();
+        _this.dialog = true;
       },
       doSubmit() {
         this.fileList = []
