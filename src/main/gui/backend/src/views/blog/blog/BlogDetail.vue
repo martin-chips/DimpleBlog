@@ -90,8 +90,7 @@
         </el-row>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <mavonEditor v-model="form.content" ref="editor"
-                       style="min-height: 500px;"/>
+          <mavonEditor v-model="form.content" ref="editor" @imgAdd="handleEditorImgAdd" style="min-height: 500px;"/>
         </el-form-item>
       </div>
     </el-form>
@@ -105,7 +104,6 @@
           <el-button type="primary" @click="imagePickerOpen = false">确 定</el-button>
         </span>
     </el-dialog>
-
   </div>
 </template>
 
@@ -118,7 +116,8 @@
   import {getToken} from '@/utils/auth'
   import marked from 'marked'
   import ImagePicker from '@/components/ImagePicker'
-
+  import MyLocalStorage from "../../../utils/MyLocalStorage";
+  import {uploadImgToQiNiu} from "@/api/common"
 
   export default {
     name: 'BlogDetail',
@@ -172,19 +171,40 @@
       }
     },
     created() {
-      if (this.isEdit) {
-        const id = this.$route.params && this.$route.params.id
-        this.fetchData(id)
+      var blogCache = MyLocalStorage.Cache.get("blogCache");
+      if (blogCache.content != undefined && blogCache.content.length != 0) {
+        this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
+          confirmButtonText: '继续编辑',
+          cancelButtonText: '删除本地记录',
+          type: 'warning'
+        }).then(() => {
+          this.msgSuccess("已成功恢复!");
+          this.form = blogCache;
+        }).catch(() => {
+          this.msgInfo("已删除!");
+          //删除缓存
+          MyLocalStorage.Cache.remove("blogCache");
+          if (this.isEdit) {
+            const id = this.$route.params && this.$route.params.id;
+            this.fetchData(id);
+          }
+        });
       }
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
       this.getCategory();
       this.imagesUploadApi = process.env.VUE_APP_BASE_API + "/tool/qiNiu"
+
+      setInterval(() => {
+        MyLocalStorage.Cache.put("blogCache", this.form);
+      }, 10000)
     },
     methods: {
       onImgSelect(url) {
-        console.log("URL  " + url)
-         this.form.headerImg = url;
+        this.form.headerImg = url;
+        if (this.form.headerImgType == 0) {
+          this.form.headerImgType = 1;
+        }
       },
       headerImgTypeChange() {
         if (this.form.headerImgType == 0) {
@@ -241,6 +261,8 @@
       },
       submitBlog() {
         this.form.htmlContent = marked(this.form.content);
+        //删除缓存
+        MyLocalStorage.Cache.remove("blogCache");
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading = true
@@ -285,6 +307,8 @@
           })
           return
         }
+        //删除缓存
+        MyLocalStorage.Cache.remove("blogCache");
         let obj = JSON.parse(JSON.stringify(this.form));
         obj.status = false;
         if (obj.id == undefined) {
@@ -304,7 +328,17 @@
             }
           });
         }
-      }
+      },
+      handleEditorImgAdd(pos, $file){
+        // 第一步.将图片上传到服务器.
+        var formdata = new FormData();
+        formdata.append('file', $file);
+        uploadImgToQiNiu(formdata).then((url) => {
+          // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+          // $vm.$img2Url 详情见本页末尾
+          $vm.$img2Url(pos, url);
+        })
+      },
     }
   }
 </script>

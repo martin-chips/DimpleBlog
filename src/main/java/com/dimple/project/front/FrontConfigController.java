@@ -122,6 +122,7 @@ public class FrontConfigController extends BaseController {
     }
 
     @GetMapping("/blog")
+    @VLog(title = "首页")
     public TableDataInfo blog(BlogQuery blogQuery) {
         startPage();
         List<Blog> blogList = blogService.selectBlogList(blogQuery);
@@ -138,6 +139,7 @@ public class FrontConfigController extends BaseController {
     LinkService linkService;
 
     @GetMapping("/link")
+    @VLog(title = "查看友链")
     public AjaxResult link() {
         Link link = new Link();
         link.setStatus(true);
@@ -149,6 +151,7 @@ public class FrontConfigController extends BaseController {
      * 申请link
      */
     @PostMapping("/link")
+    @VLog(title = "申请友链")
     public AjaxResult insertLink(@RequestBody Link link) {
         link.setStatus(false);
         link.setDisplay(false);
@@ -166,6 +169,7 @@ public class FrontConfigController extends BaseController {
      * 点赞博客
      */
     @PutMapping("/blog/like/{id}")
+    @VLog(title = "点赞博客")
     public AjaxResult likeBlog(@PathVariable Long id) {
         return AjaxResult.success(blogService.incrementBlogLike(id));
     }
@@ -180,11 +184,13 @@ public class FrontConfigController extends BaseController {
     }
 
     @PutMapping("/comment/good/{id}")
+    @VLog(title = "点赞评论")
     public AjaxResult goodComment(@PathVariable Long id) {
         return toAjax(commentService.incrementCommentGood(id));
     }
 
     @PutMapping("/comment/bad/{id}")
+    @VLog(title = "踩评论")
     public AjaxResult badComment(@PathVariable Long id) {
         return toAjax(commentService.incrementCommentBad(id));
     }
@@ -193,6 +199,7 @@ public class FrontConfigController extends BaseController {
      * 新增评论
      */
     @PostMapping("comment")
+    @VLog(title = "发表评论")
     public AjaxResult comment(@RequestBody Comment comment) {
         return toAjax(commentService.insertComment(comment));
     }
@@ -229,6 +236,7 @@ public class FrontConfigController extends BaseController {
 
     @Autowired
     NoticeService noticeService;
+
     @GetMapping("notice")
     public AjaxResult getNotice() {
         Notice notice = new Notice();

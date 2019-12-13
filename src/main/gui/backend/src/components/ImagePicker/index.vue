@@ -1,24 +1,12 @@
 <template>
   <div>
     <el-tabs tab-position="left">
-      <el-tab-pane label="七牛云服务器">
-        <el-row :gutter="12">
-          <el-col :span="8" v-for="item in qiNiuContent.rows">
-            <div @click="onImgSelect(item)">
-              <el-card shadow="hover" :class="{'selectImg':item.id==index}">
-                <img :src="item.url" class="image">
-                <div style="padding: 14px;">
-                  <span>{{item.name}}</span>
-                  <div class="bottom clearfix">
-                    <time class="time">{{ item.createTime }}</time>
-                  </div>
-                </div>
-              </el-card>
-            </div>
-          </el-col>
-        </el-row>
+      <el-tab-pane label="七牛云服务器" style="height: 400px;overflow-y: auto">
+        <QiNiuImageContent @onImgSelect="onImgSelect"/>
       </el-tab-pane>
-      <el-tab-pane label="本地服务器">本地服务器</el-tab-pane>
+      <el-tab-pane label="本地服务器">
+        <LocalImageContent @onImgSelect="onImgSelect"/>
+      </el-tab-pane>
       <el-tab-pane label="本地上传">
         <el-upload
           class="avatar-uploader"
@@ -34,38 +22,23 @@
 </template>
 
 <script>
-  import {listQiNiuImage, listLocalImage} from "@/api/common"
+  import QiNiuImageContent from "./components/QiNiuImageContent";
+  import LocalImageContent from "./components/LocalImageContent";
 
   export default {
     name: "ImagePicker",
+    components: {
+      QiNiuImageContent,LocalImageContent
+    },
     data() {
-      return {
-        index: 0,
-        QiNiuPageNum: 1,
-        QiNiuPageSize: 10,
-        LocalPageNum: 1,
-        LocalPageSize: 10,
-        qiNiuContent: {},
-        localContent: {}
-      }
+      return {}
     },
     created() {
-      listQiNiuImage({pageNum: this.QiNiuPageNum, pageSize: this.QiNiuPageSize}).then(response => {
-        this.qiNiuContent = response;
-      });
-      listLocalImage({pageNum: this.LocalPageNum, pageSize: this.LocalPageSize}).then(response => {
-        this.localContent = response;
-      });
     },
     methods: {
-      onImgSelect(item) {
-        this.index = item.id;
-        console.log(item)
-        this.$emit('onImgSelect', item.url);
+      onImgSelect(url) {
+        this.$emit('onImgSelect', url);
       },
-      test() {
-        console.log(1111)
-      }
     }
   }
 </script>
@@ -73,14 +46,14 @@
 <style scoped>
   .selectImg {
     /*filter: blur(1px);*/
-    border-radius: 4px!important;
-    border: 1px solid #67C23A!important;
-    background-color: #DCDFE6!important;
-    overflow: hidden!important;
-    color: #409EFF!important;
+    border-radius: 4px !important;
+    border: 1px solid #67C23A !important;
+    background-color: #DCDFE6 !important;
+    overflow: hidden !important;
+    color: #409EFF !important;
   }
 
-  .selectImg .el-card__body{
+  .selectImg .el-card__body {
     background-color: cornflowerblue;
   }
 

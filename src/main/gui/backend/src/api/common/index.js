@@ -17,3 +17,12 @@ export function listLocalImage(query) {
     params: query
   })
 }
+
+//上传图片
+export function uploadImgToQiNiu(data) {
+  return request({
+    url: '/tool/qiNiu',
+    method: 'post',
+    data: data
+  })
+}

@@ -162,17 +162,17 @@ public class FileUtils {
         String documents = "txt doc pdf ppt pps xlsx xls docx";
         String music = "mp3 wav wma mpa ram ra aac aif m4a";
         String video = "avi mpg mpe mpeg asf wmv mov qt rm mp4 flv m4v webm ogv ogg";
-        String image = "bmp dib pcp dif wmf gif jpg tif eps psd cdr iff tga pcd mpt png jpeg";
+        String image = "bmp dib pcp dif wmf gif jpg tif eps psd cdr iff tga pcd mpt png jpeg ico";
         if (image.contains(type)) {
-            return "图片";
+            return "image";
         } else if (documents.contains(type)) {
-            return "文档";
+            return "document";
         } else if (music.contains(type)) {
-            return "音乐";
+            return "music";
         } else if (video.contains(type)) {
-            return "视频";
+            return "video";
         } else {
-            return "其他";
+            return "other";
         }
     }
 

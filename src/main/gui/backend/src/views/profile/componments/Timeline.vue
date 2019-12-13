@@ -47,7 +47,7 @@
         dateRange: [],
         // 查询参数
         queryParams: {
-          pageNum: 1,
+          pageNum: 0,
           pageSize: 10,
           orderByColumn: "createTime",
           isAsc: "desc"
@@ -64,7 +64,6 @@
           this.getTimeLine();
         }, 1000)
       },
-
       getTimeLine() {
         if (this.noMore) {
           return
