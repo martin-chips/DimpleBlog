@@ -19,16 +19,16 @@
                 for (let i = 0; i < list.length; i++) {
                     let obj = list[i];
                     //通知
-                    if (obj.noticeType === "1") {
+                    if (obj.type === "1") {
                         this.$Notice.info({
-                            title: obj.noticeTitle,
-                            desc: obj.noticeContent
+                            title: obj.title,
+                            desc: obj.content
                         });
                     } else {
                         //公告
                         this.$Modal.info({
-                            title: obj.noticeTitle,
-                            content: obj.noticeContent,
+                            title: obj.title,
+                            content: obj.content,
                             okText:'我知道了',
                             scrollable:true,
                         })

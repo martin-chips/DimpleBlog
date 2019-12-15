@@ -3,7 +3,7 @@
         <Row class="row">
             <Col :xs="24" :sm="24" :md="24" :lg="17" class="col">
                 <swiper :options="leftSwiperOption" ref="leftSwiper" class="gallery">
-                    <swiper-slide v-for="item in list">
+                    <swiper-slide v-for="item in carouselList">
                         <a @click.prevent="gotoPostDetail(item)" :href="`article/${item.id}`">
                             <span class="title">{{ item.title}}</span>
                             <img :src="item.headerImg" :title="item.title">
@@ -20,7 +20,7 @@
             </Col>
             <Col :xs="0" :sm="0" :md="0" :lg="7" class="col">
                 <swiper :options="rightSwiperOption" ref="rightSwiper" class="gallery right-gallery">
-                    <swiper-slide v-for="item in list">
+                    <swiper-slide v-for="item in carouselList">
                         <div class="carousel-infos">
                             <p class="title">{{ item.title | textLineBreak(35) }}</p>
                             <p class="desc">
