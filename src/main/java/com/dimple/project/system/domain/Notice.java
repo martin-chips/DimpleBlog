@@ -25,20 +25,24 @@ public class Notice extends BaseEntity {
     /**
      * 公告标题
      */
-    private String noticeTitle;
+    private String title;
 
     /**
      * 公告类型（1通知 2公告）
      */
-    private String noticeType;
+    private String type;
 
     /**
      * 公告内容
      */
-    private String noticeContent;
+    private String content;
+    /**
+     * Html内容
+     */
+    private String htmlContent;
 
     /**
-     * 公告状态（0正常 1关闭）
+     * 公告状态（true正常 false关闭）
      */
-    private String status;
+    private Boolean status;
 }

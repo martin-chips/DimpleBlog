@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
       <el-form-item label="公告标题">
-        <el-input v-model="queryParams.noticeTitle" placeholder="请输入公告标题" clearable size="small"
+        <el-input v-model="queryParams.title" placeholder="请输入公告标题" clearable size="small"
                   @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="操作人员">
@@ -10,7 +10,7 @@
                   @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="类型">
-        <el-select v-model="queryParams.noticeType" placeholder="公告类型" clearable size="small">
+        <el-select v-model="queryParams.type" placeholder="公告类型" clearable size="small">
           <el-option
             v-for="dict in typeOptions"
             :key="dict.dictValue"
@@ -51,8 +51,8 @@
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
       <el-table-column label="序号" align="center" prop="id"/>
-      <el-table-column label="公告标题" align="center" prop="noticeTitle" :show-overflow-tooltip="true"/>
-      <el-table-column label="公告类型" align="center" prop="noticeType" :formatter="typeFormat"/>
+      <el-table-column label="公告标题" align="center" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column label="公告类型" align="center" prop="type" :formatter="typeFormat"/>
       <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat"/>
       <el-table-column label="创建者" align="center" prop="createBy"/>
       <el-table-column label="创建时间" align="center" prop="createTime">
@@ -88,13 +88,13 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="公告标题" prop="noticeTitle">
-              <el-input v-model="form.noticeTitle" placeholder="请输入公告标题"/>
+            <el-form-item label="公告标题" prop="title">
+              <el-input v-model="form.title" placeholder="请输入公告标题"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="公告类型" prop="noticeType">
-              <el-select v-model="form.noticeType" placeholder="请选择">
+            <el-form-item label="公告类型" prop="type">
+              <el-select v-model="form.type" placeholder="请选择">
                 <el-option
                   v-for="dict in typeOptions"
                   :key="dict.dictValue"
@@ -105,7 +105,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="状态">
+            <el-form-item label="状态" prop="status">
               <el-radio-group v-model="form.status">
                 <el-radio
                   v-for="dict in statusOptions"
@@ -117,8 +117,9 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="内容">
-<!--              <Editor v-model="form.noticeContent"/>-->
+            <el-form-item label="内容" prop="content">
+              <mavonEditor @change="contentChange" v-model="form.content" ref="editor" @imgAdd="handleEditorImgAdd" :subfield="false"
+                           style="min-height: 200px;max-height: 400px"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -132,14 +133,16 @@
 </template>
 
 <script>
-  import {listNotice, getNotice, delNotice, addNotice, updateNotice} from "@/api/system/notice";
-  // import Editor from '@/components/Editor';
   import initData from '@/mixins/initData'
+  import marked from 'marked'
+  import {uploadImgToQiNiu} from "@/api/common"
+  import {mavonEditor} from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
 
   export default {
     mixins: [initData],
     components: {
-      // Editor
+      mavonEditor
     },
     data() {
       return {
@@ -149,16 +152,21 @@
         typeOptions: [],
         // 查询参数
         queryParams: {
-          noticeTitle: undefined,
+          title: undefined,
           createBy: undefined,
           status: undefined
         },
         // 表单校验
         rules: {
-          noticeTitle: [
-            {required: true, message: "公告标题不能为空", trigger: "blur"}
+          title: [
+            {required: true, message: "公告标题不能为空", trigger: "blur"},
+            {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'change'}
           ],
-          noticeType: [
+          content: [
+            {required: true, message: "内容不能为空", trigger: "blur"},
+            {min: 3, max: 500, message: '长度在 3 到 500 个字符', trigger: 'change'}
+          ],
+          type: [
             {required: true, message: "公告类型不能为空", trigger: "blur"}
           ]
         }
@@ -180,6 +188,21 @@
         this.base = '/system/notice';
         this.modelName = '公告'
         return true
+      },
+      handleEditorImgAdd(pos, $file) {
+        // 第一步.将图片上传到服务器.
+        var formdata = new FormData();
+        formdata.append('file', $file);
+        uploadImgToQiNiu(formdata).then((url) => {
+          // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+          // $vm.$img2Url 详情见本页末尾
+          $vm.$img2Url(pos, url);
+        })
+      },
+      contentChange() {
+        this.form.htmlContent = marked(this.form.content);
+        console.log(this.form.content)
+        console.log(this.form.htmlContent)
       },
       // 公告状态字典翻译
       statusFormat(row, column) {

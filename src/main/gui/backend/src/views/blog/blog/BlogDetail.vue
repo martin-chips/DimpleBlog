@@ -135,7 +135,6 @@
         imagesUploadApi: '',
         //上传文件需要用到的token
         headers: {'Authorization': 'Bearer ' + getToken()},
-        tags: '',
         form: {
           headerImgType: 0,
           headerImg: '',
@@ -172,7 +171,7 @@
     },
     created() {
       var blogCache = MyLocalStorage.Cache.get("blogCache");
-      if (blogCache.content != undefined && blogCache.content.length != 0) {
+      if (blogCache != undefined && blogCache.content != undefined && blogCache.content.length != 0) {
         this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
           confirmButtonText: '继续编辑',
           cancelButtonText: '删除本地记录',
@@ -329,7 +328,7 @@
           });
         }
       },
-      handleEditorImgAdd(pos, $file){
+      handleEditorImgAdd(pos, $file) {
         // 第一步.将图片上传到服务器.
         var formdata = new FormData();
         formdata.append('file', $file);
