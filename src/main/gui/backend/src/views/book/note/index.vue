@@ -41,7 +41,7 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <router-link to="blog/add" class="link-type">
+        <router-link to="note/add" class="link-type">
           <el-button type="primary" icon="el-icon-plus" size="mini">新增
           </el-button>
         </router-link>
@@ -240,8 +240,8 @@
     },
     methods: {
       beforeInit() {
-        this.base = '/blog/blog';
-        this.modelName = '博客'
+        this.base = '/book/note';
+        this.modelName = '笔记'
         return true
       },
       // 博客状态修改

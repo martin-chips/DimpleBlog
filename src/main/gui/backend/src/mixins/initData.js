@@ -75,6 +75,7 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
+      this.queryParams={}
       this.handleQuery();
     },
     // 多选框选中数据
@@ -107,8 +108,9 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.open = true;
       this.title = "添加" + this.modelName;
+      this.form = this.formReset;
+      this.open = true;
     },
     /** 提交按钮 */
     submitForm: function (refName) {
@@ -149,7 +151,12 @@ export default {
     },
     // 表单重置
     reset() {
-      this.form = this.formReset;
+      this.$nextTick(() => {
+        if (this.$refs["form"] !== undefined) {
+          this.$refs["form"].resetFields();
+        }
+      })
+      this.form = {};
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

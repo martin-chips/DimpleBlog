@@ -154,7 +154,7 @@
     </insert>
 
     <delete id="deleteMenuById">
-	    update sys_menu set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{id}
+	    update sys_menu set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{menuId}
 	</delete>
 
-</mapper> 
+</mapper>

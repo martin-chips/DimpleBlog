@@ -96,7 +96,7 @@ public interface MenuMapper {
      * @param menuId 菜单ID
      * @return 结果
      */
-    int deleteMenuById(@Param("menuId") Long menuId, @Param("loginUsername") String loginUsername);
+    int deleteMenuById(@Param("id") Long menuId, @Param("loginUsername") String loginUsername);
 
     /**
      * 校验菜单名称是否唯一

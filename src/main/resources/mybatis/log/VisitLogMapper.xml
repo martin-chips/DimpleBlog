@@ -27,7 +27,6 @@
         <if test="status!=null and status!=''">status,</if>
         <if test="title!=null and title!=''">title,</if>
         <if test="entryUrl!=null and entryUrl!=''">entry_url,</if>
-        <if test="createBy != null and createBy != ''">create_by,</if>
         create_time)
         values (
         <if test="ip!=null and ip!=''">#{ip},</if>
@@ -40,7 +39,6 @@
         <if test="status!=null and status!=''">#{status},</if>
         <if test="title!=null and title!=''">#{title},</if>
         <if test="entryUrl!=null and entryUrl!=''">#{entryUrl},</if>
-        <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )
     </insert>

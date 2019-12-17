@@ -16,16 +16,12 @@
         <result property="support" column="support"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="deleteBy" column="delete_by"/>
-        <result property="deleteTime" column="delete_time"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="selectNoteById" resultMap="NoteMap">
         select
-          id, title, description, content, html_content, click, like, chapter, book_id, header_img, support, create_by, create_time, update_by, update_time
+          id, title, description, content, html_content, click, like, chapter, book_id, header_img, support, create_by, create_time
         from bk_note
         where id = #{id} and delete_time is null
     </select>
@@ -33,8 +29,8 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectNoteList" resultMap="NoteMap">
         select
-        id, title, description, content, html_content, click, like, chapter, book_id, header_img, support, create_by,
-        create_time, update_by, update_time, delete_by, delete_time
+        id, title, description, content, html_content, click, `like`, chapter, book_id, header_img, support, create_by,
+        create_time
         from bk_note
         where delete_time is null
         <if test="title != null and title != ''">
@@ -49,11 +45,11 @@
         <if test="support != null">
             and support = #{support}
         </if>
-        <if test="beginTime != null "><!-- 开始时间检索 -->
-            and date_format( b.create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
         </if>
-        <if test="endTime != null "><!-- 结束时间检索 -->
-            and date_format( b.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
 

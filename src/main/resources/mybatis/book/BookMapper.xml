@@ -21,16 +21,12 @@
         <result property="support" column="support"/>
         <result property="createTime" column="create_time"/>
         <result property="createBy" column="create_by"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="deleteBy" column="delete_by"/>
-        <result property="deleteTime" column="delete_time"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="selectBookById" resultMap="BkBookMap">
         select
-          id, title, header_img, author, category_id, publisher, publish_time, page_num, grade, description, catalog, click, like, status, progress, support, create_time, create_by, update_by, update_time
+          id, title, header_img, author, category_id, publisher, publish_time, page_num, grade, description, catalog, click, like, status, progress, support, create_time, create_by
         from bk_book
         where id = #{id} and delete_time is null
     </select>
@@ -38,8 +34,8 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectBookList" resultMap="BkBookMap">
         select
-        id, title, header_img, author, category_id, publisher, publish_time, page_num, grade, description, catalog,
-        click, like, status, progress, support, create_time, create_by, update_by, update_time, delete_by, delete_time
+        id, title, header_img, author, category_id, publisher, publish_time, page_num, grade, description, `catalog`,
+        click, `like`, status, progress, support, create_time
         from bk_book
         where delete_time is null
         <if test="title != null and title != ''">
@@ -67,20 +63,14 @@
 
     <!--新增所有列-->
     <insert id="insertBook" keyProperty="id" useGeneratedKeys="true">
-        insert into bk_book(title, header_img, author, category_id, publisher, publish_time, page_num, grade,
-        description, catalog, click, like, status, progress, support, create_time, create_by, update_by, update_time,
-        delete_by, delete_time)
-        values (#{title}, #{headerImg}, #{author}, #{categoryId}, #{publisher}, #{publishTime}, #{pageNum}, #{grade},
-        #{description}, #{catalog}, #{click}, #{like}, #{status}, #{progress}, #{support}, #{createTime}, #{createBy},
-        #{updateBy}, #{updateTime}, #{deleteBy}, #{deleteTime})
-        insert into bg_blog
+        insert into bk_book
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null ">title,</if>
             <if test="headerImg != null  and headerImg != ''">header_img,</if>
             <if test="author != null  and author != ''">author,</if>
             <if test="categoryId != null  and categoryId != ''">category_id,</if>
             <if test="publisher != null  and publisher != ''">publisher,</if>
-            <if test="publishTime != null  and publishTime != ''">publish_time,</if>
+            <if test="publishTime != null">publish_time,</if>
             <if test="pageNum != null ">page_num,</if>
             <if test="grade != null ">grade,</if>
             <if test="description != null and description !=''">description,</if>
@@ -97,7 +87,7 @@
             <if test="author != null  and author != ''">#{author},</if>
             <if test="categoryId != null  and categoryId != ''">#{categoryId},</if>
             <if test="publisher != null  and publisher != ''">#{publisher},</if>
-            <if test="publishTime != null  and publishTime != ''">#{publishTime},</if>
+            <if test="publishTime != null">#{publishTime},</if>
             <if test="pageNum != null ">#{pageNum},</if>
             <if test="grade != null ">#{grade},</if>
             <if test="description != null and description !=''">#{description},</if>
@@ -143,12 +133,6 @@
             </if>
             <if test="catalog != null and catalog != ''">
                 catalog = #{catalog},
-            </if>
-            <if test="click != null">
-                click = #{click},
-            </if>
-            <if test="like != null">
-                like = #{like},
             </if>
             <if test="status != null">
                 status = #{status},

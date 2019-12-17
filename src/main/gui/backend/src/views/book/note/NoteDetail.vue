@@ -22,7 +22,7 @@
                           v-model="form.summary"></el-input>
               </el-form-item>
               <el-row>
-                <el-col :span="8">
+                <el-col :span="6">
                   <el-form-item prop="categoryId" label-width="60px" label="分类: ">
                     <el-select v-model="form.categoryId" filterable allow-create default-first-option
                                placeholder="请选择文章分类">
@@ -31,16 +31,25 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="4">
                   <el-form-item label-width="60px" label="推荐: " class="postInfo-container-item" prop="support">
                     <el-switch v-model="form.support" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="6">
                   <el-form-item label-width="60px" label="评论: " class="postInfo-container-item" prop="comment">
                     <el-radio-group v-model="form.comment">
                       <el-radio :label="true">开启</el-radio>
                       <el-radio :label="false">关闭</el-radio>
+                    </el-radio-group>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label-width="100px" label="封面类型: " class="postInfo-container-item" prop="comment">
+                    <el-radio-group @change="headerImgTypeChange" v-model="form.headerImgType">
+                      <el-radio :label="0">无</el-radio>
+                      <el-radio :label="1">普通</el-radio>
+                      <el-radio :label="2">大图</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-col>
@@ -69,25 +78,32 @@
             </el-col>
             <el-col :span="6">
               <el-form-item prop="headerImg" label-width="60px" label="封面">
-                <el-upload
-                  class="avatar-uploader"
-                  action="https://httpbin.org/post"
-                  :show-file-list="false"
-                  accept="image/*"
-                  :on-success="handleUploadSuccess">
-                  <img v-if="form.headerImg" :src="form.headerImg" class="avatar">
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
+                <div class="avatar-uploader" @click="imagePickerOpen=true">
+                  <div class="el-upload el-upload--text">
+                    <img v-if="form.headerImg" :src="form.headerImg" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  </div>
+                </div>
               </el-form-item>
             </el-col>
           </el-row>
         </el-row>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <mavonEditor v-model="form.content" ref="editor" @change="mavonChangeHandle" style="height: 400px"/>
+          <mavonEditor v-model="form.content" ref="editor" @imgAdd="handleEditorImgAdd" style="min-height: 500px;"/>
         </el-form-item>
       </div>
     </el-form>
+
+    <el-dialog
+      title="图片选择"
+      :visible.sync="imagePickerOpen">
+      <ImagePicker @onImgSelect="onImgSelect"/>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="imagePickerOpen = false">取 消</el-button>
+          <el-button type="primary" @click="imagePickerOpen = false">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -95,15 +111,17 @@
   import Sticky from '@/components/Sticky' // 粘性header组件
   import {mavonEditor} from 'mavon-editor'
   import 'mavon-editor/dist/css/index.css'
-  import DropZone from '@/components/DropZone' // 上传文件组件
   import {listBlogTagList, getBlog, addBlog, updateBlog, addBlogDraft, updateBlogDraft} from "@/api/blog/blog";
   import {listCategory} from "@/api/blog/category";
   import {getToken} from '@/utils/auth'
   import marked from 'marked'
+  import ImagePicker from '@/components/ImagePicker'
+  import MyLocalStorage from "../../../utils/MyLocalStorage";
+  import {uploadImgToQiNiu} from "@/api/common"
 
   export default {
     name: 'BlogDetail',
-    components: { DropZone, Sticky, mavonEditor},
+    components: {Sticky, mavonEditor, ImagePicker},
     props: {
       isEdit: {
         type: Boolean,
@@ -112,12 +130,15 @@
     },
     data() {
       return {
+        imagePickerOpen: false,
         //上传图片的地址
         imagesUploadApi: '',
         //上传文件需要用到的token
         headers: {'Authorization': 'Bearer ' + getToken()},
         tags: '',
         form: {
+          headerImgType: 0,
+          headerImg: '',
           weight: 1,
           tagTitleList: [],
           comment: true,
@@ -131,11 +152,11 @@
         rules: {
           title: [
             {required: true, message: "文章标题不能为空", trigger: "blur"},
-            {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'change'}
+            {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'change'}
           ],
           summary: [
             {required: true, message: "文章摘要不能为空", trigger: "blur"},
-            {min: 10, max: 150, message: '长度在 10 到 150 个字符', trigger: 'change'}
+            {min: 10, max: 250, message: '长度在 10 到 250 个字符', trigger: 'change'}
           ],
           categoryId: [
             {required: true, message: "文章分类不能为空", trigger: "change"}
@@ -150,19 +171,57 @@
       }
     },
     created() {
-      if (this.isEdit) {
-        const id = this.$route.params && this.$route.params.id
-        this.fetchData(id)
+      var blogCache = MyLocalStorage.Cache.get("blogCache");
+      if (blogCache.content != undefined && blogCache.content.length != 0) {
+        this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
+          confirmButtonText: '继续编辑',
+          cancelButtonText: '删除本地记录',
+          type: 'warning'
+        }).then(() => {
+          this.msgSuccess("已成功恢复!");
+          this.form = blogCache;
+        }).catch(() => {
+          this.msgInfo("已删除!");
+          //删除缓存
+          MyLocalStorage.Cache.remove("blogCache");
+          if (this.isEdit) {
+            const id = this.$route.params && this.$route.params.id;
+            this.fetchData(id);
+          }
+        });
       }
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
       this.getCategory();
       this.imagesUploadApi = process.env.VUE_APP_BASE_API + "/tool/qiNiu"
+
+      setInterval(() => {
+        MyLocalStorage.Cache.put("blogCache", this.form);
+      }, 10000)
     },
     methods: {
+      onImgSelect(url) {
+        this.form.headerImg = url;
+        if (this.form.headerImgType == 0) {
+          this.form.headerImgType = 1;
+        }
+      },
+      headerImgTypeChange() {
+        if (this.form.headerImgType == 0) {
+          this.form.headerImg = undefined;
+        }
+      },
       //上传文件成功回调方法
       handleUploadSuccess(res, file) {
-        this.form.headerImg = res.data.url;
+        if (res.code == 200) {
+          this.form.headerImg = res.data.url;
+          //修改headerImgType
+          if (this.form.headerImgType == 0) {
+            this.form.headerImgType = 1;
+          }
+        } else {
+          this.msgError("上传文件失败!" + res.message);
+        }
       },
       //查询标签
       getRemoteTagList(query) {
@@ -191,14 +250,6 @@
           }
         );
       },
-      dropzoneS(file) {
-        console.log(file)
-        this.$message({message: '上传成功', type: 'success'})
-      },
-      dropzoneR(file) {
-        console.log(file)
-        this.$message({message: '删除成功', type: 'success'})
-      },
       fetchData(id) {
         getBlog(id).then(response => {
           if (response.code != 200) {
@@ -208,18 +259,14 @@
           this.form = response.data;
         })
       },
-      mavonChangeHandle(context, render) {
-        console.log(marked(context))
-      },
       submitBlog() {
         this.form.htmlContent = marked(this.form.content);
-        console.log(this.form.htmlContent)
-        return
+        //删除缓存
+        MyLocalStorage.Cache.remove("blogCache");
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading = true
             this.form.status = true
-
             let obj = JSON.parse(JSON.stringify(this.form));
             if (obj.id == undefined) {
               addBlog(obj).then(response => {
@@ -230,6 +277,8 @@
                 } else {
                   this.msgError(response.msg);
                 }
+                this.loading = false;
+              }).catch(error => {
                 this.loading = false;
               });
             } else {
@@ -242,12 +291,15 @@
                   this.msgError(response.msg);
                 }
                 this.loading = false;
+              }).catch(error => {
+                this.loading = false;
               });
             }
           }
         })
       },
       draftBlog() {
+        this.form.htmlContent = marked(this.form.content);
         if (this.form.content.length === 0 || this.form.title.length === 0) {
           this.$message({
             message: '请填写必要的标题和内容',
@@ -255,8 +307,9 @@
           })
           return
         }
+        //删除缓存
+        MyLocalStorage.Cache.remove("blogCache");
         let obj = JSON.parse(JSON.stringify(this.form));
-        obj.tag = obj.tag.join(",");
         obj.status = false;
         if (obj.id == undefined) {
           addBlogDraft(obj).then(response => {
@@ -275,7 +328,17 @@
             }
           });
         }
-      }
+      },
+      handleEditorImgAdd(pos, $file){
+        // 第一步.将图片上传到服务器.
+        var formdata = new FormData();
+        formdata.append('file', $file);
+        uploadImgToQiNiu(formdata).then((url) => {
+          // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+          // $vm.$img2Url 详情见本页末尾
+          $vm.$img2Url(pos, url);
+        })
+      },
     }
   }
 </script>
@@ -286,39 +349,39 @@
   .createPost-container {
     position: relative;
 
-  .createPost-main-container {
-    padding: 30px 45px 20px 50px;
+    .createPost-main-container {
+      padding: 30px 45px 20px 50px;
 
-  .postInfo-container {
-    position: relative;
-  @include clearfix;
-    margin-bottom: 10px;
+      .postInfo-container {
+        position: relative;
+        @include clearfix;
+        margin-bottom: 10px;
 
-  .postInfo-container-item {
-    float: left;
-  }
+        .postInfo-container-item {
+          float: left;
+        }
 
-  }
-  }
+      }
+    }
 
-  .word-counter {
-    width: 40px;
-    position: absolute;
-    right: 10px;
-    top: 0px;
-  }
+    .word-counter {
+      width: 40px;
+      position: absolute;
+      right: 10px;
+      top: 0px;
+    }
 
   }
 
   .article-textarea /deep/ {
 
-  textarea {
-    padding-right: 40px;
-    resize: none;
-    border: none;
-    border-radius: 0px;
-    border-bottom: 1px solid #bfcbd9;
-  }
+    textarea {
+      padding-right: 40px;
+      resize: none;
+      border: none;
+      border-radius: 0px;
+      border-bottom: 1px solid #bfcbd9;
+    }
 
   }
 

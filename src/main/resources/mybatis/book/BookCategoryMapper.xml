@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.book.mapper.BookCategoryMapper">
+
+    <resultMap type="com.dimple.project.book.entity.BookCategory" id="CategoryResult">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectBgCategoryVo">
+        select id, title, description, create_by, create_time from bk_category
+    </sql>
+
+    <select id="selectBookCategoryList" parameterType="com.dimple.project.book.entity.BookCategory"
+            resultMap="CategoryResult">
+        select id, title, description, create_by, create_time
+        from bk_category
+        where delete_time is null
+        <if test="title != null and title != ''">
+            AND title like concat('%', #{title}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+    </select>
+
+    <select id="selectBookCategoryById" resultMap="CategoryResult">
+        select id, title, description, create_by, create_time from bk_category
+        where id = #{id}
+    </select>
+
+    <insert id="insertBookCategory" parameterType="com.dimple.project.book.entity.BookCategory" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into bk_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">title,</if>
+            <if test="description != null  and description != ''">description,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="description != null  and description != ''">#{description},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            sysdate()
+        </trim>
+    </insert>
+
+    <update id="updateBookCategory" parameterType="com.dimple.project.book.entity.BookCategory">
+        update bk_category
+        <set>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="description != null  and description != ''">description = #{description},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            update_time =sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBookCategoryById">
+        update bk_category set delete_date=sysdate(),delete_by=#{username} where id = #{id}
+    </delete>
+
+    <delete id="deleteBookCategoryByIds">
+        update bk_category set delete_time=sysdate(),delete_by=#{username} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

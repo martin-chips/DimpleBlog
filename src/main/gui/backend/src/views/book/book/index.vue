@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :inline="true" label-width="68px">
+    <el-form ref="queryForm" :inline="true" label-width="68px">
       <el-form-item label="图书名">
         <el-input v-model="queryParams.title" placeholder="请输入图书名" clearable size="small" style="width: 240px"
                   @keyup.enter.native="handleQuery"/>
@@ -96,20 +96,72 @@
       @pagination="init"/>
 
     <!-- 添加或修改分类对话框 -->
-    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="850px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="图书名" prop="title">
-          <el-input v-model="form.title" placeholder="请输入图书名"/>
-        </el-form-item>
-        <el-form-item label="图书描述" prop="description">
-          <el-input v-model="form.description" placeholder="请输入图书描述"/>
-        </el-form-item>
-        <el-form-item label="推荐" prop="support">
-          <el-switch v-model="form.support" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-        </el-form-item>
-        <el-form-item label="推荐" prop="support">
-          <el-switch v-model="form.support" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-        </el-form-item>
+        <el-col :span="12">
+          <el-form-item label="图书名" prop="title">
+            <el-input v-model="form.title" placeholder="请输入图书名"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="封面图片" prop="headerImg">
+            <el-input v-model="form.headerImg" placeholder="请输入封面图片"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="作者" prop="author">
+            <el-input v-model="form.author" placeholder="请输入作者"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="出版社" prop="publisher">
+            <el-input v-model="form.publisher" placeholder="请输入出版社"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="发行时间" prop="publishTime">
+            <el-date-picker style="width: 100%" value-format="yyyy-MM-dd" v-model="form.publishTime" type="date"
+                            placeholder="请输入发行时间"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="页码数" prop="pageNum">
+            <el-input-number style="width: 100%" v-model="form.pageNum" controls-position="right" :min="0"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="评分" prop="grade">
+            <el-rate v-model="form.grade" :max="5" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                     :low-threshold="1" :high-threshold="5" style="display:inline-block"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="图书描述" prop="description">
+            <el-input v-model="form.description" placeholder="请输入图书描述"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="原书目录" prop="catalog">
+            <el-input type="textarea" v-model="form.catalog" placeholder="请输入图书描述"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-col :span="12">
+            <el-form-item label="状态" prop="support">
+              <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="推荐" prop="support">
+              <el-switch v-model="form.support" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            </el-form-item>
+          </el-col>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="读书状态" prop="progress">
+            <el-slider v-model="form.progress" show-input></el-slider>
+          </el-form-item>
+        </el-col>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -120,10 +172,6 @@
 </template>
 
 <script>
-  import {
-    getCategory,
-    changeCategorySupport,
-  } from "@/api/blog/category";
   import initData from '@/mixins/initData'
 
   export default {
@@ -136,18 +184,48 @@
           description: undefined,
           support: undefined
         },
-        // 表单参数
-        form: {},
+        formReset: {
+          support: false,
+          status: false
+        },
         // 表单校验
         rules: {
           title: [
-            {required: true, message: "分类名称不能为空", trigger: "blur"},
-            {min: 3, max: 50, message: '长度在 5 到 120 个字符', trigger: 'change'}
+            {required: true, message: "图书名不能为空", trigger: "blur"},
+            {min: 3, max: 200, message: '长度在 3 到 200 个字符', trigger: 'change'}
+          ],
+          headerImg: [
+            {required: true, message: "封面不能为空", trigger: "blur"},
+            {min: 3, max: 250, message: '长度在 3 到 250 个字符', trigger: 'change'},
+            {type: 'url', message: '请输入正确的图片地址', trigger: ['blur', 'change']}
+          ],
+          author: [
+            {required: true, message: "作者不能为空", trigger: "blur"},
+            {min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'change'}
+          ],
+          publisher: [
+            {required: true, message: "出版社不能为空", trigger: "blur"},
+            {min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'change'}
+          ],
+          publishTime: [
+            {required: true, message: "发布时间不能为空", trigger: "blur"},
+          ],
+          pageNum: [
+            {required: true, message: "页码不能为空", trigger: "blur"},
+          ],
+          grade: [
+            {required: true, message: "评分不能为空", trigger: "blur"},
           ],
           description: [
-            {required: true, message: "分类描述不能为空", trigger: "blur"},
-            {min: 10, max: 150, message: '长度在 10 到 256 个字符', trigger: 'change'}
-          ]
+            {required: true, message: "描述不能为空", trigger: "blur"},
+            {min: 10, max: 2000, message: '长度在 10 到 2000 个字符', trigger: 'change'}
+          ],
+          status: [
+            {required: true, message: "状态不能为空", trigger: "blur"},
+          ],
+          support: [
+            {required: true, message: "推荐不能为空", trigger: "blur"},
+          ],
         }
       };
     },
@@ -158,8 +236,8 @@
     },
     methods: {
       beforeInit() {
-        this.base = '/blog/category';
-        this.modelName = '分类'
+        this.base = '/book/book';
+        this.modelName = '图书'
         return true
       },
       handleSupportChange(row) {
