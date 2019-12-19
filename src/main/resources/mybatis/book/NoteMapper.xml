@@ -5,7 +5,7 @@
     <resultMap type="com.dimple.project.book.entity.Note" id="NoteMap">
         <result property="id" column="id"/>
         <result property="title" column="title"/>
-        <result property="description" column="description"/>
+        <result property="summary" column="summary"/>
         <result property="content" column="content"/>
         <result property="htmlContent" column="html_content"/>
         <result property="click" column="click"/>
@@ -13,7 +13,9 @@
         <result property="chapter" column="chapter"/>
         <result property="bookId" column="book_id"/>
         <result property="headerImg" column="header_img"/>
+        <result property="headerImgType" column="header_img_type"/>
         <result property="support" column="support"/>
+        <result property="status" column="status"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
@@ -21,7 +23,7 @@
     <!--查询单个-->
     <select id="selectNoteById" resultMap="NoteMap">
         select
-          id, title, description, content, html_content, click, like, chapter, book_id, header_img, support, create_by, create_time
+         id, title, summary, content, html_content, click, `like`, chapter, book_id, header_img_type,header_img, support, comment, status, weight, create_by, create_time
         from bk_note
         where id = #{id} and delete_time is null
     </select>
@@ -29,8 +31,8 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectNoteList" resultMap="NoteMap">
         select
-        id, title, description, content, html_content, click, `like`, chapter, book_id, header_img, support, create_by,
-        create_time
+        id, title, summary, content, html_content, click, `like`, chapter, book_id, header_img_type,header_img, support,
+        comment, status, weight, create_by, create_time
         from bk_note
         where delete_time is null
         <if test="title != null and title != ''">
@@ -58,25 +60,31 @@
         insert into bk_note
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null ">title,</if>
-            <if test="description != null  and description != ''">description,</if>
+            <if test="summary != null  and summary != ''">summary,</if>
             <if test="content != null  and content != ''">content,</if>
-            <if test="html_content != null  and html_content != ''">htmlContent,</if>
+            <if test="htmlContent != null  and htmlContent != ''">html_content,</if>
             <if test="chapter != null  and chapter != ''">chapter,</if>
-            <if test="bookId null ">book_id,</if>
-            <if test="headerImg != null ">header_img,</if>
+            <if test="bookId !=null ">book_id,</if>
+            <if test="weight !=null ">weight,</if>
+            <if test="headerImg != null and headerImg != '' ">header_img,</if>
+            <if test="headerImgType != null and headerImgType != '' ">header_img_type,</if>
             <if test="support != null ">support,</if>
+            <if test="comment != null ">comment,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             create_time
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null ">#{title},</if>
-            <if test="description != null  and description != ''">#{description},</if>
+            <if test="summary != null  and summary != ''">#{summary},</if>
             <if test="content != null  and content != ''">#{content},</if>
-            <if test="html_content != null  and html_content != ''">#{htmlContent},</if>
+            <if test="htmlContent != null  and htmlContent != ''">#{htmlContent},</if>
             <if test="chapter != null  and chapter != ''">#{chapter},</if>
             <if test="bookId != null ">#{bookId},</if>
+            <if test="weight != null ">#{weight},</if>
             <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
+            <if test="headerImgType != null  and headerImgType != ''">#{headerImgType},</if>
             <if test="support != null ">#{support},</if>
+            <if test="comment != null ">#{comment},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             sysdate()
         </trim>
@@ -89,8 +97,8 @@
             <if test="title != null and title != ''">
                 title = #{title},
             </if>
-            <if test="description != null and description != ''">
-                description = #{description},
+            <if test="summary != null and summary != ''">
+                summary = #{summary},
             </if>
             <if test="content != null">
                 content = #{content},
@@ -107,8 +115,20 @@
             <if test="headerImg != null and headerImg != ''">
                 header_img = #{headerImg},
             </if>
+            <if test="headerImgType != null and headerImgType != ''">
+                header_img_type = #{headerImgType},
+            </if>
             <if test="support != null">
                 support = #{support},
+            </if>
+            <if test="comment != null">
+                comment = #{comment},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
             </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},

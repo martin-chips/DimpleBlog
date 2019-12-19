@@ -93,7 +93,7 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/blog',
+    path: '/bookManage',
     component: Layout,
     hidden: true,
     redirect: 'noRedirect',
@@ -112,7 +112,7 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/book',
+    path: '/bookManage',
     component: Layout,
     hidden: true,
     redirect: 'noRedirect',

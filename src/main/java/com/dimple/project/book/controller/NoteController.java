@@ -101,4 +101,12 @@ public class NoteController extends BaseController {
     public AjaxResult remove(@PathVariable String ids) {
         return toAjax(noteService.deleteNoteByIds(ids));
     }
+
+
+    @PreAuthorize("@permissionService.hasPermission('book:note:edit')")
+    @GetMapping("tag/{query}")
+    public TableDataInfo getCommonTag(@PathVariable String query) {
+        return getDataTable(noteService.selectNoteTagList(query));
+    }
+
 }

@@ -80,30 +80,8 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="博客主键" prop="id"/>
+      <el-table-column label="笔记主键" prop="id"/>
       <el-table-column label="标题" prop="title" :show-overflow-tooltip="true"/>
-      <el-table-column label="分类" prop="category.title">
-        <template slot-scope="scope">
-          <el-popover trigger="hover" placement="right">
-            <p>名称: {{ scope.row.category.title }}</p>
-            <p>描述: {{ scope.row.category.description }}</p>
-            <p>推荐:
-              <el-switch
-                v-model="scope.row.category.support"
-                active-color="#13ce66"
-                disabled
-                inactive-color="#ff4949">
-              </el-switch>
-            </p>
-            <p>
-              创建时间:<span>{{ parseTime(scope.row.category.createTime) }}</span>
-            </p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag effect="plain">{{ scope.row.category.title }}</el-tag>
-            </div>
-          </el-popover>
-        </template>
-      </el-table-column>
       <el-table-column label="摘要" prop="summary" :show-overflow-tooltip="true"/>
       <el-table-column label="封面" prop="headerImg">
         <template slot-scope="scope">
@@ -137,42 +115,10 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="评论" align="center">
-        <template slot-scope="scope">
-          <el-popover
-            placement="left"
-            width="600"
-            trigger="click">
-            <el-table v-loading="loading" :data="scope.row.commentList" style="width: 100%;">
-              <el-table-column label="评论编号" align="center" prop="id"/>
-              <el-table-column label="昵称" align="center" prop="nickName"/>
-              <el-table-column label="主机" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
-              <el-table-column label="操作地点" align="center" prop="location"/>
-              <el-table-column label="显示" align="center">
-                <template slot-scope="scope">
-                  <el-switch v-model="scope.row.display" active-color="#13ce66" inactive-color="#ff4949" disabled/>
-                </template>
-              </el-table-column>
-              <el-table-column label="内容" align="center" prop="content" :show-overflow-tooltip="true"/>
-              <el-table-column label="点赞" align="center" prop="good"/>
-              <el-table-column label="踩" align="center" prop="bad"/>
-              <el-table-column label="评论日期" align="center" prop="createTime" width="180">
-                <template slot-scope="scope">
-                  <span>{{ parseTime(scope.row.createTime) }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-button size="mini" type="text" icon="el-icon-tickets" slot="reference">共
-              {{scope.row.commentList.length}}
-              条数据
-            </el-button>
-          </el-popover>
-        </template>
-      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="text" size="mini" icon="el-icon-edit">
-            <router-link :to="'blog/edit/'+scope.row.id">编辑</router-link>
+            <router-link :to="'note/edit/'+scope.row.id">编辑</router-link>
           </el-button>
           <el-popover :ref="scope.row.id" placement="top" width="180">
             <p>确定删除本条数据吗？</p>
@@ -195,7 +141,7 @@
 </template>
 
 <script>
-  import {listBlog, delBlog, changeBlogSupport, changeBlogComment} from "@/api/blog/blog";
+  import {changeNoteSupport, changeNoteComment} from "@/api/book/note";
   import initData from '@/mixins/initData'
 
   export default {
@@ -247,12 +193,12 @@
       // 博客状态修改
       handleCommentChange(row) {
         let text = row.comment ? "开启评论" : "关闭评论";
-        this.$confirm('确认要"' + text + '""' + row.title + '"博客吗?', "警告", {
+        this.$confirm('确认要"' + text + '""' + row.title + '"笔记吗?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return changeBlogComment(row.id, row.comment);
+          return changeNoteComment(row.id, row.comment);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess(text + "成功");
@@ -261,16 +207,17 @@
           }
         }).catch(function () {
           this.msgError(text + "失败");
+          row.comment = row.comment === false ? true : false;
         });
       },
       handleSupportChange(row) {
         let text = row.support ? "推荐" : "取消推荐";
-        this.$confirm('确认要' + text + '"' + row.title + '"博客吗?', "警告", {
+        this.$confirm('确认要' + text + '"' + row.title + '"笔记吗?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          return changeBlogSupport(row.id, row.support);
+          return changeNoteSupport(row.id, row.support);
         }).then((response) => {
           if (response.code == 200) {
             this.msgSuccess(text + "成功");

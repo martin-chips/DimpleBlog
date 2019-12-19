@@ -42,6 +42,13 @@
         select id,color,title from bk_tag where title=#{title}
     </select>
 
+    <select id="selectNoteTagByNoteId" resultType="com.dimple.project.book.entity.NoteTag">
+        select t.id,t.title,t.color
+        from bk_tag t left join bk_note_tag  bt
+        on t.id=bt.tag_id
+        where bt.note_id=#{id}
+    </select>
+
 
     <insert id="insertNoteTag" parameterType="com.dimple.project.book.entity.NoteTag" useGeneratedKeys="true"
             keyProperty="id">
@@ -58,6 +65,9 @@
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             sysdate()
         </trim>
+    </insert>
+    <insert id="insertNoteTagMapping">
+        insert bk_note_tag(note_id,tag_id) values (#{noteId},#{tagId})
     </insert>
 
     <update id="updateNoteTag" parameterType="com.dimple.project.book.entity.NoteTag">
@@ -77,6 +87,9 @@
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </delete>
+    <delete id="deleteNoteTagMappingByNoteId">
+        delete from bk_note_tag where note_id=#{id}
     </delete>
 
 </mapper>

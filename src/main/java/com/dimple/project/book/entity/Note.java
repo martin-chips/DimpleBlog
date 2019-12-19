@@ -4,6 +4,7 @@ import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @className: Note
@@ -22,7 +23,7 @@ public class Note extends BaseEntity implements Serializable {
     /**
      * 描述
      */
-    private String description;
+    private String summary;
     /**
      * 内容
      */
@@ -40,6 +41,10 @@ public class Note extends BaseEntity implements Serializable {
      */
     private Long like;
     /**
+     * 权重
+     */
+    private Long weight;
+    /**
      * 所属章节
      */
     private String chapter;
@@ -51,6 +56,8 @@ public class Note extends BaseEntity implements Serializable {
      * 封面
      */
     private String headerImg;
+
+    private Integer headerImgType;
     /**
      * 推荐
      */
@@ -59,6 +66,12 @@ public class Note extends BaseEntity implements Serializable {
      * 评论
      */
     private Boolean comment;
+    /**
+     * true表示发表,false表示草稿
+     */
+    private Boolean status;
+
+    private List<String> tagTitleList;
 
 
 }

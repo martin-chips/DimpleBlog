@@ -52,4 +52,13 @@ public interface NoteService {
      * @return 受影响的行数
      */
     int deleteNoteByIds(String ids);
+
+    /**
+     * 根据查询参数获取符合条件的Tag Title
+     *
+     * @param query 查询
+     * @return 符合条件的list
+     */
+    List<String> selectNoteTagList(String query);
+
 }

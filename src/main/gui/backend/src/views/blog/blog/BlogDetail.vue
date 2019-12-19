@@ -171,6 +171,7 @@
     },
     created() {
       var blogCache = MyLocalStorage.Cache.get("blogCache");
+      var fetch = true;
       if (blogCache != undefined && blogCache.content != undefined && blogCache.content.length != 0) {
         this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
           confirmButtonText: '继续编辑',
@@ -178,16 +179,17 @@
           type: 'warning'
         }).then(() => {
           this.msgSuccess("已成功恢复!");
+          fetch = false;
           this.form = blogCache;
         }).catch(() => {
           this.msgInfo("已删除!");
           //删除缓存
           MyLocalStorage.Cache.remove("blogCache");
-          if (this.isEdit) {
-            const id = this.$route.params && this.$route.params.id;
-            this.fetchData(id);
-          }
         });
+      }
+      if (fetch&&this.isEdit) {
+          const id = this.$route.params && this.$route.params.id;
+          this.fetchData(id);
       }
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
@@ -272,7 +274,7 @@
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
                   this.$store.dispatch('tagsView/delView', this.$route)
-                  this.$router.push({path: '/blog/blog'})
+                  this.$router.push({path: '/blogManager/blog'})
                 } else {
                   this.msgError(response.msg);
                 }
@@ -285,7 +287,7 @@
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
                   this.$store.dispatch('tagsView/delView', this.$route)
-                  this.$router.push({path: '/blog/blog'})
+                  this.$router.push({path: '/blogManager/blog'})
                 } else {
                   this.msgError(response.msg);
                 }

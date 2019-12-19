@@ -3,10 +3,10 @@
     <el-form ref="form" :model="form" :rules="rules" class="form-container">
       <sticky :z-index="10" :class-name="'sub-navbar '+(form.status==null?'publish':'draft')">
         <el-button :loading="loading" style="margin-left: 10px;" icon="el-icon-check" type="success" plain
-                   @click="submitBlog">发布
+                   @click="submitNote">发布
         </el-button>
         <el-button :loading="loading" icon="el-icon-message" type="warning" plain
-                   @click="draftBlog">保存草稿
+                   @click="draftNote">保存草稿
         </el-button>
       </sticky>
 
@@ -21,12 +21,15 @@
                 <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3}" placeholder="请输入摘要"
                           v-model="form.summary"></el-input>
               </el-form-item>
+              <el-form-item prop="chapter" label="章节: " label-width="60px">
+                <el-input placeholder="请输入章节" v-model="form.chapter" clearable></el-input>
+              </el-form-item>
               <el-row>
                 <el-col :span="6">
-                  <el-form-item prop="categoryId" label-width="60px" label="分类: ">
-                    <el-select v-model="form.categoryId" filterable allow-create default-first-option
-                               placeholder="请选择文章分类">
-                      <el-option v-for="item in categoryOptions" :key="item.id" :label="item.title"
+                  <el-form-item prop="bookId" label-width="60px" label="图书: ">
+                    <el-select v-model="form.bookId" filterable allow-create default-first-option
+                               placeholder="请选择图书">
+                      <el-option v-for="item in bookOptions" :key="item.id" :label="item.title"
                                  :value="item.id"></el-option>
                     </el-select>
                   </el-form-item>
@@ -67,7 +70,7 @@
                       <el-select
                         style="width:100%" v-model="form.tagTitleList" multiple default-first-option filterable remote
                         :loading="loading"
-                        :remote-method="getRemoteTagList" allow-create placeholder="请选择文章标签">
+                        :remote-method="getRemoteTagList" allow-create placeholder="请选择笔记标签">
                         <el-option v-for="item in blogTagOptions" :key="item" :label="item"
                                    :value="item"/>
                       </el-select>
@@ -111,8 +114,8 @@
   import Sticky from '@/components/Sticky' // 粘性header组件
   import {mavonEditor} from 'mavon-editor'
   import 'mavon-editor/dist/css/index.css'
-  import {listBlogTagList, getBlog, addBlog, updateBlog, addBlogDraft, updateBlogDraft} from "@/api/blog/blog";
-  import {listCategory} from "@/api/blog/category";
+  import {listNoteTagList, getNote, addNote, updateNote, addNoteDraft, updateNoteDraft} from "@/api/book/note";
+  import {listCategory} from "@/api/book/category";
   import {getToken} from '@/utils/auth'
   import marked from 'marked'
   import ImagePicker from '@/components/ImagePicker'
@@ -120,7 +123,7 @@
   import {uploadImgToQiNiu} from "@/api/common"
 
   export default {
-    name: 'BlogDetail',
+    name: 'NoteDetail',
     components: {Sticky, mavonEditor, ImagePicker},
     props: {
       isEdit: {
@@ -146,20 +149,20 @@
         },
         loading: false,
         tempRoute: {},
-        categoryOptions: [],
+        bookOptions: [],
         blogTagOptions: [],
         // 表单校验
         rules: {
           title: [
-            {required: true, message: "文章标题不能为空", trigger: "blur"},
+            {required: true, message: "笔记标题不能为空", trigger: "blur"},
             {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'change'}
           ],
           summary: [
-            {required: true, message: "文章摘要不能为空", trigger: "blur"},
+            {required: true, message: "笔记摘要不能为空", trigger: "blur"},
             {min: 10, max: 250, message: '长度在 10 到 250 个字符', trigger: 'change'}
           ],
           categoryId: [
-            {required: true, message: "文章分类不能为空", trigger: "change"}
+            {required: true, message: "笔记分类不能为空", trigger: "change"}
           ],
           comment: [
             {required: true, message: "评论不能为空", trigger: "change"}
@@ -171,24 +174,27 @@
       }
     },
     created() {
-      var blogCache = MyLocalStorage.Cache.get("blogCache");
-      if (blogCache.content != undefined && blogCache.content.length != 0) {
-        this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
+      var noteCache = MyLocalStorage.Cache.get("noteCache");
+      var fetch = true;
+      if (noteCache != undefined && noteCache.content != undefined && noteCache.content.length != 0) {
+        this.$confirm('检测到本地存在未发布笔记,是否继续编辑', '提示', {
           confirmButtonText: '继续编辑',
           cancelButtonText: '删除本地记录',
           type: 'warning'
         }).then(() => {
           this.msgSuccess("已成功恢复!");
-          this.form = blogCache;
+          this.form = noteCache;
+          fetch = false;
         }).catch(() => {
           this.msgInfo("已删除!");
           //删除缓存
-          MyLocalStorage.Cache.remove("blogCache");
-          if (this.isEdit) {
-            const id = this.$route.params && this.$route.params.id;
-            this.fetchData(id);
-          }
+          MyLocalStorage.Cache.remove("noteCache");
+
         });
+      }
+      if (fetch && this.isEdit) {
+        const id = this.$route.params && this.$route.params.id;
+        this.fetchData(id);
       }
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
@@ -196,7 +202,7 @@
       this.imagesUploadApi = process.env.VUE_APP_BASE_API + "/tool/qiNiu"
 
       setInterval(() => {
-        MyLocalStorage.Cache.put("blogCache", this.form);
+        MyLocalStorage.Cache.put("noteCache", this.form);
       }, 10000)
     },
     methods: {
@@ -229,7 +235,7 @@
           this.loading = true;
           setTimeout(() => {
             this.loading = false;
-            listBlogTagList(query).then(response => {
+            listNoteTagList(query).then(response => {
                 this.blogTagOptions = response.rows;
                 this.loading = false;
               }
@@ -243,7 +249,7 @@
       getCategory() {
         listCategory().then(response => {
             if (response.code == 200) {
-              this.categoryOptions = response.rows;
+              this.bookOptions = response.rows;
             } else {
               this.msgError(response.msg);
             }
@@ -251,7 +257,7 @@
         );
       },
       fetchData(id) {
-        getBlog(id).then(response => {
+        getNote(id).then(response => {
           if (response.code != 200) {
             this.msgError(response.msg);
             return;
@@ -259,21 +265,21 @@
           this.form = response.data;
         })
       },
-      submitBlog() {
+      submitNote() {
         this.form.htmlContent = marked(this.form.content);
         //删除缓存
-        MyLocalStorage.Cache.remove("blogCache");
+        MyLocalStorage.Cache.remove("noteCache");
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading = true
             this.form.status = true
             let obj = JSON.parse(JSON.stringify(this.form));
             if (obj.id == undefined) {
-              addBlog(obj).then(response => {
+              addNote(obj).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
                   this.$store.dispatch('tagsView/delView', this.$route)
-                  this.$router.push({path: '/blog/blog'})
+                  this.$router.push({path: '/bookManage/note'})
                 } else {
                   this.msgError(response.msg);
                 }
@@ -282,11 +288,11 @@
                 this.loading = false;
               });
             } else {
-              updateBlog(obj).then(response => {
+              updateNote(obj).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
                   this.$store.dispatch('tagsView/delView', this.$route)
-                  this.$router.push({path: '/blog/blog'})
+                  this.$router.push({path: '/bookManage/note'})
                 } else {
                   this.msgError(response.msg);
                 }
@@ -298,7 +304,7 @@
           }
         })
       },
-      draftBlog() {
+      draftNote() {
         this.form.htmlContent = marked(this.form.content);
         if (this.form.content.length === 0 || this.form.title.length === 0) {
           this.$message({
@@ -308,11 +314,11 @@
           return
         }
         //删除缓存
-        MyLocalStorage.Cache.remove("blogCache");
+        MyLocalStorage.Cache.remove("noteCache");
         let obj = JSON.parse(JSON.stringify(this.form));
         obj.status = false;
         if (obj.id == undefined) {
-          addBlogDraft(obj).then(response => {
+          addNoteDraft(obj).then(response => {
             if (response.code === 200) {
               this.msgSuccess("保存草稿成功");
             } else {
@@ -320,7 +326,7 @@
             }
           });
         } else {
-          updateBlogDraft(obj).then(response => {
+          updateNoteDraft(obj).then(response => {
             if (response.code === 200) {
               this.msgSuccess("保存草稿成功");
             } else {
@@ -329,7 +335,7 @@
           });
         }
       },
-      handleEditorImgAdd(pos, $file){
+      handleEditorImgAdd(pos, $file) {
         // 第一步.将图片上传到服务器.
         var formdata = new FormData();
         formdata.append('file', $file);
@@ -397,7 +403,7 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 224px;
+    height: 280px;
   }
 
   .avatar-uploader .el-upload:hover {
@@ -408,8 +414,8 @@
     font-size: 28px;
     color: #8c939d;
     width: 100%;
-    height: 224px;
-    line-height: 224px;
+    height: 280px;
+    line-height: 280px;
     text-align: center;
   }
 

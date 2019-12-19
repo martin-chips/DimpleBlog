@@ -59,4 +59,29 @@ public interface NoteTagMapper {
      * @return tag
      */
     NoteTag selectNoteTagByTitle(String tag);
+
+    /**
+     * 根据note 的id获取与之关联的noteTag
+     *
+     * @param noteId note的id
+     * @return NoteTag
+     */
+    List<NoteTag> selectNoteTagByNoteId(Long noteId);
+
+    /**
+     * 根据Node的id删除Note和tag的关联
+     *
+     * @param id note的id
+     * @return 受影响的行数
+     */
+    int deleteNoteTagMappingByNoteId(@Param("id") Long id);
+
+    /**
+     * 插入Note和tag的关联
+     *
+     * @param noteId note的id
+     * @param tagId  tag的id
+     * @return 受影响的行数
+     */
+    int insertNoteTagMapping(@Param("noteId") Long noteId, @Param("tagId") Long tagId);
 }

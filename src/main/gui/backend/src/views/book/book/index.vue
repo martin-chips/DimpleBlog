@@ -98,70 +98,86 @@
     <!-- 添加或修改分类对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="850px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-col :span="12">
-          <el-form-item label="图书名" prop="title">
-            <el-input v-model="form.title" placeholder="请输入图书名"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="封面图片" prop="headerImg">
-            <el-input v-model="form.headerImg" placeholder="请输入封面图片"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="作者" prop="author">
-            <el-input v-model="form.author" placeholder="请输入作者"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="出版社" prop="publisher">
-            <el-input v-model="form.publisher" placeholder="请输入出版社"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="发行时间" prop="publishTime">
-            <el-date-picker style="width: 100%" value-format="yyyy-MM-dd" v-model="form.publishTime" type="date"
-                            placeholder="请输入发行时间"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="页码数" prop="pageNum">
-            <el-input-number style="width: 100%" v-model="form.pageNum" controls-position="right" :min="0"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="评分" prop="grade">
-            <el-rate v-model="form.grade" :max="5" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-                     :low-threshold="1" :high-threshold="5" style="display:inline-block"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="图书描述" prop="description">
-            <el-input v-model="form.description" placeholder="请输入图书描述"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="原书目录" prop="catalog">
-            <el-input type="textarea" v-model="form.catalog" placeholder="请输入图书描述"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
+        <el-row>
           <el-col :span="12">
-            <el-form-item label="状态" prop="support">
-              <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            <el-form-item label="图书名" prop="title">
+              <el-input v-model="form.title" placeholder="请输入图书名"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="推荐" prop="support">
-              <el-switch v-model="form.support" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            <el-form-item label="分类" prop="categoryId">
+              <el-select v-model="form.categoryId" filterable placeholder="请选择 " style="width: 100%">
+                <el-option
+                  v-for="item in categoryOptions"
+                  :key="item.id"
+                  :label="item.title"
+                  :value="item.id">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
-        </el-col>
-        <el-col :span="24">
-          <el-form-item label="读书状态" prop="progress">
-            <el-slider v-model="form.progress" show-input></el-slider>
-          </el-form-item>
-        </el-col>
+          <el-col :span="12">
+            <el-form-item label="封面图片" prop="headerImg">
+              <el-input v-model="form.headerImg" placeholder="请输入封面图片"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="作者" prop="author">
+              <el-input v-model="form.author" placeholder="请输入作者"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="出版社" prop="publisher">
+              <el-input v-model="form.publisher" placeholder="请输入出版社"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="发行时间" prop="publishTime">
+              <el-date-picker style="width: 100%" value-format="yyyy-MM-dd" v-model="form.publishTime" type="date"
+                              placeholder="请输入发行时间"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="页码数" prop="pageNum">
+              <el-input-number style="width: 100%" v-model="form.pageNum" controls-position="right" :min="0"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="评分" prop="grade">
+              <el-rate v-model="form.grade" :max="5" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                       :low-threshold="1" :high-threshold="5" style="display:inline-block"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="图书描述" prop="description">
+              <el-input v-model="form.description" placeholder="请输入图书描述"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-col :span="12">
+              <el-form-item label="状态" prop="support">
+                <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="推荐" prop="support">
+                <el-switch v-model="form.support" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+              </el-form-item>
+            </el-col>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="原书目录" prop="catalog">
+              <el-input type="textarea" v-model="form.catalog" placeholder="请输入原书目录"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="读书状态" prop="progress">
+              <el-slider v-model="form.progress" show-input></el-slider>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -173,11 +189,13 @@
 
 <script>
   import initData from '@/mixins/initData'
+  import {listCategory} from '@/api/book/category';
 
   export default {
     mixins: [initData],
     data() {
       return {
+        categoryOptions: [],
         // 查询参数
         queryParams: {
           title: undefined,
@@ -231,8 +249,14 @@
     },
     created() {
       this.$nextTick(() => {
-        this.init()
-      })
+        this.init();
+      });
+      //获取categoryList
+      listCategory({pageSize: 0}).then(response => {
+        if (response.code == 200) {
+          this.categoryOptions = response.rows;
+        }
+      });
     },
     methods: {
       beforeInit() {
