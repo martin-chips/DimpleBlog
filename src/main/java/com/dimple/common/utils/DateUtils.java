@@ -1,11 +1,14 @@
 package com.dimple.common.utils;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+
 import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-
-import org.apache.commons.lang3.time.DateFormatUtils;
+import java.util.List;
 
 /**
  * @className: DateUtils
@@ -133,4 +136,42 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         // long sec = diff % nd % nh % nm / ns;
         return day + "天" + hour + "小时" + min + "分钟";
     }
+
+    /**
+     * 获取过去 <code>intervals</code>时间的字符串数组
+     *
+     * @param intervals 过去时间
+     * @return 字符串数组
+     */
+    public static List<String> getPastDaysList(int intervals) {
+        List<String> pastDaysList = new ArrayList<>();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(YYYY_MM_DD);
+        for (int i = intervals - 1; i >= 0; i--) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - i);
+            Date today = calendar.getTime();
+            pastDaysList.add(simpleDateFormat.format(today));
+        }
+        return pastDaysList;
+    }
+
+    /**
+     * 获取过去anchor开始到anchor+intervals时间段的日期
+     *
+     * @param anchor    锚点
+     * @param intervals 间隔
+     * @return 时间段日期String
+     */
+    public static List<String> getPastDaysList(int anchor, int intervals) {
+        List<String> pastDaysList = new ArrayList<>();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(YYYY_MM_DD);
+        for (int i = intervals - 1; i >= 0; i--) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - anchor - i);
+            Date today = calendar.getTime();
+            pastDaysList.add(simpleDateFormat.format(today));
+        }
+        return pastDaysList;
+    }
+
 }

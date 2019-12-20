@@ -22,11 +22,14 @@
       height: {
         type: String,
         default: '300px'
+      },
+      spiderData:{
+        type: Array
       }
     },
     data() {
       return {
-        chart: null
+        chart: null,
       }
     },
     mounted() {
@@ -43,6 +46,7 @@
     },
     methods: {
       initChart() {
+        let legendData = this.spiderData.map(e => e.name);
         this.chart = echarts.init(this.$el, 'macarons')
 
         this.chart.setOption({
@@ -53,22 +57,16 @@
           legend: {
             left: 'center',
             bottom: '10',
-            data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+            data: legendData
           },
           series: [
             {
-              name: 'WEEKLY WRITE ARTICLES',
+                name: '爬虫访问',
               type: 'pie',
               roseType: 'radius',
               radius: [15, 95],
               center: ['50%', '38%'],
-              data: [
-                {value: 320, name: 'Industries'},
-                {value: 240, name: 'Technology'},
-                {value: 149, name: 'Forex'},
-                {value: 100, name: 'Gold'},
-                {value: 59, name: 'Forecasts'}
-              ],
+              data: this.spiderData,
               animationEasing: 'cubicInOut',
               animationDuration: 2600
             }
