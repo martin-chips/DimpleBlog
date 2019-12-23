@@ -53,4 +53,8 @@ public class VisitLog extends BaseEntity {
      * 入口地址
      */
     private String entryUrl;
+    /**
+     * 页面id
+     */
+    private Long pageId;
 }

@@ -37,7 +37,7 @@ public class BlogController extends BaseController {
     }
 
     @GetMapping("/blog/{id}")
-    @VLog(title = "查看博客")
+    @VLog(title = "查看博客",pageId = "#id")
     public AjaxResult blogDetail(@PathVariable Long id) {
         return AjaxResult.success(blogService.selectBlogDetailById(id));
     }

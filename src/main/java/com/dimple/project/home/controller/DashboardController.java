@@ -1,6 +1,8 @@
 package com.dimple.project.home.controller;
 
+import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.home.domain.LineChartData;
 import com.dimple.project.home.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/dashboard")
-public class DashboardController {
+public class DashboardController extends BaseController {
 
     @Autowired
     DashboardService dashboardService;
@@ -41,5 +43,12 @@ public class DashboardController {
     public AjaxResult getSpiderData() {
         List<Map<String, Long>> result = dashboardService.getSpiderData();
         return AjaxResult.success(result);
+    }
+
+    @GetMapping("/visitLog")
+    public TableDataInfo tableDataInfo() {
+        startPage();
+        List<String> visitLogList = dashboardService.getVisitLogStringList();
+        return getDataTable(visitLogList);
     }
 }

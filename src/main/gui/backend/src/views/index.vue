@@ -2,10 +2,17 @@
   <div class="dashboard-editor-container">
     <panel-group @handleSetLineChartData="handleSetLineChartData"/>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-col :xs="24" :sm="24" :lg="16">
+      <el-col :xs="24" :sm="24" :lg="24">
         <line-chart v-if="lineChartData.expectedData!=undefined" :chart-data="lineChartData"/>
       </el-col>
+    </el-row>
+    <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
+        <div class="chart-wrapper">
+          <Log/>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="16">
         <div class="chart-wrapper">
           <pie-chart :spider-data="spiderData" v-if="spiderData.length!=0"/>
         </div>
@@ -19,6 +26,7 @@
   import LineChart from './dashboard/LineChart'
   import PieChart from './dashboard/PieChart'
   import {listLineChartData, listSpiderData} from "@/api/dashboard";
+  import Log from "@/views/dashboard/Log"
 
 
   var lineChartDataAll = {
@@ -48,6 +56,7 @@
     name: 'Index',
     components: {
       PanelGroup,
+      Log,
       LineChart,
       PieChart,
     },

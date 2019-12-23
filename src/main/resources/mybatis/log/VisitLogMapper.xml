@@ -9,6 +9,7 @@
         <result property="location" column="location"/>
         <result property="browser" column="browser"/>
         <result property="os" column="os"/>
+        <result property="pageId" column="page_id"/>
         <result property="spider" column="spider"/>
         <result property="url" column="url"/>
         <result property="errorMsg" column="error_msg"/>
@@ -22,6 +23,7 @@
         <if test="browser!=null and browser!=''">browser,</if>
         <if test="os!=null and os!=''">os,</if>
         <if test="url!=null and url!=''">url,</if>
+        <if test="pageId !=null">page_id,</if>
         <if test="errorMsg!=null and errorMsg!=''">error_msg,</if>
         <if test="spider!=null and spider!=''">spider,</if>
         <if test="status!=null and status!=''">status,</if>
@@ -34,6 +36,7 @@
         <if test="browser!=null and browser!=''">#{browser},</if>
         <if test="os!=null and os!=''">#{os},</if>
         <if test="url!=null and url!=''">#{url},</if>
+        <if test="pageId!=null ">#{pageId},</if>
         <if test="errorMsg!=null and errorMsg!=''">#{errorMsg},</if>
         <if test="spider!=null and spider!=''">#{spider},</if>
         <if test="status!=null and status!=''">#{status},</if>
@@ -45,7 +48,7 @@
 
     <select id="selectVisitLogList" parameterType="com.dimple.project.log.domain.VisitLog"
             resultMap="VisitLogResult">
-        select id, ip, location, browser, os, status, error_msg,spider,url, create_time from bg_visit_log
+        select id, ip, location, browser, os, status, error_msg,spider,url, create_time,page_id from bg_visit_log
         where delete_time is null
         <if test="ip != null and ip != ''">
             AND ip like concat('%', #{ip}, '%')

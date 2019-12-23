@@ -96,7 +96,7 @@
             }),
             //跳转到后台首页
             toIndex() {
-                this.$router.push({path: '/index'});
+                window.open("admin.bianxiaofeng.com", '_blank')
             },
             //切换主题
             toggleTheme() {

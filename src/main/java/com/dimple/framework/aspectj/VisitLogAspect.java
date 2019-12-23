@@ -15,6 +15,12 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -63,6 +69,7 @@ public class VisitLogAspect {
                 return;
             }
             VisitLog visitLog = new VisitLog();
+            visitLog.setPageId(getPageId(vLog, joinPoint));
             visitLog.setIp(IpUtils.getHostIp());
             visitLog.setUrl(ServletUtils.getRequest().getRequestURI());
             if (e != null) {
@@ -79,9 +86,7 @@ public class VisitLogAspect {
             AsyncManager.me().execute(AsyncFactory.recordVisitLog(visitLog));
         } catch (Exception exp) {
             // 记录本地异常日志
-            log.error("==前置通知异常==");
-            log.error("异常信息:{}", exp.getMessage());
-            exp.printStackTrace();
+            log.error("异常信息:{}", exp.getMessage(),exp);
         }
     }
 
@@ -108,5 +113,44 @@ public class VisitLogAspect {
             return method.getAnnotation(VLog.class);
         }
         return null;
+    }
+
+    /**
+     * 获取PageId
+     *
+     * @param joinPoint 切入点
+     * @return PageId
+     */
+    private Long getPageId(VLog vLog, JoinPoint joinPoint) throws NoSuchMethodException {
+        String pageIdStr = vLog.pageId();
+        if (StringUtils.isEmpty(pageIdStr)) {
+            return null;
+        }
+        //get target method
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Method method = joinPoint.getTarget().getClass().getMethod(methodSignature.getMethod().getName(), methodSignature.getMethod().getParameterTypes());
+        //express SpEL
+        ExpressionParser expressionParser = new SpelExpressionParser();
+        LocalVariableTableParameterNameDiscoverer localVariableTableParameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
+        String[] params = localVariableTableParameterNameDiscoverer.getParameterNames(method);
+
+        Object[] args = joinPoint.getArgs();
+        EvaluationContext context = new StandardEvaluationContext();
+        for (int i = 0; i < params.length; i++) {
+            context.setVariable(params[i], args[i]);
+        }
+
+        Expression expression = expressionParser.parseExpression(pageIdStr);
+        Object value = expression.getValue(context);
+
+        if (value == null) {
+            return null;
+        }
+        try {
+            return (Long) value;
+        } catch (Exception e) {
+            log.error("get pageId error for parameters {}", value);
+            return null;
+        }
     }
 }

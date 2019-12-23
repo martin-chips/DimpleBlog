@@ -1,5 +1,6 @@
 package com.dimple.project.home.mapper;
 
+import com.dimple.project.log.domain.VisitLog;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -75,4 +76,18 @@ public interface DashBoardMapper {
 
     List<Map<String, Long>> getSpiderData();
 
+    /**
+     * 获取visitLog
+     *
+     * @return visitLog
+     */
+    List<VisitLog> getVisitLog();
+
+    /**
+     * 根据Id获取blog的title
+     *
+     * @param pageId blog的id
+     * @return blog的title
+     */
+    String getBlogNameByPageId(Long pageId);
 }

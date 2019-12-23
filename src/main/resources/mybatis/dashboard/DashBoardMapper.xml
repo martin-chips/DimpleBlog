@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.home.mapper.DashBoardMapper">
+
+    <select id="getVisitorCount" resultType="java.lang.Long">
+        select count(*)
+        from bg_visit_log
+        where delete_time is null
+    </select>
+    <select id="getBlogCount" resultType="java.lang.Long">
+        select count(*)
+        from bg_blog
+        where delete_time is null
+    </select>
+    <select id="getBookCount" resultType="java.lang.Long">
+        select count(*)
+        from bk_book
+        where delete_time is null
+    </select>
+    <select id="getNoteCount" resultType="java.lang.Long">
+        select count(*)
+        from bk_note
+        where delete_time is null
+    </select>
+    <select id="getVisitorCountByCreateTime" resultType="java.lang.Long">
+        select count(*)
+        from bg_visit_log
+        where date(create_time) = #{date}
+    </select>
+    <select id="getNoteCountByCreateTime" resultType="java.lang.Long">
+        select count(*)
+        from bk_note
+        where date(create_time) = #{date}
+    </select>
+    <select id="getBlogCountByCreateTime" resultType="java.lang.Long">
+        select count(*)
+        from bg_blog
+        where date(create_time) = #{date}
+    </select>
+    <select id="getBookCountByCreateTime" resultType="java.lang.Long">
+        select count(*)
+        from bk_book
+        where date(create_time) = #{date}
+    </select>
+    <select id="getSpiderData" resultType="java.util.Map">
+        select spider as 'name', count(spider) as 'value'
+        from bg_visit_log
+        where spider is not null
+        group by spider
+        order by spider
+        limit 10
+    </select>
+    <select id="getVisitLog" resultType="com.dimple.project.log.domain.VisitLog">
+        select id,
+               ip,
+               page_id,
+               location,
+               browser,
+               os,
+               entry_url,
+               url,
+               error_msg,
+               status,
+               title,
+               spider,
+               create_time
+        from bg_visit_log
+        where delete_time is null
+    </select>
+    <select id="getBlogNameByPageId" resultType="java.lang.String">
+        select title
+        from bg_blog
+        where id = #{pageId}
+    </select>
+
+</mapper>

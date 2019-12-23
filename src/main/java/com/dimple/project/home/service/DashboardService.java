@@ -34,4 +34,11 @@ public interface DashboardService {
      */
     List<Map<String, Long>> getSpiderData();
 
+    /**
+     * 获取VisitLog List
+     *
+     * @return VisitLog
+     */
+    List<String> getVisitLogStringList();
+
 }

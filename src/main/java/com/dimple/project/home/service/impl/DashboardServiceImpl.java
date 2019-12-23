@@ -1,13 +1,16 @@
 package com.dimple.project.home.service.impl;
 
 import com.dimple.common.utils.DateUtils;
+import com.dimple.common.utils.StringUtils;
 import com.dimple.project.home.domain.LineChartData;
 import com.dimple.project.home.mapper.DashBoardMapper;
 import com.dimple.project.home.service.DashboardService;
+import com.dimple.project.log.domain.VisitLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,6 +68,26 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public List<Map<String, Long>> getSpiderData() {
         return dashBoardMapper.getSpiderData();
+    }
+
+    @Override
+    public List<String> getVisitLogStringList() {
+        List<VisitLog> visitLogList = dashBoardMapper.getVisitLog();
+        List<String> result = new ArrayList<>();
+        for (VisitLog visitLog : visitLogList) {
+            String name = "";
+            if (visitLog.getPageId() == -1000) {
+                name = "留言页";
+            } else {
+                Long pageId = visitLog.getPageId();
+                if (pageId != null) {
+                    name = dashBoardMapper.getBlogNameByPageId(pageId);
+                }
+            }
+            //XXX 分钟前 : @47.112.14.207 浏览了 <strong>title</strong> <a href='url'>XXXXX</a>
+            result.add(StringUtils.format("{} : @{} 浏览了 <strong> {} </strong> <a href='{}'> {} </a>", DateUtils.showTime(visitLog.getCreateTime()), visitLog.getIp(), visitLog.getTitle(), visitLog.getUrl(), StringUtils.isEmpty(name) ? visitLog.getUrl() : name));
+        }
+        return result;
     }
 
     /**

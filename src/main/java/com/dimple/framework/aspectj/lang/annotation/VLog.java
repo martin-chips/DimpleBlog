@@ -24,5 +24,5 @@ public @interface VLog {
     /**
      * page Id
      */
-    long pageId() default 0L;
+    String pageId() default "";
 }
