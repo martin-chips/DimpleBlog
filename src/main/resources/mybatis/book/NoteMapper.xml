@@ -24,16 +24,16 @@
     <select id="selectNoteById" resultMap="NoteMap">
         select
          id, title, summary, content, html_content, click, `like`, chapter, book_id, header_img_type,header_img, support, comment, status, weight, create_by, create_time
-        from bk_note
+        from note
         where id = #{id} and delete_time is null
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectNoteList" resultMap="NoteMap">
         select
-        id, title, summary, content, html_content, click, `like`, chapter, book_id, header_img_type,header_img, support,
+        id, title, summary, click, `like`, chapter, book_id, header_img_type,header_img, support,
         comment, status, weight, create_by, create_time
-        from bk_note
+        from note
         where delete_time is null
         <if test="title != null and title != ''">
             and title = #{title}
@@ -57,7 +57,7 @@
 
     <!--新增所有列-->
     <insert id="insertNote" keyProperty="id" useGeneratedKeys="true">
-        insert into bk_note
+        insert into note
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null ">title,</if>
             <if test="summary != null  and summary != ''">summary,</if>
@@ -92,7 +92,7 @@
 
     <!--通过主键修改数据-->
     <update id="updateNote">
-        update bk_note
+        update note
         <set>
             <if test="title != null and title != ''">
                 title = #{title},
@@ -140,7 +140,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteNoteByIds">
-        update bk_note set delete_time =sysdate() ,delete_by=#{username} where id in
+        update note set delete_time =sysdate() ,delete_by=#{username} where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>

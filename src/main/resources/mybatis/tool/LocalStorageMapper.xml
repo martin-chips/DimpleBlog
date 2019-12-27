@@ -15,7 +15,7 @@
     </resultMap>
 
     <insert id="insertLocalStorage">
-        insert into tool_local_storage(
+        insert into local_storage(
         <if test="realName != null and realName != ''">real_name,</if>
         <if test="name != null and name != ''">name,</if>
         <if test="suffix != null and suffix != ''">suffix,</if>
@@ -37,7 +37,7 @@
     </insert>
 
     <update id="updateLocalStorage">
-        update tool_local_storage
+        update local_storage
         <set>
             <if test="name != null and name != ''">
                 name = #{name},
@@ -53,7 +53,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectLocalStorageList" resultMap="LocalStorageMap">
         select id, real_name, name, suffix, path, type, size, create_by, create_time
-        from tool_local_storage
+        from local_storage
         where delete_time is null
         <if test="name != null and name != ''">
             and name like concat('%',#{name},'%')
@@ -73,13 +73,13 @@
     </select>
     <select id="selectLocalStorageById" resultMap="LocalStorageMap">
         select id, real_name, name, suffix, path, type, size, create_by, create_time
-        from tool_local_storage
+        from local_storage
         where delete_time is null and id=#{id}
     </select>
 
     <!--通过主键删除-->
     <delete id="deleteLocalStorageById">
-      update tool_local_storage set delete_time = sysdate(),delete_by=#{username} where id=#{id}
+      update local_storage set delete_time = sysdate(),delete_by=#{username} where id=#{id}
     </delete>
 
 </mapper>

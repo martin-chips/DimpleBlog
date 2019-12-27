@@ -1,5 +1,8 @@
 package com.dimple.project.home.mapper;
 
+import com.dimple.project.log.domain.LoginLog;
+import com.dimple.project.log.domain.OperateLog;
+import com.dimple.project.log.domain.QuartzJobLog;
 import com.dimple.project.log.domain.VisitLog;
 import org.apache.ibatis.annotations.Param;
 
@@ -90,4 +93,25 @@ public interface DashBoardMapper {
      * @return blog的title
      */
     String getBlogNameByPageId(Long pageId);
+
+    /**
+     * 获取登录日志
+     *
+     * @return 登录日志
+     */
+    List<LoginLog> getLoginLogList();
+
+    /**
+     * 获取操作日志
+     *
+     * @return 操作日志
+     */
+    List<OperateLog> getOperateLogList();
+
+    /**
+     * 获取任务日志
+     *
+     * @return 任务日志
+     */
+    List<QuartzJobLog> getQuartzJobLogList();
 }

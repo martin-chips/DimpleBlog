@@ -4,7 +4,7 @@ const state = {
      */
     F_ICP: '蜀ICP备 19004343',
     F_Title: 'DimpleBlog',
-    F_Title_Desc: 'DimpleBlog预上线版本,仅供测试!',
+    F_Title_Desc: 'Code for the world',
     /**
      * 版权
      */

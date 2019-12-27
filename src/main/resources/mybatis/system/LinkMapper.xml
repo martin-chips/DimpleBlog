@@ -19,7 +19,7 @@
     </resultMap>
 
     <sql id="selectLinkVo">
-        select id, title, url, description, header_img, status, display, email, weight, create_by, create_time  from sys_link where delete_time is null
+        select id, title, url, description, header_img, status, display, email, weight, create_by, create_time  from link where delete_time is null
     </sql>
 
     <select id="selectLinkList" resultMap="LinkResult">
@@ -51,7 +51,7 @@
 
     <insert id="insertLink" useGeneratedKeys="true"
             keyProperty="id">
-        insert into sys_link
+        insert into link
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null  and title != ''">title,</if>
             <if test="url != null  and url != ''">url,</if>
@@ -79,7 +79,7 @@
     </insert>
 
     <update id="updateLink">
-        update sys_link
+        update link
         <trim prefix="SET" suffixOverrides=",">
             <if test="title != null  and title != ''">title = #{title},</if>
             <if test="url != null  and url != ''">url = #{url},</if>
@@ -96,11 +96,11 @@
     </update>
 
     <delete id="deleteLinkById">
-        update sys_link set delete_time = sysdate(), delete_by =#{username} where id = #{id}
+        update link set delete_time = sysdate(), delete_by =#{username} where id = #{id}
     </delete>
 
     <delete id="deleteLinkByIds">
-        update sys_link set delete_time = sysdate() , delete_by =#{username} where id in
+        update link set delete_time = sysdate() , delete_by =#{username} where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>

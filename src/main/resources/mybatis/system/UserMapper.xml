@@ -35,9 +35,9 @@
     <sql id="selectUserVo">
         select u.id, u.user_name, u.nick_name, u.email, u.avatar, u.phone, u.password, u.sex, u.status, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,u.delete_by,u.delete_time,
         r.id, r.role_name, r.role_key, r.role_sort, r.status as role_status
-        from sys_user u
+        from user u
 		    left join sys_user_role ur on u.id = ur.user_id
-		    left join sys_role r on r.id = ur.role_id
+		    left join role r on r.id = ur.role_id
     </sql>
 
     <select id="selectUserList" parameterType="com.dimple.project.system.domain.SysUser" resultMap="SysUserResult">
@@ -71,20 +71,20 @@
     </select>
 
     <select id="checkUserNameUnique" parameterType="String" resultType="int">
-		select count(1) from sys_user where user_name = #{userName}
+		select count(1) from user where user_name = #{userName}
 	</select>
 
     <select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
-		select id, phone from sys_user where phone = #{phone}
+		select id, phone from user where phone = #{phone}
 	</select>
 
     <select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
-		select id, email from sys_user where email = #{email}
+		select id, email from user where email = #{email}
 	</select>
 
     <insert id="insertUser" parameterType="com.dimple.project.system.domain.SysUser" useGeneratedKeys="true"
             keyProperty="id">
-        insert into sys_user(
+        insert into user(
         <if test="id != null and id != 0">id,</if>
         <if test="userName != null and userName != ''">user_name,</if>
         <if test="nickName != null and nickName != ''">nick_name,</if>
@@ -114,7 +114,7 @@
     </insert>
 
     <update id="updateUser" parameterType="com.dimple.project.system.domain.SysUser">
-        update sys_user
+        update user
         <set>
             <if test="userName != null and userName != ''">user_name = #{userName},</if>
             <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
@@ -138,18 +138,18 @@
     <!--	</update>-->
 
     <update id="updateUserAvatar" parameterType="com.dimple.project.system.domain.SysUser">
- 		update sys_user set avatar = #{avatar} where user_name = #{userName}
+ 		update user set avatar = #{avatar} where user_name = #{userName}
 	</update>
 
     <update id="resetUserPwd" parameterType="com.dimple.project.system.domain.SysUser">
- 		update sys_user set password = #{password} where user_name = #{userName}
+ 		update user set password = #{password} where user_name = #{userName}
 	</update>
 
     <delete id="deleteUserByIds">
-        update sys_user set delete_by =#{loginUsername} , delete_time= sysdate() where id in
+        update user set delete_by =#{loginUsername} , delete_time= sysdate() where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
 
-</mapper> 
+</mapper>

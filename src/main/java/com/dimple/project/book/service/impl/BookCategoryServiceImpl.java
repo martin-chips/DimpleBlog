@@ -1,10 +1,11 @@
 package com.dimple.project.book.service.impl;
 
+import com.dimple.common.enums.CategoryType;
 import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.SecurityUtils;
-import com.dimple.project.book.entity.BookCategory;
-import com.dimple.project.book.mapper.BookCategoryMapper;
 import com.dimple.project.book.service.BookCategoryService;
+import com.dimple.project.common.domain.Category;
+import com.dimple.project.common.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,30 +20,32 @@ import java.util.List;
 @Service
 public class BookCategoryServiceImpl implements BookCategoryService {
     @Autowired
-    BookCategoryMapper bookCategoryMapper;
+    CategoryMapper categoryMapper;
 
     @Override
-    public BookCategory selectBookCategoryById(Long id) {
-        return bookCategoryMapper.selectBookCategoryById(id);
+    public Category selectBookCategoryById(Long id) {
+        return categoryMapper.selectCategoryById(id);
     }
 
     @Override
-    public List<BookCategory> selectBookCategoryList(BookCategory bookCategory) {
-        return bookCategoryMapper.selectBookCategoryList(bookCategory);
+    public List<Category> selectBookCategoryList(Category category) {
+        category.setType(CategoryType.Book.getType());
+        return categoryMapper.selectCategoryList(category);
     }
 
     @Override
-    public int insertBookCategory(BookCategory bookCategory) {
-        return bookCategoryMapper.insertBookCategory(bookCategory);
+    public int insertBookCategory(Category category) {
+        category.setType(CategoryType.Book.getType());
+        return categoryMapper.insertCategory(category);
     }
 
     @Override
-    public int updateBookCategory(BookCategory bookCategory) {
-        return bookCategoryMapper.updateBookCategory(bookCategory);
+    public int updateBookCategory(Category category) {
+        return categoryMapper.updateCategory(category);
     }
 
     @Override
     public int deleteBookCategoryByIds(String ids) {
-        return bookCategoryMapper.deleteBookCategoryByIds(ConvertUtils.toLongArray(ids), SecurityUtils.getUsername());
+        return categoryMapper.deleteCategoryByIds(ConvertUtils.toLongArray(ids), SecurityUtils.getUsername());
     }
 }

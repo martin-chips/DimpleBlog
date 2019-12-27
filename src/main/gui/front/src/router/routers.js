@@ -9,6 +9,7 @@ import ArticleContent from "../components/content/ArticleContent";
 import LinkContent from "../components/content/LinkContent";
 import Error404 from "../views/error/Error404";
 import LeaveCommentContent from "../components/content/LeaveCommentContent";
+import BookContent from "../components/content/BookContent";
 export default [
     {
         path: '/',
@@ -86,6 +87,19 @@ export default [
                 },
                 meta: {
                     title: '文章详情',
+                    need_log: false
+                }
+            },
+            {
+                path: 'book/:id',
+                name: 'book',
+                components: {
+                    header: SimpleHeader,
+                    content: BookContent,
+                    footer: Footer
+                },
+                meta: {
+                    title: '书籍概览',
                     need_log: false
                 }
             },

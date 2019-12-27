@@ -274,7 +274,7 @@
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
                   this.$store.dispatch('tagsView/delView', this.$route)
-                  this.$router.push({path: '/blogManager/blog'})
+                  this.$router.push({path: '/blogManage/blog'})
                 } else {
                   this.msgError(response.msg);
                 }
@@ -287,7 +287,7 @@
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
                   this.$store.dispatch('tagsView/delView', this.$route)
-                  this.$router.push({path: '/blogManager/blog'})
+                  this.$router.push({path: '/blogManage/blog'})
                 } else {
                   this.msgError(response.msg);
                 }

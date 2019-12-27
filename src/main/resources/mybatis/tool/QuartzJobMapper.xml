@@ -16,7 +16,7 @@
     </resultMap>
 
     <insert id="insertQuartzJob">
-        insert into tool_quartz_job(
+        insert into quartz_job(
         <if test="jobName != null and jobName != ''">job_name,</if>
         <if test="beanName != null and beanName != ''">bean_name,</if>
         <if test="methodName != null and methodName != ''">method_name,</if>
@@ -39,7 +39,7 @@
         )
     </insert>
     <update id="updateQuartzJob">
-        update tool_quartz_job
+        update quartz_job
         <set>
             <if test="jobName != null and jobName != ''">
                 job_name = #{jobName},
@@ -74,7 +74,7 @@
     <select id="selectQuartzJobList" resultMap="QuartzJobMap">
         select id, job_name, bean_name, method_name, method_params, cron_expression, status, remark, create_time,
         create_by
-        from tool_quartz_job
+        from quartz_job
         where delete_time is null
         <if test="jobName != null and jobName != ''">
             and job_name like concat('%',#{jobName},'%')
@@ -102,20 +102,20 @@
     <select id="selectQuartzJobById" resultMap="QuartzJobMap">
         select id, job_name, bean_name, method_name, method_params, cron_expression, status, remark, create_time,
         create_by
-        from tool_quartz_job
+        from quartz_job
         where delete_time is null and id=#{id}
     </select>
 
     <select id="selectRunningQuartzJobList" resultMap="QuartzJobMap">
         select id, job_name, bean_name, method_name, method_params, cron_expression, status, remark, create_time,
         create_by
-        from tool_quartz_job
+        from quartz_job
         where delete_time is null and status=1
     </select>
 
     <!--通过主键删除-->
     <delete id="deleteQuartzJobById">
-      update tool_quartz_job set delete_time = sysdate(),delete_by=#{username} where id=#{id}
+      update quartz_job set delete_time = sysdate(),delete_by=#{username} where id=#{id}
     </delete>
 
 </mapper>

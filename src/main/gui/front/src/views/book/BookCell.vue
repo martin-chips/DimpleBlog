@@ -1,42 +1,42 @@
 <template>
-    <div class="article-list-cell">
+    <div class="book-cell cell-theme">
         <Row type="flex">
-            <Col :xs="24" :sm="24" :md="textSpan" :lg="textSpan" :order="textOrderType"
-                 style="padding-left: 0;padding-right: 0;">
+            <Col :xs="24" :sm="24" :md="textSpan" :lg="textSpan" :order="textOrderType" style="padding-left: 0;padding-right: 0;">
                 <div class="text-wrapper">
                     <h4 class="title">
-                        <a @click.prevent="gotoPostDetail(article)">
-                            {{article.title}}</a>
-                        <span class="special" v-if="article.support">推荐</span>
+                        <a @click.prevent="gotoPostDetail(book)">
+                            {{book.title}}
+                        </a>
+                        <span class="special" v-if="book.support">推荐</span>
                     </h4>
                     <div class="tags">
                         <Tag :key="tag.id" class="border-tag" type="border" :color="tag.color"
-                             v-for="tag in article.tagList">
+                             v-for="tag in book.tagList">
                             {{tag.title}}
                         </Tag>
                     </div>
-                    <p class="desc">{{article.summary | textLineBreak(90) }}
-                        <a @click.prevent="gotoPostDetail(article)" :href="`/article/${article.id}`"> 查看更多
+                    <p class="desc">{{book.summary | textLineBreak(90) }}
+                        <a @click.prevent="gotoPostDetail(book)" :href="`/book/${book.id}`"> 查看更多
                             <Icon type="md-arrow-dropright"/>
                         </a>
                     </p>
                     <p class="operate_info">
                         <span class="publish-time">
-                            <a>{{ article.createTime | socialDate }}</a>
+                            <a>{{ book.createTime | socialDate }}</a>
                         </span>
                         <span class="readings">
                              <a>
-                                 <Icon type="ios-eye"/> {{article.click}} 阅读
+                                 <Icon type="ios-eye"/> {{book.click}} 阅读
                              </a>
                         </span>
                         <span class="comments">
                             <a>
-                                <Icon type="ios-create"/> {{article.commentCount}} 评论
+                                <Icon type="ios-create"/> {{book.commentCount}} 评论
                             </a>
                         </span>
                         <span class="likes">
-                            <a @click="likePost(article)">
-                                <Icon type="ios-heart"/> {{article.like}} 赞
+                            <a @click="likePost(book)">
+                                <Icon type="ios-heart"/> {{book.like}} 赞
                             </a>
                         </span>
                     </p>
@@ -44,7 +44,7 @@
             </Col>
             <Col :xs="0" :sm="0" :md="imgSpan" :lg="imgSpan" :order="imgOrderType">
                 <div class="img-wrapper" :class="themeClass">
-                    <img :src="article.headerImg" alt="">
+                    <img :src="book.headerImg" alt="">
                 </div>
             </Col>
         </Row>
@@ -55,16 +55,16 @@
     import {mixin} from '@/utils';
     import {LineBreakMode} from "@/utils/const.js";
     import {socialDateFormat} from "@/utils";
-    import {LikeBlog} from "@/api";
+    import {LikeBook} from "@/api";
 
     const ARTICLE_TYPE_NO_IMAGE = 0;
     const ARTICLE_TYPE_NORMAL_IMAGE = 1;
     const ARTICLE_TYPE_BIG_IMAGE = 2;
     export default {
-        name: 'article-list-cell',
+        name: 'BookCell',
         mixins: [mixin],
         props: {
-            article: {
+            book: {
                 Type: Object
             }
         },
@@ -122,12 +122,12 @@
         methods: {
             gotoPostDetail(post) {
                 this.$router.push({
-                    name: "article",
+                    name: "book",
                     params: {id: post.id},
                 });
             },
             likePost(post) {
-                LikeBlog(post.id).then((response) => {
+                LikeBook(post.id).then((response) => {
                     post.like += 1;
                     this.$Message.success("点赞 +1");
                 }).catch((error) => {
@@ -172,7 +172,7 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
     @import "../../common/stylus/theme.styl";
-    .article-list-cell
+    .book-cell
         margin-bottom 10px
         background-color $default-cell-background-color
         border 1px solid $default-border-color
@@ -198,7 +198,7 @@
                 @media only screen and (max-width: 768px)
                     font-size 17px
                     line-height 23px
-                word-wrap break-word
+                    word-wrap break-word
                 a
                     color $default-title-color
                     cursor pointer

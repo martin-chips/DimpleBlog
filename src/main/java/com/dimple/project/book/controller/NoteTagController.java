@@ -1,13 +1,14 @@
 package com.dimple.project.book.controller;
 
+import com.dimple.common.enums.TagType;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.framework.aspectj.lang.annotation.Log;
 import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.book.entity.NoteTag;
-import com.dimple.project.book.service.NoteTagService;
+import com.dimple.project.blog.service.TagService;
+import com.dimple.project.common.domain.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,41 +33,43 @@ import java.util.List;
 public class NoteTagController extends BaseController {
 
     @Autowired
-    NoteTagService noteTagService;
+    TagService tagService;
 
     @PreAuthorize("@permissionService.hasPermission('book:tag:list')")
     @GetMapping("/list")
-    public TableDataInfo list(NoteTag noteTag) {
+    public TableDataInfo list(Tag tag) {
         startPage();
-        List<NoteTag> list = noteTagService.selectNoteTagList(noteTag);
+        tag.setType(TagType.Note.getType());
+        List<Tag> list = tagService.selectTagList(tag);
         return getDataTable(list);
     }
 
     @PreAuthorize("@permissionService.hasPermission('book:tag:add')")
     @Log(title = "标签管理", businessType = BusinessType.INSERT)
     @PostMapping()
-    public AjaxResult add(@RequestBody NoteTag noteTag) {
-        noteTag.setCreateBy(SecurityUtils.getUsername());
-        return toAjax(noteTagService.insertNoteTag(noteTag));
+    public AjaxResult add(@RequestBody Tag tag) {
+        tag.setCreateBy(SecurityUtils.getUsername());
+        tag.setType(TagType.Note.getType());
+        return toAjax(tagService.insertTag(tag));
     }
 
     @PreAuthorize("@permissionService.hasPermission('book:tag:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable Long id) {
-        return AjaxResult.success(noteTagService.selectNoteTagById(id));
+        return AjaxResult.success(tagService.selectTagById(id));
     }
 
     @PreAuthorize("@permissionService.hasPermission('book:tag:edit')")
     @Log(title = "标签管理", businessType = BusinessType.UPDATE)
     @PutMapping()
-    public AjaxResult edit(@RequestBody NoteTag tag) {
-        return toAjax(noteTagService.updateNoteTag(tag));
+    public AjaxResult edit(@RequestBody Tag tag) {
+        return toAjax(tagService.updateTag(tag));
     }
 
     @PreAuthorize("@permissionService.hasPermission('book:tag:remove')")
     @Log(title = "标签管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable String ids) {
-        return toAjax(noteTagService.deleteNoteTagByIds(ids));
+        return toAjax(tagService.deleteTagByIds(ids));
     }
 }

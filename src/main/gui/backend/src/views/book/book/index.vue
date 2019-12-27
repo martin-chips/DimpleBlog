@@ -55,7 +55,7 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="图书描述" align="center" prop="description" :show-overflow-tooltip="true"/>
+      <el-table-column label="图书描述" align="center" prop="summary" :show-overflow-tooltip="true"/>
       <el-table-column label="图书作者" align="center" prop="author" :show-overflow-tooltip="true"/>
       <el-table-column label="出版社" align="center" prop="publisher" :show-overflow-tooltip="true"/>
       <el-table-column label="浏览量" align="center" prop="click" :show-overflow-tooltip="true"/>
@@ -149,8 +149,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="图书描述" prop="description">
-              <el-input v-model="form.description" placeholder="请输入图书描述"/>
+            <el-form-item label="图书描述" prop="summary">
+              <el-input v-model="form.summary" placeholder="请输入图书描述"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -199,7 +199,7 @@
         // 查询参数
         queryParams: {
           title: undefined,
-          description: undefined,
+          summary: undefined,
           support: undefined
         },
         formReset: {
@@ -234,7 +234,7 @@
           grade: [
             {required: true, message: "评分不能为空", trigger: "blur"},
           ],
-          description: [
+          summary: [
             {required: true, message: "描述不能为空", trigger: "blur"},
             {min: 10, max: 2000, message: '长度在 10 到 2000 个字符', trigger: 'change'}
           ],

@@ -63,8 +63,19 @@ mybatis:
   typeAliasesPackage: com.dimple.project.**.domain
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapperLocations: classpath*:mybatis/**/*Mapper.xml
-  # 加载全局的配置文件
-  configLocation: classpath:mybatis/mybatis-config.xml
+  # 全局配置
+  configuration:
+    #    驼峰式命名
+    map-underscore-to-camel-case: true
+    #    全局映射器启用缓存
+    cache-enabled: true
+    #     允许 JDBC 支持自动生成主键
+    use-generated-keys: true
+    #    配置默认的执行器
+    default-executor-type: reuse
+    #     指定 MyBatis 所用日志的具体实现
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
 
 # PageHelper分页插件
 pagehelper:

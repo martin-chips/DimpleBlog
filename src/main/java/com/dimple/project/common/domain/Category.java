@@ -1,6 +1,7 @@
-package com.dimple.project.blog.domain;
+package com.dimple.project.common.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
+import com.dimple.project.blog.domain.Blog;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +41,10 @@ public class Category extends BaseEntity {
      */
     @NotNull(message = "推荐设置不能为空")
     private Boolean support;
+    /**
+     * 分类的类型
+     */
+    private Integer type;
 
     private List<Blog> blogList;
 

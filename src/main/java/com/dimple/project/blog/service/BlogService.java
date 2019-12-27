@@ -78,7 +78,7 @@ public interface BlogService {
     List<Blog> selectBlogList(BlogQuery blogQuery);
 
     /**
-     * 获取前台现实的Blog
+     * 获取前台显示的Blog
      *
      * @param id id
      * @return blog

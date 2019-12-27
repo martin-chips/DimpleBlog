@@ -1,6 +1,6 @@
-package com.dimple.project.blog.mapper;
+package com.dimple.project.common.mapper;
 
-import com.dimple.project.blog.domain.Category;
+import com.dimple.project.common.domain.Category;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,26 +23,26 @@ public interface CategoryMapper {
     /**
      * 查询分类列表
      *
-     * @param bgCategory 分类
+     * @param category 分类
      * @return 分类集合
      */
-    List<Category> selectCategoryList(Category bgCategory);
+    List<Category> selectCategoryList(Category category);
 
     /**
      * 新增分类
      *
-     * @param bgCategory 分类
+     * @param category 分类
      * @return 结果
      */
-    int insertCategory(Category bgCategory);
+    int insertCategory(Category category);
 
     /**
      * 修改分类
      *
-     * @param bgCategory 分类
+     * @param category 分类
      * @return 结果
      */
-    int updateCategory(Category bgCategory);
+    int updateCategory(Category category);
 
     /**
      * 删除分类
@@ -58,13 +58,13 @@ public interface CategoryMapper {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteCategoryByIds(@Param("ids") String[] ids, @Param("username") String username);
+    int deleteCategoryByIds(@Param("ids") Long[] ids, @Param("username") String username);
 
     /**
-     * 获取所有的support的分类
+     * 获取所有的Blog Category support的分类
      *
      * @return list
      */
-    List<Category> selectSupportCategoryList();
+    List<Category> selectSupportBlogCategoryList();
 
 }

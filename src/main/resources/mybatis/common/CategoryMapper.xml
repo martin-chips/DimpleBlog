@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dimple.project.blog.mapper.CategoryMapper">
+<mapper namespace="com.dimple.project.common.mapper.CategoryMapper">
 
-    <resultMap type="com.dimple.project.blog.domain.Category" id="CategoryResult">
+    <resultMap type="com.dimple.project.common.domain.Category" id="CategoryResult">
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="description" column="description"/>
@@ -13,15 +13,15 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <sql id="selectBgCategoryVo">
-        select id, title, description, support, create_by, create_time from bg_category
-    </sql>
 
-    <select id="selectCategoryList" parameterType="com.dimple.project.blog.domain.Category"
+    <select id="selectCategoryList" parameterType="com.dimple.project.common.domain.Category"
             resultMap="CategoryResult">
         select id, title, description, support, create_by, create_time
-        from bg_category
+        from category
         where delete_time is null
+        <if test="type != null">
+            AND type =#{type}
+        </if>
         <if test="title != null and title != ''">
             AND title like concat('%', #{title}, '%')
         </if>
@@ -37,20 +37,27 @@
     </select>
 
     <select id="selectCategoryById" resultMap="CategoryResult">
-        select id, title, description, support, create_by, create_time from bg_category
+        select id, title, description, support, create_by, create_time
+        from category
         where id = #{id}
     </select>
-    <select id="selectSupportCategoryList" resultType="com.dimple.project.blog.domain.Category">
-        select id, title, description, support, create_by, create_time from bg_category where support=1 and delete_time is null
+
+    <select id="selectSupportBlogCategoryList" resultType="com.dimple.project.common.domain.Category">
+        select id, title, description, support, create_by, create_time
+        from category
+        where support = 1
+          and delete_time is null
+          and type = 1
     </select>
 
-    <insert id="insertCategory" parameterType="com.dimple.project.blog.domain.Category" useGeneratedKeys="true"
+    <insert id="insertCategory" parameterType="com.dimple.project.common.domain.Category" useGeneratedKeys="true"
             keyProperty="id">
-        insert into bg_category
+        insert into category
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null  and title != ''">title,</if>
             <if test="description != null  and description != ''">description,</if>
             <if test="support != null ">support,</if>
+            <if test="type != null ">type,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             create_time
         </trim>
@@ -58,13 +65,14 @@
             <if test="title != null  and title != ''">#{title},</if>
             <if test="description != null  and description != ''">#{description},</if>
             <if test="support != null ">#{support},</if>
+            <if test="type != null ">#{type},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             sysdate()
         </trim>
     </insert>
 
-    <update id="updateCategory" parameterType="com.dimple.project.blog.domain.Category">
-        update bg_category
+    <update id="updateCategory" parameterType="com.dimple.project.common.domain.Category">
+        update category
         <set>
             <if test="title != null  and title != ''">title = #{title},</if>
             <if test="description != null  and description != ''">description = #{description},</if>
@@ -76,11 +84,14 @@
     </update>
 
     <delete id="deleteCategoryById">
-        update bg_category set delete_date=sysdate(),delete_by=#{username} where id = #{id}
+        update category
+        set delete_time=sysdate(),
+            delete_by=#{username}
+        where id = #{id}
     </delete>
 
     <delete id="deleteCategoryByIds">
-        update bg_category set delete_time=sysdate(),delete_by=#{username} where id in
+        update category set delete_time=sysdate(),delete_by=#{username} where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>

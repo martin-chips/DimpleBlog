@@ -41,4 +41,24 @@ public interface DashboardService {
      */
     List<String> getVisitLogStringList();
 
+    /**
+     * 获取Login Log的String List
+     *
+     * @return loginLog
+     */
+    List<String> getLoginLogStringList();
+
+    /**
+     * Operate Log的String List
+     *
+     * @return operateLog
+     */
+    List<String> getOperateLogStringList();
+
+    /**
+     * 获取Task Log的String List
+     *
+     * @return taskLog
+     */
+    List<String> getTaskLogStringList();
 }

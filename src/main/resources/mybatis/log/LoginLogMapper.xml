@@ -17,13 +17,13 @@
     </resultMap>
 
     <insert id="insertLoginLog" parameterType="com.dimple.project.log.domain.LoginLog">
-		insert into sys_login_log (user_name, status, ip, location, browser, os, msg, create_time,create_by)
+		insert into login_log (user_name, status, ip, location, browser, os, msg, create_time,create_by)
 		values (#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{msg}, sysdate(),#{createBy})
 	</insert>
 
     <select id="selectLoginLogList" parameterType="com.dimple.project.log.domain.LoginLog"
             resultMap="SysLoginLogResult">
-        select id, user_name, ip, location, browser, os, status, msg, create_time from sys_login_log
+        select id, user_name, ip, location, browser, os, status, msg, create_time from login_log
         where delete_time is null
         <if test="ip != null and ip != ''">
             AND ip like concat('%', #{ip}, '%')
@@ -43,14 +43,14 @@
     </select>
 
     <delete id="deleteLoginLogByIds">
-        update sys_login_log set delete_by = #{username},delete_time =sysdate() where id in
+        update login_log set delete_by = #{username},delete_time =sysdate() where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
 
     <update id="cleanLoginLog">
-          update sys_login_log set delete_by = #{username},delete_time =sysdate()
+          update login_log set delete_by = #{username},delete_time =sysdate()
     </update>
 
-</mapper> 
+</mapper>

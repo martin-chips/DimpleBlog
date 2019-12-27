@@ -46,9 +46,30 @@ public class DashboardController extends BaseController {
     }
 
     @GetMapping("/visitLog")
-    public TableDataInfo tableDataInfo() {
+    public TableDataInfo visitLogDataInfo() {
         startPage();
         List<String> visitLogList = dashboardService.getVisitLogStringList();
+        return getDataTable(visitLogList);
+    }
+
+    @GetMapping("/loginLog")
+    public TableDataInfo loginLogDataInfo() {
+        startPage();
+        List<String> visitLogList = dashboardService.getLoginLogStringList();
+        return getDataTable(visitLogList);
+    }
+
+    @GetMapping("/operateLog")
+    public TableDataInfo operateLogDataInfo() {
+        startPage();
+        List<String> visitLogList = dashboardService.getOperateLogStringList();
+        return getDataTable(visitLogList);
+    }
+
+    @GetMapping("/taskLog")
+    public TableDataInfo taskLogDataInfo() {
+        startPage();
+        List<String> visitLogList = dashboardService.getTaskLogStringList();
         return getDataTable(visitLogList);
     }
 }

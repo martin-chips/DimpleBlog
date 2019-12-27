@@ -50,6 +50,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public int likeBook(Long id) {
+        return 0;
+    }
+
+    @Override
+    public Book getBookDetail(Long id) {
+        return null;
+    }
+
+    @Override
     public List<Book> selectBookList(Book book) {
         return bookMapper.selectBookList(book);
     }

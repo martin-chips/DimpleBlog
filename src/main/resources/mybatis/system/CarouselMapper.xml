@@ -19,7 +19,7 @@
     <select id="selectCarouselById" resultMap="SysCarouselMap">
         select
           id, description, click, header_img, display, target, create_by, create_time,title,url
-        from sys_carousel
+        from carousel
         where id = #{id} and delete_time is null
     </select>
 
@@ -27,7 +27,7 @@
     <select id="selectCarouselList" resultMap="SysCarouselMap">
         select
         id,title, description, click, header_img, display, target, create_by, create_time,url
-        from sys_carousel
+        from carousel
         where delete_time is null
         <if test="description != null and description != ''">
             and description = #{description}
@@ -48,7 +48,7 @@
 
     <!--新增所有列-->
     <insert id="insertCarousel" keyProperty="id" useGeneratedKeys="true">
-        insert into sys_carousel (
+        insert into carousel (
         <if test="description != null and description != '' ">description,</if>
         <if test="headerImg != null and headerImg != '' ">header_img,</if>
         <if test="display != null and display != ''">display,</if>
@@ -71,7 +71,7 @@
 
     <!--通过主键修改数据-->
     <update id="updateCarousel">
-        update sys_carousel
+        update carousel
         <set>
             <if test="description != null and description != ''">
                 description = #{description},
@@ -101,7 +101,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteCarouselById">
-        update sys_carousel set delete_time =sysdate(), delete_by=#{username} where id = #{id}
+        update carousel set delete_time =sysdate(), delete_by=#{username} where id = #{id}
     </delete>
 
 </mapper>

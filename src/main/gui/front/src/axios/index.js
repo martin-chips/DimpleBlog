@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {Notice} from 'view-design'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
@@ -23,7 +24,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(response => {
         const code = response.data.code
         if (code < 200 || code > 300) {
-            this.$Notice.error({
+            Notice.error({
                 title: response.data.msg
             })
             return Promise.reject('error')
@@ -36,14 +37,14 @@ service.interceptors.response.use(response => {
             code = error.response.data.code
         } catch (e) {
             if (error.toString().indexOf('Error: timeout') !== -1) {
-               this.$Notice.error({
+                Notice.error({
                     title: '网络请求超时',
                     duration: 2500
                 })
                 return Promise.reject(error)
             }
             if (error.toString().indexOf('Error: Network Error') !== -1) {
-                this.$Notice.error({
+                Notice.error({
                     title: '网络请求错误',
                     duration: 2500
                 })

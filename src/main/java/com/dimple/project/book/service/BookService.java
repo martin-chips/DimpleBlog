@@ -51,4 +51,20 @@ public interface BookService {
      * @return 受影响的行数
      */
     int deleteBookByIds(String ids);
+
+    /**
+     * 喜欢图书id
+     *
+     * @param id id
+     * @return 受影响的行数
+     */
+    int likeBook(Long id);
+
+    /**
+     * 获取Book详细
+     *
+     * @param id id
+     * @return Book
+     */
+    Book getBookDetail(Long id);
 }

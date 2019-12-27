@@ -201,8 +201,6 @@
       },
       contentChange() {
         this.form.htmlContent = marked(this.form.content);
-        console.log(this.form.content)
-        console.log(this.form.htmlContent)
       },
       // 公告状态字典翻译
       statusFormat(row, column) {

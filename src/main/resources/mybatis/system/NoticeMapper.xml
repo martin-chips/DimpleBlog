@@ -19,7 +19,7 @@
 
     <sql id="selectNoticeVo">
         select id, title, type, content,html_content, status, create_by, create_time, update_by, update_time
-		from sys_notice
+		from notice
     </sql>
 
     <select id="selectNoticeById" parameterType="Long" resultMap="SysNoticeResult">
@@ -43,7 +43,7 @@
     </select>
 
     <insert id="insertNotice" parameterType="com.dimple.project.system.domain.Notice">
-        insert into sys_notice (
+        insert into notice (
         <if test="title != null and title != '' ">title,</if>
         <if test="type != null and type != '' ">type,</if>
         <if test="content != null and content != '' ">content,</if>
@@ -63,7 +63,7 @@
     </insert>
 
     <update id="updateNotice" parameterType="com.dimple.project.system.domain.Notice">
-        update sys_notice
+        update notice
         <set>
             <if test="title != null and title != ''">title = #{title},</if>
             <if test="type != null and type != ''">type = #{type},</if>
@@ -77,7 +77,7 @@
     </update>
 
     <delete id="deleteNoticeByIds">
-        update sys_notice set delete_by =#{loginUsername} , delete_time= sysdate() where id in
+        update notice set delete_by =#{loginUsername} , delete_time= sysdate() where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>

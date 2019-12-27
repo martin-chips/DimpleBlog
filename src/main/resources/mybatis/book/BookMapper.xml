@@ -12,7 +12,7 @@
         <result property="publishTime" column="publish_time"/>
         <result property="pageNum" column="page_num"/>
         <result property="grade" column="grade"/>
-        <result property="description" column="description"/>
+        <result property="summary" column="summary"/>
         <result property="catalog" column="catalog"/>
         <result property="click" column="click"/>
         <result property="like" column="like"/>
@@ -26,7 +26,7 @@
     <!--查询单个-->
     <select id="selectBookById" resultMap="BkBookMap">
         select
-          id, title, header_img, author, category_id, publisher, publish_time, page_num, grade, description, catalog, click, like, status, progress, support, create_time, create_by
+          id, title, header_img, author, category_id, publisher, publish_time, page_num, grade, summary, catalog, click, like, status, progress, support, create_time, create_by
         from bk_book
         where id = #{id} and delete_time is null
     </select>
@@ -34,9 +34,9 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectBookList" resultMap="BkBookMap">
         select
-        id, title, header_img, author, category_id, publisher, publish_time, page_num, grade, description, `catalog`,
+        id, title, header_img, author, category_id, publisher, publish_time, page_num, grade, summary, `catalog`,
         click, `like`, status, progress, support, create_time
-        from bk_book
+        from book
         where delete_time is null
         <if test="title != null and title != ''">
             and title = #{title}
@@ -54,16 +54,16 @@
             and support = #{support}
         </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-            and date_format( b.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            and date_format( create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
         </if>
         <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-            and date_format( b.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            and date_format( create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
 
     <!--新增所有列-->
     <insert id="insertBook" keyProperty="id" useGeneratedKeys="true">
-        insert into bk_book
+        insert into book
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null ">title,</if>
             <if test="headerImg != null  and headerImg != ''">header_img,</if>
@@ -73,7 +73,7 @@
             <if test="publishTime != null">publish_time,</if>
             <if test="pageNum != null ">page_num,</if>
             <if test="grade != null ">grade,</if>
-            <if test="description != null and description !=''">description,</if>
+            <if test="summary != null and summary !=''">summary,</if>
             <if test="catalog != null and catalog !=''">catalog,</if>
             <if test="status != null ">status,</if>
             <if test="progress != null ">progress,</if>
@@ -90,7 +90,7 @@
             <if test="publishTime != null">#{publishTime},</if>
             <if test="pageNum != null ">#{pageNum},</if>
             <if test="grade != null ">#{grade},</if>
-            <if test="description != null and description !=''">#{description},</if>
+            <if test="summary != null and summary !=''">#{summary},</if>
             <if test="catalog != null and catalog !=''">#{catalog},</if>
             <if test="status != null ">#{status},</if>
             <if test="progress != null ">#{progress},</if>
@@ -102,7 +102,7 @@
 
     <!--通过主键修改数据-->
     <update id="updateBook">
-        update bk_book
+        update book
         <set>
             <if test="title != null and title != ''">
                 title = #{title},
@@ -128,8 +128,8 @@
             <if test="grade != null">
                 grade = #{grade},
             </if>
-            <if test="description != null and description != ''">
-                description = #{description},
+            <if test="summary != null and summary != ''">
+                summary = #{summary},
             </if>
             <if test="catalog != null and catalog != ''">
                 catalog = #{catalog},
@@ -153,7 +153,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteBookByIds">
-        update bk_book set delete_time =sysdate() ,delete_by=#{username} where id in
+        update book set delete_time =sysdate() ,delete_by=#{username} where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>

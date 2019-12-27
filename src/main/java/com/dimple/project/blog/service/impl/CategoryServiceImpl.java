@@ -2,12 +2,13 @@ package com.dimple.project.blog.service.impl;
 
 import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.DateUtils;
+import com.dimple.common.utils.ObjectUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.blog.domain.Blog;
-import com.dimple.project.blog.domain.Category;
 import com.dimple.project.blog.mapper.BlogMapper;
-import com.dimple.project.blog.mapper.CategoryMapper;
+import com.dimple.project.common.mapper.CategoryMapper;
 import com.dimple.project.blog.service.CategoryService;
+import com.dimple.project.common.domain.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,9 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> selectCategoryList(Category bgCategory) {
         List<Category> categoryList = bgCategoryMapper.selectCategoryList(bgCategory);
         List<Long> categoryIds = categoryList.stream().map(e -> e.getId()).collect(Collectors.toList());
+        if (ObjectUtils.isEmpty(categoryIds)) {
+            return categoryList;
+        }
         List<Blog> blogList = blogMapper.selectBlogListByCategoryIds(categoryIds);
         for (Category category : categoryList) {
             List<Blog> collect = blogList.stream().filter(e -> category.getId().equals(e.getCategoryId())).collect(Collectors.toList());
@@ -60,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public int deleteCategoryByIds(String ids) {
         String username = SecurityUtils.getUsername();
-        return bgCategoryMapper.deleteCategoryByIds(ConvertUtils.toStrArray(ids), username);
+        return bgCategoryMapper.deleteCategoryByIds(ConvertUtils.toLongArray(ids), username);
     }
 
     @Override
@@ -71,7 +75,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> selectSupportCategory() {
-        return bgCategoryMapper.selectSupportCategoryList();
+        return bgCategoryMapper.selectSupportBlogCategoryList();
     }
 }
 

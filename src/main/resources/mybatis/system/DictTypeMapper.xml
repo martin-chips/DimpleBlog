@@ -17,7 +17,7 @@
 
     <sql id="selectDictTypeVo">
         select id, dict_name, dict_type, status, create_by, create_time, remark
-		from sys_dict_type
+		from dict_type
     </sql>
 
     <select id="selectDictTypeList" parameterType="com.dimple.project.system.domain.DictType"
@@ -62,11 +62,11 @@
     </select>
 
     <delete id="deleteDictTypeById" parameterType="Long">
- 		update sys_dict_type set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{id}
+ 		update dict_type set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{id}
  	</delete>
 
     <update id="updateDictType" parameterType="com.dimple.project.system.domain.DictType">
-        update sys_dict_type
+        update dict_type
         <set>
             <if test="dictName != null and dictName != ''">dict_name = #{dictName},</if>
             <if test="dictType != null and dictType != ''">dict_type = #{dictType},</if>
@@ -79,7 +79,7 @@
     </update>
 
     <insert id="insertDictType" parameterType="com.dimple.project.system.domain.DictType">
-        insert into sys_dict_type(
+        insert into dict_type(
         <if test="dictName != null and dictName != ''">dict_name,</if>
         <if test="dictType != null and dictType != ''">dict_type,</if>
         <if test="status != null">status,</if>
@@ -96,4 +96,4 @@
         )
     </insert>
 
-</mapper> 
+</mapper>

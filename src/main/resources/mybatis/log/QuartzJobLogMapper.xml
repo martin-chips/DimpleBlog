@@ -17,7 +17,7 @@
     </resultMap>
 
     <insert id="insertQuartzJobLog">
-        insert into tool_quartz_log(
+        insert into quartz_log(
         <if test="jobName != null and jobName != ''">job_name,</if>
         <if test="beanName != null and beanName != ''">bean_name,</if>
         <if test="methodName != null and methodName != ''">method_name,</if>
@@ -46,7 +46,7 @@
 
 
     <delete id="deleteQuartzJobLogByIds">
-        update tool_quartz_log set delete_by=#{username},delete_time =sysdate() where id in
+        update quartz_log set delete_by=#{username},delete_time =sysdate() where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -54,7 +54,7 @@
 
 
     <delete id="cleanQuartzJobLog">
-        update tool_quartz_log set delete_by=#{username},delete_time =sysdate()
+        update quartz_log set delete_by=#{username},delete_time =sysdate()
     </delete>
 
 
@@ -62,7 +62,7 @@
     <select id="selectQuartzJobLogList" resultMap="QuartzJobLogMap">
         select id, job_name, bean_name, method_name, method_params, cron_expression, exception, status, cost,
         create_time
-        from tool_quartz_log
+        from quartz_log
         where delete_time is null
         <if test="jobName != null and jobName != ''">
             and job_name like concat('%',#{jobName},'%')

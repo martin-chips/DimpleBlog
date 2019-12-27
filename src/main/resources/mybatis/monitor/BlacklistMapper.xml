@@ -16,16 +16,16 @@
     </resultMap>
 
     <insert id="insertBlacklist" parameterType="com.dimple.project.log.domain.LoginLog">
-		insert into sys_blacklist (ip, description, intercept_count, last_access_url, last_access_time, create_by, create_time)
+		insert into blacklist (ip, description, intercept_count, last_access_url, last_access_time, create_by, create_time)
 		values (#{ip}, #{description}, #{interceptCount}, #{lastAccessUrl}, #{lastAccessTime}, #{createBy}, sysdate())
 	</insert>
 
     <insert id="insertBlacklistRecord">
-        update sys_blacklist set interceptCount+=1,last_access_url=${lastAccessUrl} ,last_access_time=sysdate() where id=${id}
+        update blacklist set interceptCount+=1,last_access_url=${lastAccessUrl} ,last_access_time=sysdate() where id=${id}
     </insert>
 
     <update id="updateBlacklist">
-        update sys_blacklist
+        update blacklist
         <set>
             <if test="ip != null and ip != ''">ip = #{ip},</if>
             <if test="description != null and description != ''">description = #{description},</if>
@@ -38,7 +38,7 @@
     <select id="selectBlacklistList" parameterType="com.dimple.project.monitor.domain.Blacklist"
             resultMap="SysBlacklistResult" resultType="com.dimple.project.monitor.domain.Blacklist">
         select id, ip, description, intercept_count, last_access_url, last_access_time, create_by, create_time
-        from sys_blacklist
+        from blacklist
         where delete_time is null
         <if test="ip != null and ip != ''">
             AND ip like concat('%', #{ip}, '%')
@@ -54,15 +54,15 @@
         </if>
     </select>
     <select id="selectBlacklistById" resultType="com.dimple.project.monitor.domain.Blacklist">
-         select id, ip, description, intercept_count, last_access_url, last_access_time, create_by, create_time from sys_blacklist where id = ${id}
+         select id, ip, description, intercept_count, last_access_url, last_access_time, create_by, create_time from blacklist where id = ${id}
     </select>
 
     <delete id="deleteBlacklistByIds" parameterType="String">
-        update sys_blacklist set delete_by =#{deleteBy} , delete_time=sysdate() where id in
+        update blacklist set delete_by =#{deleteBy} , delete_time=sysdate() where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
 
 
-</mapper> 
+</mapper>

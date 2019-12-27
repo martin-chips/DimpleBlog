@@ -1,6 +1,6 @@
 package com.dimple.project.book.service;
 
-import com.dimple.project.book.entity.BookCategory;
+import com.dimple.project.common.domain.Category;
 
 import java.util.List;
 
@@ -18,31 +18,31 @@ public interface BookCategoryService {
      * @param id 分类ID
      * @return 分类
      */
-    BookCategory selectBookCategoryById(Long id);
+    Category selectBookCategoryById(Long id);
 
     /**
      * 查询分类列表
      *
-     * @param bookCategory 分类
+     * @param category 分类
      * @return 分类集合
      */
-    List<BookCategory> selectBookCategoryList(BookCategory bookCategory);
+    List<Category> selectBookCategoryList(Category category);
 
     /**
      * 新增分类
      *
-     * @param bookCategory 分类
+     * @param category 分类
      * @return 结果
      */
-    int insertBookCategory(BookCategory bookCategory);
+    int insertBookCategory(Category category);
 
     /**
      * 修改分类
      *
-     * @param bookCategory 分类
+     * @param category 分类
      * @return 结果
      */
-    int updateBookCategory(BookCategory bookCategory);
+    int updateBookCategory(Category category);
 
     /**
      * 批量删除分类

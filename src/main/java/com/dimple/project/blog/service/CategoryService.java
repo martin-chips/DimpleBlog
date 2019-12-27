@@ -1,6 +1,6 @@
 package com.dimple.project.blog.service;
 
-import com.dimple.project.blog.domain.Category;
+import com.dimple.project.common.domain.Category;
 
 import java.util.List;
 

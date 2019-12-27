@@ -54,7 +54,7 @@ public class Book extends BaseEntity {
     /**
     * 简介
     */
-    private String description;
+    private String summary;
     /**
     * 原书目录
     */

@@ -14,7 +14,7 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
     <insert id="insertContent" useGeneratedKeys="true" keyProperty="id">
-        insert into tool_qi_niu_content(
+        insert into qi_niu_content(
         <if test="name != null and name != ''">name,</if>
         <if test="bucket != null and bucket != ''">bucket,</if>
         <if test="size != null and size != ''">size,</if>
@@ -38,14 +38,14 @@
     <!--查询单个-->
     <select id="selectContentById" resultMap="QiNiuContentMap">
         select id, name, bucket, size, url, suffix, type, create_by, create_time
-        from tool_qi_niu_content
+        from qi_niu_content
         where id = #{id}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectContentList" resultMap="QiNiuContentMap">
         select id, name, bucket, size, url, suffix, type, create_by, create_time
-        from tool_qi_niu_content
+        from qi_niu_content
         <where>
             <if test="name != null and name != ''">
                 and name like concat('%',#{name},'%')
@@ -69,7 +69,7 @@
     </select>
     <select id="selectContentByIds" resultType="com.dimple.project.tool.domain.QiNiuContent">
         select id, name, bucket, size, url, suffix, type, create_by, create_time
-        from tool_qi_niu_content
+        from qi_niu_content
         where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
@@ -78,13 +78,13 @@
 
     <!--通过主键删除-->
     <delete id="deleteContentByIds">
-        delete from tool_qi_niu_content where id in
+        delete from qi_niu_content where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
     <delete id="clearContent">
-        TRUNCATE TABLE tool_qi_niu_content
+        TRUNCATE TABLE qi_niu_content
     </delete>
 
 </mapper>

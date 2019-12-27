@@ -21,8 +21,8 @@
     </resultMap>
 
     <sql id="selectDictDataVo">
-        select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, remark 
-		from sys_dict_data
+        select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, remark
+		from dict_data
     </sql>
 
     <select id="selectDictDataList" parameterType="com.dimple.project.system.domain.DictData"
@@ -47,7 +47,7 @@
     </select>
 
     <select id="selectDictLabel" resultType="String">
-		select dict_label from sys_dict_data
+		select dict_label from dict_data
 		where dict_type = #{dictType} and dict_value = #{dictValue}
 	</select>
 
@@ -57,15 +57,15 @@
     </select>
 
     <select id="countDictDataByType" resultType="Integer">
-	    select count(1) from sys_dict_data where dict_type=#{dictType}  
+	    select count(1) from dict_data where dict_type=#{dictType}
 	</select>
 
     <delete id="deleteDictDataById">
- 		update sys_dict_data set delete_by =#{loginUsername} , delete_time= sysdate()  where dict_code = #{dictCode}
+ 		update dict_data set delete_by =#{loginUsername} , delete_time= sysdate()  where dict_code = #{dictCode}
  	</delete>
 
     <update id="updateDictData" parameterType="com.dimple.project.system.domain.DictData">
-        update sys_dict_data
+        update dict_data
         <set>
             <if test="dictSort != null and dictSort != ''">dict_sort = #{dictSort},</if>
             <if test="dictLabel != null and dictLabel != ''">dict_label = #{dictLabel},</if>
@@ -83,11 +83,11 @@
     </update>
 
     <update id="updateDictDataType" parameterType="String">
- 		update sys_dict_data set dict_type = #{newDictType} where dict_type = #{oldDictType}
+ 		update dict_data set dict_type = #{newDictType} where dict_type = #{oldDictType}
 	</update>
 
     <insert id="insertDictData" parameterType="com.dimple.project.system.domain.DictData">
-        insert into sys_dict_data(
+        insert into dict_data(
         <if test="dictSort != null and dictSort != ''">dict_sort,</if>
         <if test="dictLabel != null and dictLabel != ''">dict_label,</if>
         <if test="dictValue != null and dictValue != ''">dict_value,</if>
@@ -114,4 +114,4 @@
         )
     </insert>
 
-</mapper> 
+</mapper>

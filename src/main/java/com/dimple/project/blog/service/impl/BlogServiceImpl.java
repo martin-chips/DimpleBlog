@@ -1,25 +1,21 @@
 package com.dimple.project.blog.service.impl;
 
+import com.dimple.common.enums.TagType;
 import com.dimple.common.utils.ConvertUtils;
-import com.dimple.common.utils.ObjectUtils;
 import com.dimple.common.utils.SecurityUtils;
-import com.dimple.common.utils.StringUtils;
 import com.dimple.project.blog.domain.Blog;
-import com.dimple.project.blog.domain.BlogTag;
 import com.dimple.project.blog.domain.Comment;
-import com.dimple.project.blog.domain.Tag;
 import com.dimple.project.blog.mapper.BlogMapper;
-import com.dimple.project.blog.mapper.BlogTagMapper;
 import com.dimple.project.blog.mapper.CommentMapper;
-import com.dimple.project.blog.mapper.TagMapper;
 import com.dimple.project.blog.service.BlogService;
+import com.dimple.project.blog.service.TagService;
+import com.dimple.project.common.domain.Tag;
 import com.dimple.project.front.domain.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -36,9 +32,7 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     CommentMapper commentMapper;
     @Autowired
-    TagMapper tagMapper;
-    @Autowired
-    BlogTagMapper blogTagMapper;
+    TagService tagService;
 
     @Override
     public Blog selectBlogById(Long id) {
@@ -70,7 +64,9 @@ public class BlogServiceImpl implements BlogService {
      * @return title集合
      */
     private List<String> getTagTitleListByBlogId(Long blogId) {
-        List<Tag> tagList = tagMapper.selectTagListByBlogId(blogId);
+        Tag tag = new Tag();
+        tag.setType(TagType.Blog.getType());
+        List<Tag> tagList = tagService.selectTagList(tag);
         List<String> tagTitleList = tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
         return tagTitleList;
     }
@@ -80,48 +76,16 @@ public class BlogServiceImpl implements BlogService {
     public int insertBlog(Blog blog) {
         blog.setCreateBy(SecurityUtils.getUsername());
         int count = blogMapper.insertBlog(blog);
-        updateBlogTagMapping(blog);
+        tagService.updateTagMapping(TagType.Blog.getType(), blog.getId(), blog.getTagTitleList());
         return count;
     }
 
-    /**
-     * 设置blog和tag的关联
-     */
-    private void updateBlogTagMapping(Blog blog) {
-        //删除该blogId下的所有关联
-        blogTagMapper.deleteBlogTagByBlogId(blog.getId());
-        List<String> tagTitleList = blog.getTagTitleList();
-        if (ObjectUtils.isNotEmpty(tagTitleList)) {
-            for (String title : tagTitleList) {
-                //搜索所有的该tag
-                Tag tag = tagMapper.selectTagByTitle(title);
-                if (tag != null) {
-                    blogTagMapper.insertBlogTag(new BlogTag(blog.getId(), tag.getId()));
-                } else {
-                    Tag temp = new Tag(title, StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 1));
-                    tagMapper.insertTag(temp);
-                    blogTagMapper.insertBlogTag(new BlogTag(blog.getId(), temp.getId()));
-                }
-            }
-        }
-    }
-
-    /**
-     * 获取随机数
-     *
-     * @param num 最大范围
-     * @return 随机数
-     */
-    private int getRandomNum(int num) {
-        Random random = new Random();
-        return random.nextInt(num);
-    }
 
     @Override
     public int updateBlog(Blog blog) {
         blog.setUpdateBy(SecurityUtils.getUsername());
         int count = blogMapper.updateBlog(blog);
-        updateBlogTagMapping(blog);
+        tagService.updateTagMapping(TagType.Blog.getType(), blog.getId(), blog.getTagTitleList());
         return count;
     }
 
@@ -141,7 +105,7 @@ public class BlogServiceImpl implements BlogService {
     public List<String> selectBlogTagList(String query) {
         Tag tag = new Tag();
         tag.setTitle(query);
-        List<Tag> tagList = tagMapper.selectTagList(tag);
+        List<Tag> tagList = tagService.selectTagList(tag);
         return tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
     }
 
@@ -149,7 +113,7 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> selectBlogList(BlogQuery blogQuery) {
         List<Blog> blogList = blogMapper.selectBlogListQuery(blogQuery);
         for (Blog blog : blogList) {
-            blog.setTagList(tagMapper.selectTagListByBlogId(blog.getId()));
+            blog.setTagList(tagService.selectTagListByTypeAndId(TagType.Blog.getType(), blog.getId()));
         }
         return blogList;
     }
@@ -157,7 +121,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog selectBlogDetailById(Long id) {
         Blog blog = blogMapper.selectBlogByIdQuery(id);
-        blog.setTagList(tagMapper.selectTagListByBlogId(id));
+        blog.setTagList(tagService.selectTagListByTypeAndId(TagType.Blog.getType(), id));
         //获取commentList
         blog.setCommentList(commentMapper.selectCommentListByPageId(id));
         //设置点击数量+1

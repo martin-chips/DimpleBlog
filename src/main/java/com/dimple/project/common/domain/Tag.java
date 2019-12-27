@@ -1,4 +1,4 @@
-package com.dimple.project.blog.domain;
+package com.dimple.project.common.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,18 +26,17 @@ public class Tag extends BaseEntity {
      */
     private String title;
     /**
-     * 关联Blog数量
+     * 标签类型,1表示博客的Tag,2表示笔记的Tag
+     */
+    private Integer type;
+    /**
+     * 关联数量
      */
     private Long count;
 
-    public Tag(String title, String color, Long count) {
+    public Tag(String title, String color,Integer type) {
         this.color = color;
         this.title = title;
-        this.count = count;
-    }
-
-    public Tag(String title, String color) {
-        this.color = color;
-        this.title = title;
+        this.type = type;
     }
 }

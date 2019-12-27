@@ -2,8 +2,8 @@ package com.dimple.project.front.controller;
 
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
-import com.dimple.project.blog.domain.Category;
 import com.dimple.project.blog.service.CategoryService;
+import com.dimple.project.common.domain.Category;
 import com.dimple.project.front.domain.FrontMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,7 +77,7 @@ public class ConfigController extends BaseController {
 
     @GetMapping("/categories")
     public AjaxResult categories() {
-        List<Category> categories = categoryService.selectSupportCategory();
+        List<Category> categories = categoryService.selectCategoryList(new Category());
         return AjaxResult.success(categories);
     }
 }

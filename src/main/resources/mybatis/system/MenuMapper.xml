@@ -26,7 +26,7 @@
 
     <sql id="selectMenuVo">
         select id, menu_name, parent_id, order_num, path, component, is_frame, menu_type, visible, ifnull(perms,'') as perms, icon, create_time
-		from sys_menu
+		from menu
     </sql>
 
     <select id="selectMenuList" parameterType="com.dimple.project.system.domain.Menu" resultMap="SysMenuResult">
@@ -43,35 +43,35 @@
 
     <select id="selectMenuTreeAll" resultMap="SysMenuResult">
 		select distinct m.id, m.parent_id, m.menu_name, m.path, m.component, m.visible, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m where m.menu_type in ('M', 'C') and m.visible = 0 and m.delete_time is null
+		from menu m where m.menu_type in ('M', 'C') and m.visible = 0 and m.delete_time is null
 		order by m.parent_id, m.order_num
 	</select>
 
     <select id="selectMenuTreeByUserId" parameterType="Long" resultMap="SysMenuResult">
 		select distinct m.id, m.parent_id, m.menu_name, m.path, m.component, m.visible, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
-			 left join sys_role_menu rm on m.id = rm.menu_id
+		from menu m
+			 left join role_menu rm on m.id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
-			 left join sys_role ro on ur.role_id = ro.role_id
-			 left join sys_user u on ur.user_id = u.id
+			 left join role ro on ur.role_id = ro.role_id
+			 left join user u on ur.user_id = u.id
 		where u.id = #{userId} and m.menu_type in ('M', 'C') and m.visible = 0  AND ro.status = 0 and m.delete_time is null
 		order by m.parent_id, m.order_num
 	</select>
 
     <select id="selectMenuListByRoleId" parameterType="Long" resultType="Integer">
 		select m.id, m.parent_id
-		from sys_menu m
-            left join sys_role_menu rm on m.id = rm.menu_id
+		from menu m
+            left join role_menu rm on m.id = rm.menu_id
         where rm.role_id = #{roleId}
-        	and m.id not in (select m.parent_id from sys_menu m inner join sys_role_menu rm on m.id = rm.menu_id and rm.role_id = #{roleId})
+        	and m.id not in (select m.parent_id from menu m inner join role_menu rm on m.id = rm.menu_id and rm.role_id = #{roleId})
         	and m.delete_time is null
 		order by m.parent_id, m.order_num
 	</select>
 
     <select id="selectMenuPerms" resultType="String">
 		select distinct m.perms
-		from sys_menu m
-			 left join sys_role_menu rm on m.id = rm.menu_id
+		from menu m
+			 left join role_menu rm on m.id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
 		where
 		    m.delete_time is null
@@ -79,8 +79,8 @@
 
     <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
 		select distinct m.perms
-		from sys_menu m
-			 left join sys_role_menu rm on m.id = rm.menu_id
+		from menu m
+			 left join role_menu rm on m.id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
 		where ur.user_id = #{userId} and m.delete_time is null
 	</select>
@@ -91,7 +91,7 @@
     </select>
 
     <select id="hasChildByMenuId" resultType="Integer">
-	    select count(1) from sys_menu where parent_id = #{id}  and delete_time is null
+	    select count(1) from menu where parent_id = #{id}  and delete_time is null
 	</select>
 
     <select id="checkMenuNameUnique" parameterType="com.dimple.project.system.domain.Menu" resultMap="SysMenuResult">
@@ -100,7 +100,7 @@
     </select>
 
     <update id="updateMenu" parameterType="com.dimple.project.system.domain.Menu">
-        update sys_menu
+        update menu
         <set>
             <if test="menuName != null and menuName != ''">menu_name = #{menuName},</if>
             <if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
@@ -120,7 +120,7 @@
     </update>
 
     <insert id="insertMenu" parameterType="com.dimple.project.system.domain.Menu">
-        insert into sys_menu(
+        insert into menu(
         <if test="id != null and id != 0">id,</if>
         <if test="parentId != null and parentId != 0">parent_id,</if>
         <if test="menuName != null and menuName != ''">menu_name,</if>
@@ -154,7 +154,7 @@
     </insert>
 
     <delete id="deleteMenuById">
-	    update sys_menu set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{menuId}
+	    update menu set delete_by =#{loginUsername} , delete_time= sysdate()  where id = #{menuId}
 	</delete>
 
 </mapper>

@@ -6,8 +6,8 @@ import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.book.entity.BookCategory;
 import com.dimple.project.book.service.BookCategoryService;
+import com.dimple.project.common.domain.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -36,18 +36,18 @@ public class BookCategoryController extends BaseController {
 
     @PreAuthorize("@permissionService.hasPermission('book:category:list')")
     @GetMapping("/list")
-    public TableDataInfo list(BookCategory bookCategory) {
+    public TableDataInfo list(Category category) {
         startPage();
-        List<BookCategory> list = bookCategoryService.selectBookCategoryList(bookCategory);
+        List<Category> list = bookCategoryService.selectBookCategoryList(category);
         return getDataTable(list);
     }
 
     @PreAuthorize("@permissionService.hasPermission('book:category:add')")
     @Log(title = "分类管理", businessType = BusinessType.INSERT)
     @PostMapping()
-    public AjaxResult add(@RequestBody @Validated BookCategory bookCategory) {
-        bookCategory.setCreateBy(SecurityUtils.getUsername());
-        return toAjax(bookCategoryService.insertBookCategory(bookCategory));
+    public AjaxResult add(@RequestBody @Validated Category Category) {
+        Category.setCreateBy(SecurityUtils.getUsername());
+        return toAjax(bookCategoryService.insertBookCategory(Category));
     }
 
     @PreAuthorize("@permissionService.hasPermission('book:category:query')")
@@ -59,8 +59,8 @@ public class BookCategoryController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('book:category:edit')")
     @Log(title = "分类管理", businessType = BusinessType.UPDATE)
     @PutMapping()
-    public AjaxResult edit(@RequestBody @Validated BookCategory bookCategory) {
-        return toAjax(bookCategoryService.updateBookCategory(bookCategory));
+    public AjaxResult edit(@RequestBody @Validated Category category) {
+        return toAjax(bookCategoryService.updateBookCategory(category));
     }
 
     @PreAuthorize("@permissionService.hasPermission('book:category:remove')")

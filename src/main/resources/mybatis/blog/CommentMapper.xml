@@ -29,7 +29,7 @@
     <select id="selectCommentById" resultMap="CommentMap">
         select
           id, email, ip, location, os, browser, parent_id, qq_num, avatar, page_id,nick_name, url, display, good, bad, content, create_by, create_time
-        from bg_comment
+        from comment
         where id = #{id}
     </select>
 
@@ -39,7 +39,7 @@
         id, email, ip, location, os, browser, parent_id, qq_num,nick_name, avatar, page_id, url, display, good, bad,
         content,
         create_by, create_time
-        from bg_comment
+        from comment
         where delete_time is null
         <if test="email != null and email != ''">
             AND email like concat('%', #{email}, '%')
@@ -66,7 +66,7 @@
 
     <!--新增所有列-->
     <insert id="insertComment" keyProperty="id" useGeneratedKeys="true">
-        insert into bg_comment(
+        insert into comment(
         <if test="email != null and email != ''">email,</if>
         <if test="ip != null and ip != ''">ip,</if>
         <if test="location != null and location != ''">location,</if>
@@ -111,7 +111,7 @@
 
     <!--通过主键修改数据-->
     <update id="updateComment">
-        update bg_comment
+        update comment
         <set>
             <if test="email != null and email != ''">
                 email = #{email},
@@ -166,15 +166,15 @@
         where id = #{id}
     </update>
     <update id="incrementCommentGood">
-        update bg_comment set good=good+1 where id=#{id}
+        update comment set good=good+1 where id=#{id}
     </update>
     <update id="incrementCommentBad">
-        update bg_comment set bad=bad+1 where id=#{id}
+        update comment set bad=bad+1 where id=#{id}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteCommentById">
-        update bg_comment set delete_time=sysdate(),delete_by=#{username} where id in
+        update comment set delete_time=sysdate(),delete_by=#{username} where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -186,7 +186,7 @@
         bad,
         content,
         create_by, create_time
-        from bg_comment where delete_time is null and page_id in
+        from comment where delete_time is null and page_id in
         <foreach item="id" collection="blogIdList" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -196,6 +196,6 @@
         bad,reply_id,
         html_content as content,
         create_by, create_time
-        from bg_comment where delete_time is null and page_id =#{id} order by create_time desc
+        from comment where delete_time is null and page_id =#{id} order by create_time desc
     </select>
 </mapper>

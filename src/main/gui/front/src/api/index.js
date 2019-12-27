@@ -157,3 +157,47 @@ export function listNotice() {
         method: 'get',
     })
 }
+
+//图书
+export function listBooks() {
+    return request({
+        url: '/f/notice',
+        method: 'get',
+    })
+}
+
+//点赞Book
+export function LikeBook(id) {
+    return request({
+        url: '/f/book/like/' + id,
+        method: 'put',
+    })
+}
+
+// 查询图书列表
+export function listBookBaseInfo(query) {
+    return request({
+        url: '/f/book',
+        method: 'get',
+        params: query
+    })
+}
+
+// 查询笔记列表
+export function listNoteBaseInfo(query) {
+    return request({
+        url: '/f/note',
+        method: 'get',
+        params: query
+    })
+}
+
+//获取Book信息
+export function BookDetail(params) {
+    return request({
+        url: '/f/book/' + params.id,
+        method: 'get',
+        params: params
+    })
+}
+

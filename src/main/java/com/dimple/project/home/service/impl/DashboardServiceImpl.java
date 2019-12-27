@@ -5,6 +5,9 @@ import com.dimple.common.utils.StringUtils;
 import com.dimple.project.home.domain.LineChartData;
 import com.dimple.project.home.mapper.DashBoardMapper;
 import com.dimple.project.home.service.DashboardService;
+import com.dimple.project.log.domain.LoginLog;
+import com.dimple.project.log.domain.OperateLog;
+import com.dimple.project.log.domain.QuartzJobLog;
 import com.dimple.project.log.domain.VisitLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,16 +79,49 @@ public class DashboardServiceImpl implements DashboardService {
         List<String> result = new ArrayList<>();
         for (VisitLog visitLog : visitLogList) {
             String name = "";
-            if (visitLog.getPageId() == -1000) {
-                name = "留言页";
-            } else {
-                Long pageId = visitLog.getPageId();
-                if (pageId != null) {
-                    name = dashBoardMapper.getBlogNameByPageId(pageId);
+            if (visitLog.getPageId() != null) {
+                if (visitLog.getPageId() == -1000) {
+                    name = "留言页";
+                } else {
+                    Long pageId = visitLog.getPageId();
+                    if (pageId != null) {
+                        name = dashBoardMapper.getBlogNameByPageId(pageId);
+                    }
                 }
             }
             //XXX 分钟前 : @47.112.14.207 浏览了 <strong>title</strong> <a href='url'>XXXXX</a>
             result.add(StringUtils.format("{} : @{} 浏览了 <strong> {} </strong> <a href='{}'> {} </a>", DateUtils.showTime(visitLog.getCreateTime()), visitLog.getIp(), visitLog.getTitle(), visitLog.getUrl(), StringUtils.isEmpty(name) ? visitLog.getUrl() : name));
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getLoginLogStringList() {
+        List<LoginLog> loginLogList = dashBoardMapper.getLoginLogList();
+        List<String> result = new LinkedList<>();
+        for (LoginLog loginLog : loginLogList) {
+//            XXX 分钟前: XXXX 登录系统 XXXX
+            result.add(StringUtils.format("{} : {} 登录系统 {}{}", DateUtils.showTime(loginLog.getCreateTime()), loginLog.getUserName(), loginLog.getStatus() ? "成功" : "失败", loginLog.getStatus() ? "" : "异常信息:" + loginLog.getMsg()));
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getOperateLogStringList() {
+        List<OperateLog> operateLogList = dashBoardMapper.getOperateLogList();
+        List<String> result = new LinkedList<>();
+        for (OperateLog operateLog : operateLogList) {
+            result.add(StringUtils.format("{}:{}对{}进行{}操作{}{}", DateUtils.showTime(operateLog.getCreateTime()), operateLog.getOperateName(), operateLog.getTitle(), operateLog.getOperatorType(), operateLog.getStatus() ? "成功" : "失败", operateLog.getStatus() ? "" : ",异常信息:" + operateLog.getErrorMsg()));
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getTaskLogStringList() {
+        List<String> result = new LinkedList<>();
+        List<QuartzJobLog> jobLogList = dashBoardMapper.getQuartzJobLogList();
+        for (QuartzJobLog quartzJobLog : jobLogList) {
+            result.add(StringUtils.format("{}:{}执行{}", DateUtils.showTime(quartzJobLog.getCreateTime()), quartzJobLog.getJobName(), quartzJobLog.getStatus() ? "成功" : "失败"));
         }
         return result;
     }

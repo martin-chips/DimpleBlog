@@ -17,7 +17,7 @@
     </resultMap>
 
     <insert id="insertVisitLog" parameterType="com.dimple.project.log.domain.VisitLog">
-        insert into bg_visit_log(
+        insert into visit_log(
         <if test="ip!=null and ip!=''">ip,</if>
         <if test="location!=null and location!=''">location,</if>
         <if test="browser!=null and browser!=''">browser,</if>
@@ -48,7 +48,7 @@
 
     <select id="selectVisitLogList" parameterType="com.dimple.project.log.domain.VisitLog"
             resultMap="VisitLogResult">
-        select id, ip, location, browser, os, status, error_msg,spider,url, create_time,page_id from bg_visit_log
+        select id, ip, location, browser, os, status, error_msg,spider,url, create_time,page_id from visit_log
         where delete_time is null
         <if test="ip != null and ip != ''">
             AND ip like concat('%', #{ip}, '%')
@@ -65,14 +65,14 @@
     </select>
 
     <delete id="deleteVisitLogByIds">
-        update bg_visit_log set delete_by = #{username},delete_time =sysdate() where id in
+        update visit_log set delete_by = #{username},delete_time =sysdate() where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
 
     <update id="cleanVisitLog">
-          update bg_visit_log set delete_by = #{username},delete_time =sysdate()
+          update visit_log set delete_by = #{username},delete_time =sysdate()
     </update>
 
 

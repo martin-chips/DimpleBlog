@@ -4,7 +4,7 @@ import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.domain.Blog;
-import com.dimple.project.blog.domain.Tag;
+import com.dimple.project.common.domain.Tag;
 import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.blog.service.CategoryService;
 import com.dimple.project.blog.service.CommentService;

@@ -25,11 +25,11 @@
 
     <sql id="selectOperateLogVo">
         select id, title, business_type, method, request_method, cost,operator_type, operate_name, url, ip, location, param, json_result, status, error_msg, create_time,create_by
-        from sys_operate_log
+        from operate_log
     </sql>
 
     <insert id="insertOperateLog" parameterType="com.dimple.project.log.domain.OperateLog">
-		insert into sys_operate_log(title, business_type, method, request_method, operator_type, operate_name, url, ip, location, param, json_result, status, error_msg, create_time,cost,create_by)
+		insert into operate_log(title, business_type, method, request_method, operator_type, operate_name, url, ip, location, param, json_result, status, error_msg, create_time,cost,create_by)
         values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operateName}, #{url}, #{ip}, #{location}, #{param}, #{jsonResult}, #{status}, #{errorMsg}, sysdate(),#{cost},#{createBy})
 	</insert>
 
@@ -64,7 +64,7 @@
     </select>
 
     <delete id="deleteOperateLogByIds">
-        update sys_operate_log set delete_by=#{username},delete_time =sysdate() where id in
+        update operate_log set delete_by=#{username},delete_time =sysdate() where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -76,7 +76,7 @@
     </select>
 
     <update id="cleanOperateLog">
-          update sys_operate_log set delete_by=#{username},delete_time =sysdate()
+          update operate_log set delete_by=#{username},delete_time =sysdate()
     </update>
 
-</mapper> 
+</mapper>
