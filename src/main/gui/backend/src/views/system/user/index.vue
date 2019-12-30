@@ -240,7 +240,7 @@
     created() {
       this.$nextTick(() => {
         this.init()
-      })
+      });
       this.getDicts("sys_normal_disable").then(response => {
         this.statusOptions = response.data;
       });
@@ -251,7 +251,7 @@
     methods: {
       beforeInit() {
         this.base = '/system/user';
-        this.modelName = '用户'
+        this.modelName = '用户';
         return true
       },
       // 筛选节点

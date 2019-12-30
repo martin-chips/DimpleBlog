@@ -5,7 +5,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.home.domain.LineChartData;
 import com.dimple.project.home.service.DashboardService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +23,11 @@ import java.util.Map;
 @RequestMapping("/dashboard")
 public class DashboardController extends BaseController {
 
-    @Autowired
-    DashboardService dashboardService;
+    final DashboardService dashboardService;
+
+    public DashboardController(DashboardService dashboardService) {
+        this.dashboardService = dashboardService;
+    }
 
     @GetMapping("/panelGroup")
     public AjaxResult getPanelGroupData() {

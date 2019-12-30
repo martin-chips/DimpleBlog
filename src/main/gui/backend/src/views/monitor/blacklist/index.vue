@@ -138,7 +138,7 @@
     methods: {
       beforeInit() {
         this.base = '/monitor/blacklist';
-        this.modelName = '黑名单'
+        this.modelName = '黑名单';
         return true
       },
     }

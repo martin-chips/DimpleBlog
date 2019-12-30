@@ -63,5 +63,5 @@ public enum BusinessType {
     /**
      * 下载
      */
-    DOWNLOAD;
+    DOWNLOAD
 }

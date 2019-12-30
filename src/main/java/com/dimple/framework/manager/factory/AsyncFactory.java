@@ -26,6 +26,9 @@ import java.util.TimerTask;
  */
 @Slf4j
 public class AsyncFactory {
+    private AsyncFactory() {
+
+    }
 
     /**
      * 记录登陆信息

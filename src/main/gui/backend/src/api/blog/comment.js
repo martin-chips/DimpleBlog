@@ -41,6 +41,6 @@ export function changeCommentDisplay(id, display) {
   let data = {
     id: id,
     support: diaplay
-  }
+  };
   updateComment(data);
 }

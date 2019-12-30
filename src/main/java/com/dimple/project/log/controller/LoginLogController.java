@@ -6,7 +6,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.log.domain.LoginLog;
 import com.dimple.project.log.service.LoginLogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +24,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/log/loginLog")
 public class LoginLogController extends BaseController {
-    @Autowired
-    private LoginLogService loginLogService;
+    private final LoginLogService loginLogService;
+
+    public LoginLogController(LoginLogService loginLogService) {
+        this.loginLogService = loginLogService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('monitor:loginLog:list')")
     @GetMapping("/list")

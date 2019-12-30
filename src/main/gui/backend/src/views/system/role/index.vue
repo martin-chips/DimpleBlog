@@ -177,7 +177,7 @@
     created() {
       this.$nextTick(() => {
         this.init()
-      })
+      });
       this.getDicts("sys_normal_disable").then(response => {
         this.statusOptions = response.data;
       });
@@ -185,7 +185,7 @@
     methods: {
       beforeInit() {
         this.base = '/system/role';
-        this.modelName = '角色'
+        this.modelName = '角色';
         return true
       },
       /** 查询菜单树结构 */

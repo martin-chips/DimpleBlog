@@ -17,7 +17,7 @@ public class AsyncManager {
     /**
      * 操作延迟10毫秒
      */
-    private final int OPERATE_DELAY_TIME = 10;
+    private static final int OPERATE_DELAY_TIME = 10;
 
     /**
      * 异步操作任务调度线程池

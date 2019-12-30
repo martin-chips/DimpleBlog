@@ -7,7 +7,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.service.BlogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,8 +30,11 @@ import java.util.List;
 @RequestMapping("/blog/blog")
 public class BlogController extends BaseController {
 
-    @Autowired
-    private BlogService blogService;
+    private final BlogService blogService;
+
+    public BlogController(BlogService blogService) {
+        this.blogService = blogService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('blog:blog:list')")
     @GetMapping("/list")

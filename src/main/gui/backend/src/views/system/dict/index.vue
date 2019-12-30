@@ -154,7 +154,7 @@
     created() {
       this.$nextTick(() => {
         this.init()
-      })
+      });
       this.getDicts("sys_normal_disable").then(response => {
         this.statusOptions = response.data;
       });
@@ -162,7 +162,7 @@
     methods: {
       beforeInit() {
         this.base = '/system/dict/type';
-        this.modelName = '字典'
+        this.modelName = '字典';
         return true
       },
       // 字典状态字典翻译

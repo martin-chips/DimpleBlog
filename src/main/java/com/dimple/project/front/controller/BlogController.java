@@ -7,7 +7,6 @@ import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.front.domain.BlogQuery;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,8 +24,11 @@ import java.util.List;
 @RestController("frontBlogController")
 @RequestMapping("/f")
 public class BlogController extends BaseController {
-    @Autowired
-    BlogService blogService;
+    final BlogService blogService;
+
+    public BlogController(BlogService blogService) {
+        this.blogService = blogService;
+    }
 
     @GetMapping("/blog")
     @VLog(title = "首页")

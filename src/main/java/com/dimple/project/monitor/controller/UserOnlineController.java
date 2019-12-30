@@ -11,7 +11,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.monitor.domain.UserOnline;
 import com.dimple.project.system.service.UserOnlineService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,17 +32,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/monitor/online")
 public class UserOnlineController extends BaseController {
-    @Autowired
-    private UserOnlineService userOnlineService;
+    private final UserOnlineService userOnlineService;
 
-    @Autowired
-    private RedisCacheService redisCacheService;
+    private final RedisCacheService redisCacheService;
+
+    public UserOnlineController(UserOnlineService userOnlineService, RedisCacheService redisCacheService) {
+        this.userOnlineService = userOnlineService;
+        this.redisCacheService = redisCacheService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('monitor:online:list')")
     @GetMapping("/list")
     public TableDataInfo list(String ip, String userName) {
         Collection<String> keys = redisCacheService.keys(Constants.LOGIN_TOKEN_KEY + "*");
-        List<UserOnline> userOnlineList = new ArrayList<UserOnline>();
+        List<UserOnline> userOnlineList = new ArrayList<>();
         for (String key : keys) {
             LoginUser user = redisCacheService.getCacheObject(key);
             if (StringUtils.isNotEmpty(ip) && StringUtils.isNotEmpty(userName)) {

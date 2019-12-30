@@ -55,7 +55,7 @@
       <el-table-column type="selection" align="center"/>
       <el-table-column :show-overflow-tooltip="true" label="文件名">
         <template slot-scope="scope">
-          <a href="JavaScript:;" class="el-link el-link--primary" target="_blank" type="primary"
+          <a href="JavaScript:" class="el-link el-link--primary" target="_blank" type="primary"
              @click="download(scope.row.id)">{{ scope.row.name }}</a>
         </template>
       </el-table-column>
@@ -161,7 +161,7 @@
     methods: {
       beforeInit() {
         this.base = '/tool/qiNiu';
-        this.modelName = '七牛云'
+        this.modelName = '七牛云';
         return true
       },
       /** 下载 */
@@ -170,17 +170,17 @@
       },
       /**刷新*/
       handleSynchronize() {
-        this.icon = 'el-icon-loading'
-        this.buttonName = '同步中'
+        this.icon = 'el-icon-loading';
+        this.buttonName = '同步中';
         syncContent().then(res => {
-          this.icon = 'el-icon-refresh'
-          this.buttonName = '同步数据'
-          this.msgSuccess("同步成功")
+          this.icon = 'el-icon-refresh';
+          this.buttonName = '同步数据';
+          this.msgSuccess("同步成功");
           this.init();
         }).catch(err => {
-          this.icon = 'el-icon-refresh'
-          this.buttonName = '同步数据'
-          this.msgError("同步失败")
+          this.icon = 'el-icon-refresh';
+          this.buttonName = '同步数据';
+          this.msgError("同步失败");
           console.log(err.response.msg)
         })
       },
@@ -201,10 +201,10 @@
         _this.dialog = true;
       },
       doSubmit() {
-        this.fileList = []
-        this.open = false
-        this.dialogImageUrl = ''
-        this.dialog = false
+        this.fileList = [];
+        this.open = false;
+        this.dialogImageUrl = '';
+        this.dialog = false;
         this.init()
       },
     }

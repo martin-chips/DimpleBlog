@@ -8,7 +8,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.DictData;
 import com.dimple.project.system.service.DictDataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +30,11 @@ import java.util.List;
 @RequestMapping("/system/dict/data")
 public class DictDataController extends BaseController {
 
-    @Autowired
-    private DictDataService dictDataService;
+    private final DictDataService dictDataService;
+
+    public DictDataController(DictDataService dictDataService) {
+        this.dictDataService = dictDataService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('system:dict:list')")
     @GetMapping("/list")

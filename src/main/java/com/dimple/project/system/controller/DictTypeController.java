@@ -9,7 +9,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.DictType;
 import com.dimple.project.system.service.DictTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +31,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/dict/type")
 public class DictTypeController extends BaseController {
-    @Autowired
-    private DictTypeService dictTypeService;
+    private final DictTypeService dictTypeService;
+
+    public DictTypeController(DictTypeService dictTypeService) {
+        this.dictTypeService = dictTypeService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('system:dict:list')")
     @GetMapping("/list")

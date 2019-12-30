@@ -9,7 +9,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.Role;
 import com.dimple.project.system.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +30,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/role")
 public class RoleController extends BaseController {
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
+
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('system:role:list')")
     @GetMapping("/list")

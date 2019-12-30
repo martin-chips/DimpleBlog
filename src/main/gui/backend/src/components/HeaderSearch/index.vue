@@ -59,20 +59,20 @@
         },
         methods: {
             click() {
-                this.show = !this.show
+                this.show = !this.show;
                 if (this.show) {
                     this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.focus()
                 }
             },
             close() {
-                this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.blur()
-                this.options = []
+                this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.blur();
+                this.options = [];
                 this.show = false
             },
             change(val) {
-                this.$router.push(val.path)
-                this.search = ''
-                this.options = []
+                this.$router.push(val.path);
+                this.search = '';
+                this.options = [];
                 this.$nextTick(() => {
                     this.show = false
                 })
@@ -97,7 +97,7 @@
             // Filter out the routes that can be displayed in the sidebar
             // And generate the internationalized title
             generateRoutes(routes, basePath = '/', prefixTitle = []) {
-                let res = []
+                let res = [];
 
                 for (const router of routes) {
                     // skip hidden router
@@ -108,10 +108,10 @@
                     const data = {
                         path: path.resolve(basePath, router.path),
                         title: [...prefixTitle]
-                    }
+                    };
 
                     if (router.meta && router.meta.title) {
-                        data.title = [...data.title, router.meta.title]
+                        data.title = [...data.title, router.meta.title];
 
                         if (router.redirect !== 'noRedirect') {
                             // only push the routes with title
@@ -122,7 +122,7 @@
 
                     // recursive child routes
                     if (router.children) {
-                        const tempRoutes = this.generateRoutes(router.children, data.path, data.title)
+                        const tempRoutes = this.generateRoutes(router.children, data.path, data.title);
                         if (tempRoutes.length >= 1) {
                             res = [...res, ...tempRoutes]
                         }

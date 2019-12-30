@@ -63,8 +63,7 @@ public class TokenService {
             // 解析对应的权限以及用户信息
             String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
             String userKey = getTokenKey(uuid);
-            LoginUser user = redisCacheService.getCacheObject(userKey);
-            return user;
+            return redisCacheService.getCacheObject(userKey);
         }
         return null;
     }
@@ -146,10 +145,9 @@ public class TokenService {
      * @return 令牌
      */
     private String createToken(Map<String, Object> claims) {
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
-        return token;
     }
 
     /**

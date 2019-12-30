@@ -7,6 +7,9 @@ package com.dimple.common.constant;
  * @date: 10/22/19
  */
 public class UserConstants {
+    private UserConstants() {
+    }
+
     /**
      * 平台内系统用户的唯一标志
      */

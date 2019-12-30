@@ -7,6 +7,9 @@ package com.dimple.common.utils;
  * @date: 10/22/19
  */
 public class LogUtils {
+    private LogUtils() {
+    }
+
     public static String getBlock(Object msg) {
         if (msg == null) {
             msg = "";

@@ -7,7 +7,7 @@ package com.dimple.common.enums;
  * @date: 12/25/19
  */
 public enum TagType {
-    Blog(1), Note(2), Book(3);
+    BLOG(1), NOTE(2), BOOK(3);
     private Integer type;
 
     TagType(Integer type) {

@@ -40,8 +40,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Menu> selectMenuList(Menu menu) {
-        List<Menu> menuList = menuMapper.selectMenuList(menu);
-        return menuList;
+        return menuMapper.selectMenuList(menu);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<RouterVo> buildMenus(List<Menu> menus) {
-        List<RouterVo> routers = new LinkedList<RouterVo>();
+        List<RouterVo> routers = new LinkedList<>();
         for (Menu menu : menus) {
             RouterVo router = new RouterVo();
             router.setName(menu.getMenuName());
@@ -83,7 +82,7 @@ public class MenuServiceImpl implements MenuService {
             router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));
             router.setName(menu.getMenuName());
             List<Menu> cMenus = menu.getChildren();
-            if (!cMenus.isEmpty() && cMenus.size() > 0 && "M".equals(menu.getMenuType())) {
+            if (!cMenus.isEmpty() && "M".equals(menu.getMenuType())) {
                 router.setAlwaysShow(true);
                 router.setRedirect("noRedirect");
                 router.setChildren(buildMenus(cMenus));
@@ -95,9 +94,9 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Menu> buildMenuTree(List<Menu> menus) {
-        List<Menu> returnList = new ArrayList<Menu>();
+        List<Menu> returnList = new ArrayList<>();
         for (Iterator<Menu> iterator = menus.iterator(); iterator.hasNext(); ) {
-            Menu t = (Menu) iterator.next();
+            Menu t = iterator.next();
             // 根据传入的某个父节点ID,遍历该父节点的所有子节点
             if (t.getParentId() == 0) {
                 recursionFn(menus, t);
@@ -124,13 +123,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public boolean hasChildByMenuId(Long menuId) {
         int result = menuMapper.hasChildByMenuId(menuId);
-        return result > 0 ? true : false;
+        return result > 0;
     }
 
     @Override
     public boolean checkMenuExistRole(Long menuId) {
         int result = roleMenuMapper.checkMenuExistRole(menuId);
-        return result > 0 ? true : false;
+        return result > 0;
     }
 
     @Override
@@ -182,9 +181,9 @@ public class MenuServiceImpl implements MenuService {
      * @return String
      */
     public List<Menu> getChildPerms(List<Menu> list, int parentId) {
-        List<Menu> returnList = new ArrayList<Menu>();
+        List<Menu> returnList = new ArrayList<>();
         for (Iterator<Menu> iterator = list.iterator(); iterator.hasNext(); ) {
-            Menu t = (Menu) iterator.next();
+            Menu t = iterator.next();
             // 一、根据传入的某个父节点ID,遍历该父节点的所有子节点
             if (t.getParentId() == parentId) {
                 recursionFn(list, t);
@@ -209,7 +208,7 @@ public class MenuServiceImpl implements MenuService {
                 // 判断是否有子节点
                 Iterator<Menu> it = childList.iterator();
                 while (it.hasNext()) {
-                    Menu n = (Menu) it.next();
+                    Menu n = it.next();
                     recursionFn(list, n);
                 }
             }
@@ -220,10 +219,10 @@ public class MenuServiceImpl implements MenuService {
      * 得到子节点列表
      */
     private List<Menu> getChildList(List<Menu> list, Menu t) {
-        List<Menu> tlist = new ArrayList<Menu>();
+        List<Menu> tlist = new ArrayList<>();
         Iterator<Menu> it = list.iterator();
         while (it.hasNext()) {
-            Menu n = (Menu) it.next();
+            Menu n = it.next();
             if (n.getParentId().longValue() == t.getId().longValue()) {
                 tlist.add(n);
             }
@@ -235,6 +234,6 @@ public class MenuServiceImpl implements MenuService {
      * 判断是否有子节点
      */
     private boolean hasChild(List<Menu> list, Menu t) {
-        return getChildList(list, t).size() > 0 ? true : false;
+        return getChildList(list, t).isEmpty();
     }
 }

@@ -50,7 +50,7 @@
       actualData: [],
       axisData: []
     }
-  }
+  };
 
   export default {
     name: 'Index',

@@ -73,7 +73,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
             throw new CustomException("当前任务不存在");
         }
         //如果当前为运行状态
-        if (quartzJob.getStatus()) {
+        if (quartzJob.getStatus().booleanValue()) {
             quartzManage.pauseJob(quartzJob);
         } else {
             quartzManage.resumeJob(quartzJob);

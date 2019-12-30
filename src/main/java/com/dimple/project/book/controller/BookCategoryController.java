@@ -8,7 +8,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.book.service.BookCategoryService;
 import com.dimple.project.common.domain.Category;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,8 +30,11 @@ import java.util.List;
 @RestController
 @RequestMapping("book/category")
 public class BookCategoryController extends BaseController {
-    @Autowired
-    BookCategoryService bookCategoryService;
+    final BookCategoryService bookCategoryService;
+
+    public BookCategoryController(BookCategoryService bookCategoryService) {
+        this.bookCategoryService = bookCategoryService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('book:category:list')")
     @GetMapping("/list")
@@ -45,9 +47,9 @@ public class BookCategoryController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('book:category:add')")
     @Log(title = "分类管理", businessType = BusinessType.INSERT)
     @PostMapping()
-    public AjaxResult add(@RequestBody @Validated Category Category) {
-        Category.setCreateBy(SecurityUtils.getUsername());
-        return toAjax(bookCategoryService.insertBookCategory(Category));
+    public AjaxResult add(@RequestBody @Validated Category category) {
+        category.setCreateBy(SecurityUtils.getUsername());
+        return toAjax(bookCategoryService.insertBookCategory(category));
     }
 
     @PreAuthorize("@permissionService.hasPermission('book:category:query')")

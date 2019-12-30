@@ -5,7 +5,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.book.entity.Book;
 import com.dimple.project.book.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,8 +23,11 @@ import java.util.List;
 @RequestMapping("f")
 public class BookController extends BaseController {
 
-    @Autowired
-    BookService bookService;
+    final BookService bookService;
+
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @GetMapping("/book")
     public TableDataInfo blog(Book book) {

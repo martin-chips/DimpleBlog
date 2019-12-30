@@ -10,7 +10,6 @@ import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.SysUser;
 import com.dimple.project.system.service.RoleService;
 import com.dimple.project.system.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +31,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/user")
 public class UserController extends BaseController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
+
+    public UserController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     /**
      * 获取用户列表

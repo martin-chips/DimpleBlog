@@ -187,7 +187,7 @@
     methods: {
       beforeInit() {
         this.base = '/system/carousel';
-        this.modelName = '轮播图'
+        this.modelName = '轮播图';
         return true
       },
       handleDisplayChange(row) {

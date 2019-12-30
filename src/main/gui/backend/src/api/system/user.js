@@ -48,7 +48,7 @@ export function resetUserPwd(id, password) {
   const data = {
     id: id,
     password
-  }
+  };
   return request({
     url: '/system/user/resetPwd',
     method: 'put',
@@ -61,7 +61,7 @@ export function changeUserStatus(id, status) {
   const data = {
     userId: id,
     status
-  }
+  };
   return request({
     url: '/system/user/changeStatus',
     method: 'put',
@@ -91,7 +91,7 @@ export function updateUserPwd(oldPassword, newPassword) {
   const data = {
     oldPassword,
     newPassword
-  }
+  };
   return request({
     url: '/system/user/profile/updatePwd',
     method: 'put',

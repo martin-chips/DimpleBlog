@@ -94,8 +94,8 @@
     },
     methods: {
       changeSuccess(avatar) {
-        this.dialogVisible = false
-        this.msgSuccess("修改成功")
+        this.dialogVisible = false;
+        this.msgSuccess("修改成功");
         this.user.avatar = avatar;
         this.$store.commit('SET_AVATAR', avatar)
       },

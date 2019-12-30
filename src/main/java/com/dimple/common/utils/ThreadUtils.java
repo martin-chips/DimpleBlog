@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class ThreadUtils {
+    private ThreadUtils() {
+    }
 
     /**
      * sleep等待,单位为毫秒
@@ -24,7 +26,7 @@ public class ThreadUtils {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
-            return;
+            log.error(e.getMessage(), e);
         }
     }
 

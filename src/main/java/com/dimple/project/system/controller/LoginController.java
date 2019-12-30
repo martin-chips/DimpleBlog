@@ -10,7 +10,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.system.domain.Menu;
 import com.dimple.project.system.domain.SysUser;
 import com.dimple.project.system.service.MenuService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,24 +25,27 @@ import java.util.Set;
  */
 @RestController
 public class LoginController {
-    @Autowired
-    private SysLoginService loginService;
+    private final SysLoginService loginService;
 
-    @Autowired
-    private MenuService menuService;
+    private final MenuService menuService;
 
-    @Autowired
-    private SysPermissionService permissionService;
+    private final SysPermissionService permissionService;
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
+
+    public LoginController(SysLoginService loginService, MenuService menuService, SysPermissionService permissionService, TokenService tokenService) {
+        this.loginService = loginService;
+        this.menuService = menuService;
+        this.permissionService = permissionService;
+        this.tokenService = tokenService;
+    }
 
     /**
      * 登录方法
      *
      * @param username 用户名
      * @param password 密码
-     * @param code  验证码
+     * @param code     验证码
      * @param uuid     唯一标识
      * @return 结果
      */

@@ -130,7 +130,7 @@
       handleSubDelete(id) {
         this.loading = true;
         delLocalStorage(id).then((response) => {
-          this.$refs[id].doClose()
+          this.$refs[id].doClose();
           this.loading = false;
           if (response.code == 200) {
             this.msgSuccess("删除成功");
@@ -140,7 +140,7 @@
           this.getList();
         }).catch(err => {
           this.msgError("删除失败");
-          this.$refs[id].doClose()
+          this.$refs[id].doClose();
           this.loading = false;
         });
       },
@@ -166,12 +166,12 @@
       },
       /** 修改按钮操作 */
       handleUpdate(row) {
-        this.isAdd = false
-        const _this = this.$refs.localStorageUpload
+        this.isAdd = false;
+        const _this = this.$refs.localStorageUpload;
         _this.form = {
           id: row.id,
           name: row.name
-        }
+        };
         _this.open = true
       },
     }

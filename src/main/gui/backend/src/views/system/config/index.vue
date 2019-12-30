@@ -155,7 +155,7 @@
       handleSubDelete(id) {
         this.loading = true;
         delConfig(id).then((response) => {
-          this.$refs[id].doClose()
+          this.$refs[id].doClose();
           this.loading = false;
           if (response.code == 200) {
             this.msgSuccess("删除成功");
@@ -165,7 +165,7 @@
           this.getList();
         }).catch(err => {
           this.msgError("删除失败");
-          this.$refs[id].doClose()
+          this.$refs[id].doClose();
           this.loading = false;
         });
       },

@@ -175,7 +175,7 @@
     created() {
       this.$nextTick(() => {
         this.init()
-      })
+      });
       this.getDicts("sys_notice_status").then(response => {
         this.statusOptions = response.data;
       });
@@ -186,7 +186,7 @@
     methods: {
       beforeInit() {
         this.base = '/system/notice';
-        this.modelName = '公告'
+        this.modelName = '公告';
         return true
       },
       handleEditorImgAdd(pos, $file) {

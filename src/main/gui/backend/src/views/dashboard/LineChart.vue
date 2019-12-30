@@ -5,7 +5,7 @@
 <script>
   import echarts from 'echarts'
 
-  require('echarts/theme/macarons') // echarts theme
+  require('echarts/theme/macarons'); // echarts theme
   import resize from './mixins/resize'
 
   export default {
@@ -54,12 +54,12 @@
       if (!this.chart) {
         return
       }
-      this.chart.dispose()
+      this.chart.dispose();
       this.chart = null
     },
     methods: {
       initChart() {
-        this.chart = echarts.init(this.$el, 'macarons')
+        this.chart = echarts.init(this.$el, 'macarons');
         this.setOptions(this.chartData)
       },
       setOptions({expectedData, actualData, axisData} = {}) {

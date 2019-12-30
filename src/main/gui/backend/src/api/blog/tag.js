@@ -48,7 +48,7 @@ export function changeBlogSupport(id, support) {
   let data = {
     id: id,
     support: support
-  }
+  };
   return request({
     url: '/blog/blog/support',
     method: 'put',
@@ -62,7 +62,7 @@ export function changeBlogComment(id, comment) {
   let data = {
     id: id,
     comment: comment
-  }
+  };
   return request({
     url: '/blog/blog/comment',
     method: 'put',

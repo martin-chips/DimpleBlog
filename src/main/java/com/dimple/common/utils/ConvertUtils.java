@@ -16,6 +16,9 @@ import java.util.Set;
  * @date: 10/22/19
  */
 public class ConvertUtils {
+    private ConvertUtils() {
+    }
+
     /**
      * 转换为字符串<br>
      * 如果给定的值为null，或者转换失败，返回默认值<br>
@@ -762,7 +765,7 @@ public class ConvertUtils {
      * @return 全角字符串.
      */
     public static String toSBC(String input, Set<Character> notConvertSet) {
-        char c[] = input.toCharArray();
+        char[] c = input.toCharArray();
         for (int i = 0; i < c.length; i++) {
             if (null != notConvertSet && notConvertSet.contains(c[i])) {
                 // 跳过不替换的字符
@@ -797,7 +800,7 @@ public class ConvertUtils {
      * @return 替换后的字符
      */
     public static String toDBC(String text, Set<Character> notConvertSet) {
-        char c[] = text.toCharArray();
+        char[] c = text.toCharArray();
         for (int i = 0; i < c.length; i++) {
             if (null != notConvertSet && notConvertSet.contains(c[i])) {
                 // 跳过不替换的字符
@@ -810,9 +813,7 @@ public class ConvertUtils {
                 c[i] = (char) (c[i] - 65248);
             }
         }
-        String returnString = new String(c);
-
-        return returnString;
+        return new String(c);
     }
 
     /**

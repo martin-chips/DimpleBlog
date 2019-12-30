@@ -167,8 +167,8 @@ export default {
   },
   methods: {
     handleModelInput(event) {
-      const value = event.target.value
-      this.$emit('input', value)
+      const value = event.target.value;
+      this.$emit('input', value);
       if (this.$parent.$options.componentName === 'ElFormItem') {
         if (this.validateEvent) {
           this.$parent.$emit('el.form.change', [value])
@@ -177,16 +177,16 @@ export default {
       this.$emit('change', value)
     },
     handleMdFocus(event) {
-      this.focus = true
-      this.$emit('focus', event)
+      this.focus = true;
+      this.$emit('focus', event);
       if (this.placeholder && this.placeholder !== '') {
         this.fillPlaceHolder = this.placeholder
       }
     },
     handleMdBlur(event) {
-      this.focus = false
-      this.$emit('blur', event)
-      this.fillPlaceHolder = null
+      this.focus = false;
+      this.$emit('blur', event);
+      this.fillPlaceHolder = null;
       if (this.$parent.$options.componentName === 'ElFormItem') {
         if (this.validateEvent) {
           this.$parent.$emit('el.form.blur', [this.currentValue])

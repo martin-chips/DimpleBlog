@@ -126,7 +126,7 @@
         created() {
             this.$nextTick(() => {
                 this.init()
-            })
+            });
             this.getDicts("sys_common_status").then(response => {
                 this.statusOptions = response.data;
             });
@@ -134,7 +134,7 @@
         methods: {
             beforeInit() {
                 this.base = '/log/quartzLog';
-                this.modelName = '任务日志'
+                this.modelName = '任务日志';
                 return true
             },
             getExceptionInfo(exception) {

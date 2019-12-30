@@ -5,7 +5,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.log.domain.OperateLog;
 import com.dimple.project.log.service.OperateLogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +23,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/log/operateLog")
 public class OperateLogController extends BaseController {
-    @Autowired
-    private OperateLogService operateLogService;
+    private final OperateLogService operateLogService;
+
+    public OperateLogController(OperateLogService operateLogService) {
+        this.operateLogService = operateLogService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('monitor:operateLog:list')")
     @GetMapping("/list")

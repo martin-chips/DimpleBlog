@@ -194,7 +194,7 @@
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
       this.getCategory();
-      this.imagesUploadApi = process.env.VUE_APP_BASE_API + "/tool/qiNiu"
+      this.imagesUploadApi = process.env.VUE_APP_BASE_API + "/tool/qiNiu";
 
       setInterval(() => {
         MyLocalStorage.Cache.put("blogCache", this.form);
@@ -266,14 +266,14 @@
         MyLocalStorage.Cache.remove("blogCache");
         this.$refs.form.validate(valid => {
           if (valid) {
-            this.loading = true
-            this.form.status = true
+            this.loading = true;
+            this.form.status = true;
             let obj = JSON.parse(JSON.stringify(this.form));
             if (obj.id == undefined) {
               addBlog(obj).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
-                  this.$store.dispatch('tagsView/delView', this.$route)
+                  this.$store.dispatch('tagsView/delView', this.$route);
                   this.$router.push({path: '/blogManage/blog'})
                 } else {
                   this.msgError(response.msg);
@@ -286,7 +286,7 @@
               updateBlog(obj).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("发布成功");
-                  this.$store.dispatch('tagsView/delView', this.$route)
+                  this.$store.dispatch('tagsView/delView', this.$route);
                   this.$router.push({path: '/blogManage/blog'})
                 } else {
                   this.msgError(response.msg);
@@ -305,7 +305,7 @@
           this.$message({
             message: '请填写必要的标题和内容',
             type: 'warning'
-          })
+          });
           return
         }
         //删除缓存

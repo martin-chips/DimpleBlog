@@ -19,12 +19,12 @@ import java.util.Date;
 public class LogFilter extends Filter<ILoggingEvent> {
     @Override
     public FilterReply decide(ILoggingEvent event) {
-        String exception = "";
+        StringBuilder exception = new StringBuilder();
         IThrowableProxy iThrowableProxy1 = event.getThrowableProxy();
         if (iThrowableProxy1 != null) {
-            exception = "<span class='excehtext'>" + iThrowableProxy1.getClassName() + " " + iThrowableProxy1.getMessage() + "</span></br>";
+            exception.append("<span class='excehtext'>" + iThrowableProxy1.getClassName() + " " + iThrowableProxy1.getMessage() + "</span></br>");
             for (int i = 0; i < iThrowableProxy1.getStackTraceElementProxyArray().length; i++) {
-                exception += "<span class='excetext'>" + iThrowableProxy1.getStackTraceElementProxyArray()[i].toString() + "</span></br>";
+                exception.append("<span class='excetext'>" + iThrowableProxy1.getStackTraceElementProxyArray()[i].toString() + "</span></br>");
             }
         }
         LoggerMessage loggerMessage = new LoggerMessage(
@@ -33,7 +33,7 @@ public class LogFilter extends Filter<ILoggingEvent> {
                 event.getThreadName(),
                 event.getLoggerName(),
                 event.getLevel().levelStr,
-                exception,
+                exception.toString(),
                 ""
         );
         LoggerQueue.getInstance().push(loggerMessage);

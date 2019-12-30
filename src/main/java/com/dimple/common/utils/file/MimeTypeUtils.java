@@ -7,6 +7,8 @@ package com.dimple.common.utils.file;
  * @date: 10/22/19
  */
 public class MimeTypeUtils {
+    private MimeTypeUtils() {
+    }
 
     public static final String IMAGE_PNG = "image/png";
 

@@ -13,6 +13,8 @@ import java.util.Date;
  * @date: 11/06/19
  */
 public class QiNiuUtils {
+    private QiNiuUtils() {
+    }
 
     private static final String HUAD = "华东";
 

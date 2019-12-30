@@ -111,7 +111,7 @@ public class EscapeUtil {
                     tmp.append(content.substring(lastPos));
                     lastPos = content.length();
                 } else {
-                    tmp.append(content.substring(lastPos, pos));
+                    tmp.append(content, lastPos, pos);
                     lastPos = pos;
                 }
             }

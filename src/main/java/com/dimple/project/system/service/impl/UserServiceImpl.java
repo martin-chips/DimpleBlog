@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String selectUserRoleGroup(String userName) {
         List<Role> list = roleMapper.selectRolesByUserName(userName);
-        StringBuffer idsStr = new StringBuffer();
+        StringBuilder idsStr = new StringBuilder();
         for (Role role : list) {
             idsStr.append(role.getRoleName()).append(",");
         }
@@ -169,14 +169,14 @@ public class UserServiceImpl implements UserService {
         Long[] roles = user.getRoleIds();
         if (StringUtils.isNotNull(roles)) {
             // 新增用户与角色管理
-            List<UserRole> list = new ArrayList<UserRole>();
+            List<UserRole> list = new ArrayList<>();
             for (Long roleId : roles) {
                 UserRole ur = new UserRole();
                 ur.setUserId(user.getId());
                 ur.setRoleId(roleId);
                 list.add(ur);
             }
-            if (list.size() > 0) {
+            if (!list.isEmpty()) {
                 userRoleMapper.batchUserRole(list);
             }
         }

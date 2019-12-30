@@ -1,12 +1,12 @@
 package com.dimple.common.utils;
 
+import com.dimple.common.exception.UtilException;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
-import com.dimple.common.exception.UtilException;
 
 /**
  * @className: UUID
@@ -221,7 +221,7 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
      *
      * @throws UnsupportedOperationException 如果此 {@code UUID} 不是 version 为 1 的 UUID。
      */
-    public long timestamp() throws UnsupportedOperationException {
+    public long timestamp() {
         checkTimeBase();
         return (mostSigBits & 0x0FFFL) << 48//
                 | ((mostSigBits >> 16) & 0x0FFFFL) << 32//
@@ -238,9 +238,8 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
      * UnsupportedOperationException。
      *
      * @return 此 {@code UUID} 的时钟序列
-     * @throws UnsupportedOperationException 如果此 UUID 的 version 不为 1
      */
-    public int clockSequence() throws UnsupportedOperationException {
+    public int clockSequence() {
         checkTimeBase();
         return (int) ((leastSigBits & 0x3FFF000000000000L) >>> 48);
     }
@@ -255,9 +254,8 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
      * 如果此 UUID 不是基于时间的 UUID，则此方法抛出 UnsupportedOperationException。
      *
      * @return 此 {@code UUID} 的节点值
-     * @throws UnsupportedOperationException 如果此 UUID 的 version 不为 1
      */
-    public long node() throws UnsupportedOperationException {
+    public long node() {
         checkTimeBase();
         return leastSigBits & 0x0000FFFFFFFFFFFFL;
     }
@@ -319,12 +317,12 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
         final StringBuilder builder = new StringBuilder(isSimple ? 32 : 36);
         // time_low
         builder.append(digits(mostSigBits >> 32, 8));
-        if (false == isSimple) {
+        if (isSimple == false) {
             builder.append('-');
         }
         // time_mid
         builder.append(digits(mostSigBits >> 16, 4));
-        if (false == isSimple) {
+        if (isSimple == false) {
             builder.append('-');
         }
         // time_high_and_version
@@ -334,7 +332,7 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
         }
         // variant_and_sequence
         builder.append(digits(leastSigBits >> 48, 4));
-        if (false == isSimple) {
+        if (isSimple == false) {
             builder.append('-');
         }
         // node

@@ -129,7 +129,7 @@
     methods: {
       beforeInit() {
         this.base = '/book/category';
-        this.modelName = '图书分类'
+        this.modelName = '图书分类';
         return true
       },
     }

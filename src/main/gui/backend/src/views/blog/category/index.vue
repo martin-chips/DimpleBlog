@@ -188,7 +188,7 @@
     methods: {
       beforeInit() {
         this.base = '/blog/category';
-        this.modelName = '分类'
+        this.modelName = '分类';
         return true
       },
       handleSupportChange(row) {

@@ -24,26 +24,26 @@ public interface CommentMapper {
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param Comment 实例对象
+     * @param comment 实例对象
      * @return 对象列表
      */
-    List<Comment> selectCommentList(Comment Comment);
+    List<Comment> selectCommentList(Comment comment);
 
     /**
      * 新增数据
      *
-     * @param Comment 实例对象
+     * @param comment 实例对象
      * @return 影响行数
      */
-    int insertComment(Comment Comment);
+    int insertComment(Comment comment);
 
     /**
      * 修改数据
      *
-     * @param Comment 实例对象
+     * @param comment 实例对象
      * @return 影响行数
      */
-    int updateComment(Comment Comment);
+    int updateComment(Comment comment);
 
     /**
      * 通过主键删除数据

@@ -1,5 +1,6 @@
 package com.dimple.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -15,7 +16,11 @@ import java.io.IOException;
  * @author: Dimple
  * @date: 10/22/19
  */
+@Slf4j
 public class ServletUtils {
+    private ServletUtils() {
+    }
+
     /**
      * 获取String参数
      */
@@ -84,7 +89,7 @@ public class ServletUtils {
             response.setCharacterEncoding("utf-8");
             response.getWriter().print(string);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return null;
     }

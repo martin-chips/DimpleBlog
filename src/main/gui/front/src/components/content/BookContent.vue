@@ -1,6 +1,6 @@
 <template>
     <div class="book-overview-content layout-content" v-if="Object.keys(bookDoubanInfo).length > 0">
-        <Row v-if="!needAuth">
+        <Row>
             <Col :xs="24" :sm="24" :md="24" :lg="17">
                 <div class="layout-left">
                     <div class="book-infos">
@@ -111,7 +111,6 @@
         computed: {
             ...mapState({
                 book: state => state.book.book,
-                bookDoubanInfo: state => state.book.bookDoubanInfo,
             })
         },
         mounted() {

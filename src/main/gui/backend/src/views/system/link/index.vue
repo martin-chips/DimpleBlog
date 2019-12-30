@@ -190,7 +190,7 @@
     methods: {
       beforeInit() {
         this.base = '/system/link';
-        this.modelName = '友链'
+        this.modelName = '友链';
         return true
       },
       handleStatus(row, pass) {

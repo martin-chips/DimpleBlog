@@ -45,11 +45,11 @@
     'hthz_12.jpg', 'hthz_13.jpeg',
     'hthz_14.jpeg', 'hthz_15.jpg',
     'hthz_16.jpg', 'hthz_17.jpeg'
-  ]
+  ];
   const al = [
     'al_2.png', 'al_1.png', 'al_3.png',
     'al_6.png', 'al_5.png', 'al_4.png'
-  ]
+  ];
   const lm = [
     'lm_18.jpg', 'lm_12.jpg', 'lm_19.jpg',
     'lm_13.jpg', 'lm_1.jpg', 'lm_2.jpg',
@@ -57,7 +57,7 @@
     'lm_6.jpg', 'lm_7.jpg', 'lm_8.jpg',
     'lm_10.jpg', 'lm_11.jpg', 'lm_14.jpg',
     'lm_15.jpg', 'lm_16.jpg', 'lm_17.jpg'
-  ]
+  ];
   export default {
     name: 'Avatar',
     props: {
@@ -106,13 +106,13 @@
           this.msgWarning("正在修改中");
           return
         }
-        this.updating = true
+        this.updating = true;
         updateUserProfile({
           avatar: avatar,
           userId: this.id
         }).then(() => {
           this.msgSuccess("修改成功");
-          this.$emit('success', avatar)
+          this.$emit('success', avatar);
           this.updating = false
         }).catch((r) => {
           this.msgError("修改失败");
@@ -120,7 +120,7 @@
         })
       },
       initWidth() {
-        this.screenWidth = document.body.clientWidth
+        this.screenWidth = document.body.clientWidth;
         if (this.screenWidth < 991) {
           return '90%'
         } else if (this.screenWidth < 1400) {

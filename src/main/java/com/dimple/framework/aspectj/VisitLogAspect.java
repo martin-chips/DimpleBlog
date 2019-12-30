@@ -86,7 +86,7 @@ public class VisitLogAspect {
             AsyncManager.me().execute(AsyncFactory.recordVisitLog(visitLog));
         } catch (Exception exp) {
             // 记录本地异常日志
-            log.error("异常信息:{}", exp.getMessage(),exp);
+            log.error("异常信息:{}", exp.getMessage(), exp);
         }
     }
 
@@ -97,7 +97,7 @@ public class VisitLogAspect {
      * @param visitLog 操作日志
      * @throws Exception
      */
-    public void getControllerMethodDescription(VLog log, VisitLog visitLog) throws Exception {
+    public void getControllerMethodDescription(VLog log, VisitLog visitLog) {
         visitLog.setTitle(log.title());
     }
 
@@ -105,7 +105,7 @@ public class VisitLogAspect {
     /**
      * 是否存在注解，如果存在就获取
      */
-    private VLog getAnnotationLog(JoinPoint joinPoint) throws Exception {
+    private VLog getAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();

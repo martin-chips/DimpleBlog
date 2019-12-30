@@ -34,11 +34,11 @@
         }
       },
       selectedIcon(name) {
-        this.$emit('selected', name)
+        this.$emit('selected', name);
         document.body.click()
       },
       reset() {
-        this.name = ''
+        this.name = '';
         this.iconList = icons
       }
     }

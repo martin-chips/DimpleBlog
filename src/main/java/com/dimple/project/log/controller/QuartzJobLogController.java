@@ -5,7 +5,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.log.domain.QuartzJobLog;
 import com.dimple.project.log.service.QuartzJobLogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +24,11 @@ import java.util.List;
 @RequestMapping("/log/quartzLog")
 public class QuartzJobLogController extends BaseController {
 
-    @Autowired
-    QuartzJobLogService quartzJobLogService;
+    final QuartzJobLogService quartzJobLogService;
+
+    public QuartzJobLogController(QuartzJobLogService quartzJobLogService) {
+        this.quartzJobLogService = quartzJobLogService;
+    }
 
     @GetMapping("/list")
     @PreAuthorize("@permissionService.hasPermission('monitor:loginLog:list')")

@@ -8,7 +8,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.Notice;
 import com.dimple.project.system.service.NoticeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +29,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/notice")
 public class NoticeController extends BaseController {
-    @Autowired
-    private NoticeService noticeService;
+    private final NoticeService noticeService;
+
+    public NoticeController(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
 
     /**
      * 获取通知公告列表
@@ -81,7 +83,7 @@ public class NoticeController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:notice:remove')")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable String ids ) {
+    public AjaxResult remove(@PathVariable String ids) {
         return toAjax(noticeService.deleteNoticeByIds(ids));
     }
 }

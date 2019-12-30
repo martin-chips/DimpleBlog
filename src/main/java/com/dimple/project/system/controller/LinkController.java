@@ -9,7 +9,6 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.Link;
 import com.dimple.project.system.service.LinkService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,8 +32,11 @@ import java.util.List;
 @RequestMapping("/system/link")
 public class LinkController extends BaseController {
 
-    @Autowired
-    private LinkService linkService;
+    private final LinkService linkService;
+
+    public LinkController(LinkService linkService) {
+        this.linkService = linkService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('blog:link:list')")
     @GetMapping("/list")

@@ -125,7 +125,7 @@
     methods: {
       beforeInit() {
         this.base = '/book/tag';
-        this.modelName = '标签'
+        this.modelName = '标签';
         return true
       },
     }

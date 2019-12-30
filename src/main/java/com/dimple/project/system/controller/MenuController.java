@@ -8,7 +8,6 @@ import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.system.domain.Menu;
 import com.dimple.project.system.service.MenuService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,8 +31,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/menu")
 public class MenuController extends BaseController {
-    @Autowired
-    private MenuService menuService;
+    private final MenuService menuService;
+
+    public MenuController(MenuService menuService) {
+        this.menuService = menuService;
+    }
 
     /**
      * 获取菜单列表

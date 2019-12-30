@@ -8,7 +8,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.blog.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,8 +31,11 @@ import java.util.List;
 @RequestMapping("/blog/comment")
 public class CommentController extends BaseController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
+
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('blog:comment:list')")
     @GetMapping("/list")

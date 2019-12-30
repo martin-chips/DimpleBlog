@@ -73,7 +73,7 @@
       doSubmit() {
         this.$refs['form'].validate((valid) => {
           if (valid) {
-            this.loading = true
+            this.loading = true;
             updateQiNiuConfig(this.form).then(response => {
               if (response.code === 200) {
                 this.msgSuccess("修改成功");
@@ -81,10 +81,10 @@
               } else {
                 this.msgError(response.msg);
               }
-              this.loading = false
+              this.loading = false;
               this.dialog = false
             }).catch(err => {
-              this.loading = false
+              this.loading = false;
               console.log(err.response.data.message)
             })
           } else {

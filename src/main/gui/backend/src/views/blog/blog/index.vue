@@ -231,7 +231,7 @@
     methods: {
       beforeInit() {
         this.base = '/blog/blog';
-        this.modelName = '博客'
+        this.modelName = '博客';
         return true
       },
       // 博客状态修改

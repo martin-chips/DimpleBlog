@@ -188,5 +188,13 @@
 </script>
 
 <style scoped>
+  .list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
 
+  .list-item {
+    margin: 10px;
+  }
 </style>

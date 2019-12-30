@@ -9,7 +9,6 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.monitor.domain.Blacklist;
 import com.dimple.project.monitor.service.BlacklistService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,8 +31,11 @@ import java.util.List;
 @RestController()
 @RequestMapping("monitor/blacklist")
 public class BlacklistController extends BaseController {
-    @Autowired
-    BlacklistService blacklistService;
+    final BlacklistService blacklistService;
+
+    public BlacklistController(BlacklistService blacklistService) {
+        this.blacklistService = blacklistService;
+    }
 
     /**
      * 获取黑名单列表
@@ -52,8 +54,7 @@ public class BlacklistController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('monitor:blacklist:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable Long id) {
-        AjaxResult ajax = AjaxResult.success(blacklistService.selectBlacklistById(id));
-        return ajax;
+        return AjaxResult.success(blacklistService.selectBlacklistById(id));
     }
 
     /**

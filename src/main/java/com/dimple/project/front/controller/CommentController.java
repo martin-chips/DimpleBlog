@@ -1,5 +1,6 @@
 package com.dimple.project.front.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dimple.common.utils.StringUtils;
@@ -9,7 +10,6 @@ import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.blog.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,8 +32,11 @@ import java.util.Map;
 @RestController("frontCommentController")
 public class CommentController extends BaseController {
 
-    @Autowired
-    CommentService commentService;
+    final CommentService commentService;
+
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     /**
      * QQ 头像和昵称查询地址
@@ -80,7 +83,7 @@ public class CommentController extends BaseController {
         if (!StringUtils.isEmpty(json)) {
             json = json.replaceAll("portraitCallBack|\\\\s*|\\t|\\r|\\n", "");
             json = json.substring(1, json.length() - 1);
-            JSONObject object = JSONObject.parseObject(json);
+            JSONObject object = JSON.parseObject(json);
             JSONArray array = object.getJSONArray(String.valueOf(qqNum));
             qqInfo.put("avatar", "https://q1.qlogo.cn/g?b=qq&nk=" + qqNum + "&s=40");
             qqInfo.put("email", qqNum + "@qq.com");

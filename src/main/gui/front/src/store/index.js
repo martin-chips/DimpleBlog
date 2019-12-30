@@ -11,7 +11,7 @@ import articleHome from './modules/articleHome';
 import article from "./modules/article";
 import settings from "./modules/settings";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
     modules: {
@@ -25,6 +25,6 @@ const store = new Vuex.Store({
         settings
     },
     getters
-})
+});
 
 export default store

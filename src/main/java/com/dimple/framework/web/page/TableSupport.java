@@ -10,6 +10,9 @@ import com.dimple.common.utils.StringUtils;
  * @date: 10/22/19
  */
 public class TableSupport {
+    private TableSupport() {
+    }
+
     /**
      * 当前记录起始索引
      */

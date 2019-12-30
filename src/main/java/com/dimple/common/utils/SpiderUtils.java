@@ -15,6 +15,9 @@ import java.util.concurrent.TimeUnit;
  * @date: 2019/11/30
  */
 public class SpiderUtils {
+    private SpiderUtils() {
+    }
+
     //private static final String KEY = CacheConstant.BUSINESS_CACHE_SPIDER + "List";
     private static final String KEY = "Spider_List";
 
@@ -35,7 +38,7 @@ public class SpiderUtils {
     private static Map<String, String> listSpider() {
         RedisTemplate redisTemplate = SpringUtils.getBean("redisTemplate");
         ValueOperations<String, Map<String, String>> valueOperations = redisTemplate.opsForValue();
-        if (redisTemplate.hasKey(KEY)) {
+        if (redisTemplate.hasKey(KEY).booleanValue()) {
             return valueOperations.get(KEY);
         }
         Map<String, String> spider = new HashMap<>();

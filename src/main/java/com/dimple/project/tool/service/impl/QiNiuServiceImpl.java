@@ -1,7 +1,6 @@
 package com.dimple.project.tool.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.dimple.common.constant.ConfigKey;
 import com.dimple.common.exception.CustomException;
 import com.dimple.common.utils.ConvertUtils;
@@ -57,13 +56,12 @@ public class QiNiuServiceImpl implements QiNiuService {
         if (StringUtils.isEmpty(configValue)) {
             return new QiNiuConfig();
         }
-        QiNiuConfig qiNiuConfig = JSONObject.parseObject(configValue, QiNiuConfig.class);
-        return qiNiuConfig;
+        return JSON.parseObject(configValue, QiNiuConfig.class);
     }
 
     @Override
     public int updateQiNiuConfig(QiNiuConfig qiNiuConfig) {
-        String qiNiuConfigString = JSONObject.toJSONString(qiNiuConfig);
+        String qiNiuConfigString = JSON.toJSONString(qiNiuConfig);
         Config config = new Config();
         config.setConfigKey(ConfigKey.QI_NIU_CONFIG_KEY);
         config.setConfigValue(qiNiuConfigString);

@@ -187,7 +187,7 @@
     methods: {
       beforeInit() {
         this.base = '/book/note';
-        this.modelName = '笔记'
+        this.modelName = '笔记';
         return true
       },
       // 博客状态修改

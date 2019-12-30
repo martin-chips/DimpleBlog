@@ -4,17 +4,16 @@ import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.domain.Blog;
-import com.dimple.project.common.domain.Tag;
 import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.blog.service.CategoryService;
 import com.dimple.project.blog.service.CommentService;
 import com.dimple.project.blog.service.TagService;
+import com.dimple.project.common.domain.Tag;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.system.domain.Carousel;
 import com.dimple.project.system.domain.Notice;
 import com.dimple.project.system.service.CarouselService;
 import com.dimple.project.system.service.NoticeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,16 +30,20 @@ import java.util.List;
 @RequestMapping("/f")
 public class CommonController extends BaseController {
 
-    @Autowired
-    CategoryService categoryService;
-    @Autowired
-    TagService tagService;
-    @Autowired
-    BlogService blogService;
-    @Autowired
-    CommentService commentService;
-    @Autowired
-    CarouselService carouselService;
+    final CategoryService categoryService;
+    final TagService tagService;
+    final BlogService blogService;
+    final CommentService commentService;
+    final CarouselService carouselService;
+
+    public CommonController(CategoryService categoryService, TagService tagService, BlogService blogService, CommentService commentService, CarouselService carouselService, NoticeService noticeService) {
+        this.categoryService = categoryService;
+        this.tagService = tagService;
+        this.blogService = blogService;
+        this.commentService = commentService;
+        this.carouselService = carouselService;
+        this.noticeService = noticeService;
+    }
 
     @GetMapping("/support")
     public TableDataInfo support(BlogQuery blogQuery) {
@@ -73,7 +76,7 @@ public class CommonController extends BaseController {
         return AjaxResult.success(carouselList);
     }
 
-    @Autowired
+    final
     NoticeService noticeService;
 
     @GetMapping("notice")

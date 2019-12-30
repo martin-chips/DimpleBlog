@@ -53,11 +53,11 @@
       }
     },
     mounted() {
-      this.insertToBody()
+      this.insertToBody();
       this.addEventClick()
     },
     beforeDestroy() {
-      const elx = this.$refs.rightPanel
+      const elx = this.$refs.rightPanel;
       elx.remove()
     },
     methods: {
@@ -65,15 +65,15 @@
         window.addEventListener('click', this.closeSidebar)
       },
       closeSidebar(evt) {
-        const parent = evt.target.closest('.rightPanel')
+        const parent = evt.target.closest('.rightPanel');
         if (!parent) {
-          this.show = false
+          this.show = false;
           window.removeEventListener('click', this.closeSidebar)
         }
       },
       insertToBody() {
-        const elx = this.$refs.rightPanel
-        const body = document.querySelector('body')
+        const elx = this.$refs.rightPanel;
+        const body = document.querySelector('body');
         body.insertBefore(elx, body.firstChild)
       }
     }

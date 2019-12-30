@@ -8,7 +8,6 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.system.domain.Carousel;
 import com.dimple.project.system.service.CarouselService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,8 +31,11 @@ import java.util.List;
 @RequestMapping("system/carousel")
 public class CarouselController extends BaseController {
 
-    @Autowired
-    CarouselService carouselService;
+    final CarouselService carouselService;
+
+    public CarouselController(CarouselService carouselService) {
+        this.carouselService = carouselService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('system:carousel:list')")
     @GetMapping("/list")

@@ -58,7 +58,7 @@
         this.resetForm()
       },
       submitForm() {
-        this.loading = true
+        this.loading = true;
         if (this.isAdd) {
           this.$refs.upload.submit()
         } else {
@@ -67,41 +67,41 @@
       },
       handleUpdate() {
         updateLocalStorage(this.form).then(res => {
-          this.resetForm()
-          this.msgSuccess("修改成功")
-          this.loading = false
+          this.resetForm();
+          this.msgSuccess("修改成功");
+          this.loading = false;
           this.$parent.getList()
         }).catch(err => {
-          this.loading = false
+          this.loading = false;
           console.log(err.response.data.message)
         })
       },
       resetForm() {
-        this.open = false
-        this.$refs['form'].resetFields()
+        this.open = false;
+        this.$refs['form'].resetFields();
         this.form = {
           id: '',
           name: ''
         }
       },
       beforeUpload(file) {
-        let isLt2M = true
-        isLt2M = file.size / 1024 / 1024 < 100
+        let isLt2M = true;
+        isLt2M = file.size / 1024 / 1024 < 100;
         if (!isLt2M) {
           this.msgError('上传文件大小不能超过 100MB!')
         }
-        this.loading = false
+        this.loading = false;
         return isLt2M
       },
       handleSuccess(response, file, fileList) {
-        this.open = false
-        this.resetForm()
-        this.$refs.upload.clearFiles()
+        this.open = false;
+        this.resetForm();
+        this.$refs.upload.clearFiles();
         this.$parent.getList()
       },
       // 监听上传失败
       handleError(e, file, fileList) {
-        const msg = JSON.parse(e.msg)
+        const msg = JSON.parse(e.msg);
         this.msgError(msg);
         this.loading = false
       }

@@ -2,7 +2,6 @@ package com.dimple.project.monitor.controller;
 
 import com.dimple.framework.redis.RedisCacheService;
 import com.dimple.framework.web.domain.AjaxResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,8 +28,11 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/monitor/redis")
 public class RedisController {
-    @Autowired
-    RedisCacheService redisCacheService;
+    final RedisCacheService redisCacheService;
+
+    public RedisController(RedisCacheService redisCacheService) {
+        this.redisCacheService = redisCacheService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('monitor:redis:list')")
     @GetMapping("/list")

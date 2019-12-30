@@ -8,8 +8,8 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.PageDomain;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.framework.web.page.TableSupport;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.page.PageMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -51,7 +51,7 @@ public class BaseController {
         Integer pageSize = pageDomain.getPageSize();
         if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
             String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
-            PageHelper.startPage(pageNum, pageSize, orderBy);
+            PageMethod.startPage(pageNum, pageSize, orderBy);
         }
     }
 

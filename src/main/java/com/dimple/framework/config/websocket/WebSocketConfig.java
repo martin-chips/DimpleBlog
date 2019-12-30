@@ -1,5 +1,6 @@
 package com.dimple.framework.config.websocket;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -19,6 +20,7 @@ import java.util.concurrent.Executors;
  */
 @Configuration
 @EnableWebSocketMessageBroker
+@Slf4j
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Autowired
     SimpMessagingTemplate messagingTemplate;
@@ -40,13 +42,11 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
             while (true) {
                 try {
                     LoggerMessage log = LoggerQueue.getInstance().poll();
-                    if (log != null) {
-                        if (messagingTemplate != null) {
-                            messagingTemplate.convertAndSend("/topic/pullLogger", log);
-                        }
+                    if (log != null && messagingTemplate != null) {
+                        messagingTemplate.convertAndSend("/topic/pullLogger", log);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage(), e);
                 }
             }
         };

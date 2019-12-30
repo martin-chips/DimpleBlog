@@ -114,7 +114,7 @@
         methods: {
             beforeInit() {
                 this.base = '/log/loginLog';
-                this.modelName = '登录日志'
+                this.modelName = '登录日志';
                 return true
             },
         }

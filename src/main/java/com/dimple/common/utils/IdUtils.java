@@ -7,6 +7,9 @@ package com.dimple.common.utils;
  * @date: 10/22/19
  */
 public class IdUtils {
+    private IdUtils() {
+    }
+
     /**
      * 获取随机UUID
      *

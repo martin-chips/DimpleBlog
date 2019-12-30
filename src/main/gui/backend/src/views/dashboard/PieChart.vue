@@ -5,7 +5,7 @@
 <script>
   import echarts from 'echarts'
 
-  require('echarts/theme/macarons') // echarts theme
+  require('echarts/theme/macarons'); // echarts theme
   import resize from './mixins/resize'
 
   export default {
@@ -41,13 +41,13 @@
       if (!this.chart) {
         return
       }
-      this.chart.dispose()
+      this.chart.dispose();
       this.chart = null
     },
     methods: {
       initChart() {
         let legendData = this.spiderData.map(e => e.name);
-        this.chart = echarts.init(this.$el, 'macarons')
+        this.chart = echarts.init(this.$el, 'macarons');
 
         this.chart.setOption({
           tooltip: {

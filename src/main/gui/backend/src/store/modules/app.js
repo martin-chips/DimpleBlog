@@ -7,12 +7,12 @@ const state = {
   },
   device: 'desktop',
   size: Cookies.get('size') || 'medium'
-}
+};
 
 const mutations = {
   TOGGLE_SIDEBAR: state => {
-    state.sidebar.opened = !state.sidebar.opened
-    state.sidebar.withoutAnimation = false
+    state.sidebar.opened = !state.sidebar.opened;
+    state.sidebar.withoutAnimation = false;
     if (state.sidebar.opened) {
       Cookies.set('sidebarStatus', 1)
     } else {
@@ -20,18 +20,18 @@ const mutations = {
     }
   },
   CLOSE_SIDEBAR: (state, withoutAnimation) => {
-    Cookies.set('sidebarStatus', 0)
-    state.sidebar.opened = false
+    Cookies.set('sidebarStatus', 0);
+    state.sidebar.opened = false;
     state.sidebar.withoutAnimation = withoutAnimation
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
   },
   SET_SIZE: (state, size) => {
-    state.size = size
+    state.size = size;
     Cookies.set('size', size)
   }
-}
+};
 
 const actions = {
   toggleSideBar({ commit }) {
@@ -46,7 +46,7 @@ const actions = {
   setSize({ commit }, size) {
     commit('SET_SIZE', size)
   }
-}
+};
 
 export default {
   namespaced: true,

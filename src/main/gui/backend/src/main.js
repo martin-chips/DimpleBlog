@@ -22,35 +22,35 @@ import {parseTime, resetForm, addDateRange, selectDictLabel} from "@/utils/dimpl
 import Pagination from "@/components/Pagination";
 
 // 全局方法挂载
-Vue.prototype.getDicts = getDicts
-Vue.prototype.getConfigKey = getConfigKey
-Vue.prototype.parseTime = parseTime
-Vue.prototype.resetForm = resetForm
-Vue.prototype.addDateRange = addDateRange
-Vue.prototype.selectDictLabel = selectDictLabel
+Vue.prototype.getDicts = getDicts;
+Vue.prototype.getConfigKey = getConfigKey;
+Vue.prototype.parseTime = parseTime;
+Vue.prototype.resetForm = resetForm;
+Vue.prototype.addDateRange = addDateRange;
+Vue.prototype.selectDictLabel = selectDictLabel;
 
 
 Vue.prototype.msgSuccess = function (msg) {
   this.$message({showClose: true, message: msg, type: "success"});
-}
+};
 
 Vue.prototype.msgError = function (msg) {
   this.$message({showClose: true, message: msg, type: "error"});
-}
+};
 
 Vue.prototype.msgWarning = function (msg) {
   this.$message({showClose: true, message: msg, type: "warning"});
-}
+};
 
 
 Vue.prototype.msgInfo = function (msg) {
   this.$message.info(msg);
-}
+};
 
 // 全局组件挂载
-Vue.component('Pagination', Pagination)
+Vue.component('Pagination', Pagination);
 
-Vue.use(permission)
+Vue.use(permission);
 
 /**
  * If you don't want to use mock-server
@@ -63,13 +63,13 @@ Vue.use(permission)
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
-})
+});
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   el: '#app',
   router,
   store,
   render: h => h(App)
-})
+});

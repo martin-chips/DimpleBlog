@@ -5,7 +5,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.blog.service.CategoryService;
 import com.dimple.project.common.domain.Category;
 import com.dimple.project.front.domain.FrontMenu;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +24,11 @@ import java.util.Map;
 @RequestMapping("/f")
 public class ConfigController extends BaseController {
 
-    @Autowired
-    CategoryService categoryService;
+    final CategoryService categoryService;
+
+    public ConfigController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     /**
      * 网站信息

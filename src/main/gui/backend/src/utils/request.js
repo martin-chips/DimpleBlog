@@ -5,14 +5,14 @@ import {getToken} from '@/utils/auth'
 import config from '@/config'
 import router from '@/router'
 
-axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
+axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 // 创建axios实例
 const service = axios.create({
   // axios中请求配置有baseURL选项，表示请求URL公共部分
   baseURL: process.env.VUE_APP_BASE_API,
   // 超时
   timeout: config.timeout
-})
+});
 // request拦截器
 service.interceptors.request.use(
   config => {
@@ -22,24 +22,24 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    console.log(error)
+    console.log(error);
     Promise.reject(error)
   }
-)
+);
 
 // 响应拦截器
 service.interceptors.response.use(response => {
-    const code = response.data.code
+    const code = response.data.code;
     if (code < 200 || code > 300) {
       Notification.error({
         title: response.data.msg
-      })
+      });
       return Promise.reject('error')
     } else {
       return response.data
     }
   }, error => {
-    let code = 0
+    let code = 0;
     try {
       code = error.response.data.code
     } catch (e) {
@@ -47,14 +47,14 @@ service.interceptors.response.use(response => {
         Notification.error({
           title: '网络请求超时',
           duration: 2500
-        })
+        });
         return Promise.reject(error)
       }
       if (error.toString().indexOf('Error: Network Error') !== -1) {
         Notification.error({
           title: '网络请求错误',
           duration: 2500
-        })
+        });
         return Promise.reject(error)
       }
     }
@@ -75,7 +75,7 @@ service.interceptors.response.use(response => {
     } else if (code === 403) {
       router.push({path: '/401'})
     } else {
-      const errorMsg = error.response.data.msg
+      const errorMsg = error.response.data.msg;
       if (errorMsg !== undefined) {
         Notification.error({
           title: errorMsg,
@@ -85,6 +85,6 @@ service.interceptors.response.use(response => {
     }
     return Promise.reject(error)
   }
-)
+);
 
 export default service

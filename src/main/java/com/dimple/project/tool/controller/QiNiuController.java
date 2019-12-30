@@ -75,8 +75,7 @@ public class QiNiuController extends BaseController {
     @Log(title = "七牛云存储", businessType = BusinessType.UPDATE)
     @PostMapping("/synchronize")
     public AjaxResult synchronize() {
-        int count = qiNiuService.synchronize();
-        return AjaxResult.success();
+        return AjaxResult.success(qiNiuService.synchronize());
     }
 
     @DeleteMapping("/{ids}")

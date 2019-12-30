@@ -9,6 +9,9 @@ import io.jsonwebtoken.Claims;
  * @date: 10/22/19
  */
 public class Constants {
+    private Constants() {
+    }
+
     /**
      * 通用成功标识
      */

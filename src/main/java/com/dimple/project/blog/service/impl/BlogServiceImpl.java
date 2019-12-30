@@ -47,7 +47,7 @@ public class BlogServiceImpl implements BlogService {
         if (blogList.isEmpty()) {
             return blogList;
         }
-        List<Long> blogIdList = blogList.stream().map(e -> e.getId()).collect(Collectors.toList());
+        List<Long> blogIdList = blogList.stream().map(Blog::getId).collect(Collectors.toList());
         //设置comment信息
         List<Comment> commentList = commentMapper.selectCommentListByPageIds(blogIdList);
         for (Blog temp : blogList) {
@@ -65,10 +65,9 @@ public class BlogServiceImpl implements BlogService {
      */
     private List<String> getTagTitleListByBlogId(Long blogId) {
         Tag tag = new Tag();
-        tag.setType(TagType.Blog.getType());
+        tag.setType(TagType.BLOG.getType());
         List<Tag> tagList = tagService.selectTagList(tag);
-        List<String> tagTitleList = tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
-        return tagTitleList;
+        return tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
     }
 
     @Override
@@ -76,7 +75,7 @@ public class BlogServiceImpl implements BlogService {
     public int insertBlog(Blog blog) {
         blog.setCreateBy(SecurityUtils.getUsername());
         int count = blogMapper.insertBlog(blog);
-        tagService.updateTagMapping(TagType.Blog.getType(), blog.getId(), blog.getTagTitleList());
+        tagService.updateTagMapping(TagType.BLOG.getType(), blog.getId(), blog.getTagTitleList());
         return count;
     }
 
@@ -85,7 +84,7 @@ public class BlogServiceImpl implements BlogService {
     public int updateBlog(Blog blog) {
         blog.setUpdateBy(SecurityUtils.getUsername());
         int count = blogMapper.updateBlog(blog);
-        tagService.updateTagMapping(TagType.Blog.getType(), blog.getId(), blog.getTagTitleList());
+        tagService.updateTagMapping(TagType.BLOG.getType(), blog.getId(), blog.getTagTitleList());
         return count;
     }
 
@@ -113,7 +112,7 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> selectBlogList(BlogQuery blogQuery) {
         List<Blog> blogList = blogMapper.selectBlogListQuery(blogQuery);
         for (Blog blog : blogList) {
-            blog.setTagList(tagService.selectTagListByTypeAndId(TagType.Blog.getType(), blog.getId()));
+            blog.setTagList(tagService.selectTagListByTypeAndId(TagType.BLOG.getType(), blog.getId()));
         }
         return blogList;
     }
@@ -121,7 +120,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog selectBlogDetailById(Long id) {
         Blog blog = blogMapper.selectBlogByIdQuery(id);
-        blog.setTagList(tagService.selectTagListByTypeAndId(TagType.Blog.getType(), id));
+        blog.setTagList(tagService.selectTagListByTypeAndId(TagType.BLOG.getType(), id));
         //获取commentList
         blog.setCommentList(commentMapper.selectCommentListByPageId(id));
         //设置点击数量+1

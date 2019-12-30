@@ -113,7 +113,7 @@ public class RedisCacheService {
      * @return 缓存键值对应的数据
      */
     public <T> List<T> getCacheList(String key) {
-        List<T> dataList = new ArrayList<T>();
+        List<T> dataList = new ArrayList<>();
         ListOperations<String, T> listOperation = redisTemplate.opsForList();
         Long size = listOperation.size(key);
 
@@ -146,7 +146,7 @@ public class RedisCacheService {
      * @return
      */
     public <T> Set<T> getCacheSet(String key) {
-        Set<T> dataSet = new HashSet<T>();
+        Set<T> dataSet = new HashSet<>();
         BoundSetOperations<String, T> operation = redisTemplate.boundSetOps(key);
         Long size = operation.size();
         for (int i = 0; i < size; i++) {
@@ -179,8 +179,7 @@ public class RedisCacheService {
      * @return
      */
     public <T> Map<String, T> getCacheMap(String key) {
-        Map<String, T> map = redisTemplate.opsForHash().entries(key);
-        return map;
+        return redisTemplate.opsForHash().entries(key);
     }
 
     /**

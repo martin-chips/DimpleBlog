@@ -48,7 +48,7 @@ export function changeLinkDisplay(id, display) {
   let data = {
     id: id,
     display: display
-  }
+  };
   updateLink(data);
 }
 

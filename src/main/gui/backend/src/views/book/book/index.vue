@@ -261,7 +261,7 @@
     methods: {
       beforeInit() {
         this.base = '/book/book';
-        this.modelName = '图书'
+        this.modelName = '图书';
         return true
       },
       handleSupportChange(row) {

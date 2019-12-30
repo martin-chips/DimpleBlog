@@ -5,7 +5,6 @@ import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.system.domain.Link;
 import com.dimple.project.system.service.LinkService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +23,11 @@ import java.util.List;
 @RequestMapping("/f")
 public class LinkController extends BaseController {
 
-    @Autowired
-    LinkService linkService;
+    final LinkService linkService;
+
+    public LinkController(LinkService linkService) {
+        this.linkService = linkService;
+    }
 
     @GetMapping("/link")
     @VLog(title = "查看友链")

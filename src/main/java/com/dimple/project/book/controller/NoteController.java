@@ -7,7 +7,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.book.entity.Note;
 import com.dimple.project.book.service.NoteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +29,11 @@ import java.util.List;
 @RestController
 @RequestMapping("book/note")
 public class NoteController extends BaseController {
-    @Autowired
-    NoteService noteService;
+    final NoteService noteService;
+
+    public NoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('book:note:list')")
     @GetMapping("/list")

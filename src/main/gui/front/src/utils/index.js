@@ -162,7 +162,7 @@ export const mixin = {
     methods: {
         // 滚动到评论区域
         scrollToComments(selector) {
-            console.log(selector)
+            console.log(selector);
             try {
                 let commentEle = document.querySelector(selector);
                 const sTop = document.documentElement.scrollTop || document.body.scrollTop;

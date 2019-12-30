@@ -1,19 +1,19 @@
 package com.dimple.project.common.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.IdUtils;
 import com.dimple.common.utils.VerifyCodeUtils;
 import com.dimple.common.utils.sign.Base64;
 import com.dimple.framework.redis.RedisCacheService;
 import com.dimple.framework.web.domain.AjaxResult;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @className: CaptchaController
@@ -22,10 +22,14 @@ import com.dimple.framework.web.domain.AjaxResult;
  * @date: 10/22/19
  */
 @RestController
+@Slf4j
 public class CaptchaController {
 
-    @Autowired
-    private RedisCacheService redisCacheService;
+    final RedisCacheService redisCacheService;
+
+    public CaptchaController(RedisCacheService redisCacheService) {
+        this.redisCacheService = redisCacheService;
+    }
 
     /**
      * 生成验证码
@@ -40,7 +44,8 @@ public class CaptchaController {
 
         redisCacheService.setCacheObject(verifyKey, verifyCode, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
         // 生成图片
-        int w = 111, h = 36;
+        int w = 111;
+        int h = 36;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         VerifyCodeUtils.outputImage(w, h, stream, verifyCode);
         try {
@@ -49,7 +54,7 @@ public class CaptchaController {
             ajax.put("img", Base64.encode(stream.toByteArray()));
             return ajax;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return AjaxResult.error(e.getMessage());
         } finally {
             stream.close();

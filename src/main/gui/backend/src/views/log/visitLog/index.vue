@@ -113,7 +113,7 @@
         methods: {
             beforeInit() {
                 this.base = '/log/visitLog';
-                this.modelName = '访问日志'
+                this.modelName = '访问日志';
                 return true
             },
         }

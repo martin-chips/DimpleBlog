@@ -62,7 +62,7 @@ public class QuartzManage {
             scheduler.scheduleJob(jobDetail, cronTrigger);
 
             // 暂停任务
-            if (!quartzJob.getStatus()) {
+            if (!quartzJob.getStatus().booleanValue()) {
                 pauseJob(quartzJob);
             }
         } catch (Exception e) {
@@ -91,7 +91,7 @@ public class QuartzManage {
 
             scheduler.rescheduleJob(triggerKey, trigger);
             // 暂停任务
-            if (!quartzJob.getStatus()) {
+            if (!quartzJob.getStatus().booleanValue()) {
                 pauseJob(quartzJob);
             }
         } catch (Exception e) {

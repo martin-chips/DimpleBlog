@@ -71,21 +71,21 @@ public class TagServiceImpl implements TagService {
     public void updateTagMapping(Integer type, Long id, List<String> tagTitleList) {
         //删除该Id下的所有关联
         TagMapping tagMapping = TagMapping.builder()
-                .blogId(TagType.Blog.getType().equals(type) ? id : null)
-                .noteId(TagType.Note.getType().equals(type) ? id : null)
-                .bookId(TagType.Book.getType().equals(type) ? id : null)
+                .blogId(TagType.BLOG.getType().equals(type) ? id : null)
+                .noteId(TagType.NOTE.getType().equals(type) ? id : null)
+                .bookId(TagType.BOOK.getType().equals(type) ? id : null)
                 .build();
         deleteTagMapping(tagMapping);
 
         if (ObjectUtils.isNotEmpty(tagTitleList)) {
             for (String title : tagTitleList) {
                 //搜索所有的tag
-                Tag tag = selectTagByTitle(title.trim(), TagType.Blog.getType());
+                Tag tag = selectTagByTitle(title.trim(), TagType.BLOG.getType());
                 if (tag != null) {
                     tagMapping.setTagId(tag.getId());
                     insertTagMapping(tagMapping);
                 } else {
-                    Tag temp = new Tag(title.trim(), StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 1), TagType.Blog.getType());
+                    Tag temp = new Tag(title.trim(), StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 1), TagType.BLOG.getType());
                     insertTag(temp);
                     tagMapping.setTagId(temp.getId());
                     insertTagMapping(tagMapping);

@@ -100,7 +100,7 @@
             },
             //切换主题
             toggleTheme() {
-                console.log(this.siteTheme)
+                console.log(this.siteTheme);
                 this.updateSiteTheme(this.siteTheme === 'dark' ? 'default' : 'dark');
             },
             checkTheme() {

@@ -49,7 +49,7 @@ export function changeRoleStatus(id, status) {
   const data = {
     id,
     status
-  }
+  };
   return request({
     url: '/system/role/changeStatus',
     method: 'put',

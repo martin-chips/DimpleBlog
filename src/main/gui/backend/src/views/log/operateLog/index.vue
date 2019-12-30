@@ -174,7 +174,7 @@
         created() {
             this.$nextTick(() => {
                 this.init()
-            })
+            });
             this.getDicts("sys_oper_type").then(response => {
                 this.typeOptions = response.data;
             });
@@ -185,7 +185,7 @@
         methods: {
             beforeInit() {
                 this.base = '/log/operateLog';
-                this.modelName = '操作日志'
+                this.modelName = '操作日志';
                 return true
             },
             // 操作日志状态字典翻译

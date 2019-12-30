@@ -1,6 +1,7 @@
 package com.dimple.common.utils.ip;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.file.FileUtils;
@@ -22,6 +23,8 @@ import java.lang.reflect.Method;
  */
 @Slf4j
 public class AddressUtils {
+    private AddressUtils() {
+    }
 
     public static final String IP_URL = "http://ip.taobao.com/service/getIpInfo.php";
 
@@ -36,7 +39,7 @@ public class AddressUtils {
             log.error("获取地理位置异常 {}", ip);
             return address;
         }
-        JSONObject obj = JSONObject.parseObject(rspStr);
+        JSONObject obj = JSON.parseObject(rspStr);
         JSONObject data = obj.getObject("data", JSONObject.class);
         String region = data.getString("region");
         String city = data.getString("city");
@@ -67,7 +70,7 @@ public class AddressUtils {
             }
             return address.equals("内网IP|内网IP") ? "内网IP" : address;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Get Error In Get City Address ,{}", e.getMessage(), e);
         }
         return "";
     }

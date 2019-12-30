@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
 import Layout from '@/layout'
@@ -130,7 +130,7 @@ export const constantRoutes = [
       }
     ]
   }
-]
+];
 
 export default new Router({
   mode: 'history', // 去掉url中的#

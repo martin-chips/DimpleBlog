@@ -36,9 +36,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     private List<String> getTagTitleListByNoteId(Long noteId) {
-        List<Tag> tagList = tagService.selectTagListByTypeAndId(TagType.Note.getType(), noteId);
-        List<String> tagTitleList = tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
-        return tagTitleList;
+        List<Tag> tagList = tagService.selectTagListByTypeAndId(TagType.NOTE.getType(), noteId);
+        return tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
     }
 
     @Override
@@ -46,7 +45,7 @@ public class NoteServiceImpl implements NoteService {
     public int insertNote(Note note) {
         note.setCreateBy(SecurityUtils.getUsername());
         int count = noteMapper.insertNote(note);
-        tagService.updateTagMapping(TagType.Note.getType(), note.getId(), note.getTagTitleList());
+        tagService.updateTagMapping(TagType.NOTE.getType(), note.getId(), note.getTagTitleList());
         return count;
     }
 
@@ -56,7 +55,7 @@ public class NoteServiceImpl implements NoteService {
     public int updateNote(Note note) {
         note.setUpdateBy(SecurityUtils.getUsername());
         int count = noteMapper.updateNote(note);
-        tagService.updateTagMapping(TagType.Note.getType(), note.getId(), note.getTagTitleList());
+        tagService.updateTagMapping(TagType.NOTE.getType(), note.getId(), note.getTagTitleList());
         return count;
     }
 
@@ -75,7 +74,7 @@ public class NoteServiceImpl implements NoteService {
     public List<String> selectNoteTagList(String query) {
         Tag tag = new Tag();
         tag.setTitle(query);
-        tag.setType(TagType.Note.getType());
+        tag.setType(TagType.NOTE.getType());
         List<Tag> tagList = tagService.selectTagList(tag);
         return tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
     }

@@ -12,20 +12,20 @@ export default {
       if (this.chart) {
         this.chart.resize()
       }
-    }, 100)
-    this.$_initResizeEvent()
+    }, 100);
+    this.$_initResizeEvent();
     this.$_initSidebarResizeEvent()
   },
   beforeDestroy() {
-    this.$_destroyResizeEvent()
+    this.$_destroyResizeEvent();
     this.$_destroySidebarResizeEvent()
   },
   activated() {
-    this.$_initResizeEvent()
+    this.$_initResizeEvent();
     this.$_initSidebarResizeEvent()
   },
   deactivated() {
-    this.$_destroyResizeEvent()
+    this.$_destroyResizeEvent();
     this.$_destroySidebarResizeEvent()
   },
   methods: {
@@ -41,7 +41,7 @@ export default {
       }
     },
     $_initSidebarResizeEvent() {
-      this.$_sidebarElm = document.getElementsByClassName('sidebar-container')[0]
+      this.$_sidebarElm = document.getElementsByClassName('sidebar-container')[0];
       this.$_sidebarElm && this.$_sidebarElm.addEventListener('transitionend', this.$_sidebarResizeHandler)
     },
     $_destroySidebarResizeEvent() {

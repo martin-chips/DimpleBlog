@@ -96,7 +96,7 @@
       },
       /** 强退按钮操作 */
       handleForceLogout(tokenId) {
-        this.loading = true
+        this.loading = true;
         forceLogout(tokenId).then((response) => {
           if (response.code == 200) {
             this.msgSuccess("强退成功");

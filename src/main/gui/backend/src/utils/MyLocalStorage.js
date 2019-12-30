@@ -50,6 +50,6 @@ var MyLocalStorage ={
       localStorage.clear();
     }
   }//end Cache
-}
+};
 
 export default MyLocalStorage;

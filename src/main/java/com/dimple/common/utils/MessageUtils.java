@@ -11,6 +11,9 @@ import com.dimple.common.utils.spring.SpringUtils;
  * @date: 10/22/19
  */
 public class MessageUtils {
+    private MessageUtils() {
+    }
+
     /**
      * 根据消息键和参数 获取消息 委托给spring messageSource
      *

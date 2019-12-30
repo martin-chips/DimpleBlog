@@ -48,6 +48,6 @@ export function changeCategorySupport(id, support) {
   let data = {
     id: id,
     support: support
-  }
+  };
   updateCategory(data);
 }

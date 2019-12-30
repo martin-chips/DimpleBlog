@@ -1,17 +1,18 @@
 package com.dimple.common.xss;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import com.dimple.common.utils.StringUtils;
+import com.dimple.common.utils.html.EscapeUtil;
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import com.dimple.common.utils.StringUtils;
-import com.dimple.common.utils.html.EscapeUtil;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @className: XssHttpServletRequestWrapper
@@ -50,14 +51,14 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         }
 
         // 为空，直接返回
-        String json = IOUtils.toString(super.getInputStream(), "utf-8");
+        String json = IOUtils.toString(super.getInputStream(), StandardCharsets.UTF_8);
         if (StringUtils.isEmpty(json)) {
             return super.getInputStream();
         }
 
         // xss过滤
         json = EscapeUtil.clean(json).trim();
-        final ByteArrayInputStream bis = new ByteArrayInputStream(json.getBytes("utf-8"));
+        final ByteArrayInputStream bis = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
         return new ServletInputStream() {
             @Override
             public boolean isFinished() {

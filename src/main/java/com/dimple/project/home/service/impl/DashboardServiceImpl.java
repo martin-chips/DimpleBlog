@@ -101,7 +101,7 @@ public class DashboardServiceImpl implements DashboardService {
         List<String> result = new LinkedList<>();
         for (LoginLog loginLog : loginLogList) {
 //            XXX 分钟前: XXXX 登录系统 XXXX
-            result.add(StringUtils.format("{} : {} 登录系统 {}{}", DateUtils.showTime(loginLog.getCreateTime()), loginLog.getUserName(), loginLog.getStatus() ? "成功" : "失败", loginLog.getStatus() ? "" : "异常信息:" + loginLog.getMsg()));
+            result.add(StringUtils.format("{} : {} 登录系统 {}{}", DateUtils.showTime(loginLog.getCreateTime()), loginLog.getUserName(), loginLog.getStatus().booleanValue() ? "成功" : "失败", loginLog.getStatus().booleanValue() ? "" : "异常信息:" + loginLog.getMsg()));
         }
         return result;
     }
@@ -111,7 +111,7 @@ public class DashboardServiceImpl implements DashboardService {
         List<OperateLog> operateLogList = dashBoardMapper.getOperateLogList();
         List<String> result = new LinkedList<>();
         for (OperateLog operateLog : operateLogList) {
-            result.add(StringUtils.format("{}:{}对{}进行{}操作{}{}", DateUtils.showTime(operateLog.getCreateTime()), operateLog.getOperateName(), operateLog.getTitle(), operateLog.getOperatorType(), operateLog.getStatus() ? "成功" : "失败", operateLog.getStatus() ? "" : ",异常信息:" + operateLog.getErrorMsg()));
+            result.add(StringUtils.format("{}:{}对{}进行{}操作{}{}", DateUtils.showTime(operateLog.getCreateTime()), operateLog.getOperateName(), operateLog.getTitle(), operateLog.getOperatorType(), operateLog.getStatus().booleanValue() ? "成功" : "失败", operateLog.getStatus().booleanValue() ? "" : ",异常信息:" + operateLog.getErrorMsg()));
         }
         return result;
     }
@@ -121,7 +121,7 @@ public class DashboardServiceImpl implements DashboardService {
         List<String> result = new LinkedList<>();
         List<QuartzJobLog> jobLogList = dashBoardMapper.getQuartzJobLogList();
         for (QuartzJobLog quartzJobLog : jobLogList) {
-            result.add(StringUtils.format("{}:{}执行{}", DateUtils.showTime(quartzJobLog.getCreateTime()), quartzJobLog.getJobName(), quartzJobLog.getStatus() ? "成功" : "失败"));
+            result.add(StringUtils.format("{}:{}执行{}", DateUtils.showTime(quartzJobLog.getCreateTime()), quartzJobLog.getJobName(), quartzJobLog.getStatus().booleanValue() ? "成功" : "失败"));
         }
         return result;
     }

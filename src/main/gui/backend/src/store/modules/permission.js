@@ -9,7 +9,7 @@ const permission = {
   },
   mutations: {
     SET_ROUTES: (state, routes) => {
-      state.addRoutes = routes
+      state.addRoutes = routes;
       state.routes = constantRoutes.concat(routes)
     }
   },
@@ -19,14 +19,14 @@ const permission = {
       return new Promise(resolve => {
         // 向后端请求路由数据
         getRouters().then(res => {
-          const accessedRoutes = filterAsyncRouter(res.data)
-          commit('SET_ROUTES', accessedRoutes)
+          const accessedRoutes = filterAsyncRouter(res.data);
+          commit('SET_ROUTES', accessedRoutes);
           resolve(accessedRoutes)
         })
       })
     }
   }
-}
+};
 
 // 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap) {
@@ -48,6 +48,6 @@ function filterAsyncRouter(asyncRouterMap) {
 
 export const loadView = (view) => { // 路由懒加载
   return () => import(`@/views/${view}`)
-}
+};
 
 export default permission

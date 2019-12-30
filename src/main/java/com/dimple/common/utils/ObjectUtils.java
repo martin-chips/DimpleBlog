@@ -11,6 +11,9 @@ import java.util.Map;
  * @date: 11/22/19
  */
 public class ObjectUtils {
+    private ObjectUtils() {
+    }
+
     /**
      * 检验Object是否为Null或者Empty,支持List,Map
      *

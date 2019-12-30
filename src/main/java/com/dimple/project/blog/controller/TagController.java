@@ -9,7 +9,6 @@ import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.blog.service.TagService;
 import com.dimple.project.common.domain.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,14 +31,17 @@ import java.util.List;
 @RequestMapping("blog/tag")
 public class TagController extends BaseController {
 
-    @Autowired
-    TagService tagService;
+    final TagService tagService;
+
+    public TagController(TagService tagService) {
+        this.tagService = tagService;
+    }
 
     @PreAuthorize("@permissionService.hasPermission('blog:tag:list')")
     @GetMapping("/list")
     public TableDataInfo list(Tag tag) {
         startPage();
-        tag.setType(TagType.Blog.getType());
+        tag.setType(TagType.BLOG.getType());
         List<Tag> list = tagService.selectTagList(tag);
         return getDataTable(list);
     }
@@ -49,7 +51,7 @@ public class TagController extends BaseController {
     @PostMapping()
     public AjaxResult add(@RequestBody Tag tag) {
         tag.setCreateBy(SecurityUtils.getUsername());
-        tag.setType(TagType.Blog.getType());
+        tag.setType(TagType.BLOG.getType());
         return toAjax(tagService.insertTag(tag));
     }
 

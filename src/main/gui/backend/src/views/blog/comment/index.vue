@@ -156,7 +156,7 @@
     methods: {
       beforeInit() {
         this.base = '/blog/comment';
-        this.modelName = '评论'
+        this.modelName = '评论';
         return true
       },
       handleDisplayChange(row) {

@@ -6,10 +6,9 @@ import com.dimple.common.utils.ObjectUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.mapper.BlogMapper;
-import com.dimple.project.common.mapper.CategoryMapper;
 import com.dimple.project.blog.service.CategoryService;
 import com.dimple.project.common.domain.Category;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dimple.project.common.mapper.CategoryMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +22,13 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    CategoryMapper bgCategoryMapper;
-    @Autowired
-    BlogMapper blogMapper;
+    final CategoryMapper bgCategoryMapper;
+    final BlogMapper blogMapper;
+
+    public CategoryServiceImpl(CategoryMapper bgCategoryMapper, BlogMapper blogMapper) {
+        this.bgCategoryMapper = bgCategoryMapper;
+        this.blogMapper = blogMapper;
+    }
 
     @Override
 
@@ -37,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> selectCategoryList(Category bgCategory) {
         List<Category> categoryList = bgCategoryMapper.selectCategoryList(bgCategory);
-        List<Long> categoryIds = categoryList.stream().map(e -> e.getId()).collect(Collectors.toList());
+        List<Long> categoryIds = categoryList.stream().map(Category::getId).collect(Collectors.toList());
         if (ObjectUtils.isEmpty(categoryIds)) {
             return categoryList;
         }

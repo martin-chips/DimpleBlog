@@ -194,7 +194,7 @@
         methods: {
             beforeInit() {
                 this.base = '/tool/quartz';
-                this.modelName = '定时任务'
+                this.modelName = '定时任务';
                 return true
             },
             //执行任务
