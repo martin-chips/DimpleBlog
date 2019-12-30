@@ -57,7 +57,7 @@ public class ConfigController extends BaseController {
         FrontMenu frontMenu = new FrontMenu("时光轴", 1, false, "/archive");
         FrontMenu frontMenu1 = new FrontMenu("友链", 2, false, "/link");
         FrontMenu frontMenu2 = new FrontMenu("留言", 3, false, "/leaveComment");
-        FrontMenu frontMenu3 = new FrontMenu("关于", 4, true, "/about");
+        FrontMenu frontMenu3 = new FrontMenu("关于", 4, false, "/about");
         List<FrontMenu> menuList = new ArrayList<>();
         menuList.add(frontMenu);
         menuList.add(frontMenu1);

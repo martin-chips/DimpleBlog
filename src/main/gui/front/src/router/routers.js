@@ -10,6 +10,7 @@ import LinkContent from "../components/content/LinkContent";
 import Error404 from "../views/error/Error404";
 import LeaveCommentContent from "../components/content/LeaveCommentContent";
 import BookContent from "../components/content/BookContent";
+import AboutContent from "../components/content/AboutContent";
 export default [
     {
         path: '/',
@@ -65,10 +66,15 @@ export default [
                     footer: Footer
                 },
             },
-            // {
-            //     path: '/about',
-            //     component: () => import('@/views/front/about'),
-            // },
+            {
+                path: '/about',
+                name: 'leaveComment',
+                components: {
+                    header: SimpleHeader,
+                    content: AboutContent,
+                    footer: Footer
+                },
+            },
             {
                 path: '/archive',
                 components: {
