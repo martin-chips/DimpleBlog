@@ -3,6 +3,8 @@ package com.dimple.project.log.domain;
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @className: VisitLog
  * @description:
@@ -10,7 +12,7 @@ import lombok.Data;
  * @date: 2019/11/30
  */
 @Data
-public class VisitLog extends BaseEntity {
+public class VisitLog extends BaseEntity implements Serializable {
 
     private Long id;
     /**

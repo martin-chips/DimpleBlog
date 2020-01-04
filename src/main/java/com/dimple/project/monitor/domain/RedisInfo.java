@@ -2,6 +2,7 @@ package com.dimple.project.monitor.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  * @date: 10/22/19
  */
 @Data
-public class RedisInfo {
+public class RedisInfo implements Serializable {
     private static Map<String, String> map = new HashMap<>();
 
     static {

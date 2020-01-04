@@ -4,6 +4,8 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @className: OperateLog
  * @description: 操作日志记录表 SysOperateLog
@@ -13,7 +15,7 @@ import lombok.Data;
 @Data
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OperateLog extends BaseEntity {
+public class OperateLog extends BaseEntity implements Serializable {
     /**
      * 日志主键
      */

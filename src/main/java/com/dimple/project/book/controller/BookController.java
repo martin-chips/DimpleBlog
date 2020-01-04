@@ -6,7 +6,7 @@ import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.book.entity.Book;
+import com.dimple.project.book.domain.Book;
 import com.dimple.project.book.service.BookService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;

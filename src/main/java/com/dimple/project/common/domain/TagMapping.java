@@ -3,6 +3,8 @@ package com.dimple.project.common.domain;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @className: TagMapping
  * @description: Tag和其他表的关联
@@ -11,7 +13,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class TagMapping {
+public class TagMapping implements Serializable {
     private Long id;
     private Long blogId;
     private Long tagId;

@@ -11,7 +11,6 @@ import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.blog.service.TagService;
 import com.dimple.project.common.domain.Tag;
 import com.dimple.project.front.domain.BlogQuery;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,12 +26,15 @@ import java.util.stream.Collectors;
 @Service
 public class BlogServiceImpl implements BlogService {
 
-    @Autowired
     BlogMapper blogMapper;
-    @Autowired
     CommentMapper commentMapper;
-    @Autowired
     TagService tagService;
+
+    public BlogServiceImpl(BlogMapper blogMapper, CommentMapper commentMapper, TagService tagService) {
+        this.blogMapper = blogMapper;
+        this.commentMapper = commentMapper;
+        this.tagService = tagService;
+    }
 
     @Override
     public Blog selectBlogById(Long id) {
@@ -64,9 +66,7 @@ public class BlogServiceImpl implements BlogService {
      * @return title集合
      */
     private List<String> getTagTitleListByBlogId(Long blogId) {
-        Tag tag = new Tag();
-        tag.setType(TagType.BLOG.getType());
-        List<Tag> tagList = tagService.selectTagList(tag);
+        List<Tag> tagList = tagService.selectTagListByTypeAndId(TagType.BLOG.getType(), blogId);
         return tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
     }
 

@@ -44,7 +44,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="图书主键" align="center" prop="id"/>
       <el-table-column label="图书名" align="center" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="封面" prop="headerImg" width="120">
         <template slot-scope="scope">

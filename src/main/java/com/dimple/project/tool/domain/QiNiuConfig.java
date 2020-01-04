@@ -4,6 +4,7 @@ import com.dimple.common.utils.StringUtils;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * @className: QiNiuConfig
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotBlank;
  * @date: 11/06/19
  */
 @Data
-public class QiNiuConfig {
+public class QiNiuConfig implements Serializable {
 
     /**
      * 一个账号最多拥有两对密钥(Access/Secret Key)

@@ -70,7 +70,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="博客主键" prop="id"/>
       <el-table-column label="标题" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="分类" prop="category.title">
         <template slot-scope="scope">
@@ -116,6 +115,12 @@
                      inactive-color="#ff4949"/>
         </template>
       </el-table-column>
+      <el-table-column label="状态" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.status ==true">发布</el-tag>
+          <el-tag v-else type="warning">草稿</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="权重" prop="weight" align="center">
         <template slot-scope="scope">
           <el-rate v-model="scope.row.weight" :max="5" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" disabled
@@ -134,7 +139,6 @@
             width="600"
             trigger="click">
             <el-table v-loading="loading" :data="scope.row.commentList" style="width: 100%;">
-              <el-table-column label="评论编号" align="center" prop="id"/>
               <el-table-column label="昵称" align="center" prop="nickName"/>
               <el-table-column label="主机" align="center" prop="ip" :show-overflow-tooltip="true"/>
               <el-table-column label="操作地点" align="center" prop="location"/>

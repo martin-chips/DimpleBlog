@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @className: LoginLog
  * @description: 系统访问记录表 sys_loginLog
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @NoArgsConstructor
-public class LoginLog extends BaseEntity {
+public class LoginLog extends BaseEntity implements Serializable {
 
 
     /**

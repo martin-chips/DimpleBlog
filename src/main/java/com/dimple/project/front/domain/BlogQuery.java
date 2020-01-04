@@ -1,8 +1,8 @@
 package com.dimple.project.front.domain;
 
 import lombok.Data;
-import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,8 +12,7 @@ import java.util.Date;
  * @date: 11/21/19
  */
 @Data
-@ToString
-public class BlogQuery {
+public class BlogQuery implements Serializable {
     /**
      * 分类Id
      */

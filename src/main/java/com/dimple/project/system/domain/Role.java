@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @className: Role
  * @description: 角色表 sys_role
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Role extends BaseEntity {
+public class Role extends BaseEntity implements Serializable {
 
     /**
      * 角色ID

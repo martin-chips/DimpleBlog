@@ -54,7 +54,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="角色编号" align="center" prop="id"/>
       <el-table-column label="角色名称" align="center" prop="roleName" :show-overflow-tooltip="true"/>
       <el-table-column label="权限字符" prop="roleKey" align="center" :show-overflow-tooltip="true"/>
       <el-table-column label="显示顺序" align="center" prop="roleSort"/>

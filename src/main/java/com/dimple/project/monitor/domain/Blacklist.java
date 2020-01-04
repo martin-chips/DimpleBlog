@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Date;
 @Data
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Blacklist extends BaseEntity {
+public class Blacklist extends BaseEntity implements Serializable {
     /**
      * id
      */

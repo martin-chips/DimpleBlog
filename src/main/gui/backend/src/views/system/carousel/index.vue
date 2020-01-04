@@ -45,7 +45,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="轮播组件" align="center" prop="id"/>
       <el-table-column label="轮播标题" align="center" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="链接地址" align="center" prop="url" :show-overflow-tooltip="true"/>
       <el-table-column label="描述内容" align="center" prop="description" :show-overflow-tooltip="true"/>

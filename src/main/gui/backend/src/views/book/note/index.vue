@@ -80,7 +80,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="笔记主键" prop="id"/>
       <el-table-column label="标题" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="摘要" prop="summary" :show-overflow-tooltip="true"/>
       <el-table-column label="封面" prop="headerImg">

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @className: MetaVo
  * @description: 路由显示信息
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MetaVo {
+public class MetaVo implements Serializable {
     /**
      * 设置该路由在侧边栏和面包屑中展示的名字
      */

@@ -48,7 +48,7 @@
 
     <select id="selectVisitLogList" parameterType="com.dimple.project.log.domain.VisitLog"
             resultMap="VisitLogResult">
-        select id, ip, location, browser, os, status, error_msg,spider,url, create_time,page_id from visit_log
+        select id, ip, location, browser, os, title,status, error_msg,spider,url, create_time,page_id from visit_log
         where delete_time is null
         <if test="ip != null and ip != ''">
             AND ip like concat('%', #{ip}, '%')

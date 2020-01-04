@@ -1,6 +1,6 @@
 package com.dimple.project.book.mapper;
 
-import com.dimple.project.book.entity.Note;
+import com.dimple.project.book.domain.Note;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

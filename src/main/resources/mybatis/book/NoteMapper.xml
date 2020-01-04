@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dimple.project.book.mapper.NoteMapper">
 
-    <resultMap type="com.dimple.project.book.entity.Note" id="NoteMap">
+    <resultMap type="com.dimple.project.book.domain.Note" id="NoteMap">
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="summary" column="summary"/>

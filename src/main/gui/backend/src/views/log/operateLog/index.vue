@@ -58,7 +58,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="日志编号" align="center" prop="id"/>
       <el-table-column label="系统模块" align="center" prop="title"/>
       <el-table-column label="操作类型" align="center" prop="businessType" :formatter="typeFormat"/>
       <el-table-column label="请求方式" align="center" prop="requestMethod"/>

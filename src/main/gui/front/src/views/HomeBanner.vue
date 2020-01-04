@@ -27,7 +27,7 @@
                                 {{ item.description | textLineBreak(70) }}
                             </p>
                             <Button size="large" type="primary" @click.prevent="gotoPostDetail(item)"
-                                    :href="`article/${item.id}`">查看更多
+                                    :href="`article/${item.id}`">详情
                             </Button>
                         </div>
                     </swiper-slide>
@@ -91,6 +91,15 @@
                 leftSwiper.controller.control = rightSwiper;
             })
         },
+        methods:{
+            gotoPostDetail(item) {
+                if (item.target) {
+                    window.open(item.url, '_blank')
+                } else {
+                    window.open(item.url)
+                }
+            }
+        }
     };
 </script>
 

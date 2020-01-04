@@ -52,8 +52,8 @@
         codeUrl: "",
         cookiePassword: "",
         loginForm: {
-          username: "admin",
-          password: "admin123",
+          username: "",
+          password: "",
           rememberMe: false,
           code: "",
           uuid: ""
@@ -135,7 +135,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    background-image: url("../assets/image/login-background.jpg");
+    background-image: url("https://api.isoyu.com/bing_images.php");
     background-size: cover;
   }
 

@@ -283,6 +283,7 @@
                 }
             },
             send() {
+                this.publishing = true;
                 if (this.form.nickName.length === 0) {
                     this.$Notice.warning({
                         title: '您需要填写昵称',

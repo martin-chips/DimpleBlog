@@ -70,7 +70,7 @@ public class VisitLogAspect {
             }
             VisitLog visitLog = new VisitLog();
             visitLog.setPageId(getPageId(vLog, joinPoint));
-            visitLog.setIp(IpUtils.getHostIp());
+            visitLog.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
             visitLog.setUrl(ServletUtils.getRequest().getRequestURI());
             if (e != null) {
                 visitLog.setStatus(false);

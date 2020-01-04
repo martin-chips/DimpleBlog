@@ -22,13 +22,13 @@
                     if (obj.type === "1") {
                         this.$Notice.info({
                             title: obj.title,
-                            desc: obj.content
+                            desc: obj.htmlContent
                         });
                     } else {
                         //公告
                         this.$Modal.info({
                             title: obj.title,
-                            content: obj.content,
+                            content: obj.htmlContent,
                             okText:'我知道了',
                             scrollable:true,
                         })

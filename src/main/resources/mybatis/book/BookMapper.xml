@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dimple.project.book.mapper.BookMapper">
 
-    <resultMap type="com.dimple.project.book.entity.Book" id="BkBookMap">
+    <resultMap type="com.dimple.project.book.domain.Book" id="BkBookMap">
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="headerImg" column="header_img"/>

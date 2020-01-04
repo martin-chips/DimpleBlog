@@ -17,7 +17,7 @@
                                   @menusControl="articlesMenusControl">
                     </SectionTitle>
                     <ArticleListCell v-for="article in articles" :article="article" :key="article.id"></ArticleListCell>
-                    <SectionTitle mainTitle="阅读" subTitle="Reading" :menus="booksTitleMenus" :to="'/articles'"
+                    <SectionTitle mainTitle="阅读" subTitle="Reading" :menus="booksTitleMenus" :to="'/articles'" v-if="books.length>0"
                                   :withRefresh="true"
                                   :withTimeSelect="false"
                                   @refresh="refreshBooks"
@@ -98,24 +98,20 @@
             });
             if (this.$store.state.home.articles.length === 0) {
                 this.getArticlesBaseInfo({
-                    params: {
-                        is_recommend: this.recommend,
-                        is_hot: this.hot,
-                        ordering: this.mostComment,
-                        pageSize: 10,
-                        pageNum: 1
-                    }
+                    is_recommend: this.recommend,
+                    is_hot: this.hot,
+                    ordering: this.mostComment,
+                    pageSize: 10,
+                    pageNum: 1
                 });
             }
             if (this.$store.state.home.books.length === 0) {
                 this.getBooksBaseInfo({
-                    params: {
-                        is_recommend: this.recommend,
-                        is_hot: this.hot,
-                        ordering: this.mostComment,
-                        pageSize: 10,
-                        pageNum: 1
-                    }
+                    is_recommend: this.recommend,
+                    is_hot: this.hot,
+                    ordering: this.mostComment,
+                    pageSize: 10,
+                    pageNum: 1
                 });
             }
         },
@@ -202,7 +198,8 @@
                         orderByColumn: orderings.toString(),
                         isAsc: this.timeSorted ? 'asc' : 'desc',
                         pageNum: 1,
-                        pageSize: 10
+                        pageSize: 10,
+                        orderByColumn:'b.create_time'
                     }
                 });
             }

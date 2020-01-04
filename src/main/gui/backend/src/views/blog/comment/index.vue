@@ -39,7 +39,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="评论编号" align="center" prop="id"/>
       <el-table-column label="昵称" align="center" prop="nickName"/>
       <el-table-column label="主机" align="center" prop="ip" :show-overflow-tooltip="true"/>
       <el-table-column label="操作地点" align="center" prop="location"/>

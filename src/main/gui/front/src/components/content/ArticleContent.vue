@@ -101,9 +101,23 @@
                 this.getArticleDetailInfo(this.id).then(response => {
                     this.refreshContent();
                 });
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                } else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
             },
             // 更新目录
             refreshContent() {
+                document.title = this.article.title + " | DimpleBlog";
+                let head = document.getElementsByTagName('head');
+                let meta = document.createElement('meta');
+                document.querySelector('meta[name="keywords"]').setAttribute('content', this.article.title + ";" + this.article.tagTitleList)
+                document.querySelector('meta[name="description"]').setAttribute('content', this.article.summary)
                 this.$nextTick(() => {
                     this.addTocScrollSpy();
                 });

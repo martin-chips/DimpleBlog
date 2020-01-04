@@ -59,9 +59,9 @@
         from tag t
         left join tag_mapping tm on t.id = tm.tag_id
         where t.type=#{type}
-        <if test="type =1">and tm.blog_id=#{id}</if>
-        <if test="type =2">and tm.note_id=#{id}</if>
-        <if test="type =3">and tm.book_id=#{id}</if>
+        <if test="type == 1">and tm.blog_id=#{id}</if>
+        <if test="type ==2">and tm.note_id=#{id}</if>
+        <if test="type ==3">and tm.book_id=#{id}</if>
     </select>
 
 

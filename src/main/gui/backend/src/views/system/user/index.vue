@@ -56,7 +56,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="用户编号" align="center" prop="id"/>
       <el-table-column label="用户名称" align="center" prop="userName"/>
       <el-table-column label="用户昵称" align="center" prop="nickName"/>
       <el-table-column label="手机号码" align="center" prop="phone"/>

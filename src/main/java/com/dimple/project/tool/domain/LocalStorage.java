@@ -4,6 +4,8 @@ import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @className: LocalStorage
  * @description:
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class LocalStorage extends BaseEntity {
+public class LocalStorage extends BaseEntity implements Serializable {
     private Long id;
     /**
      * 文件真实名称

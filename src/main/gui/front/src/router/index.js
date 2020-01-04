@@ -34,6 +34,12 @@ LoadingBar.config({
 const router = new Router(RouterConfig);
 
 router.beforeEach((to, from, next) => {
+    if (to.meta.title) {
+        document.title = to.meta.title + ' | DimpleBlog';
+    }
+    if (to.meta.content) {
+
+    }
     try {
         LoadingBar.start();
     } catch (err) {

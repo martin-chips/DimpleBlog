@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @className: Tag
  * @description:
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Tag extends BaseEntity {
+public class Tag extends BaseEntity implements Serializable {
     private Long id;
     /**
      * 标签颜色
@@ -34,7 +36,7 @@ public class Tag extends BaseEntity {
      */
     private Long count;
 
-    public Tag(String title, String color,Integer type) {
+    public Tag(String title, String color, Integer type) {
         this.color = color;
         this.title = title;
         this.type = type;

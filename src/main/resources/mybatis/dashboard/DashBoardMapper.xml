@@ -50,7 +50,7 @@
         where spider is not null
         group by spider
         order by spider
-        limit 10
+        limit 20
     </select>
     <select id="getVisitLog" resultType="com.dimple.project.log.domain.VisitLog">
         select id,

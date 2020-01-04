@@ -23,6 +23,13 @@ export default [
                     content: HomeContent,
                     footer: Footer
                 },
+                meta: {
+                    title: '首页',
+                    content:{
+                        keywords:'DimpleBlog,边小丰,Java',
+                        description:'DimpleBlog,Java',
+                    },
+                }
             },
             {
                 path: '/articles',
@@ -32,6 +39,13 @@ export default [
                     content: ArticleHomeContent,
                     footer: Footer
                 },
+                meta: {
+                    title: '文章',
+                    content:{
+                        keywords:'DimpleBlog,边小丰,Java',
+                        description:'DimpleBlog,Java',
+                    },
+                }
             },
             {
                 path: '/articles/category/:id',
@@ -43,6 +57,10 @@ export default [
                 },
                 meta: {
                     title: '文章列表',
+                    content:{
+                        keywords:'DimpleBlog,边小丰,Java',
+                        description:'DimpleBlog,Java',
+                    },
                 }
             },
             {
@@ -54,7 +72,11 @@ export default [
                     footer: Footer
                 },
                 meta: {
-                    title: '文章列表',
+                    title: '友链',
+                    content:{
+                        keywords:'DimpleBlog,边小丰,Java',
+                        description:'DimpleBlog,Java',
+                    },
                 }
             },
             {
@@ -65,6 +87,13 @@ export default [
                     content: LeaveCommentContent,
                     footer: Footer
                 },
+                meta: {
+                    title: '留言',
+                    content:{
+                        keywords:'DimpleBlog,边小丰,Java,留言',
+                        description:'DimpleBlog,Java',
+                    },
+                }
             },
             {
                 path: '/about',
@@ -74,6 +103,13 @@ export default [
                     content: AboutContent,
                     footer: Footer
                 },
+                meta: {
+                    title: '关于',
+                    content:{
+                        keywords:'DimpleBlog,边小丰,Java,关于',
+                        description:'DimpleBlog,Java',
+                    },
+                }
             },
             {
                 path: '/archive',
@@ -82,6 +118,13 @@ export default [
                     content: TimeLineContent,
                     footer: Footer
                 },
+                meta: {
+                    title: '时光轴',
+                    content:{
+                        keywords:'DimpleBlog,边小丰,Java',
+                        description:'DimpleBlog,Java',
+                    },
+                }
             },
             {
                 path: 'article/:id',
@@ -93,7 +136,11 @@ export default [
                 },
                 meta: {
                     title: '文章详情',
-                    need_log: false
+                    need_log: false,
+                    content:{
+                        keywords:'DimpleBlog,边小丰,Java',
+                        description:'DimpleBlog,Java',
+                    },
                 }
             },
             {

@@ -1,6 +1,6 @@
 package com.dimple.project.book.service;
 
-import com.dimple.project.book.entity.Book;
+import com.dimple.project.book.domain.Book;
 
 import java.util.List;
 

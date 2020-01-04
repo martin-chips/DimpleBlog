@@ -40,7 +40,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="标签主键" align="center" prop="id"/>
       <el-table-column label="标签名称" align="center" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="标签颜色" align="center" prop="color">
         <template slot-scope="scope">

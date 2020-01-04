@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @className: DictType
  * @description: 字典类型表 sys_dict_type
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class DictType extends BaseEntity {
+public class DictType extends BaseEntity implements Serializable {
 
     /**
      * 字典主键

@@ -50,7 +50,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="序号" align="center" prop="id"/>
       <el-table-column label="公告标题" align="center" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="公告类型" align="center" prop="type" :formatter="typeFormat"/>
       <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat"/>
@@ -208,7 +207,7 @@
       },
       // 公告状态字典翻译
       typeFormat(row, column) {
-        return this.selectDictLabel(this.typeOptions, row.noticeType);
+        return this.selectDictLabel(this.typeOptions, row.type);
       },
     }
   };

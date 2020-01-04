@@ -114,7 +114,7 @@
             }),
             //跳转到后台首页
             toIndex() {
-                window.open("admin.bianxiaofeng.com", '_blank')
+                window.open("http://admin.bianxiaofeng.com", '_blank')
             },
             rootRouterLink(category) {
                 let router = {};

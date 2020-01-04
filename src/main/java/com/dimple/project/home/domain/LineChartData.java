@@ -2,6 +2,7 @@ package com.dimple.project.home.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  * @date: 12/20/19
  */
 @Data
-public class LineChartData<T> {
+public class LineChartData<T> implements Serializable {
     public static final String BLOG_LINE = "blog";
     public static final String NOTE_LINE = "note";
     public static final String BOOK_LINE = "book";

@@ -44,7 +44,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="分类主键" align="center" prop="id"/>
       <el-table-column label="分类名称" align="center" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="分类描述" align="center" prop="description" :show-overflow-tooltip="true"/>
       <el-table-column label="推荐" align="center">
@@ -62,7 +61,6 @@
         <template slot-scope="scope">
           <el-popover placement="left" width="600" trigger="click">
             <el-table :data="scope.row.blogList">
-              <el-table-column label="博客主键" prop="id"/>
               <el-table-column label="标题" prop="title" :show-overflow-tooltip="true"/>
               <el-table-column label="摘要" prop="summary" :show-overflow-tooltip="true"/>
               <el-table-column label="封面" prop="headerImg" width="120">

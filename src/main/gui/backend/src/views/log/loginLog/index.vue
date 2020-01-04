@@ -48,7 +48,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="访问编号" align="center" prop="id"/>
       <el-table-column label="用户名称" align="center" prop="userName"/>
       <el-table-column label="登录地址" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
       <el-table-column label="登录地点" align="center" prop="location"/>

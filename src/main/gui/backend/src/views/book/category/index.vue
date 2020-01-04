@@ -44,7 +44,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="分类主键" align="center" prop="id"/>
       <el-table-column label="分类名称" align="center" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="分类描述" align="center" prop="description" :show-overflow-tooltip="true"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">

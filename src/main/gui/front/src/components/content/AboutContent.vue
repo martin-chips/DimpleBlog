@@ -133,7 +133,9 @@
     }
 </script>
 
-<style scoped>
+<style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
+    @import "../../common/stylus/theme.styl";
+
     .about-content {
         line-height: 25px;
         margin-bottom: 30px;

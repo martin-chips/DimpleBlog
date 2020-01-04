@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @className: UserOnline
  * @description: 当前在线会话
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @NoArgsConstructor
-public class UserOnline {
+public class UserOnline implements Serializable {
     /**
      * 会话编号
      */

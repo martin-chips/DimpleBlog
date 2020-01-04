@@ -2,6 +2,8 @@ package com.dimple.project.home.service.impl;
 
 import com.dimple.common.utils.DateUtils;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.framework.config.redis.CacheExpire;
+import com.dimple.framework.config.redis.TimeType;
 import com.dimple.project.home.domain.LineChartData;
 import com.dimple.project.home.mapper.DashBoardMapper;
 import com.dimple.project.home.service.DashboardService;
@@ -11,6 +13,7 @@ import com.dimple.project.log.domain.QuartzJobLog;
 import com.dimple.project.log.domain.VisitLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -47,6 +50,8 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
+    @Cacheable(value = "DashBoard", key = "'LineChartData'+ #type")
+    @CacheExpire(expire = 3, type = TimeType.HOURS)
     public LineChartData<Long> getLineChartData(String type) {
         LineChartData lineChartData = null;
         switch (type) {
@@ -69,6 +74,7 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
+    @Cacheable(value = "DashBoard", key = "'SpiderData'")
     public List<Map<String, Long>> getSpiderData() {
         return dashBoardMapper.getSpiderData();
     }

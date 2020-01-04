@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @className: Notice
  * @description: 通知公告表 sys_notice
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class Notice extends BaseEntity {
+public class Notice extends BaseEntity implements Serializable {
 
     /**
      * 公告ID

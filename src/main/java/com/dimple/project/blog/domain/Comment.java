@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class Comment extends BaseEntity {
+public class Comment extends BaseEntity implements Serializable {
 
     private Long id;
     /**

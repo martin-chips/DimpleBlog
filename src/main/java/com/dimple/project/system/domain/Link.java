@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @className: Link
@@ -20,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Link extends BaseEntity {
+public class Link extends BaseEntity implements Serializable {
 
     /**
      * id

@@ -3,6 +3,8 @@ package com.dimple.project.tool.domain;
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @className: QiNiuContent
  * @description: 对应文件上传到七牛云之后保存在数据库中
@@ -10,7 +12,7 @@ import lombok.Data;
  * @date: 11/06/19
  */
 @Data
-public class QiNiuContent extends BaseEntity {
+public class QiNiuContent extends BaseEntity implements Serializable {
     private Long id;
     /**
      * 文件名

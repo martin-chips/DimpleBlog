@@ -1,4 +1,4 @@
-package com.dimple.project.book.entity;
+package com.dimple.project.book.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;

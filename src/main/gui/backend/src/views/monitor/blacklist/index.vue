@@ -48,7 +48,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="黑名单编号" prop="id"/>
       <el-table-column label="IP" prop="ip" :show-overflow-tooltip="true"/>
       <el-table-column label="封禁原因" prop="description" :show-overflow-tooltip="true"/>
       <el-table-column label="上次拦截URL" prop="lastAccessUrl"/>

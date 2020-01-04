@@ -4,7 +4,7 @@ import com.dimple.common.enums.TagType;
 import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.blog.service.TagService;
-import com.dimple.project.book.entity.Note;
+import com.dimple.project.book.domain.Note;
 import com.dimple.project.book.mapper.NoteMapper;
 import com.dimple.project.book.service.NoteService;
 import com.dimple.project.common.domain.Tag;

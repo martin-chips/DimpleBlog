@@ -54,7 +54,6 @@
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center"/>
-      <el-table-column label="字典主键" align="center" prop="id"/>
       <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true"/>
       <el-table-column label="字典类型" align="center">
         <template slot-scope="scope">

@@ -3,7 +3,7 @@ package com.dimple.project.book.service.impl;
 import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.project.book.mapper.BookMapper;
-import com.dimple.project.book.entity.Book;
+import com.dimple.project.book.domain.Book;
 import com.dimple.project.book.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

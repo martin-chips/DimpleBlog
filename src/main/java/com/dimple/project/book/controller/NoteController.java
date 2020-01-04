@@ -5,7 +5,7 @@ import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.book.entity.Note;
+import com.dimple.project.book.domain.Note;
 import com.dimple.project.book.service.NoteService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;

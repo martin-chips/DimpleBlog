@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @className: Carousel
@@ -19,7 +20,7 @@ import javax.validation.constraints.NotNull;
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class Carousel extends BaseEntity {
+public class Carousel extends BaseEntity implements Serializable {
 
     @NotNull(groups = {Update.class})
     private Long id;

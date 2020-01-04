@@ -25,16 +25,9 @@ export default {
   actions: {
     // 获取推荐内容
     GET_RECOMMENDS(store, params) {
-      params = {
-        pageSize: 5,
-        pageNum: 1,
-        orderByColumn: "b.weight,b.createTime",
-        support: true,
-        isAsc: 'desc'
-      };
       return new Promise((resolve, reject) => {
         listRecommend(params).then((response) => {
-          store.commit('UPDATE_RECOMMENDS', response.rows);
+          store.commit('UPDATE_RECOMMENDS', response.data);
           resolve(response);
         }).catch((error) => {
           reject(error);
@@ -46,12 +39,12 @@ export default {
       params = {
         pageSize: 5,
         pageNum: 1,
-        orderByColumn: "b.weight,b.click,b.createTime",
+        orderByColumn: "b.click,b.createTime,b.weight",
         isAsc: 'desc'
       };
       return new Promise((resolve, reject) => {
         listHot(params).then((response) => {
-          store.commit('UPDATE_HOTS', response.rows);
+          store.commit('UPDATE_HOTS', response.data);
           resolve(response);
         }).catch((error) => {
           reject(error);
@@ -73,7 +66,7 @@ export default {
     GET_TAGS(store, params) {
       return new Promise((resolve, reject) => {
         listTag().then((response) => {
-          store.commit('UPDATE_TAGS', response.rows);
+          store.commit('UPDATE_TAGS', response.data);
           resolve(response);
         }).catch((error) => {
           reject(error);

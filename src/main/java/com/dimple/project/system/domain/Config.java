@@ -4,6 +4,8 @@ import com.dimple.framework.web.domain.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @className: Config
  * @description: 参数配置表 sys_config
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class Config extends BaseEntity {
+public class Config extends BaseEntity implements Serializable {
     /**
      * 参数主键
      */
