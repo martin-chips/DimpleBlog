@@ -1,9 +1,9 @@
 package com.dimple.framework.web.domain;
 
-import java.util.HashMap;
-
-import com.dimple.common.constant.HttpStatus;
 import com.dimple.common.utils.StringUtils;
+import org.springframework.http.HttpStatus;
+
+import java.util.HashMap;
 
 /**
  * @className: AjaxResult
@@ -53,8 +53,8 @@ public class AjaxResult extends HashMap<String, Object> {
      * @param msg  返回内容
      * @param data 数据对象
      */
-    public AjaxResult(int code, String msg, Object data) {
-        super.put(CODE_TAG, code);
+    public AjaxResult(HttpStatus code, String msg, Object data) {
+        super.put(CODE_TAG, code.value());
         super.put(MSG_TAG, msg);
         if (StringUtils.isNotNull(data)) {
             super.put(DATA_TAG, data);
@@ -97,7 +97,7 @@ public class AjaxResult extends HashMap<String, Object> {
      * @return 成功消息
      */
     public static AjaxResult success(String msg, Object data) {
-        return new AjaxResult(HttpStatus.SUCCESS, msg, data);
+        return new AjaxResult(HttpStatus.OK, msg, data);
     }
 
     /**
@@ -127,7 +127,7 @@ public class AjaxResult extends HashMap<String, Object> {
      * @return 警告消息
      */
     public static AjaxResult error(String msg, Object data) {
-        return new AjaxResult(HttpStatus.ERROR, msg, data);
+        return new AjaxResult(HttpStatus.INTERNAL_SERVER_ERROR, msg, data);
     }
 
     /**
@@ -137,7 +137,7 @@ public class AjaxResult extends HashMap<String, Object> {
      * @param msg  返回内容
      * @return 警告消息
      */
-    public static AjaxResult error(int code, String msg) {
+    public static AjaxResult error(HttpStatus code, String msg) {
         return new AjaxResult(code, msg, null);
     }
 }

@@ -2,7 +2,7 @@ package com.dimple.common.exception;
 
 /**
  * @className: UtilException
- * @description: 工具类异常
+ * @description: the exception with utils class use
  * @author: Dimple
  * @date: 10/22/19
  */

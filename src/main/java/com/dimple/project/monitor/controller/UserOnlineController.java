@@ -49,11 +49,11 @@ public class UserOnlineController extends BaseController {
         for (String key : keys) {
             LoginUser user = redisCacheService.getCacheObject(key);
             if (StringUtils.isNotEmpty(ip) && StringUtils.isNotEmpty(userName)) {
-                if (StringUtils.equals(ip, user.getIpaddr()) && StringUtils.equals(userName, user.getUsername())) {
+                if (StringUtils.equals(ip, user.getIp()) && StringUtils.equals(userName, user.getUsername())) {
                     userOnlineList.add(userOnlineService.selectOnlineByInfo(ip, userName, user));
                 }
             } else if (StringUtils.isNotEmpty(ip)) {
-                if (StringUtils.equals(ip, user.getIpaddr())) {
+                if (StringUtils.equals(ip, user.getIp())) {
                     userOnlineList.add(userOnlineService.selectOnlineByIpaddr(ip, user));
                 }
             } else if (StringUtils.isNotEmpty(userName) && StringUtils.isNotNull(user.getUser())) {

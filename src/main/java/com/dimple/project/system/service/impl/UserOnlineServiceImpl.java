@@ -17,7 +17,7 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 
     @Override
     public UserOnline selectOnlineByIpaddr(String ipaddr, LoginUser user) {
-        if (StringUtils.equals(ipaddr, user.getIpaddr())) {
+        if (StringUtils.equals(ipaddr, user.getIp())) {
             return loginUserToUserOnline(user);
         }
         return null;
@@ -34,7 +34,7 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 
     @Override
     public UserOnline selectOnlineByInfo(String ipaddr, String userName, LoginUser user) {
-        if (StringUtils.equals(ipaddr, user.getIpaddr()) && StringUtils.equals(userName, user.getUsername())) {
+        if (StringUtils.equals(ipaddr, user.getIp()) && StringUtils.equals(userName, user.getUsername())) {
             return loginUserToUserOnline(user);
         }
         return null;
@@ -48,8 +48,8 @@ public class UserOnlineServiceImpl implements UserOnlineService {
         UserOnline userOnline = new UserOnline();
         userOnline.setTokenId(user.getToken());
         userOnline.setUserName(user.getUsername());
-        userOnline.setIpaddr(user.getIpaddr());
-        userOnline.setLoginLocation(user.getLoginLocation());
+        userOnline.setIpaddr(user.getIp());
+        userOnline.setLoginLocation(user.getLocation());
         userOnline.setBrowser(user.getBrowser());
         userOnline.setOs(user.getOs());
         userOnline.setLoginTime(user.getLoginTime());

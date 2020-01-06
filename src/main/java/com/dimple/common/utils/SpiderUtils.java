@@ -18,7 +18,6 @@ public class SpiderUtils {
     private SpiderUtils() {
     }
 
-    //private static final String KEY = CacheConstant.BUSINESS_CACHE_SPIDER + "List";
     private static final String KEY = "Spider_List";
 
     public static String parseUserAgent(String userAgent) {

@@ -4,7 +4,7 @@ import com.dimple.common.exception.BaseException;
 
 /**
  * @className: FileException
- * @description: 文件信息异常类
+ * @description: file exception class
  * @author: Dimple
  * @date: 10/22/19
  */

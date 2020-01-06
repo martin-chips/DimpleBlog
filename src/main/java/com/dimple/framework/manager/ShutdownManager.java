@@ -7,7 +7,7 @@ import javax.annotation.PreDestroy;
 
 /**
  * @className: ShutdownManager
- * @description: 确保应用退出时能关闭后台线程
+ * @description: Ensure that the background thread can be closed when the application exits
  * @author: Dimple
  * @date: 10/22/19
  */
@@ -25,7 +25,7 @@ public class ShutdownManager {
      */
     private void shutdownAsyncManager() {
         try {
-            log.info("====关闭后台任务任务线程池====");
+            log.info("close thread pool");
             AsyncManager.me().shutdown();
         } catch (Exception e) {
             log.error(e.getMessage(), e);

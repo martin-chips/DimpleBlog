@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @className: RedisCache
- * @description: spring redis 工具类
+ * @description: spring redis utils class
  * @author: Dimple
  * @date: 10/22/19
  */

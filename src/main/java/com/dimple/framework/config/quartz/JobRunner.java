@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * @className: JobRunner
- * @description:
+ * @description: Job Runner for load job from database
  * @author: Dimple
  * @date: 11/07/19
  */
@@ -26,13 +26,13 @@ public class JobRunner implements ApplicationRunner {
     QuartzJobService quartzJobService;
 
     /**
-     * 方便项目重启的时候重新加载任务
+     * get job from database when application run
      */
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-        log.info("开始注入定时任务");
+    public void run(ApplicationArguments args) {
+        log.info("start inject task");
         List<QuartzJob> quartzJobList = quartzJobService.selectRunningQuartzJobList();
         quartzJobList.forEach(quartzManage::addJob);
-        log.info("任务注入完成,数量{}",quartzJobList.size());
+        log.info("end inject task,the size of task {}", quartzJobList.size());
     }
 }

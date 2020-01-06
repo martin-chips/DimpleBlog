@@ -2,7 +2,7 @@ package com.dimple.common.exception.file;
 
 /**
  * @className: FileSizeLimitExceededException
- * @description: 文件名大小限制异常类
+ * @description: if the size of this file are gt than the maxSize,will throw this exception
  * @author: Dimple
  * @date: 10/22/19
  */

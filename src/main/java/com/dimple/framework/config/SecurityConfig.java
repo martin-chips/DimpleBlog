@@ -24,36 +24,16 @@ import com.dimple.framework.security.handle.LogoutSuccessHandlerImpl;
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    /**
-     * 自定义用户认证逻辑
-     */
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    /**
-     * 认证失败处理类
-     */
+    UserDetailsService userDetailsService;
     @Autowired
-    private AuthenticationEntryPointImpl unauthorizedHandler;
-
-    /**
-     * 退出处理类
-     */
+    AuthenticationEntryPointImpl unauthorizedHandler;
     @Autowired
-    private LogoutSuccessHandlerImpl logoutSuccessHandler;
+    LogoutSuccessHandlerImpl logoutSuccessHandler;
 
-    /**
-     * token认证过滤器
-     */
     @Autowired
-    private JwtAuthenticationTokenFilter authenticationTokenFilter;
+    JwtAuthenticationTokenFilter authenticationTokenFilter;
 
-    /**
-     * 解决 无法直接注入 AuthenticationManager
-     *
-     * @return
-     * @throws Exception
-     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -114,17 +94,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    /**
-     * 强散列哈希加密实现
-     */
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /**
-     * 身份认证接口
-     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());

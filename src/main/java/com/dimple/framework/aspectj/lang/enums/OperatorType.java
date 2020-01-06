@@ -2,7 +2,7 @@ package com.dimple.framework.aspectj.lang.enums;
 
 /**
  * @className: OperatorType
- * @description: 操作人类别
+ * @description: the type of operator
  * @author: Dimple
  * @date: 10/22/19
  */

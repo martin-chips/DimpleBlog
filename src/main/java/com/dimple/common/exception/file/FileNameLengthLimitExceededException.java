@@ -2,7 +2,7 @@ package com.dimple.common.exception.file;
 
 /**
  * @className: FileNameLengthLimitExceededException
- * @description: 文件名称超长限制异常类
+ * @description: if the name of file is too long,will throw this exception
  * @author: Dimple
  * @date: 10/22/19
  */

@@ -5,29 +5,29 @@ import com.dimple.common.utils.StringUtils;
 
 /**
  * @className: BaseException
- * @description: 基础异常
+ * @description: the base of exception
  * @author: Dimple
  * @date: 10/22/19
  */
 public class BaseException extends RuntimeException {
 
     /**
-     * 所属模块
+     * the module
      */
     private String module;
 
     /**
-     * 错误码
+     * error code
      */
     private String code;
 
     /**
-     * 错误码对应的参数
+     * the args
      */
     private Object[] args;
 
     /**
-     * 错误消息
+     * error message
      */
     private String defaultMessage;
 

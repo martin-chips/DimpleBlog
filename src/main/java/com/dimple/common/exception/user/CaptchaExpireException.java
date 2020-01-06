@@ -2,7 +2,7 @@ package com.dimple.common.exception.user;
 
 /**
  * @className: CaptchaExpireException
- * @description: 验证码失效异常类
+ * @description: if captcha is expired, will throw this exception
  * @author: Dimple
  * @date: 10/22/19
  */

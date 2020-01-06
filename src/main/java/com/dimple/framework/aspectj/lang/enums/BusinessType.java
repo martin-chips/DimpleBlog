@@ -8,60 +8,55 @@ package com.dimple.framework.aspectj.lang.enums;
  */
 public enum BusinessType {
     /**
-     * 其它
+     * other
      */
     OTHER,
 
     /**
-     * 新增
+     * add
      */
     INSERT,
 
     /**
-     * 修改
+     * modify
      */
     UPDATE,
 
     /**
-     * 删除
+     * remove
      */
     DELETE,
 
     /**
-     * 授权
+     * grant
      */
     GRANT,
 
     /**
-     * 导出
+     * export
      */
     EXPORT,
 
     /**
-     * 导入
+     * import
      */
     IMPORT,
 
     /**
-     * 强退
+     * force logout
      */
     FORCE,
 
     /**
-     * 生成代码
-     */
-    GENCODE,
-
-    /**
-     * 清空数据
+     * clean data
      */
     CLEAN,
     /**
-     * 上传
+     * upload
      */
     UPLOAD,
     /**
-     * 下载
+     * download
      */
     DOWNLOAD
 }

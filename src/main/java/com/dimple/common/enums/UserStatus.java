@@ -2,7 +2,7 @@ package com.dimple.common.enums;
 
 /**
  * @className: UserStatus
- * @description: 用户状态
+ * @description: user type
  * @author: Dimple
  * @date: 10/22/19
  */

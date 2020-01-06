@@ -1,11 +1,11 @@
 package com.dimple.framework.web.exception;
 
-import com.dimple.common.constant.HttpStatus;
 import com.dimple.common.exception.BaseException;
 import com.dimple.common.exception.CustomException;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.web.domain.AjaxResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     public AjaxResult handlerNoFoundException(Exception e) {
         log.error(e.getMessage(), e);
-        return AjaxResult.error(HttpStatus.NOT_FOUND, "路径不存在，请检查路径是否正确");
+        return AjaxResult.error(HttpStatus.FORBIDDEN, "路径不存在，请检查路径是否正确");
     }
 
     @ExceptionHandler(AccessDeniedException.class)

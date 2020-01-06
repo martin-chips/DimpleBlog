@@ -29,7 +29,7 @@ import java.util.concurrent.Callable;
 
 /**
  * @className: MyRedisCacheManager
- * @description: 自定义CacheManager实现注解设置失效时间
+ * @description: cache manager to insert expire time
  * @author: Dimple
  * @date: 2020/1/1
  */
@@ -157,7 +157,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
             }
             log.info("cacheName: {}, expire: {},duration: {}", cacheName, expire, duration);
             if (expire >= 0) {
-                // 缓存配置
+                // cache config
                 RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
                         .entryTtl(duration)
                         .disableCachingNullValues()

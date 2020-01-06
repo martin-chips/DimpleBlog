@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * @className: FilterConfig
- * @description: Filter配置
+ * @description: filter config
  * @author: Dimple
  * @date: 10/22/19
  */
