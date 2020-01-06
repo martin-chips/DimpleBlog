@@ -179,44 +179,44 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public String getName() {
-            log.info("name: {}", cache.getName());
+            log.info("get cache by name: {}", cache.getName());
             try {
                 return cache.getName();
             } catch (Exception e) {
-                log.error("getName ---> errMsg: {}", e.getMessage(), e);
+                log.error("getName get an exception, errMsg: {}", e.getMessage(), e);
                 return null;
             }
         }
 
         @Override
         public Object getNativeCache() {
-            log.info("nativeCache: {}", cache.getNativeCache());
+            log.info("get native cache : {}", cache.getNativeCache());
             try {
                 return cache.getNativeCache();
             } catch (Exception e) {
-                log.error("getNativeCache ---> errMsg: {}", e.getMessage(), e);
+                log.error("getNativeCache get an exception, errMsg: {}", e.getMessage(), e);
                 return null;
             }
         }
 
         @Override
         public ValueWrapper get(Object o) {
-            log.info("get ---> o: {}", o);
+            log.info("get cache by key : {}", o);
             try {
                 return cache.get(o);
             } catch (Exception e) {
-                log.error("get ---> o: {}, errMsg: {}", o, e.getMessage(), e);
+                log.error("get cache {} get an exception, errMsg: {}", o, e.getMessage(), e);
                 return null;
             }
         }
 
         @Override
         public <T> T get(Object o, Class<T> aClass) {
-            log.info("get ---> o: {}, clazz: {}", o, aClass);
+            log.info("get cache by key and class: {}, clazz: {}", o, aClass);
             try {
                 return cache.get(o, aClass);
             } catch (Exception e) {
-                log.error("get ---> o: {}, clazz: {}, errMsg: {}", o, aClass, e.getMessage(), e);
+                log.error("get cache by key {} and class {}, errMsg: {}", o, aClass, e.getMessage(), e);
                 return null;
             }
         }
@@ -224,43 +224,43 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public <T> T get(Object o, Callable<T> callable) {
-            log.info("get ---> o: {}", o);
+            log.info("get cache by key {} and callable", o);
             try {
                 return cache.get(o, callable);
             } catch (Exception e) {
-                log.error("get ---> o: {}, errMsg: {}", o, e.getMessage(), e);
+                log.error("get cache by key {},errMsg {}", o, e.getMessage(), e);
                 return null;
             }
         }
 
         @Override
         public void put(Object o, Object o1) {
-            log.info("put ---> o: {}, o1: {}", o, o1);
+            log.info("put cache key: {}, value: {}", o, o1);
             try {
                 cache.put(o, o1);
             } catch (Exception e) {
-                log.error("put ---> o: {}, o1: {}, errMsg: {}", o, o1, e.getMessage(), e);
+                log.error("put cache key: {}, value: {}, errMsg: {}", o, o1, e.getMessage(), e);
             }
         }
 
         @Override
         public ValueWrapper putIfAbsent(Object o, Object o1) {
-            log.info("putIfAbsent ---> o: {}, o1: {}", o, o1);
+            log.info("putIfAbsent key {} value {}", o, o1);
             try {
                 return cache.putIfAbsent(o, o1);
             } catch (Exception e) {
-                log.error("putIfAbsent ---> o: {}, o1: {}, errMsg: {}", o, o1, e.getMessage(), e);
+                log.error("putIfAbsent key {} value {}, errMsg: {}", o, o1, e.getMessage(), e);
                 return null;
             }
         }
 
         @Override
         public void evict(Object o) {
-            log.info("evict ---> o: {}", o);
+            log.info("evict by key: {}", o);
             try {
                 cache.evict(o);
             } catch (Exception e) {
-                log.error("evict ---> o: {}, errMsg: {}", o, e.getMessage(), e);
+                log.error("evict by key: {}, errMsg: {}", o, e.getMessage(), e);
             }
         }
 
@@ -270,7 +270,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
             try {
                 cache.clear();
             } catch (Exception e) {
-                log.error("clear ---> errMsg: {}", e.getMessage(), e);
+                log.error("clear, errMsg: {}", e.getMessage(), e);
             }
         }
     }

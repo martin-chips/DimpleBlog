@@ -125,7 +125,6 @@
             addTocScrollSpy() {
                 /* eslint-disable */
                 if (!this.$refs.article) return;
-                console.log('addTocScrollSpy');
                 let tocSelector = '#side-toc';
                 if (document.body.clientWidth <= 1200) {
                     tocSelector = '#sidebar-toc';

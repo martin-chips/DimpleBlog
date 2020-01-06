@@ -1563,3 +1563,8 @@ insert  into `visit_log`(`id`,`ip`,`page_id`,`location`,`browser`,`os`,`entry_ur
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+alter table link
+    add click bigint default 0 null comment '点击量' after weight;
+

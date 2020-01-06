@@ -6,6 +6,7 @@ import com.dimple.project.common.domain.Category;
 import com.dimple.project.common.domain.Tag;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.system.domain.Carousel;
+import com.dimple.project.system.domain.Config;
 import com.dimple.project.system.domain.Link;
 import com.dimple.project.system.domain.Notice;
 import org.apache.ibatis.annotations.Param;
@@ -118,4 +119,8 @@ public interface FrontMapper {
     List<Blog> selectBlogList(BlogQuery blogQuery);
 
     List<Tag> selectTagListByTypeAndId(@Param("type") Integer type, @Param("id") Long id);
+
+    int incrementLinkClick(Integer id);
+
+    Config selectAbout();
 }

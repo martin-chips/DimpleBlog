@@ -1,4 +1,4 @@
-import {listBlogBaseInfo} from '@/api'
+import {listBlogArchive} from '@/api'
 
 export default {
   namespaced: true,
@@ -41,7 +41,7 @@ export default {
     // 获取文章详细信息
     GET_TIMELINE_INFO({state, commit}, {params, reset}) {
       return new Promise((resolve, reject) => {
-        listBlogBaseInfo(params).then((response) => {
+        listBlogArchive(params).then((response) => {
           // 更新timeline
           if (reset) {
             // 如果是重置，则先删除原有数据

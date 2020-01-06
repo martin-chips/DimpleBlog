@@ -132,4 +132,28 @@ public interface FrontService {
      */
     List<Blog> selectBlogList(BlogQuery blogQuery);
 
+    /**
+     * update link click
+     *
+     * @param id link id
+     * @return update count
+     */
+    int incrementLinkClick(Integer id);
+
+    /**
+     * update blog click
+     *
+     * @param id blog id
+     * @return update count
+     */
+    int incrementBlogClick(Long id);
+
+    /**
+     * get about from config
+     *
+     * @return about html
+     */
+    String selectAbout();
+
+    List<Blog> selectBlogArchive(BlogQuery blogQuery);
 }

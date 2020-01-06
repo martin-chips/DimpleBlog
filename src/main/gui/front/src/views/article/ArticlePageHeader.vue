@@ -25,7 +25,7 @@
                   </span>
                     <span class="comments">
                       <a @click="scrollToComments('#comments')">
-                        <Icon type="ios-create"></Icon> {{article.commentCount}} 评论
+                        <Icon type="ios-create"></Icon> {{article.commentList.length}} 评论
                       </a>
                    </span>
                     <span class="likes">
@@ -77,28 +77,41 @@
     .article-page-header
         padding-bottom 10px
         text-align left
+
         .status
             display flex
             margin-bottom 10px
             line-height 100%
+
             .switches
                 flex 1
                 display flex
                 justify-content flex-end
                 cursor pointer
+
                 .ivu-btn-ghost
-                    i::before, span
+                    i:
+
+                    :before, span
                     color $default-desc-color
                     &:hover
-                        i::before, span
+                        i:
+
+                        :before, span
                             color $default-desc-hover-color
 
                 .ivu-btn-ghost[disabled]
-                    i::before, span
+                    i:
+
+                    :before, span
                         color $default-info-color
+
                     &:hover
-                        i::before, span
+                        i:
+
+                        :before, span
                             color $default-info-color
+
         .title
             font-weight 500
             color $default-title-color
@@ -114,6 +127,7 @@
             @media screen and (min-width: $responsive-lg)
                 font-size 27px
                 line-height 35px
+
         .info, .operate_info
             margin-top 10px
             font-size 14px
@@ -124,22 +138,29 @@
                 margin-top 7px
                 font-size 12px
                 line-height 15px
+
             a
                 color: $default-link-color
                 cursor pointe
+
                 &:hover
                     color $default-link-hover-color
+
             .publish-time
                 margin-left 20px
+
         .operate_info
             text-align right
             @media only screen and (max-width: 768px)
                 text-align left
+
             span
                 + span
                     margin-left 10px
+
                 a
                     cursor pointer
+
                     &:hover
                         color $default-link-hover-color
 

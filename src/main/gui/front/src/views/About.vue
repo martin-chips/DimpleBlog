@@ -1,7 +1,7 @@
 <template>
     <div class="about">
         <img class="background" src="./../assets/background.jpg" alt="">
-        <img class="avatar" src="https://bianxiaofeng.com/front/images/ava.png" alt="">
+        <img class="avatar" src="./../assets/avatar.png" alt="">
         <p class="name">边小丰</p>
         <p class="desc">Dimple Blog</p>
         <!--    <ul class="social">-->

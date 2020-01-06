@@ -1,5 +1,6 @@
 package com.dimple.project.blog.service.impl;
 
+import com.dimple.common.enums.CacheConstants;
 import com.dimple.common.enums.TagType;
 import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.SecurityUtils;
@@ -11,6 +12,8 @@ import com.dimple.project.blog.service.BlogService;
 import com.dimple.project.blog.service.TagService;
 import com.dimple.project.common.domain.Tag;
 import com.dimple.project.front.domain.BlogQuery;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,6 +75,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     @Transactional(rollbackFor = {Exception.class})
+    @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogList'")
     public int insertBlog(Blog blog) {
         blog.setCreateBy(SecurityUtils.getUsername());
         int count = blogMapper.insertBlog(blog);
@@ -81,6 +85,7 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
+    @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogList'")
     public int updateBlog(Blog blog) {
         blog.setUpdateBy(SecurityUtils.getUsername());
         int count = blogMapper.updateBlog(blog);
@@ -89,18 +94,31 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogList'"),
+            @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'HotList'"),
+            @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'SupportList'"),
+    })
+    @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogList'")
     public int deleteBlogByIds(String ids) {
         String username = SecurityUtils.getUsername();
         return blogMapper.deleteBlogByIds(ConvertUtils.toStrArray(ids), username);
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogList'"),
+            @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'HotList'"),
+            @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'SupportList'"),
+            @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogItem_'+#id")
+    })
     public int deleteBlogById(Long id) {
         String username = SecurityUtils.getUsername();
         return blogMapper.deleteBlogById(id, username);
     }
 
     @Override
+    @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogList'")
     public List<String> selectBlogTagList(String query) {
         Tag tag = new Tag();
         tag.setTitle(query);

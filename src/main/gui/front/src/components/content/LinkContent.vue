@@ -11,15 +11,17 @@
                     </Divider>
                     <Row>
                         <Col v-for="link in list" :xs="8" :sm="8" :md="7" :lg="7" :xl="7">
-                            <Card style="height: 10rem;margin: 0.8rem 0.8rem 0.8rem 0">
-                                <div slot="title">
-                                    <Avatar :src="link.headerImg"/>
-                                    <span class="link-title" :title="link.title" style="">{{link.title}}</span>
-                                </div>
-                                <div class="link-desc" :title="link.description" style="">
-                                    {{link.description}}
-                                </div>
-                            </Card>
+                            <a :href="link.url"  style="color:#333;" @click="updateCount(link.id)">
+                                <Card style="height: 10rem;margin: 0.8rem 0.8rem 0.8rem 0">
+                                    <div slot="title">
+                                        <Avatar :src="link.headerImg"/>
+                                        <span class="link-title" :title="link.title" style="">{{link.title}}</span>
+                                    </div>
+                                    <div class="link-desc" :title="link.description" style="">
+                                        {{link.description}}
+                                    </div>
+                                </Card>
+                            </a>
                         </Col>
                     </Row>
                     <Divider orientation="left">
@@ -98,7 +100,7 @@
 </template>
 
 <script>
-    import {listFriendLinks, insertFriendLink} from "@/api"
+    import {listFriendLinks, insertFriendLink,updateLinkCount} from "@/api"
     import Recommend from "../../views/Recommend";
     import Hot from "../../views/Hot";
     import {mapState} from "vuex";
@@ -154,7 +156,10 @@
             });
         },
         methods: {
-            searchSiteInfo(){
+            updateCount(id){
+                updateLinkCount(id);
+            },
+            searchSiteInfo() {
                 this.$Notice.warning({
                     title: '网站信息查询失败,请手动输入',
                 });

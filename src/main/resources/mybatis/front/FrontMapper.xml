@@ -63,6 +63,9 @@
     <update id="incrementBlogClick">
         update blog  set click=click +1 where id=#{id}
     </update>
+    <update id="incrementLinkClick">
+        update link set click=click+1 where id=#{id}
+    </update>
 
     <select id="selectLinkList" resultType="com.dimple.project.system.domain.Link">
         select id, title, url, description, header_img
@@ -78,17 +81,20 @@
     </select>
 
     <select id="selectSupportBlogList" resultType="com.dimple.project.blog.domain.Blog">
-        select id, title, summary, header_img_type, header_img, `like`, click, create_time
-        from blog
-        where delete_time is null and support = 1 and status =1
-        order by create_time,weight desc
+        select b.id, b.title, b.summary, b.header_img_type, b.header_img, b.like, b.click, b.create_time,count(c.id) as comment_count
+        from blog b left join comment c on b.id=c.page_id
+        where b.delete_time is null and c.delete_time is null and b.support = 1 and b.status =1
+        group by b.id
+        order by b.create_time,b.weight desc
         limit 5
     </select>
 
     <select id="selectHotBlogList" resultType="com.dimple.project.blog.domain.Blog">
-        select id, title, summary, header_img_type, header_img, `like`, click, create_time
-        from blog
-        where delete_time is null
+        select  b.id, b.title, b.summary, b.header_img_type,b.header_img, b.like, b.click, b.create_time,count(c.id) as comment_count
+        from blog  b left join comment c
+        on b.id=c.page_id
+        where b.delete_time is null and c.delete_time is null
+        group by b.id
         order by click desc
         limit 5
     </select>
@@ -173,6 +179,11 @@
         <if test="type == 1">and tm.blog_id=#{id}</if>
         <if test="type ==2">and tm.note_id=#{id}</if>
         <if test="type ==3">and tm.book_id=#{id}</if>
+    </select>
+    <select id="selectAbout" resultType="com.dimple.project.system.domain.Config">
+        select id, config_key, config_value
+        from config
+        where delete_time is null and config_key='about'
     </select>
 </mapper>
 

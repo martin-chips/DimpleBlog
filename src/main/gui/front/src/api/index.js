@@ -201,3 +201,19 @@ export function BookDetail(params) {
     })
 }
 
+//增加Link点击量
+export function updateLinkCount(id) {
+    return request({
+        url: '/f/link/' + id,
+        method: 'put',
+    })
+}
+
+//获取时光轴数据
+export function listBlogArchive(query) {
+    return request({
+        url: '/f/archive',
+        method: 'get',
+        params: query
+    })
+}
