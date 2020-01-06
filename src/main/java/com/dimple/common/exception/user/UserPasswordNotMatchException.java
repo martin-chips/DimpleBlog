@@ -2,7 +2,7 @@ package com.dimple.common.exception.user;
 
 /**
  * @className: UserPasswordNotMatchException
- * @description: 用户密码不正确或不符合规范异常类
+ * @description: user not exist or password are not match
  * @author: Dimple
  * @date: 10/22/19
  */

@@ -2,7 +2,6 @@ package com.dimple.framework.security.handle;
 
 import com.alibaba.fastjson.JSON;
 import com.dimple.common.constant.Constants;
-import com.dimple.common.constant.HttpStatus;
 import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.manager.AsyncManager;
@@ -12,6 +11,7 @@ import com.dimple.framework.security.service.TokenService;
 import com.dimple.framework.web.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
@@ -47,6 +47,6 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
             // 记录用户退出日志
             AsyncManager.me().execute(AsyncFactory.recordLoginLog(userName, Constants.LOGOUT, "退出成功"));
         }
-        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(HttpStatus.SUCCESS, "退出成功")));
+        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(HttpStatus.OK, "退出成功")));
     }
 }

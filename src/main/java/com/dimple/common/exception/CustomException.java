@@ -1,5 +1,7 @@
 package com.dimple.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * @className: CustomException
  * @description: 自定义异常
@@ -8,7 +10,7 @@ package com.dimple.common.exception;
  */
 public class CustomException extends RuntimeException {
 
-    private Integer code;
+    private HttpStatus code;
 
     private String message;
 
@@ -16,7 +18,7 @@ public class CustomException extends RuntimeException {
         this.message = message;
     }
 
-    public CustomException(String message, Integer code) {
+    public CustomException(String message, HttpStatus code) {
         this.message = message;
         this.code = code;
     }
@@ -31,7 +33,7 @@ public class CustomException extends RuntimeException {
         return message;
     }
 
-    public Integer getCode() {
+    public HttpStatus getCode() {
         return code;
     }
 }

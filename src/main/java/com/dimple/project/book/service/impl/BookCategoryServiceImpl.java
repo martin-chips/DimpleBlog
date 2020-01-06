@@ -29,13 +29,13 @@ public class BookCategoryServiceImpl implements BookCategoryService {
 
     @Override
     public List<Category> selectBookCategoryList(Category category) {
-        category.setType(CategoryType.Book.getType());
+        category.setType(CategoryType.BOOK.getType());
         return categoryMapper.selectCategoryList(category);
     }
 
     @Override
     public int insertBookCategory(Category category) {
-        category.setType(CategoryType.Book.getType());
+        category.setType(CategoryType.BOOK.getType());
         return categoryMapper.insertCategory(category);
     }
 

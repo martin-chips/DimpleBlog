@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 
 /**
  * @className: Log
- * @description: 自定义操作日志记录注解
+ * @description: an annotation for record the log
  * @author: Dimple
  * @date: 10/22/19
  */
@@ -20,22 +20,23 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Log {
     /**
-     * 模块
+     * the module of this log
      */
     String title() default "";
 
     /**
-     * 功能
+     * business type
      */
     BusinessType businessType() default BusinessType.OTHER;
 
     /**
-     * 操作人类别
+     * the operator type
      */
     OperatorType operatorType() default OperatorType.MANAGE;
 
     /**
-     * 是否保存请求的参数
+     * is save the request data?
+     * if the data is password or other privacy
      */
     boolean isSaveRequestData() default true;
 }

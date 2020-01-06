@@ -1,12 +1,11 @@
 package com.dimple.common.utils;
 
+import com.dimple.common.exception.CustomException;
+import com.dimple.framework.security.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.dimple.common.constant.HttpStatus;
-import com.dimple.common.exception.CustomException;
-import com.dimple.framework.security.LoginUser;
 
 /**
  * @className: SecurityUtils
@@ -23,7 +22,7 @@ public class SecurityUtils {
         try {
             return getLoginUser().getUsername();
         } catch (Exception e) {
-            throw new CustomException("获取用户账户异常", HttpStatus.UNAUTHORIZED);
+            throw new CustomException("获取用户账户异常", org.springframework.http.HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -34,7 +33,7 @@ public class SecurityUtils {
         try {
             return (LoginUser) getAuthentication().getPrincipal();
         } catch (Exception e) {
-            throw new CustomException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
+            throw new CustomException("获取用户信息异常", org.springframework.http.HttpStatus.UNAUTHORIZED);
         }
     }
 

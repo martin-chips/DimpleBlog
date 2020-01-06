@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
 @Component
 @Slf4j
 public class VisitLogAspect {
-    // 配置织入点
+
     @Pointcut("@annotation(com.dimple.framework.aspectj.lang.annotation.VLog)")
     public void logPointCut() {
     }

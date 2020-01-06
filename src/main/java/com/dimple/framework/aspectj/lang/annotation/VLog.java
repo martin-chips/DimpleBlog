@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  * @className: VLog
- * @description: 前台访问日志记录
+ * @description: an annotation for record user access log
  * @author: Dimple
  * @date: 2019/11/30
  */
@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface VLog {
     /**
-     * 请求的模块
+     * the module
      */
     String title() default "";
 

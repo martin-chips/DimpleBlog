@@ -29,9 +29,6 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    /**
-     * 系统基础配置
-     */
     @Autowired
     private DimpleBlogConfig dimpleBlogConfig;
 
@@ -75,18 +72,12 @@ public class SwaggerConfig {
                 .build();
     }
 
-    /**
-     * 安全模式，这里指定token通过Authorization头请求头传递
-     */
     private List<ApiKey> securitySchemes() {
         List<ApiKey> apiKeyList = new ArrayList<>();
         apiKeyList.add(new ApiKey("Authorization", "Authorization", "header"));
         return apiKeyList;
     }
 
-    /**
-     * 安全上下文
-     */
     private List<SecurityContext> securityContexts() {
         List<SecurityContext> securityContexts = new ArrayList<>();
         securityContexts.add(
@@ -97,9 +88,6 @@ public class SwaggerConfig {
         return securityContexts;
     }
 
-    /**
-     * 默认的安全上引用
-     */
     private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];

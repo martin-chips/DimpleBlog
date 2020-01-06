@@ -22,7 +22,7 @@ import java.time.Duration;
 
 /**
  * @className: RedisConfig
- * @description: redis配置
+ * @description: redis config
  * @author: Dimple
  * @date: 10/22/19
  */
@@ -35,10 +35,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-        // 初始化一个RedisCacheWriter
         RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
 
-        //设置默认缓存过期时间
         RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofHours(1))
                 .serializeKeysWith(MyRedisCacheManager.STRING_PAIR)
@@ -52,18 +50,14 @@ public class RedisConfig extends CachingConfigurerSupport {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         // set key serializer
         StringRedisSerializer serializer = MyRedisCacheManager.STRING_SERIALIZER;
-        // 设置key序列化类，否则key前面会多了一些乱码
         template.setKeySerializer(serializer);
         template.setHashKeySerializer(serializer);
 
-        // fastjson serializer
         GenericFastJsonRedisSerializer fastSerializer = MyRedisCacheManager.FASTJSON_SERIALIZER;
         template.setValueSerializer(fastSerializer);
         template.setHashValueSerializer(fastSerializer);
-        // 如果 KeySerializer 或者 ValueSerializer 没有配置，则对应的 KeySerializer、ValueSerializer 才使用这个 Serializer
         template.setDefaultSerializer(fastSerializer);
 
-        // factory
         template.setConnectionFactory(connectionFactory);
         template.afterPropertiesSet();
         return template;

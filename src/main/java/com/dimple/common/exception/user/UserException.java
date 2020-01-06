@@ -4,7 +4,7 @@ import com.dimple.common.exception.BaseException;
 
 /**
  * @className: UserException
- * @description: 用户信息异常类
+ * @description: user exception
  * @author: Dimple
  * @date: 10/22/19
  */

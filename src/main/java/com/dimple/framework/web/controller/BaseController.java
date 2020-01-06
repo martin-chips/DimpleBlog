@@ -1,6 +1,5 @@
 package com.dimple.framework.web.controller;
 
-import com.dimple.common.constant.HttpStatus;
 import com.dimple.common.utils.DateUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.sql.SqlUtil;
@@ -11,6 +10,7 @@ import com.dimple.framework.web.page.TableSupport;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.page.PageMethod;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -61,7 +61,7 @@ public class BaseController {
     @SuppressWarnings({"rawtypes", "unchecked"})
     protected TableDataInfo getDataTable(List<?> list) {
         TableDataInfo rspData = new TableDataInfo();
-        rspData.setCode(HttpStatus.SUCCESS);
+        rspData.setCode(HttpStatus.OK.value());
         rspData.setRows(list);
         if (list == null) {
             list = new ArrayList<>();

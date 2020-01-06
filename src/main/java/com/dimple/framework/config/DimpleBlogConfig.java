@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @className: DimpleBlogConfig
- * @description: 读取项目相关配置
+ * @description: get project setting
  * @author: Dimple
  * @date: 10/22/19
  */
@@ -13,27 +13,27 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "dimple")
 public class DimpleBlogConfig {
     /**
-     * 项目名称
+     * application name
      */
     private String name;
 
     /**
-     * 版本
+     * application version
      */
     private String version;
 
     /**
-     * 版权年份
+     * copyright
      */
     private String copyrightYear;
 
     /**
-     * 上传路径
+     * upload url
      */
     private static String profile;
 
     /**
-     * 获取地址开关
+     * enable address get
      */
     private static boolean addressEnabled;
 

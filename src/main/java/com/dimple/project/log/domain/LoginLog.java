@@ -2,6 +2,7 @@ package com.dimple.project.log.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @NoArgsConstructor
+@Builder
 public class LoginLog extends BaseEntity implements Serializable {
 
 

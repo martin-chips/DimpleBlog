@@ -1,12 +1,12 @@
 package com.dimple.common.exception.file;
 
-import java.util.Arrays;
-
 import org.apache.commons.fileupload.FileUploadException;
+
+import java.util.Arrays;
 
 /**
  * @className: InvalidExtensionException
- * @description: 文件上传 误异常类
+ * @description: If can not get the correct file will throw this exception
  * @author: Dimple
  * @date: 10/22/19
  */

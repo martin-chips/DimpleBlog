@@ -1,10 +1,8 @@
 package com.dimple.common.constant;
 
-import io.jsonwebtoken.Claims;
-
 /**
  * @className: Constants
- * @description: 通用常量信息
+ * @description: the constants
  * @author: Dimple
  * @date: 10/22/19
  */
@@ -13,87 +11,56 @@ public class Constants {
     }
 
     /**
-     * 通用成功标识
-     */
-    public static final String SUCCESS = "0";
-
-    /**
-     * 通用失败标识
-     */
-    public static final String FAIL = "1";
-
-    /**
-     * 登录成功
+     * login success
      */
     public static final String LOGIN_SUCCESS = "Success";
 
     /**
-     * 注销
+     * logout
      */
     public static final String LOGOUT = "Logout";
 
     /**
-     * 登录失败
+     * login failed
      */
     public static final String LOGIN_FAIL = "Error";
 
     /**
-     * 验证码 redis key
+     * captcha redis key
      */
     public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
 
     /**
-     * 登录用户 redis key
+     * logine user redis key
      */
     public static final String LOGIN_TOKEN_KEY = "login_tokens:";
 
     /**
-     * 验证码有效期（分钟）
+     * expire time of captcha (minute)
      */
     public static final Integer CAPTCHA_EXPIRATION = 2;
 
     /**
-     * 令牌
+     * token
      */
     public static final String TOKEN = "token";
 
     /**
-     * 令牌前缀
+     * the prefix of token
      */
     public static final String TOKEN_PREFIX = "Bearer ";
 
     /**
-     * 令牌前缀
+     * the prefix of token
      */
     public static final String LOGIN_USER_KEY = "login_user_key";
 
     /**
-     * 用户ID
+     * common constant for success
      */
-    public static final String JWT_USERID = "userid";
-
+    public static final Boolean SUCCESS = true;
     /**
-     * 用户名称
+     * common constant for failed
      */
-    public static final String JWT_USERNAME = Claims.SUBJECT;
-
-    /**
-     * 用户头像
-     */
-    public static final String JWT_AVATAR = "avatar";
-
-    /**
-     * 创建时间
-     */
-    public static final String JWT_CREATED = "created";
-
-    /**
-     * 用户权限
-     */
-    public static final String JWT_AUTHORITIES = "authorities";
-
-    /**
-     * 资源映射路径 前缀
-     */
-    public static final String RESOURCE_PREFIX = "/profile";
+    public static final Boolean FAILED = false;
 }

@@ -2,7 +2,7 @@ package com.dimple.common.exception.user;
 
 /**
  * @className: CaptchaException
- * @description: 验证码错误异常类
+ * @description: if captcha error will throw this exception
  * @author: Dimple
  * @date: 10/22/19
  */

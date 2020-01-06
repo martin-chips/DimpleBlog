@@ -1,7 +1,7 @@
 package com.dimple.framework.aspectj;
 
 import com.alibaba.fastjson.JSON;
-import com.dimple.common.enums.HttpMethod;
+import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.ip.IpUtils;
@@ -21,6 +21,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
@@ -28,11 +29,12 @@ import org.springframework.web.servlet.HandlerMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.text.MessageFormat;
 import java.util.Map;
 
 /**
  * @className: LogAspect
- * @description: 操作日志记录处理
+ * @description: the aspect for log operate log
  * @author: Dimple
  * @date: 10/22/19
  */
@@ -43,33 +45,28 @@ public class LogAspect {
 
     private long startTime = 0L;
 
-    // 配置织入点
     @Pointcut("@annotation(com.dimple.framework.aspectj.lang.annotation.Log)")
     public void logPointCut() {
     }
 
     /**
-     * 处理完请求后执行
+     * if the target method throw an exception will be blocked by this method.
      *
-     * @param joinPoint 切点
-     */
-    //@AfterReturning(pointcut = "logPointCut()", returning = "jsonResult")
-    //public void doAfterReturning(JoinPoint joinPoint, Object jsonResult) {
-    //    handleLog(joinPoint, null, jsonResult);
-    //}
-    //
-
-    /**
-     * 拦截异常操作
-     *
-     * @param joinPoint 切点
-     * @param e         异常
+     * @param joinPoint join point
+     * @param e         exception
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
         handleLog(joinPoint, e, null, System.currentTimeMillis() - startTime);
     }
 
+    /**
+     * around method
+     *
+     * @param joinPoint join point
+     * @return object(the target method result)
+     * @throws Throwable exception
+     */
     @Around("logPointCut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result;
@@ -79,94 +76,103 @@ public class LogAspect {
         return result;
     }
 
-
+    /**
+     * for log record
+     *
+     * @param joinPoint  join point
+     * @param e          exception
+     * @param jsonResult result
+     * @param cost       the time of this method cost
+     */
     protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult, long cost) {
         try {
-            // 获得注解
+            // get annotation
             Log controllerLog = getAnnotationLog(joinPoint);
             if (controllerLog == null) {
                 return;
             }
 
-            // 获取当前的用户
+            // get current user from servlet
             LoginUser loginUser = SpringUtils.getBean(TokenService.class).getLoginUser(ServletUtils.getRequest());
 
-            // *========数据库日志=========*//
-            OperateLog operLog = new OperateLog();
-            operLog.setStatus(true);
-            // 请求的地址
-            String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
-            operLog.setIp(ip);
-            // 返回参数
-            operLog.setJsonResult(JSON.toJSONString(jsonResult));
-            operLog.setCost(cost);
-            operLog.setUrl(ServletUtils.getRequest().getRequestURI());
+            OperateLog operateLog = new OperateLog();
+            operateLog.setStatus(Constants.SUCCESS);
+            // get the IP of this request
+            operateLog.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
+            // get result with JSON format
+            operateLog.setJsonResult(JSON.toJSONString(jsonResult));
+            operateLog.setCost(cost);
+            operateLog.setUrl(ServletUtils.getRequest().getRequestURI());
+
             if (loginUser != null) {
-                operLog.setOperateName(loginUser.getUsername());
+                operateLog.setOperateName(loginUser.getUsername());
             }
 
             if (e != null) {
-                operLog.setStatus(false);
-                operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
+                operateLog.setStatus(Constants.FAILED);
+                operateLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
-            // 设置方法名称
+            // get the class name
             String className = joinPoint.getTarget().getClass().getName();
+            // get method name
             String methodName = joinPoint.getSignature().getName();
-            operLog.setMethod(className + "." + methodName + "()");
-            // 设置请求方式
-            operLog.setRequestMethod(ServletUtils.getRequest().getMethod());
-            // 处理设置注解上的参数
-            getControllerMethodDescription(joinPoint, controllerLog, operLog);
-            // 保存数据库
-            AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
-        } catch (Exception exp) {
-            // 记录本地异常日志
-            log.error("==前置通知异常==");
-            log.error("异常信息:{}", exp.getMessage());
-            exp.printStackTrace();
+            operateLog.setMethod(MessageFormat.format("{}.{}()", className, methodName));
+            // get request method
+            operateLog.setRequestMethod(ServletUtils.getRequest().getMethod());
+            // set method args
+            getControllerMethodDescription(joinPoint, controllerLog, operateLog);
+            // save log
+            AsyncManager.me().execute(AsyncFactory.recordOperateLog(operateLog));
+        } catch (Exception exception) {
+            log.error("get exception in handleLog,{} ", exception.getMessage(), exception);
         }
     }
 
     /**
-     * 获取注解中对方法的描述信息 用于Controller层注解
+     * set the log <code>com.dimple.framework.aspectj.lang.annotation.Log</code> other descriptin
      *
-     * @param log     日志
-     * @param operLog 操作日志
-     * @throws Exception
+     * @param joinPoint  join point
+     * @param log        the annotation
+     * @param operateLog the operateLog
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, OperateLog operLog) {
-        // 设置action动作
-        operLog.setBusinessType(log.businessType().ordinal());
-        // 设置标题
-        operLog.setTitle(log.title());
-        // 设置操作人类别
-        operLog.setOperatorType(log.operatorType().ordinal());
-        // 是否需要保存request，参数和值
+    private void getControllerMethodDescription(JoinPoint joinPoint, Log log, OperateLog operateLog) {
+        // set businessType
+        operateLog.setBusinessType(log.businessType().ordinal());
+        // set title
+        operateLog.setTitle(log.title());
+        // set operator type
+        operateLog.setOperatorType(log.operatorType().ordinal());
+        // save request data if saveRequestData is true
         if (log.isSaveRequestData()) {
-            // 获取参数的信息，传入到数据库中。
-            setRequestValue(joinPoint, operLog);
+            // set request value
+            setRequestValue(joinPoint, operateLog);
         }
     }
 
     /**
-     * 获取请求的参数，放到log中
+     * get the data from request.
+     * If this request method is PUT/POST get data from body(the method args)
+     * else ,get data from attribute
      *
-     * @param operLog 操作日志
-     * @throws Exception 异常
+     * @param joinPoint  join point
+     * @param operateLog operate log
      */
-    private void setRequestValue(JoinPoint joinPoint, OperateLog operLog) {
-        String requestMethod = operLog.getRequestMethod();
-        if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
+    private void setRequestValue(JoinPoint joinPoint, OperateLog operateLog) {
+        String requestMethod = operateLog.getRequestMethod();
+        if (HttpMethod.PUT.matches(requestMethod) || HttpMethod.POST.matches(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());
-            operLog.setParam(StringUtils.substring(params, 0, 2000));
+            operateLog.setParam(StringUtils.substring(params, 0, 2000));
         } else {
             Map<?, ?> paramsMap = (Map<?, ?>) ServletUtils.getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-            operLog.setParam(StringUtils.substring(paramsMap.toString(), 0, 2000));
+            operateLog.setParam(StringUtils.substring(paramsMap.toString(), 0, 2000));
         }
     }
 
     /**
-     * 是否存在注解，如果存在就获取
+     * get annotation of <code>com.dimple.framework.aspectj.lang.annotation.Log</code>
+     *
+     * @param joinPoint join point
+     * @return the annotation of <code>com.dimple.framework.aspectj.lang.annotation.Log</code>,if can not find will return <code>null</code>
      */
     private Log getAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
@@ -180,7 +186,10 @@ public class LogAspect {
     }
 
     /**
-     * 参数拼装
+     * concat params
+     *
+     * @param paramsArray data
+     * @return params data
      */
     private String argsArrayToString(Object[] paramsArray) {
         StringBuilder params = new StringBuilder();
@@ -196,10 +205,10 @@ public class LogAspect {
     }
 
     /**
-     * 判断是否需要过滤的对象。
+     * consider if the data is file ,httpRequest or response
      *
-     * @param o 对象信息。
-     * @return 如果是需要过滤的对象，则返回true；否则返回false。
+     * @param o the data
+     * @return if match return true,else return false
      */
     public boolean isFilterObject(final Object o) {
         return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse;

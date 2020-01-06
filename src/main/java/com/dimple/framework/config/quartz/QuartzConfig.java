@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @className: QuartzConfig
- * @description: Quartz定时任务
+ * @description: the config of quartz
  * @author: Dimple
  * @date: 11/07/19
  */
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class QuartzConfig {
 
     /**
-     * 解决Job中注入SpringBean为Null的问题
+     * Solve the problem of null spring bean injection in job
      */
     @Component
     public static class QuartzJobFactory extends AdaptableJobFactory {
@@ -36,9 +36,6 @@ public class QuartzConfig {
         }
     }
 
-    /**
-     * 注入Scheduler到Spring
-     */
     @Bean
     public Scheduler scheduler(QuartzJobFactory quartzJobFactory) throws Exception {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();

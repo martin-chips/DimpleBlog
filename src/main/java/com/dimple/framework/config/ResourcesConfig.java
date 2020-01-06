@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 
 /**
  * @className: ResourcesConfig
- * @description: 通用配置
+ * @description: resource config
  * @author: Dimple
  * @date: 10/22/19
  */
@@ -17,11 +17,9 @@ public class ResourcesConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //设置上传的文件的访问路径映射
         String pathUtl = Paths.get(DimpleBlogConfig.getProfile()).normalize().toUri().toASCIIString();
         registry.addResourceHandler("/file/**").addResourceLocations(pathUtl).setCachePeriod(0);
 
-        /** swagger配置 */
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
