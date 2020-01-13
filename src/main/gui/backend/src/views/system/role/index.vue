@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="app-container">
     <el-form :inline="true">
       <el-form-item label="角色名称">
@@ -137,7 +137,7 @@
 </template>
 
 <script>
-  import {listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleStatus} from "@/api/system/role";
+  import {getRole, addRole, updateRole, changeRoleStatus} from "@/api/system/role";
   import {treeselect as menuTreeselect, roleMenuTreeselect} from "@/api/system/menu";
   import initData from '@/mixins/initData'
 

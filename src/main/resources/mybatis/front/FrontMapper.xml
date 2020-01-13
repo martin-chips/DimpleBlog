@@ -15,11 +15,11 @@
         <if test="location != null and location != ''">location,</if>
         <if test="os != null and os != ''">os,</if>
         <if test="browser != null and browser != ''">browser,</if>
-        <if test="parentId != null and parentId != ''">parent_id,</if>
+        <if test="parentId != null">parent_id,</if>
         <if test="qqNum != null and qqNum != ''">qq_num,</if>
         <if test="nickName != null and nickName != ''">nick_name,</if>
         <if test="avatar != null and avatar != ''">avatar,</if>
-        <if test="pageId != null and pageId != ''">page_id,</if>
+        <if test="pageId != null">page_id,</if>
         <if test="url != null and url != ''">url,</if>
         <if test="display != null and display != ''">display,</if>
         <if test="content != null and content != ''">content,</if>
@@ -35,11 +35,11 @@
         <if test="location != null and location != ''">#{location},</if>
         <if test="os != null and os != ''">#{os},</if>
         <if test="browser != null and browser != ''">#{browser},</if>
-        <if test="parentId != null and parentId != ''">#{parentId},</if>
+        <if test="parentId != null">#{parentId},</if>
         <if test="qqNum != null and qqNum != ''">#{qqNum},</if>
         <if test="nickName != null and nickName != ''">#{nickName},</if>
         <if test="avatar != null and avatar != ''">#{avatar},</if>
-        <if test="pageId != null and pageId != ''">#{pageId},</if>
+        <if test="pageId != null">#{pageId},</if>
         <if test="url != null and url != ''">#{url},</if>
         <if test="display != null and display != ''">#{display},</if>
         <if test="content != null and content != ''">#{content},</if>
@@ -121,7 +121,7 @@
     </select>
 
     <select id="selectCommentListByPageId" resultType="com.dimple.project.blog.domain.Comment">
-        select id, parent_id,nick_name, avatar, page_id, url, good,admin_reply,bad,reply_id,html_content as content, create_time
+        select id, parent_id,nick_name, avatar, page_id, good,admin_reply,bad,reply_id,html_content as content, create_time
         from comment
         where delete_time is null and page_id =#{id} order by create_time desc
     </select>

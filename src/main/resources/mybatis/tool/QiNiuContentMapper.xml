@@ -22,7 +22,7 @@
         <if test="suffix != null and suffix != ''">suffix,</if>
         <if test="type != null and type != ''">type,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
-        create_time
+        <if test="createTime != null and createTime != ''">create_time,</if>
         )values(
         <if test="name != null and name != ''">#{name},</if>
         <if test="bucket != null and bucket != ''">#{bucket},</if>
@@ -31,7 +31,7 @@
         <if test="suffix != null and suffix != ''">#{suffix},</if>
         <if test="type != null and type != ''">#{type},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
-        sysdate()
+        <if test="createTime != null and createTime != ''">#{createTime},</if>
         )
     </insert>
 

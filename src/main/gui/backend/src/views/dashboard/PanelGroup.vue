@@ -81,7 +81,7 @@
       //获取数据
       getPanelGroup() {
         listPanelGroup().then(response => {
-          this.bookCount = response.data.blogCount;
+          this.bookCount = response.data.bookCount;
           this.blogCount = response.data.blogCount;
           this.visitorCount = response.data.visitorCount;
           this.noteCount = response.data.noteCount;

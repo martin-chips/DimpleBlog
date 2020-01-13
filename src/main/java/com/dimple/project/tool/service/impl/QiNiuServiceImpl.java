@@ -9,7 +9,7 @@ import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.file.FileUtils;
 import com.dimple.project.system.domain.Config;
 import com.dimple.project.system.service.ConfigService;
-import com.dimple.project.tool.domain.QiNiuConfig;
+import com.dimple.project.common.domain.QiNiuConfig;
 import com.dimple.project.tool.domain.QiNiuContent;
 import com.dimple.project.tool.mapper.QiNiuContentMapper;
 import com.dimple.project.tool.service.QiNiuService;
@@ -50,7 +50,7 @@ public class QiNiuServiceImpl implements QiNiuService {
 
     @Override
     public QiNiuConfig getQiNiuConfig() {
-        Config config = configService.selectConfigByKey(ConfigKey.QI_NIU_CONFIG_KEY);
+        Config config = configService.selectConfigByKey(ConfigKey.CONFIG_KEY_QI_NIU);
         //七牛云Config的配置Json
         String configValue = config.getConfigValue();
         if (StringUtils.isEmpty(configValue)) {
@@ -63,7 +63,7 @@ public class QiNiuServiceImpl implements QiNiuService {
     public int updateQiNiuConfig(QiNiuConfig qiNiuConfig) {
         String qiNiuConfigString = JSON.toJSONString(qiNiuConfig);
         Config config = new Config();
-        config.setConfigKey(ConfigKey.QI_NIU_CONFIG_KEY);
+        config.setConfigKey(ConfigKey.CONFIG_KEY_QI_NIU);
         config.setConfigValue(qiNiuConfigString);
         config.setUpdateBy(SecurityUtils.getUsername());
         return configService.updateConfigByConfigKey(config);
@@ -140,12 +140,28 @@ public class QiNiuServiceImpl implements QiNiuService {
                     qiNiuContent.setBucket(qiNiuConfig.getBucket());
                     qiNiuContent.setUrl("http://" + qiNiuConfig.getHost() + "/" + item.key);
                     qiNiuContent.setCreateBy(username);
+                    qiNiuContent.setCreateTime(convertUnixTime(item.putTime + ""));
                     count += qiNiuContentMapper.insertContent(qiNiuContent);
                 }
 
             }
         }
         return count;
+    }
+
+    private Date convertUnixTime(String time) {
+        if (StringUtils.isEmpty(time)) {
+            return new Date();
+        }
+        //去掉后七位
+        String realTimeStr = time.substring(0, time.length() - 7);
+        try {
+            Long createTime = Long.valueOf(realTimeStr);
+            return new Date(createTime);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return new Date();
+        }
     }
 
     @Override

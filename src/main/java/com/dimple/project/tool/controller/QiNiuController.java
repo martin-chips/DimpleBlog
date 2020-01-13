@@ -6,7 +6,7 @@ import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
-import com.dimple.project.tool.domain.QiNiuConfig;
+import com.dimple.project.common.domain.QiNiuConfig;
 import com.dimple.project.tool.domain.QiNiuContent;
 import com.dimple.project.tool.service.QiNiuService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.dimple.project.tool.domain;
+package com.dimple.project.common.domain;
 
 import com.dimple.common.utils.StringUtils;
 import lombok.Data;

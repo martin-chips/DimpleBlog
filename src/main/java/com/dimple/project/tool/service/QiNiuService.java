@@ -1,6 +1,6 @@
 package com.dimple.project.tool.service;
 
-import com.dimple.project.tool.domain.QiNiuConfig;
+import com.dimple.project.common.domain.QiNiuConfig;
 import com.dimple.project.tool.domain.QiNiuContent;
 import org.springframework.web.multipart.MultipartFile;
 

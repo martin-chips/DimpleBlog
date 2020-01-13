@@ -72,7 +72,7 @@
       <el-table-column prop="bucket" label="空间名称"/>
       <el-table-column prop="size" label="文件大小"/>
       <el-table-column prop="type" label="空间类型"/>
-      <el-table-column width="180px" prop="updateTime" label="创建日期">
+      <el-table-column width="180px" prop="updateTime" label="上传时间">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
@@ -80,7 +80,7 @@
       <el-table-column label="操作" width="100px" align="center">
         <template slot-scope="scope">
           <el-popover :ref="scope.row.id" placement="top" width="180">
-            <p>确定删除本条数据吗？</p>
+            <p>删除该文件会导致所有引用该文件的博客图片失效!确定删除本条数据吗？</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
               <el-button :loading="loading" type="primary" size="mini" @click="handleSubDelete(scope.row.id)">确定

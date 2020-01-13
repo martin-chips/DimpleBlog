@@ -4,7 +4,6 @@ import com.dimple.framework.web.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -17,11 +16,8 @@ import java.io.Serializable;
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@NoArgsConstructor
 @Builder
 public class LoginLog extends BaseEntity implements Serializable {
-
-
     /**
      * ID
      */

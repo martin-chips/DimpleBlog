@@ -10,6 +10,12 @@ public interface ConfigKey {
     /**
      * 七牛云Config Key
      */
-    String QI_NIU_CONFIG_KEY = "qiNiuConfig";
+    String CONFIG_KEY_QI_NIU = "qiNiuConfig";
 
+    /**
+     * about
+     */
+    String CONFIG_KEY_ABOUT = "about";
+
+    String CONFIG_KEY_SITE_SETTING = "siteSetting";
 }

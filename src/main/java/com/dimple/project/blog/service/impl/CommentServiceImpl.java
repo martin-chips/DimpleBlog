@@ -4,6 +4,7 @@ import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.ObjectUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.ServletUtils;
+import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.ip.AddressUtils;
 import com.dimple.common.utils.ip.IpUtils;
 import com.dimple.project.blog.domain.Comment;
@@ -32,7 +33,18 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> selectCommentList(Comment comment) {
-        return commentMapper.selectCommentList(comment);
+        List<Comment> commentList = commentMapper.selectCommentList(comment);
+        if (!SecurityUtils.isAdmin()) {
+            commentList.forEach(e->{
+                if (StringUtils.isNotEmpty(e.getQqNum())) {
+                    e.setQqNum(e.getQqNum().replaceAll("[1-9][0-9]{4,}","*"));
+                }
+                if (StringUtils.isNotEmpty(e.getEmail())) {
+                    e.setEmail(e.getEmail().replaceAll("[1-9][0-9]{4,}", "*"));
+                }
+            });
+        }
+        return commentList;
     }
 
     @Override

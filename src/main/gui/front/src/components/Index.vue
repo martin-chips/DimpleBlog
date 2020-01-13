@@ -30,6 +30,7 @@
                             title: obj.title,
                             content: obj.htmlContent,
                             okText:'我知道了',
+                            closeOnClickModal:true,
                             scrollable:true,
                         })
                     }
