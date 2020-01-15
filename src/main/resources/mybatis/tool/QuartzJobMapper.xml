@@ -22,8 +22,8 @@
         <if test="methodName != null and methodName != ''">method_name,</if>
         <if test="methodParams != null and methodParams != ''">method_params,</if>
         <if test="cronExpression != null and cronExpression != ''">cron_expression,</if>
-        <if test="status null and status != ''">status,</if>
-        <if test="remark null and remark != ''">remark,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         )values(

@@ -103,6 +103,7 @@ public class FrontServiceImpl implements FrontService {
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         comment.setOs(userAgent.getOperatingSystem().getName());
         comment.setBrowser(userAgent.getBrowser().getName());
+        comment.setDisplay(true);
         comment.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         comment.setLocation(AddressUtils.getCityInfoByIp(comment.getIp()));
         return frontMapper.insertComment(comment);

@@ -38,4 +38,12 @@ public interface QuartzJobLogService {
      * 清空日志
      */
     void cleanQuartzJobLog();
+
+    /**
+     * select quartz job log by id
+     *
+     * @param id id
+     * @return quartzLog
+     */
+    QuartzJobLog selectQuartzJobLogById(Long id);
 }

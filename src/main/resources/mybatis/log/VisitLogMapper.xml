@@ -72,7 +72,25 @@
     </delete>
 
     <update id="cleanVisitLog">
-          update visit_log set delete_by = #{username},delete_time =sysdate()
+        update visit_log
+        set delete_by   = #{username},
+            delete_time =sysdate()
+    </update>
+
+    <update id="updateVisitLog">
+        update visit_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ip != null ">ip = #{ip},</if>
+            <if test="location != null  and location != ''">location = #{location},</if>
+            <if test="browser != null  and browser != ''">browser = #{browser},</if>
+            <if test="os != null  and os != ''">os = #{os},</if>
+            <if test="pageId != null  and pageId != ''">page_id = #{pageId},</if>
+            <if test="errorMsg != null  and errorMsg != ''">error_msg = #{errorMsg},</if>
+            <if test="spider != null  and spider != ''">spider = #{spider},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="title != null ">title = #{title},</if>
+        </trim>
+        where id = #{id}
     </update>
 
 

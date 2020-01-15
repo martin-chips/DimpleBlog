@@ -43,4 +43,12 @@ public interface VisitLogMapper {
      * @return 结果
      */
     int cleanVisitLog(String username);
+
+    /**
+     * update visitLog
+     *
+     * @param visitLog VisitLog
+     * @return update count
+     */
+    int updateVisitLog(VisitLog visitLog);
 }

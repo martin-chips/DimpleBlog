@@ -73,8 +73,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button v-show="scope.row.exception" size="mini" type="text" icon="el-icon-circle-close"
-                     @click="getExceptionInfo(scope.row.exception)">查看异常日志
+          <el-button size="mini" type="text" icon="el-icon-view"
+                     @click="handleDetail(scope.row.id)">详细
           </el-button>
           <el-popover :ref="scope.row.id" placement="top" width="180">
             <p>确定删除本条数据吗？</p>
@@ -91,10 +91,37 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog :close-on-click-modal="false" title="任务日志异常详细" :visible.sync="open" width="700px">
-      <span>
-        {{ exception }}
-      </span>
+    <el-dialog title="任务日志详细" :visible.sync="open" width="700px">
+      <el-form ref="form" :model="detail" label-width="100px" size="mini">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="任务名称：">{{ detail.jobName }}</el-form-item>
+            <el-form-item label="Bean名称：">{{ detail.beanName }}</el-form-item>
+            <el-form-item label="Cron表达式：">{{ detail.cronExpression }}</el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="方法名称：">{{ detail.methodName }}</el-form-item>
+            <el-form-item label="方法参数：">{{ detail.methodParams }}</el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="操作状态：">
+              <el-tag :type="detail.status ? 'success' : 'danger'">{{ detail.status ? '成功' : '失败' }}</el-tag>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="操作时间：">{{ parseTime(form.createTime) }}</el-form-item>
+          </el-col>
+          <el-col :span="24" v-if="detail.result!=null">
+            <el-form-item label="结果：">{{ detail.result }}</el-form-item>
+          </el-col>
+          <el-col :span="24" v-if="detail.status === false">
+            <el-form-item label="异常信息：">{{ detail.exception }}</el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="open = false">关 闭</el-button>
+      </div>
     </el-dialog>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
@@ -105,43 +132,45 @@
 </template>
 
 <script>
-    import {listQuartzJobLog} from "@/api/log/quartzLog";
-    import initData from '@/mixins/initData'
+  import {getQuartzDetail} from "@/api/log/quartzLog";
+  import initData from '@/mixins/initData'
 
-    export default {
-        mixins: [initData],
-        data() {
-            return {
-                exception: '',
-                // 类型数据字典
-                statusOptions: [],
-                // 查询参数
-                queryParams: {
-                    jobName: undefined,
-                    methodName: undefined,
-                    status: undefined
-                }
-            };
-        },
-        created() {
-            this.$nextTick(() => {
-                this.init()
-            });
-            this.getDicts("sys_common_status").then(response => {
-                this.statusOptions = response.data;
-            });
-        },
-        methods: {
-            beforeInit() {
-                this.base = '/log/quartzLog';
-                this.modelName = '任务日志';
-                return true
-            },
-            getExceptionInfo(exception) {
-                this.exception = exception;
-                this.open = true;
-            },
+  export default {
+    mixins: [initData],
+    data() {
+      return {
+        detail: {},
+        // 类型数据字典
+        statusOptions: [],
+        // 查询参数
+        queryParams: {
+          jobName: undefined,
+          methodName: undefined,
+          status: undefined
         }
-    };
+      };
+    },
+    created() {
+      this.$nextTick(() => {
+        this.init()
+      });
+      this.getDicts("sys_common_status").then(response => {
+        this.statusOptions = response.data;
+      });
+    },
+    methods: {
+      beforeInit() {
+        this.base = '/log/quartzLog';
+        this.modelName = '任务日志';
+        return true
+      },
+      handleDetail(id) {
+        getQuartzDetail(id).then(response => {
+          this.detail = response.data;
+          this.open = true;
+        });
+      }
+    }
+  };
 </script>
 

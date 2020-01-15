@@ -43,4 +43,9 @@ public class QuartzJobLogServiceImpl implements QuartzJobLogService {
         String username = SecurityUtils.getUsername();
         quartzJobLogMapper.cleanQuartzJobLog(username);
     }
+
+    @Override
+    public QuartzJobLog selectQuartzJobLogById(Long id) {
+        return quartzJobLogMapper.selectQuartzJobLogById(id);
+    }
 }

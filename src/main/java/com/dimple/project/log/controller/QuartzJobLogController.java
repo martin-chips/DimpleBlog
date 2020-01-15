@@ -38,6 +38,12 @@ public class QuartzJobLogController extends BaseController {
         return getDataTable(list);
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("@permissionService.hasPermission('monitor:loginLog:query')")
+    public AjaxResult query(@PathVariable Long id) {
+        return AjaxResult.success(quartzJobLogService.selectQuartzJobLogById(id));
+    }
+
     @PreAuthorize("@permissionService.hasPermission('monitor:quartzLog:remove')")
     @DeleteMapping("/{ids}")
     public AjaxResult deleteQuartzJobLogByIds(@PathVariable String ids) {
@@ -50,4 +56,6 @@ public class QuartzJobLogController extends BaseController {
         quartzJobLogService.cleanQuartzJobLog();
         return AjaxResult.success();
     }
+
+
 }

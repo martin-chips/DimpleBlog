@@ -43,4 +43,12 @@ public interface LoginLogMapper {
      * @return 结果
      */
     int cleanLoginLog(String username);
+
+    /**
+     * update login log
+     *
+     * @param loginLog login log
+     * @return update count
+     */
+    int updateLoginLog(LoginLog loginLog);
 }

@@ -146,81 +146,81 @@
 </template>
 
 <script>
-    import {
-        listQuartzJob,
-        delQuartzJob,
-        updateQuartzStatus,
-        executeJob,
-        getQuartzJob,
-        addQuartzJob,
-        updateQuartzJob
-    } from "@/api/tool/quartz";
-    import initData from '@/mixins/initData'
+  import {
+    listQuartzJob,
+    delQuartzJob,
+    updateQuartzStatus,
+    executeJob,
+    getQuartzJob,
+    addQuartzJob,
+    updateQuartzJob
+  } from "@/api/tool/quartz";
+  import initData from '@/mixins/initData'
 
-    export default {
-        mixins: [initData],
-        data() {
-            return {
-                // 状态数据字典
-                statusOptions: [],
-                // 查询参数
-                queryParams: {
-                    jobName: undefined,
-                    methodName: undefined,
-                    status: undefined
-                },
-                // 表单校验
-                rules: {
-                    jobName: [
-                        {required: true, message: '请输入任务名称', trigger: 'blur'}
-                    ],
-                    beanName: [
-                        {required: true, message: '请输入Bean名称', trigger: 'blur'}
-                    ],
-                    methodName: [
-                        {required: true, message: '请输入方法名称', trigger: 'blur'}
-                    ],
-                    cronExpression: [
-                        {required: true, message: '请输入Cron表达式', trigger: 'blur'}
-                    ]
-                }
-            };
+  export default {
+    mixins: [initData],
+    data() {
+      return {
+        // 状态数据字典
+        statusOptions: [],
+        // 查询参数
+        queryParams: {
+          jobName: undefined,
+          methodName: undefined,
+          status: undefined
         },
-        created() {
-            this.$nextTick(() => {
-                this.init()
-            })
-        },
-        methods: {
-            beforeInit() {
-                this.base = '/tool/quartz';
-                this.modelName = '定时任务';
-                return true
-            },
-            //执行任务
-            execute(id) {
-                executeJob(id).then(response => {
-                    if (response.code == 200) {
-                        this.msgSuccess("执行成功");
-                    } else {
-                        this.msgError("执行失败");
-                    }
-                }).catch(err => {
-                    console.log(err.response.data.message)
-                })
-            },
-            updateStatus(id) {
-                updateQuartzStatus(id).then(res => {
-                    if (res.code == 200) {
-                        this.msgSuccess("更新成功");
-                        this.getList();
-                    } else {
-                        this.msgError(res.msg);
-                    }
-                }).catch(err => {
-                    console.log(err.response.data.message)
-                })
-            }
+        // 表单校验
+        rules: {
+          jobName: [
+            {required: true, message: '请输入任务名称', trigger: 'blur'}
+          ],
+          beanName: [
+            {required: true, message: '请输入Bean名称', trigger: 'blur'}
+          ],
+          methodName: [
+            {required: true, message: '请输入方法名称', trigger: 'blur'}
+          ],
+          cronExpression: [
+            {required: true, message: '请输入Cron表达式', trigger: 'blur'}
+          ]
         }
-    };
+      };
+    },
+    created() {
+      this.$nextTick(() => {
+        this.init()
+      })
+    },
+    methods: {
+      beforeInit() {
+        this.base = '/tool/quartz';
+        this.modelName = '定时任务';
+        return true
+      },
+      //执行任务
+      execute(id) {
+        executeJob(id).then(response => {
+          if (response.code == 200) {
+            this.msgSuccess("执行成功");
+          } else {
+            this.msgError("执行失败");
+          }
+        }).catch(err => {
+          console.log(err.response.data.message)
+        })
+      },
+      updateStatus(id) {
+        updateQuartzStatus(id).then(res => {
+          if (res.code == 200) {
+            this.msgSuccess("更新成功");
+            this.init();
+          } else {
+            this.msgError(res.msg);
+          }
+        }).catch(err => {
+          console.log(err.response.data.message)
+        })
+      }
+    }
+  };
 </script>

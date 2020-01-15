@@ -54,13 +54,15 @@
 
 
     <delete id="cleanQuartzJobLog">
-        update quartz_log set delete_by=#{username},delete_time =sysdate()
+        update quartz_log
+        set delete_by=#{username},
+            delete_time =sysdate()
     </delete>
 
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectQuartzJobLogList" resultMap="QuartzJobLogMap">
-        select id, job_name, bean_name, method_name, method_params, cron_expression, exception, status, cost,
+        select id, job_name, bean_name, method_name, method_params, cron_expression, exception, status, cost,result,
         create_time
         from quartz_log
         where delete_time is null
@@ -85,5 +87,22 @@
         <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
             and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
+    </select>
+    <select id="selectQuartzJobLogById" resultType="com.dimple.project.log.domain.QuartzJobLog">
+        select id,
+               job_name,
+               bean_name,
+               method_name,
+               method_params,
+               cron_expression,
+               exception,
+               result,
+               status,
+               cost,
+               create_time,
+               create_by
+        from quartz_log
+        where id = #{id}
+          and delete_time is null
     </select>
 </mapper>

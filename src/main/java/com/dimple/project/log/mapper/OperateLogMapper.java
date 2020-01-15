@@ -48,4 +48,12 @@ public interface OperateLogMapper {
      * 清空操作日志
      */
     void cleanOperateLog(String username);
+
+    /**
+     * update operate log
+     *
+     * @param operateLog operateLog
+     * @return update count
+     */
+    int updateOperateLog(OperateLog operateLog);
 }

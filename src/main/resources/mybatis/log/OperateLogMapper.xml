@@ -24,14 +24,32 @@
     </resultMap>
 
     <sql id="selectOperateLogVo">
-        select id, title, business_type, method, request_method, cost,operator_type, operate_name, url, ip, location, param, json_result, status, error_msg, create_time,create_by
+        select id,
+               title,
+               business_type,
+               method,
+               request_method,
+               cost,
+               operator_type,
+               operate_name,
+               url,
+               ip,
+               location,
+               param,
+               json_result,
+               status,
+               error_msg,
+               create_time,
+               create_by
         from operate_log
     </sql>
 
     <insert id="insertOperateLog" parameterType="com.dimple.project.log.domain.OperateLog">
-		insert into operate_log(title, business_type, method, request_method, operator_type, operate_name, url, ip, location, param, json_result, status, error_msg, create_time,cost,create_by)
-        values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operateName}, #{url}, #{ip}, #{location}, #{param}, #{jsonResult}, #{status}, #{errorMsg}, sysdate(),#{cost},#{createBy})
-	</insert>
+        insert into operate_log(title, business_type, method, request_method, operator_type, operate_name, url, ip,
+                                location, param, json_result, status, error_msg, create_time, cost, create_by)
+        values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operateName}, #{url}, #{ip},
+                #{location}, #{param}, #{jsonResult}, #{status}, #{errorMsg}, sysdate(), #{cost}, #{createBy})
+    </insert>
 
     <select id="selectOperateLogList" parameterType="com.dimple.project.log.domain.OperateLog"
             resultMap="SysOperateLogResult">
@@ -76,7 +94,28 @@
     </select>
 
     <update id="cleanOperateLog">
-          update operate_log set delete_by=#{username},delete_time =sysdate()
+        update operate_log
+        set delete_by=#{username},
+            delete_time =sysdate()
+    </update>
+    <update id="updateOperateLog">
+        update operate_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null ">title = #{title},</if>
+            <if test="businessType != null  and businessType != ''">business_type = #{businessType},</if>
+            <if test="method != null  and method != ''">method = #{method},</if>
+            <if test="requestMethod != null  and requestMethod != ''">request_method = #{requestMethod},</if>
+            <if test="cost != null ">cost = #{cost},</if>
+            <if test="operateName != null  and operateName != ''">operate_name = #{operateName},</if>
+            <if test="url != null  and url != ''">url = #{url},</if>
+            <if test="ip != null ">ip = #{ip},</if>
+            <if test="location != null ">location = #{location},</if>
+            <if test="param != null ">param = #{param},</if>
+            <if test="jsonResult != null ">json_result = #{jsonResult},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="errorMsg != null ">error_msg = #{errorMsg},</if>
+        </trim>
+        where id = #{id}
     </update>
 
 </mapper>

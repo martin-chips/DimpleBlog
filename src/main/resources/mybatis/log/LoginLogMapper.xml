@@ -17,9 +17,9 @@
     </resultMap>
 
     <insert id="insertLoginLog" parameterType="com.dimple.project.log.domain.LoginLog">
-		insert into login_log (user_name, status, ip, location, browser, os, msg, create_time,create_by)
-		values (#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{msg}, sysdate(),#{createBy})
-	</insert>
+        insert into login_log (user_name, status, ip, location, browser, os, msg, create_time, create_by)
+        values (#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{msg}, sysdate(), #{createBy})
+    </insert>
 
     <select id="selectLoginLogList" parameterType="com.dimple.project.log.domain.LoginLog"
             resultMap="SysLoginLogResult">
@@ -50,7 +50,22 @@
     </delete>
 
     <update id="cleanLoginLog">
-          update login_log set delete_by = #{username},delete_time =sysdate()
+        update login_log
+        set delete_by   = #{username},
+            delete_time =sysdate()
+    </update>
+    <update id="updateLoginLog">
+        update login_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userName != null ">user_name = #{userName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="ip != null  and ip != ''">ip = #{ip},</if>
+            <if test="location != null  and location != ''">location = #{location},</if>
+            <if test="browser != null ">browser = #{browser},</if>
+            <if test="os != null  and os != ''">os = #{os},</if>
+            <if test="msg != null  and msg != ''">msg = #{msg},</if>
+        </trim>
+        where id = #{id}
     </update>
 
 </mapper>

@@ -43,4 +43,12 @@ public interface QuartzJobLogMapper {
      * @param username 操作者
      */
     void cleanQuartzJobLog(String username);
+
+    /**
+     * select quartz log by id
+     *
+     * @param id id
+     * @return quartzLog
+     */
+    QuartzJobLog selectQuartzJobLogById(Long id);
 }
