@@ -62,7 +62,7 @@
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectQuartzJobLogList" resultMap="QuartzJobLogMap">
-        select id, job_name, bean_name, method_name, method_params, cron_expression, exception, status, cost,result,
+        select id, job_name, bean_name, method_name, method_params, cron_expression, status, cost,
         create_time
         from quartz_log
         where delete_time is null

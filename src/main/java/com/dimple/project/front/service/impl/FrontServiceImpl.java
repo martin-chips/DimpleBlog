@@ -13,6 +13,7 @@ import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.common.domain.Category;
 import com.dimple.project.common.domain.Tag;
+import com.dimple.project.common.service.EmailService;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.front.mapper.FrontMapper;
 import com.dimple.project.front.service.FrontService;
@@ -41,6 +42,8 @@ public class FrontServiceImpl implements FrontService {
 
     @Autowired
     FrontMapper frontMapper;
+    @Autowired
+    EmailService emailService;
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_LINK_LIST)
@@ -97,7 +100,7 @@ public class FrontServiceImpl implements FrontService {
     }
 
     @Override
-    @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT_COMMENT_ITEM , key = "'PageId:'+#comment.pageId")
+    @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT_COMMENT_ITEM, key = "'PageId:'+#comment.pageId")
     public int insertComment(Comment comment) {
         comment.setAdminReply(SecurityUtils.isAdmin());
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
@@ -106,8 +109,15 @@ public class FrontServiceImpl implements FrontService {
         comment.setDisplay(true);
         comment.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         comment.setLocation(AddressUtils.getCityInfoByIp(comment.getIp()));
+        if (comment.getParentId() != null) {
+            Comment tempComment = frontMapper.selectCommentById(comment.getParentId());
+            if (tempComment.getReply()) {
+                emailService.sendReplyEmail(comment.getUrl(), comment.getHtmlContent(), comment.getNickName(), tempComment.getEmail());
+            }
+        }
         return frontMapper.insertComment(comment);
     }
+
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_COMMENT_ITEM, key = "'PageId:'+#id")

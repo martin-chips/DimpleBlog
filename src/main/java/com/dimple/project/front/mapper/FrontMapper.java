@@ -123,4 +123,6 @@ public interface FrontMapper {
     int incrementLinkClick(Integer id);
 
     Config selectAbout();
+
+    Comment selectCommentById(Long id);
 }

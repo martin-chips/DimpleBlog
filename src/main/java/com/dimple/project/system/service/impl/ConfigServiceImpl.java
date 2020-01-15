@@ -1,12 +1,18 @@
 package com.dimple.project.system.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.dimple.common.constant.UserConstants;
+import com.dimple.common.enums.CacheConstants;
+import com.dimple.common.exception.CustomException;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.framework.config.redis.CacheExpire;
+import com.dimple.framework.config.redis.TimeType;
 import com.dimple.project.system.domain.Config;
 import com.dimple.project.system.mapper.ConfigMapper;
 import com.dimple.project.system.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -77,5 +83,18 @@ public class ConfigServiceImpl implements ConfigService {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
+    }
+
+    @Override
+    @Cacheable(value = CacheConstants.CACHE_NAME_BACKEND_CONFIG, key = "#key")
+    @CacheExpire(expire = 5, type = TimeType.HOURS)
+    public <T> T selectConfigByConfigKey(String key, Class<T> tClass) {
+        Config config = new Config();
+        config.setConfigKey(key);
+        Config retConfig = configMapper.selectConfig(config);
+        if (retConfig == null) {
+            throw new CustomException("Can not get config by key  " + key);
+        }
+        return JSON.parseObject(retConfig.getConfigValue(), tClass);
     }
 }

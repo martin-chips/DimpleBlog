@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" label-width="80px">
+  <el-form ref="form" :model="form">
     <el-form-item prop="content" style="margin-bottom: 30px;">
       <mavonEditor v-model="form.content" ref="editor" @imgAdd="handleEditorImgAdd" style="height: 500px; "/>
     </el-form-item>
@@ -12,8 +12,14 @@
 
 <script>
   import {updateAbout} from "@/api/system/setting";
+  import {mavonEditor} from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
+
   export default {
     name: "AboutSetting",
+    components: {
+      mavonEditor
+    },
     data() {
       return {
         form: {},

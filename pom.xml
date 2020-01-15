@@ -35,6 +35,7 @@
         <oshi.version>4.1.1</oshi.version>
         <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
         <hutool.version>5.0.4</hutool.version>
+        <mail.version>1.4.7</mail.version>
     </properties>
 
     <dependencies>
@@ -43,6 +44,18 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <!--邮件依赖-->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${mail.version}</version>
         </dependency>
 
         <dependency>

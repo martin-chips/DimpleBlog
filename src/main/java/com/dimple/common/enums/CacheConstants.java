@@ -24,4 +24,6 @@ public interface CacheConstants {
     String CACHE_NAME_FRONT_BLOG_ITEM = "Front_Blog_Item";
     String CACHE_NAME_FRONT_COMMENT_ITEM = "Front_Comment_Item";
 
+    String CACHE_NAME_BACKEND_CONFIG = "Backend_Config";
+
 }

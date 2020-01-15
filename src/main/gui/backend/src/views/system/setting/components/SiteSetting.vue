@@ -1,22 +1,22 @@
 <template>
-  <el-form ref="form" :model="setting" :rules="rules" label-width="80px">
+  <el-form ref="form" :model="setting" :rules="rules" label-width="300px">
     <el-form-item label="网站名称" prop="title">
-      <el-input v-model="setting.title" placeholder="请输入网站名称"/>
+      <el-input v-model="setting.title" style="width: 60%;" placeholder="请输入网站名称"/>
     </el-form-item>
     <el-form-item label="网站备案号" prop="icp">
-      <el-input v-model="setting.icp" placeholder="请输入网站备案号"/>
+      <el-input v-model="setting.icp" style="width: 60%;" placeholder="请输入网站备案号"/>
     </el-form-item>
     <el-form-item label="网站描述" prop="description">
-      <el-input v-model="user.description" placeholder="请输入网站描述"/>
+      <el-input v-model="setting.description" style="width: 60%;" placeholder="请输入网站描述"/>
     </el-form-item>
     <el-form-item label="版权信息" prop="copyright">
-      <el-input v-model="user.copyright" placeholder="请输入版权信息"/>
+      <el-input v-model="setting.copyright" style="width: 60%;" placeholder="请输入版权信息"/>
     </el-form-item>
     <el-form-item label="版权信息描述" prop="copyrightDesc">
-      <el-input v-model="user.copyrightDesc" placeholder="请输入版权信息描述"/>
+      <el-input v-model="setting.copyrightDesc" style="width: 60%;" placeholder="请输入版权信息描述"/>
     </el-form-item>
     <el-form-item label="版权信息英文描述" prop="copyrightDescEn">
-      <el-input v-model="user.copyrightDescEn" placeholder="请输入版权信息英文描述"/>
+      <el-input v-model="setting.copyrightDescEn" style="width: 60%;" placeholder="请输入版权信息英文描述"/>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" size="mini" @click="submit">保存</el-button>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {updateSiteSetting} from "@/api/system/setting";
+  import {updateSiteSetting, getSiteSetting} from "@/api/system/setting";
 
   export default {
     name: "SiteSetting",
@@ -40,6 +40,11 @@
           ]
         }
       }
+    },
+    created() {
+      getSiteSetting().then(response => {
+        this.setting = response.data;
+      })
     },
     methods: {
       submit() {

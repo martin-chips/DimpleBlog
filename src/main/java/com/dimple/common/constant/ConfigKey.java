@@ -17,5 +17,12 @@ public interface ConfigKey {
      */
     String CONFIG_KEY_ABOUT = "about";
 
+    /**
+     * site setting
+     */
     String CONFIG_KEY_SITE_SETTING = "siteSetting";
+    /**
+     * email setting
+     */
+    String CONFIG_KEY_EMAIL_SETTING = "emailSetting";
 }

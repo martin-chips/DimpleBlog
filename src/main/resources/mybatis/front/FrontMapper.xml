@@ -185,5 +185,10 @@
         from config
         where delete_time is null and config_key='about'
     </select>
+    <select id="selectCommentById" resultType="com.dimple.project.blog.domain.Comment">
+        select id, nick_name, email, ip, location, os, browser, parent_id, qq_num, avatar, page_id, url, display, good, bad, content, create_by, create_time, reply
+from comment
+where id=#{id}
+    </select>
 </mapper>
 

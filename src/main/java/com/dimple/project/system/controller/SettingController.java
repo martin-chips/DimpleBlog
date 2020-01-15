@@ -5,6 +5,7 @@ import com.dimple.common.constant.ConfigKey;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.system.domain.Config;
+import com.dimple.project.system.domain.EmailSetting;
 import com.dimple.project.system.domain.SiteSetting;
 import com.dimple.project.system.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,4 +68,23 @@ public class SettingController extends BaseController {
         return AjaxResult.success(configService.updateConfigByConfigKey(config));
     }
 
+    @GetMapping("/emailSetting")
+    public AjaxResult emailSetting() {
+        Config config = configService.selectConfigByKey(ConfigKey.CONFIG_KEY_EMAIL_SETTING);
+        //convert to site setting
+        if (config != null) {
+            EmailSetting emailSetting = (EmailSetting) JSON.parse(config.getConfigValue());
+            return AjaxResult.success(emailSetting);
+        }
+        return AjaxResult.success(new EmailSetting());
+    }
+
+    @PutMapping("emailSetting")
+    public AjaxResult editEmailSetting(EmailSetting emailSetting) {
+        String jsonString = JSON.toJSONString(emailSetting);
+        Config config = new Config();
+        config.setConfigKey(ConfigKey.CONFIG_KEY_EMAIL_SETTING);
+        config.setConfigValue(jsonString);
+        return AjaxResult.success(configService.updateConfigByConfigKey(config));
+    }
 }

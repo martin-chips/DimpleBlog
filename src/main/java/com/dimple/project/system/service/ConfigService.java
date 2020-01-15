@@ -74,4 +74,14 @@ public interface ConfigService {
      * @return 结果
      */
     String checkConfigKeyUnique(Config config);
+
+    /**
+     * get config and cast to class
+     *
+     * @param key    config key
+     * @param tClass class
+     * @param <T>    class type
+     * @return T
+     */
+    <T> T selectConfigByConfigKey(String key, Class<T> tClass);
 }
