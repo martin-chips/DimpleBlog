@@ -1,7 +1,7 @@
 <template>
-  <el-form ref="form" :model="form">
+  <el-form ref="form" :model="setting">
     <el-form-item prop="content" style="margin-bottom: 30px;">
-      <mavonEditor v-model="form.content" ref="editor" @imgAdd="handleEditorImgAdd" style="height: 500px; "/>
+      <mavonEditor v-model="setting.content" ref="editor" @imgAdd="handleEditorImgAdd" style="height: 500px; "/>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" size="mini" @click="submit">保存</el-button>
@@ -11,18 +11,26 @@
 </template>
 
 <script>
-  import {updateAbout} from "@/api/system/setting";
+  import {updateAbout, getAbout} from "@/api/system/setting";
   import {mavonEditor} from 'mavon-editor'
   import 'mavon-editor/dist/css/index.css'
+  import marked from 'marked'
 
   export default {
     name: "AboutSetting",
     components: {
       mavonEditor
     },
+    created() {
+      getAbout().then(response => {
+        this.setting.content = response.data;
+      })
+    },
     data() {
       return {
-        form: {},
+        setting: {
+          content:""
+        },
         // 表单校验
         rules: {
           content: [
@@ -35,8 +43,8 @@
       submit() {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            this.form.htmlContent = marked(this.form.content)
-            updateAbout(JSON.parse(JSON.stringify(this.form))).then(
+            this.setting.htmlContent = marked(this.setting.content)
+            updateAbout(JSON.parse(JSON.stringify(this.setting))).then(
               response => {
                 if (response.code === 200) {
                   this.msgSuccess("修改成功");

@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
-    <el-tabs>
+    <el-tabs v-model="activeName" style="padding-left: 8px;">
       <el-tab-pane label="关于我" name="first">
         <AboutSetting/>
       </el-tab-pane>
       <el-tab-pane label="菜单设置" name="second">
         <FrontMenuSetting/>
       </el-tab-pane>
-      <el-tab-pane label="前台网站设置" name="three">
+      <el-tab-pane label="前台网站设置" name="third">
         <SiteSetting/>
       </el-tab-pane>
-      <el-tab-pane label="Email设置" name="four">
+      <el-tab-pane label="Email设置" name="fourth">
         <EmailSetting/>
       </el-tab-pane>
     </el-tabs>
@@ -27,7 +27,9 @@
     name: "index",
     components: {SiteSetting, FrontMenuSetting, AboutSetting, EmailSetting},
     data() {
-      return {}
+      return {
+        activeName: "first"
+      }
     },
   }
 </script>

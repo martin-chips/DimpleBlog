@@ -34,4 +34,8 @@ public class EmailSetting {
      * 发件人
      */
     private String fromEmail;
+    /**
+     * 站长邮箱
+     */
+    private String StationmasterEmail;
 }

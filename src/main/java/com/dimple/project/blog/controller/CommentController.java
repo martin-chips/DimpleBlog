@@ -67,6 +67,17 @@ public class CommentController extends BaseController {
         return toAjax(commentService.updateComment(comment));
     }
 
+    @PreAuthorize("@permissionService.hasPermission('blog:comment:edit')")
+    @Log(title = "评论管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/{id}/display/{display}")
+    public AjaxResult edit(@PathVariable Long id, @PathVariable Boolean display) {
+        Comment comment = new Comment();
+        comment.setDisplay(display);
+        comment.setId(id);
+        comment.setUpdateBy(SecurityUtils.getUsername());
+        return toAjax(commentService.updateComment(comment));
+    }
+
     @PreAuthorize("@permissionService.hasPermission('system:config:remove')")
     @Log(title = "评论管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")

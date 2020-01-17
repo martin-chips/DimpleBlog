@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.dimple.common.constant.ConfigKey;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
+import com.dimple.project.system.domain.AboutSetting;
 import com.dimple.project.system.domain.Config;
 import com.dimple.project.system.domain.EmailSetting;
 import com.dimple.project.system.domain.SiteSetting;
@@ -11,11 +12,9 @@ import com.dimple.project.system.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @className: SettingController
@@ -32,16 +31,16 @@ public class SettingController extends BaseController {
     @GetMapping("/about")
     public AjaxResult about() {
         Config config = configService.selectConfigByKey(ConfigKey.CONFIG_KEY_ABOUT);
-        return AjaxResult.success(config == null ? "" : config.getConfigValue());
+        if (config != null) {
+            AboutSetting aboutSetting = JSON.parseObject(config.getConfigValue(), AboutSetting.class);
+            return AjaxResult.success("获取成功", aboutSetting.getContent());
+        }
+        return AjaxResult.success(new AboutSetting());
     }
 
     @PutMapping("/about")
-    public AjaxResult editAbout(String content, String htmlContent) {
-        Map<String, String> map = new HashMap<>();
-        map.put("content", content);
-        map.put("htmlContent", htmlContent);
-        //convert to json
-        String jsonString = JSON.toJSONString(map);
+    public AjaxResult editAbout(@RequestBody AboutSetting aboutSetting) {
+        String jsonString = JSON.toJSONString(aboutSetting);
         Config config = new Config();
         config.setConfigKey(ConfigKey.CONFIG_KEY_ABOUT);
         config.setConfigValue(jsonString);
@@ -60,7 +59,7 @@ public class SettingController extends BaseController {
     }
 
     @PutMapping("siteSetting")
-    public AjaxResult editSiteSetting(SiteSetting siteSetting) {
+    public AjaxResult editSiteSetting(@RequestBody SiteSetting siteSetting) {
         String jsonString = JSON.toJSONString(siteSetting);
         Config config = new Config();
         config.setConfigKey(ConfigKey.CONFIG_KEY_SITE_SETTING);
@@ -73,14 +72,15 @@ public class SettingController extends BaseController {
         Config config = configService.selectConfigByKey(ConfigKey.CONFIG_KEY_EMAIL_SETTING);
         //convert to site setting
         if (config != null) {
-            EmailSetting emailSetting = (EmailSetting) JSON.parse(config.getConfigValue());
+            EmailSetting emailSetting = JSON.parseObject(config.getConfigValue(), EmailSetting.class);
+            emailSetting.setPassword("*************************");
             return AjaxResult.success(emailSetting);
         }
         return AjaxResult.success(new EmailSetting());
     }
 
     @PutMapping("emailSetting")
-    public AjaxResult editEmailSetting(EmailSetting emailSetting) {
+    public AjaxResult editEmailSetting(@RequestBody EmailSetting emailSetting) {
         String jsonString = JSON.toJSONString(emailSetting);
         Config config = new Config();
         config.setConfigKey(ConfigKey.CONFIG_KEY_EMAIL_SETTING);

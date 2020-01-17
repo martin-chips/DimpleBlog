@@ -122,7 +122,7 @@
           <el-input v-model="form.methodName" style="width: 460px;"/>
         </el-form-item>
         <el-form-item label="参数内容">
-          <el-input v-model="form.params" style="width: 460px;"/>
+          <el-input v-model="form.methodParams" style="width: 460px;"/>
         </el-form-item>
         <el-form-item label="Cron表达式" prop="cronExpression">
           <el-input v-model="form.cronExpression" style="width: 460px;"/>

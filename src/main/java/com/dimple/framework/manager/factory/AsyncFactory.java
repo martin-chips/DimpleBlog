@@ -5,6 +5,7 @@ import com.dimple.common.utils.SpiderUtils;
 import com.dimple.common.utils.ip.AddressUtils;
 import com.dimple.common.utils.ip.IpUtils;
 import com.dimple.common.utils.spring.SpringUtils;
+import com.dimple.project.common.service.EmailService;
 import com.dimple.project.log.domain.LoginLog;
 import com.dimple.project.log.domain.OperateLog;
 import com.dimple.project.log.domain.VisitLog;
@@ -94,6 +95,15 @@ public class AsyncFactory {
                 visitLog.setBrowser(userAgent.getBrowser().getName());
                 visitLog.setLocation(AddressUtils.getCityInfoByIp(visitLog.getIp()));
                 SpringUtils.getBean(VisitLogService.class).insertVisitLog(visitLog);
+            }
+        };
+    }
+
+    public static TimerTask sendReplyEmail(String url, String htmlContent, String nickName, String email) {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                SpringUtils.getBean(EmailService.class).sendReplyEmail(url, htmlContent, nickName, email);
             }
         };
     }

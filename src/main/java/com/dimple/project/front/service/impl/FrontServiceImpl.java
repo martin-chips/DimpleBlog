@@ -9,6 +9,8 @@ import com.dimple.common.utils.ip.AddressUtils;
 import com.dimple.common.utils.ip.IpUtils;
 import com.dimple.framework.config.redis.CacheExpire;
 import com.dimple.framework.config.redis.TimeType;
+import com.dimple.framework.manager.AsyncManager;
+import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.common.domain.Category;
@@ -112,7 +114,7 @@ public class FrontServiceImpl implements FrontService {
         if (comment.getParentId() != null) {
             Comment tempComment = frontMapper.selectCommentById(comment.getParentId());
             if (tempComment.getReply()) {
-                emailService.sendReplyEmail(comment.getUrl(), comment.getHtmlContent(), comment.getNickName(), tempComment.getEmail());
+                AsyncManager.me().execute(AsyncFactory.sendReplyEmail(comment.getUrl(), comment.getHtmlContent(), comment.getNickName(), tempComment.getEmail()));
             }
         }
         return frontMapper.insertComment(comment);
