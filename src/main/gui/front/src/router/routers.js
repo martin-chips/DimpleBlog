@@ -40,7 +40,7 @@ export default [
                     footer: Footer
                 },
                 meta: {
-                    title: '文章',
+                    title: '文章列表',
                     content:{
                         keywords:'DimpleBlog,边小丰,Java',
                         description:'DimpleBlog,Java',
@@ -52,7 +52,7 @@ export default [
                 name: 'articles/category',
                 components: {
                     header: SimpleHeader,
-                    content: LeaveCommentContent,
+                    content: ArticleHomeContent,
                     footer: Footer
                 },
                 meta: {

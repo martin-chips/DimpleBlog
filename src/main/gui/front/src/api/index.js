@@ -59,6 +59,13 @@ export function listFriendLinks() {
     })
 }
 
+export function listSupportFriendLink() {
+    return request({
+        url: '/f/link/support',
+        method: 'get',
+    })
+}
+
 //新增友链
 export function insertFriendLink(data) {
     return request({
@@ -80,6 +87,14 @@ export function listTag() {
 export function listBlogBaseInfo(query) {
     return request({
         url: '/f/blog',
+        method: 'get',
+        params: query
+    })
+}
+
+export function listBlogInfo(query) {
+    return request({
+        url: '/f/frontBlog',
         method: 'get',
         params: query
     })

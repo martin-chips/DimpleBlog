@@ -208,4 +208,10 @@ public class FrontServiceImpl implements FrontService {
         return blogList;
     }
 
+    @Override
+    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    public List<Link> selectSupportLinkList() {
+        return frontMapper.selectSupportLinkList();
+    }
+
 }

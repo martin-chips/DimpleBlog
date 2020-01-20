@@ -49,6 +49,11 @@ public class FrontController extends BaseController {
         return AjaxResult.success(frontService.selectLinkList());
     }
 
+    @GetMapping("/link/support")
+    public AjaxResult supportLink() {
+        return AjaxResult.success(frontService.selectSupportLinkList());
+    }
+
     @PutMapping("/link/{id}")
     @VLog(title = "友链跳转")
     public AjaxResult linkRedirect(@PathVariable Integer id) {
@@ -192,6 +197,14 @@ public class FrontController extends BaseController {
     @GetMapping("/blog")
     @VLog(title = "首页")
     public TableDataInfo blog(BlogQuery blogQuery) {
+        startPage();
+        List<Blog> blogList = frontService.selectBlogList(blogQuery);
+        return getDataTable(blogList);
+    }
+
+    @GetMapping("/frontBlog")
+    @VLog(title = "首页")
+    public TableDataInfo frontBlog(BlogQuery blogQuery) {
         startPage();
         List<Blog> blogList = frontService.selectBlogList(blogQuery);
         return getDataTable(blogList);

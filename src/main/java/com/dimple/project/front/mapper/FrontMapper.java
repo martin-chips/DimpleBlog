@@ -81,8 +81,8 @@ public interface FrontMapper {
     /**
      * insert Comment
      *
-     * @return the count which data has been modified
      * @param comment
+     * @return the count which data has been modified
      */
     int insertComment(Comment comment);
 
@@ -125,4 +125,6 @@ public interface FrontMapper {
     Config selectAbout();
 
     Comment selectCommentById(Long id);
+
+    List<Link> selectSupportLinkList();
 }

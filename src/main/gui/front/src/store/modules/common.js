@@ -1,4 +1,4 @@
-import {listRecommend, listHot, listFriendLinks, listTag} from '@/api'
+import {listRecommend, listHot, listSupportFriendLink, listTag} from '@/api'
 
 export default {
   namespaced: true,
@@ -54,7 +54,7 @@ export default {
     // 获取友情链接
     GET_FRIEND_LINKS(store, params) {
       return new Promise((resolve, reject) => {
-        listFriendLinks().then((response) => {
+        listSupportFriendLink().then((response) => {
           store.commit('UPDATE_FRIEND_LINKS', response.data);
           resolve(response);
         }).catch((error) => {

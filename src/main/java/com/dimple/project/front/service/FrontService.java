@@ -156,4 +156,11 @@ public interface FrontService {
     String selectAbout();
 
     List<Blog> selectBlogArchive(BlogQuery blogQuery);
+
+    /**
+     * get support Link
+     *
+     * @return supportLink
+     */
+    List<Link> selectSupportLinkList();
 }
