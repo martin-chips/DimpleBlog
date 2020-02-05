@@ -287,5 +287,8 @@
         where support = 1
         order by weight desc
     </select>
+    <select id="selectBlogTitleById" resultType="java.lang.String">
+        select title from blog where id=#{id}
+    </select>
 </mapper>
 

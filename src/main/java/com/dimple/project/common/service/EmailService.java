@@ -1,6 +1,6 @@
 package com.dimple.project.common.service;
 
-import org.springframework.scheduling.annotation.Async;
+import com.dimple.project.common.domain.ReplayEmail;
 
 /**
  * @className: EmailService
@@ -10,16 +10,9 @@ import org.springframework.scheduling.annotation.Async;
  */
 public interface EmailService {
 
-    /**
-     * send html email
-     *
-     * @param to      send to email
-     * @param title   title
-     * @param content content（HTML）
-     */
-    @Async
     void sendHtmlMail(String to, String title, String content);
 
-    @Async
-    void sendReplyEmail(String url, String htmlContent, String nickName, String email);
+    void sendReplyEmail(String url, String htmlContent, String nickName, String email, ReplayEmail replayEmail);
+
+    void sendLinkApplyResult(boolean success,String reason);
 }

@@ -5,6 +5,7 @@ import com.dimple.common.utils.SpiderUtils;
 import com.dimple.common.utils.ip.AddressUtils;
 import com.dimple.common.utils.ip.IpUtils;
 import com.dimple.common.utils.spring.SpringUtils;
+import com.dimple.project.common.domain.ReplayEmail;
 import com.dimple.project.common.service.EmailService;
 import com.dimple.project.log.domain.LoginLog;
 import com.dimple.project.log.domain.OperateLog;
@@ -99,11 +100,11 @@ public class AsyncFactory {
         };
     }
 
-    public static TimerTask sendReplyEmail(String url, String htmlContent, String nickName, String email) {
+    public static TimerTask sendReplyEmail(String url, String htmlContent, String nickName, String email, ReplayEmail replayEmail) {
         return new TimerTask() {
             @Override
             public void run() {
-                SpringUtils.getBean(EmailService.class).sendReplyEmail(url, htmlContent, nickName, email);
+                SpringUtils.getBean(EmailService.class).sendReplyEmail(url, htmlContent, nickName, email,replayEmail);
             }
         };
     }

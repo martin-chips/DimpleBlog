@@ -127,4 +127,6 @@ public interface FrontMapper {
     Comment selectCommentById(Long id);
 
     List<Link> selectSupportLinkList();
+
+    String selectBlogTitleById(Long id);
 }

@@ -14,6 +14,7 @@ import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.common.domain.Category;
+import com.dimple.project.common.domain.ReplayEmail;
 import com.dimple.project.common.domain.Tag;
 import com.dimple.project.common.service.EmailService;
 import com.dimple.project.front.domain.BlogQuery;
@@ -113,8 +114,15 @@ public class FrontServiceImpl implements FrontService {
         comment.setLocation(AddressUtils.getCityInfoByIp(comment.getIp()));
         if (comment.getParentId() != null) {
             Comment tempComment = frontMapper.selectCommentById(comment.getParentId());
+            String title = frontMapper.selectBlogTitleById(comment.getPageId());
             if (tempComment.getReply()) {
-                AsyncManager.me().execute(AsyncFactory.sendReplyEmail(comment.getUrl(), comment.getHtmlContent(), comment.getNickName(), tempComment.getEmail()));
+                ReplayEmail replayEmail = new ReplayEmail();
+                replayEmail.setCreateTime(tempComment.getCreateTime());
+                replayEmail.setOriginContent(tempComment.getHtmlContent());
+                replayEmail.setReplyContent(comment.getHtmlContent());
+                replayEmail.setUrl(comment.getUrl());
+                replayEmail.setTitle(title);
+                AsyncManager.me().execute(AsyncFactory.sendReplyEmail(comment.getUrl(), comment.getHtmlContent(), comment.getNickName(), tempComment.getEmail(),replayEmail));
             }
         }
         return frontMapper.insertComment(comment);

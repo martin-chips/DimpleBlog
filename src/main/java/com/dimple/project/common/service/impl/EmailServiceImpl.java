@@ -1,6 +1,8 @@
 package com.dimple.project.common.service.impl;
 
 import com.dimple.common.constant.ConfigKey;
+import com.dimple.common.utils.StringUtils;
+import com.dimple.project.common.domain.ReplayEmail;
 import com.dimple.project.common.service.EmailService;
 import com.dimple.project.system.domain.EmailSetting;
 import com.dimple.project.system.service.ConfigService;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -26,6 +30,8 @@ import java.util.Properties;
 public class EmailServiceImpl implements EmailService {
     @Autowired
     private ConfigService configService;
+    @Autowired
+    private TemplateEngine templateEngine;
 
     @Override
     public void sendHtmlMail(String to, String title, String content) {
@@ -51,6 +57,9 @@ public class EmailServiceImpl implements EmailService {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
             mimeMessageHelper.setFrom(emailSetting.getFromEmail());
             mimeMessageHelper.setTo(to);
+            if (StringUtils.isNotEmpty(emailSetting.getStationmasterEmail())) {
+                mimeMessageHelper.setBcc(emailSetting.getStationmasterEmail());
+            }
             mimeMessageHelper.setSubject(title);
             mimeMessageHelper.setText(content, true);
             mailSender.setSession(session);
@@ -61,10 +70,19 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendReplyEmail(String url, String htmlContent, String nickName, String email) {
-        String title = "您在DimpleBlog的评论收到新回复了!";
-        String content = "你的评论被" + nickName + "回复了! 回复内容: " + htmlContent + "," + "<a href='" + url + "'>点此快速回复!</a>";
-        sendHtmlMail(email, title, content);
+    public void sendReplyEmail(String url, String htmlContent, String nickName, String email, ReplayEmail replayEmail) {
+        Context context = new Context();
+        //回复的内容
+        context.setVariables(replayEmail.toMap());
+        String emailContent = templateEngine.process("/mail/ReplyEmail", context);
+        String title = "DimpleBlog 留言回复通知!";
+        sendHtmlMail(email, title, emailContent);
+    }
+
+    @Override
+    public void sendLinkApplyResult(boolean success, String reason) {
+        String title = "DimpleBlog 申请友链结果通知";
+        String content = "";
     }
 
 }
