@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @className: Abut
- * @description:
+ * @description: about 的panel设置
  * @author: Dimple
  * @date: 11/19/19
  */

@@ -50,7 +50,7 @@
         },
         filters: {
             formatDate: function (date) {
-                let formattedDate = new Date(date);
+                let formattedDate = new Date(date.replace(/\-/g, "/"));
                 let year = formattedDate.getFullYear();
                 let month = formattedDate.getMonth() + 1;
                 month = month >= 10 ? month : '0' + month; // 不满10前面加0

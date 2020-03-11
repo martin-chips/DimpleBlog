@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 /**
  * @className: FrontServiceImpl
- * @description:
+ * @description: front service impl
  * @author: Dimple
  * @date: 2020/1/1
  */
@@ -44,66 +44,67 @@ import java.util.stream.Collectors;
 public class FrontServiceImpl implements FrontService {
 
     @Autowired
-    FrontMapper frontMapper;
+    private FrontMapper frontMapper;
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_LINK_LIST)
-    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    @CacheExpire(expire = 1, type = TimeType.HOURS)
     public List<Link> selectLinkList() {
         return frontMapper.selectLinkList();
     }
 
     @Override
     public int insertLink(Link link) {
+        link.setStatus(false);
+        link.setDisplay(false);
         return frontMapper.insertLink(link);
     }
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_CATEGORY_LIST)
-    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    @CacheExpire(expire = 1, type = TimeType.HOURS)
     public List<Category> selectCategoryList() {
         return frontMapper.selectCategoryList();
     }
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_SUPPORT_BLOG_LIST)
-    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    @CacheExpire(expire = 1, type = TimeType.HOURS)
     public List<Blog> selectSupportBlogList() {
         return frontMapper.selectSupportBlogList();
     }
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_HOT_BLOG_LIST)
-    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    @CacheExpire(expire = 1, type = TimeType.HOURS)
     public List<Blog> selectHotBlogList() {
         return frontMapper.selectHotBlogList();
     }
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_TAG_LIST)
-    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    @CacheExpire(expire = 1, type = TimeType.HOURS)
     public List<Tag> selectTagList() {
         return frontMapper.selectTagList();
     }
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_CAROUSEL_LIST)
-    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    @CacheExpire(expire = 1, type = TimeType.HOURS)
     public List<Carousel> selectCarouselList() {
         return frontMapper.selectCarouselList();
     }
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_NOTICE_LIST)
-    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    @CacheExpire(expire = 1, type = TimeType.HOURS)
     public List<Notice> selectNoticeList() {
         return frontMapper.selectNoticeList();
     }
 
     @Override
-    @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT_COMMENT_ITEM, key = "'PageId:'+#comment.pageId")
     public int insertComment(Comment comment) {
         comment.setAdminReply(SecurityUtils.isAdmin());
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
@@ -122,7 +123,7 @@ public class FrontServiceImpl implements FrontService {
                 replayEmail.setReplyContent(comment.getHtmlContent());
                 replayEmail.setUrl(comment.getUrl());
                 replayEmail.setTitle(title);
-                AsyncManager.me().execute(AsyncFactory.sendReplyEmail(comment.getUrl(), comment.getHtmlContent(), comment.getNickName(), tempComment.getEmail(),replayEmail));
+                AsyncManager.me().execute(AsyncFactory.sendReplyEmail(comment.getUrl(), comment.getHtmlContent(), comment.getNickName(), tempComment.getEmail(), replayEmail));
             }
         }
         return frontMapper.insertComment(comment);
@@ -130,8 +131,6 @@ public class FrontServiceImpl implements FrontService {
 
 
     @Override
-    @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_COMMENT_ITEM, key = "'PageId:'+#id")
-    @CacheExpire(expire = 30, type = TimeType.MINUTES)
     public List<Comment> selectCommentListByPageId(Long id) {
         //查询获取所有的comment
         List<Comment> commentList = frontMapper.selectCommentListByPageId(id);
@@ -154,13 +153,11 @@ public class FrontServiceImpl implements FrontService {
     }
 
     @Override
-    @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT_COMMENT_ITEM, key = "'PageId:'+#id")
     public int incrementCommentGood(Long id) {
         return frontMapper.incrementCommentGood(id);
     }
 
     @Override
-    @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT_COMMENT_ITEM, key = "'PageId:'+#id")
     public int incrementCommentBad(Long id) {
         return frontMapper.incrementCommentBad(id);
     }
@@ -172,7 +169,7 @@ public class FrontServiceImpl implements FrontService {
 
     @Override
     @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_BLOG_ITEM, key = "'BlogId:' +#id")
-    @CacheExpire(expire = 30, type = TimeType.MINUTES)
+    @CacheExpire(expire = 1, type = TimeType.MINUTES)
     public Blog selectBlogDetailById(Long id) {
         Blog blog = frontMapper.selectBlogDetailById(id);
         //get all comment
@@ -181,8 +178,6 @@ public class FrontServiceImpl implements FrontService {
     }
 
     @Override
-    @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_BLOG_LIST, key = "'Query:' +#blogQuery")
-    @CacheExpire(expire = 3, type = TimeType.HOURS)
     public List<Blog> selectBlogList(BlogQuery blogQuery) {
         List<Blog> blogList = frontMapper.selectBlogList(blogQuery);
         for (Blog blog : blogList) {
@@ -217,7 +212,8 @@ public class FrontServiceImpl implements FrontService {
     }
 
     @Override
-    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    @Cacheable(value = CacheConstants.CACHE_NAME_FRONT_SUPPORT_LINK_LIST)
+    @CacheExpire(expire = 1, type = TimeType.HOURS)
     public List<Link> selectSupportLinkList() {
         return frontMapper.selectSupportLinkList();
     }

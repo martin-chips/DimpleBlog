@@ -21,7 +21,7 @@
         </BackTop>
 
         <p class="copyright">
-            <a href="http://www.miibeian.gov.cn/">{{ $store.state.settings.F_ICP }}</a>
+            <a target="_blank" href="http://www.miit.gov.cn">{{ $store.state.settings.F_ICP }}</a>
             <span>|</span>
             {{ $store.state.settings.F_Copyright }}
             <span>|</span>

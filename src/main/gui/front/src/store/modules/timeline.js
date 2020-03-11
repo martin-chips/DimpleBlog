@@ -14,8 +14,8 @@ export default {
       // 根据年月来分发更新timeline
       datas.rows.map((post) => {
         // 按年月分批
-        let addYear = new Date(post.createTime).getFullYear();
-        let addMonth = new Date(post.createTime).getMonth();
+        let addYear = new Date(post.createTime.replace(/\-/g, "/") ).getFullYear();
+        let addMonth = new Date(post.createTime.replace(/\-/g, "/")).getMonth();
         if (!state.timeline.hasOwnProperty(addYear)) {
           state.timeline[addYear] = {};
           state.timeline[addYear]['months'] = {};
