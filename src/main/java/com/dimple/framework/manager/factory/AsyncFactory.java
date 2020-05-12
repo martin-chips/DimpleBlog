@@ -49,14 +49,14 @@ public class AsyncFactory {
                 String address = AddressUtils.getRealAddressByIP(ip);
                 String os = userAgent.getOperatingSystem().getName();
                 String browser = userAgent.getBrowser().getName();
-                LoginLog loginLog = LoginLog.builder()
-                        .userName(username)
-                        .ip(ip)
-                        .browser(browser)
-                        .os(os).msg(message)
-                        .location(address)
-                        .status(status)
-                        .build();
+                LoginLog loginLog = new LoginLog();
+                loginLog.setUserName(username);
+                loginLog.setIp(ip);
+                loginLog.setBrowser(browser);
+                loginLog.setOs(os);
+                loginLog.setMsg(message);
+                loginLog.setLocation(address);
+                loginLog.setStatus(status);
                 log.info("insert login log {}", loginLog);
                 SpringUtils.getBean(LoginLogService.class).insertLoginLog(loginLog);
             }

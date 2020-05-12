@@ -63,7 +63,7 @@ public class AddressUpdateTask {
     }
 
     private String updateLoginLogAddress() {
-        List<LoginLog> loginLogList = loginLogMapper.selectLoginLogList(LoginLog.builder().build());
+        List<LoginLog> loginLogList = loginLogMapper.selectLoginLogList(new LoginLog());
         Integer count = 0;
         for (LoginLog loginLog : loginLogList) {
             String ip = loginLog.getIp();

@@ -16,7 +16,6 @@ import java.io.Serializable;
 //序列化Json的时候,如果是Null则忽略
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@Builder
 public class LoginLog extends BaseEntity implements Serializable {
     /**
      * ID
