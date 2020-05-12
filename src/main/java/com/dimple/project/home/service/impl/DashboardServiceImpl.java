@@ -11,16 +11,20 @@ import com.dimple.project.log.domain.LoginLog;
 import com.dimple.project.log.domain.OperateLog;
 import com.dimple.project.log.domain.QuartzJobLog;
 import com.dimple.project.log.domain.VisitLog;
+import com.dimple.project.system.domain.DictData;
+import com.dimple.project.system.service.DictDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @className: DashboardServiceImpl
@@ -34,6 +38,8 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
     DashBoardMapper dashBoardMapper;
+    @Autowired
+    private DictDataService dictDataService;
 
     @Override
     public Map<String, Long> getPanelGroupData() {
@@ -116,18 +122,28 @@ public class DashboardServiceImpl implements DashboardService {
     public List<String> getOperateLogStringList() {
         List<OperateLog> operateLogList = dashBoardMapper.getOperateLogList();
         List<String> result = new LinkedList<>();
+        Map<String, String> operateTypeString = getOperateTypeString();
         for (OperateLog operateLog : operateLogList) {
-            result.add(StringUtils.format("{}:{}对{}进行{}操作{}{}", DateUtils.showTime(operateLog.getCreateTime()), operateLog.getOperateName(), operateLog.getTitle(), operateLog.getOperatorType(), operateLog.getStatus().booleanValue() ? "成功" : "失败", operateLog.getStatus().booleanValue() ? "" : ",异常信息:" + operateLog.getErrorMsg()));
+            Integer businessType = operateLog.getBusinessType();
+            String typeString = operateTypeString.get(businessType.toString());
+            result.add(StringUtils.format("{} : {} 对 {} 进行 {} 操作 {} {}", DateUtils.showTime(operateLog.getCreateTime()), operateLog.getOperateName(), operateLog.getTitle(), typeString, operateLog.getStatus().booleanValue() ? "成功" : "失败", operateLog.getStatus().booleanValue() ? "" : ",异常信息:" + operateLog.getErrorMsg()));
         }
         return result;
     }
+
+    private Map<String,String> getOperateTypeString() {
+        List<DictData> operateTypeList = dictDataService.selectDictDataByType("sys_oper_type");
+        return operateTypeList.stream().collect(Collectors.toMap(DictData::getDictValue, DictData::getDictLabel));
+    }
+
+
 
     @Override
     public List<String> getTaskLogStringList() {
         List<String> result = new LinkedList<>();
         List<QuartzJobLog> jobLogList = dashBoardMapper.getQuartzJobLogList();
         for (QuartzJobLog quartzJobLog : jobLogList) {
-            result.add(StringUtils.format("{}:{}执行{}", DateUtils.showTime(quartzJobLog.getCreateTime()), quartzJobLog.getJobName(), quartzJobLog.getStatus().booleanValue() ? "成功" : "失败"));
+            result.add(StringUtils.format("{} : {} 执行 {}", DateUtils.showTime(quartzJobLog.getCreateTime()), quartzJobLog.getJobName(), quartzJobLog.getStatus().booleanValue() ? "成功" : "失败"));
         }
         return result;
     }
