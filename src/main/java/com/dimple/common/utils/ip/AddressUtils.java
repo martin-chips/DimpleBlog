@@ -28,6 +28,14 @@ public class AddressUtils {
 
     public static final String IP_URL = "http://ip.taobao.com/service/getIpInfo.php";
 
+    /**
+     * call taobao api will get error like <code>{"msg":"the request over max qps for user ,the accessKey=public","code":4}</code>
+     * this method has deprecated.
+     *
+     * @param ip ip location
+     * @return location info
+     */
+    @Deprecated
     public static String getRealAddressByIP(String ip) {
         String address = "XX XX";
         // 内网不查询

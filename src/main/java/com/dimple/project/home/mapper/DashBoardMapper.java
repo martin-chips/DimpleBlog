@@ -32,20 +32,6 @@ public interface DashBoardMapper {
     Long getBlogCount();
 
     /**
-     * 获取图书数量
-     *
-     * @return 图书数量
-     */
-    Long getBookCount();
-
-    /**
-     * 获取笔记数量
-     *
-     * @return 笔记数量
-     */
-    Long getNoteCount();
-
-    /**
      * get visit log count by createTime .
      *
      * @param date current day string. eg:2019-08-08

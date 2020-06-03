@@ -3,7 +3,7 @@ package com.dimple.project.front.service;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.common.domain.Category;
-import com.dimple.project.common.domain.Tag;
+import com.dimple.project.blog.domain.Tag;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.system.domain.Carousel;
 import com.dimple.project.system.domain.Link;

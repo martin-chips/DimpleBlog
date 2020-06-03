@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dimple.project.common.mapper.CategoryMapper">
+<mapper namespace="com.dimple.project.blog.mapper.CategoryMapper">
 
     <resultMap type="com.dimple.project.common.domain.Category" id="CategoryResult">
         <result property="id" column="id"/>
@@ -19,9 +19,6 @@
         select id, title, description, support, create_by, create_time
         from category
         where delete_time is null
-        <if test="type != null">
-            AND type =#{type}
-        </if>
         <if test="title != null and title != ''">
             AND title like concat('%', #{title}, '%')
         </if>
@@ -47,7 +44,6 @@
         from category
         where support = 1
           and delete_time is null
-          and type = 1
     </select>
 
     <insert id="insertCategory" parameterType="com.dimple.project.common.domain.Category" useGeneratedKeys="true"
@@ -57,7 +53,6 @@
             <if test="title != null  and title != ''">title,</if>
             <if test="description != null  and description != ''">description,</if>
             <if test="support != null ">support,</if>
-            <if test="type != null ">type,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             create_time
         </trim>
@@ -65,7 +60,6 @@
             <if test="title != null  and title != ''">#{title},</if>
             <if test="description != null  and description != ''">#{description},</if>
             <if test="support != null ">#{support},</if>
-            <if test="type != null ">#{type},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             sysdate()
         </trim>

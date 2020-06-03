@@ -8,3 +8,6 @@ target
 /src/main/gui/front/node_modules/
 /src/main/gui/front/package-lock.json
 /src/main/gui/front/dist
+
+DimpleBlog.iml
+

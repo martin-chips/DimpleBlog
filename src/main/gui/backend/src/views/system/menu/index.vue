@@ -81,6 +81,7 @@
             <el-form-item label="上级菜单">
               <treeselect
                 v-model="form.parentId"
+                :normalizer="normalizer"
                 :options="menuOptions"
                 :show-count="true"
                 placeholder="选择上级菜单"
@@ -221,7 +222,7 @@
       });
     },
     methods: {
-      change (e) {
+      change(e) {
         this.$forceUpdate()
       },
       // 选择图标
@@ -232,16 +233,27 @@
       getList() {
         this.loading = true;
         listMenu(this.queryParams).then(response => {
-          this.menuList = response.data;
+          this.menuList = this.handleTree(response.data, "id");
           this.loading = false;
         });
       },
+      /** 转换菜单数据结构 */
+      normalizer(node) {
+        if (node.children && !node.children.length) {
+          delete node.children;
+        }
+        return {
+          id: node.id,
+          label: node.menuName,
+          children: node.children
+        };
+      },
       /** 查询菜单下拉树结构 */
       getTreeselect() {
-        treeselect().then(response => {
+        listMenu().then(response => {
           this.menuOptions = [];
-          const menu = {id: 0, label: '主类目', children: []};
-          menu.children = response.data;
+          const menu = {id: 0, menuName: '主类目', children: []};
+          menu.children = this.handleTree(response.data, "id");
           this.menuOptions.push(menu);
         });
       },

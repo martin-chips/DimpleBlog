@@ -1,14 +1,13 @@
 package com.dimple.project.blog.service.impl;
 
-import com.dimple.common.enums.TagType;
 import com.dimple.common.utils.ConvertUtils;
 import com.dimple.common.utils.ObjectUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.project.blog.service.TagService;
-import com.dimple.project.common.domain.Tag;
-import com.dimple.project.common.domain.TagMapping;
-import com.dimple.project.common.mapper.TagMapper;
+import com.dimple.project.blog.domain.Tag;
+import com.dimple.project.blog.domain.TagMapping;
+import com.dimple.project.blog.mapper.TagMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,8 +57,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag selectTagByTitle(String title, Integer type) {
-        return tagMapper.selectTagByTitle(title, type);
+    public Tag selectTagByTitle(String title) {
+        return tagMapper.selectTagByTitle(title);
     }
 
     @Override
@@ -68,24 +67,21 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void updateTagMapping(Integer type, Long id, List<String> tagTitleList) {
+    public void updateTagMapping(Long id, List<String> tagTitleList) {
         //删除该Id下的所有关联
         TagMapping tagMapping = TagMapping.builder()
-                .blogId(TagType.BLOG.getType().equals(type) ? id : null)
-                .noteId(TagType.NOTE.getType().equals(type) ? id : null)
-                .bookId(TagType.BOOK.getType().equals(type) ? id : null)
                 .build();
         deleteTagMapping(tagMapping);
 
         if (ObjectUtils.isNotEmpty(tagTitleList)) {
             for (String title : tagTitleList) {
                 //搜索所有的tag
-                Tag tag = selectTagByTitle(title.trim(), TagType.BLOG.getType());
+                Tag tag = selectTagByTitle(title.trim());
                 if (tag != null) {
                     tagMapping.setTagId(tag.getId());
                     insertTagMapping(tagMapping);
                 } else {
-                    Tag temp = new Tag(title.trim(), StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 1), TagType.BLOG.getType());
+                    Tag temp = new Tag(title.trim(), StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 1));
                     insertTag(temp);
                     tagMapping.setTagId(temp.getId());
                     insertTagMapping(tagMapping);
@@ -95,8 +91,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> selectTagListByTypeAndId(Integer type, Long id) {
-        return tagMapper.selectTagListByType(type, id);
+    public List<Tag> selectTagListByBlogId(Long id) {
+        return tagMapper.selectTagListByType(id);
     }
 
     /**

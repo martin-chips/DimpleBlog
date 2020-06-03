@@ -92,27 +92,33 @@ public class MenuServiceImpl implements MenuService {
         return routers;
     }
 
-    @Override
-    public List<Menu> buildMenuTree(List<Menu> menus) {
-        List<Menu> returnList = new ArrayList<>();
-        for (Iterator<Menu> iterator = menus.iterator(); iterator.hasNext(); ) {
-            Menu t = iterator.next();
-            // 根据传入的某个父节点ID,遍历该父节点的所有子节点
-            if (t.getParentId() == 0) {
-                recursionFn(menus, t);
-                returnList.add(t);
-            }
-        }
-        if (returnList.isEmpty()) {
-            returnList = menus;
-        }
-        return returnList;
-    }
 
     @Override
     public List<TreeSelect> buildMenuTreeSelect(List<Menu> menus) {
-        List<Menu> menuTrees = buildMenuTree(menus);
-        return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
+        List<Menu> menuList = buildMenuTree(menus);
+        return menuList.stream().map(TreeSelect::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Menu> buildMenuTree(List<Menu> menus) {
+        if (menus.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return menus.stream()
+                .filter(e -> e.getParentId() == 0)
+                .peek(parent -> parent.setChildren(getChildrenMenu(menus, parent.getId())))
+                .collect(Collectors.toList());
+    }
+
+    private List<Menu> getChildrenMenu(List<Menu> menus, Long id) {
+        List<Menu> children = menus.stream().filter(e -> e.getParentId().equals(id)).collect(Collectors.toList());
+        if (children.isEmpty()) {
+            return new ArrayList<>();
+        }
+        for (Menu menu : children) {
+            menu.setChildren(getChildrenMenu(menus, menu.getId()));
+        }
+        return children;
     }
 
     @Override

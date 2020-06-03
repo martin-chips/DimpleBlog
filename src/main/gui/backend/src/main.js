@@ -18,7 +18,7 @@ import './assets/icons' // icon
 import '@/router' // permission control
 import {getDicts} from "@/api/system/dict/data";
 import {getConfigKey} from "@/api/system/config";
-import {parseTime, resetForm, addDateRange, selectDictLabel} from "@/utils/dimple";
+import {parseTime, resetForm, addDateRange, selectDictLabel,handleTree} from "@/utils/dimple";
 import Pagination from "@/components/Pagination";
 
 // 全局方法挂载
@@ -28,7 +28,7 @@ Vue.prototype.parseTime = parseTime;
 Vue.prototype.resetForm = resetForm;
 Vue.prototype.addDateRange = addDateRange;
 Vue.prototype.selectDictLabel = selectDictLabel;
-
+Vue.prototype.handleTree = handleTree
 
 Vue.prototype.msgSuccess = function (msg) {
   this.$message({showClose: true, message: msg, type: "success"});

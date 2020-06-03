@@ -110,25 +110,6 @@ export const constantRoutes = [
         meta: {title: '修改文章', noCache: false, activeMenu: '/blog/blog'},
       }
     ]
-  },
-  {
-    path: '/bookManage',
-    component: Layout,
-    hidden: true,
-    redirect: 'noRedirect',
-    children: [
-      {
-        path: 'note/add',
-        component: () => import('@/views/book/note/add'),
-        name: 'AddNote',
-        meta: {title: '新增笔记', noCache: false, activeMenu: '/book/note'},
-      }, {
-        path: 'note/edit/:id(\\d+)',
-        component: () => import('@/views/book/note/edit'),
-        name: 'EditNote',
-        meta: {title: '修改笔记', noCache: false, activeMenu: '/book/note'},
-      }
-    ]
   }
 ];
 

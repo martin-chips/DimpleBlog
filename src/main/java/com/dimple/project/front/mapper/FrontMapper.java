@@ -3,7 +3,7 @@ package com.dimple.project.front.mapper;
 import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.common.domain.Category;
-import com.dimple.project.common.domain.Tag;
+import com.dimple.project.blog.domain.Tag;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.system.domain.Carousel;
 import com.dimple.project.system.domain.Config;
@@ -118,7 +118,7 @@ public interface FrontMapper {
 
     List<Blog> selectBlogList(BlogQuery blogQuery);
 
-    List<Tag> selectTagListByTypeAndId(@Param("type") Integer type, @Param("id") Long id);
+    List<Tag> selectTagListByTypeAndId(@Param("id") Long id);
 
     int incrementLinkClick(Integer id);
 

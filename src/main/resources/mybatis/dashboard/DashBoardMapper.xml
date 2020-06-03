@@ -14,16 +14,7 @@
         from blog
         where delete_time is null
     </select>
-    <select id="getBookCount" resultType="java.lang.Long">
-        select count(*)
-        from book
-        where delete_time is null
-    </select>
-    <select id="getNoteCount" resultType="java.lang.Long">
-        select count(*)
-        from note
-        where delete_time is null
-    </select>
+
     <select id="getVisitorCountByCreateTime" resultType="java.lang.Long">
         select count(*)
         from visit_log

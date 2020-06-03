@@ -1,7 +1,7 @@
 package com.dimple.project.blog.service;
 
-import com.dimple.project.common.domain.Tag;
-import com.dimple.project.common.domain.TagMapping;
+import com.dimple.project.blog.domain.Tag;
+import com.dimple.project.blog.domain.TagMapping;
 
 import java.util.List;
 
@@ -64,10 +64,9 @@ public interface TagService {
      * 根据Tag的title 和 type搜索Tag
      *
      * @param title Tag的title
-     * @param type  Tag的类型
      * @return Tag
      */
-    Tag selectTagByTitle(String title, Integer type);
+    Tag selectTagByTitle(String title);
 
     /**
      * 新增Tag Mapping映射关系
@@ -80,19 +79,17 @@ public interface TagService {
     /**
      * 更新TagMapping
      *
-     * @param type         type
      * @param id           id
      * @param tagTitleList list
      */
-    void updateTagMapping(Integer type, Long id, List<String> tagTitleList);
+    void updateTagMapping( Long id, List<String> tagTitleList);
 
     /**
      * 根据Tag的type和Id获取该Id下的所有Tag
      *
-     * @param type Type
-     * @param id   id
+     * @param id id
      * @return Tag list
      */
-    List<Tag> selectTagListByTypeAndId(Integer type, Long id);
+    List<Tag> selectTagListByBlogId(Long id);
 
 }

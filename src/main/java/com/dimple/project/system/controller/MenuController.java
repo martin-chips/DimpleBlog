@@ -43,8 +43,7 @@ public class MenuController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:menu:list')")
     @GetMapping("/list")
     public AjaxResult list(Menu menu) {
-        List<Menu> menus = menuService.selectMenuList(menu);
-        return AjaxResult.success(menuService.buildMenuTree(menus));
+        return AjaxResult.success(menuService.selectMenuList(menu));
     }
 
     /**
@@ -72,8 +71,12 @@ public class MenuController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:menu:query')")
     @GetMapping(value = "/roleMenuTreeselect/{roleId}")
     @ResponseBody
-    public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId) {
-        return AjaxResult.success(menuService.selectMenuListByRoleId(roleId));
+    public AjaxResult roleMenuTreeselect(@PathVariable Long roleId) {
+        List<Menu> menus = menuService.selectMenuList(new Menu());
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
+        ajax.put("menus", menuService.buildMenuTreeSelect(menus));
+        return ajax;
     }
 
     /**

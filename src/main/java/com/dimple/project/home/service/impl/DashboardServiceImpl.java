@@ -46,12 +46,8 @@ public class DashboardServiceImpl implements DashboardService {
         Map<String, Long> resultMap = new HashMap<>();
         Long visitorCount = dashBoardMapper.getVisitorCount();
         Long blogCount = dashBoardMapper.getBlogCount();
-        Long bookCount = dashBoardMapper.getBookCount();
-        Long noteCount = dashBoardMapper.getNoteCount();
         resultMap.put("visitorCount", visitorCount);
         resultMap.put("blogCount", blogCount);
-        resultMap.put("bookCount", bookCount);
-        resultMap.put("noteCount", noteCount);
         return resultMap;
     }
 

@@ -116,7 +116,7 @@ public class LogAspect {
             String className = joinPoint.getTarget().getClass().getName();
             // get method name
             String methodName = joinPoint.getSignature().getName();
-            operateLog.setMethod(MessageFormat.format("{}.{}()", className, methodName));
+            operateLog.setMethod(StringUtils.format("{}.{}()", className, methodName));
             // get request method
             operateLog.setRequestMethod(ServletUtils.getRequest().getMethod());
             // set method args

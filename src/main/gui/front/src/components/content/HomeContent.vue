@@ -17,15 +17,6 @@
                                   @menusControl="articlesMenusControl">
                     </SectionTitle>
                     <ArticleListCell v-for="article in articles" :article="article" :key="article.id"></ArticleListCell>
-                    <SectionTitle mainTitle="阅读" subTitle="Reading" :menus="booksTitleMenus" :to="'/articles'" v-if="books.length>0"
-                                  :withRefresh="true"
-                                  :withTimeSelect="false"
-                                  @refresh="refreshBooks"
-                                  @menusControl="booksMenusControl">
-                    </SectionTitle>
-                    <div class="books">
-                        <BookCell :book="book" v-for="book in books" :key="book.id"></BookCell>
-                    </div>
                 </div>
             </Col>
             <Col :xs="24" :sm="24" :md="24" :lg="24" :xl="7">
@@ -56,7 +47,6 @@
     import Recommend from "../../views/Recommend";
     import HomeBanner from "../../views/HomeBanner";
     import {listCarousel} from '@/api'
-    import BookCell from "../../views/book/BookCell";
 
 
     export default {
@@ -72,21 +62,12 @@
                     {title: "最多评论", selected: false, method: 'mostComment'},
                     {title: "最热", selected: false, method: 'hot'},
                     {title: "推荐", selected: false, method: 'recommend'}
-                ],
-                mostCommentBooks: undefined,
-                hotBooks: undefined,
-                recommendBooks: undefined,
-                booksTitleMenus: [
-                    {title: '最多评论', selected: false, method: 'mostComment'},
-                    {title: '最热', selected: false, method: 'hot'},
-                    {title: '推荐', selected: false, method: 'recommend'}
-                ],
+                ]
             };
         },
         computed: {
             ...mapState({
                 articles: state => state.home.articles,
-                books: state => state.home.books,
             }),
             showPage: function () {
                 return this.$store.state.home.articles.length > 0;
@@ -105,15 +86,6 @@
                     pageNum: 1
                 });
             }
-            if (this.$store.state.home.books.length === 0) {
-                this.getBooksBaseInfo({
-                    is_recommend: this.recommend,
-                    is_hot: this.hot,
-                    ordering: this.mostComment,
-                    pageSize: 10,
-                    pageNum: 1
-                });
-            }
         },
         mounted() {
             // 更新首页meta信息
@@ -121,8 +93,7 @@
         },
         methods: {
             ...mapActions({
-                getArticlesBaseInfo: 'home/GET_ARTICLES_BASE_INFO',
-                getBooksBaseInfo: 'home/GET_BOOKS_BASE_INFO',
+                getArticlesBaseInfo: 'home/GET_ARTICLES_BASE_INFO'
             }),
             refreshArticles() {
                 this.mostComment = undefined;
@@ -157,55 +128,10 @@
                     pageNum: 1,
                     pageSize: 10
                 });
-            },
-            refreshBooks() {
-                this.mostCommentBooks = undefined;
-                this.hotBooks = undefined;
-                this.recommendBooks = undefined;
-                this.getBooksBaseInfo({
-                    params: {
-                        is_recommend: this.recommendBooks,
-                        is_hot: this.hotBooks,
-                        ordering: this.mostCommentBooks,
-                        limit: 10,
-                        offset: 0
-                    }
-                });
-            },
-            booksMenusControl(params) {
-                switch (params[0]) {
-                    case 'mostComment':
-                        this.mostCommentBooks = params[1] ? 'commentCount' : undefined;
-                        break;
-                    case 'hot':
-                        this.hotBooks = params[1] ? 'click' : undefined;
-                        break;
-                    case 'recommend':
-                        this.recommendBooks = params[1] ? true : undefined;
-                        break;
-                }
-                // 排序条件
-                let orderings = [];
-                if (this.mostCommentBooks !== undefined) {
-                    orderings.push(this.mostCommentBooks);
-                }
-                if (this.hot !== undefined) {
-                    orderings.push(this.hotBooks);
-                }
-                this.getBooksBaseInfo({
-                    params: {
-                        support: this.recommend,
-                        orderByColumn: orderings.toString(),
-                        isAsc: this.timeSorted ? 'asc' : 'desc',
-                        pageNum: 1,
-                        pageSize: 10,
-                        orderByColumn:'b.create_time'
-                    }
-                });
             }
         },
         components: {
-            SectionTitle, ArticleListCell, About, TagWall, FriendLinks, Hot, Recommend, HomeBanner, BookCell
+            SectionTitle, ArticleListCell, About, TagWall, FriendLinks, Hot, Recommend, HomeBanner
         }
     };
 </script>

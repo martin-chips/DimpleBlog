@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dimple.project.common.mapper.TagMapper">
+<mapper namespace="com.dimple.project.blog.mapper.TagMapper">
 
-    <resultMap type="com.dimple.project.common.domain.Tag" id="TagResult">
+    <resultMap type="com.dimple.project.blog.domain.Tag" id="TagResult">
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="color" column="color"/>
@@ -13,14 +13,11 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <select id="selectTagList" parameterType="com.dimple.project.common.domain.Tag" resultMap="TagResult">
+    <select id="selectTagList" parameterType="com.dimple.project.blog.domain.Tag" resultMap="TagResult">
         select t.id,t.title,t.color,t.create_time,t.create_by ,count(tm.id) as count
         from tag t left join tag_mapping tm
         on t.id=tm.tag_id
         where t.delete_time is null
-        <if test="type != null">
-            AND t.type =#{type}
-        </if>
         <if test="title != null and title != ''">
             AND t.title like concat('%', #{title}, '%')
         </if>
@@ -42,14 +39,13 @@
           and t.id = #{id}
     </select>
 
-    <select id="selectTagByTitle" resultType="com.dimple.project.common.domain.Tag">
+    <select id="selectTagByTitle" resultType="com.dimple.project.blog.domain.Tag">
         select id, color, title, type
         from tag
         where title = #{title}
-          and type = #{type}
     </select>
 
-    <select id="selectTagListByType" resultType="com.dimple.project.common.domain.Tag">
+    <select id="selectTagListByType" resultType="com.dimple.project.blog.domain.Tag">
         select t.id,
         color,
         title,
@@ -58,14 +54,12 @@
         create_time
         from tag t
         left join tag_mapping tm on t.id = tm.tag_id
-        where t.type=#{type}
-        <if test="type == 1">and tm.blog_id=#{id}</if>
-        <if test="type ==2">and tm.note_id=#{id}</if>
-        <if test="type ==3">and tm.book_id=#{id}</if>
+        where
+     tm.blog_id=#{id}
     </select>
 
 
-    <insert id="insertTag" parameterType="com.dimple.project.common.domain.Tag" useGeneratedKeys="true"
+    <insert id="insertTag" parameterType="com.dimple.project.blog.domain.Tag" useGeneratedKeys="true"
             keyProperty="id">
         insert into tag
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -87,19 +81,15 @@
         insert into tag_mapping
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="blogId != null">blog_id,</if>
-            <if test="tagId != null">tag_id,</if>
-            <if test="bookId != null">book_id,</if>
-            <if test="noteId != null">note_id</if>
+            <if test="tagId != null">tag_id</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="blogId != null">#{blogId},</if>
-            <if test="tagId != null">#{tagId},</if>
-            <if test="bookId != null">#{bookId},</if>
-            <if test="noteId != null">#{noteId}</if>
+            <if test="tagId != null">#{tagId}</if>
         </trim>
     </insert>
 
-    <update id="updateTag" parameterType="com.dimple.project.common.domain.Tag">
+    <update id="updateTag" parameterType="com.dimple.project.blog.domain.Tag">
         update tag
         <set>
             <if test="title != null  and title != ''">title = #{title},</if>
@@ -133,12 +123,6 @@
         </if>
         <if test="tagId != null">
             AND tag_id =#{tagId}
-        </if>
-        <if test="bookId != null">
-            AND book_id =#{bookId}
-        </if>
-        <if test="noteId != null">
-            AND note_id =#{noteId}
         </if>
     </delete>
 

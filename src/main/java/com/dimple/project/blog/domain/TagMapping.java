@@ -1,4 +1,4 @@
-package com.dimple.project.common.domain;
+package com.dimple.project.blog.domain;
 
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +17,4 @@ public class TagMapping implements Serializable {
     private Long id;
     private Long blogId;
     private Long tagId;
-    private Long bookId;
-    private Long noteId;
 }

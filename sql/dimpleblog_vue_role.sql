@@ -1,0 +1,2 @@
+INSERT INTO `dimpleblog-vue`.role (id, role_name, role_key, role_sort, status, create_by, create_time, update_by, update_time, delete_by, delete_time, remark) VALUES (1, '管理员', 'admin', 1, '0', 'admin', '2018-03-16 11:33:00', '23', '2018-03-16 11:33:00', '', null, '管理员');
+INSERT INTO `dimpleblog-vue`.role (id, role_name, role_key, role_sort, status, create_by, create_time, update_by, update_time, delete_by, delete_time, remark) VALUES (2, '普通角色', 'common', 2, '0', 'admin', '2018-03-16 11:33:00', 'admin', '2019-11-12 19:11:06', '', null, '普通角色');

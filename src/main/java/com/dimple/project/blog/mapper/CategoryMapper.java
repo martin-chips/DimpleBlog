@@ -1,4 +1,4 @@
-package com.dimple.project.common.mapper;
+package com.dimple.project.blog.mapper;
 
 import com.dimple.project.common.domain.Category;
 import org.apache.ibatis.annotations.Param;

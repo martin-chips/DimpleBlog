@@ -133,7 +133,7 @@ public class TokenService {
         UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
         loginUser.setIp(ip);
-        loginUser.setLocation(AddressUtils.getRealAddressByIP(ip));
+        loginUser.setLocation(AddressUtils.getCityInfoByIp(ip));
         loginUser.setBrowser(userAgent.getBrowser().getName());
         loginUser.setOs(userAgent.getOperatingSystem().getName());
     }

@@ -1,7 +1,6 @@
 package com.dimple.project.front.service.impl;
 
 import com.dimple.common.enums.CacheConstants;
-import com.dimple.common.enums.TagType;
 import com.dimple.common.utils.ObjectUtils;
 import com.dimple.common.utils.SecurityUtils;
 import com.dimple.common.utils.ServletUtils;
@@ -15,7 +14,7 @@ import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.domain.Comment;
 import com.dimple.project.common.domain.Category;
 import com.dimple.project.common.domain.ReplayEmail;
-import com.dimple.project.common.domain.Tag;
+import com.dimple.project.blog.domain.Tag;
 import com.dimple.project.common.service.EmailService;
 import com.dimple.project.front.domain.BlogQuery;
 import com.dimple.project.front.mapper.FrontMapper;
@@ -26,7 +25,6 @@ import com.dimple.project.system.domain.Link;
 import com.dimple.project.system.domain.Notice;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -181,7 +179,7 @@ public class FrontServiceImpl implements FrontService {
     public List<Blog> selectBlogList(BlogQuery blogQuery) {
         List<Blog> blogList = frontMapper.selectBlogList(blogQuery);
         for (Blog blog : blogList) {
-            blog.setTagList(frontMapper.selectTagListByTypeAndId(TagType.BLOG.getType(), blog.getId()));
+            blog.setTagList(frontMapper.selectTagListByTypeAndId(blog.getId()));
         }
         return blogList;
     }
@@ -206,7 +204,7 @@ public class FrontServiceImpl implements FrontService {
     public List<Blog> selectBlogArchive(BlogQuery blogQuery) {
         List<Blog> blogList = frontMapper.selectBlogList(blogQuery);
         for (Blog blog : blogList) {
-            blog.setTagList(frontMapper.selectTagListByTypeAndId(TagType.BLOG.getType(), blog.getId()));
+            blog.setTagList(frontMapper.selectTagListByTypeAndId(blog.getId()));
         }
         return blogList;
     }

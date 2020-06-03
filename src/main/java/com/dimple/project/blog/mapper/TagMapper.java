@@ -1,7 +1,7 @@
-package com.dimple.project.common.mapper;
+package com.dimple.project.blog.mapper;
 
-import com.dimple.project.common.domain.Tag;
-import com.dimple.project.common.domain.TagMapping;
+import com.dimple.project.blog.domain.Tag;
+import com.dimple.project.blog.domain.TagMapping;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -66,10 +66,9 @@ public interface TagMapper {
      * 根据Title查询Tag
      *
      * @param title title
-     * @param type  类型
      * @return Tag tag
      */
-    Tag selectTagByTitle(@Param("title") String title, @Param("type") Integer type);
+    Tag selectTagByTitle(@Param("title") String title);
 
     /**
      * 插入Tag关联
@@ -82,9 +81,8 @@ public interface TagMapper {
     /**
      * 根据Tag的type和对应type的id获取TagList
      *
-     * @param type 类型
-     * @param id   对应类型的id
+     * @param id 对应类型的id
      * @return Tag list
      */
-    List<Tag> selectTagListByType(@Param("type") Integer type, @Param("id") Long id);
+    List<Tag> selectTagListByType(@Param("id") Long id);
 }

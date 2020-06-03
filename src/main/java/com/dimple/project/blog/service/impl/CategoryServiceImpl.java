@@ -8,7 +8,7 @@ import com.dimple.project.blog.domain.Blog;
 import com.dimple.project.blog.mapper.BlogMapper;
 import com.dimple.project.blog.service.CategoryService;
 import com.dimple.project.common.domain.Category;
-import com.dimple.project.common.mapper.CategoryMapper;
+import com.dimple.project.blog.mapper.CategoryMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -73,5 +73,9 @@ public class Link extends BaseEntity implements Serializable {
      * 权重
      */
     private Long weight;
+    /**
+     * 用于在首页Panel上显示
+     */
+    private Boolean support;
 
 }

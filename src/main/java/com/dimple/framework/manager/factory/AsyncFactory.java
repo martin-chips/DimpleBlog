@@ -46,7 +46,7 @@ public class AsyncFactory {
         return new TimerTask() {
             @Override
             public void run() {
-                String address = AddressUtils.getRealAddressByIP(ip);
+                String address = AddressUtils.getCityInfoByIp(ip);
                 String os = userAgent.getOperatingSystem().getName();
                 String browser = userAgent.getBrowser().getName();
                 LoginLog loginLog = new LoginLog();

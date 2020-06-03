@@ -2,7 +2,6 @@ package com.dimple.project.blog.domain;
 
 import com.dimple.framework.web.domain.BaseEntity;
 import com.dimple.project.common.domain.Category;
-import com.dimple.project.common.domain.Tag;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;

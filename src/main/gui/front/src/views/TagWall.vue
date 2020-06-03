@@ -1,5 +1,5 @@
 <template>
-    <div class="tag-wall">
+    <div class="tag-wall" v-if="tags.length > 0">
         <panel title="标签墙">
             <div slot="content" class="content">
                 <Tag v-for="tag in tags" type="dot" style="margin: 0 5px 5px 0;"

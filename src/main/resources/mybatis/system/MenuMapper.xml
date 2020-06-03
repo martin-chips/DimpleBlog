@@ -52,7 +52,7 @@
 		from menu m
 			 left join role_menu rm on m.id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
-			 left join role ro on ur.role_id = ro.role_id
+			 left join role ro on ur.role_id = ro.id
 			 left join user u on ur.user_id = u.id
 		where u.id = #{userId} and m.menu_type in ('M', 'C') and m.visible = 0  AND ro.status = 0 and m.delete_time is null
 		order by m.parent_id, m.order_num
