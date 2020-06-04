@@ -13,6 +13,13 @@ server:
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
 
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+  # 请求前缀
+  pathMapping: /dev-api
+
 # 日志配置
 logging:
   level:

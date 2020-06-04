@@ -44,6 +44,7 @@
     "axios": "0.18.1",
     "dropzone": "^5.5.1",
     "echarts": "4.2.1",
+    "vue-echarts": "^5.0.0-beta.0",
     "element-ui": "2.13.0",
     "fuse.js": "3.4.4",
     "highlight.js": "^9.12.0",

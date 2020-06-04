@@ -33,6 +33,7 @@
         <jwt.version>0.9.1</jwt.version>
         <swagger.version>2.9.2</swagger.version>
         <oshi.version>4.1.1</oshi.version>
+        <jna.version>5.5.0</jna.version>
         <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
     </properties>
 
@@ -257,11 +258,13 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
+            <version>${jna.version}</version>
         </dependency>
 
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
+            <version>${jna.version}</version>
         </dependency>
 
     </dependencies>

@@ -115,7 +115,7 @@ public class FileUtils {
         String resultSize = "";
         if (size / GB >= 1) {
             //如果当前Byte的值大于等于1GB
-            resultSize = DF.format(size / (float) GB + "GB");
+            resultSize = DF.format(size / (float) GB) + "GB";
         } else if (size / MB >= 1) {
             //如果当前Byte的值大于等于1MB
             resultSize = DF.format(size / (float) MB) + "MB";

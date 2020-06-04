@@ -2,7 +2,8 @@ package com.dimple.project.monitor.controller;
 
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
-import com.dimple.framework.web.domain.Server;
+import com.dimple.project.monitor.service.ServerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/monitor/server")
 public class ServerController extends BaseController {
+    @Autowired
+    private ServerService serverService;
+
     @PreAuthorize("@permissionService.hasPermission('monitor:server:list')")
     @GetMapping()
     public AjaxResult getInfo() throws Exception {
-        Server server = new Server();
-        server.copyTo();
-        return AjaxResult.success(server);
+        return AjaxResult.success(serverService.getServers());
     }
 }
