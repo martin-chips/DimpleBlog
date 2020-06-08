@@ -1,5 +1,6 @@
 package com.dimple.project.home.service;
 
+import com.dimple.project.home.domain.AccessDataResult;
 import com.dimple.project.home.domain.LineChartData;
 
 import java.util.List;
@@ -61,4 +62,12 @@ public interface DashboardService {
      * @return taskLog
      */
     List<String> getTaskLogStringList();
+
+    /**
+     * get access data for chart
+     *
+     * @return access data
+     */
+    AccessDataResult getAccessData();
+
 }

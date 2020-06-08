@@ -3,6 +3,7 @@ package com.dimple.project.home.controller;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.framework.web.page.TableDataInfo;
+import com.dimple.project.home.domain.KeyValue;
 import com.dimple.project.home.domain.LineChartData;
 import com.dimple.project.home.service.DashboardService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,5 +74,10 @@ public class DashboardController extends BaseController {
         startPage();
         List<String> visitLogList = dashboardService.getTaskLogStringList();
         return getDataTable(visitLogList);
+    }
+
+    @GetMapping("access")
+    public AjaxResult getAccessData() {
+        return AjaxResult.success(dashboardService.getAccessData());
     }
 }

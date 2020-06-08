@@ -3,7 +3,14 @@
     <panel-group @handleSetLineChartData="handleSetLineChartData"/>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-col :xs="24" :sm="24" :lg="24">
-        <line-chart v-if="lineChartData.expectedData!=undefined" :chart-data="lineChartData"/>
+        <line-chart :data-type="dataType"/>
+      </el-col>
+    </el-row>
+    <el-row :gutter="32">
+      <el-col :xs="24" :sm="24" :lg="24">
+        <div class="chart-wrapper">
+          <access></access>
+        </div>
       </el-col>
     </el-row>
     <el-row :gutter="32">
@@ -14,7 +21,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="16">
         <div class="chart-wrapper">
-          <pie-chart :spider-data="spiderData" v-if="spiderData.length!=0"/>
+          <pie-chart/>
         </div>
       </el-col>
     </el-row>
@@ -25,32 +32,8 @@
   import PanelGroup from './dashboard/PanelGroup'
   import LineChart from './dashboard/LineChart'
   import PieChart from './dashboard/PieChart'
-  import {listLineChartData, listSpiderData} from "@/api/dashboard";
+  import Access from './dashboard/Access'
   import Log from "@/views/dashboard/Log"
-
-
-  var lineChartDataAll = {
-    note: {
-      expectedData: [],
-      actualData: [],
-      axisData: []
-    },
-    book: {
-      expectedData: [],
-      actualData: [],
-      axisData: []
-    },
-    visitor: {
-      expectedData: [],
-      actualData: [],
-      axisData: []
-    },
-    blog: {
-      expectedData: [],
-      actualData: [],
-      axisData: []
-    }
-  };
 
   export default {
     name: 'Index',
@@ -59,32 +42,16 @@
       Log,
       LineChart,
       PieChart,
+      Access
     },
     data() {
       return {
-        lineChartData: {},
-        spiderData: []
+        dataType: "visitor"
       }
     },
-    created() {
-      this.handleSetLineChartData("visitor");
-      this.getSpiderData();
-    },
     methods: {
-      getSpiderData() {
-        listSpiderData().then(response => {
-          this.spiderData = response.data;
-        });
-      },
       handleSetLineChartData(type) {
-        if (lineChartDataAll[type].axisData.length == 0) {
-          listLineChartData(type).then(response => {
-            this.lineChartData = response.data;
-            lineChartDataAll[type] = response.data;
-          })
-        } else {
-          this.lineChartData = lineChartDataAll[type];
-        }
+        this.dataType = type;
       }
     }
   }

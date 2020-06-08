@@ -1,5 +1,6 @@
 package com.dimple.project.home.mapper;
 
+import com.dimple.project.home.domain.KeyValue;
 import com.dimple.project.log.domain.LoginLog;
 import com.dimple.project.log.domain.OperateLog;
 import com.dimple.project.log.domain.QuartzJobLog;
@@ -40,28 +41,12 @@ public interface DashBoardMapper {
     Long getVisitorCountByCreateTime(@Param("date") String date);
 
     /**
-     * get note count by createTime
-     *
-     * @param day current day string. eg:2019-08-08
-     * @return count
-     */
-    Long getNoteCountByCreateTime(String day);
-
-    /**
      * get blog count by createTime
      *
      * @param day current day string. eg:2019-08-08
      * @return count
      */
     Long getBlogCountByCreateTime(String day);
-
-    /**
-     * get book count by createTime
-     *
-     * @param day current day string. eg:2019-08-08
-     * @return count
-     */
-    Long getBookCountByCreateTime(String day);
 
     List<Map<String, Long>> getSpiderData();
 
@@ -100,4 +85,6 @@ public interface DashBoardMapper {
      * @return 任务日志
      */
     List<QuartzJobLog> getQuartzJobLogList();
+
+    List<KeyValue> getAccessData();
 }

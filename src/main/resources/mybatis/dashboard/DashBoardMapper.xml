@@ -20,21 +20,13 @@
         from visit_log
         where date(create_time) = #{date}
     </select>
-    <select id="getNoteCountByCreateTime" resultType="java.lang.Long">
-        select count(*)
-        from note
-        where date(create_time) = #{date}
-    </select>
+
     <select id="getBlogCountByCreateTime" resultType="java.lang.Long">
         select count(*)
         from blog
         where date(create_time) = #{date}
     </select>
-    <select id="getBookCountByCreateTime" resultType="java.lang.Long">
-        select count(*)
-        from book
-        where date(create_time) = #{date}
-    </select>
+
     <select id="getSpiderData" resultType="java.util.Map">
         select spider as 'name', count(spider) as 'value'
         from visit_log
@@ -112,6 +104,12 @@
                create_time
         from quartz_log
         where delete_time is null
+    </select>
+
+    <select id="getAccessData" resultType="com.dimple.project.home.domain.KeyValue">
+        select entry_url as 'key', count(*) as 'value'
+        from visit_log
+        group by entry_url
     </select>
 
 </mapper>

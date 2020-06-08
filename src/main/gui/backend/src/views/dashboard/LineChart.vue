@@ -6,10 +6,10 @@
   import echarts from 'echarts'
 
   require('echarts/theme/macarons'); // echarts theme
-  import resize from './mixins/resize'
+  import {listLineChartData} from "@/api/dashboard";
+  import {debounce} from '@/utils'
 
   export default {
-    mixins: [resize],
     props: {
       className: {
         type: String,
@@ -23,49 +23,17 @@
         type: String,
         default: '350px'
       },
-      autoResize: {
-        type: Boolean,
-        default: true
+      dataType: {
+        type: String,
+        default: 'visitor'
       },
-      chartData: {
-        type: Object,
-        required: true
-      }
     },
     data() {
       return {
-        chart: null
-      }
-    },
-    watch: {
-      chartData: {
-        deep: true,
-        handler(val) {
-          this.setOptions(val)
-        }
-      }
-    },
-    mounted() {
-      this.$nextTick(() => {
-        this.initChart()
-      })
-    },
-    beforeDestroy() {
-      if (!this.chart) {
-        return
-      }
-      this.chart.dispose();
-      this.chart = null
-    },
-    methods: {
-      initChart() {
-        this.chart = echarts.init(this.$el, 'macarons');
-        this.setOptions(this.chartData)
-      },
-      setOptions({expectedData, actualData, axisData} = {}) {
-        this.chart.setOption({
+        chart: null,
+        echartOptions: {
           xAxis: {
-            data: axisData,
+            data: [],
             boundaryGap: false,
             axisTick: {
               show: false
@@ -94,7 +62,7 @@
             data: ['上周同期', '本周']
           },
           series: [{
-            name: '上周同期', itemStyle: {
+            name: '上周', itemStyle: {
               normal: {
                 color: '#FF005A',
                 lineStyle: {
@@ -105,7 +73,7 @@
             },
             smooth: true,
             type: 'line',
-            data: expectedData,
+            data: [],
             animationDuration: 2800,
             animationEasing: 'cubicInOut'
           },
@@ -125,12 +93,82 @@
                   }
                 }
               },
-              data: actualData,
+              data: [],
               animationDuration: 2800,
               animationEasing: 'quadraticOut'
             }]
-        })
+        }
       }
+    },
+    //数据自动刷新，必然需要一个监听机制告诉Echarts重新设置数据
+    watch: {
+      dataType: {
+        handler(newVal, oldVal) {
+          if (this.chart) {
+            this.chart.showLoading({
+              text: '数据加载中...'
+            });
+            this.initData();
+            this.chart.hideLoading()
+          } else {
+            this.initChart();
+          }
+        }
+      },
+      //观察option的变化
+      echartOptions: {
+        handler(newVal, oldVal) {
+          if (this.chart) {
+            if (newVal) {
+              this.chart.setOption(newVal);
+            } else {
+              this.chart.setOption(oldVal);
+            }
+            this.chart.hideLoading()
+          } else {
+            this.initChart();
+          }
+        },
+        deep: true //对象内部属性的监听，关键。
+      }
+    },
+    mounted() {
+      this.initData();
+      this.initChart()
+
+      this.__resizeHandler = debounce(() => {
+        if (this.chart) {
+          this.chart.resize()
+        }
+      }, 100)
+      window.addEventListener('resize', this.__resizeHandler)
+    },
+    beforeDestroy() {
+      if (!this.chart) {
+        return
+      }
+      window.removeEventListener('resize', this.__resizeHandler)
+      this.chart.dispose()
+      this.chart = null
+    },
+    methods: {
+      initData() {
+        if (this.dataType == null) {
+          this.dataType="visitor"
+        }
+        listLineChartData(this.dataType).then(response => {
+          this.echartOptions.xAxis.data = response.data.axisData;
+          this.echartOptions.series[0].data = response.data.expectedData;
+          this.echartOptions.series[1].data = response.data.actualData;
+        });
+      },
+      initChart() {
+        this.chart = echarts.init(this.$el, 'macarons');
+        this.chart.setOption(this.echartOptions);
+        this.chart.showLoading({
+          text: '数据加载中...'
+        });
+      },
     }
   }
 </script>

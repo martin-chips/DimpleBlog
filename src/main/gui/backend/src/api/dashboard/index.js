@@ -15,6 +15,14 @@ export function listLineChartData(type) {
   })
 }
 
+//获取访问来源数据
+export function listAccessData() {
+  return request({
+    url: '/dashboard/access',
+    method: 'get',
+  })
+}
+
 //获取爬虫访问数据
 export function listSpiderData() {
   return request({
