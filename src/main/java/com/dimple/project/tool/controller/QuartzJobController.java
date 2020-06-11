@@ -7,6 +7,7 @@ import com.dimple.framework.web.page.TableDataInfo;
 import com.dimple.project.tool.domain.QuartzJob;
 import com.dimple.project.tool.service.QuartzJobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class QuartzJobController extends BaseController {
     QuartzJobService quartzJobService;
 
     @GetMapping("/list")
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:list')")
     public TableDataInfo list(QuartzJob quartzJob) {
         startPage();
         List<QuartzJob> quartzJobList = quartzJobService.selectQuartzJobList(quartzJob);
@@ -40,32 +42,38 @@ public class QuartzJobController extends BaseController {
     }
 
     @PostMapping()
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:add')")
     public AjaxResult add(@Validated @RequestBody QuartzJob quartzJob) {
         return toAjax(quartzJobService.insertQuartzJob(quartzJob));
     }
 
     @GetMapping("/{id}")
-    public AjaxResult add(@PathVariable Long id) {
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:query')")
+    public AjaxResult get(@PathVariable Long id) {
         return AjaxResult.success(quartzJobService.selectQuartzJobById(id));
     }
 
     @PutMapping()
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:edit')")
     public AjaxResult edit(@RequestBody @Validated(BaseEntity.Update.class) QuartzJob quartzJob) {
         return toAjax(quartzJobService.updateQuartzJob(quartzJob));
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:remove')")
     public AjaxResult delete(@PathVariable Long id) {
         return toAjax(quartzJobService.deleteQuartzJob(id));
     }
 
     @PutMapping("/exe/{id}")
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:exec')")
     public AjaxResult execute(@PathVariable Long id) {
         quartzJobService.executeQuartzJobById(id);
         return AjaxResult.success();
     }
 
     @PutMapping("/status/{id}")
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:changeStatus')")
     public AjaxResult updateQuartzJobStatus(@PathVariable Long id) {
         return toAjax(quartzJobService.updateQuartzJobStatus(id));
     }

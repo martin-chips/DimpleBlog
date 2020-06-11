@@ -115,77 +115,80 @@
 
   .user-profile {
 
-  .user-name {
-    font-weight: bold;
+    .user-name {
+      font-weight: bold;
+    }
+
+    .box-center {
+      padding-top: 10px;
+    }
+
+    .user-role {
+      padding-top: 10px;
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .box-social {
+      padding-top: 30px;
+
+      .el-table {
+        border-top: 1px solid #dfe6ec;
+      }
+
+    }
+
+    .user-follow {
+      padding-top: 20px;
+    }
+
   }
 
-  .box-center {
-    padding-top: 10px;
-  }
-
-  .user-role {
-    padding-top: 10px;
-    font-weight: 400;
-    font-size: 14px;
-  }
-
-  .box-social {
-    padding-top: 30px;
-
-  .el-table {
-    border-top: 1px solid #dfe6ec;
-  }
-
-  }
-  .user-follow {
-    padding-top: 20px;
-  }
-
-  }
   .user-bio {
     margin-top: 20px;
     color: #606266;
 
-  span {
-    padding-left: 4px;
-  }
+    span {
+      padding-left: 4px;
+    }
 
-  .logo-wrapper {
-    display: inline-block;
-    margin: 10px 0;
+    .logo-wrapper {
+      display: inline-block;
+      margin: 10px 0;
 
-  img {
-    width: 1.4rem;
-    display: inline-block;
-    margin: 0 .6rem;
-    cursor: pointer;
+      img {
+        width: 1.4rem;
+        display: inline-block;
+        margin: 0 .6rem;
+        cursor: pointer;
 
-  &
-  .unbind {
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-    filter: grayscale(100%);
-  }
+        &
+        .unbind {
+          -webkit-filter: grayscale(100%);
+          -moz-filter: grayscale(100%);
+          -o-filter: grayscale(100%);
+          filter: grayscale(100%);
+        }
 
-  &
-  .radius {
-    border-radius: 50%;
-  }
+        &
+        .radius {
+          border-radius: 50%;
+        }
 
-  }
-  }
-  .user-bio-section {
-    font-size: 14px;
-    padding: 15px 0;
+      }
+    }
 
-  .user-bio-section-header {
-    border-bottom: 1px solid #dfe6ec;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
+    .user-bio-section {
+      font-size: 14px;
+      padding: 15px 0;
 
-  }
+      .user-bio-section-header {
+        border-bottom: 1px solid #dfe6ec;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+    }
   }
 </style>

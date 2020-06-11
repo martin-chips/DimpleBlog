@@ -32,17 +32,17 @@
     </el-form>
 
     <el-table v-loading="loading" :data="configList">
-      <el-table-column label="参数名称" align="center" prop="configName" :show-overflow-tooltip="true"/>
-      <el-table-column label="参数键名" align="center" prop="configKey" :show-overflow-tooltip="true"/>
-      <el-table-column label="参数键值" align="center" prop="configValue"/>
-      <el-table-column label="系统内置" align="center" prop="configType" :formatter="typeFormat"/>
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="参数名称" prop="configName" :show-overflow-tooltip="true"/>
+      <el-table-column label="参数键名" prop="configKey" :show-overflow-tooltip="true"/>
+      <el-table-column label="参数键值" prop="configValue"/>
+      <el-table-column label="系统内置" prop="configType" :formatter="typeFormat"/>
+      <el-table-column label="备注" prop="remark" :show-overflow-tooltip="true"/>
+      <el-table-column label="创建时间" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit"
                      @click="handleUpdate(scope.row)">修改

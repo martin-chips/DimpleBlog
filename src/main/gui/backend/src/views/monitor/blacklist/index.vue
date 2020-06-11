@@ -47,22 +47,22 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
+      <el-table-column type="selection"/>
       <el-table-column label="IP" prop="ip" :show-overflow-tooltip="true"/>
       <el-table-column label="封禁原因" prop="description" :show-overflow-tooltip="true"/>
       <el-table-column label="上次拦截URL" prop="lastAccessUrl"/>
-      <el-table-column label="上次拦截时间" align="center">
+      <el-table-column label="上次拦截时间">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.lastAccessTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="拦截次数" prop="interceptCount"/>
-      <el-table-column label="创建时间" align="center" prop="createTime">
+      <el-table-column label="创建时间" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit"
                      @click="handleUpdate(scope.row)">修改

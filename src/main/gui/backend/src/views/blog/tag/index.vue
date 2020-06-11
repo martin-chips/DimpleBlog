@@ -39,20 +39,20 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
-      <el-table-column label="标签名称" align="center" prop="title" :show-overflow-tooltip="true"/>
-      <el-table-column label="标签颜色" align="center" prop="color">
+      <el-table-column type="selection"/>
+      <el-table-column label="标签名称" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column label="标签颜色" prop="color">
         <template slot-scope="scope">
           <el-color-picker v-model="scope.row.color" size="mini" disabled></el-color-picker>
         </template>
       </el-table-column>
-      <el-table-column label="关联博客数量" align="center" prop="count"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="关联博客数量" prop="count"/>
+      <el-table-column label="创建时间" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit"
                      @click="handleUpdate(scope.row)">修改
@@ -80,7 +80,7 @@
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="标签名" prop="title">
-          <el-input v-model="form.title" placeholder="请输入分类名称"/>
+          <el-input v-model="form.title" placeholder="请输入标签名称"/>
         </el-form-item>
         <el-form-item label="标签颜色" prop="color">
           <el-color-picker v-model="form.color" show-alpha></el-color-picker>
@@ -114,7 +114,7 @@
         // 表单校验
         rules: {
           title: [
-            {required: true, message: "分类名称不能为空", trigger: "blur"},
+            {required: true, message: "标签名称不能为空", trigger: "blur"},
             {min: 3, max: 50, message: '长度在 1 到 10 个字符', trigger: 'change'}
           ]
         }

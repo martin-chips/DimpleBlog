@@ -73,7 +73,7 @@ public class DashboardServiceImpl implements DashboardService {
     @Cacheable(value = "DashBoard", key = "'LineChartData'+ #type")
     @CacheExpire(expire = 3, type = TimeType.HOURS)
     public LineChartData<Long> getLineChartData(String type) {
-        LineChartData lineChartData = null;
+        LineChartData lineChartData;
         switch (type) {
             case LineChartData.BLOG_LINE:
                 lineChartData = getBlogLineChartData();

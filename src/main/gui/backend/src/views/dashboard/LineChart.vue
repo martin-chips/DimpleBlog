@@ -154,7 +154,7 @@
     methods: {
       initData() {
         if (this.dataType == null) {
-          this.dataType="visitor"
+          this.dataType = "visitor"
         }
         listLineChartData(this.dataType).then(response => {
           this.echartOptions.xAxis.data = response.data.axisData;

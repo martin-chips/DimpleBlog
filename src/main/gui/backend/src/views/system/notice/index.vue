@@ -49,17 +49,17 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
-      <el-table-column label="公告标题" align="center" prop="title" :show-overflow-tooltip="true"/>
-      <el-table-column label="公告类型" align="center" prop="type" :formatter="typeFormat"/>
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat"/>
-      <el-table-column label="创建者" align="center" prop="createBy"/>
-      <el-table-column label="创建时间" align="center" prop="createTime">
+      <el-table-column type="selection"/>
+      <el-table-column label="公告标题" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column label="公告类型" prop="type" :formatter="typeFormat"/>
+      <el-table-column label="状态" prop="status" :formatter="statusFormat"/>
+      <el-table-column label="创建者" prop="createBy"/>
+      <el-table-column label="创建时间" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit"
                      @click="handleUpdate(scope.row)">修改
@@ -117,7 +117,8 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="内容" prop="content">
-              <mavonEditor @change="contentChange" v-model="form.content" ref="editor" @imgAdd="handleEditorImgAdd" :subfield="false"
+              <mavonEditor @change="contentChange" v-model="form.content" ref="editor" @imgAdd="handleEditorImgAdd"
+                           :subfield="false"
                            style="min-height: 200px;max-height: 400px"/>
             </el-form-item>
           </el-col>

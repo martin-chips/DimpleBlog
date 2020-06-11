@@ -44,18 +44,18 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
-      <el-table-column label="轮播标题" align="center" prop="title" :show-overflow-tooltip="true"/>
-      <el-table-column label="链接地址" align="center" prop="url" :show-overflow-tooltip="true"/>
-      <el-table-column label="描述内容" align="center" prop="description" :show-overflow-tooltip="true"/>
-      <el-table-column label="点击次数" align="center" prop="click"/>
-      <el-table-column label="显示" align="center">
+      <el-table-column type="selection"/>
+      <el-table-column label="轮播标题" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column label="链接地址" prop="url" :show-overflow-tooltip="true"/>
+      <el-table-column label="描述内容" prop="description" :show-overflow-tooltip="true"/>
+      <el-table-column label="点击次数" prop="click"/>
+      <el-table-column label="显示">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.display" @change="handleDisplayChange(scope.row)" active-color="#13ce66"
                      inactive-color="#ff4949"/>
         </template>
       </el-table-column>
-      <el-table-column label="图片" align="center" prop="headerImg">
+      <el-table-column label="图片" prop="headerImg">
         <template slot-scope="scope">
           <el-image
             style="width: 30px; height: 30px"
@@ -64,18 +64,18 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="新窗口打开" align="center" prop="target">
+      <el-table-column label="新窗口打开" prop="target">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.target"
                      @change="handleTargetChange(scope.row)"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="创建时间" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text"
                      @click="handleUpdate(scope.row)">修改

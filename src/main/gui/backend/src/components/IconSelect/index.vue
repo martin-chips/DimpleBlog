@@ -50,26 +50,26 @@
     width: 100%;
     padding: 10px;
 
-  .icon-list {
-    height: 200px;
-    overflow-y: scroll;
+    .icon-list {
+      height: 200px;
+      overflow-y: scroll;
 
-  div {
-    height: 30px;
-    line-height: 30px;
-    margin-bottom: -5px;
-    cursor: pointer;
-    width: 33%;
-    float: left;
-  }
+      div {
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: -5px;
+        cursor: pointer;
+        width: 33%;
+        float: left;
+      }
 
-  span {
-    display: inline-block;
-    vertical-align: -0.15em;
-    fill: currentColor;
-    overflow: hidden;
-  }
+      span {
+        display: inline-block;
+        vertical-align: -0.15em;
+        fill: currentColor;
+        overflow: hidden;
+      }
 
-  }
+    }
   }
 </style>

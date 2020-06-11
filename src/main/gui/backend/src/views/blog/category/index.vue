@@ -43,21 +43,21 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
-      <el-table-column label="分类名称" align="center" prop="title" :show-overflow-tooltip="true"/>
-      <el-table-column label="分类描述" align="center" prop="description" :show-overflow-tooltip="true"/>
-      <el-table-column label="推荐" align="center">
+      <el-table-column type="selection"/>
+      <el-table-column label="分类名称" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column label="分类描述" prop="description" :show-overflow-tooltip="true"/>
+      <el-table-column label="推荐">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.support" active-color="#13ce66" inactive-color="#ff4949"
                      @change="handleSupportChange(scope.row)"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="创建时间" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="关联博客" align="center">
+      <el-table-column label="关联博客">
         <template slot-scope="scope">
           <el-popover placement="left" width="600" trigger="click">
             <el-table :data="scope.row.blogList">
@@ -72,24 +72,24 @@
                   </el-image>
                 </template>
               </el-table-column>
-              <el-table-column label="评论" align="center">
+              <el-table-column label="评论">
                 <template slot-scope="scope">
                   <el-switch v-model="scope.row.comment" disabled/>
                 </template>
               </el-table-column>
-              <el-table-column label="推荐" align="center">
+              <el-table-column label="推荐">
                 <template slot-scope="scope">
                   <el-switch v-model="scope.row.support" disabled active-color="#13ce66"
                              inactive-color="#ff4949"/>
                 </template>
               </el-table-column>
-              <el-table-column label="权重" prop="weight" width="150" align="center">
+              <el-table-column label="权重" prop="weight" width="150">
                 <template slot-scope="scope">
                   <el-rate v-model="scope.row.weight" :max="5" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" disabled
                            :low-threshold="1" :high-threshold="5" style="display:inline-block"/>
                 </template>
               </el-table-column>
-              <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+              <el-table-column label="创建时间" prop="createTime" width="180">
                 <template slot-scope="scope">
                   <span>{{ parseTime(scope.row.createTime) }}</span>
                 </template>
@@ -101,7 +101,7 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit"
                      @click="handleUpdate(scope.row)">修改
@@ -197,10 +197,14 @@
           type: "warning"
         }).then(function () {
           return changeCategorySupport(row.id, row.support);
-        }).then(() => {
-          this.msgSuccess(text + "成功");
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess(text + "成功");
+          } else {
+            this.msgError(text + "失败");
+          }
         }).catch(function () {
-          row.support = row.support === false ? true : false;
+          row.support = row.support ? false : true;
         });
       },
     }

@@ -47,24 +47,24 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
-      <el-table-column label="用户名称" align="center" prop="userName"/>
-      <el-table-column label="登录地址" align="center" prop="ip" width="130" :show-overflow-tooltip="true"/>
-      <el-table-column label="登录地点" align="center" prop="location"/>
-      <el-table-column label="浏览器" align="center" prop="browser"/>
-      <el-table-column label="操作系统" align="center" prop="os"/>
-      <el-table-column align="center" prop="status" label="登录状态">
+      <el-table-column type="selection"/>
+      <el-table-column label="用户名称" prop="userName"/>
+      <el-table-column label="登录地址" prop="ip" width="130" :show-overflow-tooltip="true"/>
+      <el-table-column label="登录地点" prop="location"/>
+      <el-table-column label="浏览器" prop="browser"/>
+      <el-table-column label="操作系统" prop="os"/>
+      <el-table-column prop="status" label="登录状态">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status ? 'success' : 'danger'">{{ scope.row.status ? '成功' : '失败' }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作信息" align="center" prop="msg"/>
-      <el-table-column label="登录日期" align="center" prop="createTime" width="180">
+      <el-table-column label="操作信息" prop="msg"/>
+      <el-table-column label="登录日期" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-popover :ref="scope.row.id" placement="top" width="180">
             <p>确定删除本条数据吗？</p>
@@ -88,35 +88,35 @@
 </template>
 
 <script>
-    import {list} from "@/api/log/loginLog";
-    import initData from '@/mixins/initData'
+  import {list} from "@/api/log/loginLog";
+  import initData from '@/mixins/initData'
 
-    export default {
-        mixins: [initData],
-        data() {
-            return {
-                // 状态数据字典
-                statusOptions: [],
-                // 查询参数
-                queryParams: {
-                    ip: undefined,
-                    userName: undefined,
-                    status: undefined
-                }
-            };
-        },
-        created() {
-            this.$nextTick(() => {
-                this.init()
-            })
-        },
-        methods: {
-            beforeInit() {
-                this.base = '/log/loginLog';
-                this.modelName = '登录日志';
-                return true
-            },
+  export default {
+    mixins: [initData],
+    data() {
+      return {
+        // 状态数据字典
+        statusOptions: [],
+        // 查询参数
+        queryParams: {
+          ip: undefined,
+          userName: undefined,
+          status: undefined
         }
-    };
+      };
+    },
+    created() {
+      this.$nextTick(() => {
+        this.init()
+      })
+    },
+    methods: {
+      beforeInit() {
+        this.base = '/log/loginLog';
+        this.modelName = '登录日志';
+        return true
+      },
+    }
+  };
 </script>
 

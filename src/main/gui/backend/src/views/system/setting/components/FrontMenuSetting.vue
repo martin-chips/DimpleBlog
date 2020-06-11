@@ -1,7 +1,7 @@
 <template>
   <el-form :model="menuList" ref="form" label-width="100px">
     <el-form-item prop="category" label="分类">
-      
+
     </el-form-item>
   </el-form>
 </template>

@@ -69,31 +69,24 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
-      <el-table-column label="标题" prop="title" :show-overflow-tooltip="true"/>
-      <el-table-column label="分类" prop="category.title">
-        <template slot-scope="scope">
-          <el-popover trigger="hover" placement="right">
-            <p>名称: {{ scope.row.category.title }}</p>
-            <p>描述: {{ scope.row.category.description }}</p>
-            <p>推荐:
-              <el-switch
-                v-model="scope.row.category.support"
-                active-color="#13ce66"
-                disabled
-                inactive-color="#ff4949">
-              </el-switch>
-            </p>
-            <p>
-              创建时间:<span>{{ parseTime(scope.row.category.createTime) }}</span>
-            </p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag effect="plain">{{ scope.row.category.title }}</el-tag>
-            </div>
-          </el-popover>
+      <el-table-column type="selection"/>
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="分类名称">
+              <span>{{ props.row.category.title }}</span>
+            </el-form-item>
+            <el-form-item label="分类描述">
+              <span>{{ props.row.category.description }}</span>
+            </el-form-item>
+            <el-form-item label="摘要">
+              <span>{{ props.row.summary }}</span>
+            </el-form-item>
+          </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="摘要" prop="summary" :show-overflow-tooltip="true"/>
+      <el-table-column label="标题" min-width="300px" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column label="分类" prop="category.title"/>
       <el-table-column label="封面" prop="headerImg">
         <template slot-scope="scope">
           <el-image
@@ -103,67 +96,36 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="评论" align="center">
+      <el-table-column label="允许评论">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.comment"
                      @change="handleCommentChange(scope.row)"/>
         </template>
       </el-table-column>
-      <el-table-column label="推荐" align="center">
+      <el-table-column label="推荐">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.support" @change="handleSupportChange(scope.row)" active-color="#13ce66"
                      inactive-color="#ff4949"/>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center">
+      <el-table-column label="状态">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.status ==true">发布</el-tag>
           <el-tag v-else type="warning">草稿</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="权重" prop="weight" align="center">
+      <el-table-column label="权重" prop="weight">
         <template slot-scope="scope">
           <el-rate v-model="scope.row.weight" :max="5" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" disabled
                    :low-threshold="1" :high-threshold="5" style="display:inline-block"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime">
+      <el-table-column label="创建时间" min-width="100px" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="评论" align="center">
-        <template slot-scope="scope">
-          <el-popover
-            placement="left"
-            width="600"
-            trigger="click">
-            <el-table v-loading="loading" :data="scope.row.commentList" style="width: 100%;">
-              <el-table-column label="昵称" align="center" prop="nickName"/>
-              <el-table-column label="主机" align="center" prop="ip" :show-overflow-tooltip="true"/>
-              <el-table-column label="操作地点" align="center" prop="location"/>
-              <el-table-column label="显示" align="center">
-                <template slot-scope="scope">
-                  <el-switch v-model="scope.row.display" active-color="#13ce66" inactive-color="#ff4949" disabled/>
-                </template>
-              </el-table-column>
-              <el-table-column label="内容" align="center" prop="content" :show-overflow-tooltip="true"/>
-              <el-table-column label="点赞" align="center" prop="good"/>
-              <el-table-column label="踩" align="center" prop="bad"/>
-              <el-table-column label="评论日期" align="center" prop="createTime" width="180">
-                <template slot-scope="scope">
-                  <span>{{ parseTime(scope.row.createTime) }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-button size="mini" type="text" icon="el-icon-tickets" slot="reference">共
-              {{scope.row.commentList.length}}
-              条数据
-            </el-button>
-          </el-popover>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="text" size="mini" icon="el-icon-edit">
             <router-link :to="'blog/edit/'+scope.row.id">编辑</router-link>
@@ -254,6 +216,7 @@
             this.msgError(text + "失败");
           }
         }).catch(function () {
+          row.comment = row.comment ? false : true;
           this.msgError(text + "失败");
         });
       },
@@ -278,3 +241,34 @@
     }
   };
 </script>
+
+<style scoped>
+  .demo-table-expand {
+    font-size: 0;
+  }
+
+  .demo-table-expand label {
+    width: 70px;
+    color: #99a9bf;
+  }
+
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .demo-table-expand .el-form-item__content {
+    font-size: 12px;
+  }
+
+  /deep/ .el-dialog__body {
+    padding: 0 20px 10px 20px !important;
+  }
+
+  .java.hljs {
+    color: #444;
+    background: #ffffff !important;
+    height: 630px !important;
+  }
+</style>

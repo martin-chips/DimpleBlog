@@ -51,11 +51,7 @@ public class BlogServiceImpl implements BlogService {
         if (blogList.isEmpty()) {
             return blogList;
         }
-        List<Long> blogIdList = blogList.stream().map(Blog::getId).collect(Collectors.toList());
-        //设置comment信息
-        List<Comment> commentList = commentMapper.selectCommentListByPageIds(blogIdList);
         for (Blog temp : blogList) {
-            temp.setCommentList(commentList.stream().filter(e -> e.getPageId().equals(temp.getId())).collect(Collectors.toList()));
             temp.setTagTitleList(getTagTitleListByBlogId(temp.getId()));
         }
         return blogList;

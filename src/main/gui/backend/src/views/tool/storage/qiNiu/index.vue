@@ -52,7 +52,7 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
+      <el-table-column type="selection"/>
       <el-table-column :show-overflow-tooltip="true" label="文件名">
         <template slot-scope="scope">
           <a href="JavaScript:" class="el-link el-link--primary" target="_blank" type="primary"
@@ -77,7 +77,7 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100px" align="center">
+      <el-table-column label="操作" width="100px">
         <template slot-scope="scope">
           <el-popover :ref="scope.row.id" placement="top" width="180">
             <p>删除该文件会导致所有引用该文件的博客图片失效!确定删除本条数据吗？</p>

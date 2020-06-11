@@ -40,7 +40,7 @@
     </select>
 
     <select id="selectTagByTitle" resultType="com.dimple.project.blog.domain.Tag">
-        select id, color, title, type
+        select id, color, title
         from tag
         where title = #{title}
     </select>
@@ -49,8 +49,7 @@
         select t.id,
         color,
         title,
-        type,
-        create_by,
+     create_by,
         create_time
         from tag t
         left join tag_mapping tm on t.id = tm.tag_id
@@ -65,14 +64,12 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null  and title != ''">title,</if>
             <if test="color != null  and color != ''">color,</if>
-            <if test="type != null">type,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             create_time
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null  and title != ''">#{title},</if>
             <if test="color != null  and color != ''">#{color},</if>
-            <if test="type != null">#{type},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             sysdate()
         </trim>

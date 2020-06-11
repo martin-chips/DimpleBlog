@@ -56,20 +56,47 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
-      <el-table-column label="系统模块" align="center" prop="title"/>
-      <el-table-column label="操作类型" align="center" prop="businessType" :formatter="typeFormat"/>
-      <el-table-column label="请求方式" align="center" prop="requestMethod"/>
-      <el-table-column label="操作人员" align="center" prop="operateName"/>
-      <el-table-column label="主机" align="center" prop="ip" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作地点" align="center" prop="location"/>
-      <el-table-column align="center" prop="status" label="登录状态">
+    <el-table v-loading="loading" :data="list" style="width: 100%;" @selection-change="handleSelectionChange">
+      <el-table-column type="selection"/>
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="URL">
+              <span>{{ props.row.url}}</span>
+            </el-form-item>
+            <el-form-item label="请求方式">
+              <span>{{ props.row.requestMethod}}</span>
+            </el-form-item>
+            <el-form-item label="操作方法">
+              <span>{{ props.row.method}}</span>
+            </el-form-item>
+            <el-form-item label="请求参数">
+              <span>{{ props.row.param }}</span>
+            </el-form-item>
+            <el-form-item label="返回参数">
+              <span>{{ props.row.jsonResult }}</span>
+            </el-form-item>
+            <el-form-item label="登录信息">
+              <span>{{ props.row.operateName }} / {{ props.row.ip }} / {{ props.row.location }}</span>
+            </el-form-item>
+            <el-form-item label="异常信息" v-if="props.row.status === false">
+              <span>{{ props.row.errorMsg }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column label="系统模块" prop="title"/>
+      <el-table-column label="操作类型" prop="businessType" :formatter="typeFormat"/>
+      <el-table-column label="请求方式" prop="requestMethod"/>
+      <el-table-column label="操作人员" prop="operateName"/>
+      <el-table-column label="主机" prop="ip" :show-overflow-tooltip="true"/>
+      <el-table-column label="操作地点" prop="location"/>
+      <el-table-column prop="status" label="登录状态">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status ? 'success' : 'danger'">{{ scope.row.status ? '成功' : '失败' }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="cost" label="请求耗时" align="center">
+      <el-table-column prop="cost" label="请求耗时">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.cost ==null"><1ms</el-tag>
           <el-tag v-else-if="scope.row.cost <= 300">{{ scope.row.cost }}ms</el-tag>
@@ -77,16 +104,13 @@
           <el-tag v-else type="danger">{{ scope.row.cost }}ms</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作日期" align="center" prop="createTime" width="180">
+      <el-table-column label="操作日期" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-view"
-                     @click="handleView(scope.row,scope.index)">详细
-          </el-button>
           <el-popover :ref="scope.row.id" placement="top" width="180">
             <p>确定删除本条数据吗？</p>
             <div style="text-align: right; margin: 0">
@@ -105,102 +129,86 @@
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
                 @pagination="init"/>
 
-    <!-- 操作日志详细 -->
-    <el-dialog :close-on-click-modal="false" title="操作日志详细" :visible.sync="open" width="700px">
-      <el-form ref="form" :model="form" label-width="100px" size="mini">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="操作模块：">{{ form.title }} / 修改</el-form-item>
-            <el-form-item
-              label="登录信息："
-            >{{ form.operateName }} / {{ form.ip }} / {{ form.location }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="请求地址：">{{ form.url }}</el-form-item>
-            <el-form-item label="请求方式：">{{ form.requestMethod }}</el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="操作方法：">{{ form.method }}</el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="请求参数：">{{ form.param }}</el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="返回参数：">{{ form.jsonResult }}</el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="操作状态：">
-              <el-tag :type="form.status ? 'success' : 'danger'">{{ form.status ? '成功' : '失败' }}</el-tag>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="操作时间：">{{ parseTime(form.createTime) }}</el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="异常信息：" v-if="form.status === false">{{ form.errorMsg }}</el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="open = false">关 闭</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-    import {list} from "@/api/log/operateLog";
-    import initData from '@/mixins/initData'
+  import initData from '@/mixins/initData'
 
-    export default {
-        mixins: [initData],
-        data() {
-            return {
-                // 类型数据字典
-                typeOptions: [],
-                // 类型数据字典
-                statusOptions: [],
-                // 查询参数
-                queryParams: {
-                    title: undefined,
-                    operName: undefined,
-                    businessType: undefined,
-                    status: undefined
-                }
-            };
-        },
-        created() {
-            this.$nextTick(() => {
-                this.init()
-            });
-            this.getDicts("sys_oper_type").then(response => {
-                this.typeOptions = response.data;
-            });
-            this.getDicts("sys_common_status").then(response => {
-                this.statusOptions = response.data;
-            });
-        },
-        methods: {
-            beforeInit() {
-                this.base = '/log/operateLog';
-                this.modelName = '操作日志';
-                return true
-            },
-            // 操作日志状态字典翻译
-            statusFormat(row, column) {
-                return this.selectDictLabel(this.statusOptions, row.status);
-            },
-            // 操作日志类型字典翻译
-            typeFormat(row, column) {
-                return this.selectDictLabel(this.typeOptions, row.businessType);
-            },
-            /** 详细按钮操作 */
-            handleView(row) {
-                this.open = true;
-                this.form = row;
-            }
+  export default {
+    mixins: [initData],
+    data() {
+      return {
+        // 类型数据字典
+        typeOptions: [],
+        // 类型数据字典
+        statusOptions: [],
+        // 查询参数
+        queryParams: {
+          title: undefined,
+          operName: undefined,
+          businessType: undefined,
+          status: undefined
         }
-    };
+      };
+    },
+    created() {
+      this.$nextTick(() => {
+        this.init()
+      });
+      this.getDicts("sys_oper_type").then(response => {
+        this.typeOptions = response.data;
+      });
+      this.getDicts("sys_common_status").then(response => {
+        this.statusOptions = response.data;
+      });
+    },
+    methods: {
+      beforeInit() {
+        this.base = '/log/operateLog';
+        this.modelName = '操作日志';
+        return true
+      },
+      // 操作日志状态字典翻译
+      statusFormat(row, column) {
+        return this.selectDictLabel(this.statusOptions, row.status);
+      },
+      // 操作日志类型字典翻译
+      typeFormat(row, column) {
+        return this.selectDictLabel(this.typeOptions, row.businessType);
+      },
+    }
+  };
 </script>
 
+
+<style scoped>
+  .demo-table-expand {
+    font-size: 0;
+  }
+
+  .demo-table-expand label {
+    width: 70px;
+    color: #99a9bf !important;
+  }
+
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .demo-table-expand .el-form-item__content {
+    font-size: 12px;
+  }
+
+  /deep/ .el-dialog__body {
+    padding: 0 20px 10px 20px !important;
+  }
+
+  .java.hljs {
+    color: #444;
+    background: #ffffff !important;
+    height: 630px !important;
+  }
+</style>

@@ -61,7 +61,7 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
+      <el-table-column type="selection"/>
       <el-table-column :show-overflow-tooltip="true" prop="jobName" label="任务名称"/>
       <el-table-column :show-overflow-tooltip="true" prop="beanName" label="Bean名称"/>
       <el-table-column :show-overflow-tooltip="true" prop="methodName" label="执行方法"/>
@@ -78,7 +78,7 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="300px">
+      <el-table-column label="操作" class-name="small-padding fixed-width" width="300px">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit"
                      @click="handleUpdate(scope.row)">修改

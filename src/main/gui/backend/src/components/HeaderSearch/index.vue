@@ -1,6 +1,6 @@
 <template>
   <div :class="{'show':show}" class="header-search">
-    <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
+    <svg-icon class-name="search-icon" icon-class="search" @click.stop="click"/>
     <el-select
       ref="headerSearchSelect"
       v-model="search"
@@ -12,7 +12,7 @@
       class="header-search-select"
       @change="change"
     >
-      <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title.join(' > ')" />
+      <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title.join(' > ')"/>
     </el-select>
   </div>
 </template>
@@ -101,7 +101,9 @@
 
         for (const router of routes) {
           // skip hidden router
-          if (router.hidden) { continue }
+          if (router.hidden) {
+            continue
+          }
 
           const data = {
             path: path.resolve(basePath, router.path),

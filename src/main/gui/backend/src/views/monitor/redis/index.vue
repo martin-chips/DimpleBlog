@@ -7,11 +7,11 @@
       </el-tab-pane>
       <el-tab-pane label="Redis 监控" name="second">
         <el-table max-height="800" :data="redisInfoList">
-          <el-table-column prop="key" align="center" label="Key">
+          <el-table-column prop="key" label="Key">
           </el-table-column>
-          <el-table-column prop="description" align="center" label="描述">
+          <el-table-column prop="description" label="描述">
           </el-table-column>
-          <el-table-column prop="value" align="center" label="值">
+          <el-table-column prop="value" label="值">
           </el-table-column>
         </el-table>
       </el-tab-pane>

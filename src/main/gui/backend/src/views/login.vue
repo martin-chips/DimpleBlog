@@ -151,21 +151,23 @@
     width: 400px;
     padding: 25px 25px 5px 25px;
 
-  .el-input {
-    height: 38px;
+    .el-input {
+      height: 38px;
 
-  input {
-    height: 38px;
-  }
+      input {
+        height: 38px;
+      }
+
+    }
+
+    .input-icon {
+      height: 39px;
+      width: 14px;
+      margin-left: 2px;
+    }
 
   }
-  .input-icon {
-    height: 39px;
-    width: 14px;
-    margin-left: 2px;
-  }
 
-  }
   .login-tip {
     font-size: 13px;
     text-align: center;
@@ -177,12 +179,13 @@
     height: 38px;
     float: right;
 
-  img {
-    cursor: pointer;
-    vertical-align: middle;
-  }
+    img {
+      cursor: pointer;
+      vertical-align: middle;
+    }
 
   }
+
   .el-login-footer {
     height: 40px;
     line-height: 40px;

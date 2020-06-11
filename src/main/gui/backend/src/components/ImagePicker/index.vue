@@ -28,7 +28,7 @@
   export default {
     name: "ImagePicker",
     components: {
-      QiNiuImageContent,LocalImageContent
+      QiNiuImageContent, LocalImageContent
     },
     data() {
       return {}

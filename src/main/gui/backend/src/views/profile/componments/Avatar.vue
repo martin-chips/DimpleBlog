@@ -1,11 +1,11 @@
 <template>
   <el-dialog :close-on-click-modal="false"
-    class="update-avatar"
-    title="更改头像"
-    :width="width"
-    top="50px"
-    :close-on-press-escape="false"
-    :visible.sync="isVisible"
+             class="update-avatar"
+             title="更改头像"
+             :width="width"
+             top="50px"
+             :close-on-press-escape="false"
+             :visible.sync="isVisible"
   >
     <el-tabs v-model="activeName" class="avatar-tabs">
       <el-tab-pane label="后田花子" name="first">
@@ -139,20 +139,20 @@
   .update-avatar {
     padding: 0 1rem 1rem 1rem !important;
 
-  .avatar-tabs {
+    .avatar-tabs {
 
-  .avatar-wrapper {
-    display: inline-block;
+      .avatar-wrapper {
+        display: inline-block;
 
-  img {
-    width: 5rem;
-    border-radius: 50%;
-    display: inline-block;
-    margin: .5rem;
-    cursor: pointer;
-  }
+        img {
+          width: 5rem;
+          border-radius: 50%;
+          display: inline-block;
+          margin: .5rem;
+          cursor: pointer;
+        }
 
-  }
-  }
+      }
+    }
   }
 </style>

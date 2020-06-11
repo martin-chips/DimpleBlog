@@ -43,23 +43,23 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
-      <el-table-column label="友链名称" align="center" prop="title" :show-overflow-tooltip="true"/>
-      <el-table-column label="友链描述" align="center" prop="description" :show-overflow-tooltip="true"/>
-      <el-table-column label="显示" align="center">
+      <el-table-column type="selection"/>
+      <el-table-column label="友链名称" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column label="友链描述" prop="description" :show-overflow-tooltip="true"/>
+      <el-table-column label="显示">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.display" @change="handleDisplayChange(scope.row)" active-color="#13ce66"
                      inactive-color="#ff4949"/>
         </template>
       </el-table-column>
-      <el-table-column label="权重" align="center" prop="weight" :show-overflow-tooltip="true"/>
-      <el-table-column label="站长邮箱" align="center" prop="email" :show-overflow-tooltip="true"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="权重" prop="weight" :show-overflow-tooltip="true"/>
+      <el-table-column label="站长邮箱" prop="email" :show-overflow-tooltip="true"/>
+      <el-table-column label="创建时间" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <div v-if="scope.row.status">
             <el-button size="mini" type="text"

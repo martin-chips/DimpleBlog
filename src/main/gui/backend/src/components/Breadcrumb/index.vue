@@ -74,10 +74,10 @@
     line-height: 50px;
     margin-left: 8px;
 
-  .no-redirect {
-    color: #97a8be;
-    cursor: text;
-  }
+    .no-redirect {
+      color: #97a8be;
+      cursor: text;
+    }
 
   }
 </style>

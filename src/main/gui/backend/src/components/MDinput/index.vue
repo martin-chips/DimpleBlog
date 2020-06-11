@@ -1,7 +1,7 @@
 <template>
   <div :class="computedClasses" class="material-input__component">
     <div :class="{iconClass:icon}">
-      <i v-if="icon" :class="['el-icon-' + icon]" class="el-input__icon material-input__icon" />
+      <i v-if="icon" :class="['el-icon-' + icon]" class="el-input__icon material-input__icon"/>
       <input
         v-if="type === 'email'"
         v-model="currentValue"
@@ -101,100 +101,100 @@
         @blur="handleMdBlur"
         @input="handleModelInput"
       >
-      <span class="material-input-bar" />
+      <span class="material-input-bar"/>
       <label class="material-label">
-        <slot />
+        <slot/>
       </label>
     </div>
   </div>
 </template>
 
 <script>
-// source:https://github.com/wemake-services/vue-material-input/blob/master/src/components/MaterialInput.vue
+  // source:https://github.com/wemake-services/vue-material-input/blob/master/src/components/MaterialInput.vue
 
-export default {
-  name: 'MdInput',
-  props: {
-    /* eslint-disable */
-    icon: String,
-    name: String,
-    type: {
-      type: String,
-      default: 'text'
-    },
-    value: [String, Number],
-    placeholder: String,
-    readonly: Boolean,
-    disabled: Boolean,
-    min: String,
-    max: String,
-    step: String,
-    minlength: Number,
-    maxlength: Number,
-    required: {
-      type: Boolean,
-      default: true
-    },
-    autoComplete: {
-      type: String,
-      default: 'off'
-    },
-    validateEvent: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data() {
-    return {
-      currentValue: this.value,
-      focus: false,
-      fillPlaceHolder: null
-    }
-  },
-  computed: {
-    computedClasses() {
-      return {
-        'material--active': this.focus,
-        'material--disabled': this.disabled,
-        'material--raised': Boolean(this.focus || this.currentValue) // has value
+  export default {
+    name: 'MdInput',
+    props: {
+      /* eslint-disable */
+      icon: String,
+      name: String,
+      type: {
+        type: String,
+        default: 'text'
+      },
+      value: [String, Number],
+      placeholder: String,
+      readonly: Boolean,
+      disabled: Boolean,
+      min: String,
+      max: String,
+      step: String,
+      minlength: Number,
+      maxlength: Number,
+      required: {
+        type: Boolean,
+        default: true
+      },
+      autoComplete: {
+        type: String,
+        default: 'off'
+      },
+      validateEvent: {
+        type: Boolean,
+        default: true
       }
-    }
-  },
-  watch: {
-    value(newValue) {
-      this.currentValue = newValue
-    }
-  },
-  methods: {
-    handleModelInput(event) {
-      const value = event.target.value;
-      this.$emit('input', value);
-      if (this.$parent.$options.componentName === 'ElFormItem') {
-        if (this.validateEvent) {
-          this.$parent.$emit('el.form.change', [value])
+    },
+    data() {
+      return {
+        currentValue: this.value,
+        focus: false,
+        fillPlaceHolder: null
+      }
+    },
+    computed: {
+      computedClasses() {
+        return {
+          'material--active': this.focus,
+          'material--disabled': this.disabled,
+          'material--raised': Boolean(this.focus || this.currentValue) // has value
         }
       }
-      this.$emit('change', value)
     },
-    handleMdFocus(event) {
-      this.focus = true;
-      this.$emit('focus', event);
-      if (this.placeholder && this.placeholder !== '') {
-        this.fillPlaceHolder = this.placeholder
+    watch: {
+      value(newValue) {
+        this.currentValue = newValue
       }
     },
-    handleMdBlur(event) {
-      this.focus = false;
-      this.$emit('blur', event);
-      this.fillPlaceHolder = null;
-      if (this.$parent.$options.componentName === 'ElFormItem') {
-        if (this.validateEvent) {
-          this.$parent.$emit('el.form.blur', [this.currentValue])
+    methods: {
+      handleModelInput(event) {
+        const value = event.target.value;
+        this.$emit('input', value);
+        if (this.$parent.$options.componentName === 'ElFormItem') {
+          if (this.validateEvent) {
+            this.$parent.$emit('el.form.change', [value])
+          }
+        }
+        this.$emit('change', value)
+      },
+      handleMdFocus(event) {
+        this.focus = true;
+        this.$emit('focus', event);
+        if (this.placeholder && this.placeholder !== '') {
+          this.fillPlaceHolder = this.placeholder
+        }
+      },
+      handleMdBlur(event) {
+        this.focus = false;
+        this.$emit('blur', event);
+        this.fillPlaceHolder = null;
+        if (this.$parent.$options.componentName === 'ElFormItem') {
+          if (this.validateEvent) {
+            this.$parent.$emit('el.form.blur', [this.currentValue])
+          }
         }
       }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>
@@ -239,9 +239,11 @@ export default {
   .material-input__component {
     margin-top: 36px;
     position: relative;
+
     * {
       box-sizing: border-box;
     }
+
     .iconClass {
       .material-input__icon {
         position: absolute;
@@ -255,13 +257,16 @@ export default {
         font-weight: $font-weight-normal;
         pointer-events: none;
       }
+
       .material-label {
         left: $index-has-icon;
       }
+
       .material-input {
         text-indent: $index-has-icon;
       }
     }
+
     .material-input {
       font-size: $font-size-base;
       padding: $spacer $spacer $spacer - $apixel * 10 $spacer / 2;
@@ -270,12 +275,14 @@ export default {
       border: none;
       line-height: 1;
       border-radius: 0;
+
       &:focus {
         outline: none;
         border: none;
         border-bottom: 1px solid transparent; // fixes the height issue
       }
     }
+
     .material-label {
       font-weight: $font-weight-normal;
       position: absolute;
@@ -285,31 +292,37 @@ export default {
       transition: $transition;
       font-size: $font-size-small;
     }
+
     .material-input-bar {
       position: relative;
       display: block;
       width: 100%;
+
       &:before {
         @extend %base-bar-pseudo;
         left: 50%;
       }
+
       &:after {
         @extend %base-bar-pseudo;
         right: 50%;
       }
     }
+
     // Disabled state:
     &.material--disabled {
       .material-input {
         border-bottom-style: dashed;
       }
     }
+
     // Raised state:
     &.material--raised {
       .material-label {
         @include slided-top();
       }
     }
+
     // Active state:
     &.material--active {
       .material-input-bar {
@@ -323,32 +336,38 @@ export default {
 
   .material-input__component {
     background: $color-white;
+
     .material-input {
       background: none;
       color: $color-black;
       text-indent: $index;
       border-bottom: 1px solid $color-grey-light;
     }
+
     .material-label {
       color: $color-grey;
     }
+
     .material-input-bar {
       &:before,
       &:after {
         background: $color-blue;
       }
     }
+
     // Active state:
     &.material--active {
       .material-label {
         color: $color-blue;
       }
     }
+
     // Errors:
     &.material--has-errors {
       &.material--active .material-label {
         color: $color-red;
       }
+
       .material-input-bar {
         &:before,
         &:after {

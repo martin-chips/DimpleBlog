@@ -2,6 +2,8 @@ package com.dimple.project.system.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.dimple.common.constant.ConfigKey;
+import com.dimple.framework.aspectj.lang.annotation.Log;
+import com.dimple.framework.aspectj.lang.enums.BusinessType;
 import com.dimple.framework.web.controller.BaseController;
 import com.dimple.framework.web.domain.AjaxResult;
 import com.dimple.project.system.domain.AboutSetting;
@@ -10,6 +12,7 @@ import com.dimple.project.system.domain.EmailSetting;
 import com.dimple.project.system.domain.SiteSetting;
 import com.dimple.project.system.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +32,7 @@ public class SettingController extends BaseController {
     ConfigService configService;
 
     @GetMapping("/about")
+    @PreAuthorize("@permissionService.hasPermission('system:setting:about:query')")
     public AjaxResult about() {
         Config config = configService.selectConfigByKey(ConfigKey.CONFIG_KEY_ABOUT);
         if (config != null) {
@@ -39,6 +43,8 @@ public class SettingController extends BaseController {
     }
 
     @PutMapping("/about")
+    @Log(title = "系统设置-关于", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@permissionService.hasPermission('system:setting:about:edit')")
     public AjaxResult editAbout(@RequestBody AboutSetting aboutSetting) {
         String jsonString = JSON.toJSONString(aboutSetting);
         Config config = new Config();
@@ -48,6 +54,7 @@ public class SettingController extends BaseController {
     }
 
     @GetMapping("/siteSetting")
+    @PreAuthorize("@permissionService.hasPermission('system:setting:siteSetting:query')")
     public AjaxResult siteSetting() {
         Config config = configService.selectConfigByKey(ConfigKey.CONFIG_KEY_SITE_SETTING);
         //convert to site setting
@@ -59,6 +66,8 @@ public class SettingController extends BaseController {
     }
 
     @PutMapping("siteSetting")
+    @PreAuthorize("@permissionService.hasPermission('system:setting:siteSetting:edit')")
+    @Log(title = "系统设置-网站设置", businessType = BusinessType.UPDATE)
     public AjaxResult editSiteSetting(@RequestBody SiteSetting siteSetting) {
         String jsonString = JSON.toJSONString(siteSetting);
         Config config = new Config();
@@ -68,6 +77,7 @@ public class SettingController extends BaseController {
     }
 
     @GetMapping("/emailSetting")
+    @PreAuthorize("@permissionService.hasPermission('system:setting:emailSetting:query')")
     public AjaxResult emailSetting() {
         Config config = configService.selectConfigByKey(ConfigKey.CONFIG_KEY_EMAIL_SETTING);
         //convert to site setting
@@ -80,6 +90,8 @@ public class SettingController extends BaseController {
     }
 
     @PutMapping("emailSetting")
+    @Log(title = "系统设置-邮件设置", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@permissionService.hasPermission('system:setting:emailSetting:edit')")
     public AjaxResult editEmailSetting(@RequestBody EmailSetting emailSetting) {
         String jsonString = JSON.toJSONString(emailSetting);
         Config config = new Config();

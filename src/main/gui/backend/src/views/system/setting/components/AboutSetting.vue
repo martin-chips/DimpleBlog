@@ -29,7 +29,7 @@
     data() {
       return {
         setting: {
-          content:""
+          content: ""
         },
         // 表单校验
         rules: {

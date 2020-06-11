@@ -38,25 +38,25 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
-      <el-table-column label="昵称" align="center" prop="nickName"/>
-      <el-table-column label="主机" align="center" prop="ip" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作地点" align="center" prop="location"/>
-      <el-table-column label="显示" align="center">
+      <el-table-column type="selection"/>
+      <el-table-column label="昵称" prop="nickName"/>
+      <el-table-column label="主机" prop="ip" :show-overflow-tooltip="true"/>
+      <el-table-column label="操作地点" prop="location"/>
+      <el-table-column label="显示">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.display" active-color="#13ce66" inactive-color="#ff4949"
                      @change="handleDisplayChange(scope.row)"/>
         </template>
       </el-table-column>
-      <el-table-column label="内容" align="center" prop="content" :show-overflow-tooltip="true"/>
-      <el-table-column label="点赞" align="center" prop="good"/>
-      <el-table-column label="踩" align="center" prop="bad"/>
-      <el-table-column label="评论日期" align="center" prop="createTime" width="180">
+      <el-table-column label="内容" prop="content" :show-overflow-tooltip="true"/>
+      <el-table-column label="点赞" prop="good"/>
+      <el-table-column label="踩" prop="bad"/>
+      <el-table-column label="评论日期" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view"
                      @click="handleView(scope.row,scope.index)">详细
@@ -160,14 +160,18 @@
       },
       handleDisplayChange(row) {
         let text = row.display ? "显示" : "隐藏";
-        this.$confirm('确认要' + text + '"' + row.title + '"评论吗?', "警告", {
+        this.$confirm('确认要' + text + '"' + row.nickName + '"的评论吗?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
           return changeCommentDisplay(row.id, row.display);
-        }).then(() => {
-          this.msgSuccess(text + "成功");
+        }).then((response) => {
+          if (response.code == 200) {
+            this.msgSuccess(text + "成功");
+          } else {
+            this.msgError(text + "失败");
+          }
         }).catch(function () {
           row.display = row.display === false ? true : false;
         });

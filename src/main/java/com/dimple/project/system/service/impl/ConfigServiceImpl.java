@@ -41,7 +41,7 @@ public class ConfigServiceImpl implements ConfigService {
         Config config = new Config();
         config.setConfigKey(configKey);
         Config retConfig = configMapper.selectConfig(config);
-        return Objects.isNull(retConfig) ? null : retConfig;
+        return Objects.isNull(retConfig) ? new Config() : retConfig;
     }
 
     @Override

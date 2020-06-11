@@ -47,13 +47,13 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
+      <el-table-column type="selection"/>
       <el-table-column :show-overflow-tooltip="true" prop="jobName" label="任务名称"/>
       <el-table-column :show-overflow-tooltip="true" prop="beanName" label="Bean名称"/>
       <el-table-column :show-overflow-tooltip="true" prop="methodName" label="执行方法"/>
       <el-table-column :show-overflow-tooltip="true" prop="methodParams" label="参数"/>
       <el-table-column :show-overflow-tooltip="true" prop="cronExpression" label="cron表达式"/>
-      <el-table-column align="center" prop="cost" label="耗时">
+      <el-table-column prop="cost" label="耗时">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.cost ==null"><1ms</el-tag>
           <el-tag v-else-if="scope.row.cost <= 300">{{ scope.row.cost }}ms</el-tag>
@@ -61,7 +61,7 @@
           <el-tag v-else type="danger">{{ scope.row.cost }}ms</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="isSuccess" label="状态">
+      <el-table-column prop="isSuccess" label="状态">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status ? 'success' : 'danger'">{{ scope.row.status ? '成功' : '失败' }}</el-tag>
         </template>
@@ -71,7 +71,7 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view"
                      @click="handleDetail(scope.row.id)">详细

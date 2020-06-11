@@ -187,9 +187,9 @@
           MyLocalStorage.Cache.remove("blogCache");
         });
       }
-      if (fetch&&this.isEdit) {
-          const id = this.$route.params && this.$route.params.id;
-          this.fetchData(id);
+      if (fetch && this.isEdit) {
+        const id = this.$route.params && this.$route.params.id;
+        this.fetchData(id);
       }
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
@@ -350,39 +350,39 @@
   .createPost-container {
     position: relative;
 
-  .createPost-main-container {
-    padding: 30px 45px 20px 50px;
+    .createPost-main-container {
+      padding: 30px 45px 20px 50px;
 
-  .postInfo-container {
-    position: relative;
-  @include clearfix;
-    margin-bottom: 10px;
+      .postInfo-container {
+        position: relative;
+        @include clearfix;
+        margin-bottom: 10px;
 
-  .postInfo-container-item {
-    float: left;
-  }
+        .postInfo-container-item {
+          float: left;
+        }
 
-  }
-  }
+      }
+    }
 
-  .word-counter {
-    width: 40px;
-    position: absolute;
-    right: 10px;
-    top: 0px;
-  }
+    .word-counter {
+      width: 40px;
+      position: absolute;
+      right: 10px;
+      top: 0px;
+    }
 
   }
 
   .article-textarea /deep/ {
 
-  textarea {
-    padding-right: 40px;
-    resize: none;
-    border: none;
-    border-radius: 0px;
-    border-bottom: 1px solid #bfcbd9;
-  }
+    textarea {
+      padding-right: 40px;
+      resize: none;
+      border: none;
+      border-radius: 0px;
+      border-bottom: 1px solid #bfcbd9;
+    }
 
   }
 
