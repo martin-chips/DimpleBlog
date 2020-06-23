@@ -1,0 +1,66 @@
+@import "theme.styl";
+
+body, html
+	font-weight 300
+	font-family "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+
+// 整体布局相关
+.layout-content
+	width auto
+	margin-top $mobile-header-height
+	@media only screen and (max-width: $responsive-sm)
+		margin $mobile-header-height 5px 0 5px
+		padding-top 5px
+	@media screen and (min-width: $responsive-sm)
+		margin $mobile-header-height 10px 0 10px
+		padding-top 10px
+	@media screen and (min-width: $responsive-md)
+		margin $mobile-header-height 35px 0 35px
+		padding-top 15px
+	@media screen and (min-width: $responsive-lg)
+		width 1200px
+		margin $header-height auto 15px
+		padding-top 15px
+		.layout-left, .layout-right
+			padding 0
+			@media only screen and (max-width: $responsive-sm)
+				padding 0
+			@media screen and (min-width: $responsive-sm)
+				padding 0
+			@media screen and (min-width: $responsive-md)
+				padding 0 7.5px
+			@media screen and (min-width: $responsive-lg)
+				padding 0 7.5px
+		.layout-right
+			display flex
+			flex-direction column
+
+
+// 弹框相关
+.modal-title
+	font-size 20px
+	font-weight 700
+	text-align center
+	padding-bottom 10px
+
+.modal-message
+	font-size 16px
+	line-height 28px
+	text-align center
+	padding-bottom 15px
+
+.modal-input
+	padding 0 20px
+
+.modal-image
+	display block
+	width 100%
+	margin 0 auto
+
+.modal-desc
+	font-size 17px
+	margin-top 15px
+	text-align center
+	
+.ivu-col
+	transition All 0.4s ease-in-out

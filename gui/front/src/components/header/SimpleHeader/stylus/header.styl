@@ -1,0 +1,214 @@
+@import "../../../../common/stylus/theme.styl";
+html
+  position relative
+
+body
+  #header
+    display flex
+    justify-content space-between
+    padding 0 30px
+    width 100%
+    background-color $default-header-background-color
+    border-bottom 1px solid $default-header-border-color
+    z-index 1003
+    &.show
+      transform translate(0, 0)
+    #logo
+      display flex
+      align-items center
+      height $header-height
+      color $default-title-color
+      font-weight 500
+      img
+        margin-right 6px
+        width 129px
+        height $header-height
+      .info
+        display flex
+        flex-direction column
+        justify-content space-around
+        .name
+          display none
+          font-size 20px
+        .desc
+          font-size 12px
+          font-weight 100
+          color $default-title-hover-color
+    #nav
+      flex-shrink 0
+      float right
+      height $header-height
+      line-height $header-height
+      list-style-type none
+      > li
+        position relative
+        display inline-block
+        &.search-area
+          margin-right 15px
+        &.switches
+          .ivu-btn
+            border-color #dddee1
+            i::before, span
+              color $default-info-color
+          &:hover
+            i::before, span
+              color $default-info-hover-color
+      .nav-dropdown-container
+        margin-right 10px
+        &:hover
+          > .nav-dropdown
+            display block
+        > .nav-dropdown
+          top $header-height
+          left 0
+          li
+            position relative
+            display block
+            height $header-inner-height
+            line-height $header-inner-height
+            background-color $default-header-background-color
+            overflow visible
+            &:hover
+              > .nav-dropdown
+                display block
+            > .nav-dropdown
+              top -1px
+              left 100%
+              max-height "calc(100vh - %s)" % $header-height
+              overflow-y auto
+              > li
+                display block
+                position relative
+                height $header-inner-height
+                line-height $header-inner-height
+      .nav-dropdown
+        position absolute
+        display none
+        box-sizing border-box
+        text-align left
+        border-left 1px solid $default-border-color
+        border-right 1px solid $default-border-color
+        border-bottom 1px solid $default-border-color
+        border-top 1px solid $default-border-color
+        white-space nowrap
+      a.nav-link
+        display block
+        color $default-link-color
+        font-size 17px
+        font-weight 300
+        padding 0 20px
+        text-decoration none
+        cursor pointer
+        .arrow
+          display inline-block
+          vertical-align middle
+          margin-top -1px
+          margin-left 6px
+          margin-right -14px
+          width 0
+          height 0
+          border-left 4px solid transparent
+          border-right 4px solid transparent
+          border-top 5px solid #ccc
+        &:hover
+          color $default-link-hover-color
+        &:hover:not(.current)
+          border-bottom none
+        &.active-link, &.exact-active-link
+          font-weight 400
+          border-bottom none
+          color $default-link-hover-color
+  // 小屏模式下的导航栏
+  #mobile-bar
+    width 100%
+    height $mobile-header-height
+    line-height $mobile-header-height
+    background-color $default-background-color
+    border-bottom 1px solid $default-border-color
+    box-shadow 0 0 2px $default-box-shadow-color
+    z-index 1003
+    display none
+    .menu-button
+      position absolute
+      cursor pointer
+      width $mobile-header-inner-height
+      height $mobile-header-inner-height
+      top "calc((%s - %s) / 2)" % ($mobile-header-height $mobile-header-inner-height)
+      left 12px
+      background url("~@/assets/icons/menu.png") center center no-repeat
+      background-size 24px
+    .logo
+      position absolute
+      width 86px
+      height $mobile-header-inner-height
+      top "calc((%s - %s) / 2)" % ($mobile-header-height $mobile-header-inner-height)
+      left 50%
+      margin-left -43px
+      img
+        height $mobile-header-inner-height
+        width 86px
+    .search-area
+      > .search-view
+        padding 0 50px
+        width auto
+        .result-area
+          border none
+    .search-button
+      position absolute
+      cursor pointer
+      width $mobile-header-inner-height
+      height $mobile-header-inner-height
+      top "calc((%s - %s) / 2)" % ($mobile-header-height $mobile-header-inner-height)
+      right 12px
+      background url("~@/assets/icons/search.png") center center no-repeat
+      background-size 24px
+
+body.dark
+  #header
+    background-color $dark-header-background-color
+    border-bottom 1px solid $dark-header-border-color
+    #logo
+      color $dark-title-color
+      .info
+        .desc
+          color $dark-title-hover-color
+    #nav
+      li
+        &.switches
+          .ivu-btn
+            border-color $dark-info-color
+            i::before, span
+              color $dark-info-color
+          &:hover
+            color $dark-info-hover-color
+            i::before, span
+              color $dark-info-hover-color
+      .nav-dropdown-container
+        > .nav-dropdown
+          li
+            background-color $dark-header-background-color
+      .nav-dropdown
+        border 1px solid $dark-header-background-color
+      a.nav-link
+        color $dark-link-color
+        .arrow
+          border-top 5px solid #ccc
+        &:hover
+          color $dark-link-hover-color
+        &.active-link, &.exact-active-link
+          color $dark-link-hover-color
+          &::after
+            border-left 5px solid $dark-link-hover-color
+  #mobile-bar
+    background-color $dark-background-color
+    border-bottom 1px solid $dark-border-color
+    box-shadow 0 0 2px $dark-box-shadow-color
+
+body
+  @media screen and (max-width $responsive-md)
+    -webkit-text-size-adjust none
+    font-size 14px
+    #header
+      display none
+    #mobile-bar
+      display block

@@ -1,0 +1,53 @@
+package com.dimple.utils;
+
+import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.dimple.utils.StringUtils.getWeekDay;
+import static com.dimple.utils.StringUtils.toCamelCase;
+import static com.dimple.utils.StringUtils.toCapitalizeCamelCase;
+import static com.dimple.utils.StringUtils.toUnderScoreCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+/**
+ * @className: StringUtilsTest
+ * @description:
+ * @author: Dimple
+ * @date: 06/17/20
+ */
+public class StringUtilsTest {
+
+    @Test
+    public void testToCamelCase() {
+        assertNull(toCamelCase(null));
+    }
+
+    @Test
+    public void testToCapitalizeCamelCase() {
+        assertNull(StringUtils.toCapitalizeCamelCase(null));
+        assertEquals("HelloWorld", toCapitalizeCamelCase("hello_world"));
+    }
+
+    @Test
+    public void testToUnderScoreCase() {
+        assertNull(StringUtils.toUnderScoreCase(null));
+        assertEquals("hello_world", toUnderScoreCase("helloWorld"));
+        assertEquals("\u0000\u0000", toUnderScoreCase("\u0000\u0000"));
+        assertEquals("\u0000_a", toUnderScoreCase("\u0000A"));
+    }
+
+    @Test
+    public void testGetWeekDay() {
+        SimpleDateFormat simpleDateformat = new SimpleDateFormat("E");
+        assertEquals(simpleDateformat.format(new Date()), getWeekDay());
+    }
+
+    @Test
+    public void testGetIP() {
+        assertEquals("127.0.0.1", IpUtil.getIp(new MockHttpServletRequest()));
+    }
+}

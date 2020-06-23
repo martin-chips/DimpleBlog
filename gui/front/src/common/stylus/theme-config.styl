@@ -1,0 +1,536 @@
+@import "theme.styl";
+
+// ======================== 默认主题 ==========================
+body
+	position relative
+	font-family $body-font
+	font-size $body-font-size
+	min-height 100vh
+	-webkit-font-smoothing antialiased
+	-moz-osx-font-smoothing grayscale
+	background-color $default-body-background-color
+
+body.dark
+	background-color $dark-body-background-color
+	// cell的主题
+	.article-list-cell, .book-cell, .book-note-cell
+		background-color $dark-cell-background-color
+		border 1px solid $dark-border-color
+		.text-wrapper
+			.title
+				a
+					color $dark-title-color
+					&:hover
+						color $dark-title-hover-color
+			.desc
+				color $dark-desc-color
+				a
+					color $dark-desc-hover-color
+			.operate_info
+				a
+					color $dark-info-color
+					&:hover
+						color $dark-info-hover-color
+		.img-wrapper
+			&.big-image
+				box-shadow 1px 1px 1px $dark-border-color
+	// book-note-cell
+	.book-note-cell
+		.toggle-arrow
+			background-color $dark-cell-toggle-background-color
+			&:hover
+				color $dark-info-hover-color
+		.book-infos
+			.book-infos-wrapper
+				.img
+					border 1px solid $dark-border-color
+					box-shadow 1px 1px 1px $dark-border-color
+				.book-info
+					.title
+						color $dark-title-color
+					.desc
+						color $dark-desc-color
+					.progress
+						color $dark-desc-color
+	// article header
+	.article-page-header
+		.status
+			.switches
+				.ivu-btn-ghost
+					border-color $dark-info-color
+					i::before, span
+						color $dark-desc-color
+					&:hover
+						color $dark-desc-hover-color
+						i::before, span
+							color $dark-desc-hover-color
+				.ivu-btn-ghost[disabled]
+					background-color $dark-background-hover-color
+					i::before, span
+						color $dark-info-color
+					&:hover
+						i::before, span
+							color $dark-info-color
+		.title
+			color $dark-title-color
+		.info, .operate_info
+			color $dark-desc-color
+			a
+				color $dark-link-color
+				&:hover
+					color $dark-link-hover-color
+		.operate_info
+			span
+				a
+					&:hover
+						color $dark-link-hover-color
+		.abstract
+			border 1px dashed $dark-border-color
+			background $dark-info-color
+			color $dark-link-hover-color
+	// article-home-banner
+	.article-home-banner
+		.gallery
+			border-color $dark-border-color
+			a
+				.title
+					background rgba($dark-background-color, 0.8)
+					color $dark-title-color
+			.carousel-infos
+				background $dark-background-color
+				.title
+					color $dark-title-color
+				.desc
+					color $dark-desc-color
+	// movie-list-item
+	.movie-list-item
+		border 1px solid $dark-border-color
+		.movie-info
+			background rgba($iview-secondary-info-color, 0.9)
+			.title
+				color $dark-title-color
+			.desc
+				color $dark-title-color
+		&:hover
+			.movie-info
+				background rgba($dark-background-hover-color, 1.0)
+	// book-reading-cell
+	.book-reading-cell
+		border 1px solid $dark-border-color
+		background-color $dark-background-color
+		h4
+			color $dark-title-color
+		> a
+			.img
+				border 1px solid $dark-border-hover-color
+				box-shadow 1px 1px 1px $dark-border-color
+			.book-info
+				.title
+					a
+						color $dark-title-color
+						&:hover
+							color $dark-title-hover-color
+				.desc
+					color $dark-desc-color
+					> span
+						color $dark-info-color
+	// book-overview-content
+	.book-overview-content
+		.book-infos
+			.book-base-info
+				.img
+					.container
+						.target
+							border 1px solid $dark-border-color
+				.info
+					.title
+						color $dark-title-color
+					.desc
+						color $dark-desc-color
+						> span
+							color $dark-desc-color
+			.book-detail-info
+				p.summary, p.author, p.catalog
+					color $dark-desc-color
+				.nav-tabs-navigation
+					border-bottom 1px solid $dark-border-color
+					.nav-tabs
+						li
+							a
+								color $dark-info-color
+								&.active_tab
+									color $dark-info-hover-color
+								&::before
+									border-bottom 11px solid $dark-border-color
+								&::after
+									border-bottom 11px solid $dark-body-background-color
+	// book-catalog
+	.book-catalog
+		.book-toc-list-item
+			a.book-toc-link
+				color $dark-desc-color
+				&.is-active-link
+					color $dark-link-hover-color
+				&:hover
+					color $dark-link-hover-color
+		.toggle-more
+			color $dark-link-hover-color
+			.mask
+				background-image linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 1))
+	// book-info
+	.book-info
+		.content
+			border-left 1px solid $dark-border-color
+			border-right 1px solid $dark-border-color
+			border-bottom 1px solid $dark-border-color
+		.info
+			.title
+				a
+					color $dark-title-color
+			.desc
+				color $dark-desc-color
+				> span
+					color $dark-info-color
+		&:hover
+			.info
+				.desc
+					color $dark-desc-hover-color
+	// archive-list-cell
+	.archive-list-cell
+		&::after
+			background $dark-link-hover-color
+		.info
+			.base-info
+				a.title
+					color $dark-title-color
+					&:hover
+						color $dark-title-hover-color
+				a.see-desc
+					color $dark-desc-color
+					&:hover,&.show
+						color $dark-desc-hover-color
+				.desc
+					color $dark-desc-color
+	// article-list-year-title
+	.article-list-year-title
+		&.style-date-year
+			.date
+				color lighten($dark-link-hover-color, 10%)
+				&::before
+					background-color: $dark-link-hover-color
+				&::after
+					background-color: $dark-link-hover-color
+			.main-title
+				color $dark-title-color
+			.vertical-line
+				background-color $dark-desc-color
+			.sub-title
+				color $dark-desc-color
+			.view-more
+				a
+					color $dark-link-hover-color
+		&.style-date-month
+			.date
+				color lighten($dark-title-color, 20%)
+				&::before
+					background $dark-link-hover-color
+				&::after
+					background $dark-link-hover-color
+			.main-title
+				color $dark-title-color
+			.vertical-line
+				background-color $dark-desc-color
+			.sub-title
+				color $dark-desc-color
+			.view-more
+				a
+					color $dark-link-hover-color
+	// section-title的主题
+	.section-title
+		.title
+			.square
+				background $dark-sectionTitle-square-color
+			.main-title
+				color $dark-sectionTitle-title-color
+			.vertical-line
+				background-color $dark-sectionTitle-line-color
+			.sub-title
+				color $dark-sectionTitle-subtitle-color
+			.view-more
+				a
+					color $dark-sectionTitle-title-color
+		.menu
+			ul.list
+				li
+					a
+						color $dark-link-color
+						&:hover, &.active
+							color $dark-link-hover-color
+							border-bottom 2px solid $dark-link-hover-color
+			.date-picker
+				.ivu-input
+					background-color $dark-background-color
+					color $dark-desc-color
+			.refresh
+				a
+					color $dark-link-color
+					&:hover
+						color $dark-link-hover-color
+	// social-section
+	.social-section
+		.comment-list
+			background rgba($dark-background-hover-color, 0.4)
+	// custom-mavon-editor
+	.custom-mavon-editor
+		.operate
+			.ivu-checkbox-checked .ivu-checkbox-inner
+				border-color $iview-secondary-warning-color;
+				background-color $iview-secondary-warning-color
+			.ivu-checkbox-wrapper
+				color $dark-desc-color!important
+			.ivu-input-group-prepend
+				background $dark-border-color
+				span
+					color $dark-desc-color
+			.ivu-input
+				background $dark-background-color
+				color $dark-desc-color
+			.i-dropdown-link
+				color $dark-desc-hover-color
+		.editor-area
+			// mavon editor区域
+			.markdown-body
+				background $dark-background-color
+				.v-note-op
+					background $dark-background-hover-color!important
+				textarea
+					background $dark-background-color
+					color $dark-desc-color
+				.v-show-content
+					background $dark-background-color
+					color $dark-desc-color
+				.content-input-wrapper
+					background $dark-background-color!important
+					color $dark-desc-color!important
+				pre
+					background rgba($dark-background-hover-color, 0.25)
+					div
+						background transparent
+			.bottom-area
+				.comment-tip
+					a
+						color $dark-link-color
+						&:hover
+							color $dark-link-hover-color
+	// comment-list-cell
+	.comment-list-cell
+		.content
+			.title
+				.name
+					a
+						color $dark-title-hover-color
+				.name-tag
+					background-color $dark-info-color
+				.reply-icon
+					color $dark-info-color
+				.reply-name
+					a
+						color $dark-link-color
+						&:hover
+							color $dark-link-hover-color
+				.time
+					color $dark-info-color
+		.operate-area
+			.like, .unlike
+				color $dark-info-color
+		.comment-area
+			p.comment-tip
+				a
+					&:hover
+						color $dark-link-hover-color
+	// search-view
+	.search-view
+		.ivu-input
+			border-color $dark-border-color
+			background-color $dark-background-hover-color
+			color $dark-title-color
+			> i
+				color $dark-title-color
+		.result-area
+			border 1px solid $dark-border-color
+			box-shadow 1px 1px 1px $dark-box-shadow-color
+	// search-result-section
+	.search-result-section
+		.type
+			color $dark-title-color
+			border-bottom 1px solid $dark-border-hover-color
+			background-color $dark-border-color
+			box-shadow 1px 1px 1px $dark-box-shadow-color
+		.result-option
+			background-color $dark-background-color
+			border-bottom 1px solid $dark-border-color
+			&:hover, &.select-option
+				background-color $dark-background-hover-color
+			.title
+				color $dark-title-color
+			.infos
+				span
+					color $dark-info-color
+			.highlighted
+				color $dark-desc-color
+				em
+					color $dark-desc-hover-color
+	// classifyMenu
+	.classify-bar
+		.level
+			border-bottom 1px solid $dark-border-color
+			.title
+				color $dark-title-color
+			.class
+				a
+					color $dark-link-color
+					&.name
+						&:hover
+							color $dark-link-hover-color
+					&.active
+						color $dark-select-color
+						background $dark-select-background-hover-color
+	// browse more
+	.browse-more
+		border 1px solid $dark-link-hover-color
+		border-radius $border-radius
+		a
+			.text
+				color $dark-link-hover-color
+			.spinner
+				> div
+					background $dark-link-hover-color
+	// about主题
+	.about
+		background-color $dark-background-color
+		border 1px solid $dark-border-color
+		img.avatar
+			border 5px solid $dark-border-color
+		.name
+			color $dark-title-color
+		.desc
+			color $dark-desc-color
+		.master
+			.line
+				background-color $dark-border-color
+			h4
+				color $dark-title-color
+			.progresses
+				p.title
+					color $dark-title-color
+	// recommend hot 主题
+	.recommend, .hot
+		background $dark-background-color
+		.content
+			border-left 1px solid $dark-border-color
+		.top, .others
+			.title
+				> a
+					color $dark-title-color
+					&:hover
+						color $dark-title-hover-color
+			.info
+				span
+					color $dark-info-color
+				a
+					&:hover
+						color $dark-link-hover-color
+			.desc
+				color $dark-info-color
+		.others
+			li
+				border-top 1px solid $dark-border-color
+	// friendlinks主题
+	.friend-links
+		ul.link-list
+			border-left 1px solid $dark-border-color
+			li
+				a
+					&:hover
+						.link
+							color $dark-link-color
+					img
+						border 1px solid $dark-border-color
+						&.no-pic
+							border none
+					.right
+						p
+							&.title
+								color $dark-title-hover-color
+							&.link
+								color $dark-link-hover-color
+	// tag wall
+	.tag-wall
+		.content
+			border-left 1px solid $dark-border-color
+	// panel主题
+	.panel
+		background $dark-background-color
+		h4
+			color $dark-title-color
+			border-left 5px solid $dark-link-hover-color
+			&.center
+				border 1px solid $dark-border-color
+			&.left
+				border-left 5px solid $dark-link-hover-color
+			&.right
+				border-right 5px solid $dark-link-hover-color
+
+	// license-tag
+	.license-tag
+		a
+			.type
+				background-color $dark-background-color
+			.desc
+				color $dark-desc-color
+				a
+					color $dark-link-color
+					&:hover
+						color $dark-link-hover-color
+
+	// footer主题
+	.common-footer
+		background $dark-background-color
+		border-top 1px solid $dark-border-color
+		.top
+			i.icon
+				color $dark-background-color
+				background rgba($dark-link-color, .7)
+				&:hover
+					background rgba($dark-link-hover-color, .7)
+		.copyright, .copyright-english
+			color $dark-title-color
+			a
+				color $dark-link-color
+				&:hover
+					color $dark-link-hover-color
+	// tag的主题
+	.border-tag
+		background-color transparent!important
+		border-color $dark-border-color!important
+		span
+			color $dark-info-color!important
+	.dot-tag
+		background $dark-desc-color!important
+		border-color transparent!important
+		span
+			color $dark-select-background-hover-color!important
+	// spin
+	.ivu-spin
+		background-color $dark-select-color
+		.ivu-spin-text
+			color $dark-desc-color
+	// data-picker
+	//.ivu-select-dropdown
+	//	background-color $dark-background-color
+	//	.ivu-picker-panel-sidebar
+	//		background-color $dark-background-hover-color
+	//		.ivu-picker-panel-shortcut
+	//			color $dark-title-color
+	//			&:hover
+	//				background-color $dark-background-color

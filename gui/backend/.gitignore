@@ -1,0 +1,21 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.operateLog*
+yarn-debug.operateLog*
+yarn-error.operateLog*
+**/*.operateLog
+
+tests/**/coverage/
+tests/e2e/reports
+selenium-debug.operateLog
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.localpackage-lock.json
+yarn.lock

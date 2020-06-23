@@ -1,0 +1,58 @@
+@import "../../common/stylus/theme.styl";
+
+body
+	#side-toc, #sidebar-toc
+		overflow-y hidden
+		padding 0 15px 15px 0
+		> ul
+			overflow hidden
+			position relative
+			li
+				list-style none
+		.toc-list
+			margin 0
+			padding-left 25px
+			overflow-y hidden
+			.toc-list-item
+				> a.toc-link
+					height 30px
+					line-height 30px
+					padding 5px 0
+		.toc-link
+			color $default-link-color
+			height 100%
+			&::before
+				background-color $default-border-color
+				content ' '
+				display inline-block
+				height inherit
+				left 0
+				margin-top -1px
+				position absolute
+				width 1px
+		.is-active-link
+			font-weight 700
+			color $default-link-hover-color
+			&::before
+				background-color $default-link-hover-color
+				width 3px
+		.is-collapsible
+			max-height 1000px
+			overflow hidden
+			transition all 300ms ease-in-out
+		.is-collapsed
+			max-height 0
+		.is-position-fixed
+			position fixed !important
+			top 0
+
+body.dark
+	#side-toc, #sidebar-toc
+		.toc-link
+			color $dark-link-color
+			&::before
+				background-color $dark-border-color
+		.is-active-link
+			color $dark-link-hover-color
+			&::before
+				background-color $dark-link-hover-color

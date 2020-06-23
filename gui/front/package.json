@@ -1,0 +1,73 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "core-js": "^2.6.5",
+    "crypto-js": "^3.1.9-1",
+    "highlight.js": "^9.16.2",
+    "marked": "^0.8.0",
+    "mavon-editor": "^2.7.7",
+    "tocbot": "^4.1.1",
+    "view-design": "^4.0.2",
+    "vue": "^2.6.10",
+    "vue-headroom": "^0.8.1",
+    "vue-nav-tabs": "^0.5.6",
+    "vue-router": "^3.1.3",
+    "vuex": "^3.1.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.12.0",
+    "@vue/cli-plugin-eslint": "^3.12.0",
+    "@vue/cli-service": "^4.1.2",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-import": "^1.6.3",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-register": "^6.22.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "html-webpack-plugin": "3.2.0",
+    "iview-loader": "^1.3.0",
+    "script-ext-html-webpack-plugin": "2.1.3",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2",
+    "vue-awesome-swiper": "^3.1.3",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
