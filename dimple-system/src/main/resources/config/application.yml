@@ -25,11 +25,10 @@ spring:
   redis:
     #数据库索引
     database: 0
-    host: 47.112.14.207
+    host: localhost
     port: 6379
     #连接超时时间
     timeout: 5000
-    password: aliyun-redis-2020
 
 task:
   pool:

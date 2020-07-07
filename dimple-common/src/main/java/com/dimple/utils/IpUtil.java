@@ -150,8 +150,16 @@ public class IpUtil {
      */
     public static String getHttpCityInfo(String ip) {
         String api = String.format(Constant.Url.IP_URL, ip);
-        JSONObject object = JSONUtil.parseObj(HttpUtil.get(api));
-        return object.get("addr", String.class);
+        try {
+            JSONObject object = JSONUtil.parseObj(HttpUtil.get(api));
+            object.get("addr", String.class);
+        }catch (Exception e){
+            //if get error from remote server, use local ip database to find location.
+            log.warn("get location for ip [{}] get error [{}],just get location from local database.", ip, e.getMessage());
+            log.error(e.getMessage(), e);
+            return getLocalCityInfo(ip);
+        }
+        return "";
     }
 
 }

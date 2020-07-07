@@ -16,3 +16,12 @@ src/main/gui/backend/dist/
 src/main/gui/backend/node_modules/
 src/main/gui/front/node_modules/
 src/main/gui/front/dist/
+
+
+gui/backend/dist/
+gui/backend/node_modules/
+/gui/front/node_modules/
+/gui/front/dist/
+
+
+target

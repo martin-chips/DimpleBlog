@@ -43,6 +43,22 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>dimple-generator</artifactId>
+            <version>3.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.dimple</groupId>
+                    <artifactId>dimple-common</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.dimple</groupId>
+                    <artifactId>dimple-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- Spring boot websocket -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

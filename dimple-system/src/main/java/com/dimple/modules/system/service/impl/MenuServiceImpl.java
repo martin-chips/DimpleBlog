@@ -32,14 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -98,9 +91,15 @@ public class MenuServiceImpl implements MenuService {
     @Override
 //    @Cacheable(key = "'user:' + #p0")
     public List<MenuDTO> findByUser(Long currentUserId) {
-        List<RoleSmallDTO> roles = roleService.findByUsersId(currentUserId);
-        Set<Long> roleIds = roles.stream().map(RoleSmallDTO::getId).collect(Collectors.toSet());
-        LinkedHashSet<Menu> menus = menuRepository.findByRoleIdsAndTypeNot(roleIds, 2);
+        LinkedHashSet<Menu> menus;
+        if (Objects.equals(currentUserId, 1L)) {
+            //todo if current user id admin,get all permission for it.
+            menus = menuRepository.findByTypeNot(2);
+        } else {
+            List<RoleSmallDTO> roles = roleService.findByUsersId(currentUserId);
+            Set<Long> roleIds = roles.stream().map(RoleSmallDTO::getId).collect(Collectors.toSet());
+            menus= menuRepository.findByRoleIdsAndTypeNot(roleIds, 2);
+        }
         return menus.stream().map(menuMapper::toDto).collect(Collectors.toList());
     }
 

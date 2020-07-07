@@ -22,7 +22,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
-* @website https://el-admin.vip
 * @description /
 * @author ${author}
 * @date ${date}

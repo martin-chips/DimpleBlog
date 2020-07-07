@@ -46,6 +46,7 @@ public interface MenuRepository extends JpaRepository<Menu, Long>, JpaSpecificat
             "m.menu_id = r.menu_id AND r.role_id IN ?1 AND type != ?2 order by m.menu_sort asc", nativeQuery = true)
     LinkedHashSet<Menu> findByRoleIdsAndTypeNot(Set<Long> roleIds, int type);
 
+    LinkedHashSet<Menu> findByTypeNot(Integer type);
     /**
      * 获取节点数量
      */
