@@ -4,7 +4,15 @@
     <div class="head-container">
       <div v-if="crud.props.searchToggle">
         <!-- 搜索 -->
-        <el-input v-model="query.blurry" clearable size="small" placeholder="模糊搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery" />
+        <el-input
+          v-model="query.blurry"
+          clearable
+          size="small"
+          placeholder="模糊搜索"
+          style="width: 200px;"
+          class="filter-item"
+          @keyup.enter.native="toQuery"
+        />
         <el-date-picker
           v-model="query.createTime"
           :default-time="['00:00:00','23:59:59']"
@@ -21,7 +29,14 @@
       <crudOperation :permission="permission" />
     </div>
     <!--表单渲染-->
-    <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="580px">
+    <el-dialog
+      append-to-body
+      :close-on-click-modal="false"
+      :before-close="crud.cancelCU"
+      :visible.sync="crud.status.cu > 0"
+      :title="crud.status.title"
+      width="580px"
+    >
       <el-form ref="form" :inline="true" :model="form" :rules="rules" size="small" label-width="80px">
         <el-form-item label="菜单类型" prop="type">
           <el-radio-group v-model="form.type" size="mini" style="width: 178px">
@@ -39,7 +54,13 @@
           >
             <IconSelect ref="iconSelect" @selected="selected" />
             <el-input slot="reference" v-model="form.icon" style="width: 450px;" placeholder="点击选择图标" readonly>
-              <svg-icon v-if="form.icon" slot="prefix" :icon-class="form.icon" class="el-input__icon" style="height: 32px;width: 16px;" />
+              <svg-icon
+                v-if="form.icon"
+                slot="prefix"
+                :icon-class="form.icon"
+                class="el-input__icon"
+                style="height: 32px;width: 16px;"
+              />
               <i v-else slot="prefix" class="el-icon-search el-input__icon" />
             </el-input>
           </el-popover>
@@ -63,7 +84,11 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item v-if="form.type.toString() !== '2'" label="菜单标题" prop="title">
-          <el-input v-model="form.title" :style=" form.type.toString() === '0' ? 'width: 450px' : 'width: 178px'" placeholder="菜单标题" />
+          <el-input
+            v-model="form.title"
+            :style=" form.type.toString() === '0' ? 'width: 450px' : 'width: 178px'"
+            placeholder="菜单标题"
+          />
         </el-form-item>
         <el-form-item v-if="form.type.toString() === '2'" label="按钮名称" prop="title">
           <el-input v-model="form.title" placeholder="按钮名称" style="width: 178px;" />
@@ -75,7 +100,13 @@
           <el-input v-model="form.path" placeholder="路由地址" style="width: 178px;" />
         </el-form-item>
         <el-form-item label="菜单排序" prop="menuSort">
-          <el-input-number v-model.number="form.menuSort" :min="0" :max="999" controls-position="right" style="width: 178px;" />
+          <el-input-number
+            v-model.number="form.menuSort"
+            :min="0"
+            :max="999"
+            controls-position="right"
+            style="width: 178px;"
+          />
         </el-form-item>
         <el-form-item v-show="!form.iframe && form.type.toString() === '1'" label="组件名称" prop="componentName">
           <el-input v-model="form.componentName" style="width: 178px;" placeholder="匹配组件内Name字段" />
@@ -148,7 +179,13 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column v-permission="['admin','menu:edit','menu:del']" label="操作" width="130px" align="center" fixed="right">
+      <el-table-column
+        v-permission="['admin','menu:edit','menu:del']"
+        label="操作"
+        width="130px"
+        align="center"
+        fixed="right"
+      >
         <template slot-scope="scope">
           <udOperation
             :data="scope.row"
@@ -173,7 +210,22 @@ import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 
 // crud交由presenter持有
-const defaultForm = { id: null, title: null, menuSort: 999, path: null, component: null, componentName: null, iframe: false, roles: [], pid: 0, icon: null, cache: false, hidden: false, type: 0, permission: null }
+const defaultForm = {
+  id: null,
+  title: null,
+  menuSort: 999,
+  path: null,
+  component: null,
+  componentName: null,
+  iframe: false,
+  roles: [],
+  pid: 0,
+  icon: null,
+  cache: false,
+  hidden: false,
+  type: 0,
+  permission: null
+}
 export default {
   name: 'Menu',
   components: { Treeselect, IconSelect, crudOperation, rrOperation, udOperation },
@@ -258,6 +310,7 @@ export default {
   /deep/ .el-input-number .el-input__inner {
     text-align: left;
   }
+
   /deep/ .vue-treeselect__control, /deep/ .vue-treeselect__placeholder, /deep/ .vue-treeselect__single-value {
     height: 30px;
     line-height: 30px;

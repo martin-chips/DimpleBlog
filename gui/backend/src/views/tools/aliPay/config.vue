@@ -32,6 +32,7 @@
 
 <script>
 import { get, update } from '@/api/tools/alipay'
+
 export default {
   name: 'Config',
   data() {

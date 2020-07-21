@@ -32,10 +32,11 @@ router.beforeEach((to, from, next) => {
             location.reload() // 为了重新实例化vue-router对象 避免bug
           })
         })
-      // 登录时未拉取 菜单，在此处拉取
+        // 登录时未拉取 菜单，在此处拉取
       } else if (store.getters.loadMenus) {
         // 修改成false，防止死循环
-        store.dispatch('updateLoadMenus').then(res => {})
+        store.dispatch('updateLoadMenus').then(res => {
+        })
         loadMenus(next, to)
       } else {
         next()

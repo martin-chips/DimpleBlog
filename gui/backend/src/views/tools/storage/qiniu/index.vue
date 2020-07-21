@@ -6,7 +6,15 @@
     <div class="head-container">
       <div v-if="crud.props.searchToggle">
         <!-- 搜索 -->
-        <el-input v-model="query.key" clearable size="small" placeholder="输入文件名称搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery" />
+        <el-input
+          v-model="query.key"
+          clearable
+          size="small"
+          placeholder="输入文件名称搜索"
+          style="width: 200px;"
+          class="filter-item"
+          @keyup.enter.native="toQuery"
+        />
         <el-date-picker
           v-model="query.c"
           :default-time="['00:00:00','23:59:59']"
@@ -23,7 +31,8 @@
       <crudOperation :permission="permission">
         <template slot="left">
           <!-- 上传 -->
-          <el-button class="filter-item" size="mini" type="primary" icon="el-icon-upload" @click="dialog = true">上传</el-button>
+          <el-button class="filter-item" size="mini" type="primary" icon="el-icon-upload" @click="dialog = true">上传
+          </el-button>
           <!-- 同步 -->
           <el-button :icon="icon" class="filter-item" size="mini" type="warning" @click="synchronize">同步</el-button>
           <!-- 配置 -->
@@ -33,7 +42,8 @@
             type="success"
             icon="el-icon-s-tools"
             @click="doConfig"
-          >配置</el-button>
+          >配置
+          </el-button>
         </template>
       </crudOperation>
       <!-- 文件上传 -->
@@ -56,14 +66,31 @@
         </div>
       </el-dialog>
       <!--表格渲染-->
-      <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+      <el-table
+        ref="table"
+        v-loading="crud.loading"
+        :data="crud.data"
+        style="width: 100%;"
+        @selection-change="crud.selectionChangeHandler"
+      >
         <el-table-column type="selection" width="55" />
         <el-table-column prop="name" :show-overflow-tooltip="true" label="文件名">
           <template slot-scope="scope">
-            <a href="JavaScript:" class="el-link el-link--primary" target="_blank" type="primary" @click="download(scope.row.id)">{{ scope.row.key }}</a>
+            <a
+              href="JavaScript:"
+              class="el-link el-link--primary"
+              target="_blank"
+              type="primary"
+              @click="download(scope.row.id)"
+            >{{ scope.row.key }}</a>
           </template>
         </el-table-column>
-        <el-table-column :show-overflow-tooltip="true" prop="suffix" label="文件类型" @selection-change="crud.selectionChangeHandler" />
+        <el-table-column
+          :show-overflow-tooltip="true"
+          prop="suffix"
+          label="文件类型"
+          @selection-change="crud.selectionChangeHandler"
+        />
         <el-table-column prop="bucket" label="空间名称" />
         <el-table-column prop="size" label="文件大小" />
         <el-table-column prop="type" label="空间类型" />
@@ -141,7 +168,8 @@ export default {
     handleBeforeRemove(file, fileList) {
       for (let i = 0; i < this.files.length; i++) {
         if (this.files[i].uid === file.uid) {
-          crudQiNiu.del([this.files[i].id]).then(res => {})
+          crudQiNiu.del([this.files[i].id]).then(res => {
+          })
           return true
         }
       }

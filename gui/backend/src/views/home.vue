@@ -99,7 +99,7 @@ export default {
     }
   }
 
-  @media (max-width:1024px) {
+  @media (max-width: 1024px) {
     .chart-wrapper {
       padding: 8px;
     }

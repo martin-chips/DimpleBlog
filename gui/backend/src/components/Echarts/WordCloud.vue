@@ -4,9 +4,11 @@
 
 <script>
 import echarts from 'echarts'
+
 require('echarts-wordcloud')
 require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
+
 export default {
   props: {
     className: {
@@ -173,9 +175,9 @@ export default {
             normal: {
               color: function() {
                 return 'rgb(' +
-                  Math.round(Math.random() * 255) +
-                  ', ' + Math.round(Math.random() * 255) +
-                  ', ' + Math.round(Math.random() * 255) + ')'
+                    Math.round(Math.random() * 255) +
+                    ', ' + Math.round(Math.random() * 255) +
+                    ', ' + Math.round(Math.random() * 255) + ')'
               }
             }
           },

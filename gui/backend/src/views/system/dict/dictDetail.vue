@@ -8,12 +8,27 @@
       <div class="head-container">
         <div v-if="crud.props.searchToggle">
           <!-- 搜索 -->
-          <el-input v-model="query.label" clearable size="small" placeholder="输入字典标签查询" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery" />
+          <el-input
+            v-model="query.label"
+            clearable
+            size="small"
+            placeholder="输入字典标签查询"
+            style="width: 200px;"
+            class="filter-item"
+            @keyup.enter.native="toQuery"
+          />
           <rrOperation />
         </div>
       </div>
       <!--表单组件-->
-      <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible="crud.status.cu > 0" :title="crud.status.title" width="500px">
+      <el-dialog
+        append-to-body
+        :close-on-click-modal="false"
+        :before-close="crud.cancelCU"
+        :visible="crud.status.cu > 0"
+        :title="crud.status.title"
+        width="500px"
+      >
         <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
           <el-form-item label="字典标签" prop="label">
             <el-input v-model="form.label" style="width: 370px;" />
@@ -22,7 +37,13 @@
             <el-input v-model="form.value" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="排序" prop="dictSort">
-            <el-input-number v-model.number="form.dictSort" :min="0" :max="999" controls-position="right" style="width: 370px;" />
+            <el-input-number
+              v-model.number="form.dictSort"
+              :min="0"
+              :max="999"
+              controls-position="right"
+              style="width: 370px;"
+            />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -31,14 +52,27 @@
         </div>
       </el-dialog>
       <!--表格渲染-->
-      <el-table ref="table" v-loading="crud.loading" :data="crud.data" highlight-current-row style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+      <el-table
+        ref="table"
+        v-loading="crud.loading"
+        :data="crud.data"
+        highlight-current-row
+        style="width: 100%;"
+        @selection-change="crud.selectionChangeHandler"
+      >
         <el-table-column label="所属字典">
           {{ query.dictName }}
         </el-table-column>
         <el-table-column prop="label" label="字典标签" />
         <el-table-column prop="value" label="字典值" />
         <el-table-column prop="dictSort" label="排序" />
-        <el-table-column v-permission="['admin','dict:edit','dict:del']" label="操作" width="130px" align="center" fixed="right">
+        <el-table-column
+          v-permission="['admin','dict:edit','dict:del']"
+          label="操作"
+          width="130px"
+          align="center"
+          fixed="right"
+        >
           <template slot-scope="scope">
             <udOperation
               :data="scope.row"
@@ -66,7 +100,8 @@ export default {
   components: { pagination, rrOperation, udOperation },
   cruds() {
     return [
-      CRUD({ title: '字典详情', url: 'api/dictDetail', query: { dictName: '' }, sort: ['dictSort,asc', 'id,desc'],
+      CRUD({
+        title: '字典详情', url: 'api/dictDetail', query: { dictName: '' }, sort: ['dictSort,asc', 'id,desc'],
         crudMethod: { ...crudDictDetail },
         optShow: {
           add: true,

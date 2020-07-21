@@ -3,7 +3,8 @@
     <p class="warn-content">
       Markdown 基于
       <el-link type="primary" href="https://github.com/hinesboy/mavonEditor" target="_blank">MavonEditor</el-link>
-      ，图片上传使用 <el-link type="primary" href="https://sm.ms/" target="_blank">SM.MS</el-link>
+      ，图片上传使用
+      <el-link type="primary" href="https://sm.ms/" target="_blank">SM.MS</el-link>
     </p>
     <mavon-editor ref="md" :style="'height:' + height" @imgAdd="imgAdd" />
   </div>
@@ -12,6 +13,7 @@
 <script>
 import { upload } from '@/utils/upload'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'Markdown',
   data() {

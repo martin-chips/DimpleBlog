@@ -1,5 +1,10 @@
 <template>
-  <div v-loading="!show" element-loading-text="数据加载中..." :style="!show ? 'height: 500px' : 'height: 100%'" class="app-container">
+  <div
+    v-loading="!show"
+    element-loading-text="数据加载中..."
+    :style="!show ? 'height: 500px' : 'height: 100%'"
+    class="app-container"
+  >
     <div v-if="show">
       <el-card class="box-card">
         <div style="color: #666;font-size: 13px;">
@@ -139,6 +144,7 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 import { initData } from '@/api/data'
+
 export default {
   name: 'ServerMonitor',
   components: {
@@ -253,21 +259,25 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
   /deep/ .box-card {
     margin-bottom: 5px;
+
     span {
       margin-right: 28px;
     }
+
     .el-icon-refresh {
       margin-right: 10px;
       float: right;
-      cursor:pointer;
+      cursor: pointer;
     }
   }
-  .cpu, .memory, .swap, .disk  {
+
+  .cpu, .memory, .swap, .disk {
     width: 20%;
     float: left;
     padding-bottom: 20px;
     margin-right: 5%;
   }
+
   .title, .footer {
     text-align: center;
     font-size: 15px;
@@ -276,6 +286,7 @@ export default {
     height: 25px;
     line-height: 25px;
   }
+
   .content {
     text-align: center;
     margin-top: 5px;

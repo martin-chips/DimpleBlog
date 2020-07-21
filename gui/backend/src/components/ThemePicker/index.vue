@@ -11,6 +11,7 @@
 const version = require('element-ui/package.json').version // element-ui version from node_modules
 const ORIGINAL_THEME = '#409EFF' // default color
 import Cookies from 'js-cookie'
+
 export default {
   data() {
     return {
@@ -148,18 +149,18 @@ export default {
 </script>
 
 <style>
-.theme-message,
-.theme-picker-dropdown {
-  z-index: 99999 !important;
-}
+  .theme-message,
+  .theme-picker-dropdown {
+    z-index: 99999 !important;
+  }
 
-.theme-picker .el-color-picker__trigger {
-  height: 26px !important;
-  width: 26px !important;
-  padding: 2px;
-}
+  .theme-picker .el-color-picker__trigger {
+    height: 26px !important;
+    width: 26px !important;
+    padding: 2px;
+  }
 
-.theme-picker-dropdown .el-color-dropdown__link-btn {
-  display: none;
-}
+  .theme-picker-dropdown .el-color-dropdown__link-btn {
+    display: none;
+  }
 </style>

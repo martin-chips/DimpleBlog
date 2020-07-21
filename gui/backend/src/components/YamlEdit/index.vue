@@ -10,6 +10,7 @@ import 'codemirror/lib/codemirror.css'
 // 替换主题这里需修改名称
 import 'codemirror/theme/idea.css'
 import 'codemirror/mode/yaml/yaml'
+
 export default {
   props: {
     value: {
@@ -64,17 +65,20 @@ export default {
 </script>
 
 <style scoped>
-  .json-editor{
+  .json-editor {
     height: 100%;
     margin-bottom: 10px;
   }
+
   .json-editor >>> .CodeMirror {
     font-size: 13px;
-    overflow-y:auto;
-    font-weight:normal
+    overflow-y: auto;
+    font-weight: normal
   }
-  .json-editor >>> .CodeMirror-scroll{
+
+  .json-editor >>> .CodeMirror-scroll {
   }
+
   .json-editor >>> .cm-s-rubyblue span.cm-string {
     color: #F08047;
   }

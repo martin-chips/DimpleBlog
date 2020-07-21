@@ -24,6 +24,7 @@ import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 import Theme from '@/components/ThemePicker'
 import Cookies from 'js-cookie'
+
 export default {
   name: 'Layout',
   components: {

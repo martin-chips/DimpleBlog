@@ -4,7 +4,15 @@
     <div class="head-container">
       <div v-if="crud.props.searchToggle">
         <!--搜索-->
-        <el-input v-model="query.filename" clearable size="small" placeholder="输入文件名" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <el-input
+          v-model="query.filename"
+          clearable
+          size="small"
+          placeholder="输入文件名"
+          style="width: 200px;"
+          class="filter-item"
+          @keyup.enter.native="crud.toQuery"
+        />
         <el-date-picker
           v-model="query.createTime"
           :default-time="['00:00:00','23:59:59']"
@@ -28,8 +36,15 @@
           type="primary"
           icon="el-icon-upload"
           @click="dialog = true"
-        >上传</el-button>
-        <el-tooltip slot="right" class="item" effect="dark" content="使用同步功能需要在 https://sm.ms/login 中注册账号，并且在 application.yml 文件中修改 Secret Token" placement="top-start">
+        >上传
+        </el-button>
+        <el-tooltip
+          slot="right"
+          class="item"
+          effect="dark"
+          content="使用同步功能需要在 https://sm.ms/login 中注册账号，并且在 application.yml 文件中修改 Secret Token"
+          placement="top-start"
+        >
           <el-button
             v-permission="['admin','pictures:add']"
             class="filter-item"
@@ -38,7 +53,8 @@
             icon="el-icon-refresh"
             :loading="syncLoading"
             @click="sync"
-          >同步</el-button>
+          >同步
+          </el-button>
         </el-tooltip>
       </crudOperation>
     </div>
@@ -64,7 +80,13 @@
       </div>
     </el-dialog>
     <!--表格渲染-->
-    <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+    <el-table
+      ref="table"
+      v-loading="crud.loading"
+      :data="crud.data"
+      style="width: 100%;"
+      @selection-change="crud.selectionChangeHandler"
+    >
       <el-table-column type="selection" width="55" />
       <el-table-column width="200" prop="filename" label="文件名" />
       <el-table-column prop="username" label="上传者" />
@@ -143,7 +165,8 @@ export default {
     handleBeforeRemove(file, fileList) {
       for (let i = 0; i < this.pictures.length; i++) {
         if (this.pictures[i].uid === file.uid) {
-          crudPic.del(Array.of(this.pictures[i].id)).then(res => {})
+          crudPic.del(Array.of(this.pictures[i].id)).then(res => {
+          })
           return true
         }
       }

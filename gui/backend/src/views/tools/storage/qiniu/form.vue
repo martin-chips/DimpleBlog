@@ -37,6 +37,7 @@
 
 <script>
 import { get, update } from '@/api/tools/qiniu'
+
 export default {
   data() {
     return {

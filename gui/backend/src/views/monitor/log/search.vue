@@ -26,6 +26,7 @@
 <script>
 import { header } from '@crud/crud'
 import rrOperation from '@crud/RR.operation'
+
 export default {
   components: { rrOperation },
   mixins: [header()]

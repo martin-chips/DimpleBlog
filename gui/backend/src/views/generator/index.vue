@@ -3,7 +3,15 @@
     <!--工具栏-->
     <div class="head-container">
       <div v-if="crud.props.searchToggle">
-        <el-input v-model="query.name" clearable size="small" placeholder="请输入表名" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <el-input
+          v-model="query.name"
+          clearable
+          size="small"
+          placeholder="请输入表名"
+          style="width: 200px;"
+          class="filter-item"
+          @keyup.enter.native="crud.toQuery"
+        />
         <rrOperation />
       </div>
       <crudOperation>
@@ -16,12 +24,19 @@
             :loading="syncLoading"
             :disabled="crud.selections.length === 0"
             @click="sync"
-          >同步</el-button>
+          >同步
+          </el-button>
         </el-tooltip>
       </crudOperation>
     </div>
     <!--表格渲染-->
-    <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+    <el-table
+      ref="table"
+      v-loading="crud.loading"
+      :data="crud.data"
+      style="width: 100%;"
+      @selection-change="crud.selectionChangeHandler"
+    >
       <el-table-column type="selection" width="55" />
       <el-table-column :show-overflow-tooltip="true" prop="tableName" label="表名" />
       <el-table-column :show-overflow-tooltip="true" prop="engine" label="数据库引擎" />
@@ -39,13 +54,20 @@
               预览
             </router-link>
           </el-button>
-          <el-button size="mini" style="margin-left: -1px;margin-right: 2px" type="text" @click="toDownload(scope.row.tableName)">下载</el-button>
+          <el-button
+            size="mini"
+            style="margin-left: -1px;margin-right: 2px"
+            type="text"
+            @click="toDownload(scope.row.tableName)"
+          >下载
+          </el-button>
           <el-button size="mini" style="margin-left: -1px;margin-right: 2px" type="text">
             <router-link :to="'/sys-tools/generator/config/' + scope.row.tableName">
               配置
             </router-link>
           </el-button>
-          <el-button type="text" style="margin-left: -1px" size="mini" @click="toGen(scope.row.tableName)">生成</el-button>
+          <el-button type="text" style="margin-left: -1px" size="mini" @click="toGen(scope.row.tableName)">生成
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -12,7 +12,8 @@
               style="float: right; padding: 6px 9px;"
               type="success"
               @click="toGen"
-            >保存&生成</el-button>
+            >保存&生成
+            </el-button>
             <el-button
               :loading="columnLoading"
               icon="el-icon-check"
@@ -20,7 +21,8 @@
               style="float: right; padding: 6px 9px;margin-right: 9px"
               type="primary"
               @click="saveColumnConfig"
-            >保存</el-button>
+            >保存
+            </el-button>
             <el-tooltip class="item" effect="dark" content="数据库中表字段变动时使用该功能" placement="top-start">
               <el-button
                 :loading="syncLoading"
@@ -29,11 +31,18 @@
                 style="float: right; padding: 6px 9px;"
                 type="info"
                 @click="sync"
-              >同步</el-button>
+              >同步
+              </el-button>
             </el-tooltip>
           </div>
           <el-form size="small" label-width="90px">
-            <el-table v-loading="loading" :data="data" :max-height="tableHeight" size="small" style="width: 100%;margin-bottom: 15px">
+            <el-table
+              v-loading="loading"
+              :data="data"
+              :max-height="tableHeight"
+              size="small"
+              style="width: 100%;margin-bottom: 15px"
+            >
               <el-table-column prop="columnName" label="字段名称" />
               <el-table-column prop="columnType" label="字段类型" />
               <el-table-column prop="remark" label="字段描述">
@@ -58,7 +67,14 @@
               </el-table-column>
               <el-table-column label="表单类型">
                 <template slot-scope="scope">
-                  <el-select v-model="data[scope.$index].formType" filterable class="edit-input" clearable size="mini" placeholder="请选择">
+                  <el-select
+                    v-model="data[scope.$index].formType"
+                    filterable
+                    class="edit-input"
+                    clearable
+                    size="mini"
+                    placeholder="请选择"
+                  >
                     <el-option
                       label="文本框"
                       value="Input"
@@ -84,7 +100,14 @@
               </el-table-column>
               <el-table-column label="查询方式">
                 <template slot-scope="scope">
-                  <el-select v-model="data[scope.$index].queryType" filterable class="edit-input" clearable size="mini" placeholder="请选择">
+                  <el-select
+                    v-model="data[scope.$index].queryType"
+                    filterable
+                    class="edit-input"
+                    clearable
+                    size="mini"
+                    placeholder="请选择"
+                  >
                     <el-option
                       label="="
                       value="="
@@ -118,7 +141,14 @@
               </el-table-column>
               <el-table-column label="日期注解">
                 <template slot-scope="scope">
-                  <el-select v-model="data[scope.$index].dateAnnotation" filterable class="edit-input" clearable size="mini" placeholder="请选择">
+                  <el-select
+                    v-model="data[scope.$index].dateAnnotation"
+                    filterable
+                    class="edit-input"
+                    clearable
+                    size="mini"
+                    placeholder="请选择"
+                  >
                     <el-option
                       label="自动创建时间"
                       value="CreationTimestamp"
@@ -132,8 +162,20 @@
               </el-table-column>
               <el-table-column label="关联字典">
                 <template slot-scope="scope">
-                  <el-select v-model="data[scope.$index].dictName" filterable class="edit-input" clearable size="mini" placeholder="请选择">
-                    <el-option v-for="item in dicts" :key="item.id" :label="item.remark === '' ? item.name : item.remark" :value="item.name" />
+                  <el-select
+                    v-model="data[scope.$index].dictName"
+                    filterable
+                    class="edit-input"
+                    clearable
+                    size="mini"
+                    placeholder="请选择"
+                  >
+                    <el-option
+                      v-for="item in dicts"
+                      :key="item.id"
+                      :label="item.remark === '' ? item.name : item.remark"
+                      :value="item.name"
+                    />
                   </el-select>
                 </template>
               </el-table-column>
@@ -152,7 +194,8 @@
               style="float: right; padding: 6px 9px"
               type="primary"
               @click="doSubmit"
-            >保存</el-button>
+            >保存
+            </el-button>
           </div>
           <el-form ref="form" :model="form" :rules="rules" size="small" label-width="78px">
             <el-form-item label="作者名称" prop="author">
@@ -202,14 +245,33 @@ import crud from '@/mixins/crud'
 import { update, get } from '@/api/generator/genConfig'
 import { save, sync, generator } from '@/api/generator/generator'
 import { getDicts } from '@/api/system/dict'
+
 export default {
   name: 'GeneratorConfig',
   components: {},
   mixins: [crud],
   data() {
     return {
-      activeName: 'first', tableName: '', tableHeight: 550, columnLoading: false, configLoading: false, dicts: [], syncLoading: false, genLoading: false,
-      form: { id: null, tableName: '', author: '', pack: '', path: '', moduleName: '', cover: 'false', apiPath: '', prefix: '', apiAlias: null },
+      activeName: 'first',
+      tableName: '',
+      tableHeight: 550,
+      columnLoading: false,
+      configLoading: false,
+      dicts: [],
+      syncLoading: false,
+      genLoading: false,
+      form: {
+        id: null,
+        tableName: '',
+        author: '',
+        pack: '',
+        path: '',
+        moduleName: '',
+        cover: 'false',
+        apiPath: '',
+        prefix: '',
+        apiAlias: null
+      },
       rules: {
         author: [
           { required: true, message: '作者不能为空', trigger: 'blur' }

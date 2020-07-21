@@ -17,7 +17,11 @@
  # 密码（注意，某些邮箱需要为SMTP服务单独设置密码，如QQ和163等等）
  # 是否开启ssl，默认开启</pre>
         <blockquote class="my-blockquote">更多帮助</blockquote>
-        <pre class="my-code">更多帮助请查看文档：<a style="color:#009688" href="http://hutool.mydoc.io/#text_319499" target="_black">hutool工具包</a></pre>
+        <pre class="my-code">更多帮助请查看文档：<a
+style="color:#009688"
+href="http://hutool.mydoc.io/#text_319499"
+                                          target="_black"
+        >hutool工具包</a></pre>
       </div>
     </el-tab-pane>
   </el-tabs>
@@ -26,6 +30,7 @@
 <script>
 import Config from './config'
 import Send from './send'
+
 export default {
   name: 'Email',
   components: { Config, Send },

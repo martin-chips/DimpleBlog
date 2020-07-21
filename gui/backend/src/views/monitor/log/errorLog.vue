@@ -17,7 +17,13 @@
       </crudOperation>
     </div>
     <!--表格渲染-->
-    <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+    <el-table
+      ref="table"
+      v-loading="crud.loading"
+      :data="crud.data"
+      style="width: 100%;"
+      @selection-change="crud.selectionChangeHandler"
+    >
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -113,27 +119,32 @@ export default {
 </script>
 
 <style scoped>
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 70px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 100%;
-}
-.demo-table-expand .el-form-item__content {
-  font-size: 12px;
-}
-/deep/ .el-dialog__body {
-  padding: 0 20px 10px 20px !important;
-}
-.java.hljs {
-  color: #444;
-  background: #ffffff !important;
-  height: 630px !important;
-}
+  .demo-table-expand {
+    font-size: 0;
+  }
+
+  .demo-table-expand label {
+    width: 70px;
+    color: #99a9bf;
+  }
+
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .demo-table-expand .el-form-item__content {
+    font-size: 12px;
+  }
+
+  /deep/ .el-dialog__body {
+    padding: 0 20px 10px 20px !important;
+  }
+
+  .java.hljs {
+    color: #444;
+    background: #ffffff !important;
+    height: 630px !important;
+  }
 </style>

@@ -1,7 +1,14 @@
 <template>
   <div class="app-container">
     <!--表单组件-->
-    <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible="crud.status.cu > 0" :title="crud.status.title" width="500px">
+    <el-dialog
+      append-to-body
+      :close-on-click-modal="false"
+      :before-close="crud.cancelCU"
+      :visible="crud.status.cu > 0"
+      :title="crud.status.title"
+      width="500px"
+    >
       <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
         <el-form-item label="字典名称" prop="name">
           <el-input v-model="form.name" style="width: 370px;" />
@@ -23,17 +30,39 @@
           <div class="head-container">
             <div v-if="crud.props.searchToggle">
               <!-- 搜索 -->
-              <el-input v-model="query.blurry" clearable size="small" placeholder="输入名称或者描述搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+              <el-input
+                v-model="query.blurry"
+                clearable
+                size="small"
+                placeholder="输入名称或者描述搜索"
+                style="width: 200px;"
+                class="filter-item"
+                @keyup.enter.native="crud.toQuery"
+              />
               <rrOperation />
             </div>
             <crudOperation :permission="permission" />
           </div>
           <!--表格渲染-->
-          <el-table ref="table" v-loading="crud.loading" :data="crud.data" highlight-current-row style="width: 100%;" @selection-change="crud.selectionChangeHandler" @current-change="handleCurrentChange">
+          <el-table
+            ref="table"
+            v-loading="crud.loading"
+            :data="crud.data"
+            highlight-current-row
+            style="width: 100%;"
+            @selection-change="crud.selectionChangeHandler"
+            @current-change="handleCurrentChange"
+          >
             <el-table-column type="selection" width="55" />
             <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" />
             <el-table-column :show-overflow-tooltip="true" prop="description" label="描述" />
-            <el-table-column v-permission="['admin','dict:edit','dict:del']" label="操作" width="130px" align="center" fixed="right">
+            <el-table-column
+              v-permission="['admin','dict:edit','dict:del']"
+              label="操作"
+              width="130px"
+              align="center"
+              fixed="right"
+            >
               <template slot-scope="scope">
                 <udOperation
                   :data="scope.row"
@@ -59,7 +88,8 @@
               type="primary"
               icon="el-icon-plus"
               @click="$refs.dictDetail && $refs.dictDetail.crud.toAdd()"
-            >新增</el-button>
+            >新增
+            </el-button>
           </div>
           <dictDetail ref="dictDetail" :permission="permission" />
         </el-card>

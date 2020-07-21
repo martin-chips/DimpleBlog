@@ -14,7 +14,8 @@
         <el-button style="margin-left:0;" icon="el-icon-minus" @click.prevent="removeDomain(domain)" />
       </el-form-item>
       <div ref="editor" class="editor" />
-      <el-button :loading="loading" style="margin-left:1.6%;" size="medium" type="primary" @click="doSubmit">发送邮件</el-button>
+      <el-button :loading="loading" style="margin-left:1.6%;" size="medium" type="primary" @click="doSubmit">发送邮件
+      </el-button>
     </el-form>
   </div>
 </template>
@@ -25,6 +26,7 @@ import { upload } from '@/utils/upload'
 import { validEmail } from '@/utils/validate'
 import { mapGetters } from 'vuex'
 import E from 'wangeditor'
+
 export default {
   name: 'Index',
   data() {
@@ -108,7 +110,9 @@ export default {
               sub = true
             }
           })
-          if (sub) { return false }
+          if (sub) {
+            return false
+          }
           this.loading = true
           send(this.form).then(res => {
             this.$notify({
@@ -131,11 +135,12 @@ export default {
 </script>
 
 <style scoped>
-  .editor{
-    text-align:left;
+  .editor {
+    text-align: left;
     margin: 20px;
     width: 730px;
   }
+
   /deep/ .w-e-text-container {
     height: 360px !important;
   }

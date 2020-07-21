@@ -48,7 +48,14 @@
           <crudOperation show="" :permission="permission" />
         </div>
         <!--表单渲染-->
-        <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="570px">
+        <el-dialog
+          append-to-body
+          :close-on-click-modal="false"
+          :before-close="crud.cancelCU"
+          :visible.sync="crud.status.cu > 0"
+          :title="crud.status.title"
+          width="570px"
+        >
           <el-form ref="form" :inline="true" :model="form" :rules="rules" size="small" label-width="66px">
             <el-form-item label="用户名" prop="username">
               <el-input v-model="form.username" />
@@ -74,7 +81,8 @@
                   v-for="item in dict.user_status"
                   :key="item.id"
                   :label="item.value"
-                >{{ item.label }}</el-radio>
+                >{{ item.label }}
+                </el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item style="margin-bottom: 0;" label="角色" prop="roles">
@@ -102,7 +110,13 @@
           </div>
         </el-dialog>
         <!--表格渲染-->
-        <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+        <el-table
+          ref="table"
+          v-loading="crud.loading"
+          :data="crud.data"
+          style="width: 100%;"
+          @selection-change="crud.selectionChangeHandler"
+        >
           <el-table-column :selectable="checkboxT" type="selection" width="55" />
           <el-table-column :show-overflow-tooltip="true" prop="username" label="用户名" />
           <el-table-column :show-overflow-tooltip="true" prop="nickName" label="昵称" />
@@ -149,182 +163,193 @@
 </template>
 
 <script>
-  import crudUser from '@/api/system/user'
-  import { isvalidPhone } from '@/utils/validate'
-  import { getAll, getLevel } from '@/api/system/role'
-  import CRUD, { presenter, header, form, crud } from '@crud/crud'
-  import rrOperation from '@crud/RR.operation'
-  import crudOperation from '@crud/CRUD.operation'
-  import udOperation from '@crud/UD.operation'
-  import pagination from '@crud/Pagination'
-  import Treeselect from '@riophae/vue-treeselect'
-  import { mapGetters } from 'vuex'
-  import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-  import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
-  let userRoles = []
-  let userJobs = []
-  const defaultForm = { id: null, username: null, nickName: null, gender: '男', email: null, enabled: 'false', roles: [], phone: null }
-  export default {
-    name: 'User',
-    components: { Treeselect, crudOperation, rrOperation, udOperation, pagination },
-    cruds() {
-      return CRUD({ title: '用户', url: 'api/users', crudMethod: { ...crudUser }})
-    },
-    mixins: [presenter(), header(), form(defaultForm), crud()],
-    // 数据字典
-    dicts: ['user_status'],
-    data() {
-      // 自定义验证
-      const validPhone = (rule, value, callback) => {
-        if (!value) {
-          callback(new Error('请输入电话号码'))
-        } else if (!isvalidPhone(value)) {
-          callback(new Error('请输入正确的11位手机号码'))
-        } else {
-          callback()
-        }
+import crudUser from '@/api/system/user'
+import { isvalidPhone } from '@/utils/validate'
+import { getAll, getLevel } from '@/api/system/role'
+import CRUD, { presenter, header, form, crud } from '@crud/crud'
+import rrOperation from '@crud/RR.operation'
+import crudOperation from '@crud/CRUD.operation'
+import udOperation from '@crud/UD.operation'
+import pagination from '@crud/Pagination'
+import Treeselect from '@riophae/vue-treeselect'
+import { mapGetters } from 'vuex'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
+
+let userRoles = []
+const userJobs = []
+const defaultForm = {
+  id: null,
+  username: null,
+  nickName: null,
+  gender: '男',
+  email: null,
+  enabled: 'false',
+  roles: [],
+  phone: null
+}
+export default {
+  name: 'User',
+  components: { Treeselect, crudOperation, rrOperation, udOperation, pagination },
+  cruds() {
+    return CRUD({ title: '用户', url: 'api/users', crudMethod: { ...crudUser }})
+  },
+  mixins: [presenter(), header(), form(defaultForm), crud()],
+  // 数据字典
+  dicts: ['user_status'],
+  data() {
+    // 自定义验证
+    const validPhone = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入电话号码'))
+      } else if (!isvalidPhone(value)) {
+        callback(new Error('请输入正确的11位手机号码'))
+      } else {
+        callback()
       }
-      return {
-        height: document.documentElement.clientHeight - 180 + 'px;',
-        deptName: '', depts: [], deptDatas: [], jobs: [], level: 3, roles: [],
-        defaultProps: { children: 'children', label: 'name', isLeaf: 'leaf' },
-        permission: {
-          add: ['admin', 'user:add'],
-          edit: ['admin', 'user:edit'],
-          del: ['admin', 'user:del']
-        },
-        enabledTypeOptions: [
-          { key: 'true', display_name: '激活' },
-          { key: 'false', display_name: '锁定' }
+    }
+    return {
+      height: document.documentElement.clientHeight - 180 + 'px;',
+      deptName: '', depts: [], deptDatas: [], jobs: [], level: 3, roles: [],
+      defaultProps: { children: 'children', label: 'name', isLeaf: 'leaf' },
+      permission: {
+        add: ['admin', 'user:add'],
+        edit: ['admin', 'user:edit'],
+        del: ['admin', 'user:del']
+      },
+      enabledTypeOptions: [
+        { key: 'true', display_name: '激活' },
+        { key: 'false', display_name: '锁定' }
+      ],
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
         ],
-        rules: {
-          username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
-          ],
-          nickName: [
-            { required: true, message: '请输入用户昵称', trigger: 'blur' },
-            { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
-          ],
-          email: [
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
-          ],
-          phone: [
-            { required: true, trigger: 'blur', validator: validPhone }
-          ]
-        }
+        nickName: [
+          { required: true, message: '请输入用户昵称', trigger: 'blur' },
+          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, trigger: 'blur', validator: validPhone }
+        ]
       }
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
+  },
+  created() {
+    this.crud.msg.add = '新增成功，默认密码：123456'
+  },
+  mounted: function() {
+    const that = this
+    window.onresize = function temp() {
+      that.height = document.documentElement.clientHeight - 180 + 'px;'
+    }
+  },
+  methods: {
+    changeRole(value) {
+      userRoles = []
+      value.forEach(function(data, index) {
+        const role = { id: data }
+        userRoles.push(role)
+      })
     },
-    computed: {
-      ...mapGetters([
-        'user'
-      ])
+    [CRUD.HOOK.afterAddError](crud) {
+      this.afterErrorMethod(crud)
     },
-    created() {
-      this.crud.msg.add = '新增成功，默认密码：123456'
+    [CRUD.HOOK.afterEditError](crud) {
+      this.afterErrorMethod(crud)
     },
-    mounted: function() {
-      const that = this
-      window.onresize = function temp() {
-        that.height = document.documentElement.clientHeight - 180 + 'px;'
-      }
+    afterErrorMethod(crud) {
+      // 恢复select
+      const initRoles = []
+      userRoles.forEach(function(role, index) {
+        initRoles.push(role.id)
+      })
+      crud.form.roles = initRoles
     },
-    methods: {
-      changeRole(value) {
-        userRoles = []
-        value.forEach(function(data, index) {
-          const role = { id: data }
-          userRoles.push(role)
-        })
-      },
-      [CRUD.HOOK.afterAddError](crud) {
-        this.afterErrorMethod(crud)
-      },
-      [CRUD.HOOK.afterEditError](crud) {
-        this.afterErrorMethod(crud)
-      },
-      afterErrorMethod(crud) {
-        // 恢复select
-        const initRoles = []
-        userRoles.forEach(function(role, index) {
-          initRoles.push(role.id)
-        })
-        crud.form.roles = initRoles
-      },
-      deleteTag(value) {
-        userRoles.forEach(function(data, index) {
-          if (data.id === value) {
-            userRoles.splice(index, value)
-          }
-        })
-      },
-      // 新增与编辑前做的操作
-      [CRUD.HOOK.afterToCU](crud, form) {
-        this.getRoles()
-        this.getRoleLevel()
-        form.enabled = form.enabled.toString()
-      },
-      // 打开编辑弹窗前做的操作
-      [CRUD.HOOK.beforeToEdit](crud, form) {
-        userRoles = []
-        const roles = []
-        form.roles.forEach(function(role, index) {
-          roles.push(role.id)
-          // 初始化编辑时候的角色
-          const rol = { id: role.id }
-          userRoles.push(rol)
-        })
-        form.roles = roles
-      },
-      // 提交前做的操作
-      [CRUD.HOOK.afterValidateCU](crud) {
-       if (crud.form.roles.length === 0) {
-          this.$message({
-            message: '角色不能为空',
-            type: 'warning'
-          })
-          return false
+    deleteTag(value) {
+      userRoles.forEach(function(data, index) {
+        if (data.id === value) {
+          userRoles.splice(index, value)
         }
-        crud.form.roles = userRoles
-        return true
-      },
-
-
-      // 改变状态
-      changeEnabled(data, val) {
-        this.$confirm('此操作将 "' + this.dict.label.user_status[val] + '" ' + data.username + ', 是否继续？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+      })
+    },
+    // 新增与编辑前做的操作
+    [CRUD.HOOK.afterToCU](crud, form) {
+      this.getRoles()
+      this.getRoleLevel()
+      form.enabled = form.enabled.toString()
+    },
+    // 打开编辑弹窗前做的操作
+    [CRUD.HOOK.beforeToEdit](crud, form) {
+      userRoles = []
+      const roles = []
+      form.roles.forEach(function(role, index) {
+        roles.push(role.id)
+        // 初始化编辑时候的角色
+        const rol = { id: role.id }
+        userRoles.push(rol)
+      })
+      form.roles = roles
+    },
+    // 提交前做的操作
+    [CRUD.HOOK.afterValidateCU](crud) {
+      if (crud.form.roles.length === 0) {
+        this.$message({
+          message: '角色不能为空',
           type: 'warning'
-        }).then(() => {
-          crudUser.edit(data).then(res => {
-            this.crud.notify(this.dict.label.user_status[val] + '成功', CRUD.NOTIFICATION_TYPE.SUCCESS)
-          }).catch(() => {
-            data.enabled = !data.enabled
-          })
+        })
+        return false
+      }
+      crud.form.roles = userRoles
+      return true
+    },
+
+    // 改变状态
+    changeEnabled(data, val) {
+      this.$confirm('此操作将 "' + this.dict.label.user_status[val] + '" ' + data.username + ', 是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        crudUser.edit(data).then(res => {
+          this.crud.notify(this.dict.label.user_status[val] + '成功', CRUD.NOTIFICATION_TYPE.SUCCESS)
         }).catch(() => {
           data.enabled = !data.enabled
         })
-      },
-      // 获取弹窗内角色数据
-      getRoles() {
-        getAll().then(res => {
-          this.roles = res
-        }).catch(() => { })
-      },
+      }).catch(() => {
+        data.enabled = !data.enabled
+      })
+    },
+    // 获取弹窗内角色数据
+    getRoles() {
+      getAll().then(res => {
+        this.roles = res
+      }).catch(() => {
+      })
+    },
 
-      // 获取权限级别
-      getRoleLevel() {
-        getLevel().then(res => {
-          this.level = res.level
-        }).catch(() => { })
-      },
-      checkboxT(row, rowIndex) {
-        return row.id !== this.user.id
-      }
+    // 获取权限级别
+    getRoleLevel() {
+      getLevel().then(res => {
+        this.level = res.level
+      }).catch(() => {
+      })
+    },
+    checkboxT(row, rowIndex) {
+      return row.id !== this.user.id
     }
   }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
