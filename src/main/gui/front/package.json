@@ -12,7 +12,7 @@
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "core-js": "^2.6.5",
     "crypto-js": "^3.1.9-1",
-    "highlight.js": "^9.16.2",
+    "highlight.js": "^10.4.1",
     "marked": "^0.8.0",
     "mavon-editor": "^2.7.7",
     "tocbot": "^4.1.1",
