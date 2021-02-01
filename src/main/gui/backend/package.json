@@ -47,7 +47,7 @@
     "vue-echarts": "^5.0.0-beta.0",
     "element-ui": "2.13.0",
     "fuse.js": "3.4.4",
-    "highlight.js": "^9.12.0",
+    "highlight.js": "^10.4.1",
     "js-cookie": "2.2.0",
     "marked": "^0.8.0",
     "mavon-editor": "^2.7.7",
