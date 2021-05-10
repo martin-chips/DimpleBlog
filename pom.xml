@@ -27,7 +27,7 @@
         <pagehelper.spring.boot.starter.version>1.2.12</pagehelper.spring.boot.starter.version>
         <fastjson.version>1.2.70</fastjson.version>
         <druid.spring.boot.starter.version>1.1.20</druid.spring.boot.starter.version>
-        <commons.io.version>2.6</commons.io.version>
+        <commons.io.version>2.7</commons.io.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <bitwalker.version>1.21</bitwalker.version>
         <jwt.version>0.9.1</jwt.version>
