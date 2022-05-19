@@ -1,6 +1,5 @@
 package com.dimple.common.security.handler;
 
-import com.dimple.common.core.constant.HttpStatus;
 import com.dimple.common.core.exception.DemoModeException;
 import com.dimple.common.core.exception.InnerAuthException;
 import com.dimple.common.core.exception.ServiceException;
@@ -10,6 +9,7 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.web.domain.AjaxResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     public AjaxResult handleNotPermissionException(NotPermissionException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',权限码校验失败'{}'", requestURI, e.getMessage());
-        return AjaxResult.error(HttpStatus.FORBIDDEN, "没有访问权限，请联系管理员授权");
+        return AjaxResult.error(HttpStatus.FORBIDDEN.value(), "没有访问权限，请联系管理员授权");
     }
 
     /**
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     public AjaxResult handleNotRoleException(NotRoleException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',角色权限校验失败'{}'", requestURI, e.getMessage());
-        return AjaxResult.error(HttpStatus.FORBIDDEN, "没有访问权限，请联系管理员授权");
+        return AjaxResult.error(HttpStatus.FORBIDDEN.value(), "没有访问权限，请联系管理员授权");
     }
 
     /**
