@@ -1,15 +1,15 @@
 # 基础镜像
 FROM  openjdk:8-jre
 # author
-MAINTAINER ruoyi
+MAINTAINER dimple
 
 # 挂载目录
-VOLUME /home/ruoyi
+VOLUME /home/dimple
 # 创建目录
-RUN mkdir -p /home/ruoyi
+RUN mkdir -p /home/dimple
 # 指定路径
-WORKDIR /home/ruoyi
+WORKDIR /home/dimple
 # 复制jar文件到路径
-COPY ./jar/ruoyi-gateway.jar /home/ruoyi/ruoyi-gateway.jar
+COPY ./jar/dimple-gateway.jar /home/dimple/dimple-gateway.jar
 # 启动网关服务
-ENTRYPOINT ["java","-jar","ruoyi-gateway.jar"]
+ENTRYPOINT ["java","-jar","dimple-gateway.jar"]
