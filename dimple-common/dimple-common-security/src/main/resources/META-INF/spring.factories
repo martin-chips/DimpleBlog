@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.dimple.common.security.config.WebMvcConfig,\
+  com.dimple.common.security.service.TokenService,\
+  com.dimple.common.security.aspect.PreAuthorizeAspect,\
+  com.dimple.common.security.aspect.InnerAuthAspect,\
+  com.dimple.common.security.handler.GlobalExceptionHandler

@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>DimpleBlog</artifactId>
         <groupId>com.dimple</groupId>
-        <version>3.0</version>
+        <artifactId>dimple</artifactId>
+        <version>3.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <properties>
-        <hutool.version>5.3.4</hutool.version>
-    </properties>
+
+    <modules>
+        <module>dimple-common-log</module>
+        <module>dimple-common-core</module>
+        <module>dimple-common-redis</module>
+        <module>dimple-common-swagger</module>
+        <module>dimple-common-security</module>
+        <module>dimple-common-datascope</module>
+        <module>dimple-common-datasource</module>
+    </modules>
 
     <artifactId>dimple-common</artifactId>
-    <name>dimple-common</name>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <!--工具包-->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
-        </dependency>
-    </dependencies>
+    <description>
+        dimple-common通用模块
+    </description>
+
 </project>
