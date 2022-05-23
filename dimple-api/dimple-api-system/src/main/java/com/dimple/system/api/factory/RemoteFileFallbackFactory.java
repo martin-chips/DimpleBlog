@@ -3,6 +3,7 @@ package com.dimple.system.api.factory;
 import com.dimple.system.api.RemoteFileService;
 import com.dimple.system.api.domain.SysFile;
 import com.dimple.common.core.domain.R;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -15,8 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Dimple
  */
 @Component
+@Slf4j
 public class RemoteFileFallbackFactory implements FallbackFactory<RemoteFileService> {
-    private static final Logger log = LoggerFactory.getLogger(RemoteFileFallbackFactory.class);
 
     @Override
     public RemoteFileService create(Throwable throwable) {

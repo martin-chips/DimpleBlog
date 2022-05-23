@@ -4,6 +4,7 @@ import com.dimple.system.api.RemoteUserService;
 import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.model.LoginUser;
 import com.dimple.common.core.domain.R;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -15,8 +16,8 @@ import org.springframework.stereotype.Component;
  * @author Dimple
  */
 @Component
+@Slf4j
 public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserService> {
-    private static final Logger log = LoggerFactory.getLogger(RemoteUserFallbackFactory.class);
 
     @Override
     public RemoteUserService create(Throwable throwable) {

@@ -38,7 +38,8 @@
         <minio.version>8.2.2</minio.version>
         <poi.version>4.1.2</poi.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <transmittable-thread-local.version>2.12.2</transmittable-thread-local.version>
+        <tranmittable-thread-local.version>2.12.2</tranmittable-thread-local.version>
+        <lombok.versin>1.18.24</lombok.versin>
     </properties>
 
     <!-- 依赖声明 -->
@@ -155,9 +156,9 @@
             </dependency>
 
             <!-- Collection 增强Java集合框架 -->
-            <dependency> 
-                <groupId>commons-collections</groupId> 
-                <artifactId>commons-collections</artifactId> 
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
                 <version>${commons-collections.version}</version>
             </dependency>
 
@@ -238,6 +239,13 @@
                 <version>${dimple.version}</version>
             </dependency>
 
+            <!--Lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.versin}</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
