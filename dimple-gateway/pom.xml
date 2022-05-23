@@ -87,6 +87,10 @@
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.fox.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
     </dependencies>
 

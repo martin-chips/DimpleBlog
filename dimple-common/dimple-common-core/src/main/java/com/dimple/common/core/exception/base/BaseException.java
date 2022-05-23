@@ -1,10 +1,13 @@
 package com.dimple.common.core.exception.base;
 
+import lombok.Data;
+
 /**
  * 基础异常
  *
  * @author Dimple
  */
+@Data
 public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
@@ -51,19 +54,5 @@ public class BaseException extends RuntimeException {
         this(null, null, null, defaultMessage);
     }
 
-    public String getModule() {
-        return module;
-    }
 
-    public String getCode() {
-        return code;
-    }
-
-    public Object[] getArgs() {
-        return args;
-    }
-
-    public String getDefaultMessage() {
-        return defaultMessage;
-    }
 }

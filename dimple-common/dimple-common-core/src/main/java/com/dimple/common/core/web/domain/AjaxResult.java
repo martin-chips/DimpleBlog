@@ -1,6 +1,7 @@
 package com.dimple.common.core.web.domain;
 
 import com.dimple.common.core.utils.StringUtils;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.HashMap;
  *
  * @author Dimple
  */
+@Data
 public class AjaxResult extends HashMap<String, Object> {
     /**
      * 状态码
