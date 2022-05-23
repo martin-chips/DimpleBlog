@@ -83,9 +83,8 @@ public class IpUtils {
                     return true;
                 }
             case SECTION_5:
-                switch (b1) {
-                    case SECTION_6:
-                        return true;
+                if (SECTION_6 == b1) {
+                    return true;
                 }
             default:
                 return false;
