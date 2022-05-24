@@ -21,8 +21,11 @@ import java.io.IOException;
  */
 @Component
 public class ValidateCodeHandler implements HandlerFunction<ServerResponse> {
-    @Autowired
-    private ValidateCodeService validateCodeService;
+    private final ValidateCodeService validateCodeService;
+
+    public ValidateCodeHandler(ValidateCodeService validateCodeService) {
+        this.validateCodeService = validateCodeService;
+    }
 
     @Override
     public Mono<ServerResponse> handle(ServerRequest serverRequest) {

@@ -33,11 +33,14 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
     @Resource(name = "captchaProducerMath")
     private Producer captchaProducerMath;
 
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
 
-    @Autowired
-    private CaptchaProperties captchaProperties;
+    private final CaptchaProperties captchaProperties;
+
+    public ValidateCodeServiceImpl(RedisService redisService, CaptchaProperties captchaProperties) {
+        this.redisService = redisService;
+        this.captchaProperties = captchaProperties;
+    }
 
     /**
      * 生成验证码

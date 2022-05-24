@@ -15,11 +15,14 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service
 public class MinioSysFileServiceImpl implements ISysFileService {
-    @Autowired
-    private MinioConfig minioConfig;
+    private final MinioConfig minioConfig;
 
-    @Autowired
-    private MinioClient client;
+    private final MinioClient client;
+
+    public MinioSysFileServiceImpl(MinioConfig minioConfig, MinioClient client) {
+        this.minioConfig = minioConfig;
+        this.client = client;
+    }
 
     /**
      * 本地文件上传接口

@@ -34,14 +34,17 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/user/profile")
 public class SysProfileController extends BaseController {
-    @Autowired
-    private ISysUserService userService;
+    private final ISysUserService userService;
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
-    @Autowired
-    private RemoteFileService remoteFileService;
+    private final RemoteFileService remoteFileService;
+
+    public SysProfileController(ISysUserService userService, TokenService tokenService, RemoteFileService remoteFileService) {
+        this.userService = userService;
+        this.tokenService = tokenService;
+        this.remoteFileService = remoteFileService;
+    }
 
     /**
      * 个人信息

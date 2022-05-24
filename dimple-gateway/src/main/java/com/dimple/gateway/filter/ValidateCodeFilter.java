@@ -28,10 +28,13 @@ public class ValidateCodeFilter extends AbstractGatewayFilterFactory<Object> {
     private final static String[] VALIDATE_URL = new String[]{"/auth/login", "/auth/register"};
     private static final String CODE = "code";
     private static final String UUID = "uuid";
-    @Autowired
-    private ValidateCodeService validateCodeService;
-    @Autowired
-    private CaptchaProperties captchaProperties;
+    private final ValidateCodeService validateCodeService;
+    private final CaptchaProperties captchaProperties;
+
+    public ValidateCodeFilter(ValidateCodeService validateCodeService, CaptchaProperties captchaProperties) {
+        this.validateCodeService = validateCodeService;
+        this.captchaProperties = captchaProperties;
+    }
 
     @Override
     public GatewayFilter apply(Object config) {

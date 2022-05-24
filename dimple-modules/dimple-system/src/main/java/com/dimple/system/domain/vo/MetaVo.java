@@ -1,12 +1,14 @@
 package com.dimple.system.domain.vo;
 
 import com.dimple.common.core.utils.StringUtils;
+import lombok.Data;
 
 /**
  * 路由显示信息
  *
  * @author Dimple
  */
+@Data
 public class MetaVo {
     /**
      * 设置该路由在侧边栏和面包屑中展示的名字
@@ -57,35 +59,5 @@ public class MetaVo {
         }
     }
 
-    public boolean isNoCache() {
-        return noCache;
-    }
 
-    public void setNoCache(boolean noCache) {
-        this.noCache = noCache;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
 }

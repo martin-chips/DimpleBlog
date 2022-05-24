@@ -37,8 +37,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/job")
 public class SysJobController extends BaseController {
-    @Autowired
-    private ISysJobService jobService;
+    private final ISysJobService jobService;
+
+    public SysJobController(ISysJobService jobService) {
+        this.jobService = jobService;
+    }
 
     /**
      * 查询定时任务列表

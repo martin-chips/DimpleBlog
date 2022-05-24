@@ -35,11 +35,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/dict/data")
 public class SysDictDataController extends BaseController {
-    @Autowired
-    private ISysDictDataService dictDataService;
+    private final ISysDictDataService dictDataService;
 
-    @Autowired
-    private ISysDictTypeService dictTypeService;
+    private final ISysDictTypeService dictTypeService;
+
+    public SysDictDataController(ISysDictDataService dictDataService, ISysDictTypeService dictTypeService) {
+        this.dictDataService = dictDataService;
+        this.dictTypeService = dictTypeService;
+    }
 
     @RequiresPermissions("system:dict:list")
     @GetMapping("/list")

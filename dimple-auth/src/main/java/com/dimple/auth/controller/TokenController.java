@@ -25,11 +25,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 public class TokenController {
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
-    @Autowired
-    private SysLoginService sysLoginService;
+    private final SysLoginService sysLoginService;
+
+    public TokenController(TokenService tokenService, SysLoginService sysLoginService) {
+        this.tokenService = tokenService;
+        this.sysLoginService = sysLoginService;
+    }
 
     @PostMapping("login")
     public R<?> login(@RequestBody LoginBody form) {

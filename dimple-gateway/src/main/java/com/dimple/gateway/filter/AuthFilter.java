@@ -31,11 +31,14 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
     // 排除过滤的 uri 地址，nacos自行添加
-    @Autowired
-    private IgnoreWhiteProperties ignoreWhite;
+    private final IgnoreWhiteProperties ignoreWhite;
 
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
+
+    public AuthFilter(IgnoreWhiteProperties ignoreWhite, RedisService redisService) {
+        this.ignoreWhite = ignoreWhite;
+        this.redisService = redisService;
+    }
 
 
     @Override

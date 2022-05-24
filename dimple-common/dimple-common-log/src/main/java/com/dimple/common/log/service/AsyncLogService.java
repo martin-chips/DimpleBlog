@@ -14,8 +14,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AsyncLogService {
-    @Autowired
-    private RemoteLogService remoteLogService;
+    private final RemoteLogService remoteLogService;
+
+    public AsyncLogService(RemoteLogService remoteLogService) {
+        this.remoteLogService = remoteLogService;
+    }
 
     /**
      * 保存系统日志记录

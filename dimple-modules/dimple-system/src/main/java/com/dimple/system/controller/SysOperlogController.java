@@ -30,8 +30,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/operlog")
 public class SysOperlogController extends BaseController {
-    @Autowired
-    private ISysOperLogService operLogService;
+    private final ISysOperLogService operLogService;
+
+    public SysOperlogController(ISysOperLogService operLogService) {
+        this.operLogService = operLogService;
+    }
 
     @RequiresPermissions("system:operlog:list")
     @GetMapping("/list")

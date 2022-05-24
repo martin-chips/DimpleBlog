@@ -30,8 +30,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/notice")
 public class SysNoticeController extends BaseController {
-    @Autowired
-    private ISysNoticeService noticeService;
+    private final ISysNoticeService noticeService;
+
+    public SysNoticeController(ISysNoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
 
     /**
      * 获取通知公告列表

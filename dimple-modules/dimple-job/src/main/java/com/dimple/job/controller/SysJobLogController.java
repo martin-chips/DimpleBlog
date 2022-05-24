@@ -28,8 +28,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/job/log")
 public class SysJobLogController extends BaseController {
-    @Autowired
-    private ISysJobLogService jobLogService;
+    private final ISysJobLogService jobLogService;
+
+    public SysJobLogController(ISysJobLogService jobLogService) {
+        this.jobLogService = jobLogService;
+    }
 
     /**
      * 查询定时任务调度日志列表

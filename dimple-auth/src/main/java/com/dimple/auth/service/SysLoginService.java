@@ -25,11 +25,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SysLoginService {
-    @Autowired
-    private RemoteLogService remoteLogService;
+    private final RemoteLogService remoteLogService;
 
-    @Autowired
-    private RemoteUserService remoteUserService;
+    private final RemoteUserService remoteUserService;
+
+    public SysLoginService(RemoteLogService remoteLogService, RemoteUserService remoteUserService) {
+        this.remoteLogService = remoteLogService;
+        this.remoteUserService = remoteUserService;
+    }
 
     /**
      * 登录

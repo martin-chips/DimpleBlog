@@ -47,20 +47,23 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/user")
 public class SysUserController extends BaseController {
-    @Autowired
-    private ISysUserService userService;
+    private final ISysUserService userService;
 
-    @Autowired
-    private ISysRoleService roleService;
+    private final ISysRoleService roleService;
 
-    @Autowired
-    private ISysPostService postService;
+    private final ISysPostService postService;
 
-    @Autowired
-    private ISysPermissionService permissionService;
+    private final ISysPermissionService permissionService;
 
-    @Autowired
-    private ISysConfigService configService;
+    private final ISysConfigService configService;
+
+    public SysUserController(ISysUserService userService, ISysRoleService roleService, ISysPostService postService, ISysPermissionService permissionService, ISysConfigService configService) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.postService = postService;
+        this.permissionService = permissionService;
+        this.configService = configService;
+    }
 
     /**
      * 获取用户列表

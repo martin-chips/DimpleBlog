@@ -1,6 +1,7 @@
 package com.dimple.gateway.handler;
 
 import com.dimple.common.core.utils.ServletUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
@@ -19,8 +20,8 @@ import reactor.core.publisher.Mono;
  */
 @Order(-1)
 @Configuration
+@Slf4j
 public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
-    private static final Logger log = LoggerFactory.getLogger(GatewayExceptionHandler.class);
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {

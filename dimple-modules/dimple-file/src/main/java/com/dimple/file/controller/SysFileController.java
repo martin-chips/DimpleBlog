@@ -4,6 +4,7 @@ import com.dimple.common.core.domain.R;
 import com.dimple.common.core.utils.file.FileUtils;
 import com.dimple.file.service.ISysFileService;
 import com.dimple.system.api.domain.SysFile;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Dimple
  */
 @RestController
+@Slf4j
 public class SysFileController {
-    private static final Logger log = LoggerFactory.getLogger(SysFileController.class);
 
-    @Autowired
-    private ISysFileService sysFileService;
+    private final ISysFileService sysFileService;
+
+    public SysFileController(ISysFileService sysFileService) {
+        this.sysFileService = sysFileService;
+    }
 
     /**
      * 文件上传请求

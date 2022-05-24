@@ -36,11 +36,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 public class SysRoleController extends BaseController {
-    @Autowired
-    private ISysRoleService roleService;
+    private final ISysRoleService roleService;
 
-    @Autowired
-    private ISysUserService userService;
+    private final ISysUserService userService;
+
+    public SysRoleController(ISysRoleService roleService, ISysUserService userService) {
+        this.roleService = roleService;
+        this.userService = userService;
+    }
 
     @RequiresPermissions("system:role:list")
     @GetMapping("/list")

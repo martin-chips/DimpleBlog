@@ -33,8 +33,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/dept")
 public class SysDeptController extends BaseController {
-    @Autowired
-    private ISysDeptService deptService;
+    private final ISysDeptService deptService;
+
+    public SysDeptController(ISysDeptService deptService) {
+        this.deptService = deptService;
+    }
 
     /**
      * 获取部门列表

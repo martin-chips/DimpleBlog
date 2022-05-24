@@ -33,8 +33,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/config")
 public class SysConfigController extends BaseController {
-    @Autowired
-    private ISysConfigService configService;
+    private final ISysConfigService configService;
+
+    public SysConfigController(ISysConfigService configService) {
+        this.configService = configService;
+    }
 
     /**
      * 获取参数配置列表

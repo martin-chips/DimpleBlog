@@ -30,8 +30,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/logininfor")
 public class SysLogininforController extends BaseController {
-    @Autowired
-    private ISysLogininforService logininforService;
+    private final ISysLogininforService logininforService;
+
+    public SysLogininforController(ISysLogininforService logininforService) {
+        this.logininforService = logininforService;
+    }
 
     @RequiresPermissions("system:logininfor:list")
     @GetMapping("/list")

@@ -32,11 +32,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/online")
 public class SysUserOnlineController extends BaseController {
-    @Autowired
-    private ISysUserOnlineService userOnlineService;
+    private final ISysUserOnlineService userOnlineService;
 
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
+
+    public SysUserOnlineController(ISysUserOnlineService userOnlineService, RedisService redisService) {
+        this.userOnlineService = userOnlineService;
+        this.redisService = redisService;
+    }
 
     @RequiresPermissions("monitor:online:list")
     @GetMapping("/list")

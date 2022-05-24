@@ -38,8 +38,8 @@
         <minio.version>8.2.2</minio.version>
         <poi.version>4.1.2</poi.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <tranmittable-thread-local.version>2.12.2</tranmittable-thread-local.version>
         <lombok.versin>1.18.24</lombok.versin>
+        <transmittable-thread-local.version>2.12.2</transmittable-thread-local.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -244,7 +244,6 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.versin}</version>
-                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

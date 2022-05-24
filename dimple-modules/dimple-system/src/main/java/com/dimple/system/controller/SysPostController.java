@@ -33,8 +33,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/post")
 public class SysPostController extends BaseController {
-    @Autowired
-    private ISysPostService postService;
+    private final ISysPostService postService;
+
+    public SysPostController(ISysPostService postService) {
+        this.postService = postService;
+    }
 
     /**
      * 获取岗位列表

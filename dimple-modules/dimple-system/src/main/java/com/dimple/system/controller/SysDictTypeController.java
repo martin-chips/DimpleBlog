@@ -33,8 +33,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/dict/type")
 public class SysDictTypeController extends BaseController {
-    @Autowired
-    private ISysDictTypeService dictTypeService;
+    private final ISysDictTypeService dictTypeService;
+
+    public SysDictTypeController(ISysDictTypeService dictTypeService) {
+        this.dictTypeService = dictTypeService;
+    }
 
     @RequiresPermissions("system:dict:list")
     @GetMapping("/list")
