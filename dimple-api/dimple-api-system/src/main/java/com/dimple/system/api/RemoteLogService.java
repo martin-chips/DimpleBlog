@@ -1,9 +1,9 @@
 package com.dimple.system.api;
 
-import com.dimple.system.api.domain.SysLogininfor;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.constant.ServiceNameConstants;
 import com.dimple.common.core.domain.R;
+import com.dimple.system.api.domain.SysLogininfor;
 import com.dimple.system.api.domain.SysOperLog;
 import com.dimple.system.api.factory.RemoteLogFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;

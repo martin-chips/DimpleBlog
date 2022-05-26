@@ -12,7 +12,6 @@ import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.api.model.LoginUser;
 import com.dimple.system.domain.SysUserOnline;
 import com.dimple.system.service.ISysUserOnlineService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

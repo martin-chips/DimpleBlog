@@ -14,7 +14,6 @@ import com.dimple.system.api.domain.SysFile;
 import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.model.LoginUser;
 import com.dimple.system.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;

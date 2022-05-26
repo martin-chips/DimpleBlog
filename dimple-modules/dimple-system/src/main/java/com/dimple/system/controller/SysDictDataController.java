@@ -12,7 +12,6 @@ import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.domain.SysDictData;
 import com.dimple.system.service.ISysDictDataService;
 import com.dimple.system.service.ISysDictTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

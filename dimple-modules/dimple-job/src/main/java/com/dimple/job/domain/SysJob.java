@@ -1,15 +1,13 @@
 package com.dimple.job.domain;
 
-import com.dimple.job.util.CronUtils;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.annotation.Excel.ColumnType;
 import com.dimple.common.core.constant.ScheduleConstants;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.web.domain.BaseEntity;
+import com.dimple.job.util.CronUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

@@ -4,7 +4,6 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.html.EscapeUtil;
 import com.dimple.gateway.config.properties.XssProperties;
 import io.netty.buffer.ByteBufAllocator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;

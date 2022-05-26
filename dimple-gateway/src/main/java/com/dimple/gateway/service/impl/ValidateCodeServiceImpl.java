@@ -1,7 +1,5 @@
 package com.dimple.gateway.service.impl;
 
-import com.dimple.gateway.config.properties.CaptchaProperties;
-import com.google.code.kaptcha.Producer;
 import com.dimple.common.core.constant.Constants;
 import com.dimple.common.core.exception.CaptchaException;
 import com.dimple.common.core.utils.StringUtils;
@@ -9,8 +7,9 @@ import com.dimple.common.core.utils.sign.Base64;
 import com.dimple.common.core.utils.uuid.IdUtils;
 import com.dimple.common.core.web.domain.AjaxResult;
 import com.dimple.common.redis.service.RedisService;
+import com.dimple.gateway.config.properties.CaptchaProperties;
 import com.dimple.gateway.service.ValidateCodeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.google.code.kaptcha.Producer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FastByteArrayOutputStream;
 

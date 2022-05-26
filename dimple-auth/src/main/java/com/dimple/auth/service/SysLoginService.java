@@ -15,7 +15,6 @@ import com.dimple.system.api.RemoteUserService;
 import com.dimple.system.api.domain.SysLogininfor;
 import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.model.LoginUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**

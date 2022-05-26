@@ -1,11 +1,11 @@
 package com.dimple.system.api;
 
-import com.dimple.system.api.domain.SysUser;
-import com.dimple.system.api.model.LoginUser;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.constant.ServiceNameConstants;
 import com.dimple.common.core.domain.R;
+import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.factory.RemoteUserFallbackFactory;
+import com.dimple.system.api.model.LoginUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

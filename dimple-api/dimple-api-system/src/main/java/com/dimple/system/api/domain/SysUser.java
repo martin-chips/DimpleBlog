@@ -8,8 +8,6 @@ import com.dimple.common.core.web.domain.BaseEntity;
 import com.dimple.common.core.xss.Xss;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

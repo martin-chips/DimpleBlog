@@ -3,7 +3,6 @@ package com.dimple.gateway.handler;
 import com.dimple.common.core.exception.CaptchaException;
 import com.dimple.common.core.web.domain.AjaxResult;
 import com.dimple.gateway.service.ValidateCodeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;

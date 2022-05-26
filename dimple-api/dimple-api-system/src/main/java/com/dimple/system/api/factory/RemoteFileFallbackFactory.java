@@ -1,14 +1,10 @@
 package com.dimple.system.api.factory;
 
-import com.dimple.system.api.RemoteFileService;
-import com.dimple.system.api.domain.SysFile;
 import com.dimple.common.core.domain.R;
+import com.dimple.system.api.RemoteFileService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 文件服务降级处理

@@ -5,7 +5,6 @@ import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.gateway.config.properties.CaptchaProperties;
 import com.dimple.gateway.service.ValidateCodeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.io.buffer.DataBuffer;

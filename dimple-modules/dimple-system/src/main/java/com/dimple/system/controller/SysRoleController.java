@@ -14,7 +14,6 @@ import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.domain.SysUserRole;
 import com.dimple.system.service.ISysRoleService;
 import com.dimple.system.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

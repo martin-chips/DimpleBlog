@@ -1,12 +1,10 @@
 package com.dimple.system.api.factory;
 
+import com.dimple.common.core.domain.R;
 import com.dimple.system.api.RemoteLogService;
 import com.dimple.system.api.domain.SysLogininfor;
-import com.dimple.common.core.domain.R;
 import com.dimple.system.api.domain.SysOperLog;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 

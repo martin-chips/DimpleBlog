@@ -3,7 +3,6 @@ package com.dimple.common.log.service;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.system.api.RemoteLogService;
 import com.dimple.system.api.domain.SysOperLog;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 

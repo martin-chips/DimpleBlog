@@ -1,9 +1,9 @@
 package com.dimple.system.api.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.annotation.Excel.ColumnType;
 import com.dimple.common.core.web.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;

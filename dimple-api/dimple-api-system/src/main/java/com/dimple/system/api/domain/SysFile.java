@@ -1,8 +1,6 @@
 package com.dimple.system.api.domain;
 
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 文件信息

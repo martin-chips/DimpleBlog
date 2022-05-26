@@ -10,7 +10,6 @@ import com.dimple.common.security.auth.AuthUtil;
 import com.dimple.common.security.service.TokenService;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.model.LoginUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
