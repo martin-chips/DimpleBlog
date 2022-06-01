@@ -12,7 +12,6 @@
         <result property="requestMethod" column="request_method"/>
         <result property="operatorType" column="operator_type"/>
         <result property="operName" column="oper_name"/>
-        <result property="deptName" column="dept_name"/>
         <result property="operUrl" column="oper_url"/>
         <result property="operIp" column="oper_ip"/>
         <result property="operParam" column="oper_param"/>
@@ -30,7 +29,6 @@
                request_method,
                operator_type,
                oper_name,
-               dept_name,
                oper_url,
                oper_ip,
                oper_param,
@@ -42,9 +40,9 @@
     </sql>
 
     <insert id="insertOperlog" parameterType="SysOperLog">
-        insert into sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, dept_name,
+        insert into sys_oper_log(title, business_type, method, request_method, operator_type, oper_name,
                                  oper_url, oper_ip, oper_param, json_result, status, error_msg, oper_time)
-        values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName}, #{deptName},
+        values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName},
                 #{operUrl}, #{operIp}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, sysdate())
     </insert>
 

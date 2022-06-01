@@ -110,15 +110,6 @@ public class SysUser extends BaseEntity {
     private Date loginDate;
 
     /**
-     * 部门对象
-     */
-    @Excels({
-            @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
-            @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
-    })
-    private SysDept dept;
-
-    /**
      * 角色对象
      */
     private List<SysRole> roles;
@@ -128,10 +119,6 @@ public class SysUser extends BaseEntity {
      */
     private Long[] roleIds;
 
-    /**
-     * 岗位组
-     */
-    private Long[] postIds;
 
     /**
      * 角色ID
