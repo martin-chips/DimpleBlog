@@ -17,7 +17,6 @@ import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.model.LoginUser;
 import com.dimple.system.service.ISysConfigService;
 import com.dimple.system.service.ISysPermissionService;
-import com.dimple.system.service.ISysPostService;
 import com.dimple.system.service.ISysRoleService;
 import com.dimple.system.service.ISysUserService;
 import org.apache.commons.lang3.ArrayUtils;
@@ -50,16 +49,13 @@ public class SysUserController extends BaseController {
 
     private final ISysRoleService roleService;
 
-    private final ISysPostService postService;
-
     private final ISysPermissionService permissionService;
 
     private final ISysConfigService configService;
 
-    public SysUserController(ISysUserService userService, ISysRoleService roleService, ISysPostService postService, ISysPermissionService permissionService, ISysConfigService configService) {
+    public SysUserController(ISysUserService userService, ISysRoleService roleService, ISysPermissionService permissionService, ISysConfigService configService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.postService = postService;
         this.permissionService = permissionService;
         this.configService = configService;
     }
@@ -167,11 +163,9 @@ public class SysUserController extends BaseController {
         AjaxResult ajax = AjaxResult.success();
         List<SysRole> roles = roleService.selectRoleAll();
         ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
-        ajax.put("posts", postService.selectPostAll());
         if (StringUtils.isNotNull(userId)) {
             SysUser sysUser = userService.selectUserById(userId);
             ajax.put(AjaxResult.DATA_TAG, sysUser);
-            ajax.put("postIds", postService.selectPostListByUserId(userId));
             ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
         }
         return ajax;

@@ -1,7 +1,5 @@
 package com.dimple.common.security.annotation;
 
-import org.springframework.cloud.openfeign.EnableFeignClients;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -17,8 +15,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@EnableFeignClients
-public @interface EnableRyFeignClients {
+@org.springframework.cloud.openfeign.EnableFeignClients
+public @interface EnableCustomerFeignClients {
     String[] value() default {};
 
     String[] basePackages() default {"com.dimple"};

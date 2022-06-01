@@ -1,6 +1,6 @@
 package com.dimple.auth;
 
-import com.dimple.common.security.annotation.EnableRyFeignClients;
+import com.dimple.common.security.annotation.EnableCustomerFeignClients;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  *
  * @author Dimple
  */
-@EnableRyFeignClients
+@EnableCustomerFeignClients
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class DimpleAuthApplication {
     public static void main(String[] args) {
