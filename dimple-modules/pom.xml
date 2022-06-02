@@ -12,6 +12,7 @@
         <module>dimple-system</module>
         <module>dimple-job</module>
         <module>dimple-file</module>
+        <module>dimple-blog</module>
     </modules>
 
     <artifactId>dimple-modules</artifactId>
