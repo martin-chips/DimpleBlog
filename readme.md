@@ -2,7 +2,14 @@
 # DimpleBlog
 #### 介绍
 `Dimple Blog`是基于SpringBoot2搭建的个人博客系统.
-目前master分支的是基于SpringBoot2和Vue的前后端分离版本.`thymeleaf-version`是基于SpringBoot2的一体机代码.建议不熟悉Vue的可以切到这个版本使用.
+
+
+目前master分支的是基于SpringBoot2和Vue的前后端分离版本.
+
+`thymeleaf-version`是基于SpringBoot2的一体机代码.建议不熟悉Vue的可以切到这个版本使用.
+
+`DimpleBlog3.0` 是目前正在开发的版本，请不要下载使用。
+
 ### 体验链接地址
 [边小丰的个人博客](http://www.bianxiaofeng.com/)
 管理员账号：`test` ,管理员密码： `123456`
