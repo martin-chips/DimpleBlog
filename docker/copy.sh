@@ -9,33 +9,33 @@ usage() {
 
 # copy sql
 echo "begin copy sql "
-cp ../sql/ry_20210908.sql ./mysql/db
-cp ../sql/ry_config_20220114.sql ./mysql/db
+cp ../sql/dimple_20210908.sql ./mysql/db
+cp ../sql/dimple_config_20220114.sql ./mysql/db
 
 # copy html
 echo "begin copy html "
-cp -r ../ruoyi-ui/dist/** ./nginx/html/dist
+cp -r ../dimple-ui/dist/** ./nginx/html/dist
 
 
 # copy jar
-echo "begin copy ruoyi-gateway "
-cp ../ruoyi-gateway/target/ruoyi-gateway.jar ./ruoyi/gateway/jar
+echo "begin copy dimple-gateway "
+cp ../dimple-gateway/target/dimple-gateway.jar ./ruoyi/gateway/jar
 
-echo "begin copy ruoyi-auth "
-cp ../ruoyi-auth/target/ruoyi-auth.jar ./ruoyi/auth/jar
+echo "begin copy dimple-auth "
+cp ../dimple-auth/target/dimple-auth.jar ./ruoyi/auth/jar
 
-echo "begin copy ruoyi-visual "
-cp ../ruoyi-visual/ruoyi-monitor/target/ruoyi-visual-monitor.jar  ./ruoyi/visual/monitor/jar
+echo "begin copy dimple-visual "
+cp ../dimple-visual/dimple-monitor/target/dimple-visual-monitor.jar  ./ruoyi/visual/monitor/jar
 
-echo "begin copy ruoyi-modules-system "
-cp ../ruoyi-modules/ruoyi-system/target/ruoyi-modules-system.jar ./ruoyi/modules/system/jar
+echo "begin copy dimple-modules-system "
+cp ../dimple-modules/dimple-system/target/dimple-modules-system.jar ./ruoyi/modules/system/jar
 
-echo "begin copy ruoyi-modules-file "
-cp ../ruoyi-modules/ruoyi-file/target/ruoyi-modules-file.jar ./ruoyi/modules/file/jar
+echo "begin copy dimple-modules-file "
+cp ../dimple-modules/dimple-file/target/dimple-modules-file.jar ./ruoyi/modules/file/jar
 
-echo "begin copy ruoyi-modules-job "
-cp ../ruoyi-modules/ruoyi-job/target/ruoyi-modules-job.jar ./ruoyi/modules/job/jar
+echo "begin copy dimple-modules-job "
+cp ../dimple-modules/dimple-job/target/dimple-modules-job.jar ./ruoyi/modules/job/jar
 
-echo "begin copy ruoyi-modules-gen "
-cp ../ruoyi-modules/ruoyi-gen/target/ruoyi-modules-gen.jar ./ruoyi/modules/gen/jar
+echo "begin copy dimple-modules-gen "
+cp ../dimple-modules/dimple-gen/target/dimple-modules-gen.jar ./ruoyi/modules/gen/jar
 
