@@ -69,7 +69,7 @@ services:
     container_name: dimple-gateway
     build:
       context: dimple/gateway
-      dockerfile: dockerfile
+      dockerfile: dimple/gateway/Dockerfile
     ports:
       - "8080:8080"
     depends_on:
@@ -80,7 +80,7 @@ services:
     container_name: dimple-auth
     build:
       context: dimple/auth
-      dockerfile: dockerfile
+      dockerfile: dimple/auth/Dockerfile
     ports:
       - "9200:9200"
     depends_on:
@@ -91,7 +91,7 @@ services:
     container_name: dimple-modules-system
     build:
       context: dimple/modules/system
-      dockerfile: dockerfile
+      dockerfile: dimple/modules/system/Dockerfile
     ports:
       - "9201:9201"
     depends_on:
@@ -100,22 +100,11 @@ services:
     links:
       - dimple-redis
       - dimple-mysql
-  dimple-modules-gen:
-    container_name: dimple-modules-gen
-    build:
-      context: dimple/modules/gen
-      dockerfile: dockerfile
-    ports:
-      - "9202:9202"
-    depends_on:
-      - dimple-mysql
-    links:
-      - dimple-mysql
   dimple-modules-job:
     container_name: dimple-modules-job
     build:
       context: dimple/modules/job
-      dockerfile: dockerfile
+      dockerfile: dimple/modules/job/Dockerfile
     ports:
       - "9203:9203"
     depends_on:
@@ -126,7 +115,7 @@ services:
     container_name: dimple-modules-file
     build:
       context: dimple/modules/file
-      dockerfile: dockerfile
+      dockerfile: dimple/modules/file/Dockerfile
     ports:
       - "9300:9300"
     volumes:
@@ -135,6 +124,6 @@ services:
     container_name: dimple-visual-monitor
     build:
       context: dimple/visual/monitor
-      dockerfile: dockerfile
+      dockerfile: dimple/visual/monitor/Dockerfile
     ports:
       - "9100:9100"
