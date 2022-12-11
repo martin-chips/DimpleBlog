@@ -11,6 +11,7 @@ import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.domain.SysConfig;
 import com.dimple.system.service.ISysConfigService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +33,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/config")
 public class SysConfigController extends BaseController {
-    private final ISysConfigService configService;
-
-    public SysConfigController(ISysConfigService configService) {
-        this.configService = configService;
-    }
+    @Autowired
+    private ISysConfigService configService;
 
     /**
      * 获取参数配置列表
@@ -63,7 +61,7 @@ public class SysConfigController extends BaseController {
      */
     @GetMapping(value = "/{configId}")
     public AjaxResult getInfo(@PathVariable Long configId) {
-        return AjaxResult.success(configService.selectConfigById(configId));
+        return success(configService.selectConfigById(configId));
     }
 
     /**
@@ -71,7 +69,7 @@ public class SysConfigController extends BaseController {
      */
     @GetMapping(value = "/configKey/{configKey}")
     public AjaxResult getConfigKey(@PathVariable String configKey) {
-        return AjaxResult.success(configService.selectConfigByKey(configKey));
+        return success(configService.selectConfigByKey(configKey));
     }
 
     /**
@@ -82,7 +80,7 @@ public class SysConfigController extends BaseController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysConfig config) {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
-            return AjaxResult.error("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
+            return error("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
         config.setCreateBy(SecurityUtils.getUsername());
         return toAjax(configService.insertConfig(config));
@@ -96,7 +94,7 @@ public class SysConfigController extends BaseController {
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysConfig config) {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
-            return AjaxResult.error("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
+            return error("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
         config.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(configService.updateConfig(config));
@@ -121,6 +119,6 @@ public class SysConfigController extends BaseController {
     @DeleteMapping("/refreshCache")
     public AjaxResult refreshCache() {
         configService.resetConfigCache();
-        return AjaxResult.success();
+        return success();
     }
 }

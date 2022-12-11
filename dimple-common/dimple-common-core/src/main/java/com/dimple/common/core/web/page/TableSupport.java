@@ -2,14 +2,12 @@ package com.dimple.common.core.web.page;
 
 import com.dimple.common.core.text.Convert;
 import com.dimple.common.core.utils.ServletUtils;
-import lombok.Data;
 
 /**
  * 表格数据处理
  *
  * @author Dimple
  */
-@Data
 public class TableSupport {
     /**
      * 当前记录起始索引

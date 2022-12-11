@@ -9,6 +9,7 @@ import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.job.domain.SysJobLog;
 import com.dimple.job.service.ISysJobLogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,11 +28,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/job/log")
 public class SysJobLogController extends BaseController {
-    private final ISysJobLogService jobLogService;
-
-    public SysJobLogController(ISysJobLogService jobLogService) {
-        this.jobLogService = jobLogService;
-    }
+    @Autowired
+    private ISysJobLogService jobLogService;
 
     /**
      * 查询定时任务调度日志列表
@@ -60,9 +58,9 @@ public class SysJobLogController extends BaseController {
      * 根据调度编号获取详细信息
      */
     @RequiresPermissions("monitor:job:query")
-    @GetMapping(value = "/{configId}")
+    @GetMapping(value = "/{jobLogId}")
     public AjaxResult getInfo(@PathVariable Long jobLogId) {
-        return AjaxResult.success(jobLogService.selectJobLogById(jobLogId));
+        return success(jobLogService.selectJobLogById(jobLogId));
     }
 
     /**
@@ -83,6 +81,6 @@ public class SysJobLogController extends BaseController {
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         jobLogService.cleanJobLog();
-        return AjaxResult.success();
+        return success();
     }
 }

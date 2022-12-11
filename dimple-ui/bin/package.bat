@@ -7,6 +7,6 @@ echo.
 cd %~dp0
 
 cd ..
-yarn --registry=https://registry.npmmirror.com
+npm install --registry=https://registry.npmmirror.com
 
 pause

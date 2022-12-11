@@ -8,11 +8,10 @@ import com.dimple.common.core.utils.bean.BeanUtils;
 import com.dimple.job.domain.SysJob;
 import com.dimple.job.domain.SysJobLog;
 import com.dimple.job.service.ISysJobLogService;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -21,8 +20,8 @@ import java.util.Date;
  *
  * @author Dimple
  */
+@Slf4j
 public abstract class AbstractQuartzJob implements Job {
-    private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
 
     /**
      * 线程本地变量

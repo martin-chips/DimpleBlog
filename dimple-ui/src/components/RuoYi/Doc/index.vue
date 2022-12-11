@@ -4,10 +4,18 @@
   </div>
 </template>
 
-<script setup>
-const url = ref('http://doc.ruoyi.vip/ruoyi-cloud');
-
-function goto() {
-  window.open(url.value)
+<script>
+export default {
+  name: 'RuoYiDoc',
+  data() {
+    return {
+      url: 'http://doc.ruoyi.vip/ruoyi-cloud'
+    }
+  },
+  methods: {
+    goto() {
+      window.open(this.url)
+    }
+  }
 }
 </script>

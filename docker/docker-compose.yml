@@ -8,8 +8,8 @@ services:
     environment:
       - MODE=standalone
     volumes:
-      - /home/docker/nacos/logs/:/home/nacos/logs
-      - /home/docker/nacos/conf/application.properties:/home/nacos/conf/application.properties
+      - /home/project/dimple/nacos/logs/:/home/nacos/logs
+      - /home/project/dimple/nacos/conf/application.properties:/home/nacos/conf/application.properties
     ports:
       - "8848:8848"
       - "9848:9848"
@@ -24,9 +24,9 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /home/docker/mysql/conf:/etc/mysql/conf.d
-      - /home/docker/mysql/logs:/logs
-      - /home/docker/mysql/data:/var/lib/mysql
+      - /home/project/dimple/mysql/conf:/etc/mysql/conf.d
+      - /home/project/dimple/mysql/logs:/logs
+      - /home/project/dimple/mysql/data:/var/lib/mysql
     command: [
           'mysqld',
           '--innodb-buffer-pool-size=80M',
@@ -46,9 +46,9 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - /home/docker/redis/conf/redis.conf:/home/ruoyi/redis/redis.conf
-      - /home/docker/redis/data:/data
-    command: redis-server /home/docker/redis/config/redis.conf
+      - /home/project/dimple/redis/conf/redis.conf:/home/dimple/redis/redis.conf
+      - /home/project/dimple/redis/data:/data
+    command: redis-server /home/dimple/redis/redis.conf
   dimple-nginx:
     container_name: dimple-nginx
     image: nginx
@@ -57,10 +57,10 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /home/docker/nginx/html/dist:/home/ruoyi/projects/dimple-ui
-      - /home/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-      - /home/docker/nginx/logs:/var/log/nginx
-      - /home/docker/nginx/conf.d:/etc/nginx/conf.d
+      - /home/project/dimple/nginx/html/dist:/home/dimple/projects/dimple-ui
+      - /home/project/dimple/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - /home/project/dimple/nginx/logs:/var/log/nginx
+      - /home/project/dimple/nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - dimple-gateway
     links:
@@ -68,8 +68,8 @@ services:
   dimple-gateway:
     container_name: dimple-gateway
     build:
-      context: dimple/gateway
-      dockerfile: dimple/gateway/Dockerfile
+      context: ./dimple/gateway/
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
@@ -79,8 +79,8 @@ services:
   dimple-auth:
     container_name: dimple-auth
     build:
-      context: dimple/auth
-      dockerfile: dimple/auth/Dockerfile
+      context: ./dimple/auth/
+      dockerfile: Dockerfile
     ports:
       - "9200:9200"
     depends_on:
@@ -90,8 +90,8 @@ services:
   dimple-modules-system:
     container_name: dimple-modules-system
     build:
-      context: dimple/modules/system
-      dockerfile: dimple/modules/system/Dockerfile
+      context: ./dimple/modules/system/
+      dockerfile: Dockerfile
     ports:
       - "9201:9201"
     depends_on:
@@ -103,8 +103,8 @@ services:
   dimple-modules-job:
     container_name: dimple-modules-job
     build:
-      context: dimple/modules/job
-      dockerfile: dimple/modules/job/Dockerfile
+      context: ./dimple/modules/job/
+      dockerfile: Dockerfile
     ports:
       - "9203:9203"
     depends_on:
@@ -114,16 +114,16 @@ services:
   dimple-modules-file:
     container_name: dimple-modules-file
     build:
-      context: dimple/modules/file
-      dockerfile: dimple/modules/file/Dockerfile
+      context: ./dimple/modules/file/
+      dockerfile: Dockerfile
     ports:
       - "9300:9300"
     volumes:
-    - /home/docker/ruoyi/uploadPath:/home/ruoyi/uploadPath
+      - /home/project/dimple/file/uploadPath:/home/dimple/uploadPath
   dimple-visual-monitor:
     container_name: dimple-visual-monitor
     build:
-      context: dimple/visual/monitor
-      dockerfile: dimple/visual/monitor/Dockerfile
+      context: ./dimple/visual/monitor/
+      dockerfile: Dockerfile
     ports:
       - "9100:9100"

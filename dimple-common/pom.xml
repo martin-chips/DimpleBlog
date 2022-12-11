@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.dimple</groupId>
         <artifactId>dimple</artifactId>
-        <version>3.0.0</version>
+        <version>3.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,6 +12,7 @@
         <module>dimple-common-log</module>
         <module>dimple-common-core</module>
         <module>dimple-common-redis</module>
+        <module>dimple-common-seata</module>
         <module>dimple-common-swagger</module>
         <module>dimple-common-security</module>
         <module>dimple-common-datascope</module>
@@ -22,7 +23,7 @@
     <packaging>pom</packaging>
 
     <description>
-        dimple-common通用模块
+        Dimple-common通用模块
     </description>
 
 </project>

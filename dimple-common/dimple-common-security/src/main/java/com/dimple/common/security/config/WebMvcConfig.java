@@ -13,13 +13,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     /**
      * 不需要拦截地址
      */
-    public static final String[] EXCLUDE_URLS = {"/login", "/logout", "/refresh"};
+    public static final String[] excludeUrls = {"/login", "/logout", "/refresh"};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getHeaderInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns(EXCLUDE_URLS)
+                .excludePathPatterns(excludeUrls)
                 .order(-10);
     }
 

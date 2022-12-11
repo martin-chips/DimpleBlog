@@ -7,6 +7,6 @@ echo.
 cd %~dp0
 
 cd ..
-yarn build:prod
+npm run build:prod
 
 pause

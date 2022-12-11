@@ -1,59 +1,59 @@
-import { ElMessage, ElMessageBox, ElNotification, ElLoading } from 'element-plus'
+import {Loading, Message, MessageBox, Notification} from 'element-ui'
 
 let loadingInstance;
 
 export default {
   // 消息提示
   msg(content) {
-    ElMessage.info(content)
+    Message.info(content)
   },
   // 错误消息
   msgError(content) {
-    ElMessage.error(content)
+    Message.error(content)
   },
   // 成功消息
   msgSuccess(content) {
-    ElMessage.success(content)
+    Message.success(content)
   },
   // 警告消息
   msgWarning(content) {
-    ElMessage.warning(content)
+    Message.warning(content)
   },
   // 弹出提示
   alert(content) {
-    ElMessageBox.alert(content, "系统提示")
+    MessageBox.alert(content, "系统提示")
   },
   // 错误提示
   alertError(content) {
-    ElMessageBox.alert(content, "系统提示", { type: 'error' })
+    MessageBox.alert(content, "系统提示", {type: 'error'})
   },
   // 成功提示
   alertSuccess(content) {
-    ElMessageBox.alert(content, "系统提示", { type: 'success' })
+    MessageBox.alert(content, "系统提示", {type: 'success'})
   },
   // 警告提示
   alertWarning(content) {
-    ElMessageBox.alert(content, "系统提示", { type: 'warning' })
+    MessageBox.alert(content, "系统提示", {type: 'warning'})
   },
   // 通知提示
   notify(content) {
-    ElNotification.info(content)
+    Notification.info(content)
   },
   // 错误通知
   notifyError(content) {
-    ElNotification.error(content);
+    Notification.error(content);
   },
   // 成功通知
   notifySuccess(content) {
-    ElNotification.success(content)
+    Notification.success(content)
   },
   // 警告通知
   notifyWarning(content) {
-    ElNotification.warning(content)
+    Notification.warning(content)
   },
   // 确认窗体
   confirm(content) {
-    return ElMessageBox.confirm(content, "系统提示", {
+    return MessageBox.confirm(content, "系统提示", {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: "warning",
@@ -61,7 +61,7 @@ export default {
   },
   // 提交内容
   prompt(content) {
-    return ElMessageBox.prompt(content, "系统提示", {
+    return MessageBox.prompt(content, "系统提示", {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: "warning",
@@ -69,9 +69,10 @@ export default {
   },
   // 打开遮罩层
   loading(content) {
-    loadingInstance = ElLoading.service({
+    loadingInstance = Loading.service({
       lock: true,
       text: content,
+      spinner: "el-icon-loading",
       background: "rgba(0, 0, 0, 0.7)",
     })
   },

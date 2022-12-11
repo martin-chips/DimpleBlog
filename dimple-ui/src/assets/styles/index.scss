@@ -1,14 +1,12 @@
-@import './variables.module.scss';
+@import './variables.scss';
 @import './mixin.scss';
 @import './transition.scss';
 @import './element-ui.scss';
 @import './sidebar.scss';
 @import './btn.scss';
-@import './ruoyi.scss';
 
 body {
   height: 100%;
-  margin: 0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;

@@ -1,6 +1,7 @@
 package com.dimple.gateway.filter;
 
 import com.dimple.common.core.constant.CacheConstants;
+import com.dimple.common.core.constant.HttpStatus;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.constant.TokenConstants;
 import com.dimple.common.core.utils.JwtUtils;
@@ -9,12 +10,11 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.gateway.config.properties.IgnoreWhiteProperties;
 import io.jsonwebtoken.Claims;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -26,18 +26,15 @@ import reactor.core.publisher.Mono;
  * @author Dimple
  */
 @Component
+@Slf4j
 public class AuthFilter implements GlobalFilter, Ordered {
-    private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
     // 排除过滤的 uri 地址，nacos自行添加
-    private final IgnoreWhiteProperties ignoreWhite;
+    @Autowired
+    private IgnoreWhiteProperties ignoreWhite;
 
-    private final RedisService redisService;
-
-    public AuthFilter(IgnoreWhiteProperties ignoreWhite, RedisService redisService) {
-        this.ignoreWhite = ignoreWhite;
-        this.redisService = redisService;
-    }
+    @Autowired
+    private RedisService redisService;
 
 
     @Override
@@ -93,7 +90,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
     private Mono<Void> unauthorizedResponse(ServerWebExchange exchange, String msg) {
         log.error("[鉴权异常处理]请求路径:{}", exchange.getRequest().getPath());
-        return ServletUtils.webFluxResponseWriter(exchange.getResponse(), msg, HttpStatus.UNAUTHORIZED.value());
+        return ServletUtils.webFluxResponseWriter(exchange.getResponse(), msg, HttpStatus.UNAUTHORIZED);
     }
 
     /**

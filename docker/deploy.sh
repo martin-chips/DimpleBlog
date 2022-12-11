@@ -26,22 +26,22 @@ port(){
 
 # 启动基础环境（必须）
 base(){
-	docker-compose up -d dimple-mysql dimple-redis dimple-nacos
+	docker compose up -d dimple-mysql dimple-redis dimple-nacos
 }
 
 # 启动程序模块（必须）
 modules(){
-	docker-compose up -d dimple-nginx dimple-gateway dimple-auth dimple-modules-system
+	docker compose up -d dimple-nginx dimple-gateway dimple-auth dimple-modules-system
 }
 
 # 关闭所有环境/模块
 stop(){
-	docker-compose stop
+	docker compose stop
 }
 
 # 删除所有环境/模块
 rm(){
-	docker-compose rm
+	docker compose rm
 }
 
 # 根据输入参数，选择执行对应方法，不输入则执行使用说明

@@ -5,6 +5,7 @@ import com.dimple.common.core.utils.file.FileUtils;
 import com.dimple.file.service.ISysFileService;
 import com.dimple.system.api.domain.SysFile;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,11 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class SysFileController {
 
-    private final ISysFileService sysFileService;
-
-    public SysFileController(ISysFileService sysFileService) {
-        this.sysFileService = sysFileService;
-    }
+    @Autowired
+    private ISysFileService sysFileService;
 
     /**
      * 文件上传请求

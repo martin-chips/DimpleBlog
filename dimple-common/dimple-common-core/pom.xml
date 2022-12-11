@@ -5,14 +5,14 @@
     <parent>
         <groupId>com.dimple</groupId>
         <artifactId>dimple-common</artifactId>
-        <version>3.0.0</version>
+        <version>3.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dimple-common-core</artifactId>
 
     <description>
-        dimple-common-core核心模块
+        Dimple-common-core核心模块
     </description>
 
     <dependencies>
@@ -67,8 +67,8 @@
 
         <!-- Alibaba Fastjson -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
         </dependency>
 
         <!-- Jwt -->

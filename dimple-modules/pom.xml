@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.dimple</groupId>
         <artifactId>dimple</artifactId>
-        <version>3.0.0</version>
+        <version>3.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,14 +12,13 @@
         <module>dimple-system</module>
         <module>dimple-job</module>
         <module>dimple-file</module>
-        <module>dimple-blog</module>
     </modules>
 
     <artifactId>dimple-modules</artifactId>
     <packaging>pom</packaging>
 
     <description>
-        dimple-modules业务模块
+        Dimple-modules业务模块
     </description>
 
 </project>

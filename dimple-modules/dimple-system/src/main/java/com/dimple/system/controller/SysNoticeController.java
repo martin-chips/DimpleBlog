@@ -9,6 +9,7 @@ import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.domain.SysNotice;
 import com.dimple.system.service.ISysNoticeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +30,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/notice")
 public class SysNoticeController extends BaseController {
-    private final ISysNoticeService noticeService;
-
-    public SysNoticeController(ISysNoticeService noticeService) {
-        this.noticeService = noticeService;
-    }
+    @Autowired
+    private ISysNoticeService noticeService;
 
     /**
      * 获取通知公告列表
@@ -52,7 +50,7 @@ public class SysNoticeController extends BaseController {
     @RequiresPermissions("system:notice:query")
     @GetMapping(value = "/{noticeId}")
     public AjaxResult getInfo(@PathVariable Long noticeId) {
-        return AjaxResult.success(noticeService.selectNoticeById(noticeId));
+        return success(noticeService.selectNoticeById(noticeId));
     }
 
     /**

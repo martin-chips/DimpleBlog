@@ -1,5 +1,6 @@
 package com.dimple.common.security.auth;
 
+import com.dimple.common.core.context.SecurityContextHolder;
 import com.dimple.common.core.exception.auth.NotLoginException;
 import com.dimple.common.core.exception.auth.NotPermissionException;
 import com.dimple.common.core.exception.auth.NotRoleException;
@@ -125,6 +126,7 @@ public class AuthLogic {
      * @param requiresPermissions 注解对象
      */
     public void checkPermi(RequiresPermissions requiresPermissions) {
+        SecurityContextHolder.setPermission(StringUtils.join(requiresPermissions.value(), ","));
         if (requiresPermissions.logical() == Logical.AND) {
             checkPermiAnd(requiresPermissions.value());
         } else {

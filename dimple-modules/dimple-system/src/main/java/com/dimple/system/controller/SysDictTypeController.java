@@ -11,6 +11,7 @@ import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.domain.SysDictType;
 import com.dimple.system.service.ISysDictTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +33,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/dict/type")
 public class SysDictTypeController extends BaseController {
-    private final ISysDictTypeService dictTypeService;
-
-    public SysDictTypeController(ISysDictTypeService dictTypeService) {
-        this.dictTypeService = dictTypeService;
-    }
+    @Autowired
+    private ISysDictTypeService dictTypeService;
 
     @RequiresPermissions("system:dict:list")
     @GetMapping("/list")
@@ -61,7 +59,7 @@ public class SysDictTypeController extends BaseController {
     @RequiresPermissions("system:dict:query")
     @GetMapping(value = "/{dictId}")
     public AjaxResult getInfo(@PathVariable Long dictId) {
-        return AjaxResult.success(dictTypeService.selectDictTypeById(dictId));
+        return success(dictTypeService.selectDictTypeById(dictId));
     }
 
     /**
@@ -72,7 +70,7 @@ public class SysDictTypeController extends BaseController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysDictType dict) {
         if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
-            return AjaxResult.error("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
+            return error("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         dict.setCreateBy(SecurityUtils.getUsername());
         return toAjax(dictTypeService.insertDictType(dict));
@@ -86,7 +84,7 @@ public class SysDictTypeController extends BaseController {
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysDictType dict) {
         if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
-            return AjaxResult.error("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
+            return error("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         dict.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(dictTypeService.updateDictType(dict));
@@ -111,7 +109,7 @@ public class SysDictTypeController extends BaseController {
     @DeleteMapping("/refreshCache")
     public AjaxResult refreshCache() {
         dictTypeService.resetDictCache();
-        return AjaxResult.success();
+        return success();
     }
 
     /**
@@ -120,6 +118,6 @@ public class SysDictTypeController extends BaseController {
     @GetMapping("/optionselect")
     public AjaxResult optionselect() {
         List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
-        return AjaxResult.success(dictTypes);
+        return success(dictTypes);
     }
 }

@@ -12,6 +12,7 @@ import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.domain.SysDictData;
 import com.dimple.system.service.ISysDictDataService;
 import com.dimple.system.service.ISysDictTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,14 +35,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/dict/data")
 public class SysDictDataController extends BaseController {
-    private final ISysDictDataService dictDataService;
+    @Autowired
+    private ISysDictDataService dictDataService;
 
-    private final ISysDictTypeService dictTypeService;
-
-    public SysDictDataController(ISysDictDataService dictDataService, ISysDictTypeService dictTypeService) {
-        this.dictDataService = dictDataService;
-        this.dictTypeService = dictTypeService;
-    }
+    @Autowired
+    private ISysDictTypeService dictTypeService;
 
     @RequiresPermissions("system:dict:list")
     @GetMapping("/list")
@@ -66,7 +64,7 @@ public class SysDictDataController extends BaseController {
     @RequiresPermissions("system:dict:query")
     @GetMapping(value = "/{dictCode}")
     public AjaxResult getInfo(@PathVariable Long dictCode) {
-        return AjaxResult.success(dictDataService.selectDictDataById(dictCode));
+        return success(dictDataService.selectDictDataById(dictCode));
     }
 
     /**
@@ -78,7 +76,7 @@ public class SysDictDataController extends BaseController {
         if (StringUtils.isNull(data)) {
             data = new ArrayList<SysDictData>();
         }
-        return AjaxResult.success(data);
+        return success(data);
     }
 
     /**

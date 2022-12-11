@@ -79,7 +79,7 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
      * @return 随机生成的 {@code UUID}
      */
     public static UUID randomUUID(boolean isSecure) {
-        final Random ng = isSecure ? Holder.NUMBER_GENERATOR : getRandom();
+        final Random ng = isSecure ? Holder.numberGenerator : getRandom();
 
         byte[] randomBytes = new byte[16];
         ng.nextBytes(randomBytes);
@@ -434,6 +434,6 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
      * SecureRandom 的单例
      */
     private static class Holder {
-        static final SecureRandom NUMBER_GENERATOR = getSecureRandom();
+        static final SecureRandom numberGenerator = getSecureRandom();
     }
 }

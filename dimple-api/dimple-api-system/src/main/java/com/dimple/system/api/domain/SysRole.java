@@ -6,7 +6,9 @@ import com.dimple.common.core.web.domain.BaseEntity;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 /**
  * 角色表 sys_role
@@ -41,8 +43,8 @@ public class SysRole extends BaseEntity {
      * 角色排序
      */
     @Excel(name = "角色排序")
-    @NotBlank(message = "显示顺序不能为空")
-    private String roleSort;
+    @NotNull(message = "显示顺序不能为空")
+    private Integer roleSort;
 
     /**
      * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限）
@@ -54,6 +56,11 @@ public class SysRole extends BaseEntity {
      * 菜单树选择项是否关联显示（ 0：父子不互相关联显示 1：父子互相关联显示）
      */
     private boolean menuCheckStrictly;
+
+    /**
+     * 部门树选择项是否关联显示（0：父子不互相关联显示 1：父子互相关联显示 ）
+     */
+    private boolean deptCheckStrictly;
 
     /**
      * 角色状态（0正常 1停用）
@@ -76,25 +83,13 @@ public class SysRole extends BaseEntity {
      */
     private Long[] menuIds;
 
-    public SysRole() {
+    /**
+     * 部门组（数据权限）
+     */
+    private Long[] deptIds;
 
-    }
-
-    public SysRole(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    public static boolean isAdmin(Long roleId) {
-        return roleId != null && 1L == roleId;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin(this.roleId);
-    }
-
-    @NotBlank(message = "权限字符不能为空")
-    @Size(min = 0, max = 100, message = "权限字符长度不能超过100个字符")
-    public String getRoleKey() {
-        return roleKey;
-    }
+    /**
+     * 角色菜单权限
+     */
+    private Set<String> permissions;
 }

@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
-import { saveAs } from 'file-saver'
-import { getToken } from '@/utils/auth'
+import {Message} from 'element-ui'
+import {saveAs} from 'file-saver'
+import {getToken} from '@/utils/auth'
 import errorCode from '@/utils/errorCode'
-import { blobValidate } from '@/utils/ruoyi'
+import {blobValidate} from "@/utils/ruoyi";
 
-const baseURL = import.meta.env.VITE_APP_BASE_API
+const baseURL = process.env.VUE_APP_BASE_API
 
 export default {
   zip(url, name) {
@@ -32,7 +32,7 @@ export default {
     const resText = await data.text();
     const rspObj = JSON.parse(resText);
     const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode['default']
-    ElMessage.error(errMsg);
+    Message.error(errMsg);
   }
 }
 

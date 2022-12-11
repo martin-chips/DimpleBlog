@@ -1,7 +1,7 @@
 package com.dimple.job;
 
 import com.dimple.common.security.annotation.EnableCustomConfig;
-import com.dimple.common.security.annotation.EnableCustomerFeignClients;
+import com.dimple.common.security.annotation.EnableDimpleFeignClients;
 import com.dimple.common.swagger.annotation.EnableCustomSwagger2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @EnableCustomConfig
 @EnableCustomSwagger2
-@EnableCustomerFeignClients
+@EnableDimpleFeignClients
 @SpringBootApplication
 public class DimpleJobApplication {
     public static void main(String[] args) {

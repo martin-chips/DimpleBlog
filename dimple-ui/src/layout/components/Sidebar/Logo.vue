@@ -1,33 +1,50 @@
 <template>
-  <div class="sidebar-logo-container" :class="{ 'collapse': collapse }" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }">
+  <div :class="{'collapse':collapse}" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }"
+       class="sidebar-logo-container">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 v-else class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }">{{ title }}</h1>
+        <img v-if="logo" :src="logo" class="sidebar-logo"/>
+        <h1 v-else :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }"
+            class="sidebar-title">
+          {{ title }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }">{{ title }}</h1>
+        <img v-if="logo" :src="logo" class="sidebar-logo"/>
+        <h1 :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }"
+            class="sidebar-title">
+          {{ title }} </h1>
       </router-link>
     </transition>
   </div>
 </template>
 
-<script setup>
-import variables from '@/assets/styles/variables.module.scss'
-import logo from '@/assets/logo/logo.png'
-import useSettingsStore from '@/store/modules/settings'
+<script>
+import logoImg from '@/assets/logo/logo.png'
+import variables from '@/assets/styles/variables.scss'
 
-defineProps({
-  collapse: {
-    type: Boolean,
-    required: true
+export default {
+  name: 'SidebarLogo',
+  props: {
+    collapse: {
+      type: Boolean,
+      required: true
+    }
+  },
+  computed: {
+    variables() {
+      return variables;
+    },
+    sideTheme() {
+      return this.$store.state.settings.sideTheme
+    }
+  },
+  data() {
+    return {
+      title: '若依管理系统',
+      logo: logoImg
+    }
   }
-})
-
-const title = ref('若依管理系统');
-const settingsStore = useSettingsStore();
-const sideTheme = computed(() => settingsStore.sideTheme);
+}
 </script>
 
 <style lang="scss" scoped>

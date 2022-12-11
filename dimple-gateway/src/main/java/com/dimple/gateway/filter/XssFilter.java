@@ -4,6 +4,7 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.html.EscapeUtil;
 import com.dimple.gateway.config.properties.XssProperties;
 import io.netty.buffer.ByteBufAllocator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -34,18 +35,19 @@ import java.nio.charset.StandardCharsets;
 @ConditionalOnProperty(value = "security.xss.enabled", havingValue = "true")
 public class XssFilter implements GlobalFilter, Ordered {
     // 跨站脚本的 xss 配置，nacos自行添加
-    private final XssProperties xss;
-
-    public XssFilter(XssProperties xss) {
-        this.xss = xss;
-    }
+    @Autowired
+    private XssProperties xss;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
+        // xss开关未开启 或 通过nacos关闭，不过滤
+        if (!xss.getEnabled()) {
+            return chain.filter(exchange);
+        }
         // GET DELETE 不过滤
         HttpMethod method = request.getMethod();
-        if (method == null || method.matches("GET") || method.matches("DELETE")) {
+        if (method == null || method == HttpMethod.GET || method == HttpMethod.DELETE) {
             return chain.filter(exchange);
         }
         // 非json类型，不过滤

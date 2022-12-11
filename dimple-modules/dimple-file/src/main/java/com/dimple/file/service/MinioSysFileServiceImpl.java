@@ -4,6 +4,7 @@ import com.dimple.file.config.MinioConfig;
 import com.dimple.file.utils.FileUploadUtils;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,14 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service
 public class MinioSysFileServiceImpl implements ISysFileService {
-    private final MinioConfig minioConfig;
+    @Autowired
+    private MinioConfig minioConfig;
 
-    private final MinioClient client;
-
-    public MinioSysFileServiceImpl(MinioConfig minioConfig, MinioClient client) {
-        this.minioConfig = minioConfig;
-        this.client = client;
-    }
+    @Autowired
+    private MinioClient client;
 
     /**
      * 本地文件上传接口

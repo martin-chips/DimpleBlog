@@ -8,7 +8,7 @@ VOLUME /home/dimple
 # 创建目录
 RUN mkdir -p /home/dimple
 # 指定路径
-WORKDIR /home/dimple
+WORKDIR /home/dimple1
 # 复制jar文件到路径
 COPY ./jar/dimple-modules-job.jar /home/dimple/dimple-modules-job.jar
 # 启动定时任务服务

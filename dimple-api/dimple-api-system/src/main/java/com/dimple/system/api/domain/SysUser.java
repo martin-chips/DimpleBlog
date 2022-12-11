@@ -6,7 +6,6 @@ import com.dimple.common.core.annotation.Excel.Type;
 import com.dimple.common.core.annotation.Excels;
 import com.dimple.common.core.web.domain.BaseEntity;
 import com.dimple.common.core.xss.Xss;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -65,7 +64,6 @@ public class SysUser extends BaseEntity {
      * 手机号码
      */
     @Excel(name = "手机号码")
-    @Size(min = 0, max = 11, message = "手机号码长度不能超过11个字符")
     private String phonenumber;
 
     /**
@@ -82,8 +80,6 @@ public class SysUser extends BaseEntity {
     /**
      * 密码
      */
-
-    @JsonProperty
     private String password;
 
     /**
@@ -110,6 +106,15 @@ public class SysUser extends BaseEntity {
     private Date loginDate;
 
     /**
+     * 部门对象
+     */
+    @Excels({
+            @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
+            @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
+    })
+    private SysDept dept;
+
+    /**
      * 角色对象
      */
     private List<SysRole> roles;
@@ -119,25 +124,13 @@ public class SysUser extends BaseEntity {
      */
     private Long[] roleIds;
 
+    /**
+     * 岗位组
+     */
+    private Long[] postIds;
 
     /**
      * 角色ID
      */
     private Long roleId;
-
-    public SysUser() {
-
-    }
-
-    public SysUser(Long userId) {
-        this.userId = userId;
-    }
-
-    public static boolean isAdmin(Long userId) {
-        return userId != null && 1L == userId;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin(this.userId);
-    }
 }

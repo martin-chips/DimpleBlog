@@ -1,8 +1,11 @@
 package com.dimple.common.core.utils.file;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Objects;
 
 /**
  * 文件类型工具类
@@ -39,6 +42,20 @@ public class FileTypeUtils {
             return "";
         }
         return fileName.substring(separatorIndex + 1).toLowerCase();
+    }
+
+    /**
+     * 获取文件名的后缀
+     *
+     * @param file 表单文件
+     * @return 后缀名
+     */
+    public static final String getExtension(MultipartFile file) {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (StringUtils.isEmpty(extension)) {
+            extension = MimeTypeUtils.getExtension(Objects.requireNonNull(file.getContentType()));
+        }
+        return extension;
     }
 
     /**

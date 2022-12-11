@@ -3,45 +3,48 @@
     <template v-for="(item, index) in options">
       <template v-if="values.includes(item.value)">
         <span
-          v-if="item.elTagType == 'default' || item.elTagType == ''"
+          v-if="item.raw.listClass == 'default' || item.raw.listClass == ''"
           :key="item.value"
           :index="index"
-          :class="item.elTagClass"
-        >{{ item.label }}</span>
+          :class="item.raw.cssClass"
+        >{{ item.label }}</span
+        >
         <el-tag
           v-else
           :disable-transitions="true"
-          :key="item.value + ''"
+          :key="item.value"
           :index="index"
-          :type="item.elTagType === 'primary' ? '' : item.elTagType"
-          :class="item.elTagClass"
-        >{{ item.label }}</el-tag>
+          :class="item.raw.cssClass"
+          :type="item.raw.listClass == 'primary' ? '' : item.raw.listClass"
+        >
+          {{ item.label }}
+        </el-tag>
       </template>
     </template>
   </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  // 数据
-  options: {
-    type: Array,
-    default: null,
+<script>
+export default {
+  name: "DictTag",
+  props: {
+    options: {
+      type: Array,
+      default: null,
+    },
+    value: [Number, String, Array],
   },
-  // 当前的值
-  value: [Number, String, Array],
-})
-
-const values = computed(() => {
-  if (props.value !== null && typeof props.value !== 'undefined') {
-    return Array.isArray(props.value) ? props.value : [String(props.value)];
-  } else {
-    return [];
-  }
-})
-
+  computed: {
+    values() {
+      if (this.value !== null && typeof this.value !== 'undefined') {
+        return Array.isArray(this.value) ? this.value : [String(this.value)];
+      } else {
+        return [];
+      }
+    },
+  },
+};
 </script>
-
 <style scoped>
 .el-tag + .el-tag {
   margin-left: 10px;

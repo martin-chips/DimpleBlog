@@ -16,7 +16,7 @@ public interface ISysUserOnlineService {
      * @param user   用户信息
      * @return 在线用户信息
      */
-    SysUserOnline selectOnlineByIpaddr(String ipaddr, LoginUser user);
+    public SysUserOnline selectOnlineByIpaddr(String ipaddr, LoginUser user);
 
     /**
      * 通过用户名称查询信息
@@ -25,7 +25,7 @@ public interface ISysUserOnlineService {
      * @param user     用户信息
      * @return 在线用户信息
      */
-    SysUserOnline selectOnlineByUserName(String userName, LoginUser user);
+    public SysUserOnline selectOnlineByUserName(String userName, LoginUser user);
 
     /**
      * 通过登录地址/用户名称查询信息
@@ -35,7 +35,7 @@ public interface ISysUserOnlineService {
      * @param user     用户信息
      * @return 在线用户信息
      */
-    SysUserOnline selectOnlineByInfo(String ipaddr, String userName, LoginUser user);
+    public SysUserOnline selectOnlineByInfo(String ipaddr, String userName, LoginUser user);
 
     /**
      * 设置在线用户信息
@@ -43,5 +43,5 @@ public interface ISysUserOnlineService {
      * @param user 用户信息
      * @return 在线用户
      */
-    SysUserOnline loginUserToUserOnline(LoginUser user);
+    public SysUserOnline loginUserToUserOnline(LoginUser user);
 }

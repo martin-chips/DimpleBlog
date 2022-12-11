@@ -1,0 +1,2 @@
+com.dimple.common.redis.configure.RedisConfig
+com.dimple.common.redis.service.RedisService

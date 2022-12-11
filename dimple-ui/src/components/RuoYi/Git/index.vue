@@ -4,10 +4,18 @@
   </div>
 </template>
 
-<script setup>
-const url = ref('https://gitee.com/y_project/RuoYi-Cloud');
-
-function goto() {
-  window.open(url.value)
+<script>
+export default {
+  name: 'RuoYiGit',
+  data() {
+    return {
+      url: 'https://gitee.com/y_project/RuoYi-Cloud'
+    }
+  },
+  methods: {
+    goto() {
+      window.open(this.url)
+    }
+  }
 }
 </script>

@@ -1,6 +1,7 @@
 package com.dimple.common.security.utils;
 
-import com.dimple.common.core.constant.Constants;
+import com.alibaba.fastjson2.JSONArray;
+import com.dimple.common.core.constant.CacheConstants;
 import com.dimple.common.core.utils.SpringUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.redis.service.RedisService;
@@ -32,9 +33,9 @@ public class DictUtils {
      * @return dictDatas 字典数据列表
      */
     public static List<SysDictData> getDictCache(String key) {
-        Object cacheObj = SpringUtils.getBean(RedisService.class).getCacheObject(getCacheKey(key));
-        if (StringUtils.isNotNull(cacheObj)) {
-            return StringUtils.cast(cacheObj);
+        JSONArray arrayCache = SpringUtils.getBean(RedisService.class).getCacheObject(getCacheKey(key));
+        if (StringUtils.isNotNull(arrayCache)) {
+            return arrayCache.toList(SysDictData.class);
         }
         return null;
     }
@@ -52,7 +53,7 @@ public class DictUtils {
      * 清空字典缓存
      */
     public static void clearDictCache() {
-        Collection<String> keys = SpringUtils.getBean(RedisService.class).keys(Constants.SYS_DICT_KEY + "*");
+        Collection<String> keys = SpringUtils.getBean(RedisService.class).keys(CacheConstants.SYS_DICT_KEY + "*");
         SpringUtils.getBean(RedisService.class).deleteObject(keys);
     }
 
@@ -63,6 +64,6 @@ public class DictUtils {
      * @return 缓存键key
      */
     public static String getCacheKey(String configKey) {
-        return Constants.SYS_DICT_KEY + configKey;
+        return CacheConstants.SYS_DICT_KEY + configKey;
     }
 }

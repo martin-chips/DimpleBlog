@@ -4,4 +4,4 @@ FROM nacos/nacos-server
 MAINTAINER dimple
 
 # 复制conf文件到路径
-COPY ./conf/application.properties /home/docker/nacos/conf/application.properties
+COPY ./conf/application.properties /home/project/nacos/conf/application.properties

@@ -5,14 +5,14 @@
     <parent>
         <groupId>com.dimple</groupId>
         <artifactId>dimple-modules</artifactId>
-        <version>3.0.0</version>
+        <version>3.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dimple-modules-system</artifactId>
 
     <description>
-        dimple-modules-system系统模块
+        Dimple-modules-system系统模块
     </description>
 
     <dependencies>
@@ -78,11 +78,6 @@
             <artifactId>dimple-common-swagger</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -91,7 +86,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.7.6</version>
                 <executions>
                     <execution>
                         <goals>

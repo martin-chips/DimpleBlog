@@ -84,6 +84,11 @@ public @interface Excel {
     String[] combo() default {};
 
     /**
+     * 是否需要纵向合并单元格,应对需求:含有list集合单元格)
+     */
+    boolean needMerge() default false;
+
+    /**
      * 是否导出数据,应对需求:有时我们需要导出一份模板,这是标题需要但内容需要用户手工填写.
      */
     boolean isExport() default true;
@@ -104,7 +109,22 @@ public @interface Excel {
     ColumnType cellType() default ColumnType.STRING;
 
     /**
-     * 导出字体颜色
+     * 导出列头背景色
+     */
+    IndexedColors headerBackgroundColor() default IndexedColors.GREY_50_PERCENT;
+
+    /**
+     * 导出列头字体颜色
+     */
+    IndexedColors headerColor() default IndexedColors.WHITE;
+
+    /**
+     * 导出单元格背景色
+     */
+    IndexedColors backgroundColor() default IndexedColors.WHITE;
+
+    /**
+     * 导出单元格字体颜色
      */
     IndexedColors color() default IndexedColors.BLACK;
 

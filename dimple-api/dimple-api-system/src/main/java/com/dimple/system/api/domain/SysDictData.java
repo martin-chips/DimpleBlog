@@ -2,7 +2,6 @@ package com.dimple.system.api.domain;
 
 import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.annotation.Excel.ColumnType;
-import com.dimple.common.core.constant.UserConstants;
 import com.dimple.common.core.web.domain.BaseEntity;
 import lombok.Data;
 
@@ -33,24 +32,18 @@ public class SysDictData extends BaseEntity {
     /**
      * 字典标签
      */
-    @NotBlank(message = "字典标签不能为空")
-    @Size(min = 0, max = 100, message = "字典标签长度不能超过100个字符")
     @Excel(name = "字典标签")
     private String dictLabel;
 
     /**
      * 字典键值
      */
-    @NotBlank(message = "字典键值不能为空")
-    @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
     @Excel(name = "字典键值")
     private String dictValue;
 
     /**
      * 字典类型
      */
-    @NotBlank(message = "字典类型不能为空")
-    @Size(min = 0, max = 100, message = "字典类型长度不能超过100个字符")
     @Excel(name = "字典类型")
     private String dictType;
 
@@ -76,8 +69,4 @@ public class SysDictData extends BaseEntity {
      */
     @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
     private String status;
-
-    public boolean getDefault() {
-        return UserConstants.YES.equals(this.isDefault) ? true : false;
-    }
 }

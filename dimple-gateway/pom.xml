@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.dimple</groupId>
         <artifactId>dimple</artifactId>
-        <version>3.0.0</version>
+        <version>3.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dimple-gateway</artifactId>
 
     <description>
-        dimple-gateway网关模块
+        Dimple-gateway网关模块
     </description>
 
     <dependencies>
@@ -66,7 +66,7 @@
 
         <!--验证码 -->
         <dependency>
-            <groupId>com.github.penggle</groupId>
+            <groupId>pro.fessional</groupId>
             <artifactId>kaptcha</artifactId>
         </dependency>
 
@@ -87,10 +87,6 @@
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.fox.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
 
     </dependencies>
 
@@ -100,7 +96,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.7.6</version>
                 <executions>
                     <execution>
                         <goals>

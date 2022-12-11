@@ -8,8 +8,10 @@ import com.dimple.common.datascope.annotation.DataScope;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.domain.SysRole;
 import com.dimple.system.api.domain.SysUser;
+import com.dimple.system.domain.SysRoleDept;
 import com.dimple.system.domain.SysRoleMenu;
 import com.dimple.system.domain.SysUserRole;
+import com.dimple.system.mapper.SysRoleDeptMapper;
 import com.dimple.system.mapper.SysRoleMapper;
 import com.dimple.system.mapper.SysRoleMenuMapper;
 import com.dimple.system.mapper.SysUserRoleMapper;
@@ -39,6 +41,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Autowired
     private SysUserRoleMapper userRoleMapper;
+
+    @Autowired
+    private SysRoleDeptMapper roleDeptMapper;
 
     /**
      * 根据条件分页查询角色数据
@@ -245,7 +250,12 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int authDataScope(SysRole role) {
-        return roleMapper.updateRole(role);
+        // 修改角色信息
+        roleMapper.updateRole(role);
+        // 删除角色与部门关联
+        roleDeptMapper.deleteRoleDeptByRoleId(role.getRoleId());
+        // 新增角色和部门信息（数据权限）
+        return insertRoleDept(role);
     }
 
     /**
@@ -256,7 +266,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public int insertRoleMenu(SysRole role) {
         int rows = 1;
         // 新增用户与角色管理
-        List<SysRoleMenu> list = new ArrayList<>();
+        List<SysRoleMenu> list = new ArrayList<SysRoleMenu>();
         for (Long menuId : role.getMenuIds()) {
             SysRoleMenu rm = new SysRoleMenu();
             rm.setRoleId(role.getRoleId());
@@ -265,6 +275,27 @@ public class SysRoleServiceImpl implements ISysRoleService {
         }
         if (list.size() > 0) {
             rows = roleMenuMapper.batchRoleMenu(list);
+        }
+        return rows;
+    }
+
+    /**
+     * 新增角色部门信息(数据权限)
+     *
+     * @param role 角色对象
+     */
+    public int insertRoleDept(SysRole role) {
+        int rows = 1;
+        // 新增角色与部门（数据权限）管理
+        List<SysRoleDept> list = new ArrayList<SysRoleDept>();
+        for (Long deptId : role.getDeptIds()) {
+            SysRoleDept rd = new SysRoleDept();
+            rd.setRoleId(role.getRoleId());
+            rd.setDeptId(deptId);
+            list.add(rd);
+        }
+        if (list.size() > 0) {
+            rows = roleDeptMapper.batchRoleDept(list);
         }
         return rows;
     }
@@ -280,6 +311,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public int deleteRoleById(Long roleId) {
         // 删除角色与菜单关联
         roleMenuMapper.deleteRoleMenuByRoleId(roleId);
+        // 删除角色与部门关联
+        roleDeptMapper.deleteRoleDeptByRoleId(roleId);
         return roleMapper.deleteRoleById(roleId);
     }
 
@@ -302,6 +335,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
         }
         // 删除角色与菜单关联
         roleMenuMapper.deleteRoleMenu(roleIds);
+        // 删除角色与部门关联
+        roleDeptMapper.deleteRoleDept(roleIds);
         return roleMapper.deleteRoleByIds(roleIds);
     }
 

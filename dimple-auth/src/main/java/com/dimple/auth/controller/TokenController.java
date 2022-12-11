@@ -10,6 +10,7 @@ import com.dimple.common.security.auth.AuthUtil;
 import com.dimple.common.security.service.TokenService;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.model.LoginUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,14 +25,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 public class TokenController {
-    private final TokenService tokenService;
+    @Autowired
+    private TokenService tokenService;
 
-    private final SysLoginService sysLoginService;
-
-    public TokenController(TokenService tokenService, SysLoginService sysLoginService) {
-        this.tokenService = tokenService;
-        this.sysLoginService = sysLoginService;
-    }
+    @Autowired
+    private SysLoginService sysLoginService;
 
     @PostMapping("login")
     public R<?> login(@RequestBody LoginBody form) {

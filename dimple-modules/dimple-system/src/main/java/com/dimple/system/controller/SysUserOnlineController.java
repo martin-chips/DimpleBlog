@@ -12,6 +12,7 @@ import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.api.model.LoginUser;
 import com.dimple.system.domain.SysUserOnline;
 import com.dimple.system.service.ISysUserOnlineService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,14 +32,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/online")
 public class SysUserOnlineController extends BaseController {
-    private final ISysUserOnlineService userOnlineService;
+    @Autowired
+    private ISysUserOnlineService userOnlineService;
 
-    private final RedisService redisService;
-
-    public SysUserOnlineController(ISysUserOnlineService userOnlineService, RedisService redisService) {
-        this.userOnlineService = userOnlineService;
-        this.redisService = redisService;
-    }
+    @Autowired
+    private RedisService redisService;
 
     @RequiresPermissions("monitor:online:list")
     @GetMapping("/list")
@@ -76,6 +74,6 @@ public class SysUserOnlineController extends BaseController {
     @DeleteMapping("/{tokenId}")
     public AjaxResult forceLogout(@PathVariable String tokenId) {
         redisService.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + tokenId);
-        return AjaxResult.success();
+        return success();
     }
 }

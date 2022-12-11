@@ -1,6 +1,6 @@
 package com.dimple.system.service.impl;
 
-import com.dimple.common.core.constant.Constants;
+import com.dimple.common.core.constant.CacheConstants;
 import com.dimple.common.core.constant.UserConstants;
 import com.dimple.common.core.exception.ServiceException;
 import com.dimple.common.core.text.Convert;
@@ -146,7 +146,7 @@ public class SysConfigServiceImpl implements ISysConfigService {
      */
     @Override
     public void clearConfigCache() {
-        Collection<String> keys = redisService.keys(Constants.SYS_CONFIG_KEY + "*");
+        Collection<String> keys = redisService.keys(CacheConstants.SYS_CONFIG_KEY + "*");
         redisService.deleteObject(keys);
     }
 
@@ -182,6 +182,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
      * @return 缓存键key
      */
     private String getCacheKey(String configKey) {
-        return Constants.SYS_CONFIG_KEY + configKey;
+        return CacheConstants.SYS_CONFIG_KEY + configKey;
     }
 }

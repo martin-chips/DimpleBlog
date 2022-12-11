@@ -1,10 +1,12 @@
 package com.dimple.gateway.filter;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.gateway.config.properties.CaptchaProperties;
 import com.dimple.gateway.service.ValidateCodeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -27,13 +29,10 @@ public class ValidateCodeFilter extends AbstractGatewayFilterFactory<Object> {
     private final static String[] VALIDATE_URL = new String[]{"/auth/login", "/auth/register"};
     private static final String CODE = "code";
     private static final String UUID = "uuid";
-    private final ValidateCodeService validateCodeService;
-    private final CaptchaProperties captchaProperties;
-
-    public ValidateCodeFilter(ValidateCodeService validateCodeService, CaptchaProperties captchaProperties) {
-        this.validateCodeService = validateCodeService;
-        this.captchaProperties = captchaProperties;
-    }
+    @Autowired
+    private ValidateCodeService validateCodeService;
+    @Autowired
+    private CaptchaProperties captchaProperties;
 
     @Override
     public GatewayFilter apply(Object config) {
@@ -47,7 +46,7 @@ public class ValidateCodeFilter extends AbstractGatewayFilterFactory<Object> {
 
             try {
                 String rspStr = resolveBodyFromRequest(request);
-                JSONObject obj = JSONObject.parseObject(rspStr);
+                JSONObject obj = JSON.parseObject(rspStr);
                 validateCodeService.checkCaptcha(obj.getString(CODE), obj.getString(UUID));
             } catch (Exception e) {
                 return ServletUtils.webFluxResponseWriter(exchange.getResponse(), e.getMessage());
