@@ -23,6 +23,7 @@
         <spring-boot-admin.version>2.7.5</spring-boot-admin.version>
         <spring-boot.mybatis>2.2.2</spring-boot.mybatis>
         <swagger.fox.version>3.0.0</swagger.fox.version>
+        <lombok.version>1.18.24</lombok.version>
         <swagger.core.version>1.6.2</swagger.core.version>
         <tobato.version>1.27.2</tobato.version>
         <kaptcha.version>2.3.3</kaptcha.version>
@@ -228,6 +229,12 @@
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-api-system</artifactId>
                 <version>${dimple.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
 
         </dependencies>

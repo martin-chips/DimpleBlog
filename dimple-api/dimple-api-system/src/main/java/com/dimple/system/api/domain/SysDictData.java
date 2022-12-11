@@ -33,18 +33,24 @@ public class SysDictData extends BaseEntity {
      * 字典标签
      */
     @Excel(name = "字典标签")
+    @NotBlank(message = "字典标签不能为空")
+    @Size(min = 0, max = 100, message = "字典标签长度不能超过100个字符")
     private String dictLabel;
 
     /**
      * 字典键值
      */
     @Excel(name = "字典键值")
+    @NotBlank(message = "字典键值不能为空")
+    @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
     private String dictValue;
 
     /**
      * 字典类型
      */
     @Excel(name = "字典类型")
+    @NotBlank(message = "字典类型不能为空")
+    @Size(min = 0, max = 100, message = "字典类型长度不能超过100个字符")
     private String dictType;
 
     /**
