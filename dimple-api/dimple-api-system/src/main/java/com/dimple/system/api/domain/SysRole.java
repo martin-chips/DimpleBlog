@@ -4,6 +4,7 @@ import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.annotation.Excel.ColumnType;
 import com.dimple.common.core.web.domain.BaseEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,8 +17,13 @@ import java.util.Set;
  * @author Dimple
  */
 @Data
+@NoArgsConstructor
 public class SysRole extends BaseEntity {
     private static final long serialVersionUID = 1L;
+
+    public SysRole(Long roleId) {
+        this.roleId = roleId;
+    }
 
     /**
      * 角色ID
@@ -94,4 +100,12 @@ public class SysRole extends BaseEntity {
      * 角色菜单权限
      */
     private Set<String> permissions;
+
+    public static boolean isAdmin(Long roleId) {
+        return roleId != null && 1L == roleId;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin(this.roleId);
+    }
 }

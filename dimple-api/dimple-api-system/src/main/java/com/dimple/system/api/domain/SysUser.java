@@ -7,6 +7,7 @@ import com.dimple.common.core.annotation.Excels;
 import com.dimple.common.core.web.domain.BaseEntity;
 import com.dimple.common.core.xss.Xss;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -20,8 +21,13 @@ import java.util.List;
  * @author Dimple
  */
 @Data
+@NoArgsConstructor
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
+
+    public SysUser(Long userId) {
+        this.userId = userId;
+    }
 
     /**
      * 用户ID
@@ -134,4 +140,12 @@ public class SysUser extends BaseEntity {
      * 角色ID
      */
     private Long roleId;
+
+    public static boolean isAdmin(Long userId) {
+        return userId != null && 1L == userId;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin(this.userId);
+    }
 }
