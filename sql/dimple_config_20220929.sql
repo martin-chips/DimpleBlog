@@ -223,7 +223,7 @@ mybatis:
 swagger:
   title: 系统模块接口文档
   license: Powered By Dimple
-  licenseUrl: https://www.bianxiaofeng.com.cn', '48e0ed4a040c402bdc2444213a82c910', '2020-11-20 00:00:00',
+  licenseUrl: https://www.bianxf.com', '48e0ed4a040c402bdc2444213a82c910', '2020-11-20 00:00:00',
         '2022-09-29 02:49:09', 'nacos', '0:0:0:0:0:0:0:1', '', '', '系统模块', 'null', 'null', 'yaml', '', '');
 INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,
                                          src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema,
@@ -251,7 +251,7 @@ mybatis:
 swagger:
   title: 定时任务接口文档
   license: Powered By Dimple
-  licenseUrl: https://www.bianxiaofeng.com.cn
+  licenseUrl: https://www.bianxf.com
 ', 'edcf0e3fe13fea07b4ec08b1088f30b3', '2020-11-20 00:00:00', '2022-09-29 02:50:50', 'nacos', '0:0:0:0:0:0:0:1', '', '',
         '定时任务', 'null', 'null', 'yaml', '', '');
 INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,

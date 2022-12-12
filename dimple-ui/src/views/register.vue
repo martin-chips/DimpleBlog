@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">Dimple后台管理系统</h3>
       <el-form-item prop="username">
         <el-input v-model="registerForm.username" auto-complete="off" placeholder="账号" type="text">
           <svg-icon slot="prefix" class="el-input__icon input-icon" icon-class="user"/>
@@ -61,7 +61,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-register-footer">
-      <span>Copyright © 2018-2022 ruoyi.vip All Rights Reserved.</span>
+      <span>Copyright © 2018-2022 bianxf.com All Rights Reserved.</span>
     </div>
   </div>
 </template>

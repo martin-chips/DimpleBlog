@@ -1,7 +1,7 @@
  /**
- * v-hasPermi 操作权限处理
- * Copyright (c) 2019 ruoyi
- */
+  * v-hasPermi 操作权限处理
+  * Copyright (c) 2022 Dimple
+  */
 
  import store from '@/store'
 

@@ -1,7 +1,7 @@
  /**
- * v-hasRole 角色权限处理
- * Copyright (c) 2019 ruoyi
- */
+  * v-hasRole 角色权限处理
+  * Copyright (c) 2022 Dimple
+  */
 
  import store from '@/store'
 

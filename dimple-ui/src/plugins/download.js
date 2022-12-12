@@ -3,7 +3,7 @@ import {Message} from 'element-ui'
 import {saveAs} from 'file-saver'
 import {getToken} from '@/utils/auth'
 import errorCode from '@/utils/errorCode'
-import {blobValidate} from "@/utils/ruoyi";
+import {blobValidate} from "@/utils/dimple";
 
 const baseURL = process.env.VUE_APP_BASE_API
 

@@ -1,8 +1,8 @@
 {
-  "name": "ruoyi",
+  "name": "Dimple",
   "version": "3.5.0",
-  "description": "若依管理系统",
-  "author": "若依",
+  "description": "Dimple管理系统",
+  "author": "Dimple",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",
@@ -33,7 +33,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/y_project/RuoYi-Cloud.git"
+    "url": "https://github.com/martin-chips/DimpleBlog.git"
   },
   "dependencies": {
     "@riophae/vue-treeselect": "0.4.0",
