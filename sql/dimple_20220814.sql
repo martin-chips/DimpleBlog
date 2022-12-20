@@ -53,7 +53,7 @@ values (2, 'test', 'Dimple', '00', 'test@qq.com', '15666666666', '1', '',
         sysdate(), '', null, '测试员');
 
 -- ----------------------------
--- 4、角色信息表
+-- 角色信息表
 -- ----------------------------
 drop table if exists sys_role;
 create table sys_role
@@ -168,9 +168,6 @@ values ('113', 'Admin控制台', '2', '5', 'http://localhost:9100/login', '', ''
 insert into sys_menu
 values ('114', '表单构建', '3', '1', 'build', 'tool/build/index', '', 1, 0, 'C', '0', '0', 'tool:build:list', 'build',
         'admin', sysdate(), '', null, '表单构建菜单');
-insert into sys_menu
-values ('115', '代码生成', '3', '2', 'gen', 'tool/gen/index', '', 1, 0, 'C', '0', '0', 'tool:gen:list', 'code', 'admin',
-        sysdate(), '', null, '代码生成菜单');
 insert into sys_menu
 values ('116', '系统接口', '3', '3', 'http://localhost:8080/swagger-ui/index.html', '', '', 0, 0, 'C', '0', '0',
         'tool:swagger:list', 'swagger', 'admin', sysdate(), '', null, '系统接口菜单');
@@ -329,29 +326,8 @@ values ('1053', '状态修改', '110', '5', '#', '', '', 1, 0, 'F', '0', '0', 'm
 insert into sys_menu
 values ('1054', '任务导出', '110', '6', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:export', '#', 'admin', sysdate(),
         '', null, '');
--- 代码生成按钮
-insert into sys_menu
-values ('1055', '生成查询', '115', '1', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:query', '#', 'admin', sysdate(), '',
-        null, '');
-insert into sys_menu
-values ('1056', '生成修改', '115', '2', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:edit', '#', 'admin', sysdate(), '',
-        null, '');
-insert into sys_menu
-values ('1057', '生成删除', '115', '3', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:remove', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1058', '导入代码', '115', '2', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1059', '预览代码', '115', '4', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1060', '生成代码', '115', '5', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', sysdate(), '',
-        null, '');
-
-
 -- ----------------------------
--- 6、用户和角色关联表  用户N-1角色
+-- 用户和角色关联表  用户N-1角色
 -- ----------------------------
 drop table if exists sys_user_role;
 create table sys_user_role
@@ -371,7 +347,7 @@ values ('2', '2');
 
 
 -- ----------------------------
--- 7、角色和菜单关联表  角色1-N菜单
+-- 角色和菜单关联表  角色1-N菜单
 -- ----------------------------
 drop table if exists sys_role_menu;
 create table sys_role_menu
@@ -553,7 +529,7 @@ values ('2', '1059');
 insert into sys_role_menu
 values ('2', '1060');
 -- ----------------------------
--- 10、操作日志记录
+-- 操作日志记录
 -- ----------------------------
 drop table if exists sys_oper_log;
 create table sys_oper_log
@@ -578,7 +554,7 @@ create table sys_oper_log
 
 
 -- ----------------------------
--- 11、字典类型表
+-- 字典类型表
 -- ----------------------------
 drop table if exists sys_dict_type;
 create table sys_dict_type
@@ -619,7 +595,7 @@ values (10, '系统状态', 'sys_common_status', '0', 'admin', sysdate(), '', nu
 
 
 -- ----------------------------
--- 12、字典数据表
+-- 字典数据表
 -- ----------------------------
 drop table if exists sys_dict_data;
 create table sys_dict_data
