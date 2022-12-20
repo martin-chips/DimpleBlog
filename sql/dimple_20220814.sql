@@ -125,9 +125,12 @@ insert into sys_menu
 values ('3', '系统工具', '0', '3', 'tool', null, '', 1, 0, 'M', '0', '0', '', 'tool', 'admin', sysdate(), '', null,
         '系统工具目录');
 insert into sys_menu
-values ('4', 'Dimple官网', '0', '4', 'http://bianxf.com', null, '', 0, 0, 'M', '0', '0', '', 'guide', 'admin',
+values ('4', 'Dimple官网', '0', '10', 'http://bianxf.com', null, '', 0, 0, 'M', '0', '0', '', 'guide', 'admin',
         sysdate(),
         '', null, 'Dimple官网地址');
+insert into sys_menu
+values ('5', '日志管理', '0', '9', 'log', '', '', 1, 0, 'M', '0', '0', '', 'log', 'admin', sysdate(), '', null,
+        '日志管理菜单');
 -- 二级菜单
 insert into sys_menu
 values ('100', '用户管理', '1', '1', 'user', 'system/user/index', '', 1, 0, 'C', '0', '0', 'system:user:list', 'user',
@@ -148,13 +151,10 @@ insert into sys_menu
 values ('107', '通知公告', '1', '8', 'notice', 'system/notice/index', '', 1, 0, 'C', '0', '0', 'system:notice:list',
         'message', 'admin', sysdate(), '', null, '通知公告菜单');
 insert into sys_menu
-values ('108', '日志管理', '1', '9', 'log', '', '', 1, 0, 'M', '0', '0', '', 'log', 'admin', sysdate(), '', null,
-        '日志管理菜单');
-insert into sys_menu
 values ('109', '在线用户', '2', '1', 'online', 'monitor/online/index', '', 1, 0, 'C', '0', '0', 'monitor:online:list',
         'online', 'admin', sysdate(), '', null, '在线用户菜单');
 insert into sys_menu
-values ('110', '定时任务', '2', '2', 'job', 'monitor/job/index', '', 1, 0, 'C', '0', '0', 'monitor:job:list', 'job',
+values ('110', '定时任务', '3', '2', 'job', 'monitor/job/index', '', 1, 0, 'C', '0', '0', 'monitor:job:list', 'job',
         'admin', sysdate(), '', null, '定时任务菜单');
 insert into sys_menu
 values ('111', 'Sentinel控制台', '2', '3', 'http://localhost:8718', '', '', 0, 0, 'C', '0', '0',
@@ -166,17 +166,13 @@ insert into sys_menu
 values ('113', 'Admin控制台', '2', '5', 'http://localhost:9100/login', '', '', 0, 0, 'C', '0', '0',
         'monitor:server:list', 'server', 'admin', sysdate(), '', null, '服务监控菜单');
 insert into sys_menu
-values ('114', '表单构建', '3', '1', 'build', 'tool/build/index', '', 1, 0, 'C', '0', '0', 'tool:build:list', 'build',
-        'admin', sysdate(), '', null, '表单构建菜单');
-insert into sys_menu
 values ('116', '系统接口', '3', '3', 'http://localhost:8080/swagger-ui/index.html', '', '', 0, 0, 'C', '0', '0',
         'tool:swagger:list', 'swagger', 'admin', sysdate(), '', null, '系统接口菜单');
--- 三级菜单
 insert into sys_menu
-values ('500', '操作日志', '108', '1', 'operlog', 'system/operlog/index', '', 1, 0, 'C', '0', '0',
+values ('500', '操作日志', '5', '1', 'operlog', 'system/operlog/index', '', 1, 0, 'C', '0', '0',
         'system:operlog:list', 'form', 'admin', sysdate(), '', null, '操作日志菜单');
 insert into sys_menu
-values ('501', '登录日志', '108', '2', 'logininfor', 'system/logininfor/index', '', 1, 0, 'C', '0', '0',
+values ('501', '登录日志', '5', '2', 'logininfor', 'system/logininfor/index', '', 1, 0, 'C', '0', '0',
         'system:logininfor:list', 'logininfor', 'admin', sysdate(), '', null, '登录日志菜单');
 -- 用户管理按钮
 insert into sys_menu
