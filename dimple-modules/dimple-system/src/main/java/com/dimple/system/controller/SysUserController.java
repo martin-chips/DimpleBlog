@@ -12,14 +12,11 @@ import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
-import com.dimple.system.api.domain.SysDept;
 import com.dimple.system.api.domain.SysRole;
 import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.model.LoginUser;
 import com.dimple.system.service.ISysConfigService;
-import com.dimple.system.service.ISysDeptService;
 import com.dimple.system.service.ISysPermissionService;
-import com.dimple.system.service.ISysPostService;
 import com.dimple.system.service.ISysRoleService;
 import com.dimple.system.service.ISysUserService;
 import org.apache.commons.lang3.ArrayUtils;
@@ -54,13 +51,6 @@ public class SysUserController extends BaseController {
 
     @Autowired
     private ISysRoleService roleService;
-
-    @Autowired
-    private ISysDeptService deptService;
-
-    @Autowired
-    private ISysPostService postService;
-
     @Autowired
     private ISysPermissionService permissionService;
 
@@ -170,11 +160,9 @@ public class SysUserController extends BaseController {
         AjaxResult ajax = AjaxResult.success();
         List<SysRole> roles = roleService.selectRoleAll();
         ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
-        ajax.put("posts", postService.selectPostAll());
         if (StringUtils.isNotNull(userId)) {
             SysUser sysUser = userService.selectUserById(userId);
             ajax.put(AjaxResult.DATA_TAG, sysUser);
-            ajax.put("postIds", postService.selectPostListByUserId(userId));
             ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
         }
         return ajax;
@@ -287,14 +275,5 @@ public class SysUserController extends BaseController {
         userService.checkUserDataScope(userId);
         userService.insertUserAuth(userId, roleIds);
         return success();
-    }
-
-    /**
-     * 获取部门树列表
-     */
-    @RequiresPermissions("system:user:list")
-    @GetMapping("/deptTree")
-    public AjaxResult deptTree(SysDept dept) {
-        return success(deptService.selectDeptTreeList(dept));
     }
 }

@@ -54,7 +54,6 @@ public class SysProfileController extends BaseController {
         SysUser user = userService.selectUserByUserName(username);
         AjaxResult ajax = AjaxResult.success(user);
         ajax.put("roleGroup", userService.selectUserRoleGroup(username));
-        ajax.put("postGroup", userService.selectUserPostGroup(username));
         return ajax;
     }
 
@@ -77,7 +76,6 @@ public class SysProfileController extends BaseController {
         user.setUserId(sysUser.getUserId());
         user.setPassword(null);
         user.setAvatar(null);
-        user.setDeptId(null);
         if (userService.updateUserProfile(user) > 0) {
             // 更新缓存用户信息
             loginUser.getSysUser().setNickName(user.getNickName());

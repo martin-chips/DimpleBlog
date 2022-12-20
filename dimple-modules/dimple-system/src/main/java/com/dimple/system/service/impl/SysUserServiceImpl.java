@@ -9,13 +9,9 @@ import com.dimple.common.datascope.annotation.DataScope;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.domain.SysRole;
 import com.dimple.system.api.domain.SysUser;
-import com.dimple.system.domain.SysPost;
-import com.dimple.system.domain.SysUserPost;
 import com.dimple.system.domain.SysUserRole;
-import com.dimple.system.mapper.SysPostMapper;
 import com.dimple.system.mapper.SysRoleMapper;
 import com.dimple.system.mapper.SysUserMapper;
-import com.dimple.system.mapper.SysUserPostMapper;
 import com.dimple.system.mapper.SysUserRoleMapper;
 import com.dimple.system.service.ISysConfigService;
 import com.dimple.system.service.ISysUserService;
@@ -45,11 +41,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Autowired
     private SysRoleMapper roleMapper;
     @Autowired
-    private SysPostMapper postMapper;
-    @Autowired
     private SysUserRoleMapper userRoleMapper;
-    @Autowired
-    private SysUserPostMapper userPostMapper;
     @Autowired
     private ISysConfigService configService;
 
@@ -60,7 +52,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户信息集合信息
      */
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
+    @DataScope(userAlias = "u")
     public List<SysUser> selectUserList(SysUser user) {
         return userMapper.selectUserList(user);
     }
@@ -72,7 +64,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户信息集合信息
      */
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
+    @DataScope(userAlias = "u")
     public List<SysUser> selectAllocatedList(SysUser user) {
         return userMapper.selectAllocatedList(user);
     }
@@ -84,7 +76,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户信息集合信息
      */
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
+    @DataScope(userAlias = "u")
     public List<SysUser> selectUnallocatedList(SysUser user) {
         return userMapper.selectUnallocatedList(user);
     }
@@ -124,21 +116,6 @@ public class SysUserServiceImpl implements ISysUserService {
             return StringUtils.EMPTY;
         }
         return list.stream().map(SysRole::getRoleName).collect(Collectors.joining(","));
-    }
-
-    /**
-     * 查询用户所属岗位组
-     *
-     * @param userName 用户名
-     * @return 结果
-     */
-    @Override
-    public String selectUserPostGroup(String userName) {
-        List<SysPost> list = postMapper.selectPostsByUserName(userName);
-        if (CollectionUtils.isEmpty(list)) {
-            return StringUtils.EMPTY;
-        }
-        return list.stream().map(SysPost::getPostName).collect(Collectors.joining(","));
     }
 
     /**
@@ -229,8 +206,6 @@ public class SysUserServiceImpl implements ISysUserService {
     public int insertUser(SysUser user) {
         // 新增用户信息
         int rows = userMapper.insertUser(user);
-        // 新增用户岗位关联
-        insertUserPost(user);
         // 新增用户与角色管理
         insertUserRole(user);
         return rows;
@@ -261,10 +236,6 @@ public class SysUserServiceImpl implements ISysUserService {
         userRoleMapper.deleteUserRoleByUserId(userId);
         // 新增用户与角色管理
         insertUserRole(user);
-        // 删除用户与岗位关联
-        userPostMapper.deleteUserPostByUserId(userId);
-        // 新增用户与岗位管理
-        insertUserPost(user);
         return userMapper.updateUser(user);
     }
 
@@ -347,25 +318,6 @@ public class SysUserServiceImpl implements ISysUserService {
         this.insertUserRole(user.getUserId(), user.getRoleIds());
     }
 
-    /**
-     * 新增用户岗位信息
-     *
-     * @param user 用户对象
-     */
-    public void insertUserPost(SysUser user) {
-        Long[] posts = user.getPostIds();
-        if (StringUtils.isNotEmpty(posts)) {
-            // 新增用户与岗位管理
-            List<SysUserPost> list = new ArrayList<SysUserPost>();
-            for (Long postId : posts) {
-                SysUserPost up = new SysUserPost();
-                up.setUserId(user.getUserId());
-                up.setPostId(postId);
-                list.add(up);
-            }
-            userPostMapper.batchUserPost(list);
-        }
-    }
 
     /**
      * 新增用户角色信息
@@ -398,8 +350,6 @@ public class SysUserServiceImpl implements ISysUserService {
     public int deleteUserById(Long userId) {
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
-        // 删除用户与岗位表
-        userPostMapper.deleteUserPostByUserId(userId);
         return userMapper.deleteUserById(userId);
     }
 
@@ -418,8 +368,6 @@ public class SysUserServiceImpl implements ISysUserService {
         }
         // 删除用户与角色关联
         userRoleMapper.deleteUserRole(userIds);
-        // 删除用户与岗位关联
-        userPostMapper.deleteUserPost(userIds);
         return userMapper.deleteUserByIds(userIds);
     }
 

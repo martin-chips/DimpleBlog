@@ -65,12 +65,6 @@ public class SysOperLog extends BaseEntity {
     private String operName;
 
     /**
-     * 部门名称
-     */
-    @Excel(name = "部门名称")
-    private String deptName;
-
-    /**
      * 请求url
      */
     @Excel(name = "请求地址")

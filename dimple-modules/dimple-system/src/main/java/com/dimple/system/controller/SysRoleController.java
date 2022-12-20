@@ -9,11 +9,9 @@ import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
-import com.dimple.system.api.domain.SysDept;
 import com.dimple.system.api.domain.SysRole;
 import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.domain.SysUserRole;
-import com.dimple.system.service.ISysDeptService;
 import com.dimple.system.service.ISysRoleService;
 import com.dimple.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +41,6 @@ public class SysRoleController extends BaseController {
 
     @Autowired
     private ISysUserService userService;
-
-    @Autowired
-    private ISysDeptService deptService;
 
     @RequiresPermissions("system:role:list")
     @GetMapping("/list")
@@ -204,17 +199,5 @@ public class SysRoleController extends BaseController {
     public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds) {
         roleService.checkRoleDataScope(roleId);
         return toAjax(roleService.insertAuthUsers(roleId, userIds));
-    }
-
-    /**
-     * 获取对应角色部门树列表
-     */
-    @RequiresPermissions("system:role:query")
-    @GetMapping(value = "/deptTree/{roleId}")
-    public AjaxResult deptTree(@PathVariable("roleId") Long roleId) {
-        AjaxResult ajax = AjaxResult.success();
-        ajax.put("checkedKeys", deptService.selectDeptListByRoleId(roleId));
-        ajax.put("depts", deptService.selectDeptTreeList(new SysDept()));
-        return ajax;
     }
 }
