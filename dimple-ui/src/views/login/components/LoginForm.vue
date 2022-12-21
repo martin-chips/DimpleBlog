@@ -1,7 +1,10 @@
 <template>
   <div class="login">
+    <div class="login-title">
+      <img alt="Dimple后台管理系统" class="icon" src="@/assets/logo/logo.png"/>
+      <h2 class="title">Dimple后台管理系统</h2>
+    </div>
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">Dimple后台管理系统</h3>
       <el-form-item prop="username">
         <el-input
           v-model="loginForm.username"
@@ -9,18 +12,27 @@
           auto-complete="off"
           placeholder="账号"
         >
-          <svg-icon slot="prefix" class="el-input__icon input-icon" icon-class="user"/>
+          <template #prefix>
+            <svg-icon class="el-input__icon input-icon" icon-class="user"/>
+          </template>
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-input
           v-model="loginForm.password"
-          type="password"
+          :type="passwordType"
           auto-complete="off"
           placeholder="密码"
           @keyup.enter.native="handleLogin"
         >
-          <svg-icon slot="prefix" class="el-input__icon input-icon" icon-class="password"/>
+          <template #prefix>
+            <svg-icon class="el-input__icon input-icon" icon-class="password"/>
+          </template>
+          <template #suffix>
+            <div class="show-pwd" @click="showPwd">
+              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
+            </div>
+          </template>
         </el-input>
       </el-form-item>
       <el-form-item v-if="captchaEnabled" prop="code">
@@ -28,10 +40,12 @@
           v-model="loginForm.code"
           auto-complete="off"
           placeholder="验证码"
-          style="width: 63%"
+          style="width: 74%"
           @keyup.enter.native="handleLogin"
         >
-          <svg-icon slot="prefix" class="el-input__icon input-icon" icon-class="validCode"/>
+          <template #prefix>
+            <svg-icon class="el-input__icon input-icon" icon-class="validCode"/>
+          </template>
         </el-input>
         <div class="login-code">
           <img :src="codeUrl" @click="getCode" class="login-code-img"/>
@@ -40,6 +54,7 @@
       <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
       <el-form-item style="width:100%;">
         <el-button
+          class="login-btn"
           :loading="loading"
           size="medium"
           type="primary"
@@ -71,6 +86,7 @@ export default {
   data() {
     return {
       codeUrl: "",
+      passwordType: 'password',
       loginForm: {
         username: "admin",
         password: "admin123",
@@ -108,6 +124,10 @@ export default {
     this.getCookie();
   },
   methods: {
+    // 显示密码图标
+    showPwd() {
+      this.passwordType = this.passwordType === 'password' ? '' : 'password'
+    },
     getCode() {
       getCodeImg().then(res => {
         this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled;
@@ -157,54 +177,27 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-.login {
+.login-title {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
-  background-size: cover;
-}
+  justify-content: space-between;
+  margin-bottom: 30px;
 
-.title {
-  margin: 0px auto 30px auto;
-  text-align: center;
-  color: #707070;
-}
-
-.login-form {
-  border-radius: 6px;
-  background: #ffffff;
-  width: 400px;
-  padding: 25px 25px 5px 25px;
-  .el-input {
-    height: 38px;
-
-    input {
-      height: 38px;
-    }
+  .title {
+    margin: 0;
+    font-size: 30px;
+    white-space: break-spaces;
   }
-  .input-icon {
-    height: 39px;
-    width: 14px;
-    margin-left: 2px;
+
+  .icon {
+    width: 60px;
   }
 }
-.login-tip {
-  font-size: 13px;
-  text-align: center;
-  color: #bfbfbf;
-}
-.login-code {
-  width: 33%;
-  height: 38px;
-  float: right;
 
-  img {
-    cursor: pointer;
-    vertical-align: middle;
-  }
+::v-deep(.el-input__inner) {
+  height: 40px;
 }
+
 .el-login-footer {
   height: 40px;
   line-height: 40px;
@@ -212,12 +205,30 @@ export default {
   bottom: 0;
   width: 100%;
   text-align: center;
-  color: #fff;
+  color: #000000;
   font-family: Arial;
   font-size: 12px;
   letter-spacing: 1px;
 }
+
 .login-code-img {
   height: 38px;
+}
+
+.login-tip {
+  font-size: 13px;
+  text-align: center;
+  color: #bfbfbf;
+}
+
+.login-code {
+  width: 25%;
+  height: 38px;
+  float: right;
+
+  img {
+    cursor: pointer;
+    vertical-align: middle;
+  }
 }
 </style>
