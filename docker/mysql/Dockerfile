@@ -1,5 +1,5 @@
 # 基础镜像
-FROM mysql:5.7
+FROM mysql
 # author
 MAINTAINER dimple
 

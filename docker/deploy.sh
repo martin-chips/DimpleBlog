@@ -31,7 +31,7 @@ base() {
 
 # 启动程序模块（必须）
 modules() {
-  docker compose up -d dimple-nginx dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-visual-monitor
+  docker compose up -d --build dimple-nginx dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-visual-monitor
 }
 
 # 关闭所有环境/模块
@@ -41,10 +41,6 @@ stop() {
 
 # 删除所有环境/模块
 rm() {
-#  rm -rf ../dimple-ui/dist
-  cd ..
-  mvn clean
-  cd -
   docker compose rm
 }
 
@@ -57,8 +53,9 @@ init() {
   npm run build:prod
   cd -
   chmod +x copy.sh
-  ./copy.sh
+  ./copy.sh cp
 }
+
 # 根据输入参数，选择执行对应方法，不输入则执行使用说明
 case "$1" in
 "port")

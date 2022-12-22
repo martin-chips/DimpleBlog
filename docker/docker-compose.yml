@@ -8,8 +8,8 @@ services:
     environment:
       - MODE=standalone
     volumes:
-      - /home/project/dimple/nacos/logs/:/home/nacos/logs
-      - /home/project/dimple/nacos/conf/application.properties:/home/nacos/conf/application.properties
+      - ./nacos/logs/:/home/nacos/logs
+      - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
     ports:
       - "8848:8848"
       - "9848:9848"
@@ -18,19 +18,21 @@ services:
       - dimple-mysql
   dimple-mysql:
     container_name: dimple-mysql
-    image: mysql:5.7
+    image: mysql
     build:
       context: ./mysql
+    security_opt:
+      - seccomp:unconfined
     ports:
       - "3306:3306"
     volumes:
-      - /home/project/dimple/mysql/conf:/etc/mysql/conf.d
-      - /home/project/dimple/mysql/logs:/logs
-      - /home/project/dimple/mysql/data:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/logs:/logs
+      - ./mysql/data:/var/lib/mysql
     command: [
-          'mysqld',
-          '--innodb-buffer-pool-size=80M',
-          '--character-set-server=utf8mb4',
+      'mysqld',
+      '--innodb-buffer-pool-size=80M',
+      '--character-set-server=utf8mb4',
           '--collation-server=utf8mb4_unicode_ci',
           '--default-time-zone=+8:00',
           '--lower-case-table-names=1'
@@ -46,21 +48,22 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - /home/project/dimple/redis/conf/redis.conf:/home/dimple/redis/redis.conf
-      - /home/project/dimple/redis/data:/data
+      - ./redis/conf/redis.conf:/home/dimple/redis/redis.conf
+      - ./redis/data:/data
     command: redis-server /home/dimple/redis/redis.conf
   dimple-nginx:
     container_name: dimple-nginx
     image: nginx
+    privileged: true
     build:
       context: ./nginx
     ports:
       - "80:80"
     volumes:
-      - /home/project/dimple/nginx/html/dist:/home/dimple/projects/dimple-ui
-      - /home/project/dimple/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-      - /home/project/dimple/nginx/logs:/var/log/nginx
-      - /home/project/dimple/nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/html/dist/:/home/dimple/projects/dimple-ui/
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - dimple-gateway
     links:
@@ -119,7 +122,7 @@ services:
     ports:
       - "9300:9300"
     volumes:
-      - /home/project/dimple/file/uploadPath:/home/dimple/uploadPath
+      - ./file/uploadPath:/home/dimple/uploadPath
   dimple-visual-monitor:
     container_name: dimple-visual-monitor
     build:
