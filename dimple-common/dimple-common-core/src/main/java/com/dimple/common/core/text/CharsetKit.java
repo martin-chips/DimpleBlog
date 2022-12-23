@@ -11,6 +11,10 @@ import java.nio.charset.StandardCharsets;
  * @author Dimple
  */
 public class CharsetKit {
+    private CharsetKit() {
+
+    }
+
     /**
      * ISO-8859-1
      */

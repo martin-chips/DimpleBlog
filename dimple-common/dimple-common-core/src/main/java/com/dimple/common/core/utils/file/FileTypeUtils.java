@@ -13,6 +13,10 @@ import java.util.Objects;
  * @author Dimple
  */
 public class FileTypeUtils {
+    private FileTypeUtils() {
+
+    }
+
     /**
      * 获取文件类型
      * <p>

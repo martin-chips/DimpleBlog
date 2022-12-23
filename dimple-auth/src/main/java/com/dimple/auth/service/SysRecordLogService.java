@@ -7,7 +7,7 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.ip.IpUtils;
 import com.dimple.system.api.RemoteLogService;
 import com.dimple.system.api.domain.SysLogininfor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
  * @author Dimple
  */
 @Component
+@RequiredArgsConstructor
 public class SysRecordLogService {
-    @Autowired
-    private RemoteLogService remoteLogService;
+    private final RemoteLogService remoteLogService;
 
     /**
      * 记录登录信息

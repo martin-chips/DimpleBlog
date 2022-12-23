@@ -35,7 +35,7 @@ public class AuthLogic {
      */
     private static final String SUPER_ADMIN = "admin";
 
-    public TokenService tokenService = SpringUtils.getBean(TokenService.class);
+    private TokenService tokenService = SpringUtils.getBean(TokenService.class);
 
     /**
      * 会话注销
@@ -114,7 +114,7 @@ public class AuthLogic {
      * @param permission 权限字符串
      * @return 用户是否具备某权限
      */
-    public void checkPermi(String permission) {
+    public void checkPermission(String permission) {
         if (!hasPermi(getPermiList(), permission)) {
             throw new NotPermissionException(permission);
         }
@@ -125,12 +125,12 @@ public class AuthLogic {
      *
      * @param requiresPermissions 注解对象
      */
-    public void checkPermi(RequiresPermissions requiresPermissions) {
+    public void checkPermission(RequiresPermissions requiresPermissions) {
         SecurityContextHolder.setPermission(StringUtils.join(requiresPermissions.value(), ","));
         if (requiresPermissions.logical() == Logical.AND) {
-            checkPermiAnd(requiresPermissions.value());
+            checkPermissionAnd(requiresPermissions.value());
         } else {
-            checkPermiOr(requiresPermissions.value());
+            checkPermissionOr(requiresPermissions.value());
         }
     }
 
@@ -139,7 +139,7 @@ public class AuthLogic {
      *
      * @param permissions 权限列表
      */
-    public void checkPermiAnd(String... permissions) {
+    public void checkPermissionAnd(String... permissions) {
         Set<String> permissionList = getPermiList();
         for (String permission : permissions) {
             if (!hasPermi(permissionList, permission)) {
@@ -153,7 +153,7 @@ public class AuthLogic {
      *
      * @param permissions 权限码数组
      */
-    public void checkPermiOr(String... permissions) {
+    public void checkPermissionOr(String... permissions) {
         Set<String> permissionList = getPermiList();
         for (String permission : permissions) {
             if (hasPermi(permissionList, permission)) {
@@ -261,9 +261,9 @@ public class AuthLogic {
     public void checkByAnnotation(RequiresPermissions at) {
         String[] permissionArray = at.value();
         if (at.logical() == Logical.AND) {
-            this.checkPermiAnd(permissionArray);
+            this.checkPermissionAnd(permissionArray);
         } else {
-            this.checkPermiOr(permissionArray);
+            this.checkPermissionOr(permissionArray);
         }
     }
 

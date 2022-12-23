@@ -6,6 +6,10 @@ package com.dimple.common.core.constant;
  * @author Dimple
  */
 public class Constants {
+    private Constants() {
+
+    }
+
     /**
      * UTF-8 字符集
      */

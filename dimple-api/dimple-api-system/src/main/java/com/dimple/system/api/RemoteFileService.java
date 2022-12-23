@@ -1,7 +1,7 @@
 package com.dimple.system.api;
 
 import com.dimple.common.core.constant.ServiceNameConstants;
-import com.dimple.common.core.domain.R;
+import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.system.api.domain.SysFile;
 import com.dimple.system.api.factory.RemoteFileFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -24,5 +24,5 @@ public interface RemoteFileService {
      * @return 结果
      */
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    R<SysFile> upload(@RequestPart(value = "file") MultipartFile file);
+    ResponseEntity<SysFile> upload(@RequestPart(value = "file") MultipartFile file);
 }

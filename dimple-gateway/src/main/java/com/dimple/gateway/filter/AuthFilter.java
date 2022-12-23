@@ -10,8 +10,8 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.gateway.config.properties.IgnoreWhiteProperties;
 import io.jsonwebtoken.Claims;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -27,14 +27,13 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class AuthFilter implements GlobalFilter, Ordered {
 
     // 排除过滤的 uri 地址，nacos自行添加
-    @Autowired
-    private IgnoreWhiteProperties ignoreWhite;
+    private final IgnoreWhiteProperties ignoreWhite;
 
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
 
 
     @Override

@@ -6,16 +6,16 @@ package com.dimple.common.core.utils.sign;
  * @author Dimple
  */
 public final class Base64 {
-    static private final int BASELENGTH = 128;
-    static private final int LOOKUPLENGTH = 64;
-    static private final int TWENTYFOURBITGROUP = 24;
-    static private final int EIGHTBIT = 8;
-    static private final int SIXTEENBIT = 16;
-    static private final int FOURBYTE = 4;
-    static private final int SIGN = -128;
-    static private final char PAD = '=';
-    static final private byte[] base64Alphabet = new byte[BASELENGTH];
-    static final private char[] lookUpBase64Alphabet = new char[LOOKUPLENGTH];
+    private static final int BASELENGTH = 128;
+    private static final int LOOKUPLENGTH = 64;
+    private static final int TWENTYFOURBITGROUP = 24;
+    private static final int EIGHTBIT = 8;
+    private static final int SIXTEENBIT = 16;
+    private static final int FOURBYTE = 4;
+    private static final int SIGN = -128;
+    private static final char PAD = '=';
+    private static final byte[] base64Alphabet = new byte[BASELENGTH];
+    private static final char[] lookUpBase64Alphabet = new char[LOOKUPLENGTH];
 
     static {
         for (int i = 0; i < BASELENGTH; ++i) {
@@ -46,8 +46,8 @@ public final class Base64 {
         for (int i = 52, j = 0; i <= 61; i++, j++) {
             lookUpBase64Alphabet[i] = (char) ('0' + j);
         }
-        lookUpBase64Alphabet[62] = (char) '+';
-        lookUpBase64Alphabet[63] = (char) '/';
+        lookUpBase64Alphabet[62] = '+';
+        lookUpBase64Alphabet[63] = '/';
     }
 
     private static boolean isWhiteSpace(char octect) {
@@ -81,11 +81,15 @@ public final class Base64 {
         int fewerThan24bits = lengthDataBits % TWENTYFOURBITGROUP;
         int numberTriplets = lengthDataBits / TWENTYFOURBITGROUP;
         int numberQuartet = fewerThan24bits != 0 ? numberTriplets + 1 : numberTriplets;
-        char encodedData[] = null;
+        char encodedData[];
 
         encodedData = new char[numberQuartet * 4];
 
-        byte k = 0, l = 0, b1 = 0, b2 = 0, b3 = 0;
+        byte k = 0;
+        byte l = 0;
+        byte b1 = 0;
+        byte b2 = 0;
+        byte b3 = 0;
 
         int encodedIndex = 0;
         int dataIndex = 0;
@@ -159,9 +163,15 @@ public final class Base64 {
             return new byte[0];
         }
 
-        byte decodedData[] = null;
-        byte b1 = 0, b2 = 0, b3 = 0, b4 = 0;
-        char d1 = 0, d2 = 0, d3 = 0, d4 = 0;
+        byte[] decodedData = null;
+        byte b1 = 0;
+        byte b2 = 0;
+        byte b3 = 0;
+        byte b4 = 0;
+        char d1 = 0;
+        char d2 = 0;
+        char d3 = 0;
+        char d4 = 0;
 
         int i = 0;
         int encodedIndex = 0;

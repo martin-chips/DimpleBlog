@@ -35,7 +35,7 @@ public class SecurityContextHolder {
     public static Map<String, Object> getLocalMap() {
         Map<String, Object> map = THREAD_LOCAL.get();
         if (map == null) {
-            map = new ConcurrentHashMap<String, Object>();
+            map = new ConcurrentHashMap<>();
             THREAD_LOCAL.set(map);
         }
         return map;

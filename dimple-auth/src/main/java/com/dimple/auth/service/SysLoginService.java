@@ -3,7 +3,7 @@ package com.dimple.auth.service;
 import com.dimple.common.core.constant.Constants;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.constant.UserConstants;
-import com.dimple.common.core.domain.R;
+import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.common.core.enums.UserStatus;
 import com.dimple.common.core.exception.ServiceException;
 import com.dimple.common.core.utils.StringUtils;
@@ -11,7 +11,7 @@ import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.RemoteUserService;
 import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.model.LoginUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,15 +20,13 @@ import org.springframework.stereotype.Component;
  * @author Dimple
  */
 @Component
+@RequiredArgsConstructor
 public class SysLoginService {
-    @Autowired
-    private RemoteUserService remoteUserService;
+    private final RemoteUserService remoteUserService;
 
-    @Autowired
-    private SysPasswordService passwordService;
+    private final SysPasswordService passwordService;
 
-    @Autowired
-    private SysRecordLogService recordLogService;
+    private final SysRecordLogService recordLogService;
 
     /**
      * 登录
@@ -52,14 +50,14 @@ public class SysLoginService {
             throw new ServiceException("用户名不在指定范围");
         }
         // 查询用户信息
-        R<LoginUser> userResult = remoteUserService.getUserInfo(username, SecurityConstants.INNER);
+        ResponseEntity<LoginUser> userResult = remoteUserService.getUserInfo(username, SecurityConstants.INNER);
 
         if (StringUtils.isNull(userResult) || StringUtils.isNull(userResult.getData())) {
             recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "登录用户不存在");
             throw new ServiceException("登录用户：" + username + " 不存在");
         }
 
-        if (R.FAIL == userResult.getCode()) {
+        if (Constants.FAIL == userResult.getCode()) {
             throw new ServiceException(userResult.getMsg());
         }
 
@@ -104,9 +102,9 @@ public class SysLoginService {
         sysUser.setUserName(username);
         sysUser.setNickName(username);
         sysUser.setPassword(SecurityUtils.encryptPassword(password));
-        R<?> registerResult = remoteUserService.registerUserInfo(sysUser, SecurityConstants.INNER);
+        ResponseEntity<?> registerResult = remoteUserService.registerUserInfo(sysUser, SecurityConstants.INNER);
 
-        if (R.FAIL == registerResult.getCode()) {
+        if (Constants.FAIL == registerResult.getCode()) {
             throw new ServiceException(registerResult.getMsg());
         }
         recordLogService.recordLogininfor(username, Constants.REGISTER, "注册成功");

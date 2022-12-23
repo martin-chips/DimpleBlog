@@ -1,7 +1,7 @@
 package com.dimple.system.controller;
 
 import com.dimple.common.core.constant.UserConstants;
-import com.dimple.common.core.domain.R;
+import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.file.FileTypeUtils;
 import com.dimple.common.core.utils.file.MimeTypeUtils;
@@ -125,7 +125,7 @@ public class SysProfileController extends BaseController {
             if (!StringUtils.equalsAnyIgnoreCase(extension, MimeTypeUtils.IMAGE_EXTENSION)) {
                 return error("文件格式不正确，请上传" + Arrays.toString(MimeTypeUtils.IMAGE_EXTENSION) + "格式");
             }
-            R<SysFile> fileResult = remoteFileService.upload(file);
+            ResponseEntity<SysFile> fileResult = remoteFileService.upload(file);
             if (StringUtils.isNull(fileResult) || StringUtils.isNull(fileResult.getData())) {
                 return error("文件服务异常，请联系管理员");
             }

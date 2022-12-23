@@ -6,7 +6,7 @@ import com.dimple.common.core.exception.ServiceException;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.domain.SysUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -17,16 +17,15 @@ import java.util.concurrent.TimeUnit;
  * @author Dimple
  */
 @Component
+@RequiredArgsConstructor
 public class SysPasswordService {
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
+    private final SysRecordLogService recordLogService;
 
     private int maxRetryCount = CacheConstants.PASSWORD_MAX_RETRY_COUNT;
 
     private Long lockTime = CacheConstants.PASSWORD_LOCK_TIME;
 
-    @Autowired
-    private SysRecordLogService recordLogService;
 
     /**
      * 登录账户密码错误次数缓存键名
@@ -47,7 +46,7 @@ public class SysPasswordService {
             retryCount = 0;
         }
 
-        if (retryCount >= Integer.valueOf(maxRetryCount).intValue()) {
+        if (retryCount >= maxRetryCount) {
             String errMsg = String.format("密码输入错误%s次，帐户锁定%s分钟", maxRetryCount, lockTime);
             recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, errMsg);
             throw new ServiceException(errMsg);
@@ -68,7 +67,7 @@ public class SysPasswordService {
     }
 
     public void clearLoginRecordCache(String loginName) {
-        if (redisService.hasKey(getCacheKey(loginName))) {
+        if (Boolean.TRUE.equals(redisService.hasKey(getCacheKey(loginName)))) {
             redisService.deleteObject(getCacheKey(loginName));
         }
     }

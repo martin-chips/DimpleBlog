@@ -3,7 +3,7 @@ package com.dimple.common.log.service;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.system.api.RemoteLogService;
 import com.dimple.system.api.domain.SysOperLog;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
  * @author Dimple
  */
 @Service
+@RequiredArgsConstructor
 public class AsyncLogService {
-    @Autowired
-    private RemoteLogService remoteLogService;
+    private final RemoteLogService remoteLogService;
 
     /**
      * 保存系统日志记录

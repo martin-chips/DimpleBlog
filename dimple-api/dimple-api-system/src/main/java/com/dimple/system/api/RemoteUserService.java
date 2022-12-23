@@ -2,7 +2,7 @@ package com.dimple.system.api;
 
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.constant.ServiceNameConstants;
-import com.dimple.common.core.domain.R;
+import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.factory.RemoteUserFallbackFactory;
 import com.dimple.system.api.model.LoginUser;
@@ -28,7 +28,7 @@ public interface RemoteUserService {
      * @return 结果
      */
     @GetMapping("/user/info/{username}")
-    R<LoginUser> getUserInfo(@PathVariable("username") String username, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
+    ResponseEntity<LoginUser> getUserInfo(@PathVariable("username") String username, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
 
     /**
      * 注册用户信息
@@ -38,5 +38,5 @@ public interface RemoteUserService {
      * @return 结果
      */
     @PostMapping("/user/register")
-    R<Boolean> registerUserInfo(@RequestBody SysUser sysUser, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
+    ResponseEntity<Boolean> registerUserInfo(@RequestBody SysUser sysUser, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
 }

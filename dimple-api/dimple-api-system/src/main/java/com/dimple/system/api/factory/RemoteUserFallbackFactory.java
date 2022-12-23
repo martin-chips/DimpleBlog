@@ -1,6 +1,7 @@
 package com.dimple.system.api.factory;
 
-import com.dimple.common.core.domain.R;
+import com.dimple.common.core.domain.ResponseEntity;
+import com.dimple.common.core.utils.response.ResponseEntityUtils;
 import com.dimple.system.api.RemoteUserService;
 import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.model.LoginUser;
@@ -22,13 +23,13 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
         log.error("用户服务调用失败:{}", throwable.getMessage());
         return new RemoteUserService() {
             @Override
-            public R<LoginUser> getUserInfo(String username, String source) {
-                return R.fail("获取用户失败:" + throwable.getMessage());
+            public ResponseEntity<LoginUser> getUserInfo(String username, String source) {
+                return ResponseEntityUtils.fail("获取用户失败:" + throwable.getMessage());
             }
 
             @Override
-            public R<Boolean> registerUserInfo(SysUser sysUser, String source) {
-                return R.fail("注册用户失败:" + throwable.getMessage());
+            public ResponseEntity<Boolean> registerUserInfo(SysUser sysUser, String source) {
+                return ResponseEntityUtils.fail("注册用户失败:" + throwable.getMessage());
             }
         };
     }

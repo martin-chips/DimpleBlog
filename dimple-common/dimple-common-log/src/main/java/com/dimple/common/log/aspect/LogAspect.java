@@ -10,12 +10,12 @@ import com.dimple.common.log.filter.PropertyPreExcludeFilter;
 import com.dimple.common.log.service.AsyncLogService;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.domain.SysOperLog;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -34,13 +34,13 @@ import java.util.Map;
 @Aspect
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class LogAspect {
     /**
      * 排除敏感属性字段
      */
     public static final String[] EXCLUDE_PROPERTIES = {"password", "oldPassword", "newPassword", "confirmPassword"};
-    @Autowired
-    private AsyncLogService asyncLogService;
+    private final AsyncLogService asyncLogService;
 
     /**
      * 处理完请求后执行

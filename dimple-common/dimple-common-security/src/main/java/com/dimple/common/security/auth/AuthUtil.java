@@ -10,10 +10,14 @@ import com.dimple.system.api.model.LoginUser;
  * @author Dimple
  */
 public class AuthUtil {
+
+    private AuthUtil() {
+    }
+
     /**
      * 底层的 AuthLogic 对象
      */
-    public static AuthLogic authLogic = new AuthLogic();
+    private static final AuthLogic authLogic = new AuthLogic();
 
     /**
      * 会话注销
@@ -25,7 +29,7 @@ public class AuthUtil {
     /**
      * 会话注销，根据指定Token
      *
-     * @param tokenValue 指定token
+     * @param token 指定token
      */
     public static void logoutByToken(String token) {
         authLogic.logoutByToken(token);
@@ -114,7 +118,7 @@ public class AuthUtil {
      * @param permission 权限码
      */
     public static void checkPermi(String permission) {
-        authLogic.checkPermi(permission);
+        authLogic.checkPermission(permission);
     }
 
     /**
@@ -123,7 +127,7 @@ public class AuthUtil {
      * @param requiresPermissions 权限注解
      */
     public static void checkPermi(RequiresPermissions requiresPermissions) {
-        authLogic.checkPermi(requiresPermissions);
+        authLogic.checkPermission(requiresPermissions);
     }
 
     /**
@@ -132,7 +136,7 @@ public class AuthUtil {
      * @param permissions 权限码数组
      */
     public static void checkPermiAnd(String... permissions) {
-        authLogic.checkPermiAnd(permissions);
+        authLogic.checkPermissionAnd(permissions);
     }
 
     /**
@@ -141,6 +145,6 @@ public class AuthUtil {
      * @param permissions 权限码数组
      */
     public static void checkPermiOr(String... permissions) {
-        authLogic.checkPermiOr(permissions);
+        authLogic.checkPermissionOr(permissions);
     }
 }

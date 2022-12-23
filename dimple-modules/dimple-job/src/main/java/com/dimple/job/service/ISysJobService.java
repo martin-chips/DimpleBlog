@@ -18,7 +18,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 调度任务集合
      */
-    public List<SysJob> selectJobList(SysJob job);
+     List<SysJob> selectJobList(SysJob job);
 
     /**
      * 通过调度任务ID查询调度信息
@@ -26,7 +26,7 @@ public interface ISysJobService {
      * @param jobId 调度任务ID
      * @return 调度任务对象信息
      */
-    public SysJob selectJobById(Long jobId);
+     SysJob selectJobById(Long jobId);
 
     /**
      * 暂停任务
@@ -34,7 +34,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int pauseJob(SysJob job) throws SchedulerException;
+     int pauseJob(SysJob job) throws SchedulerException;
 
     /**
      * 恢复任务
@@ -42,7 +42,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int resumeJob(SysJob job) throws SchedulerException;
+     int resumeJob(SysJob job) throws SchedulerException;
 
     /**
      * 删除任务后，所对应的trigger也将被删除
@@ -50,7 +50,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int deleteJob(SysJob job) throws SchedulerException;
+     int deleteJob(SysJob job) throws SchedulerException;
 
     /**
      * 批量删除调度信息
@@ -58,7 +58,7 @@ public interface ISysJobService {
      * @param jobIds 需要删除的任务ID
      * @return 结果
      */
-    public void deleteJobByIds(Long[] jobIds) throws SchedulerException;
+     void deleteJobByIds(Long[] jobIds) throws SchedulerException;
 
     /**
      * 任务调度状态修改

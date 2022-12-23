@@ -45,7 +45,7 @@ public class ScheduleConstants {
 
         private String value;
 
-        private Status(String value) {
+        Status(String value) {
             this.value = value;
         }
 

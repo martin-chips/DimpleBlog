@@ -11,6 +11,10 @@ import java.io.StringWriter;
  * @author Dimple
  */
 public class ExceptionUtil {
+    private ExceptionUtil() {
+
+    }
+
     /**
      * 获取exception的详细错误信息。
      */

@@ -14,10 +14,10 @@ public interface ValidateCodeService {
     /**
      * 生成验证码
      */
-    public AjaxResult createCaptcha() throws IOException, CaptchaException;
+    AjaxResult createCaptcha() throws IOException, CaptchaException;
 
     /**
      * 校验验证码
      */
-    public void checkCaptcha(String key, String value) throws CaptchaException;
+    void checkCaptcha(String key, String value) throws CaptchaException;
 }

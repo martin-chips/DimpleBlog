@@ -3,7 +3,7 @@ package com.dimple.gateway.handler;
 import com.dimple.common.core.exception.CaptchaException;
 import com.dimple.common.core.web.domain.AjaxResult;
 import com.dimple.gateway.service.ValidateCodeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -20,9 +20,9 @@ import java.io.IOException;
  * @author Dimple
  */
 @Component
+@RequiredArgsConstructor
 public class ValidateCodeHandler implements HandlerFunction<ServerResponse> {
-    @Autowired
-    private ValidateCodeService validateCodeService;
+    private final ValidateCodeService validateCodeService;
 
     @Override
     public Mono<ServerResponse> handle(ServerRequest serverRequest) {

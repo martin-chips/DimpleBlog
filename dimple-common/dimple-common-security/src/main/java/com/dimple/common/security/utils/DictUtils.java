@@ -8,6 +8,7 @@ import com.dimple.common.redis.service.RedisService;
 import com.dimple.system.api.domain.SysDictData;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,6 +17,10 @@ import java.util.List;
  * @author Dimple
  */
 public class DictUtils {
+    private DictUtils() {
+
+    }
+
     /**
      * 设置字典缓存
      *
@@ -37,7 +42,7 @@ public class DictUtils {
         if (StringUtils.isNotNull(arrayCache)) {
             return arrayCache.toList(SysDictData.class);
         }
-        return null;
+        return Collections.emptyList();
     }
 
     /**

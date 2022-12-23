@@ -1,9 +1,10 @@
 package com.dimple.system.controller;
 
 import com.dimple.common.core.constant.UserConstants;
-import com.dimple.common.core.domain.R;
+import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.poi.ExcelUtil;
+import com.dimple.common.core.utils.response.ResponseEntityUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.domain.AjaxResult;
 import com.dimple.common.core.web.page.TableDataInfo;
@@ -99,10 +100,10 @@ public class SysUserController extends BaseController {
      */
     @InnerAuth
     @GetMapping("/info/{username}")
-    public R<LoginUser> info(@PathVariable("username") String username) {
+    public ResponseEntity<LoginUser> info(@PathVariable("username") String username) {
         SysUser sysUser = userService.selectUserByUserName(username);
         if (StringUtils.isNull(sysUser)) {
-            return R.fail("用户名或密码错误");
+            return ResponseEntityUtils.fail("用户名或密码错误");
         }
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(sysUser);
@@ -112,7 +113,7 @@ public class SysUserController extends BaseController {
         sysUserVo.setSysUser(sysUser);
         sysUserVo.setRoles(roles);
         sysUserVo.setPermissions(permissions);
-        return R.ok(sysUserVo);
+        return ResponseEntityUtils.ok(sysUserVo);
     }
 
     /**
@@ -120,15 +121,15 @@ public class SysUserController extends BaseController {
      */
     @InnerAuth
     @PostMapping("/register")
-    public R<Boolean> register(@RequestBody SysUser sysUser) {
+    public ResponseEntity<Boolean> register(@RequestBody SysUser sysUser) {
         String username = sysUser.getUserName();
         if (!("true".equals(configService.selectConfigByKey("sys.account.registerUser")))) {
-            return R.fail("当前系统没有开启注册功能！");
+            return ResponseEntityUtils.fail("当前系统没有开启注册功能！");
         }
         if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(sysUser))) {
-            return R.fail("保存用户'" + username + "'失败，注册账号已存在");
+            return ResponseEntityUtils.fail("保存用户'" + username + "'失败，注册账号已存在");
         }
-        return R.ok(userService.registerUser(sysUser));
+        return ResponseEntityUtils.ok(userService.registerUser(sysUser));
     }
 
     /**

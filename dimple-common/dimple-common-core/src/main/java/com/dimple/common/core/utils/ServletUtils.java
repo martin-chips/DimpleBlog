@@ -2,8 +2,9 @@ package com.dimple.common.core.utils;
 
 import com.alibaba.fastjson2.JSON;
 import com.dimple.common.core.constant.Constants;
-import com.dimple.common.core.domain.R;
+import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.common.core.text.Convert;
+import com.dimple.common.core.utils.response.ResponseEntityUtils;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -238,7 +239,7 @@ public class ServletUtils {
      * @return Mono<Void>
      */
     public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, Object value) {
-        return webFluxResponseWriter(response, HttpStatus.OK, value, R.FAIL);
+        return webFluxResponseWriter(response, HttpStatus.OK, value, Constants.FAIL);
     }
 
     /**
@@ -279,7 +280,7 @@ public class ServletUtils {
     public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, String contentType, HttpStatus status, Object value, int code) {
         response.setStatusCode(status);
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
-        R<?> result = R.fail(code, value.toString());
+        ResponseEntity<?> result = ResponseEntityUtils.fail(code, value.toString());
         DataBuffer dataBuffer = response.bufferFactory().wrap(JSON.toJSONString(result).getBytes());
         return response.writeWith(Mono.just(dataBuffer));
     }

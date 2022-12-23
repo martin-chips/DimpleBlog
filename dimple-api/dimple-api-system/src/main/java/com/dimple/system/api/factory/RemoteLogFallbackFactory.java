@@ -1,6 +1,6 @@
 package com.dimple.system.api.factory;
 
-import com.dimple.common.core.domain.R;
+import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.system.api.RemoteLogService;
 import com.dimple.system.api.domain.SysLogininfor;
 import com.dimple.system.api.domain.SysOperLog;
@@ -21,12 +21,12 @@ public class RemoteLogFallbackFactory implements FallbackFactory<RemoteLogServic
         log.error("日志服务调用失败:{}", throwable.getMessage());
         return new RemoteLogService() {
             @Override
-            public R<Boolean> saveLog(SysOperLog sysOperLog, String source) {
+            public ResponseEntity<Boolean> saveLog(SysOperLog sysOperLog, String source) {
                 return null;
             }
 
             @Override
-            public R<Boolean> saveLogininfor(SysLogininfor sysLogininfor, String source) {
+            public ResponseEntity<Boolean> saveLogininfor(SysLogininfor sysLogininfor, String source) {
                 return null;
             }
         };
