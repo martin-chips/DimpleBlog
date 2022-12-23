@@ -11,6 +11,10 @@
         <LoginForm v-if="accountLogin"/>
         <LoginQrcode v-else/>
       </div>
+      <!--  底部  -->
+      <div class="el-login-footer">
+        <span>Copyright © 2018-2022 bianxf.com All Rights Reserved.</span>
+      </div>
     </div>
   </div>
 </template>

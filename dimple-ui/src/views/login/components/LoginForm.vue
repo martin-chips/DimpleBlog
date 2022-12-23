@@ -69,10 +69,6 @@
         </div>
       </el-form-item>
     </el-form>
-    <!--  底部  -->
-    <div class="el-login-footer">
-      <span>Copyright © 2018-2022 bianxf.com All Rights Reserved.</span>
-    </div>
   </div>
 </template>
 
@@ -196,19 +192,6 @@ export default {
 
 ::v-deep(.el-input__inner) {
   height: 40px;
-}
-
-.el-login-footer {
-  height: 40px;
-  line-height: 40px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  color: #000000;
-  font-family: Arial;
-  font-size: 12px;
-  letter-spacing: 1px;
 }
 
 .login-code-img {
