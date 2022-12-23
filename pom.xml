@@ -79,13 +79,6 @@
                 <version>${tobato.version}</version>
             </dependency>
 
-            <!-- Mybatis 依赖配置 -->
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${spring-boot.mybatis}</version>
-            </dependency>
-
             <!-- Swagger 依赖配置 -->
             <dependency>
                 <groupId>io.swagger</groupId>
