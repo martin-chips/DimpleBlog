@@ -24,36 +24,57 @@ port() {
   service firewalld restart
 }
 
-# 启动基础环境（必须）
+# The Base Environment (Required)
+# nacos will start failed when deploy first time because mysql start slowly, may you should restart nacos when checked nacos start failed using
+# 'docker compose logs dimple-nacos'.
+# restart nacos by using 'docker compose restart dimple-nacos'
 base() {
   docker compose up -d dimple-mysql dimple-redis dimple-nacos
 }
 
-# 启动程序模块（必须）
+# The Program Modules (Required)
 modules() {
   docker compose up -d --build dimple-nginx dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-visual-monitor
 }
 
-# 关闭所有环境/模块
+# Stop all modules which contains base environment and program modules.
 stop() {
   docker compose stop
 }
 
-# 删除所有环境/模块
+# Remove all modules which contains base environment and program modules.
 rm() {
   docker compose rm
 }
 
+down() {
+  docker compose down
+}
+
+# Build the maven jar package and compile the UI, then copy all file to the dir.
 init() {
+  echo 'Add the execute permission to the env script'
+  chmod +x env.sh
+  echo 'call the rm function.'
+  ./env.sh rm
+  echo 'start build maven jar package'
   cd ..
   mvn clean package -Dmaven.test.skip=true
-  cd -
-  cd ../dimple-ui
+  echo 'start compile ui'
+  cd dimple-ui
   npm install
   npm run build:prod
-  cd -
-  chmod +x copy.sh
-  ./copy.sh cp
+  echo 'start copy files'
+  cd ../docker
+  ./env.sh cp
+}
+
+start() {
+  base
+  init
+  docker compose restart dimple-nacos
+  sleep 10
+  modules
 }
 
 # 根据输入参数，选择执行对应方法，不输入则执行使用说明
@@ -61,8 +82,14 @@ case "$1" in
 "port")
   port
   ;;
+"start")
+  start
+  ;;
 "base")
   base
+  ;;
+"down")
+  down
   ;;
 "init")
   init
