@@ -21,6 +21,7 @@ port() {
   firewall-cmd --add-port=9202/tcp --permanent
   firewall-cmd --add-port=9203/tcp --permanent
   firewall-cmd --add-port=9300/tcp --permanent
+  firewall-cmd --add-port=9401/tcp --permanent
   service firewalld restart
 }
 
@@ -34,7 +35,7 @@ base() {
 
 # The Program Modules (Required)
 modules() {
-  docker compose up -d --build dimple-nginx dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-visual-monitor
+  docker compose up -d --build dimple-nginx dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-visual-monitor dimple-modules-blog
 }
 
 # Stop all modules which contains base environment and program modules.

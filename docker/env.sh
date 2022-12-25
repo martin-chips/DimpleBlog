@@ -54,6 +54,9 @@ cp_jar() {
   echo "begin copy dimple-modules-system "
   /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-system/target/dimple-modules-system.jar $PROJECT_DOCKER_PATH/dimple/modules/system/jar
 
+  echo "begin copy dimple-modules-blog "
+  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-blog/target/dimple-modules-blog.jar $PROJECT_DOCKER_PATH/dimple/modules/blog/jar
+
   echo "begin copy dimple-modules-file "
   /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-file/target/dimple-modules-file.jar $PROJECT_DOCKER_PATH/dimple/modules/file/jar
 

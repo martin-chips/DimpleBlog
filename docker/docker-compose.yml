@@ -130,3 +130,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9100:9100"
+  dimple-modules-blog:
+    container_name: dimple-modules-blog
+    build:
+      context: ./dimple/modules/blog/
+      dockerfile: Dockerfile
+    ports:
+      - "9401:9401"
+    depends_on:
+      - dimple-redis
+      - dimple-mysql
+    links:
+      - dimple-redis
+      - dimple-mysql
