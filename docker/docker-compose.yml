@@ -15,7 +15,8 @@ services:
       - "9848:9848"
       - "9849:9849"
     depends_on:
-      - dimple-mysql
+      dimple-mysql:
+        condition: service_healthy
   dimple-mysql:
     container_name: dimple-mysql
     image: mysql
@@ -40,6 +41,11 @@ services:
     environment:
       MYSQL_DATABASE: 'dimple-cloud'
       MYSQL_ROOT_PASSWORD: password
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 3s
+      timeout: 5s
+      retries: 5
   dimple-redis:
     container_name: dimple-redis
     image: redis
