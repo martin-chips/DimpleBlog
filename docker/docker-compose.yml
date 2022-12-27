@@ -56,6 +56,7 @@ services:
     volumes:
       - ./redis/conf/redis.conf:/home/dimple/redis/redis.conf
       - ./redis/data:/data
+      - ./redis/logs:/logs
     command: redis-server /home/dimple/redis/redis.conf
   dimple-nginx:
     container_name: dimple-nginx
