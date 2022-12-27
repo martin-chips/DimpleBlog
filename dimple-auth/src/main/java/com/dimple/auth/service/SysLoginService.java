@@ -9,8 +9,8 @@ import com.dimple.common.core.exception.ServiceException;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.RemoteUserService;
-import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.model.LoginUser;
+import com.dimple.system.api.model.SysUserBO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -62,7 +62,7 @@ public class SysLoginService {
         }
 
         LoginUser userInfo = userResult.getData();
-        SysUser user = userResult.getData().getSysUser();
+        SysUserBO user = userResult.getData().getSysUser();
         if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
             recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "对不起，您的账号已被删除");
             throw new ServiceException("对不起，您的账号：" + username + " 已被删除");
@@ -98,7 +98,7 @@ public class SysLoginService {
         }
 
         // 注册用户信息
-        SysUser sysUser = new SysUser();
+        SysUserBO sysUser = new SysUserBO();
         sysUser.setUserName(username);
         sysUser.setNickName(username);
         sysUser.setPassword(SecurityUtils.encryptPassword(password));

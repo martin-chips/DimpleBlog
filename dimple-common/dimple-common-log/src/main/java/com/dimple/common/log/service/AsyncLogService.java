@@ -2,7 +2,7 @@ package com.dimple.common.log.service;
 
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.system.api.RemoteLogService;
-import com.dimple.system.api.domain.SysOperLog;
+import com.dimple.system.api.model.SysOperLogBO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class AsyncLogService {
      * 保存系统日志记录
      */
     @Async
-    public void saveSysLog(SysOperLog sysOperLog) {
+    public void saveSysLog(SysOperLogBO sysOperLog) {
         remoteLogService.saveLog(sysOperLog, SecurityConstants.INNER);
     }
 }

@@ -39,6 +39,7 @@
         <poi.version>4.1.2</poi.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <transmittable-thread-local.version>2.13.2</transmittable-thread-local.version>
+        <orika.version>1.5.4</orika.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -229,6 +230,12 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
+            <!--Bean Copy-->
+            <dependency>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
+                <version>${orika.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -240,6 +247,8 @@
         <module>dimple-modules</module>
         <module>dimple-api</module>
         <module>dimple-common</module>
+        <module>dimple-modules/dimple-system/dimple-system-service</module>
+        <module>dimple-modules/dimple-job/dimple-job-service</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -3,9 +3,9 @@ package com.dimple.system.api;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.constant.ServiceNameConstants;
 import com.dimple.common.core.domain.ResponseEntity;
-import com.dimple.system.api.domain.SysLogininfor;
-import com.dimple.system.api.domain.SysOperLog;
 import com.dimple.system.api.factory.RemoteLogFallbackFactory;
+import com.dimple.system.api.model.SysLogininforBO;
+import com.dimple.system.api.model.SysOperLogBO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +26,7 @@ public interface RemoteLogService {
      * @return 结果
      */
     @PostMapping("/operlog")
-    ResponseEntity<Boolean> saveLog(@RequestBody SysOperLog sysOperLog, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
+    ResponseEntity<Boolean> saveLog(@RequestBody SysOperLogBO sysOperLog, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
 
     /**
      * 保存访问记录
@@ -36,5 +36,5 @@ public interface RemoteLogService {
      * @return 结果
      */
     @PostMapping("/logininfor")
-    ResponseEntity<Boolean> saveLogininfor(@RequestBody SysLogininfor sysLogininfor, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
+    ResponseEntity<Boolean> saveLogininfor(@RequestBody SysLogininforBO sysLogininfor, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
 }

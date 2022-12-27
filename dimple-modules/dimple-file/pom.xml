@@ -7,6 +7,10 @@
         <artifactId>dimple-modules</artifactId>
         <version>3.5.0</version>
     </parent>
+    <packaging>pom</packaging>
+    <modules>
+        <module>dimple-file-web</module>
+    </modules>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dimple-modules-file</artifactId>
@@ -14,75 +18,5 @@
     <description>
         Dimple-modules-file文件服务
     </description>
-
-    <dependencies>
-
-        <!-- SpringCloud Alibaba Nacos -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-
-        <!-- SpringCloud Alibaba Nacos Config -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-
-        <!-- SpringCloud Alibaba Sentinel -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
-
-        <!-- SpringBoot Actuator -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <!-- FastDFS -->
-        <dependency>
-            <groupId>com.github.tobato</groupId>
-            <artifactId>fastdfs-client</artifactId>
-        </dependency>
-
-        <!-- Minio -->
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>${minio.version}</version>
-        </dependency>
-
-        <!-- Dimple Api System -->
-        <dependency>
-            <groupId>com.dimple</groupId>
-            <artifactId>dimple-api-system</artifactId>
-        </dependency>
-
-        <!-- Dimple Common Swagger -->
-        <dependency>
-            <groupId>com.dimple</groupId>
-            <artifactId>dimple-common-swagger</artifactId>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-        <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

@@ -1,7 +1,7 @@
 package com.dimple.gateway.service;
 
 import com.dimple.common.core.exception.CaptchaException;
-import com.dimple.common.core.web.domain.AjaxResult;
+import com.dimple.common.core.web.vo.params.AjaxResult;
 
 import java.io.IOException;
 

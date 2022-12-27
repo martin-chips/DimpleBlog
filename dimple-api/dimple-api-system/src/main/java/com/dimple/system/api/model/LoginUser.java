@@ -1,6 +1,5 @@
 package com.dimple.system.api.model;
 
-import com.dimple.system.api.domain.SysUser;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -58,5 +57,5 @@ public class LoginUser implements Serializable {
     /**
      * 用户信息
      */
-    private SysUser sysUser;
+    private SysUserBO sysUser;
 }

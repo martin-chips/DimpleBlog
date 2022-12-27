@@ -6,7 +6,7 @@ import com.dimple.common.core.exception.CaptchaException;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.sign.Base64;
 import com.dimple.common.core.utils.uuid.IdUtils;
-import com.dimple.common.core.web.domain.AjaxResult;
+import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.gateway.config.properties.CaptchaProperties;
 import com.dimple.gateway.service.ValidateCodeService;

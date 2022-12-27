@@ -5,7 +5,7 @@ import com.dimple.common.core.constant.Constants;
 import com.dimple.common.core.exception.ServiceException;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.utils.SecurityUtils;
-import com.dimple.system.api.domain.SysUser;
+import com.dimple.system.api.model.SysUserBO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +37,7 @@ public class SysPasswordService {
         return CacheConstants.PWD_ERR_CNT_KEY + username;
     }
 
-    public void validate(SysUser user, String password) {
+    public void validate(SysUserBO user, String password) {
         String username = user.getUserName();
 
         Integer retryCount = redisService.getCacheObject(getCacheKey(username));
@@ -62,7 +62,7 @@ public class SysPasswordService {
         }
     }
 
-    public boolean matches(SysUser user, String rawPassword) {
+    public boolean matches(SysUserBO user, String rawPassword) {
         return SecurityUtils.matchesPassword(rawPassword, user.getPassword());
     }
 

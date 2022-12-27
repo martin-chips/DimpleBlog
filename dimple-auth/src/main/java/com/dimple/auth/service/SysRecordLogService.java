@@ -6,7 +6,7 @@ import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.ip.IpUtils;
 import com.dimple.system.api.RemoteLogService;
-import com.dimple.system.api.domain.SysLogininfor;
+import com.dimple.system.api.model.SysLogininforBO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class SysRecordLogService {
      * @return
      */
     public void recordLogininfor(String username, String status, String message) {
-        SysLogininfor logininfor = new SysLogininfor();
+        SysLogininforBO logininfor = new SysLogininforBO();
         logininfor.setUserName(username);
         logininfor.setIpaddr(IpUtils.getIpAddr(ServletUtils.getRequest()));
         logininfor.setMsg(message);

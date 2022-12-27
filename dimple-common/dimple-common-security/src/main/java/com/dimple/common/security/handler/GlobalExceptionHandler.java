@@ -7,7 +7,7 @@ import com.dimple.common.core.exception.ServiceException;
 import com.dimple.common.core.exception.auth.NotPermissionException;
 import com.dimple.common.core.exception.auth.NotRoleException;
 import com.dimple.common.core.utils.StringUtils;
-import com.dimple.common.core.web.domain.AjaxResult;
+import com.dimple.common.core.web.vo.params.AjaxResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

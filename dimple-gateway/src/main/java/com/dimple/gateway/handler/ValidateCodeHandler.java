@@ -1,7 +1,7 @@
 package com.dimple.gateway.handler;
 
 import com.dimple.common.core.exception.CaptchaException;
-import com.dimple.common.core.web.domain.AjaxResult;
+import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.gateway.service.ValidateCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

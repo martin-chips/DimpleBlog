@@ -3,9 +3,9 @@ package com.dimple.system.api;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.constant.ServiceNameConstants;
 import com.dimple.common.core.domain.ResponseEntity;
-import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.factory.RemoteUserFallbackFactory;
 import com.dimple.system.api.model.LoginUser;
+import com.dimple.system.api.model.SysUserBO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,5 +38,5 @@ public interface RemoteUserService {
      * @return 结果
      */
     @PostMapping("/user/register")
-    ResponseEntity<Boolean> registerUserInfo(@RequestBody SysUser sysUser, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
+    ResponseEntity<Boolean> registerUserInfo(@RequestBody SysUserBO sysUser, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
 }

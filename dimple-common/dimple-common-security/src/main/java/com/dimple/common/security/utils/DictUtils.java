@@ -5,7 +5,7 @@ import com.dimple.common.core.constant.CacheConstants;
 import com.dimple.common.core.utils.SpringUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.redis.service.RedisService;
-import com.dimple.system.api.domain.SysDictData;
+import com.dimple.system.api.model.SysDictDataBO;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +27,7 @@ public class DictUtils {
      * @param key       参数键
      * @param dictDatas 字典数据列表
      */
-    public static void setDictCache(String key, List<SysDictData> dictDatas) {
+    public static void setDictCache(String key, List<SysDictDataBO> dictDatas) {
         SpringUtils.getBean(RedisService.class).setCacheObject(getCacheKey(key), dictDatas);
     }
 
@@ -37,10 +37,10 @@ public class DictUtils {
      * @param key 参数键
      * @return dictDatas 字典数据列表
      */
-    public static List<SysDictData> getDictCache(String key) {
+    public static List<SysDictDataBO> getDictCache(String key) {
         JSONArray arrayCache = SpringUtils.getBean(RedisService.class).getCacheObject(getCacheKey(key));
         if (StringUtils.isNotNull(arrayCache)) {
-            return arrayCache.toList(SysDictData.class);
+            return arrayCache.toList(SysDictDataBO.class);
         }
         return Collections.emptyList();
     }

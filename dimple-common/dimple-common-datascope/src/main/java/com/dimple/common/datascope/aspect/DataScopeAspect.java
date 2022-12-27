@@ -3,12 +3,12 @@ package com.dimple.common.datascope.aspect;
 import com.dimple.common.core.context.SecurityContextHolder;
 import com.dimple.common.core.text.Convert;
 import com.dimple.common.core.utils.StringUtils;
-import com.dimple.common.core.web.domain.BaseEntity;
+import com.dimple.common.core.web.vo.params.BaseVOParams;
 import com.dimple.common.datascope.annotation.DataScope;
 import com.dimple.common.security.utils.SecurityUtils;
-import com.dimple.system.api.domain.SysRole;
-import com.dimple.system.api.domain.SysUser;
 import com.dimple.system.api.model.LoginUser;
+import com.dimple.system.api.model.SysRoleBO;
+import com.dimple.system.api.model.SysUserBO;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -53,11 +53,11 @@ public class DataScopeAspect {
      * @param userAlias  用户别名
      * @param permission 权限字符
      */
-    public static void dataScopeFilter(JoinPoint joinPoint, SysUser user, String userAlias, String permission) {
+    public static void dataScopeFilter(JoinPoint joinPoint, SysUserBO user, String userAlias, String permission) {
         StringBuilder sqlString = new StringBuilder();
         List<String> conditions = new ArrayList<>();
 
-        for (SysRole role : user.getRoles()) {
+        for (SysRoleBO role : user.getRoles()) {
             String dataScope = role.getDataScope();
             if (!DATA_SCOPE_CUSTOM.equals(dataScope) && conditions.contains(dataScope)) {
                 continue;
@@ -79,9 +79,9 @@ public class DataScopeAspect {
 
         if (StringUtils.isNotBlank(sqlString.toString())) {
             Object params = joinPoint.getArgs()[0];
-            if (StringUtils.isNotNull(params) && params instanceof BaseEntity) {
-                BaseEntity baseEntity = (BaseEntity) params;
-                baseEntity.getParams().put(DATA_SCOPE, " AND (" + sqlString.substring(4) + ")");
+            if (StringUtils.isNotNull(params) && params instanceof BaseVOParams) {
+                BaseVOParams baseVOParams = (BaseVOParams) params;
+                baseVOParams.getParams().put(DATA_SCOPE, " AND (" + sqlString.substring(4) + ")");
             }
         }
     }
@@ -96,7 +96,7 @@ public class DataScopeAspect {
         // 获取当前的用户
         LoginUser loginUser = SecurityUtils.getLoginUser();
         if (StringUtils.isNotNull(loginUser)) {
-            SysUser currentUser = loginUser.getSysUser();
+            SysUserBO currentUser = loginUser.getSysUser();
             // 如果是超级管理员，则不过滤数据
             if (StringUtils.isNotNull(currentUser) && !currentUser.isAdmin()) {
                 String permission = StringUtils.defaultIfEmpty(controllerDataScope.permission(), SecurityContextHolder.getPermission());
@@ -111,9 +111,9 @@ public class DataScopeAspect {
      */
     private void clearDataScope(final JoinPoint joinPoint) {
         Object params = joinPoint.getArgs()[0];
-        if (StringUtils.isNotNull(params) && params instanceof BaseEntity) {
-            BaseEntity baseEntity = (BaseEntity) params;
-            baseEntity.getParams().put(DATA_SCOPE, "");
+        if (StringUtils.isNotNull(params) && params instanceof BaseVOParams) {
+            BaseVOParams baseVOParams = (BaseVOParams) params;
+            baseVOParams.getParams().put(DATA_SCOPE, "");
         }
     }
 }
