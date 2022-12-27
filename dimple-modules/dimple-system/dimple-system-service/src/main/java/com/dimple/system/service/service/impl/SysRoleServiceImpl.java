@@ -14,7 +14,7 @@ import com.dimple.system.service.entity.SysUserRole;
 import com.dimple.system.service.mapper.SysRoleMapper;
 import com.dimple.system.service.mapper.SysRoleMenuMapper;
 import com.dimple.system.service.mapper.SysUserRoleMapper;
-import com.dimple.system.service.service.ISysRoleService;
+import com.dimple.system.service.service.SysRoleService;
 import com.dimple.system.service.service.bo.SysUserRoleBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ import java.util.Set;
  * @author Dimple
  */
 @Service
-public class SysRoleServiceImpl implements ISysRoleService {
+public class SysRoleServiceImpl implements SysRoleService {
     @Autowired
     private SysRoleMapper roleMapper;
 

@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableCustomConfig
 @EnableCustomSwagger2
 @EnableDimpleFeignClients
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.dimple.system"})
 public class DimpleSystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(DimpleSystemApplication.class, args);

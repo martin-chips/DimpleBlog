@@ -18,9 +18,9 @@
         <dependency>
             <groupId>com.dimple</groupId>
             <artifactId>dimple-modules-file-service</artifactId>
-            <version>${dimple.version}</version>
         </dependency>
     </dependencies>
+
 
     <build>
         <finalName>${project.artifactId}</finalName>

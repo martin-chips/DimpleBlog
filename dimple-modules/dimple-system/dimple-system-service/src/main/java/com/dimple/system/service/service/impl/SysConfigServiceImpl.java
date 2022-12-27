@@ -9,7 +9,7 @@ import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.system.service.entity.SysConfig;
 import com.dimple.system.service.mapper.SysConfigMapper;
-import com.dimple.system.service.service.ISysConfigService;
+import com.dimple.system.service.service.SysConfigService;
 import com.dimple.system.service.service.bo.SysConfigBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.List;
  * @author Dimple
  */
 @Service
-public class SysConfigServiceImpl implements ISysConfigService {
+public class SysConfigServiceImpl implements SysConfigService {
     @Autowired
     private SysConfigMapper configMapper;
 

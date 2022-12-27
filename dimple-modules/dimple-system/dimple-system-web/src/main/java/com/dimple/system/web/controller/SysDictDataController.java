@@ -11,8 +11,8 @@ import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.model.SysDictDataBO;
-import com.dimple.system.service.service.ISysDictDataService;
-import com.dimple.system.service.service.ISysDictTypeService;
+import com.dimple.system.service.service.SysDictDataService;
+import com.dimple.system.service.service.SysDictTypeService;
 import com.dimple.system.web.controller.vo.SysDictDataVO;
 import com.dimple.system.web.controller.vo.params.SysDictDataVOParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +39,10 @@ import java.util.List;
 @RequestMapping("/dict/data")
 public class SysDictDataController extends BaseController {
     @Autowired
-    private ISysDictDataService dictDataService;
+    private SysDictDataService dictDataService;
 
     @Autowired
-    private ISysDictTypeService dictTypeService;
+    private SysDictTypeService dictTypeService;
 
     @RequiresPermissions("system:dict:list")
     @GetMapping("/list")
@@ -79,7 +79,7 @@ public class SysDictDataController extends BaseController {
         if (StringUtils.isNull(data)) {
             data = new ArrayList<>();
         }
-        return success(BeanMapper.convert(data, SysDictDataVO.class));
+        return success(BeanMapper.convertList(data, SysDictDataVO.class));
     }
 
     /**

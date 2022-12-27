@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Dimple
  */
-public interface ISysOperLogService {
+public interface SysOperLogService {
     /**
      * 新增操作日志
      *

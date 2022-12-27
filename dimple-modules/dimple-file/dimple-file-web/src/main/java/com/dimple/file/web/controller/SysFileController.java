@@ -3,7 +3,7 @@ package com.dimple.file.web.controller;
 import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.common.core.utils.file.FileUtils;
 import com.dimple.common.core.utils.response.ResponseEntityUtils;
-import com.dimple.file.service.service.ISysFileService;
+import com.dimple.file.service.service.SysFileService;
 import com.dimple.system.api.model.SysFileBO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class SysFileController {
 
     @Autowired
-    private ISysFileService sysFileService;
+    private SysFileService sysFileService;
 
     /**
      * 文件上传请求

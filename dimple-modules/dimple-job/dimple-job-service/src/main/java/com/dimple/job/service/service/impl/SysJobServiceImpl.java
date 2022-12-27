@@ -5,7 +5,7 @@ import com.dimple.common.core.exception.job.TaskException;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.job.service.entity.SysJob;
 import com.dimple.job.service.mapper.SysJobMapper;
-import com.dimple.job.service.service.ISysJobService;
+import com.dimple.job.service.service.SysJobService;
 import com.dimple.job.service.service.bo.SysJobBO;
 import com.dimple.job.service.util.CronUtils;
 import com.dimple.job.service.util.ScheduleUtils;
@@ -26,7 +26,7 @@ import java.util.List;
  * @author Dimple
  */
 @Service
-public class SysJobServiceImpl implements ISysJobService {
+public class SysJobServiceImpl implements SysJobService {
     @Autowired
     private Scheduler scheduler;
 

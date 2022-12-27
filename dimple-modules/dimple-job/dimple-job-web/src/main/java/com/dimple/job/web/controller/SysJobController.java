@@ -13,7 +13,7 @@ import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.job.service.entity.SysJob;
-import com.dimple.job.service.service.ISysJobService;
+import com.dimple.job.service.service.SysJobService;
 import com.dimple.job.service.service.bo.SysJobBO;
 import com.dimple.job.service.util.CronUtils;
 import com.dimple.job.service.util.ScheduleUtils;
@@ -42,7 +42,7 @@ import java.util.List;
 @RequestMapping("/job")
 public class SysJobController extends BaseController {
     @Autowired
-    private ISysJobService jobService;
+    private SysJobService jobService;
 
     /**
      * 查询定时任务列表

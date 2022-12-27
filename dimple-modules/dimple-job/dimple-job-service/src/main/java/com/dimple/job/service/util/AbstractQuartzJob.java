@@ -5,7 +5,7 @@ import com.dimple.common.core.utils.ExceptionUtil;
 import com.dimple.common.core.utils.SpringUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
-import com.dimple.job.service.service.ISysJobLogService;
+import com.dimple.job.service.service.SysJobLogService;
 import com.dimple.job.service.service.bo.SysJobBO;
 import com.dimple.job.service.service.bo.SysJobLogBO;
 import lombok.extern.slf4j.Slf4j;
@@ -79,7 +79,7 @@ public abstract class AbstractQuartzJob implements Job {
         }
 
         // 写入数据库当中
-        SpringUtils.getBean(ISysJobLogService.class).addJobLog(sysJobLog);
+        SpringUtils.getBean(SysJobLogService.class).addJobLog(sysJobLog);
     }
 
     /**

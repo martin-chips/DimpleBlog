@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author Dimple
  */
-public interface ISysMenuService {
+public interface SysMenuService {
     /**
      * 根据用户查询系统菜单列表
      *

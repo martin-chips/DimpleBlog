@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @author Dimple
  */
 @EnableDimpleFeignClients
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}, scanBasePackages = {"com.dimple.auth"})
 public class DimpleAuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(DimpleAuthApplication.class, args);

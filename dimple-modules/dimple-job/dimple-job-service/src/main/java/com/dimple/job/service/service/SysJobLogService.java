@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Dimple
  */
-public interface ISysJobLogService {
+public interface SysJobLogService {
     /**
      * 获取quartz调度器日志的计划任务
      *

@@ -2,7 +2,7 @@ package com.dimple.system.service.service.impl;
 
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.system.api.model.LoginUser;
-import com.dimple.system.service.service.ISysUserOnlineService;
+import com.dimple.system.service.service.SysUserOnlineService;
 import com.dimple.system.service.service.bo.SysUserOnlineBO;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author Dimple
  */
 @Service
-public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
+public class SysUserOnlineServiceImpl implements SysUserOnlineService {
     /**
      * 通过登录地址查询信息
      *

@@ -8,7 +8,7 @@ import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
-import com.dimple.system.service.service.ISysNoticeService;
+import com.dimple.system.service.service.SysNoticeService;
 import com.dimple.system.service.service.bo.SysNoticeBO;
 import com.dimple.system.web.controller.vo.SysNoticeVO;
 import com.dimple.system.web.controller.vo.params.SysNoticeVOParams;
@@ -34,7 +34,7 @@ import java.util.List;
 @RequestMapping("/notice")
 public class SysNoticeController extends BaseController {
     @Autowired
-    private ISysNoticeService noticeService;
+    private SysNoticeService noticeService;
 
     /**
      * 获取通知公告列表

@@ -1,6 +1,6 @@
 package com.dimple.system.web.controller.vo.params;
 
-import com.dimple.common.core.web.vo.params.BaseVOParams;
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class SysUserVOParams extends BaseVOParams {
+public class SysUserVOParams extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     public SysUserVOParams(Long userId) {

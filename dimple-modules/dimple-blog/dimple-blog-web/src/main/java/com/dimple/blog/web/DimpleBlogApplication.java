@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableCustomSwagger2
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.dimple.blog"})
 public class DimpleBlogApplication {
     public static void main(String[] args) {
         SpringApplication.run(DimpleBlogApplication.class, args);

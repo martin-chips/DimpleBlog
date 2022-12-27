@@ -5,7 +5,7 @@ import com.dimple.common.security.utils.DictUtils;
 import com.dimple.system.api.model.SysDictDataBO;
 import com.dimple.system.service.entity.SysDictData;
 import com.dimple.system.service.mapper.SysDictDataMapper;
-import com.dimple.system.service.service.ISysDictDataService;
+import com.dimple.system.service.service.SysDictDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Dimple
  */
 @Service
-public class SysDictDataServiceImpl implements ISysDictDataService {
+public class SysDictDataServiceImpl implements SysDictDataService {
     @Autowired
     private SysDictDataMapper dictDataMapper;
 

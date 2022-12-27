@@ -1,6 +1,6 @@
 package com.dimple.blog.service.entity;
 
-import com.dimple.common.core.web.vo.params.BaseVOParams;
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -9,7 +9,7 @@ import lombok.Data;
  * @author Dimple
  */
 @Data
-public class ArticleCategory extends BaseVOParams {
+public class ArticleCategory extends BaseEntity {
 
     private Integer id;
 

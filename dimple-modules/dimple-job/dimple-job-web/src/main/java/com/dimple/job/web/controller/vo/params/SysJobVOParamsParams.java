@@ -3,7 +3,7 @@ package com.dimple.job.web.controller.vo.params;
 import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.annotation.Excel.ColumnType;
 import com.dimple.common.core.constant.ScheduleConstants;
-import com.dimple.common.core.web.vo.params.BaseVOParams;
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
  * @author Dimple
  */
 @Data
-public class SysJobVOParamsParams extends BaseVOParams {
+public class SysJobVOParamsParams extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

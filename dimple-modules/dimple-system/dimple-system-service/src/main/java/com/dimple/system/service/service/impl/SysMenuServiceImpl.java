@@ -11,7 +11,7 @@ import com.dimple.system.service.entity.SysUser;
 import com.dimple.system.service.mapper.SysMenuMapper;
 import com.dimple.system.service.mapper.SysRoleMapper;
 import com.dimple.system.service.mapper.SysRoleMenuMapper;
-import com.dimple.system.service.service.ISysMenuService;
+import com.dimple.system.service.service.SysMenuService;
 import com.dimple.system.service.service.bo.MetaBO;
 import com.dimple.system.service.service.bo.RouterBO;
 import com.dimple.system.service.service.bo.SysMenuBO;
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  * @author Dimple
  */
 @Service
-public class SysMenuServiceImpl implements ISysMenuService {
+public class SysMenuServiceImpl implements SysMenuService {
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 
     @Autowired

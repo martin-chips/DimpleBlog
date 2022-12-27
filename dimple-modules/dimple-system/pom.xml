@@ -10,6 +10,7 @@
 
     <modules>
         <module>dimple-system-web</module>
+        <module>dimple-system-service</module>
     </modules>
 
     <artifactId>dimple-modules-system</artifactId>

@@ -10,7 +10,7 @@ import com.dimple.system.service.entity.SysDictData;
 import com.dimple.system.service.entity.SysDictType;
 import com.dimple.system.service.mapper.SysDictDataMapper;
 import com.dimple.system.service.mapper.SysDictTypeMapper;
-import com.dimple.system.service.service.ISysDictTypeService;
+import com.dimple.system.service.service.SysDictTypeService;
 import com.dimple.system.service.service.bo.SysDictTypeBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @author Dimple
  */
 @Service
-public class SysDictTypeServiceImpl implements ISysDictTypeService {
+public class SysDictTypeServiceImpl implements SysDictTypeService {
     @Autowired
     private SysDictTypeMapper dictTypeMapper;
 

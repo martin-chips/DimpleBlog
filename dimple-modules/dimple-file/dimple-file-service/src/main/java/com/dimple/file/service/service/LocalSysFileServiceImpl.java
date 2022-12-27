@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Primary
 @Service
-public class LocalSysFileServiceImpl implements ISysFileService {
+public class LocalSysFileServiceImpl implements SysFileService {
     /**
      * 资源映射路径 前缀
      */

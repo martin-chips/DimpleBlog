@@ -11,7 +11,7 @@ import java.util.Set;
  *
  * @author Dimple
  */
-public interface ISysPermissionService {
+public interface SysPermissionService {
     /**
      * 获取角色数据权限
      *

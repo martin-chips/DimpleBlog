@@ -4,7 +4,7 @@ package com.dimple.job.service.service.impl;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.job.service.entity.SysJobLog;
 import com.dimple.job.service.mapper.SysJobLogMapper;
-import com.dimple.job.service.service.ISysJobLogService;
+import com.dimple.job.service.service.SysJobLogService;
 import com.dimple.job.service.service.bo.SysJobLogBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Dimple
  */
 @Service
-public class SysJobLogServiceImpl implements ISysJobLogService {
+public class SysJobLogServiceImpl implements SysJobLogService {
     @Autowired
     private SysJobLogMapper jobLogMapper;
 

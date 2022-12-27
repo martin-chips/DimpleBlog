@@ -18,10 +18,10 @@ import com.dimple.system.api.model.LoginUser;
 import com.dimple.system.api.model.SysRoleBO;
 import com.dimple.system.api.model.SysUserBO;
 import com.dimple.system.service.entity.SysUser;
-import com.dimple.system.service.service.ISysConfigService;
-import com.dimple.system.service.service.ISysPermissionService;
-import com.dimple.system.service.service.ISysRoleService;
-import com.dimple.system.service.service.ISysUserService;
+import com.dimple.system.service.service.SysConfigService;
+import com.dimple.system.service.service.SysPermissionService;
+import com.dimple.system.service.service.SysRoleService;
+import com.dimple.system.service.service.SysUserService;
 import com.dimple.system.web.controller.vo.SysRoleVO;
 import com.dimple.system.web.controller.vo.SysUserVO;
 import com.dimple.system.web.controller.vo.params.SysUserVOParams;
@@ -53,15 +53,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/user")
 public class SysUserController extends BaseController {
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
     @Autowired
-    private ISysPermissionService permissionService;
+    private SysPermissionService permissionService;
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     /**
      * 获取用户列表

@@ -15,8 +15,8 @@ import com.dimple.system.service.entity.SysUserRole;
 import com.dimple.system.service.mapper.SysRoleMapper;
 import com.dimple.system.service.mapper.SysUserMapper;
 import com.dimple.system.service.mapper.SysUserRoleMapper;
-import com.dimple.system.service.service.ISysConfigService;
-import com.dimple.system.service.service.ISysUserService;
+import com.dimple.system.service.service.SysConfigService;
+import com.dimple.system.service.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class SysUserServiceImpl implements ISysUserService {
+public class SysUserServiceImpl implements SysUserService {
     @Autowired
     protected Validator validator;
     @Autowired
@@ -45,7 +45,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Autowired
     private SysUserRoleMapper userRoleMapper;
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     /**
      * 根据条件分页查询用户列表

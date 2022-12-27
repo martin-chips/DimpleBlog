@@ -1,5 +1,6 @@
 package com.dimple.system.web.controller.vo;
 
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Data;
  * @author Dimple
  */
 @Data
-public class SysNoticeVO {
+public class SysNoticeVO extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

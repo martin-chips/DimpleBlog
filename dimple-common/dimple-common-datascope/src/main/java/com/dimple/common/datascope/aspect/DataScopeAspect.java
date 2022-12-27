@@ -3,7 +3,7 @@ package com.dimple.common.datascope.aspect;
 import com.dimple.common.core.context.SecurityContextHolder;
 import com.dimple.common.core.text.Convert;
 import com.dimple.common.core.utils.StringUtils;
-import com.dimple.common.core.web.vo.params.BaseVOParams;
+import com.dimple.common.core.web.entity.BaseEntity;
 import com.dimple.common.datascope.annotation.DataScope;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.model.LoginUser;
@@ -79,9 +79,9 @@ public class DataScopeAspect {
 
         if (StringUtils.isNotBlank(sqlString.toString())) {
             Object params = joinPoint.getArgs()[0];
-            if (StringUtils.isNotNull(params) && params instanceof BaseVOParams) {
-                BaseVOParams baseVOParams = (BaseVOParams) params;
-                baseVOParams.getParams().put(DATA_SCOPE, " AND (" + sqlString.substring(4) + ")");
+            if (StringUtils.isNotNull(params) && params instanceof BaseEntity) {
+                BaseEntity baseEntity = (BaseEntity) params;
+                baseEntity.getParams().put(DATA_SCOPE, " AND (" + sqlString.substring(4) + ")");
             }
         }
     }
@@ -111,9 +111,9 @@ public class DataScopeAspect {
      */
     private void clearDataScope(final JoinPoint joinPoint) {
         Object params = joinPoint.getArgs()[0];
-        if (StringUtils.isNotNull(params) && params instanceof BaseVOParams) {
-            BaseVOParams baseVOParams = (BaseVOParams) params;
-            baseVOParams.getParams().put(DATA_SCOPE, "");
+        if (StringUtils.isNotNull(params) && params instanceof BaseEntity) {
+            BaseEntity baseEntity = (BaseEntity) params;
+            baseEntity.getParams().put(DATA_SCOPE, "");
         }
     }
 }

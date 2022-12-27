@@ -1,7 +1,6 @@
 package com.dimple.job.service.entity;
 
 import com.dimple.common.core.annotation.Excel;
-import com.dimple.common.core.web.entity.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

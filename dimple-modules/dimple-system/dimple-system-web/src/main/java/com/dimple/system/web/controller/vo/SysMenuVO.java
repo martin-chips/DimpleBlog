@@ -1,5 +1,6 @@
 package com.dimple.system.web.controller.vo;
 
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 import lombok.ToString;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Data
 @ToString(callSuper = true)
-public class SysMenuVO {
+public class SysMenuVO extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

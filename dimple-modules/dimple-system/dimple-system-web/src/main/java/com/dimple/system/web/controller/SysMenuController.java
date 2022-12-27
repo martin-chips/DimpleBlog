@@ -9,7 +9,7 @@ import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
-import com.dimple.system.service.service.ISysMenuService;
+import com.dimple.system.service.service.SysMenuService;
 import com.dimple.system.service.service.bo.SysMenuBO;
 import com.dimple.system.web.controller.vo.RouterVO;
 import com.dimple.system.web.controller.vo.SysMenuVO;
@@ -36,7 +36,7 @@ import java.util.List;
 @RequestMapping("/menu")
 public class SysMenuController extends BaseController {
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     /**
      * 获取菜单列表

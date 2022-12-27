@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Dimple
  */
-public interface ISysConfigService {
+public interface SysConfigService {
     /**
      * 查询参数配置信息
      *

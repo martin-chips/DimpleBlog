@@ -1,5 +1,7 @@
 package com.dimple.common.core.web.vo.params;
 
+import com.dimple.common.core.web.entity.BaseEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  *
  * @author Dimple
  */
-public class TreeVOParams extends BaseVOParams {
+public class TreeVOParams extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

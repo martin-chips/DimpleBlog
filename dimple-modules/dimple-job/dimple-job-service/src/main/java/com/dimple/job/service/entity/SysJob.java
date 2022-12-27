@@ -4,7 +4,6 @@ import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.annotation.Excel.ColumnType;
 import com.dimple.common.core.constant.ScheduleConstants;
 import com.dimple.common.core.utils.StringUtils;
-import com.dimple.common.core.web.entity.BaseEntity;
 import com.dimple.job.service.util.CronUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 

@@ -4,6 +4,7 @@ import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.annotation.Excel.ColumnType;
 import com.dimple.common.core.constant.ScheduleConstants;
 import com.dimple.common.core.utils.StringUtils;
+import com.dimple.common.core.web.entity.BaseEntity;
 import com.dimple.job.service.util.CronUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.util.Date;
  * @author Dimple
  */
 @Data
-public class SysJobVO {
+public class SysJobVO extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

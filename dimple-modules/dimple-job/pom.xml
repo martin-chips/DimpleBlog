@@ -10,6 +10,7 @@
 
     <modules>
         <module>dimple-job-web</module>
+        <module>dimple-job-service</module>
     </modules>
 
     <artifactId>dimple-modules-job</artifactId>

@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableCustomConfig
 @EnableCustomSwagger2
 @EnableDimpleFeignClients
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.dimple.job"})
 public class DimpleJobApplication {
     public static void main(String[] args) {
         SpringApplication.run(DimpleJobApplication.class, args);

@@ -1,6 +1,6 @@
 package com.dimple.system.web.controller.vo.params;
 
-import com.dimple.common.core.web.vo.params.BaseVOParams;
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  */
 @Data
 @NoArgsConstructor
-public class SysRoleVOParams extends BaseVOParams {
+public class SysRoleVOParams extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     public SysRoleVOParams(Long roleId) {

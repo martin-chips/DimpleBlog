@@ -10,7 +10,7 @@ import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
-import com.dimple.system.service.service.ISysDictTypeService;
+import com.dimple.system.service.service.SysDictTypeService;
 import com.dimple.system.service.service.bo.SysDictTypeBO;
 import com.dimple.system.web.controller.vo.SysDictTypeVO;
 import com.dimple.system.web.controller.vo.params.SysDictTypeVOParams;
@@ -37,7 +37,7 @@ import java.util.List;
 @RequestMapping("/dict/type")
 public class SysDictTypeController extends BaseController {
     @Autowired
-    private ISysDictTypeService dictTypeService;
+    private SysDictTypeService dictTypeService;
 
     @RequiresPermissions("system:dict:list")
     @GetMapping("/list")

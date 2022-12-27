@@ -16,7 +16,7 @@ import com.dimple.system.api.RemoteFileService;
 import com.dimple.system.api.model.LoginUser;
 import com.dimple.system.api.model.SysFileBO;
 import com.dimple.system.api.model.SysUserBO;
-import com.dimple.system.service.service.ISysUserService;
+import com.dimple.system.service.service.SysUserService;
 import com.dimple.system.web.controller.vo.params.SysUserVOParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +39,7 @@ import java.util.Arrays;
 @RequestMapping("/user/profile")
 public class SysProfileController extends BaseController {
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @Autowired
     private TokenService tokenService;

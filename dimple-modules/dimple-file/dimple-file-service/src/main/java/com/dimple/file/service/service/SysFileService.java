@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Dimple
  */
-public interface ISysFileService {
+public interface SysFileService {
     /**
      * 文件上传接口
      *

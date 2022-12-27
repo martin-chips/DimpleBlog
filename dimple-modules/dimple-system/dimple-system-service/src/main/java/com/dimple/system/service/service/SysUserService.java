@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Dimple
  */
-public interface ISysUserService {
+public interface SysUserService {
     /**
      * 根据条件分页查询用户列表
      *

@@ -3,7 +3,7 @@ package com.dimple.system.service.service.impl;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.system.service.entity.SysNotice;
 import com.dimple.system.service.mapper.SysNoticeMapper;
-import com.dimple.system.service.service.ISysNoticeService;
+import com.dimple.system.service.service.SysNoticeService;
 import com.dimple.system.service.service.bo.SysNoticeBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author Dimple
  */
 @Service
-public class SysNoticeServiceImpl implements ISysNoticeService {
+public class SysNoticeServiceImpl implements SysNoticeService {
     @Autowired
     private SysNoticeMapper noticeMapper;
 

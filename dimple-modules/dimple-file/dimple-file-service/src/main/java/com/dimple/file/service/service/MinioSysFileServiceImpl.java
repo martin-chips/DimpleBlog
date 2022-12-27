@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Dimple
  */
 @Service
-public class MinioSysFileServiceImpl implements ISysFileService {
+public class MinioSysFileServiceImpl implements SysFileService {
     @Autowired
     private MinioConfig minioConfig;
 

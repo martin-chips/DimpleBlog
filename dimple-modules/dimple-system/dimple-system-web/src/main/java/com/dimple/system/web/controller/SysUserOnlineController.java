@@ -10,7 +10,7 @@ import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.api.model.LoginUser;
-import com.dimple.system.service.service.ISysUserOnlineService;
+import com.dimple.system.service.service.SysUserOnlineService;
 import com.dimple.system.service.service.bo.SysUserOnlineBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +33,7 @@ import java.util.List;
 @RequestMapping("/online")
 public class SysUserOnlineController extends BaseController {
     @Autowired
-    private ISysUserOnlineService userOnlineService;
+    private SysUserOnlineService userOnlineService;
 
     @Autowired
     private RedisService redisService;

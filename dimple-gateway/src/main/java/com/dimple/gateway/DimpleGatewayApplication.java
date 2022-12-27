@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  *
  * @author Dimple
  */
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}, scanBasePackages = {"com.dimple.gateway"})
 public class DimpleGatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(DimpleGatewayApplication.class, args);

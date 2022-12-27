@@ -4,7 +4,7 @@ import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.system.api.model.SysOperLogBO;
 import com.dimple.system.service.entity.SysOperLog;
 import com.dimple.system.service.mapper.SysOperLogMapper;
-import com.dimple.system.service.service.ISysOperLogService;
+import com.dimple.system.service.service.SysOperLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @author Dimple
  */
 @Service
-public class SysOperLogServiceImpl implements ISysOperLogService {
+public class SysOperLogServiceImpl implements SysOperLogService {
     @Autowired
     private SysOperLogMapper operLogMapper;
 

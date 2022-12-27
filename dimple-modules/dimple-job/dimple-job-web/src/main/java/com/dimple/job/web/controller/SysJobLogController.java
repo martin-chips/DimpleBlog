@@ -8,7 +8,7 @@ import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
-import com.dimple.job.service.service.ISysJobLogService;
+import com.dimple.job.service.service.SysJobLogService;
 import com.dimple.job.service.service.bo.SysJobLogBO;
 import com.dimple.job.web.controller.vo.SysJobLogVO;
 import com.dimple.job.web.controller.vo.params.SysJobLogVOParams;
@@ -32,7 +32,7 @@ import java.util.List;
 @RequestMapping("/job/log")
 public class SysJobLogController extends BaseController {
     @Autowired
-    private ISysJobLogService jobLogService;
+    private SysJobLogService jobLogService;
 
     /**
      * 查询定时任务调度日志列表

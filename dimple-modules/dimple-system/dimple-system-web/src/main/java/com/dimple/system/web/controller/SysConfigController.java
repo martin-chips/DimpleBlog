@@ -10,7 +10,7 @@ import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
-import com.dimple.system.service.service.ISysConfigService;
+import com.dimple.system.service.service.SysConfigService;
 import com.dimple.system.service.service.bo.SysConfigBO;
 import com.dimple.system.web.controller.vo.SysConfigVO;
 import com.dimple.system.web.controller.vo.params.SysConfigVOParams;
@@ -37,7 +37,7 @@ import java.util.List;
 @RequestMapping("/config")
 public class SysConfigController extends BaseController {
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     /**
      * 获取参数配置列表

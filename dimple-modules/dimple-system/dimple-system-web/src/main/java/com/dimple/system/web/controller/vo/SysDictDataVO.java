@@ -2,6 +2,7 @@ package com.dimple.system.web.controller.vo;
 
 import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.annotation.Excel.ColumnType;
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 import javax.validation.constraints.Size;
@@ -12,7 +13,7 @@ import javax.validation.constraints.Size;
  * @author Dimple
  */
 @Data
-public class SysDictDataVO {
+public class SysDictDataVO extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**

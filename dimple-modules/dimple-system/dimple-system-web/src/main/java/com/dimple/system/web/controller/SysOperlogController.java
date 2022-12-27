@@ -10,7 +10,7 @@ import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.api.model.SysOperLogBO;
-import com.dimple.system.service.service.ISysOperLogService;
+import com.dimple.system.service.service.SysOperLogService;
 import com.dimple.system.web.controller.vo.SysOperLogVO;
 import com.dimple.system.web.controller.vo.params.SysOperLogVOParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ import java.util.List;
 @RequestMapping("/operlog")
 public class SysOperlogController extends BaseController {
     @Autowired
-    private ISysOperLogService operLogService;
+    private SysOperLogService operLogService;
 
     @RequiresPermissions("system:operlog:list")
     @GetMapping("/list")

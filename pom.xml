@@ -247,8 +247,6 @@
         <module>dimple-modules</module>
         <module>dimple-api</module>
         <module>dimple-common</module>
-        <module>dimple-modules/dimple-system/dimple-system-service</module>
-        <module>dimple-modules/dimple-job/dimple-job-service</module>
     </modules>
     <packaging>pom</packaging>
 

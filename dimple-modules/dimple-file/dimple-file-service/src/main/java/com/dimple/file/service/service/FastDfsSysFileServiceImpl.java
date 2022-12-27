@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Dimple
  */
 @Service
-public class FastDfsSysFileServiceImpl implements ISysFileService {
+public class FastDfsSysFileServiceImpl implements SysFileService {
     /**
      * 域名或本机访问地址
      */

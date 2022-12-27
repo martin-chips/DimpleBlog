@@ -2,9 +2,9 @@ package com.dimple.system.service.service.impl;
 
 import com.dimple.system.api.model.SysRoleBO;
 import com.dimple.system.api.model.SysUserBO;
-import com.dimple.system.service.service.ISysMenuService;
-import com.dimple.system.service.service.ISysPermissionService;
-import com.dimple.system.service.service.ISysRoleService;
+import com.dimple.system.service.service.SysMenuService;
+import com.dimple.system.service.service.SysPermissionService;
+import com.dimple.system.service.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +18,12 @@ import java.util.Set;
  * @author Dimple
  */
 @Service
-public class SysPermissionServiceImpl implements ISysPermissionService {
+public class SysPermissionServiceImpl implements SysPermissionService {
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     /**
      * 获取角色数据权限

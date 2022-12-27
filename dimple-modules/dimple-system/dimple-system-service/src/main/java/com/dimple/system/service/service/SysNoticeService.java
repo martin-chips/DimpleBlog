@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Dimple
  */
-public interface ISysNoticeService {
+public interface SysNoticeService {
     /**
      * 查询公告信息
      *

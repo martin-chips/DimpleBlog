@@ -4,7 +4,7 @@ import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.system.api.model.SysLogininforBO;
 import com.dimple.system.service.entity.SysLogininfor;
 import com.dimple.system.service.mapper.SysLogininforMapper;
-import com.dimple.system.service.service.ISysLogininforService;
+import com.dimple.system.service.service.SysLogininforService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @author Dimple
  */
 @Service
-public class SysLogininforServiceImpl implements ISysLogininforService {
+public class SysLogininforServiceImpl implements SysLogininforService {
 
     @Autowired
     private SysLogininforMapper logininforMapper;

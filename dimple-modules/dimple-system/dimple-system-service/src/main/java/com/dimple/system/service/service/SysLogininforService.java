@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Dimple
  */
-public interface ISysLogininforService {
+public interface SysLogininforService {
     /**
      * 新增系统登录日志
      *

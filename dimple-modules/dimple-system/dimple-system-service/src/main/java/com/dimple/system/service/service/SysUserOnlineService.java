@@ -8,7 +8,7 @@ import com.dimple.system.service.service.bo.SysUserOnlineBO;
  *
  * @author Dimple
  */
-public interface ISysUserOnlineService {
+public interface SysUserOnlineService {
     /**
      * 通过登录地址查询信息
      *

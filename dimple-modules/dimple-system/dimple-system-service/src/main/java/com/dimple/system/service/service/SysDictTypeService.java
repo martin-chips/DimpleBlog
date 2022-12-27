@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Dimple
  */
-public interface ISysDictTypeService {
+public interface SysDictTypeService {
     /**
      * 根据条件分页查询字典类型
      *

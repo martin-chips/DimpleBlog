@@ -12,7 +12,7 @@ import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.api.model.SysLogininforBO;
-import com.dimple.system.service.service.ISysLogininforService;
+import com.dimple.system.service.service.SysLogininforService;
 import com.dimple.system.web.controller.vo.SysLogininforVO;
 import com.dimple.system.web.controller.vo.params.SysLogininforVOParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ import java.util.List;
 @RequestMapping("/logininfor")
 public class SysLogininforController extends BaseController {
     @Autowired
-    private ISysLogininforService logininforService;
+    private SysLogininforService logininforService;
 
     @Autowired
     private RedisService redisService;

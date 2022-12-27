@@ -12,8 +12,8 @@ import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.model.SysRoleBO;
 import com.dimple.system.api.model.SysUserBO;
-import com.dimple.system.service.service.ISysRoleService;
-import com.dimple.system.service.service.ISysUserService;
+import com.dimple.system.service.service.SysRoleService;
+import com.dimple.system.service.service.SysUserService;
 import com.dimple.system.service.service.bo.SysUserRoleBO;
 import com.dimple.system.web.controller.vo.SysRoleVO;
 import com.dimple.system.web.controller.vo.SysUserVO;
@@ -43,10 +43,10 @@ import java.util.List;
 @RequestMapping("/role")
 public class SysRoleController extends BaseController {
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @RequiresPermissions("system:role:list")
     @GetMapping("/list")

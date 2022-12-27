@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @author Dimple
  */
 @EnableCustomSwagger2
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}, scanBasePackages = {"com.dimple.file"})
 public class DimpleFileApplication {
     public static void main(String[] args) {
         SpringApplication.run(DimpleFileApplication.class, args);

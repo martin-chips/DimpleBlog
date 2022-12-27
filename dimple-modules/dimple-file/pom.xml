@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.dimple</groupId>
         <artifactId>dimple-modules</artifactId>
         <version>3.5.0</version>
     </parent>
-    <packaging>pom</packaging>
-    <modules>
-        <module>dimple-file-web</module>
-    </modules>
     <modelVersion>4.0.0</modelVersion>
 
+    <modules>
+        <module>dimple-file-web</module>
+        <module>dimple-file-service</module>
+    </modules>
+
     <artifactId>dimple-modules-file</artifactId>
+    <packaging>pom</packaging>
 
     <description>
-        Dimple-modules-file文件服务
+        Dimple-modules-system业务模块
     </description>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.dimple</groupId>
+                <artifactId>dimple-modules-file-service</artifactId>
+                <version>${dimple.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
