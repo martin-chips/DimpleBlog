@@ -52,16 +52,16 @@ cp_jar() {
   /bin/cp -rf   $PROJECT_ROOT_PATH/dimple-visual/dimple-monitor/target/dimple-visual-monitor.jar  $PROJECT_DOCKER_PATH/dimple/visual/monitor/jar
 
   echo "begin copy dimple-modules-system "
-  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-system/target/dimple-modules-system.jar $PROJECT_DOCKER_PATH/dimple/modules/system/jar
+  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-system/dimple-system-web/target/dimple-modules-system.jar $PROJECT_DOCKER_PATH/dimple/modules/system/jar
 
   echo "begin copy dimple-modules-blog "
-  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-blog/target/dimple-modules-blog.jar $PROJECT_DOCKER_PATH/dimple/modules/blog/jar
+  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-blog/dimple-blog-web/target/dimple-modules-blog.jar $PROJECT_DOCKER_PATH/dimple/modules/blog/jar
 
   echo "begin copy dimple-modules-file "
-  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-file/target/dimple-modules-file.jar $PROJECT_DOCKER_PATH/dimple/modules/file/jar
+  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-file/dimple-file-web/target/dimple-modules-file.jar $PROJECT_DOCKER_PATH/dimple/modules/file/jar
 
   echo "begin copy dimple-modules-job "
-  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-job/target/dimple-modules-job.jar $PROJECT_DOCKER_PATH/dimple/modules/job/jar
+  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-job/dimple-job-web/target/dimple-modules-job-web.jar $PROJECT_DOCKER_PATH/dimple/modules/job/jar
 }
 
 cp_html() {
