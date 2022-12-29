@@ -9,7 +9,6 @@ import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
-import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.model.SysDictDataBO;
 import com.dimple.system.service.service.SysDictDataService;
 import com.dimple.system.service.service.SysDictTypeService;
@@ -90,7 +89,6 @@ public class SysDictDataController extends BaseController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysDictDataVOParams dict) {
         SysDictDataBO sysDictDataBO = BeanMapper.convert(dict, SysDictDataBO.class);
-        sysDictDataBO.setCreateBy(SecurityUtils.getUsername());
         return toAjax(dictDataService.insertDictData(sysDictDataBO));
     }
 
@@ -102,7 +100,6 @@ public class SysDictDataController extends BaseController {
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysDictDataVOParams dict) {
         SysDictDataBO sysDictDataBO = BeanMapper.convert(dict, SysDictDataBO.class);
-        sysDictDataBO.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(dictDataService.updateDictData(sysDictDataBO));
     }
 

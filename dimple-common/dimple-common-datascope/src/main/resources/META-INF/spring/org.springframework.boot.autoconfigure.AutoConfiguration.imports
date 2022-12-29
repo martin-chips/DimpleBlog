@@ -1,1 +1,2 @@
 com.dimple.common.datascope.aspect.DataScopeAspect
+com.dimple.common.datascope.aspect.MybatisInterceptor

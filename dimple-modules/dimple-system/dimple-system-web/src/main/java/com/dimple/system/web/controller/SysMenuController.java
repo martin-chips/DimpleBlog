@@ -96,7 +96,6 @@ public class SysMenuController extends BaseController {
         } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {
             return error("新增菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
         }
-        sysMenuBO.setCreateBy(SecurityUtils.getUsername());
         return toAjax(menuService.insertMenu(sysMenuBO));
     }
 
@@ -115,7 +114,6 @@ public class SysMenuController extends BaseController {
         } else if (sysMenuBO.getMenuId().equals(sysMenuBO.getParentId())) {
             return error("修改菜单'" + sysMenuBO.getMenuName() + "'失败，上级菜单不能选择自己");
         }
-        sysMenuBO.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(menuService.updateMenu(sysMenuBO));
     }
 

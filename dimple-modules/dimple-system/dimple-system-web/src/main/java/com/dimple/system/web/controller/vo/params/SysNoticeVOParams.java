@@ -1,6 +1,6 @@
 package com.dimple.system.web.controller.vo.params;
 
-import com.dimple.common.core.web.entity.BaseEntity;
+import com.dimple.common.core.web.vo.params.BaseVOParams;
 import lombok.Data;
 import lombok.ToString;
 
@@ -11,7 +11,7 @@ import lombok.ToString;
  */
 @Data
 @ToString(callSuper = true)
-public class SysNoticeVOParams extends BaseEntity {
+public class SysNoticeVOParams extends BaseVOParams {
     private static final long serialVersionUID = 1L;
 
     /**

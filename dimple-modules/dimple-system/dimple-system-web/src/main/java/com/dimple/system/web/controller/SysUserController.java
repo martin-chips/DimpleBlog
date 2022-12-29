@@ -194,7 +194,6 @@ public class SysUserController extends BaseController {
                 && UserConstants.NOT_UNIQUE.equals(userService.checkEmailUnique(sysUserBO))) {
             return error("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
-        sysUserBO.setCreateBy(SecurityUtils.getUsername());
         sysUserBO.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         return toAjax(userService.insertUser(sysUserBO));
     }
@@ -218,7 +217,6 @@ public class SysUserController extends BaseController {
                 && UserConstants.NOT_UNIQUE.equals(userService.checkEmailUnique(sysUserBO))) {
             return error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
-        user.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(userService.updateUser(sysUserBO));
     }
 
@@ -246,7 +244,6 @@ public class SysUserController extends BaseController {
         userService.checkUserAllowed(sysUserBO);
         userService.checkUserDataScope(sysUserBO.getUserId());
         sysUserBO.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
-        sysUserBO.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(userService.resetPwd(sysUserBO));
     }
 
@@ -260,7 +257,6 @@ public class SysUserController extends BaseController {
         SysUserBO sysUserBO = BeanMapper.convert(user, SysUserBO.class);
         userService.checkUserAllowed(sysUserBO);
         userService.checkUserDataScope(user.getUserId());
-        sysUserBO.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(userService.updateUserStatus(sysUserBO));
     }
 

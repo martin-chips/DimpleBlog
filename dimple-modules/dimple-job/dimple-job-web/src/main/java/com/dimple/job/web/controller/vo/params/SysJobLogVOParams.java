@@ -1,7 +1,7 @@
 package com.dimple.job.web.controller.vo.params;
 
 import com.dimple.common.core.annotation.Excel;
-import com.dimple.common.core.web.entity.BaseEntity;
+import com.dimple.common.core.web.vo.params.BaseVOParams;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Dimple
  */
 @Data
-public class SysJobLogVOParams extends BaseEntity {
+public class SysJobLogVOParams extends BaseVOParams {
     private static final long serialVersionUID = 1L;
 
     /**

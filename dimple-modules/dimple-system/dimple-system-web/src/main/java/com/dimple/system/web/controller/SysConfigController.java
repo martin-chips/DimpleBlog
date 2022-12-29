@@ -9,7 +9,6 @@ import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
-import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.service.service.SysConfigService;
 import com.dimple.system.service.service.bo.SysConfigBO;
 import com.dimple.system.web.controller.vo.SysConfigVO;
@@ -88,7 +87,6 @@ public class SysConfigController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(sysConfigBO))) {
             return error("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
-        sysConfigBO.setCreateBy(SecurityUtils.getUsername());
         return toAjax(configService.insertConfig(sysConfigBO));
     }
 
@@ -103,7 +101,6 @@ public class SysConfigController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(sysConfigBO))) {
             return error("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
-        sysConfigBO.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(configService.updateConfig(sysConfigBO));
     }
 

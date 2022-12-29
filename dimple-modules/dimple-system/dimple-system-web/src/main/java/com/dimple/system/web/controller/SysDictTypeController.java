@@ -9,7 +9,6 @@ import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
-import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.service.service.SysDictTypeService;
 import com.dimple.system.service.service.bo.SysDictTypeBO;
 import com.dimple.system.web.controller.vo.SysDictTypeVO;
@@ -77,7 +76,6 @@ public class SysDictTypeController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(sysDictTypeBO))) {
             return error("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
-        sysDictTypeBO.setCreateBy(SecurityUtils.getUsername());
         return toAjax(dictTypeService.insertDictType(sysDictTypeBO));
     }
 
@@ -92,7 +90,6 @@ public class SysDictTypeController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(sysDictTypeBO))) {
             return error("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
-        sysDictTypeBO.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(dictTypeService.updateDictType(sysDictTypeBO));
     }
 

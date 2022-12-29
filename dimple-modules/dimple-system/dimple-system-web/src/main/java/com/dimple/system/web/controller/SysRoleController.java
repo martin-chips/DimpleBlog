@@ -9,7 +9,6 @@ import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
-import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.model.SysRoleBO;
 import com.dimple.system.api.model.SysUserBO;
 import com.dimple.system.service.service.SysRoleService;
@@ -90,7 +89,6 @@ public class SysRoleController extends BaseController {
         } else if (UserConstants.NOT_UNIQUE.equals(roleService.checkRoleKeyUnique(sysRoleBO))) {
             return error("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
         }
-        sysRoleBO.setCreateBy(SecurityUtils.getUsername());
         return toAjax(roleService.insertRole(sysRoleBO));
 
     }
@@ -110,7 +108,6 @@ public class SysRoleController extends BaseController {
         } else if (UserConstants.NOT_UNIQUE.equals(roleService.checkRoleKeyUnique(sysRoleBO))) {
             return error("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
         }
-        sysRoleBO.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(roleService.updateRole(sysRoleBO));
     }
 
@@ -137,7 +134,6 @@ public class SysRoleController extends BaseController {
         SysRoleBO sysRoleBO = BeanMapper.convert(role, SysRoleBO.class);
         roleService.checkRoleAllowed(sysRoleBO);
         roleService.checkRoleDataScope(role.getRoleId());
-        sysRoleBO.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(roleService.updateRoleStatus(sysRoleBO));
     }
 

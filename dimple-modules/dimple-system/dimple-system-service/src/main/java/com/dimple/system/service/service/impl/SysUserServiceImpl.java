@@ -403,7 +403,6 @@ public class SysUserServiceImpl implements SysUserService {
                 if (StringUtils.isNull(u)) {
                     BeanValidators.validateWithException(validator, user);
                     user.setPassword(SecurityUtils.encryptPassword(password));
-                    user.setCreateBy(operName);
                     this.insertUser(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 导入成功");
@@ -411,7 +410,6 @@ public class SysUserServiceImpl implements SysUserService {
                     BeanValidators.validateWithException(validator, user);
                     checkUserAllowed(user);
                     checkUserDataScope(user.getUserId());
-                    user.setUpdateBy(operName);
                     this.updateUser(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 更新成功");

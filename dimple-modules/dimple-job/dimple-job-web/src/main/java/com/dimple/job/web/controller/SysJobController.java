@@ -11,7 +11,6 @@ import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.Log;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
-import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.job.service.entity.SysJob;
 import com.dimple.job.service.service.SysJobService;
 import com.dimple.job.service.service.bo.SysJobBO;
@@ -97,7 +96,6 @@ public class SysJobController extends BaseController {
         } else if (!ScheduleUtils.whiteList(job.getInvokeTarget())) {
             return error("新增任务'" + job.getJobName() + "'失败，目标字符串不在白名单内");
         }
-        job.setCreateBy(SecurityUtils.getUsername());
         return toAjax(jobService.insertJob(BeanMapper.convert(job, SysJobBO.class)));
     }
 
@@ -121,7 +119,6 @@ public class SysJobController extends BaseController {
         } else if (!ScheduleUtils.whiteList(job.getInvokeTarget())) {
             return error("修改任务'" + job.getJobName() + "'失败，目标字符串不在白名单内");
         }
-        job.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(jobService.updateJob(BeanMapper.convert(job, SysJobBO.class)));
     }
 
