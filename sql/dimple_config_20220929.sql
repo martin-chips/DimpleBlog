@@ -32,11 +32,7 @@ CREATE TABLE `config_info`
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info';
-
-INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,
-                                         src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema,
-                                         encrypted_data_key)
-VALUES (1, 'application-dev.yml', 'DEFAULT_GROUP', 'spring:
+INSERT INTO config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1, 'application-dev.yml', 'DEFAULT_GROUP', 'spring:
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   mvc:
@@ -68,12 +64,8 @@ management:
     web:
       exposure:
         include: \' *\'
-', 'aaa73b809cfd4d0058893aa13da57806', '2020-05-20 12:00:00', '2022-04-24 10:26:34', 'nacos', '0:0:0:0:0:0:0:1', '', '',
-        '通用配置', 'null', 'null', 'yaml', null, '');
-INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,
-                                         src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema,
-                                         encrypted_data_key)
-VALUES (2, 'dimple-gateway-dev.yml', 'DEFAULT_GROUP', 'spring:
+', 'aaa73b809cfd4d0058893aa13da57806', '2020-05-20 12:00:00', '2022-04-24 10:26:34', 'nacos', '0:0:0:0:0:0:0:1', '', '', '通用配置', 'null', 'null', 'yaml', null, '');
+INSERT INTO config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2, 'dimple-gateway-dev.yml', 'DEFAULT_GROUP', 'spring:
   redis:
     host: dimple-redis
     port: 6379
@@ -109,6 +101,13 @@ VALUES (2, 'dimple-gateway-dev.yml', 'DEFAULT_GROUP', 'spring:
             - Path=/system/**
           filters:
             - StripPrefix=1
+        # BLOG模块
+        - id: dimple-blog
+          uri: lb://dimple-blog
+          predicates:
+            - Path=/blog/**
+          filters:
+            - StripPrefix=1
         # 文件服务
         - id: dimple-file
           uri: lb://dimple-file
@@ -136,22 +135,14 @@ security:
       - /auth/register
       - /*/v2/api-docs
       - /csrf
-', '57cec5abd0e0a6b77d853750344a9dc0', '2020-05-14 14:17:55', '2022-09-29 02:48:32', 'nacos', '0:0:0:0:0:0:0:1', '', '',
-        '网关模块', 'null', 'null', 'yaml', '', '');
-INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,
-                                         src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema,
-                                         encrypted_data_key)
-VALUES (3, 'dimple-auth-dev.yml', 'DEFAULT_GROUP', 'spring:
+', 'b3ec0498a1418ce1791750251c83a966', '2020-05-14 14:17:55', '2022-12-29 07:49:37', 'nacos', '10.51.3.2', '', '', '网关模块', 'null', 'null', 'yaml', '', '');
+INSERT INTO config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (3, 'dimple-auth-dev.yml', 'DEFAULT_GROUP', 'spring:
   redis:
     host: dimple-redis
     port: 6379
     password: password
-', '8bd9dada9a94822feeab40de55efced6', '2020-11-20 00:00:00', '2022-09-29 02:48:42', 'nacos', '0:0:0:0:0:0:0:1', '', '',
-        '认证中心', 'null', 'null', 'yaml', '', '');
-INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,
-                                         src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema,
-                                         encrypted_data_key)
-VALUES (4, 'dimple-monitor-dev.yml', 'DEFAULT_GROUP', '# spring
+', '8bd9dada9a94822feeab40de55efced6', '2020-11-20 00:00:00', '2022-09-29 02:48:42', 'nacos', '0:0:0:0:0:0:0:1', '', '', '认证中心', 'null', 'null', 'yaml', '', '');
+INSERT INTO config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (4, 'dimple-monitor-dev.yml', 'DEFAULT_GROUP', '# spring
 spring:
   security:
     user:
@@ -161,12 +152,8 @@ spring:
     admin:
       ui:
         title: Dimple服务状态监控
-', '6f122fd2bfb8d45f858e7d6529a9cd44', '2020-11-20 00:00:00', '2022-09-29 02:48:54', 'nacos', '0:0:0:0:0:0:0:1', '', '',
-        '监控中心', 'null', 'null', 'yaml', '', '');
-INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,
-                                         src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema,
-                                         encrypted_data_key)
-VALUES (5, 'dimple-system-dev.yml', 'DEFAULT_GROUP', '# spring配置
+', '6f122fd2bfb8d45f858e7d6529a9cd44', '2020-11-20 00:00:00', '2022-09-29 02:48:54', 'nacos', '0:0:0:0:0:0:0:1', '', '', '监控中心', 'null', 'null', 'yaml', '', '');
+INSERT INTO config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (5, 'dimple-system-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   redis:
     host: dimple-redis
@@ -219,12 +206,8 @@ mybatis:
 swagger:
   title: 系统模块接口文档
   license: Powered By Dimple
-  licenseUrl: https://www.bianxf.com', '48e0ed4a040c402bdc2444213a82c910', '2020-11-20 00:00:00',
-        '2022-09-29 02:49:09', 'nacos', '0:0:0:0:0:0:0:1', '', '', '系统模块', 'null', 'null', 'yaml', '', '');
-INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,
-                                         src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema,
-                                         encrypted_data_key)
-VALUES (6, 'dimple-job-dev.yml', 'DEFAULT_GROUP', '# spring配置
+  licenseUrl: https://www.bianxf.com', '48e0ed4a040c402bdc2444213a82c910', '2020-11-20 00:00:00', '2022-09-29 02:49:09', 'nacos', '0:0:0:0:0:0:0:1', '', '', '系统模块', 'null', 'null', 'yaml', '', '');
+INSERT INTO config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (6, 'dimple-job-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   redis:
     host: dimple-redis
@@ -248,12 +231,8 @@ swagger:
   title: 定时任务接口文档
   license: Powered By Dimple
   licenseUrl: https://www.bianxf.com
-', 'edcf0e3fe13fea07b4ec08b1088f30b3', '2020-11-20 00:00:00', '2022-09-29 02:50:50', 'nacos', '0:0:0:0:0:0:0:1', '', '',
-        '定时任务', 'null', 'null', 'yaml', '', '');
-INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,
-                                         src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema,
-                                         encrypted_data_key)
-VALUES (7, 'dimple-file-dev.yml', 'DEFAULT_GROUP', '# 本地文件上传
+', 'edcf0e3fe13fea07b4ec08b1088f30b3', '2020-11-20 00:00:00', '2022-09-29 02:50:50', 'nacos', '0:0:0:0:0:0:0:1', '', '', '定时任务', 'null', 'null', 'yaml', '', '');
+INSERT INTO config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (7, 'dimple-file-dev.yml', 'DEFAULT_GROUP', '# 本地文件上传
 file:
     domain: http://127.0.0.1:9300
     path: D:/dimple/uploadPath
@@ -271,12 +250,8 @@ minio:
   url: http://8.129.231.12:9000
   accessKey: minioadmin
   secretKey: minioadmin
-  bucketName: test', '5382b93f3d8059d6068c0501fdd41195', '2020-11-20 00:00:00', '2020-12-21 21:01:59', null,
-        '0:0:0:0:0:0:0:1', '', '', '文件服务', 'null', 'null', 'yaml', null, '');
-INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user,
-                                         src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema,
-                                         encrypted_data_key)
-VALUES (8, 'sentinel-dimple-gateway', 'DEFAULT_GROUP', '[
+  bucketName: test', '5382b93f3d8059d6068c0501fdd41195', '2020-11-20 00:00:00', '2020-12-21 21:01:59', null, '0:0:0:0:0:0:0:1', '', '', '文件服务', 'null', 'null', 'yaml', null, '');
+INSERT INTO config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (8, 'sentinel-dimple-gateway', 'DEFAULT_GROUP', '[
     {
         "resource": "dimple-auth",
         "count": 500,
@@ -301,8 +276,61 @@ VALUES (8, 'sentinel-dimple-gateway', 'DEFAULT_GROUP', '[
         "strategy": 0,
         "controlBehavior": 0
     }
-]', '9f3a3069261598f74220bc47958ec252', '2020-11-20 00:00:00', '2020-11-20 00:00:00', null, '0:0:0:0:0:0:0:1', '', '',
-        '限流策略', 'null', 'null', 'json', null, '');
+]', '9f3a3069261598f74220bc47958ec252', '2020-11-20 00:00:00', '2020-11-20 00:00:00', null, '0:0:0:0:0:0:0:1', '', '', '限流策略', 'null', 'null', 'json', null, '');
+INSERT INTO config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (9, 'dimple-blog-dev.yml', 'DEFAULT_GROUP', '# spring配置
+spring:
+  redis:
+    host: dimple-redis
+    port: 6379
+    password: password
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: admin
+        loginPassword: 123456
+    dynamic:
+      druid:
+        initial-size: 5
+        min-idle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,slf4j
+        connectionProperties: druid.stat.mergeSql\\=true;druid.stat.slowSqlMillis\\=5000
+      datasource:
+          # 主库数据源
+          master:
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+            username: root
+            password: password
+          # 从库数据源
+          # slave:
+            # username:
+            # password:
+            # url:
+            # driver-class-name:
+
+# mybatis配置
+mybatis:
+    # 搜索指定包别名
+    typeAliasesPackage: com.dimple.blog
+    # 配置mapper的扫描，找到所有的mapper.xml映射文件
+    mapperLocations: classpath:mapper/**/*.xml
+
+# swagger配置
+swagger:
+  title: 系统模块接口文档
+  license: Powered By Dimple
+  licenseUrl: https://www.bianxf.com', 'fb7871b084c46c5552f2d342a3982db6', '2022-12-29 07:46:52', '2022-12-29 07:47:23', 'nacos', '10.51.3.2', '', '', 'BLOG模块', '', '', 'yaml', '', null);
 
 
 
