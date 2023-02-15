@@ -5,7 +5,7 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.annotation.RequiresPermissions;
@@ -70,7 +70,7 @@ public class SysUserOnlineController extends BaseController {
      * 强退用户
      */
     @RequiresPermissions("monitor:online:forceLogout")
-    @Log(title = "在线用户", businessType = BusinessType.FORCE)
+    @OperationLog(title = "在线用户", businessType = BusinessType.FORCE)
     @DeleteMapping("/{tokenId}")
     public AjaxResult forceLogout(@PathVariable String tokenId) {
         redisService.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + tokenId);

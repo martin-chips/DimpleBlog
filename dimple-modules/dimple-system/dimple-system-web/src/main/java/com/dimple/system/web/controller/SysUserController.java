@@ -9,7 +9,7 @@ import com.dimple.common.core.utils.response.ResponseEntityUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
@@ -75,7 +75,7 @@ public class SysUserController extends BaseController {
         return getDataTable(BeanMapper.convertList(list, SysUserVO.class));
     }
 
-    @Log(title = "用户管理", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "用户管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:user:export")
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysUserVOParams user) {
@@ -85,7 +85,7 @@ public class SysUserController extends BaseController {
         util.exportExcel(response, BeanMapper.convertList(list, SysUserVO.class), "用户数据");
     }
 
-    @Log(title = "用户管理", businessType = BusinessType.IMPORT)
+    @OperationLog(title = "用户管理", businessType = BusinessType.IMPORT)
     @RequiresPermissions("system:user:import")
     @PostMapping("/importData")
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
@@ -181,7 +181,7 @@ public class SysUserController extends BaseController {
      * 新增用户
      */
     @RequiresPermissions("system:user:add")
-    @Log(title = "用户管理", businessType = BusinessType.INSERT)
+    @OperationLog(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysUserVOParams user) {
         SysUserBO sysUserBO = BeanMapper.convert(user, SysUserBO.class);
@@ -202,7 +202,7 @@ public class SysUserController extends BaseController {
      * 修改用户
      */
     @RequiresPermissions("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysUser user) {
         SysUserBO sysUserBO = BeanMapper.convert(user, SysUserBO.class);
@@ -224,7 +224,7 @@ public class SysUserController extends BaseController {
      * 删除用户
      */
     @RequiresPermissions("system:user:remove")
-    @Log(title = "用户管理", businessType = BusinessType.DELETE)
+    @OperationLog(title = "用户管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{userIds}")
     public AjaxResult remove(@PathVariable Long[] userIds) {
         if (ArrayUtils.contains(userIds, SecurityUtils.getUserId())) {
@@ -237,7 +237,7 @@ public class SysUserController extends BaseController {
      * 重置密码
      */
     @RequiresPermissions("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwd")
     public AjaxResult resetPwd(@RequestBody SysUserVOParams user) {
         SysUserBO sysUserBO = BeanMapper.convert(user, SysUserBO.class);
@@ -251,7 +251,7 @@ public class SysUserController extends BaseController {
      * 状态修改
      */
     @RequiresPermissions("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysUserVOParams user) {
         SysUserBO sysUserBO = BeanMapper.convert(user, SysUserBO.class);
@@ -278,7 +278,7 @@ public class SysUserController extends BaseController {
      * 用户授权角色
      */
     @RequiresPermissions("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessType.GRANT)
+    @OperationLog(title = "用户管理", businessType = BusinessType.GRANT)
     @PutMapping("/authRole")
     public AjaxResult insertAuthRole(Long userId, Long[] roleIds) {
         userService.checkUserDataScope(userId);

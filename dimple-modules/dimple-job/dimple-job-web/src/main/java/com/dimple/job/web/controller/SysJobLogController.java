@@ -5,7 +5,7 @@ import com.dimple.common.core.utils.poi.ExcelUtil;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.job.service.service.SysJobLogService;
@@ -49,7 +49,7 @@ public class SysJobLogController extends BaseController {
      * 导出定时任务调度日志列表
      */
     @RequiresPermissions("monitor:job:export")
-    @Log(title = "任务调度日志", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "任务调度日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJobLogVOParams sysJobLog) {
         List<SysJobLogBO> list = jobLogService.selectJobLogList(BeanMapper.convert(sysJobLog, SysJobLogBO.class));
@@ -70,7 +70,7 @@ public class SysJobLogController extends BaseController {
      * 删除定时任务调度日志
      */
     @RequiresPermissions("monitor:job:remove")
-    @Log(title = "定时任务调度日志", businessType = BusinessType.DELETE)
+    @OperationLog(title = "定时任务调度日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{jobLogIds}")
     public AjaxResult remove(@PathVariable Long[] jobLogIds) {
         return toAjax(jobLogService.deleteJobLogByIds(jobLogIds));
@@ -80,7 +80,7 @@ public class SysJobLogController extends BaseController {
      * 清空定时任务调度日志
      */
     @RequiresPermissions("monitor:job:remove")
-    @Log(title = "调度日志", businessType = BusinessType.CLEAN)
+    @OperationLog(title = "调度日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         jobLogService.cleanJobLog();

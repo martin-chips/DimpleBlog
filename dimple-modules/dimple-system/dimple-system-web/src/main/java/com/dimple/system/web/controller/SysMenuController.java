@@ -5,7 +5,7 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
@@ -87,7 +87,7 @@ public class SysMenuController extends BaseController {
      * 新增菜单
      */
     @RequiresPermissions("system:menu:add")
-    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
+    @OperationLog(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysMenuVOParams menu) {
         SysMenuBO sysMenuBO = BeanMapper.convert(menu, SysMenuBO.class);
@@ -103,7 +103,7 @@ public class SysMenuController extends BaseController {
      * 修改菜单
      */
     @RequiresPermissions("system:menu:edit")
-    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysMenuVOParams menu) {
         SysMenuBO sysMenuBO = BeanMapper.convert(menu, SysMenuBO.class);
@@ -121,7 +121,7 @@ public class SysMenuController extends BaseController {
      * 删除菜单
      */
     @RequiresPermissions("system:menu:remove")
-    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
+    @OperationLog(title = "菜单管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{menuId}")
     public AjaxResult remove(@PathVariable("menuId") Long menuId) {
         if (menuService.hasChildByMenuId(menuId)) {

@@ -4,7 +4,7 @@ import com.dimple.common.core.text.Convert;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.gen.domain.GenTable;
@@ -97,7 +97,7 @@ public class GenController extends BaseController {
      * 导入表结构（保存）
      */
     @RequiresPermissions("tool:gen:import")
-    @Log(title = "代码生成", businessType = BusinessType.IMPORT)
+    @OperationLog(title = "代码生成", businessType = BusinessType.IMPORT)
     @PostMapping("/importTable")
     public AjaxResult importTableSave(String tables) {
         String[] tableNames = Convert.toStrArray(tables);
@@ -111,7 +111,7 @@ public class GenController extends BaseController {
      * 修改保存代码生成业务
      */
     @RequiresPermissions("tool:gen:edit")
-    @Log(title = "代码生成", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "代码生成", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult editSave(@Validated @RequestBody GenTable genTable) {
         genTableService.validateEdit(genTable);
@@ -123,7 +123,7 @@ public class GenController extends BaseController {
      * 删除代码生成
      */
     @RequiresPermissions("tool:gen:remove")
-    @Log(title = "代码生成", businessType = BusinessType.DELETE)
+    @OperationLog(title = "代码生成", businessType = BusinessType.DELETE)
     @DeleteMapping("/{tableIds}")
     public AjaxResult remove(@PathVariable Long[] tableIds) {
         genTableService.deleteGenTableByIds(tableIds);
@@ -144,7 +144,7 @@ public class GenController extends BaseController {
      * 生成代码（下载方式）
      */
     @RequiresPermissions("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessType.GENCODE)
+    @OperationLog(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/download/{tableName}")
     public void download(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException {
         byte[] data = genTableService.downloadCode(tableName);
@@ -155,7 +155,7 @@ public class GenController extends BaseController {
      * 生成代码（自定义路径）
      */
     @RequiresPermissions("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessType.GENCODE)
+    @OperationLog(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/genCode/{tableName}")
     public AjaxResult genCode(@PathVariable("tableName") String tableName) {
         genTableService.generatorCode(tableName);
@@ -166,7 +166,7 @@ public class GenController extends BaseController {
      * 同步数据库
      */
     @RequiresPermissions("tool:gen:edit")
-    @Log(title = "代码生成", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "代码生成", businessType = BusinessType.UPDATE)
     @GetMapping("/synchDb/{tableName}")
     public AjaxResult synchDb(@PathVariable("tableName") String tableName) {
         genTableService.synchDb(tableName);
@@ -177,7 +177,7 @@ public class GenController extends BaseController {
      * 批量生成代码
      */
     @RequiresPermissions("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessType.GENCODE)
+    @OperationLog(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/batchGenCode")
     public void batchGenCode(HttpServletResponse response, String tables) throws IOException {
         String[] tableNames = Convert.toStrArray(tables);

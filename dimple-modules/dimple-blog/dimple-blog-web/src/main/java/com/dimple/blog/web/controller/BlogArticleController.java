@@ -1,0 +1,87 @@
+package com.dimple.blog.web.controller;
+
+import com.dimple.blog.service.entity.BlogArticle;
+import com.dimple.blog.service.service.BlogArticleService;
+import com.dimple.blog.service.service.bo.BlogArticleBO;
+import com.dimple.blog.web.controller.vo.params.BlogArticleVOParams;
+import com.dimple.common.core.utils.bean.BeanMapper;
+import com.dimple.common.core.utils.poi.ExcelUtil;
+import com.dimple.common.core.web.controller.BaseController;
+import com.dimple.common.core.web.page.TableDataInfo;
+import com.dimple.common.core.web.vo.params.AjaxResult;
+import com.dimple.common.log.annotation.OperationLog;
+import com.dimple.common.log.enums.BusinessType;
+import com.dimple.common.security.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+/**
+ * Blog articleController
+ *
+ * @author Dimple
+ * @date 2023-02-13
+ */
+@RestController
+@RequestMapping("/article")
+public class BlogArticleController extends BaseController {
+    @Autowired
+    private BlogArticleService blogArticleService;
+
+    @RequiresPermissions("blog:article:list")
+    @GetMapping("/list")
+    public TableDataInfo list(BlogArticleVOParams blogArticle) {
+        startPage();
+        BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
+        List<BlogArticleBO> list = blogArticleService.selectBlogArticleList(blogArticleBO);
+        return getDataTable(BeanMapper.convertList(list, BlogArticleBO.class));
+    }
+
+    @RequiresPermissions("blog:article:export")
+    @OperationLog(title = "Blog article", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public void export(HttpServletResponse response, BlogArticleVOParams blogArticle) {
+        BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
+        List<BlogArticleBO> list = blogArticleService.selectBlogArticleList(blogArticleBO);
+        ExcelUtil<BlogArticleBO> util = new ExcelUtil<>(BlogArticleBO.class);
+        util.exportExcel(response, list, "Blog article数据");
+    }
+
+    @RequiresPermissions("blog:article:query")
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
+        return success(blogArticleService.selectBlogArticleById(id));
+    }
+
+    @RequiresPermissions("blog:article:add")
+    @OperationLog(title = "Blog article", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@RequestBody BlogArticleVOParams blogArticle) {
+        BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
+        return toAjax(blogArticleService.insertBlogArticle(blogArticleBO));
+    }
+
+    @RequiresPermissions("blog:article:edit")
+    @OperationLog(title = "Blog article", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@RequestBody BlogArticle blogArticle) {
+        BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
+        return toAjax(blogArticleService.updateBlogArticle(blogArticleBO));
+    }
+
+    @RequiresPermissions("blog:article:remove")
+    @OperationLog(title = "Blog article", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable List<Long> ids) {
+        return toAjax(blogArticleService.deleteBlogArticleByIds(ids));
+    }
+}

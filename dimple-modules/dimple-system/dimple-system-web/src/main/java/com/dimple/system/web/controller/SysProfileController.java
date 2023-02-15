@@ -8,7 +8,7 @@ import com.dimple.common.core.utils.file.FileTypeUtils;
 import com.dimple.common.core.utils.file.MimeTypeUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.service.TokenService;
 import com.dimple.common.security.utils.SecurityUtils;
@@ -62,7 +62,7 @@ public class SysProfileController extends BaseController {
     /**
      * 修改用户
      */
-    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult updateProfile(@RequestBody SysUserVOParams user) {
         SysUserBO sysUserBO = BeanMapper.convert(user, SysUserBO.class);
@@ -94,7 +94,7 @@ public class SysProfileController extends BaseController {
     /**
      * 重置密码
      */
-    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
     public AjaxResult updatePwd(String oldPassword, String newPassword) {
         String username = SecurityUtils.getUsername();
@@ -119,7 +119,7 @@ public class SysProfileController extends BaseController {
     /**
      * 头像上传
      */
-    @Log(title = "用户头像", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) {
         if (!file.isEmpty()) {

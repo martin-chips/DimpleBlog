@@ -4,7 +4,7 @@ import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.service.service.SysNoticeService;
@@ -61,7 +61,7 @@ public class SysNoticeController extends BaseController {
      * 新增通知公告
      */
     @RequiresPermissions("system:notice:add")
-    @Log(title = "通知公告", businessType = BusinessType.INSERT)
+    @OperationLog(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysNoticeVOParams notice) {
         SysNoticeBO sysNoticeBO = BeanMapper.convert(notice, SysNoticeBO.class);
@@ -72,7 +72,7 @@ public class SysNoticeController extends BaseController {
      * 修改通知公告
      */
     @RequiresPermissions("system:notice:edit")
-    @Log(title = "通知公告", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysNoticeVOParams notice) {
         SysNoticeBO sysNoticeBO = BeanMapper.convert(notice, SysNoticeBO.class);
@@ -83,7 +83,7 @@ public class SysNoticeController extends BaseController {
      * 删除通知公告
      */
     @RequiresPermissions("system:notice:remove")
-    @Log(title = "通知公告", businessType = BusinessType.DELETE)
+    @OperationLog(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
     public AjaxResult remove(@PathVariable Long[] noticeIds) {
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));

@@ -8,7 +8,7 @@ import com.dimple.common.core.utils.poi.ExcelUtil;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.job.service.entity.SysJob;
@@ -59,7 +59,7 @@ public class SysJobController extends BaseController {
      * 导出定时任务列表
      */
     @RequiresPermissions("monitor:job:export")
-    @Log(title = "定时任务", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "定时任务", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJobVOParamsParams sysJob) {
         List<SysJobBO> list = jobService.selectJobList(BeanMapper.convert(sysJob, SysJobBO.class));
@@ -80,7 +80,7 @@ public class SysJobController extends BaseController {
      * 新增定时任务
      */
     @RequiresPermissions("monitor:job:add")
-    @Log(title = "定时任务", businessType = BusinessType.INSERT)
+    @OperationLog(title = "定时任务", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SysJob job) throws SchedulerException, TaskException {
         if (!CronUtils.isValid(job.getCronExpression())) {
@@ -103,7 +103,7 @@ public class SysJobController extends BaseController {
      * 修改定时任务
      */
     @RequiresPermissions("monitor:job:edit")
-    @Log(title = "定时任务", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SysJob job) throws SchedulerException, TaskException {
         if (!CronUtils.isValid(job.getCronExpression())) {
@@ -126,7 +126,7 @@ public class SysJobController extends BaseController {
      * 定时任务状态修改
      */
     @RequiresPermissions("monitor:job:changeStatus")
-    @Log(title = "定时任务", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysJobVOParamsParams job) throws SchedulerException {
         SysJobBO newJob = jobService.selectJobById(job.getJobId());
@@ -138,7 +138,7 @@ public class SysJobController extends BaseController {
      * 定时任务立即执行一次
      */
     @RequiresPermissions("monitor:job:changeStatus")
-    @Log(title = "定时任务", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/run")
     public AjaxResult run(@RequestBody SysJobVOParamsParams job) throws SchedulerException {
         boolean result = jobService.run(BeanMapper.convert(job, SysJobBO.class));
@@ -149,7 +149,7 @@ public class SysJobController extends BaseController {
      * 删除定时任务
      */
     @RequiresPermissions("monitor:job:remove")
-    @Log(title = "定时任务", businessType = BusinessType.DELETE)
+    @OperationLog(title = "定时任务", businessType = BusinessType.DELETE)
     @DeleteMapping("/{jobIds}")
     public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException {
         jobService.deleteJobByIds(jobIds);

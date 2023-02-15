@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.blog.service.mapper.BlogArticleTagMapper">
+    
+    <resultMap type="com.dimple.blog.service.entity.BlogArticleTag" id="BlogArticleTagResult">
+        <result property="id"    column="id"    />
+        <result property="articleId"    column="article_id"    />
+        <result property="tagId"    column="tag_id"    />
+    </resultMap>
+
+    <sql id="selectBlogArticleTagVo">
+        select id, article_id, tag_id from blog_article_tag
+    </sql>
+
+    <select id="selectBlogArticleTagList" parameterType="BlogArticleTag" resultMap="BlogArticleTagResult">
+        <include refid="selectBlogArticleTagVo"/>
+        <where>  
+            <if test="articleId != null "> and article_id = #{articleId}</if>
+            <if test="tagId != null "> and tag_id = #{tagId}</if>
+        </where>
+    </select>
+    
+    <select id="selectBlogArticleTagById" parameterType="Long" resultMap="BlogArticleTagResult">
+        <include refid="selectBlogArticleTagVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBlogArticleTagByArticleId" resultType="com.dimple.blog.service.entity.BlogArticleTag"
+            parameterType="java.lang.Long">
+        <include refid="selectBlogArticleTagVo"/>
+        where article_id = #{articleId}
+    </select>
+
+    <insert id="insertBlogArticleTag" parameterType="BlogArticleTag" useGeneratedKeys="true" keyProperty="id">
+        insert into blog_article_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">article_id,</if>
+            <if test="tagId != null">tag_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">#{articleId},</if>
+            <if test="tagId != null">#{tagId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBlogArticleTag" parameterType="BlogArticleTag">
+        update blog_article_tag
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="articleId != null">article_id = #{articleId},</if>
+            <if test="tagId != null">tag_id = #{tagId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBlogArticleTagById" parameterType="Long">
+        delete from blog_article_tag where id = #{id}
+    </delete>
+
+    <delete id="deleteBlogArticleTagByIds" parameterType="String">
+        delete from blog_article_tag where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

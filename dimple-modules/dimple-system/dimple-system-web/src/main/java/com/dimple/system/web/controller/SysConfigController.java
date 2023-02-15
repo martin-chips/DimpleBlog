@@ -6,7 +6,7 @@ import com.dimple.common.core.utils.poi.ExcelUtil;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.service.service.SysConfigService;
@@ -49,7 +49,7 @@ public class SysConfigController extends BaseController {
         return getDataTable(BeanMapper.convertList(list, SysConfigVO.class));
     }
 
-    @Log(title = "参数管理", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "参数管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:config:export")
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysConfigVOParams config) {
@@ -80,7 +80,7 @@ public class SysConfigController extends BaseController {
      * 新增参数配置
      */
     @RequiresPermissions("system:config:add")
-    @Log(title = "参数管理", businessType = BusinessType.INSERT)
+    @OperationLog(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysConfigVOParams config) {
         SysConfigBO sysConfigBO = BeanMapper.convert(config, SysConfigBO.class);
@@ -94,7 +94,7 @@ public class SysConfigController extends BaseController {
      * 修改参数配置
      */
     @RequiresPermissions("system:config:edit")
-    @Log(title = "参数管理", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "参数管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysConfigVOParams config) {
         SysConfigBO sysConfigBO = BeanMapper.convert(config, SysConfigBO.class);
@@ -108,7 +108,7 @@ public class SysConfigController extends BaseController {
      * 删除参数配置
      */
     @RequiresPermissions("system:config:remove")
-    @Log(title = "参数管理", businessType = BusinessType.DELETE)
+    @OperationLog(title = "参数管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{configIds}")
     public AjaxResult remove(@PathVariable Long[] configIds) {
         configService.deleteConfigByIds(configIds);
@@ -119,7 +119,7 @@ public class SysConfigController extends BaseController {
      * 刷新参数缓存
      */
     @RequiresPermissions("system:config:remove")
-    @Log(title = "参数管理", businessType = BusinessType.CLEAN)
+    @OperationLog(title = "参数管理", businessType = BusinessType.CLEAN)
     @DeleteMapping("/refreshCache")
     public AjaxResult refreshCache() {
         configService.resetConfigCache();

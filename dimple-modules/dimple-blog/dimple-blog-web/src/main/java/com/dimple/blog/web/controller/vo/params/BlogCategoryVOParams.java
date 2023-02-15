@@ -1,0 +1,15 @@
+package com.dimple.blog.web.controller.vo.params;
+
+import com.dimple.common.core.web.vo.params.BaseVOParams;
+import lombok.Data;
+
+/**
+ * BlogCategoryVOParams
+ *
+ * @author Dimple
+ */
+@Data
+public class BlogCategoryVOParams extends BaseVOParams {
+    private Long id;
+    private String title;
+}

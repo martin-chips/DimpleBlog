@@ -6,7 +6,7 @@ import com.dimple.common.core.utils.poi.ExcelUtil;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.service.service.SysDictTypeService;
@@ -46,7 +46,7 @@ public class SysDictTypeController extends BaseController {
         return getDataTable(BeanMapper.convertList(list, SysDictTypeVO.class));
     }
 
-    @Log(title = "字典类型", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "字典类型", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysDictTypeVOParams dictType) {
@@ -69,7 +69,7 @@ public class SysDictTypeController extends BaseController {
      * 新增字典类型
      */
     @RequiresPermissions("system:dict:add")
-    @Log(title = "字典类型", businessType = BusinessType.INSERT)
+    @OperationLog(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysDictTypeVOParams dict) {
         SysDictTypeBO sysDictTypeBO = BeanMapper.convert(dict, SysDictTypeBO.class);
@@ -83,7 +83,7 @@ public class SysDictTypeController extends BaseController {
      * 修改字典类型
      */
     @RequiresPermissions("system:dict:edit")
-    @Log(title = "字典类型", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "字典类型", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysDictTypeVOParams dict) {
         SysDictTypeBO sysDictTypeBO = BeanMapper.convert(dict, SysDictTypeBO.class);
@@ -97,7 +97,7 @@ public class SysDictTypeController extends BaseController {
      * 删除字典类型
      */
     @RequiresPermissions("system:dict:remove")
-    @Log(title = "字典类型", businessType = BusinessType.DELETE)
+    @OperationLog(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{dictIds}")
     public AjaxResult remove(@PathVariable Long[] dictIds) {
         dictTypeService.deleteDictTypeByIds(dictIds);
@@ -108,7 +108,7 @@ public class SysDictTypeController extends BaseController {
      * 刷新字典缓存
      */
     @RequiresPermissions("system:dict:remove")
-    @Log(title = "字典类型", businessType = BusinessType.CLEAN)
+    @OperationLog(title = "字典类型", businessType = BusinessType.CLEAN)
     @DeleteMapping("/refreshCache")
     public AjaxResult refreshCache() {
         dictTypeService.resetDictCache();

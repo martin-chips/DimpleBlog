@@ -5,7 +5,7 @@ import com.dimple.common.core.utils.poi.ExcelUtil;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
@@ -45,7 +45,7 @@ public class SysOperlogController extends BaseController {
         return getDataTable(BeanMapper.convertList(list, SysOperLogVO.class));
     }
 
-    @Log(title = "操作日志", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "操作日志", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:operlog:export")
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysOperLogVOParams operLog) {
@@ -55,7 +55,7 @@ public class SysOperlogController extends BaseController {
         util.exportExcel(response, BeanMapper.convertList(list, SysOperLogVO.class), "操作日志");
     }
 
-    @Log(title = "操作日志", businessType = BusinessType.DELETE)
+    @OperationLog(title = "操作日志", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:operlog:remove")
     @DeleteMapping("/{operIds}")
     public AjaxResult remove(@PathVariable Long[] operIds) {
@@ -63,7 +63,7 @@ public class SysOperlogController extends BaseController {
     }
 
     @RequiresPermissions("system:operlog:remove")
-    @Log(title = "操作日志", businessType = BusinessType.CLEAN)
+    @OperationLog(title = "操作日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         operLogService.cleanOperLog();

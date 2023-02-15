@@ -1,6 +1,7 @@
 package com.dimple.job.service.service.bo;
 
 import com.dimple.common.core.annotation.Excel;
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;

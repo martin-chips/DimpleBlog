@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.ip.IpUtils;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessStatus;
 import com.dimple.common.log.filter.PropertyPreExcludeFilter;
 import com.dimple.common.log.service.AsyncLogService;
@@ -48,7 +48,7 @@ public class LogAspect {
      * @param joinPoint 切点
      */
     @AfterReturning(pointcut = "@annotation(controllerLog)", returning = "jsonResult")
-    public void doAfterReturning(JoinPoint joinPoint, Log controllerLog, Object jsonResult) {
+    public void doAfterReturning(JoinPoint joinPoint, OperationLog controllerLog, Object jsonResult) {
         handleLog(joinPoint, controllerLog, null, jsonResult);
     }
 
@@ -59,11 +59,11 @@ public class LogAspect {
      * @param e         异常
      */
     @AfterThrowing(value = "@annotation(controllerLog)", throwing = "e")
-    public void doAfterThrowing(JoinPoint joinPoint, Log controllerLog, Exception e) {
+    public void doAfterThrowing(JoinPoint joinPoint, OperationLog controllerLog, Exception e) {
         handleLog(joinPoint, controllerLog, e, null);
     }
 
-    protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
+    protected void handleLog(final JoinPoint joinPoint, OperationLog controllerLog, final Exception e, Object jsonResult) {
         try {
             // *========数据库日志=========*//
             SysOperLogBO operLog = new SysOperLogBO();
@@ -105,7 +105,7 @@ public class LogAspect {
      * @param operLog 操作日志
      * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLogBO operLog, Object jsonResult) throws Exception {
+    public void getControllerMethodDescription(JoinPoint joinPoint, OperationLog log, SysOperLogBO operLog, Object jsonResult) throws Exception {
         // 设置action动作
         operLog.setBusinessType(log.businessType().ordinal());
         // 设置标题

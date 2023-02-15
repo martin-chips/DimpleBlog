@@ -6,7 +6,7 @@ import com.dimple.common.core.utils.poi.ExcelUtil;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.api.model.SysRoleBO;
@@ -56,7 +56,7 @@ public class SysRoleController extends BaseController {
         return getDataTable(BeanMapper.convertList(list, SysRoleVO.class));
     }
 
-    @Log(title = "角色管理", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "角色管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:role:export")
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysRoleVOParams role) {
@@ -80,7 +80,7 @@ public class SysRoleController extends BaseController {
      * 新增角色
      */
     @RequiresPermissions("system:role:add")
-    @Log(title = "角色管理", businessType = BusinessType.INSERT)
+    @OperationLog(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysRoleVOParams role) {
         SysRoleBO sysRoleBO = BeanMapper.convert(role, SysRoleBO.class);
@@ -97,7 +97,7 @@ public class SysRoleController extends BaseController {
      * 修改保存角色
      */
     @RequiresPermissions("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysRoleVOParams role) {
         SysRoleBO sysRoleBO = BeanMapper.convert(role, SysRoleBO.class);
@@ -115,7 +115,7 @@ public class SysRoleController extends BaseController {
      * 修改保存数据权限
      */
     @RequiresPermissions("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/dataScope")
     public AjaxResult dataScope(@RequestBody SysRoleVOParams role) {
         SysRoleBO sysRoleBO = BeanMapper.convert(role, SysRoleBO.class);
@@ -128,7 +128,7 @@ public class SysRoleController extends BaseController {
      * 状态修改
      */
     @RequiresPermissions("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @OperationLog(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysRoleVOParams role) {
         SysRoleBO sysRoleBO = BeanMapper.convert(role, SysRoleBO.class);
@@ -141,7 +141,7 @@ public class SysRoleController extends BaseController {
      * 删除角色
      */
     @RequiresPermissions("system:role:remove")
-    @Log(title = "角色管理", businessType = BusinessType.DELETE)
+    @OperationLog(title = "角色管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{roleIds}")
     public AjaxResult remove(@PathVariable Long[] roleIds) {
         return toAjax(roleService.deleteRoleByIds(roleIds));
@@ -184,7 +184,7 @@ public class SysRoleController extends BaseController {
      * 取消授权用户
      */
     @RequiresPermissions("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @OperationLog(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/cancel")
     public AjaxResult cancelAuthUser(@RequestBody SysUserRoleVOParams userRole) {
         SysUserRoleBO sysUserRoleBO = BeanMapper.convert(userRole, SysUserRoleBO.class);
@@ -195,7 +195,7 @@ public class SysRoleController extends BaseController {
      * 批量取消授权用户
      */
     @RequiresPermissions("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @OperationLog(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/cancelAll")
     public AjaxResult cancelAuthUserAll(Long roleId, Long[] userIds) {
         return toAjax(roleService.deleteAuthUsers(roleId, userIds));
@@ -205,7 +205,7 @@ public class SysRoleController extends BaseController {
      * 批量选择用户授权
      */
     @RequiresPermissions("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @OperationLog(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/selectAll")
     public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds) {
         roleService.checkRoleDataScope(roleId);

@@ -6,7 +6,7 @@ import com.dimple.common.core.utils.poi.ExcelUtil;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
-import com.dimple.common.log.annotation.Log;
+import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.annotation.InnerAuth;
@@ -49,7 +49,7 @@ public class SysLogininforController extends BaseController {
         return getDataTable(BeanMapper.convertList(list, SysLogininforVO.class));
     }
 
-    @Log(title = "登录日志", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "登录日志", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:logininfor:export")
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysLogininforVOParams logininfor) {
@@ -59,14 +59,14 @@ public class SysLogininforController extends BaseController {
     }
 
     @RequiresPermissions("system:logininfor:remove")
-    @Log(title = "登录日志", businessType = BusinessType.DELETE)
+    @OperationLog(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{infoIds}")
     public AjaxResult remove(@PathVariable Long[] infoIds) {
         return toAjax(logininforService.deleteLogininforByIds(infoIds));
     }
 
     @RequiresPermissions("system:logininfor:remove")
-    @Log(title = "登录日志", businessType = BusinessType.DELETE)
+    @OperationLog(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         logininforService.cleanLogininfor();
@@ -74,7 +74,7 @@ public class SysLogininforController extends BaseController {
     }
 
     @RequiresPermissions("system:logininfor:unlock")
-    @Log(title = "账户解锁", businessType = BusinessType.OTHER)
+    @OperationLog(title = "账户解锁", businessType = BusinessType.OTHER)
     @GetMapping("/unlock/{userName}")
     public AjaxResult unlock(@PathVariable("userName") String userName) {
         redisService.deleteObject(CacheConstants.PWD_ERR_CNT_KEY + userName);

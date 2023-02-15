@@ -2,6 +2,7 @@ package com.dimple.job.service.service.bo;
 
 import com.dimple.common.core.constant.ScheduleConstants;
 import com.dimple.common.core.utils.StringUtils;
+import com.dimple.common.core.web.entity.BaseEntity;
 import com.dimple.job.service.util.CronUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
