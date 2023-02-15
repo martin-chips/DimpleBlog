@@ -3,14 +3,21 @@ package com.dimple.blog.service.entity;
 import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
+
 /**
- * blog tag
+ * 对象 blog_tag
  *
  * @author Dimple
+ * @date 2023-02-13
  */
 @Data
-public class Tag extends BaseEntity {
-    private Integer id;
+public class BlogTag extends BaseEntity {
 
+    private Long id;
+
+    /**
+     * the article tag
+     */
     private String title;
+
 }
