@@ -23,7 +23,7 @@ public interface RemoteLogService {
      *
      * @param sysOperLog 日志实体
      * @param source     请求来源
-     * @return 结果
+     * @return affected lines
      */
     @PostMapping("/operlog")
     ResponseEntity<Boolean> saveLog(@RequestBody SysOperLogBO sysOperLog, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
@@ -33,7 +33,7 @@ public interface RemoteLogService {
      *
      * @param sysLogininfor 访问实体
      * @param source        请求来源
-     * @return 结果
+     * @return affected lines
      */
     @PostMapping("/logininfor")
     ResponseEntity<Boolean> saveLogininfor(@RequestBody SysLogininforBO sysLogininfor, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);

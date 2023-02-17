@@ -48,7 +48,7 @@ public class BlogCategoryController extends BaseController {
     }
 
     @RequiresPermissions("blog:category:export")
-    @OperationLog(title = "blog category", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "分类", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, BlogCategoryVOParams blogCategory) {
         BlogCategoryBO blogCategoryBO = BeanMapper.convert(blogCategory, BlogCategoryBO.class);
@@ -58,13 +58,13 @@ public class BlogCategoryController extends BaseController {
     }
 
     @RequiresPermissions("blog:category:query")
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(blogCategoryService.selectBlogCategoryById(id));
     }
 
     @RequiresPermissions("blog:category:add")
-    @OperationLog(title = "blog category", businessType = BusinessType.INSERT)
+    @OperationLog(title = "分类", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody BlogCategoryVOParams blogCategory) {
         BlogCategoryBO blogCategoryBO = BeanMapper.convert(blogCategory, BlogCategoryBO.class);
@@ -72,15 +72,16 @@ public class BlogCategoryController extends BaseController {
     }
 
     @RequiresPermissions("blog:category:edit")
-    @OperationLog(title = "blog category", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody BlogCategoryVOParams blogCategory) {
+    @OperationLog(title = "分类", businessType = BusinessType.UPDATE)
+    @PutMapping("${id}")
+    public AjaxResult edit(@PathVariable Long id, @RequestBody BlogCategoryVOParams blogCategory) {
         BlogCategoryBO blogCategoryBO = BeanMapper.convert(blogCategory, BlogCategoryBO.class);
+        blogCategoryBO.setId(id);
         return toAjax(blogCategoryService.updateBlogCategory(blogCategoryBO));
     }
 
     @RequiresPermissions("blog:category:remove")
-    @OperationLog(title = "blog category", businessType = BusinessType.DELETE)
+    @OperationLog(title = "分类", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(blogCategoryService.deleteBlogCategoryByIds(ids));

@@ -64,7 +64,7 @@ public class SysDictDataController extends BaseController {
      * 查询字典数据详细
      */
     @RequiresPermissions("system:dict:query")
-    @GetMapping(value = "/{dictCode}")
+    @GetMapping("/{dictCode}")
     public AjaxResult getInfo(@PathVariable Long dictCode) {
         return success(dictDataService.selectDictDataById(dictCode));
     }
@@ -72,7 +72,7 @@ public class SysDictDataController extends BaseController {
     /**
      * 根据字典类型查询字典数据信息
      */
-    @GetMapping(value = "/type/{dictType}")
+    @GetMapping("/type/{dictType}")
     public AjaxResult dictType(@PathVariable String dictType) {
         List<SysDictDataBO> data = dictTypeService.selectDictDataByType(dictType);
         if (StringUtils.isNull(data)) {

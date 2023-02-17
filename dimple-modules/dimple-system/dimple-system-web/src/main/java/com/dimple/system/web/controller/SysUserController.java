@@ -163,7 +163,7 @@ public class SysUserController extends BaseController {
      * 根据用户编号获取详细信息
      */
     @RequiresPermissions("system:user:query")
-    @GetMapping(value = {"/", "/{userId}"})
+    @GetMapping({"/", "/{userId}"})
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
         userService.checkUserDataScope(userId);
         AjaxResult ajax = AjaxResult.success();

@@ -47,7 +47,7 @@ public interface SysConfigMapper {
      * 新增参数配置
      *
      * @param config 参数配置信息
-     * @return 结果
+     * @return affected lines
      */
     int insertConfig(SysConfig config);
 
@@ -55,7 +55,7 @@ public interface SysConfigMapper {
      * 修改参数配置
      *
      * @param config 参数配置信息
-     * @return 结果
+     * @return affected lines
      */
     int updateConfig(SysConfig config);
 
@@ -63,7 +63,7 @@ public interface SysConfigMapper {
      * 删除参数配置
      *
      * @param configId 参数ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteConfigById(Long configId);
 
@@ -71,7 +71,7 @@ public interface SysConfigMapper {
      * 批量删除参数信息
      *
      * @param configIds 需要删除的参数ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteConfigByIds(Long[] configIds);
 }

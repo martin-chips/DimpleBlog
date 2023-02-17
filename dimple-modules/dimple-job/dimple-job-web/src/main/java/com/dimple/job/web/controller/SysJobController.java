@@ -71,7 +71,7 @@ public class SysJobController extends BaseController {
      * 获取定时任务详细信息
      */
     @RequiresPermissions("monitor:job:query")
-    @GetMapping(value = "/{jobId}")
+    @GetMapping("/{jobId}")
     public AjaxResult getInfo(@PathVariable("jobId") Long jobId) {
         return success(jobService.selectJobById(jobId));
     }

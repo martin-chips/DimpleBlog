@@ -55,7 +55,7 @@ import java.util.List;
      * 新增用户信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
      int insertUser(SysUser user);
 
@@ -63,7 +63,7 @@ import java.util.List;
      * 修改用户信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
      int updateUser(SysUser user);
 
@@ -72,7 +72,7 @@ import java.util.List;
      *
      * @param userName 用户名
      * @param avatar   头像地址
-     * @return 结果
+     * @return affected lines
      */
      int updateUserAvatar(@Param("userName") String userName, @Param("avatar") String avatar);
 
@@ -81,7 +81,7 @@ import java.util.List;
      *
      * @param userName 用户名
      * @param password 密码
-     * @return 结果
+     * @return affected lines
      */
      int resetUserPwd(@Param("userName") String userName, @Param("password") String password);
 
@@ -89,7 +89,7 @@ import java.util.List;
      * 通过用户ID删除用户
      *
      * @param userId 用户ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteUserById(Long userId);
 
@@ -97,7 +97,7 @@ import java.util.List;
      * 批量删除用户信息
      *
      * @param userIds 需要删除的用户ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteUserByIds(Long[] userIds);
 
@@ -105,7 +105,7 @@ import java.util.List;
      * 校验用户名称是否唯一
      *
      * @param userName 用户名称
-     * @return 结果
+     * @return affected lines
      */
      SysUser checkUserNameUnique(String userName);
 
@@ -113,7 +113,7 @@ import java.util.List;
      * 校验手机号码是否唯一
      *
      * @param phonenumber 手机号码
-     * @return 结果
+     * @return affected lines
      */
      SysUser checkPhoneUnique(String phonenumber);
 
@@ -121,7 +121,7 @@ import java.util.List;
      * 校验email是否唯一
      *
      * @param email 用户邮箱
-     * @return 结果
+     * @return affected lines
      */
      SysUser checkEmailUnique(String email);
 }

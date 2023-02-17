@@ -14,50 +14,50 @@ import java.util.List;
  */
 public interface BlogArticleMapper {
     /**
-     * 查询Blog article
+     * 查询文章
      *
-     * @param id Blog article主键
-     * @return Blog article
+     * @param id 文章主键
+     * @return 文章
      */
     BlogArticle selectBlogArticleById(Long id);
 
     /**
-     * 查询Blog article列表
+     * 查询文章列表
      *
-     * @param BlogArticle Blog article
-     * @return Blog article集合
+     * @param BlogArticle 文章
+     * @return 文章集合
      */
     List<BlogArticle> selectBlogArticleList(BlogArticle BlogArticle);
 
     /**
-     * 新增Blog article
+     * 新增文章
      *
-     * @param BlogArticle Blog article
-     * @return 结果
+     * @param BlogArticle 文章
+     * @return the object id
      */
     Long insertBlogArticle(BlogArticle BlogArticle);
 
     /**
-     * 修改Blog article
+     * 修改文章
      *
-     * @param BlogArticle Blog article
-     * @return 结果
+     * @param BlogArticle 文章
+     * @return affected lines
      */
     int updateBlogArticle(BlogArticle BlogArticle);
 
     /**
-     * 删除Blog article
+     * 删除文章
      *
-     * @param id Blog article主键
-     * @return 结果
+     * @param id 文章主键
+     * @return affected lines
      */
     int deleteBlogArticleById(Long id);
 
     /**
-     * 批量删除Blog article
+     * 批量删除文章
      *
      * @param ids 需要删除的数据主键集合
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogArticleByIds(List<Long> ids);
 

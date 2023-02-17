@@ -47,37 +47,39 @@ public class BlogTagController extends BaseController {
     }
 
     @RequiresPermissions("blog:tag:export")
-    @OperationLog(title = "Blog Tag", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "标签", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, BlogTagVOParams blogTag) {
         BlogTagBO blogTagBO = BeanMapper.convert(blogTag, BlogTagBO.class);
         List<BlogTagBO> list = blogTagService.selectBlogTagList(blogTagBO);
         ExcelUtil<BlogTagBO> util = new ExcelUtil<>(BlogTagBO.class);
-        util.exportExcel(response, list, "Blog Tag 数据");
+        util.exportExcel(response, list, "标签 数据");
     }
 
     @RequiresPermissions("blog:tag:query")
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(blogTagService.selectBlogTagById(id));
     }
 
     @RequiresPermissions("blog:tag:add")
-    @OperationLog(title = "Blog Tag", businessType = BusinessType.INSERT)
+    @OperationLog(title = "标签", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody BlogTagVOParams blogTag) {
         return toAjax(blogTagService.insertBlogTag(BeanMapper.convert(blogTag, BlogTagBO.class)));
     }
 
     @RequiresPermissions("blog:tag:edit")
-    @OperationLog(title = "Blog Tag", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody BlogTagVOParams blogTag) {
-        return toAjax(blogTagService.updateBlogTag(BeanMapper.convert(blogTag, BlogTagBO.class)));
+    @OperationLog(title = "标签", businessType = BusinessType.UPDATE)
+    @PutMapping("{id}")
+    public AjaxResult edit(@PathVariable Long id, @RequestBody BlogTagVOParams blogTag) {
+        BlogTagBO blogTagBO = BeanMapper.convert(blogTag, BlogTagBO.class);
+        blogTagBO.setId(id);
+        return toAjax(blogTagService.updateBlogTag(blogTagBO));
     }
 
     @RequiresPermissions("blog:tag:remove")
-    @OperationLog(title = "Blog Tag", businessType = BusinessType.DELETE)
+    @OperationLog(title = "标签", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(blogTagService.deleteBlogTagByIds(ids));

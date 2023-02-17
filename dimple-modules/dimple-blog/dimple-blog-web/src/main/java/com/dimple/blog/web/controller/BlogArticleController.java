@@ -1,6 +1,5 @@
 package com.dimple.blog.web.controller;
 
-import com.dimple.blog.service.entity.BlogArticle;
 import com.dimple.blog.service.service.BlogArticleService;
 import com.dimple.blog.service.service.bo.BlogArticleBO;
 import com.dimple.blog.web.controller.vo.params.BlogArticleVOParams;
@@ -47,23 +46,23 @@ public class BlogArticleController extends BaseController {
     }
 
     @RequiresPermissions("blog:article:export")
-    @OperationLog(title = "Blog article", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "文章", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, BlogArticleVOParams blogArticle) {
         BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
         List<BlogArticleBO> list = blogArticleService.selectBlogArticleList(blogArticleBO);
         ExcelUtil<BlogArticleBO> util = new ExcelUtil<>(BlogArticleBO.class);
-        util.exportExcel(response, list, "Blog article数据");
+        util.exportExcel(response, list, "文章数据");
     }
 
     @RequiresPermissions("blog:article:query")
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(blogArticleService.selectBlogArticleById(id));
     }
 
     @RequiresPermissions("blog:article:add")
-    @OperationLog(title = "Blog article", businessType = BusinessType.INSERT)
+    @OperationLog(title = "文章", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody BlogArticleVOParams blogArticle) {
         BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
@@ -71,15 +70,23 @@ public class BlogArticleController extends BaseController {
     }
 
     @RequiresPermissions("blog:article:edit")
-    @OperationLog(title = "Blog article", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody BlogArticle blogArticle) {
+    @OperationLog(title = "文章", businessType = BusinessType.UPDATE)
+    @PutMapping("{id}")
+    public AjaxResult edit(@PathVariable Long id, @RequestBody BlogArticleVOParams blogArticle) {
         BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
+        blogArticleBO.setId(id);
         return toAjax(blogArticleService.updateBlogArticle(blogArticleBO));
+    }
+    
+    @RequiresPermissions("blog:article:edit")
+    @OperationLog(title = "文章", businessType = BusinessType.UPDATE)
+    @PutMapping("/{id}/status/{articleStatus}}")
+    public AjaxResult edit(@PathVariable Long id, @PathVariable Integer articleStatus) {
+        return toAjax(blogArticleService.updateBlogArticleStatus(id, articleStatus));
     }
 
     @RequiresPermissions("blog:article:remove")
-    @OperationLog(title = "Blog article", businessType = BusinessType.DELETE)
+    @OperationLog(title = "文章", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable List<Long> ids) {
         return toAjax(blogArticleService.deleteBlogArticleByIds(ids));

@@ -31,7 +31,7 @@ import java.util.List;
      * 新增公告
      *
      * @param notice 公告信息
-     * @return 结果
+     * @return affected lines
      */
      int insertNotice(SysNotice notice);
 
@@ -39,7 +39,7 @@ import java.util.List;
      * 修改公告
      *
      * @param notice 公告信息
-     * @return 结果
+     * @return affected lines
      */
      int updateNotice(SysNotice notice);
 
@@ -47,7 +47,7 @@ import java.util.List;
      * 批量删除公告
      *
      * @param noticeId 公告ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteNoticeById(Long noticeId);
 
@@ -55,7 +55,7 @@ import java.util.List;
      * 批量删除公告信息
      *
      * @param noticeIds 需要删除的公告ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteNoticeByIds(Long[] noticeIds);
 }

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询Blog article列表
+// 查询文章列表
 export function listArticle(query) {
   return request({
     url: '/blog/article/list',
@@ -9,7 +9,7 @@ export function listArticle(query) {
   })
 }
 
-// 查询Blog article详细
+// 查询文章详细
 export function getArticle(id) {
   return request({
     url: '/blog/article/' + id,
@@ -17,7 +17,7 @@ export function getArticle(id) {
   })
 }
 
-// 新增Blog article
+// 新增文章
 export function addArticle(data) {
   return request({
     url: '/blog/article',
@@ -26,7 +26,7 @@ export function addArticle(data) {
   })
 }
 
-// 修改Blog article
+// 修改文章
 export function updateArticle(data) {
   return request({
     url: '/blog/article',
@@ -35,7 +35,7 @@ export function updateArticle(data) {
   })
 }
 
-// 删除Blog article
+// 删除文章
 export function delArticle(id) {
   return request({
     url: '/blog/article/' + id,

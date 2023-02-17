@@ -30,7 +30,7 @@ import java.util.List;
      * 批量删除系统操作日志
      *
      * @param operIds 需要删除的操作日志ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteOperLogByIds(Long[] operIds);
 

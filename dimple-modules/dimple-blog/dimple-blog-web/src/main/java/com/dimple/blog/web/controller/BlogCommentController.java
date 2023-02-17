@@ -47,37 +47,40 @@ public class BlogCommentController extends BaseController {
     }
 
     @RequiresPermissions("blog:comment:export")
-    @OperationLog(title = "Blog Comment", businessType = BusinessType.EXPORT)
+    @OperationLog(title = "评论", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, BlogCommentVOParams blogComment) {
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
         List<BlogCommentBO> list = blogCommentService.selectBlogCommentList(blogCommentBO);
         ExcelUtil<BlogCommentBO> util = new ExcelUtil<>(BlogCommentBO.class);
-        util.exportExcel(response, list, "Blog Comment数据");
+        util.exportExcel(response, list, "评论数据");
     }
 
     @RequiresPermissions("blog:comment:query")
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(blogCommentService.selectBlogCommentById(id));
     }
 
     @RequiresPermissions("blog:comment:add")
-    @OperationLog(title = "Blog Comment", businessType = BusinessType.INSERT)
+    @OperationLog(title = "评论", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody BlogCommentVOParams blogComment) {
-        return toAjax(blogCommentService.insertBlogComment(BeanMapper.convert(blogComment, BlogCommentBO.class)));
+        BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
+        return toAjax(blogCommentService.insertBlogComment(blogCommentBO));
     }
 
     @RequiresPermissions("blog:comment:edit")
-    @OperationLog(title = "Blog Comment", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody BlogCommentVOParams blogComment) {
-        return toAjax(blogCommentService.updateBlogComment(BeanMapper.convert(blogComment, BlogCommentBO.class)));
+    @OperationLog(title = "评论", businessType = BusinessType.UPDATE)
+    @PutMapping("/{id}")
+    public AjaxResult edit(@PathVariable Long id, @RequestBody BlogCommentVOParams blogComment) {
+        BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
+        blogCommentBO.setId(id);
+        return toAjax(blogCommentService.updateBlogComment(blogCommentBO));
     }
 
     @RequiresPermissions("blog:comment:remove")
-    @OperationLog(title = "Blog Comment", businessType = BusinessType.DELETE)
+    @OperationLog(title = "评论", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(blogCommentService.deleteBlogCommentByIds(ids));

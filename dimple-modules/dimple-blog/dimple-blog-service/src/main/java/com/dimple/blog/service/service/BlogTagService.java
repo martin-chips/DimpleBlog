@@ -33,7 +33,7 @@ public interface BlogTagService {
      * 新增
      *
      * @param blogTag
-     * @return 结果
+     * @return the object id
      */
     Long insertBlogTag(BlogTagBO blogTag);
 
@@ -41,7 +41,7 @@ public interface BlogTagService {
      * 修改
      *
      * @param blogTag
-     * @return 结果
+     * @return affected lines
      */
     int updateBlogTag(BlogTagBO blogTag);
 
@@ -49,7 +49,7 @@ public interface BlogTagService {
      * 批量删除
      *
      * @param ids 需要删除的主键集合
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogTagByIds(Long[] ids);
 
@@ -57,7 +57,7 @@ public interface BlogTagService {
      * 删除信息
      *
      * @param id 主键
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogTagById(Long id);
 }

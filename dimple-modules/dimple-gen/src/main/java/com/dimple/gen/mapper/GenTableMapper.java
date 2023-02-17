@@ -61,7 +61,7 @@ public interface GenTableMapper {
      * 新增业务
      *
      * @param genTable 业务信息
-     * @return 结果
+     * @return affected lines
      */
     int insertGenTable(GenTable genTable);
 
@@ -69,7 +69,7 @@ public interface GenTableMapper {
      * 修改业务
      *
      * @param genTable 业务信息
-     * @return 结果
+     * @return affected lines
      */
     int updateGenTable(GenTable genTable);
 
@@ -77,7 +77,7 @@ public interface GenTableMapper {
      * 批量删除业务
      *
      * @param ids 需要删除的数据ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteGenTableByIds(Long[] ids);
 }

@@ -37,7 +37,7 @@ public interface SysJobLogService {
      * 批量删除调度日志信息
      *
      * @param logIds 需要删除的日志ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteJobLogByIds(Long[] logIds);
 
@@ -45,7 +45,7 @@ public interface SysJobLogService {
      * 删除任务日志
      *
      * @param jobId 调度日志ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteJobLogById(Long jobId);
 

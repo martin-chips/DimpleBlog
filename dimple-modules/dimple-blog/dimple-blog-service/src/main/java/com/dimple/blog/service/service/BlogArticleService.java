@@ -13,10 +13,10 @@ import java.util.List;
  */
 public interface BlogArticleService {
     /**
-     * 查询Blog article. not contain content
+     * 查询文章. not contain content
      *
-     * @param id Blog article主键
-     * @return Blog article
+     * @param id 文章主键
+     * @return 文章
      */
     BlogArticleBO selectBlogArticleById(Long id);
 
@@ -32,42 +32,51 @@ public interface BlogArticleService {
     BlogArticleBO selectBlogArticleDetailById(Long id);
 
     /**
-     * 查询Blog article列表
+     * 查询文章列表
      *
-     * @param blogArticle Blog article
-     * @return Blog article集合
+     * @param blogArticle 文章
+     * @return 文章集合
      */
     List<BlogArticleBO> selectBlogArticleList(BlogArticleBO blogArticle);
 
     /**
-     * 新增Blog article
+     * 新增文章
      *
-     * @param blogArticle Blog article
-     * @return 结果
+     * @param blogArticle 文章
+     * @return the object id
      */
     Long insertBlogArticle(BlogArticleBO blogArticle);
 
     /**
-     * 修改Blog article
+     * 修改文章
      *
-     * @param blogArticle Blog article
-     * @return 结果
+     * @param blogArticle 文章
+     * @return affected lines
      */
     int updateBlogArticle(BlogArticleBO blogArticle);
 
     /**
-     * 批量删除Blog article
+     * 批量删除文章
      *
-     * @param ids 需要删除的Blog article主键集合
-     * @return 结果
+     * @param ids 需要删除的文章主键集合
+     * @return affected lines
      */
     int deleteBlogArticleByIds(List<Long> ids);
 
     /**
-     * 删除Blog article信息
+     * 删除文章信息
      *
-     * @param id Blog article主键
-     * @return 结果
+     * @param id 文章主键
+     * @return affected lines
      */
     int deleteBlogArticleById(Long id);
+
+    /**
+     * update article status
+     *
+     * @param id            article id
+     * @param articleStatus article status,{@link com.dimple.blog.service.enums.BlogArticleStatus}
+     * @return affected lines
+     */
+    int updateBlogArticleStatus(Long id, Integer articleStatus);
 }

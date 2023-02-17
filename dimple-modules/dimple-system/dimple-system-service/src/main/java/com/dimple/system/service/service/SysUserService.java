@@ -56,7 +56,7 @@ public interface SysUserService {
      * 根据用户ID查询用户所属角色组
      *
      * @param userName 用户名
-     * @return 结果
+     * @return affected lines
      */
     String selectUserRoleGroup(String userName);
 
@@ -64,7 +64,7 @@ public interface SysUserService {
      * 校验用户名称是否唯一
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     String checkUserNameUnique(SysUserBO user);
 
@@ -72,7 +72,7 @@ public interface SysUserService {
      * 校验手机号码是否唯一
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     String checkPhoneUnique(SysUserBO user);
 
@@ -80,7 +80,7 @@ public interface SysUserService {
      * 校验email是否唯一
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     String checkEmailUnique(SysUserBO user);
 
@@ -102,7 +102,7 @@ public interface SysUserService {
      * 新增用户信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     int insertUser(SysUserBO user);
 
@@ -110,7 +110,7 @@ public interface SysUserService {
      * 注册用户信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     boolean registerUser(SysUserBO user);
 
@@ -118,7 +118,7 @@ public interface SysUserService {
      * 修改用户信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     int updateUser(SysUserBO user);
 
@@ -134,7 +134,7 @@ public interface SysUserService {
      * 修改用户状态
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     int updateUserStatus(SysUserBO user);
 
@@ -142,7 +142,7 @@ public interface SysUserService {
      * 修改用户基本信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     int updateUserProfile(SysUserBO user);
 
@@ -151,7 +151,7 @@ public interface SysUserService {
      *
      * @param userName 用户名
      * @param avatar   头像地址
-     * @return 结果
+     * @return affected lines
      */
     boolean updateUserAvatar(String userName, String avatar);
 
@@ -159,7 +159,7 @@ public interface SysUserService {
      * 重置用户密码
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     int resetPwd(SysUserBO user);
 
@@ -168,7 +168,7 @@ public interface SysUserService {
      *
      * @param userName 用户名
      * @param password 密码
-     * @return 结果
+     * @return affected lines
      */
     int resetUserPwd(String userName, String password);
 
@@ -176,7 +176,7 @@ public interface SysUserService {
      * 通过用户ID删除用户
      *
      * @param userId 用户ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteUserById(Long userId);
 
@@ -184,7 +184,7 @@ public interface SysUserService {
      * 批量删除用户信息
      *
      * @param userIds 需要删除的用户ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteUserByIds(Long[] userIds);
 
@@ -194,7 +194,7 @@ public interface SysUserService {
      * @param userList        用户数据列表
      * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
      * @param operName        操作用户
-     * @return 结果
+     * @return affected lines
      */
     String importUser(List<SysUserBO> userList, Boolean isUpdateSupport, String operName);
 }

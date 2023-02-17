@@ -1,5 +1,6 @@
 package com.dimple.blog.service.service.bo;
 
+import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class BlogTagBO extends BaseEntity {
     /**
      * the article tag
      */
+    @Excel(name = "标题")
     private String title;
 
 }

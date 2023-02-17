@@ -22,7 +22,7 @@ public class BlogCategoryBO extends BaseEntity {
     /**
      * category title, max length is 255
      */
-    @Excel
+    @Excel(name = "标题")
     private String title;
 
     private List<BlogArticleBO> articles;

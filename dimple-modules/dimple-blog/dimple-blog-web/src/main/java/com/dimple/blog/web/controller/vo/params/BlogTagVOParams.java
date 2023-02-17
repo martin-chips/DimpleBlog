@@ -11,7 +11,6 @@ import lombok.Data;
  */
 @Data
 public class BlogTagVOParams extends BaseVOParams {
-    private Long id;
 
     /**
      * the article tag

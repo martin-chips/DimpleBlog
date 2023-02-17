@@ -89,7 +89,7 @@ public class SysConfigServiceImpl implements SysConfigService {
      * 新增参数配置
      *
      * @param config 参数配置信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int insertConfig(SysConfigBO config) {
@@ -105,7 +105,7 @@ public class SysConfigServiceImpl implements SysConfigService {
      * 修改参数配置
      *
      * @param config 参数配置信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int updateConfig(SysConfigBO config) {
@@ -171,7 +171,7 @@ public class SysConfigServiceImpl implements SysConfigService {
      * 校验参数键名是否唯一
      *
      * @param config 参数配置信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public String checkConfigKeyUnique(SysConfigBO config) {

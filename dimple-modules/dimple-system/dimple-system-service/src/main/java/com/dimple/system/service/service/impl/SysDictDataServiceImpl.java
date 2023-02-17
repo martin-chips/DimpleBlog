@@ -74,7 +74,7 @@ public class SysDictDataServiceImpl implements SysDictDataService {
      * 新增保存字典数据信息
      *
      * @param data 字典数据信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int insertDictData(SysDictDataBO data) {
@@ -91,7 +91,7 @@ public class SysDictDataServiceImpl implements SysDictDataService {
      * 修改保存字典数据信息
      *
      * @param data 字典数据信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int updateDictData(SysDictDataBO data) {

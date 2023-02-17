@@ -66,7 +66,7 @@ public class ${ClassName}Controller extends BaseController
     }
 
     @RequiresPermissions("${permissionPrefix}:query")
-    @GetMapping(value = "/{${pkColumn.javaField}}")
+    @GetMapping("/{${pkColumn.javaField}}")
     public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
     {
         return success(${className}Service.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField}));

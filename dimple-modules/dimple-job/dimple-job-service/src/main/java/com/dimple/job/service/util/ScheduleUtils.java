@@ -112,7 +112,7 @@ public class ScheduleUtils {
      * 检查包名是否为白名单配置
      *
      * @param invokeTarget 目标字符串
-     * @return 结果
+     * @return affected lines
      */
     public static boolean whiteList(String invokeTarget) {
         String packageName = StringUtils.substringBefore(invokeTarget, "(");

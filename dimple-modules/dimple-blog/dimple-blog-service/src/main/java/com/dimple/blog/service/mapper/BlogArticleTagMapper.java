@@ -32,7 +32,7 @@ public interface BlogArticleTagMapper {
      * 新增
      *
      * @param blogArticleTag
-     * @return 结果
+     * @return affected lines
      */
     int insertBlogArticleTag(BlogArticleTag blogArticleTag);
 
@@ -40,7 +40,7 @@ public interface BlogArticleTagMapper {
      * 修改
      *
      * @param blogArticleTag
-     * @return 结果
+     * @return affected lines
      */
     int updateBlogArticleTag(BlogArticleTag blogArticleTag);
 
@@ -48,7 +48,7 @@ public interface BlogArticleTagMapper {
      * 删除
      *
      * @param id 主键
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogArticleTagById(Long id);
 
@@ -56,7 +56,7 @@ public interface BlogArticleTagMapper {
      * 批量删除
      *
      * @param ids 需要删除的数据主键集合
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogArticleTagByIds(List<Long> ids);
 

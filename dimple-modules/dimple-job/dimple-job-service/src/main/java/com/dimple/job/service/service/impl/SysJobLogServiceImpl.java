@@ -57,7 +57,7 @@ public class SysJobLogServiceImpl implements SysJobLogService {
      * 批量删除调度日志信息
      *
      * @param logIds 需要删除的数据ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int deleteJobLogByIds(Long[] logIds) {

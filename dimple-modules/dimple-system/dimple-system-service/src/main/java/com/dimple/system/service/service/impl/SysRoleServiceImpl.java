@@ -128,7 +128,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 校验角色名称是否唯一
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public String checkRoleNameUnique(SysRoleBO role) {
@@ -144,7 +144,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 校验角色权限是否唯一
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public String checkRoleKeyUnique(SysRoleBO role) {
@@ -189,7 +189,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 通过角色ID查询角色使用数量
      *
      * @param roleId 角色ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int countUserRoleByRoleId(Long roleId) {
@@ -200,7 +200,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 新增保存角色信息
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -215,7 +215,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 修改保存角色信息
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -232,7 +232,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 修改角色状态
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int updateRoleStatus(SysRoleBO role) {
@@ -243,7 +243,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 修改数据权限信息
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -277,7 +277,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 通过角色ID删除角色
      *
      * @param roleId 角色ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -291,7 +291,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 批量删除角色信息
      *
      * @param roleIds 需要删除的角色ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -313,7 +313,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 取消授权用户角色
      *
      * @param userRole 用户和角色关联信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int deleteAuthUser(SysUserRoleBO userRole) {
@@ -325,7 +325,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      *
      * @param roleId  角色ID
      * @param userIds 需要取消授权的用户数据ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int deleteAuthUsers(Long roleId, Long[] userIds) {
@@ -337,7 +337,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      *
      * @param roleId  角色ID
      * @param userIds 需要授权的用户数据ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int insertAuthUsers(Long roleId, Long[] userIds) {

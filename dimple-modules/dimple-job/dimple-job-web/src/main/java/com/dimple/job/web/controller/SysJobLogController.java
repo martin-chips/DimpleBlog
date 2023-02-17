@@ -61,7 +61,7 @@ public class SysJobLogController extends BaseController {
      * 根据调度编号获取详细信息
      */
     @RequiresPermissions("monitor:job:query")
-    @GetMapping(value = "/{jobLogId}")
+    @GetMapping("/{jobLogId}")
     public AjaxResult getInfo(@PathVariable Long jobLogId) {
         return success(jobLogService.selectJobLogById(jobLogId));
     }

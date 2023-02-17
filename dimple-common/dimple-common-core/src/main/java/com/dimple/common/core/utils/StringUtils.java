@@ -156,7 +156,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      *
      * @param str   字符串
      * @param start 开始
-     * @return 结果
+     * @return affected lines
      */
     public static String substring(final String str, int start) {
         if (str == null) {
@@ -183,7 +183,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param str   字符串
      * @param start 开始
      * @param end   结束
-     * @return 结果
+     * @return affected lines
      */
     public static String substring(final String str, int start, int end) {
         if (str == null) {
@@ -219,7 +219,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * 判断是否为空，并且不是空白字符
      *
      * @param str 要判断的value
-     * @return 结果
+     * @return affected lines
      */
     public static boolean hasText(String str) {
         return (str != null && !str.isEmpty() && containsText(str));
@@ -259,7 +259,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * 是否为http(s)://开头
      *
      * @param link 链接
-     * @return 结果
+     * @return affected lines
      */
     public static boolean ishttp(String link) {
         return StringUtils.startsWithAny(link, Constants.HTTP, Constants.HTTPS);

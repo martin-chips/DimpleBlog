@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 /**
- * Blog article对象 blog_article
+ * 文章对象 blog_article
  *
  * @author Dimple
  * @date 2023-02-13

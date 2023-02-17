@@ -75,7 +75,7 @@ public class SecurityUtils {
      * 是否为管理员
      *
      * @param userId 用户ID
-     * @return 结果
+     * @return affected lines
      */
     public static boolean isAdmin(Long userId) {
         return userId != null && 1L == userId;
@@ -97,7 +97,7 @@ public class SecurityUtils {
      *
      * @param rawPassword     真实密码
      * @param encodedPassword 加密后字符
-     * @return 结果
+     * @return affected lines
      */
     public static boolean matchesPassword(String rawPassword, String encodedPassword) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

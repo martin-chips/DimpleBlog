@@ -1,18 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="" prop="articleId">
-        <el-input
-          v-model="queryParams.articleId"
-          placeholder="请输入"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="" prop="categoryId">
         <el-input
-          v-model="queryParams.categoryId"
-          placeholder="请输入"
+          v-model="queryParams.title"
+          placeholder="请输入标题"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -72,7 +64,7 @@
     <el-table v-loading="loading" :data="categoryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="" align="center" prop="id" />
-      <el-table-column label="" align="center" prop="articleId" />
+      <el-table-column label="标题" align="center" prop="title" />
       <el-table-column label="" align="center" prop="categoryId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -102,14 +94,10 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="" prop="articleId">
-          <el-input v-model="form.articleId" placeholder="请输入" />
-        </el-form-item>
         <el-form-item label="" prop="categoryId">
-          <el-input v-model="form.categoryId" placeholder="请输入" />
+          <el-input v-model="form.title" placeholder="请输入" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -139,7 +127,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 分类表格数据
       categoryList: [],
       // 弹出层标题
       title: "",
@@ -149,8 +137,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        articleId: null,
-        categoryId: null
+        title: null
       },
       // 表单参数
       form: {},
@@ -163,7 +150,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询分类列表 */
     getList() {
       this.loading = true;
       listCategory(this.queryParams).then(response => {
@@ -181,8 +168,7 @@ export default {
     reset() {
       this.form = {
         id: null,
-        articleId: null,
-        categoryId: null
+        title: null,
       };
       this.resetForm("form");
     },
@@ -206,7 +192,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加分类";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -215,7 +201,7 @@ export default {
       getCategory(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改分类";
       });
     },
     /** 提交按钮 */
@@ -241,7 +227,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除分类编号为"' + ids + '"的数据项？').then(function() {
         return delCategory(ids);
       }).then(() => {
         this.getList();

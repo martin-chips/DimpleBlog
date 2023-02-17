@@ -32,7 +32,7 @@ public interface BlogCategoryMapper {
      * 新增blog category
      *
      * @param blogCategory blog category
-     * @return 结果
+     * @return affected lines
      */
     int insertBlogCategory(BlogCategory blogCategory);
 
@@ -40,7 +40,7 @@ public interface BlogCategoryMapper {
      * 修改blog category
      *
      * @param blogCategory blog category
-     * @return 结果
+     * @return affected lines
      */
     int updateBlogCategory(BlogCategory blogCategory);
 
@@ -48,7 +48,7 @@ public interface BlogCategoryMapper {
      * 删除blog category
      *
      * @param id blog category主键
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogCategoryById(Long id);
 
@@ -56,7 +56,7 @@ public interface BlogCategoryMapper {
      * 批量删除blog category
      *
      * @param ids 需要删除的数据主键集合
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogCategoryByIds(Long[] ids);
 }

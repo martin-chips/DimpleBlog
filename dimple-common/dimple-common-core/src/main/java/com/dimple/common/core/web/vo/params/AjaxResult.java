@@ -24,6 +24,11 @@ public class AjaxResult extends HashMap<String, Object> {
      * 数据对象
      */
     public static final String DATA_TAG = "data";
+
+    public static final Integer AFFECTED_ROW_FAIL = 0;
+    public static final Integer AFFECTED_ROW_SUCCESS = 1;
+
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -162,7 +167,7 @@ public class AjaxResult extends HashMap<String, Object> {
     /**
      * 是否为成功消息
      *
-     * @return 结果
+     * @return affected lines
      */
     public boolean isSuccess() {
         return Objects.equals(HttpStatus.SUCCESS, this.get(CODE_TAG));
@@ -171,7 +176,7 @@ public class AjaxResult extends HashMap<String, Object> {
     /**
      * 是否为错误消息
      *
-     * @return 结果
+     * @return affected lines
      */
     public boolean isError() {
         return !isSuccess();

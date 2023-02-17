@@ -32,7 +32,7 @@ public interface BlogCommentMapper {
      * 新增
      *
      * @param blogComment
-     * @return 结果
+     * @return affected lines
      */
     int insertBlogComment(BlogComment blogComment);
 
@@ -40,7 +40,7 @@ public interface BlogCommentMapper {
      * 修改
      *
      * @param blogComment
-     * @return 结果
+     * @return affected lines
      */
     int updateBlogComment(BlogComment blogComment);
 
@@ -48,7 +48,7 @@ public interface BlogCommentMapper {
      * 删除
      *
      * @param id 主键
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogCommentById(Long id);
 
@@ -56,7 +56,7 @@ public interface BlogCommentMapper {
      * 批量删除
      *
      * @param ids 需要删除的数据主键集合
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogCommentByIds(Long[] ids);
 }

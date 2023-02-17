@@ -9,26 +9,18 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="user name" prop="username">
+      <el-form-item label="用户名" prop="username">
         <el-input
           v-model="queryParams.username"
-          placeholder="请输入user name"
+          placeholder="请输入用户名"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="parent comment is, default is -1" prop="parentId">
-        <el-input
-          v-model="queryParams.parentId"
-          placeholder="请输入parent comment is, default is -1"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="user email, if email is not null will reply when the comment has been replied" prop="email">
+      <el-form-item label="邮箱" prop="email">
         <el-input
           v-model="queryParams.email"
-          placeholder="请输入user email, if email is not null will reply when the comment has been replied"
+          placeholder="请输入邮箱"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -40,16 +32,6 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['blog:comment:add']"
-        >新增</el-button>
-      </el-col>
       <el-col :span="1.5">
         <el-button
           type="success"
@@ -88,16 +70,15 @@
     <el-table v-loading="loading" :data="commentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="" align="center" prop="id" />
-      <el-table-column label="comment article id" align="center" prop="articleId" />
-      <el-table-column label="user name" align="center" prop="username" />
-      <el-table-column label="parent comment is, default is -1" align="center" prop="parentId" />
+      <el-table-column label="文章标题" align="center" prop="articleTitle" />
+      <el-table-column label="用户名" align="center" prop="username" />
       <el-table-column label="user head image" align="center" prop="headImage" width="100">
         <template slot-scope="scope">
           <image-preview :src="scope.row.headImage" :width="50" :height="50"/>
         </template>
       </el-table-column>
-      <el-table-column label="comment content, max length is 1024" align="center" prop="content" />
-      <el-table-column label="user email, if email is not null will reply when the comment has been replied" align="center" prop="email" />
+      <el-table-column label="内容" align="center" prop="content" />
+      <el-table-column label="邮箱" align="center" prop="email" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -126,26 +107,22 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="comment article id" prop="articleId">
-          <el-input v-model="form.articleId" placeholder="请输入comment article id" />
+          <el-input v-model="form.articleTitle" placeholder="请输入文章标题" />
         </el-form-item>
-        <el-form-item label="user name" prop="username">
-          <el-input v-model="form.username" placeholder="请输入user name" />
-        </el-form-item>
-        <el-form-item label="parent comment is, default is -1" prop="parentId">
-          <el-input v-model="form.parentId" placeholder="请输入parent comment is, default is -1" />
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="form.username" placeholder="请输入用户名" />
         </el-form-item>
         <el-form-item label="user head image" prop="headImage">
           <image-upload v-model="form.headImage"/>
         </el-form-item>
-        <el-form-item label="comment content, max length is 1024">
+        <el-form-item label="内容">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
-        <el-form-item label="user email, if email is not null will reply when the comment has been replied" prop="email">
-          <el-input v-model="form.email" placeholder="请输入user email, if email is not null will reply when the comment has been replied" />
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="form.email" placeholder="请输入邮箱" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -157,7 +134,7 @@
 </template>
 
 <script>
-import {getComment, listComment} from "@/api/";
+import {getComment, listComment} from "@/api/blog/comment";
 
 export default {
   name: "Comment",
@@ -187,8 +164,6 @@ export default {
         pageSize: 10,
         articleId: null,
         username: null,
-        parentId: null,
-        headImage: null,
         content: null,
         email: null,
       },
@@ -196,9 +171,6 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        parentId: [
-          { required: true, message: "parent comment is, default is -1不能为空", trigger: "blur" }
-        ],
       }
     };
   },
@@ -225,15 +197,11 @@ export default {
       this.form = {
         id: null,
         articleId: null,
+        articleTitle: null,
         username: null,
-        parentId: null,
         headImage: null,
         content: null,
-        email: null,
-        createBy: null,
-        createTime: null,
-        updateBy: null,
-        updateTime: null
+        email: null
       };
       this.resetForm("form");
     },
@@ -253,12 +221,6 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加【请填写功能名称】";
-    },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
@@ -266,7 +228,7 @@ export default {
       getComment(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改评论";
       });
     },
     /** 提交按钮 */
@@ -279,12 +241,6 @@ export default {
               this.open = false;
               this.getList();
             });
-          } else {
-            addComment(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
           }
         }
       });
@@ -292,7 +248,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除评论编号为"' + ids + '"的数据项？').then(function() {
         return delComment(ids);
       }).then(() => {
         this.getList();

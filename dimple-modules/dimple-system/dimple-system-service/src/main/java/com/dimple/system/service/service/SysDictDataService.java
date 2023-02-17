@@ -48,7 +48,7 @@ public interface SysDictDataService {
      * 新增保存字典数据信息
      *
      * @param dictData 字典数据信息
-     * @return 结果
+     * @return affected lines
      */
     int insertDictData(SysDictDataBO dictData);
 
@@ -56,7 +56,7 @@ public interface SysDictDataService {
      * 修改保存字典数据信息
      *
      * @param dictData 字典数据信息
-     * @return 结果
+     * @return affected lines
      */
     int updateDictData(SysDictDataBO dictData);
 }

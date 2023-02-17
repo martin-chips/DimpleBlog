@@ -38,7 +38,7 @@ public interface SysJobMapper {
      * 通过调度ID删除调度任务信息
      *
      * @param jobId 调度ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteJobById(Long jobId);
 
@@ -46,7 +46,7 @@ public interface SysJobMapper {
      * 批量删除调度任务信息
      *
      * @param ids 需要删除的数据ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteJobByIds(Long[] ids);
 
@@ -54,7 +54,7 @@ public interface SysJobMapper {
      * 修改调度任务信息
      *
      * @param job 调度任务信息
-     * @return 结果
+     * @return affected lines
      */
     int updateJob(SysJob job);
 
@@ -62,7 +62,7 @@ public interface SysJobMapper {
      * 新增调度任务信息
      *
      * @param job 调度任务信息
-     * @return 结果
+     * @return affected lines
      */
     int insertJob(SysJob job);
 }

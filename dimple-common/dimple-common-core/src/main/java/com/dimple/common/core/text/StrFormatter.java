@@ -24,7 +24,7 @@ public class StrFormatter {
      *
      * @param strPattern 字符串模板
      * @param argArray   参数列表
-     * @return 结果
+     * @return affected lines
      */
     public static String format(final String strPattern, final Object... argArray) {
         if (StringUtils.isEmpty(strPattern) || StringUtils.isEmpty(argArray)) {

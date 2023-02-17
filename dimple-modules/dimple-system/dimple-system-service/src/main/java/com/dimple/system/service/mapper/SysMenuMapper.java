@@ -86,7 +86,7 @@ import java.util.List;
      * 是否存在菜单子节点
      *
      * @param menuId 菜单ID
-     * @return 结果
+     * @return affected lines
      */
      int hasChildByMenuId(Long menuId);
 
@@ -94,7 +94,7 @@ import java.util.List;
      * 新增菜单信息
      *
      * @param menu 菜单信息
-     * @return 结果
+     * @return affected lines
      */
      int insertMenu(SysMenu menu);
 
@@ -102,7 +102,7 @@ import java.util.List;
      * 修改菜单信息
      *
      * @param menu 菜单信息
-     * @return 结果
+     * @return affected lines
      */
      int updateMenu(SysMenu menu);
 
@@ -110,7 +110,7 @@ import java.util.List;
      * 删除菜单管理信息
      *
      * @param menuId 菜单ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteMenuById(Long menuId);
 
@@ -119,7 +119,7 @@ import java.util.List;
      *
      * @param menuName 菜单名称
      * @param parentId 父菜单ID
-     * @return 结果
+     * @return affected lines
      */
      SysMenu checkMenuNameUnique(@Param("menuName") String menuName, @Param("parentId") Long parentId);
 }

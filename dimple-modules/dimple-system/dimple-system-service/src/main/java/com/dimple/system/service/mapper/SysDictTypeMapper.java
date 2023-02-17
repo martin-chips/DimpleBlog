@@ -46,7 +46,7 @@ import java.util.List;
      * 通过字典ID删除字典信息
      *
      * @param dictId 字典ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteDictTypeById(Long dictId);
 
@@ -54,7 +54,7 @@ import java.util.List;
      * 批量删除字典类型信息
      *
      * @param dictIds 需要删除的字典ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteDictTypeByIds(Long[] dictIds);
 
@@ -62,7 +62,7 @@ import java.util.List;
      * 新增字典类型信息
      *
      * @param dictType 字典类型信息
-     * @return 结果
+     * @return affected lines
      */
      int insertDictType(SysDictType dictType);
 
@@ -70,7 +70,7 @@ import java.util.List;
      * 修改字典类型信息
      *
      * @param dictType 字典类型信息
-     * @return 结果
+     * @return affected lines
      */
      int updateDictType(SysDictType dictType);
 
@@ -78,7 +78,7 @@ import java.util.List;
      * 校验字典类型称是否唯一
      *
      * @param dictType 字典类型
-     * @return 结果
+     * @return affected lines
      */
      SysDictType checkDictTypeUnique(String dictType);
 }

@@ -1,6 +1,5 @@
 package com.dimple.blog.service.service.bo;
 
-import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
@@ -17,10 +16,8 @@ public class BlogArticleCategoryBO extends BaseEntity {
     private Long id;
 
 
-    @Excel(name = "")
     private Long articleId;
 
 
-    @Excel(name = "")
     private Long categoryId;
 }

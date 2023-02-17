@@ -5,6 +5,7 @@ import com.dimple.blog.service.mapper.BlogArticleTagMapper;
 import com.dimple.blog.service.service.BlogArticleTagService;
 import com.dimple.blog.service.service.bo.BlogArticleTagBO;
 import com.dimple.common.core.utils.bean.BeanMapper;
+import com.dimple.common.core.web.vo.params.AjaxResult;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class BlogArticleTagServiceImpl implements BlogArticleTagService {
     @Override
     public int deleteBlogArticleTagByIds(List<Long> ids) {
         if (CollectionUtils.isNotEmpty(ids)) {
-            return 0;
+            return AjaxResult.AFFECTED_ROW_FAIL;
         }
         return blogArticleTagMapper.deleteBlogArticleTagByIds(ids);
     }

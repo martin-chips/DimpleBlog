@@ -22,43 +22,42 @@ public class BlogArticleBO extends BaseEntity {
     /**
      * article title
      */
-    @Excel(name = "article title")
+    @Excel(name = "标题")
     private String title;
 
     /**
      * article header image
      */
-    @Excel(name = "article header image")
+    @Excel(name = "头图")
     private String headerImage;
 
     /**
      * article content
      */
-    @Excel(name = "article content")
+    @Excel(name = "内容")
     private String content;
 
     /**
      * article category id
      */
-    @Excel(name = "article category id")
     private Long categoryId;
 
     /**
      * is original, 1 yes, 0 false
      */
-    @Excel(name = "is original, 1 yes, 0 false")
+    @Excel(name = "原创")
     private Integer original;
 
     /**
      * article summary,max length 512
      */
-    @Excel(name = "article summary,max length 512")
+    @Excel(name = "摘要")
     private String summary;
 
     /**
      * article status, 1 is published, 2 is draft
      */
-    @Excel(name = "article status, 1 is published, 2 is draft")
+    @Excel(name = "状态")
     private Integer articleStatus;
 
     private List<BlogTagBO> blogTags;

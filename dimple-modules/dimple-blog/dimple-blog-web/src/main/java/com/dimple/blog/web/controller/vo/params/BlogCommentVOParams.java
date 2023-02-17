@@ -11,7 +11,6 @@ import lombok.Data;
  */
 @Data
 public class BlogCommentVOParams extends BaseVOParams {
-    private Long id;
 
     /**
      * comment article id

@@ -113,7 +113,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 查询用户所属角色组
      *
      * @param userName 用户名
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public String selectUserRoleGroup(String userName) {
@@ -128,7 +128,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 校验用户名称是否唯一
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public String checkUserNameUnique(SysUserBO user) {
@@ -205,7 +205,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 新增保存用户信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -222,7 +222,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 注册用户信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public boolean registerUser(SysUserBO user) {
@@ -233,7 +233,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 修改保存用户信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -263,7 +263,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 修改用户状态
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int updateUserStatus(SysUserBO user) {
@@ -274,7 +274,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 修改用户基本信息
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int updateUserProfile(SysUserBO user) {
@@ -286,7 +286,7 @@ public class SysUserServiceImpl implements SysUserService {
      *
      * @param userName 用户名
      * @param avatar   头像地址
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public boolean updateUserAvatar(String userName, String avatar) {
@@ -297,7 +297,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 重置用户密码
      *
      * @param user 用户信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int resetPwd(SysUserBO user) {
@@ -309,7 +309,7 @@ public class SysUserServiceImpl implements SysUserService {
      *
      * @param userName 用户名
      * @param password 密码
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int resetUserPwd(String userName, String password) {
@@ -350,7 +350,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 通过用户ID删除用户
      *
      * @param userId 用户ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -364,7 +364,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 批量删除用户信息
      *
      * @param userIds 需要删除的用户ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -384,7 +384,7 @@ public class SysUserServiceImpl implements SysUserService {
      * @param userList        用户数据列表
      * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
      * @param operName        操作用户
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public String importUser(List<SysUserBO> userList, Boolean isUpdateSupport, String operName) {

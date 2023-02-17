@@ -25,7 +25,7 @@ public interface RemoteUserService {
      *
      * @param username 用户名
      * @param source   请求来源
-     * @return 结果
+     * @return affected lines
      */
     @GetMapping("/user/info/{username}")
     ResponseEntity<LoginUser> getUserInfo(@PathVariable("username") String username, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
@@ -35,7 +35,7 @@ public interface RemoteUserService {
      *
      * @param sysUser 用户信息
      * @param source  请求来源
-     * @return 结果
+     * @return affected lines
      */
     @PostMapping("/user/register")
     ResponseEntity<Boolean> registerUserInfo(@RequestBody SysUserBO sysUser, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);

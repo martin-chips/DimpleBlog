@@ -58,7 +58,7 @@ public class GenController extends BaseController {
      * 修改代码生成业务
      */
     @RequiresPermissions("tool:gen:query")
-    @GetMapping(value = "/{tableId}")
+    @GetMapping("/{tableId}")
     public AjaxResult getInfo(@PathVariable Long tableId) {
         GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTable> tables = genTableService.selectGenTableAll();
@@ -84,7 +84,7 @@ public class GenController extends BaseController {
     /**
      * 查询数据表字段列表
      */
-    @GetMapping(value = "/column/{tableId}")
+    @GetMapping("/column/{tableId}")
     public TableDataInfo columnList(Long tableId) {
         TableDataInfo dataInfo = new TableDataInfo();
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);

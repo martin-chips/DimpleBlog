@@ -158,7 +158,7 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
      * 新增保存字典类型信息
      *
      * @param dict 字典类型信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int insertDictType(SysDictTypeBO dict) {
@@ -174,7 +174,7 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
      * 修改保存字典类型信息
      *
      * @param dict 字典类型信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -194,7 +194,7 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
      * 校验字典类型称是否唯一
      *
      * @param dict 字典类型
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public String checkDictTypeUnique(SysDictTypeBO dict) {

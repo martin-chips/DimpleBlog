@@ -10,6 +10,7 @@ import com.dimple.blog.service.service.bo.BlogArticleTagBO;
 import com.dimple.blog.service.service.bo.BlogTagBO;
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
+import com.dimple.common.core.web.vo.params.AjaxResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +115,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     @Override
     public int deleteBlogArticleByIds(List<Long> ids) {
         if (CollectionUtils.isEmpty(ids)) {
-            return 0;
+            return AjaxResult.AFFECTED_ROW_FAIL;
         }
         deleteArticleTagMapping(ids);
         return blogArticleMapper.deleteBlogArticleByIds(ids);
@@ -126,7 +127,8 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         List<Long> needRemoveRowIds = new ArrayList<>();
         for (Long articleId : ids) {
             searchArticleTagMapping.setArticleId(articleId);
-            needRemoveRowIds.addAll(blogArticleTagService.selectBlogArticleTagList(searchArticleTagMapping).stream().map(BlogArticleTagBO::getId).collect(Collectors.toList()));
+            needRemoveRowIds.addAll(blogArticleTagService.selectBlogArticleTagList(searchArticleTagMapping).stream()
+                    .map(BlogArticleTagBO::getId).collect(Collectors.toList()));
         }
         blogArticleTagService.deleteBlogArticleTagByIds(needRemoveRowIds);
     }
@@ -134,5 +136,15 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     @Override
     public int deleteBlogArticleById(Long id) {
         return blogArticleMapper.deleteBlogArticleById(id);
+    }
+
+    @Override
+    public int updateBlogArticleStatus(Long id, Integer articleStatus) {
+        BlogArticle blogArticle = blogArticleMapper.selectBlogArticleById(id);
+        if (Objects.isNull(blogArticle)) {
+            return AjaxResult.AFFECTED_ROW_FAIL;
+        }
+        blogArticle.setArticleStatus(articleStatus);
+        return blogArticleMapper.updateBlogArticle(blogArticle);
     }
 }

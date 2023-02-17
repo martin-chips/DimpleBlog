@@ -244,7 +244,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 是否存在菜单子节点
      *
      * @param menuId 菜单ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public boolean hasChildByMenuId(Long menuId) {
@@ -256,7 +256,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 查询菜单使用数量
      *
      * @param menuId 菜单ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public boolean checkMenuExistRole(Long menuId) {
@@ -268,7 +268,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 新增保存菜单信息
      *
      * @param menu 菜单信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int insertMenu(SysMenuBO menu) {
@@ -279,7 +279,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 修改保存菜单信息
      *
      * @param menu 菜单信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int updateMenu(SysMenuBO menu) {
@@ -290,7 +290,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 删除菜单管理信息
      *
      * @param menuId 菜单ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int deleteMenuById(Long menuId) {
@@ -301,7 +301,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 校验菜单名称是否唯一
      *
      * @param menu 菜单信息
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public String checkMenuNameUnique(SysMenuBO menu) {
@@ -374,7 +374,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 是否为菜单内部跳转
      *
      * @param menu 菜单信息
-     * @return 结果
+     * @return affected lines
      */
     public boolean isMenuFrame(SysMenuBO menu) {
         return menu.getParentId().intValue() == 0 && UserConstants.TYPE_MENU.equals(menu.getMenuType())
@@ -385,7 +385,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 是否为内链组件
      *
      * @param menu 菜单信息
-     * @return 结果
+     * @return affected lines
      */
     public boolean isInnerLink(SysMenuBO menu) {
         return menu.getIsFrame().equals(UserConstants.NO_FRAME) && StringUtils.ishttp(menu.getPath());
@@ -395,7 +395,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 是否为parent_view组件
      *
      * @param menu 菜单信息
-     * @return 结果
+     * @return affected lines
      */
     public boolean isParentView(SysMenuBO menu) {
         return menu.getParentId().intValue() != 0 && UserConstants.TYPE_DIR.equals(menu.getMenuType());

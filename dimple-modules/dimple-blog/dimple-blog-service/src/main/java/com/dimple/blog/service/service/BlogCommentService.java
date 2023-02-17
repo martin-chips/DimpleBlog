@@ -31,7 +31,7 @@ public interface BlogCommentService {
      * 新增
      *
      * @param blogComment
-     * @return 结果
+     * @return affected lines
      */
     int insertBlogComment(BlogCommentBO blogComment);
 
@@ -39,7 +39,7 @@ public interface BlogCommentService {
      * 修改
      *
      * @param blogComment
-     * @return 结果
+     * @return affected lines
      */
     int updateBlogComment(BlogCommentBO blogComment);
 
@@ -47,7 +47,7 @@ public interface BlogCommentService {
      * 批量删除
      *
      * @param ids 需要删除的主键集合
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogCommentByIds(Long[] ids);
 
@@ -55,7 +55,7 @@ public interface BlogCommentService {
      * 删除信息
      *
      * @param id 主键
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogCommentById(Long id);
 }

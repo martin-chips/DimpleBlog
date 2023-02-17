@@ -77,7 +77,7 @@ public interface SysDictTypeService {
      * 新增保存字典类型信息
      *
      * @param dictType 字典类型信息
-     * @return 结果
+     * @return affected lines
      */
     int insertDictType(SysDictTypeBO dictType);
 
@@ -85,7 +85,7 @@ public interface SysDictTypeService {
      * 修改保存字典类型信息
      *
      * @param dictType 字典类型信息
-     * @return 结果
+     * @return affected lines
      */
     int updateDictType(SysDictTypeBO dictType);
 
@@ -93,7 +93,7 @@ public interface SysDictTypeService {
      * 校验字典类型称是否唯一
      *
      * @param dictType 字典类型
-     * @return 结果
+     * @return affected lines
      */
     String checkDictTypeUnique(SysDictTypeBO dictType);
 }

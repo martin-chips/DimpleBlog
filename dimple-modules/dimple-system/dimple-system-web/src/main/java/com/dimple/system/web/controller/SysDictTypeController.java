@@ -59,7 +59,7 @@ public class SysDictTypeController extends BaseController {
      * 查询字典类型详细
      */
     @RequiresPermissions("system:dict:query")
-    @GetMapping(value = "/{dictId}")
+    @GetMapping("/{dictId}")
     public AjaxResult getInfo(@PathVariable Long dictId) {
         SysDictTypeBO sysDictTypeBO = dictTypeService.selectDictTypeById(dictId);
         return success(BeanMapper.convert(sysDictTypeBO, SysDictTypeVO.class));

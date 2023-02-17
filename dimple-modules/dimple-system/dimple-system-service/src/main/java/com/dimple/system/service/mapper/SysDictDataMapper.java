@@ -56,7 +56,7 @@ import java.util.List;
      * 通过字典ID删除字典数据信息
      *
      * @param dictCode 字典数据ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteDictDataById(Long dictCode);
 
@@ -64,7 +64,7 @@ import java.util.List;
      * 批量删除字典数据信息
      *
      * @param dictCodes 需要删除的字典数据ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteDictDataByIds(Long[] dictCodes);
 
@@ -72,7 +72,7 @@ import java.util.List;
      * 新增字典数据信息
      *
      * @param dictData 字典数据信息
-     * @return 结果
+     * @return affected lines
      */
      int insertDictData(SysDictData dictData);
 
@@ -80,7 +80,7 @@ import java.util.List;
      * 修改字典数据信息
      *
      * @param dictData 字典数据信息
-     * @return 结果
+     * @return affected lines
      */
      int updateDictData(SysDictData dictData);
 
@@ -89,7 +89,7 @@ import java.util.List;
      *
      * @param oldDictType 旧字典类型
      * @param newDictType 新旧字典类型
-     * @return 结果
+     * @return affected lines
      */
      int updateDictDataType(@Param("oldDictType") String oldDictType, @Param("newDictType") String newDictType);
 }

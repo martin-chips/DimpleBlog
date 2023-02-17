@@ -64,7 +64,7 @@ public interface SysRoleService {
      * 校验角色名称是否唯一
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     String checkRoleNameUnique(SysRoleBO role);
 
@@ -72,7 +72,7 @@ public interface SysRoleService {
      * 校验角色权限是否唯一
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     String checkRoleKeyUnique(SysRoleBO role);
 
@@ -94,7 +94,7 @@ public interface SysRoleService {
      * 通过角色ID查询角色使用数量
      *
      * @param roleId 角色ID
-     * @return 结果
+     * @return affected lines
      */
     int countUserRoleByRoleId(Long roleId);
 
@@ -102,7 +102,7 @@ public interface SysRoleService {
      * 新增保存角色信息
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     int insertRole(SysRoleBO role);
 
@@ -110,7 +110,7 @@ public interface SysRoleService {
      * 修改保存角色信息
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     int updateRole(SysRoleBO role);
 
@@ -118,7 +118,7 @@ public interface SysRoleService {
      * 修改角色状态
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     int updateRoleStatus(SysRoleBO role);
 
@@ -126,7 +126,7 @@ public interface SysRoleService {
      * 修改数据权限信息
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
     int authDataScope(SysRoleBO role);
 
@@ -134,7 +134,7 @@ public interface SysRoleService {
      * 通过角色ID删除角色
      *
      * @param roleId 角色ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteRoleById(Long roleId);
 
@@ -142,7 +142,7 @@ public interface SysRoleService {
      * 批量删除角色信息
      *
      * @param roleIds 需要删除的角色ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteRoleByIds(Long[] roleIds);
 
@@ -150,7 +150,7 @@ public interface SysRoleService {
      * 取消授权用户角色
      *
      * @param userRole 用户和角色关联信息
-     * @return 结果
+     * @return affected lines
      */
     int deleteAuthUser(SysUserRoleBO userRole);
 
@@ -159,7 +159,7 @@ public interface SysRoleService {
      *
      * @param roleId  角色ID
      * @param userIds 需要取消授权的用户数据ID
-     * @return 结果
+     * @return affected lines
      */
     int deleteAuthUsers(Long roleId, Long[] userIds);
 
@@ -168,7 +168,7 @@ public interface SysRoleService {
      *
      * @param roleId  角色ID
      * @param userIds 需要删除的用户数据ID
-     * @return 结果
+     * @return affected lines
      */
     int insertAuthUsers(Long roleId, Long[] userIds);
 }

@@ -51,7 +51,7 @@ public class SysNoticeController extends BaseController {
      * 根据通知公告编号获取详细信息
      */
     @RequiresPermissions("system:notice:query")
-    @GetMapping(value = "/{noticeId}")
+    @GetMapping("/{noticeId}")
     public AjaxResult getInfo(@PathVariable Long noticeId) {
         SysNoticeBO sysNoticeBO = noticeService.selectNoticeById(noticeId);
         return success(BeanMapper.convert(sysNoticeBO, SysNoticeVO.class));

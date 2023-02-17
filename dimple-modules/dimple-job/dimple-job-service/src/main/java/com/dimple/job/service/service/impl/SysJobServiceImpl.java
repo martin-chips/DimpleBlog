@@ -126,7 +126,7 @@ public class SysJobServiceImpl implements SysJobService {
      * 批量删除调度信息
      *
      * @param jobIds 需要删除的任务ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -233,7 +233,7 @@ public class SysJobServiceImpl implements SysJobService {
      * 校验cron表达式是否有效
      *
      * @param cronExpression 表达式
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public boolean checkCronExpressionIsValid(String cronExpression) {

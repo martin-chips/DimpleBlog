@@ -61,7 +61,7 @@ public class SysConfigController extends BaseController {
     /**
      * 根据参数编号获取详细信息
      */
-    @GetMapping(value = "/{configId}")
+    @GetMapping("/{configId}")
     public AjaxResult getInfo(@PathVariable Long configId) {
         SysConfigBO sysConfigBO = configService.selectConfigById(configId);
         return success(BeanMapper.convert(sysConfigBO, SysConfigVO.class));
@@ -70,7 +70,7 @@ public class SysConfigController extends BaseController {
     /**
      * 根据参数键名查询参数值
      */
-    @GetMapping(value = "/configKey/{configKey}")
+    @GetMapping("/configKey/{configKey}")
     public AjaxResult getConfigKey(@PathVariable String configKey) {
         String configValue = configService.selectConfigByKey(configKey);
         return success(configValue);

@@ -32,7 +32,7 @@ public interface BlogCategoryService {
      * 新增blog category
      *
      * @param blogCategory blog category
-     * @return 结果
+     * @return affected lines
      */
     int insertBlogCategory(BlogCategoryBO blogCategory);
 
@@ -40,7 +40,7 @@ public interface BlogCategoryService {
      * 修改blog category
      *
      * @param blogCategory blog category
-     * @return 结果
+     * @return affected lines
      */
     int updateBlogCategory(BlogCategoryBO blogCategory);
 
@@ -48,7 +48,7 @@ public interface BlogCategoryService {
      * 批量删除blog category
      *
      * @param ids 需要删除的blog category主键集合
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogCategoryByIds(Long[] ids);
 
@@ -56,7 +56,7 @@ public interface BlogCategoryService {
      * 删除blog category信息
      *
      * @param id blog category主键
-     * @return 结果
+     * @return affected lines
      */
     int deleteBlogCategoryById(Long id);
 }

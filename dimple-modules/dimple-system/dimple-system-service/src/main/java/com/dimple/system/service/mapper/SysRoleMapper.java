@@ -78,7 +78,7 @@ import java.util.List;
      * 修改角色信息
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
      int updateRole(SysRole role);
 
@@ -86,7 +86,7 @@ import java.util.List;
      * 新增角色信息
      *
      * @param role 角色信息
-     * @return 结果
+     * @return affected lines
      */
      int insertRole(SysRole role);
 
@@ -94,7 +94,7 @@ import java.util.List;
      * 通过角色ID删除角色
      *
      * @param roleId 角色ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteRoleById(Long roleId);
 
@@ -102,7 +102,7 @@ import java.util.List;
      * 批量删除角色信息
      *
      * @param roleIds 需要删除的角色ID
-     * @return 结果
+     * @return affected lines
      */
      int deleteRoleByIds(Long[] roleIds);
 }

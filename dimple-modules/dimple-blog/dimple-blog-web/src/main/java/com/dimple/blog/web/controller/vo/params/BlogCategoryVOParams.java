@@ -10,6 +10,5 @@ import lombok.Data;
  */
 @Data
 public class BlogCategoryVOParams extends BaseVOParams {
-    private Long id;
     private String title;
 }

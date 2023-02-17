@@ -47,7 +47,7 @@ public class IpUtils {
      * 检查是否为内部IP地址
      *
      * @param ip IP地址
-     * @return 结果
+     * @return affected lines
      */
     public static boolean internalIp(String ip) {
         byte[] addr = textToNumericFormatV4(ip);
@@ -58,7 +58,7 @@ public class IpUtils {
      * 检查是否为内部IP地址
      *
      * @param addr byte地址
-     * @return 结果
+     * @return affected lines
      */
     private static boolean internalIp(byte[] addr) {
         if (StringUtils.isNull(addr) || addr.length < 2) {

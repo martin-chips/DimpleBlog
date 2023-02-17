@@ -24,7 +24,7 @@ public class SysOperLogServiceImpl implements SysOperLogService {
      * 新增操作日志
      *
      * @param operLog 操作日志对象
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int insertOperlog(SysOperLogBO operLog) {
@@ -46,7 +46,7 @@ public class SysOperLogServiceImpl implements SysOperLogService {
      * 批量删除系统操作日志
      *
      * @param operIds 需要删除的操作日志ID
-     * @return 结果
+     * @return affected lines
      */
     @Override
     public int deleteOperLogByIds(Long[] operIds) {

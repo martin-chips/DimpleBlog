@@ -53,7 +53,7 @@ public class SysMenuController extends BaseController {
      * 根据菜单编号获取详细信息
      */
     @RequiresPermissions("system:menu:query")
-    @GetMapping(value = "/{menuId}")
+    @GetMapping("/{menuId}")
     public AjaxResult getInfo(@PathVariable Long menuId) {
         SysMenuBO sysMenuBO = menuService.selectMenuById(menuId);
         return success(BeanMapper.convert(sysMenuBO, SysMenuVO.class));
@@ -73,7 +73,7 @@ public class SysMenuController extends BaseController {
     /**
      * 加载对应角色菜单列表树
      */
-    @GetMapping(value = "/roleMenuTreeselect/{roleId}")
+    @GetMapping("/roleMenuTreeselect/{roleId}")
     public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId) {
         Long userId = SecurityUtils.getUserId();
         List<SysMenuBO> menus = menuService.selectMenuList(userId);

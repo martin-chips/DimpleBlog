@@ -40,7 +40,7 @@ public interface SysConfigService {
      * 新增参数配置
      *
      * @param config 参数配置信息
-     * @return 结果
+     * @return affected lines
      */
     int insertConfig(SysConfigBO config);
 
@@ -48,7 +48,7 @@ public interface SysConfigService {
      * 修改参数配置
      *
      * @param config 参数配置信息
-     * @return 结果
+     * @return affected lines
      */
     int updateConfig(SysConfigBO config);
 
@@ -78,7 +78,7 @@ public interface SysConfigService {
      * 校验参数键名是否唯一
      *
      * @param config 参数信息
-     * @return 结果
+     * @return affected lines
      */
     String checkConfigKeyUnique(SysConfigBO config);
 }
