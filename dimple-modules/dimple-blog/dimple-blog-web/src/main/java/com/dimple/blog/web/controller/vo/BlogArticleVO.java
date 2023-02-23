@@ -33,9 +33,9 @@ public class BlogArticleVO extends BaseEntity {
     private Long categoryId;
 
     /**
-     * is original, 1 yes, 0 false
+     * is original, true yes, false no
      */
-    private Integer original;
+    private Boolean original;
 
     /**
      * article summary,max length 512

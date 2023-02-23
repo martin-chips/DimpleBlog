@@ -66,7 +66,7 @@ public class BlogArticleController extends BaseController {
     @PostMapping
     public AjaxResult add(@RequestBody BlogArticleVOParams blogArticle) {
         BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
-        return toAjax(blogArticleService.insertBlogArticle(blogArticleBO));
+        return success(blogArticleService.insertBlogArticle(blogArticleBO));
     }
 
     @RequiresPermissions("blog:article:edit")

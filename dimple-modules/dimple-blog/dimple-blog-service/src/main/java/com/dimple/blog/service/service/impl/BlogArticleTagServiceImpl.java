@@ -31,8 +31,8 @@ public class BlogArticleTagServiceImpl implements BlogArticleTagService {
 
     @Override
     public List<BlogArticleTagBO> selectBlogArticleTagByArticleId(Long articleId) {
-        blogArticleTagMapper.selectBlogArticleTagByArticleId(articleId);
-        return null;
+        List<BlogArticleTag> blogArticleTags = blogArticleTagMapper.selectBlogArticleTagByArticleId(articleId);
+        return BeanMapper.convertList(blogArticleTags, BlogArticleTagBO.class);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class BlogArticleTagServiceImpl implements BlogArticleTagService {
 
     @Override
     public int deleteBlogArticleTagByIds(List<Long> ids) {
-        if (CollectionUtils.isNotEmpty(ids)) {
+        if (CollectionUtils.isEmpty(ids)) {
             return AjaxResult.AFFECTED_ROW_FAIL;
         }
         return blogArticleTagMapper.deleteBlogArticleTagByIds(ids);

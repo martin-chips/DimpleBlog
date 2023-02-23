@@ -40,6 +40,7 @@
                header_image,
                category_id,
                original,
+               content,
                summary,
                article_status,
                create_by,
@@ -74,12 +75,12 @@
     <select id="selectBlogArticleByIds" resultType="com.dimple.blog.service.entity.BlogArticle">
         <include refid="selectBlogArticleBaseVO"/>
         where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
             #{id}
         </foreach>
     </select>
 
-    <insert id="insertBlogArticle" parameterType="BlogArticle" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertBlogArticle" parameterType="com.dimple.blog.service.entity.BlogArticle" useGeneratedKeys="true" keyProperty="id">
         insert into blog_article
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null and title != ''">title,</if>
@@ -135,7 +136,7 @@
 
     <delete id="deleteBlogArticleByIds" parameterType="Long">
         delete from blog_article where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>

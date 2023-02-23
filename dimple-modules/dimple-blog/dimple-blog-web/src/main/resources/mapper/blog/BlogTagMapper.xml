@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectBlogTagListByIds" resultType="com.dimple.blog.service.entity.BlogTag">
         <include refid="selectBlogTagVo"/>
         where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
             #{id}
         </foreach>
     </select>

@@ -1,7 +1,7 @@
 package com.dimple.common.security.utils;
 
 import com.alibaba.fastjson2.JSONArray;
-import com.dimple.common.core.constant.CacheConstants;
+import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.core.utils.SpringUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.redis.service.RedisService;
@@ -58,7 +58,7 @@ public class DictUtils {
      * 清空字典缓存
      */
     public static void clearDictCache() {
-        Collection<String> keys = SpringUtils.getBean(RedisService.class).keys(CacheConstants.SYS_DICT_KEY + "*");
+        Collection<String> keys = SpringUtils.getBean(RedisService.class).keys(CacheConstants.SYS_DICT_KEY_DEFINE.formatKey("*"));
         SpringUtils.getBean(RedisService.class).deleteObject(keys);
     }
 
@@ -69,6 +69,6 @@ public class DictUtils {
      * @return 缓存键key
      */
     public static String getCacheKey(String configKey) {
-        return CacheConstants.SYS_DICT_KEY + configKey;
+        return CacheConstants.SYS_DICT_KEY_DEFINE.formatKey(configKey);
     }
 }

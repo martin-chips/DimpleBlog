@@ -79,6 +79,16 @@
             <artifactId>dimple-common-swagger</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>dimple-common-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>5.8.12</version>
+        </dependency>
     </dependencies>
 
 

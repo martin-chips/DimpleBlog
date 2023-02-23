@@ -1,12 +1,13 @@
 package com.dimple.common.security.service;
 
-import com.dimple.common.core.constant.CacheConstants;
+import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.utils.JwtUtils;
 import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.ip.IpUtils;
 import com.dimple.common.core.utils.uuid.IdUtils;
+import com.dimple.common.redis.core.RedisKeyDefine;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.model.LoginUser;
@@ -28,9 +29,7 @@ public class TokenService {
     protected static final long MILLIS_SECOND = 1000;
     protected static final long MILLIS_MINUTE = 60 * MILLIS_SECOND;
     private final static Long MILLIS_MINUTE_TEN = CacheConstants.REFRESH_TIME * MILLIS_MINUTE;
-    private final static long expireTime = CacheConstants.EXPIRATION;
-
-    private final static String ACCESS_TOKEN = CacheConstants.LOGIN_TOKEN_KEY;
+    private final static RedisKeyDefine REDIS_KEY_DEFINE = CacheConstants.LOGIN_TOKEN_KEY_DEFINE;
     @Autowired
     private RedisService redisService;
 
@@ -48,15 +47,15 @@ public class TokenService {
         refreshToken(loginUser);
 
         // Jwt存储信息
-        Map<String, Object> claimsMap = new HashMap<String, Object>();
+        Map<String, Object> claimsMap = new HashMap<>();
         claimsMap.put(SecurityConstants.USER_KEY, token);
         claimsMap.put(SecurityConstants.DETAILS_USER_ID, userId);
         claimsMap.put(SecurityConstants.DETAILS_USERNAME, userName);
 
         // 接口返回信息
-        Map<String, Object> rspMap = new HashMap<String, Object>();
+        Map<String, Object> rspMap = new HashMap<>();
         rspMap.put("access_token", JwtUtils.createToken(claimsMap));
-        rspMap.put("expires_in", expireTime);
+        rspMap.put("expires_in", REDIS_KEY_DEFINE.getTimeout().toMinutes());
         return rspMap;
     }
 
@@ -137,13 +136,13 @@ public class TokenService {
      */
     public void refreshToken(LoginUser loginUser) {
         loginUser.setLoginTime(System.currentTimeMillis());
-        loginUser.setExpireTime(loginUser.getLoginTime() + expireTime * MILLIS_MINUTE);
+        loginUser.setExpireTime(loginUser.getLoginTime() + REDIS_KEY_DEFINE.getTimeout().toMinutes() * MILLIS_MINUTE);
         // 根据uuid将loginUser缓存
         String userKey = getTokenKey(loginUser.getToken());
-        redisService.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
+        redisService.setCacheObject(userKey, loginUser, REDIS_KEY_DEFINE.getTimeout());
     }
 
     private String getTokenKey(String token) {
-        return ACCESS_TOKEN + token;
+        return REDIS_KEY_DEFINE.formatKey(token);
     }
 }

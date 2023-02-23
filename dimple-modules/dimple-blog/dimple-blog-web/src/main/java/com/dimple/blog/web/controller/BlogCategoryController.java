@@ -73,7 +73,7 @@ public class BlogCategoryController extends BaseController {
 
     @RequiresPermissions("blog:category:edit")
     @OperationLog(title = "分类", businessType = BusinessType.UPDATE)
-    @PutMapping("${id}")
+    @PutMapping("{id}")
     public AjaxResult edit(@PathVariable Long id, @RequestBody BlogCategoryVOParams blogCategory) {
         BlogCategoryBO blogCategoryBO = BeanMapper.convert(blogCategory, BlogCategoryBO.class);
         blogCategoryBO.setId(id);

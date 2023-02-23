@@ -60,5 +60,5 @@ public interface BlogArticleTagMapper {
      */
     int deleteBlogArticleTagByIds(List<Long> ids);
 
-    BlogArticleTag selectBlogArticleTagByArticleId(Long articleId);
+    List<BlogArticleTag> selectBlogArticleTagByArticleId(Long articleId);
 }

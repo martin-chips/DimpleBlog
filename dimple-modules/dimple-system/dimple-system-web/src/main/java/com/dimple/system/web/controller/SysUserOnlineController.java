@@ -1,6 +1,6 @@
 package com.dimple.system.web.controller;
 
-import com.dimple.common.core.constant.CacheConstants;
+import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
@@ -41,7 +41,7 @@ public class SysUserOnlineController extends BaseController {
     @RequiresPermissions("monitor:online:list")
     @GetMapping("/list")
     public TableDataInfo list(String ipaddr, String userName) {
-        Collection<String> keys = redisService.keys(CacheConstants.LOGIN_TOKEN_KEY + "*");
+        Collection<String> keys = redisService.keys(CacheConstants.LOGIN_TOKEN_KEY_DEFINE.formatKey("*"));
         List<SysUserOnlineBO> userOnlineList = new ArrayList<>();
         for (String key : keys) {
             LoginUser user = redisService.getCacheObject(key);
@@ -73,7 +73,7 @@ public class SysUserOnlineController extends BaseController {
     @OperationLog(title = "在线用户", businessType = BusinessType.FORCE)
     @DeleteMapping("/{tokenId}")
     public AjaxResult forceLogout(@PathVariable String tokenId) {
-        redisService.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + tokenId);
+        redisService.deleteObject(CacheConstants.LOGIN_TOKEN_KEY_DEFINE.formatKey(tokenId));
         return success();
     }
 }

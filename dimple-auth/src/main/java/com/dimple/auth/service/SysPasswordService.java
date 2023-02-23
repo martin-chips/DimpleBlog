@@ -1,8 +1,9 @@
 package com.dimple.auth.service;
 
-import com.dimple.common.core.constant.CacheConstants;
+import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.core.constant.Constants;
 import com.dimple.common.core.exception.ServiceException;
+import com.dimple.common.redis.core.RedisKeyDefine;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.utils.SecurityUtils;
 import com.dimple.system.api.model.SysUserBO;
@@ -21,33 +22,20 @@ import java.util.concurrent.TimeUnit;
 public class SysPasswordService {
     private final RedisService redisService;
     private final SysRecordLogService recordLogService;
-
     private int maxRetryCount = CacheConstants.PASSWORD_MAX_RETRY_COUNT;
+    private RedisKeyDefine redisKeyDefine = CacheConstants.PWD_ERR_CNT_KEY_DEFINE;
 
-    private Long lockTime = CacheConstants.PASSWORD_LOCK_TIME;
-
-
-    /**
-     * 登录账户密码错误次数缓存键名
-     *
-     * @param username 用户名
-     * @return 缓存键key
-     */
-    private String getCacheKey(String username) {
-        return CacheConstants.PWD_ERR_CNT_KEY + username;
-    }
 
     public void validate(SysUserBO user, String password) {
         String username = user.getUserName();
-
-        Integer retryCount = redisService.getCacheObject(getCacheKey(username));
+        Integer retryCount = redisService.getCacheObject(redisKeyDefine.formatKey(username));
 
         if (retryCount == null) {
             retryCount = 0;
         }
 
         if (retryCount >= maxRetryCount) {
-            String errMsg = String.format("密码输入错误%s次，帐户锁定%s分钟", maxRetryCount, lockTime);
+            String errMsg = String.format("密码输入错误%s次，帐户锁定%s分钟", maxRetryCount, redisKeyDefine.getTimeout().toMinutes());
             recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, errMsg);
             throw new ServiceException(errMsg);
         }
@@ -55,7 +43,7 @@ public class SysPasswordService {
         if (!matches(user, password)) {
             retryCount = retryCount + 1;
             recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, String.format("密码输入错误%s次", retryCount));
-            redisService.setCacheObject(getCacheKey(username), retryCount, lockTime, TimeUnit.MINUTES);
+            redisService.setCacheObject(redisKeyDefine.formatKey(username), retryCount, redisKeyDefine.getTimeout());
             throw new ServiceException("用户不存在/密码错误");
         } else {
             clearLoginRecordCache(username);
@@ -67,8 +55,8 @@ public class SysPasswordService {
     }
 
     public void clearLoginRecordCache(String loginName) {
-        if (Boolean.TRUE.equals(redisService.hasKey(getCacheKey(loginName)))) {
-            redisService.deleteObject(getCacheKey(loginName));
+        if (Boolean.TRUE.equals(redisService.hasKey(redisKeyDefine.formatKey(loginName)))) {
+            redisService.deleteObject(redisKeyDefine.formatKey(loginName));
         }
     }
 }

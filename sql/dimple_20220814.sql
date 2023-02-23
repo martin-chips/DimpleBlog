@@ -150,6 +150,9 @@ insert into sys_menu
 values ('109', '在线用户', '2', '1', 'online', 'monitor/online/index', '', 1, 0, 'C', '0', '0', 'monitor:online:list',
         'online', 'admin', sysdate(), '', null, '在线用户菜单');
 insert into sys_menu
+values ('108', 'Redis监控', '2', '1', 'online', 'monitor/redis/index', '', 1, 0, 'C', '0', '0', 'monitor:redis:list',
+        'online', 'admin', sysdate(), '', null, 'Redis监控菜单');
+insert into sys_menu
 values ('110', '定时任务', '3', '2', 'job', 'monitor/job/index', '', 1, 0, 'C', '0', '0', 'monitor:job:list', 'job',
         'admin', sysdate(), '', null, '定时任务菜单');
 insert into sys_menu
@@ -330,10 +333,10 @@ insert into sys_menu values('1059', '预览代码', '115', '4', '#', '', '', 1, 
 insert into sys_menu values('1060', '生成代码', '115', '5', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code',              '#', 'admin', sysdate(), '', null, '');
 -- blog
 insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, query, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values  (6, '博客管理', 0, 6, 'blog', '', '', 1, 0, 'M', '0', '0', '', 'blog', 'admin', '2022-12-30 10:01:39', '', 'null', 'Blog管理菜单');
+values  (6, '博客管理', 0, 6, 'blog', '', '', 1, 0, 'M', '0', '0', '', 'post', 'admin', sysdate(), '', null, 'Blog管理菜单');
 
 insert into sys_menu (menu_id,menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values(601,'文章', '6', '1', 'article', 'blog/article/index', 1, 0, 'C', '0', '0', 'blog:article:list', '#', 'admin', sysdate(), '', null, '文章菜单');
+values(601,'文章', '6', '1', 'article', 'blog/article/index', 1, 0, 'C', '0', '0', 'blog:article:list', 'edit', 'admin', sysdate(), '', null, '文章菜单');
 insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
 values('文章查询', 601, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:article:query',        '#', 'admin', sysdate(), '', null, '');
 
@@ -350,7 +353,7 @@ insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame
 values('文章导出', 601, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:article:export',       '#', 'admin', sysdate(), '', null, '');
 
 insert into sys_menu (menu_id,menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values(602,'分类', '3', '1', 'category', 'blog/category/index', 1, 0, 'C', '0', '0', 'blog:category:list', '#', 'admin', sysdate(), '', null, '分类菜单');
+values(602,'分类', 6, '1', 'category', 'blog/category/index', 1, 0, 'C', '0', '0', 'blog:category:list', 'skill', 'admin', sysdate(), '', null, '分类菜单');
 insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
 values('分类查询', 602, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:category:query',        '#', 'admin', sysdate(), '', null, '');
 
@@ -367,7 +370,7 @@ insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame
 values('分类导出', 602, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:category:export',       '#', 'admin', sysdate(), '', null, '');
 
 insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values(603,'评论', '3', '1', 'comment', 'blog/comment/index', 1, 0, 'C', '0', '0', 'blog:comment:list', '#', 'admin', sysdate(), '', null, '评论菜单');
+values(603,'评论',6, '1', 'comment', 'blog/comment/index', 1, 0, 'C', '0', '0', 'blog:comment:list', 'message', 'admin', sysdate(), '', null, '评论菜单');
 insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
 values('评论查询', 603, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:comment:query',        '#', 'admin', sysdate(), '', null, '');
 
@@ -384,7 +387,7 @@ insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame
 values('评论导出', 603, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:comment:export',       '#', 'admin', sysdate(), '', null, '');
 
 insert into sys_menu (menu_id,menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values(604,'标签', '3', '1', 'tag', 'blog/tag/index', 1, 0, 'C', '0', '0', 'blog:tag:list', '#', 'admin', sysdate(), '', null, '标签菜单');
+values(604,'标签', 6, '1', 'tag', 'blog/tag/index', 1, 0, 'C', '0', '0', 'blog:tag:list', 'row', 'admin', sysdate(), '', null, '标签菜单');
 insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
 values('标签查询', 604, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:tag:query',        '#', 'admin', sysdate(), '', null, '');
 

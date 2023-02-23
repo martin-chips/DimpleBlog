@@ -1,6 +1,6 @@
 package com.dimple.gateway.filter;
 
-import com.dimple.common.core.constant.CacheConstants;
+import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.core.constant.HttpStatus;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.constant.TokenConstants;
@@ -96,7 +96,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
      * 获取缓存key
      */
     private String getTokenKey(String token) {
-        return CacheConstants.LOGIN_TOKEN_KEY + token;
+        return CacheConstants.LOGIN_TOKEN_KEY_DEFINE.formatKey(token);
     }
 
     /**

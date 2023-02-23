@@ -9,7 +9,7 @@ create table blog_article
     header_image   varchar(255) not null default '' comment 'article header image',
     content        text         not null default '' comment 'article content',
     category_id    bigint                default -1 not null comment 'article category id',
-    original       tinyint      not null default 1 comment 'is original, 1 yes, 0 false',
+    original       tinyint      not null default 1 comment 'is original, 1 yes, 0 no',
     summary        varchar(512) not null default '' comment 'article summary,max length 512',
     article_status tinyint      not null default 1 comment 'article status, 1 is published, 2 is draft',
     create_by      varchar(64)  null,

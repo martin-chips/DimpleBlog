@@ -1,6 +1,6 @@
 package com.dimple.system.web.controller;
 
-import com.dimple.common.core.constant.CacheConstants;
+import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.utils.poi.ExcelUtil;
 import com.dimple.common.core.web.controller.BaseController;
@@ -77,7 +77,7 @@ public class SysLogininforController extends BaseController {
     @OperationLog(title = "账户解锁", businessType = BusinessType.OTHER)
     @GetMapping("/unlock/{userName}")
     public AjaxResult unlock(@PathVariable("userName") String userName) {
-        redisService.deleteObject(CacheConstants.PWD_ERR_CNT_KEY + userName);
+        redisService.deleteObject(CacheConstants.PWD_ERR_CNT_KEY_DEFINE.formatKey(userName));
         return success();
     }
 

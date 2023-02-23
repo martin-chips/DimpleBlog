@@ -23,6 +23,6 @@ public interface RemoteFileService {
      * @param file 文件信息
      * @return affected lines
      */
-    @PostMapping("/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<SysFileBO> upload(@RequestPart(value = "file") MultipartFile file);
 }

@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -35,16 +36,20 @@ public class RedisService {
         redisTemplate.opsForValue().set(key, value);
     }
 
+
+    public <T> void setCacheObject(final String key, final T value, final Long timeout, final TimeUnit timeUnit) {
+        redisTemplate.opsForValue().set(key, value, timeout, timeUnit);
+    }
+
     /**
      * 缓存基本的对象，Integer、String、实体类等
      *
      * @param key      缓存的键值
      * @param value    缓存的值
-     * @param timeout  时间
-     * @param timeUnit 时间颗粒度
+     * @param duration  时间
      */
-    public <T> void setCacheObject(final String key, final T value, final Long timeout, final TimeUnit timeUnit) {
-        redisTemplate.opsForValue().set(key, value, timeout, timeUnit);
+    public <T> void setCacheObject(final String key, final T value, final Duration duration) {
+        redisTemplate.opsForValue().set(key, value, duration);
     }
 
     /**

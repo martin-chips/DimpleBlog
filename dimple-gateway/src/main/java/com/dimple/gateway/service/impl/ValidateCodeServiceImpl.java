@@ -1,12 +1,13 @@
 package com.dimple.gateway.service.impl;
 
-import com.dimple.common.core.constant.CacheConstants;
+import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.core.constant.Constants;
 import com.dimple.common.core.exception.CaptchaException;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.sign.Base64;
 import com.dimple.common.core.utils.uuid.IdUtils;
 import com.dimple.common.core.web.vo.params.AjaxResult;
+import com.dimple.common.redis.core.RedisKeyDefine;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.gateway.config.properties.CaptchaProperties;
 import com.dimple.gateway.service.ValidateCodeService;
@@ -54,7 +55,7 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
 
         // 保存验证码信息
         String uuid = IdUtils.simpleUUID();
-        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
+        RedisKeyDefine captchaRedisDefine = CacheConstants.CAPTCHA_CODE_KEY_DEFINE;
 
         String capStr = null, code = null;
         BufferedImage image = null;
@@ -71,7 +72,7 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
             image = captchaProducer.createImage(capStr);
         }
 
-        redisService.setCacheObject(verifyKey, code, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
+        redisService.setCacheObject(captchaRedisDefine.formatKey(uuid), code, captchaRedisDefine.getTimeout());
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {
@@ -96,7 +97,7 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
         if (StringUtils.isEmpty(uuid)) {
             throw new CaptchaException("验证码已失效");
         }
-        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
+        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY_DEFINE.formatKey(uuid);
         String captcha = redisService.getCacheObject(verifyKey);
         redisService.deleteObject(verifyKey);
 

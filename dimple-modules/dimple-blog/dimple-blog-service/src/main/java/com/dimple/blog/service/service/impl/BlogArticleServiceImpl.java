@@ -1,5 +1,6 @@
 package com.dimple.blog.service.service.impl;
 
+import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
 import com.dimple.blog.service.entity.BlogArticle;
 import com.dimple.blog.service.mapper.BlogArticleMapper;
 import com.dimple.blog.service.service.BlogArticleService;
@@ -41,13 +42,16 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
     @Override
     public BlogArticleBO selectBlogArticleById(Long id) {
-        BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticleMapper.selectBlogArticleById(id), BlogArticleBO.class);
+        BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticleMapper.selectBlogArticleDetailById(id), BlogArticleBO.class);
         fillArticleTags(blogArticleBO);
         return blogArticleBO;
     }
 
     @Override
     public List<BlogArticleBO> selectBlogArticleByIds(List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return Lists.newArrayList();
+        }
         List<BlogArticle> blogArticles = blogArticleMapper.selectBlogArticleByIds(ids);
         return BeanMapper.convertList(blogArticles, BlogArticleBO.class);
     }
@@ -62,7 +66,10 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     private void fillArticleTags(BlogArticleBO blogArticleBO) {
         List<BlogArticleTagBO> blogArticleTagBOS = blogArticleTagService.selectBlogArticleTagByArticleId(blogArticleBO.getId());
         List<Long> tagIds = blogArticleTagBOS.stream().map(BlogArticleTagBO::getTagId).collect(Collectors.toList());
-        List<BlogTagBO> blogTagBOS = blogTagService.selectBlogTagByIds(tagIds);
+        List<BlogTagBO> blogTagBOS = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(tagIds)) {
+            blogTagBOS = blogTagService.selectBlogTagByIds(tagIds);
+        }
         blogArticleBO.setBlogTags(blogTagBOS);
     }
 
@@ -78,14 +85,15 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     public Long insertBlogArticle(BlogArticleBO blogArticleBO) {
         BlogArticle blogArticle = BeanMapper.convert(blogArticleBO, BlogArticle.class);
         blogArticle.setCreateTime(DateUtils.getNowDate());
-        Long articleId = blogArticleMapper.insertBlogArticle(blogArticle);
+        blogArticleMapper.insertBlogArticle(blogArticle);
+        Long articleId = blogArticle.getId();
         saveBlogTags(blogArticleBO.getBlogTags(), articleId);
         return articleId;
     }
 
     private void saveBlogTags(List<BlogTagBO> blogTags, Long articleId) {
-        if (CollectionUtils.isNotEmpty(blogTags)) {
-            log.info("Current blog article no tags, just ignore save blog tags.");
+        if (CollectionUtils.isEmpty(blogTags)) {
+            log.warn("Current blog article no tags, just ignore save blog tags.");
             return;
         }
         // remove all mapping
