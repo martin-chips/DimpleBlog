@@ -48,8 +48,8 @@ cp_jar() {
   echo "begin copy dimple-auth "
   /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-auth/target/dimple-auth.jar $PROJECT_DOCKER_PATH/dimple/auth/jar
 
-  echo "begin copy dimple-visual "
-  /bin/cp -rf   $PROJECT_ROOT_PATH/dimple-visual/dimple-monitor/target/dimple-visual-monitor.jar  $PROJECT_DOCKER_PATH/dimple/visual/monitor/jar
+  echo "begin copy dimple-modules-visual "
+  /bin/cp -rf   $PROJECT_ROOT_PATH/dimple-modules/dimple-monitor/target/dimple-modules-monitor.jar  $PROJECT_DOCKER_PATH/dimple/modules/monitor/jar
 
   echo "begin copy dimple-modules-system "
   /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-system/dimple-system-web/target/dimple-modules-system.jar $PROJECT_DOCKER_PATH/dimple/modules/system/jar

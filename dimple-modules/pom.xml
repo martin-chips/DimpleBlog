@@ -14,6 +14,7 @@
         <module>dimple-file</module>
         <module>dimple-blog</module>
         <module>dimple-gen</module>
+        <module>dimple-monitor</module>
     </modules>
 
     <artifactId>dimple-modules</artifactId>

@@ -243,7 +243,6 @@
     <modules>
         <module>dimple-auth</module>
         <module>dimple-gateway</module>
-        <module>dimple-visual</module>
         <module>dimple-modules</module>
         <module>dimple-api</module>
         <module>dimple-common</module>

@@ -124,10 +124,10 @@ services:
       - "9300:9300"
     volumes:
       - ./file/uploadPath:/home/dimple/uploadPath
-  dimple-visual-monitor:
-    container_name: dimple-visual-monitor
+  dimple-modules-monitor:
+    container_name: dimple-modules-monitor
     build:
-      context: ./dimple/visual/monitor/
+      context: ./dimple/modules/monitor/
       dockerfile: Dockerfile
     ports:
       - "9100:9100"

@@ -108,6 +108,13 @@ INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gm
             - Path=/system/**
           filters:
             - StripPrefix=1
+        # 监控模块
+        - id: dimple-monitor
+          uri: lb://dimple-monitor
+          predicates:
+            - Path=/monitor/**
+          filters:
+            - StripPrefix=1
         # BLOG模块
         - id: dimple-blog
           uri: lb://dimple-blog
@@ -150,6 +157,7 @@ INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gm
     password: password
 ', '8bd9dada9a94822feeab40de55efced6', '2020-11-20 00:00:00', '2022-09-29 02:48:42', 'nacos', '0:0:0:0:0:0:0:1', '', '', '认证中心', 'null', 'null', 'yaml', '', '');
 INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (4, 'dimple-monitor-dev.yml', 'DEFAULT_GROUP', '# spring
+# spring配置
 spring:
   security:
     user:
@@ -159,6 +167,57 @@ spring:
     admin:
       ui:
         title: Dimple服务状态监控
+  redis:
+    host: dimple-redis
+    port: 6379
+    password: password
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: admin
+        loginPassword: 123456
+    dynamic:
+      druid:
+        initial-size: 5
+        min-idle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,slf4j
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      datasource:
+          # 主库数据源
+          master:
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+            username: root
+            password: password
+          # 从库数据源
+          # slave:
+            # username:
+            # password:
+            # url:
+            # driver-class-name:
+
+# mybatis配置
+mybatis:
+    # 搜索指定包别名
+    typeAliasesPackage: com.dimple.monitor
+    # 配置mapper的扫描，找到所有的mapper.xml映射文件
+    mapperLocations: classpath:mapper/**/*.xml
+# swagger配置
+swagger:
+  title: 监控模块接口文档
+  license: Powered By Dimple
+  licenseUrl: https://www.bianxf.com
 ', '6f122fd2bfb8d45f858e7d6529a9cd44', '2020-11-20 00:00:00', '2022-09-29 02:48:54', 'nacos', '0:0:0:0:0:0:0:1', '', '', '监控中心', 'null', 'null', 'yaml', '', '');
 INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (5, 'dimple-system-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
@@ -270,6 +329,14 @@ INSERT INTO `dimple-config`.config_info (id, data_id, group_id, content, md5, gm
 	{
         "resource": "dimple-system",
         "count": 1000,
+        "grade": 1,
+        "limitApp": "default",
+        "strategy": 0,
+        "controlBehavior": 0
+    },
+	{
+        "resource": "dimple-monitor",
+        "count": 300,
         "grade": 1,
         "limitApp": "default",
         "strategy": 0,

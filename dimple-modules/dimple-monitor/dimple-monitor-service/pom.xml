@@ -1,22 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.dimple</groupId>
-        <artifactId>dimple-modules-system</artifactId>
+        <artifactId>dimple-modules-monitor</artifactId>
         <version>3.5.0</version>
     </parent>
 
-    <artifactId>dimple-modules-system-service</artifactId>
+    <artifactId>dimple-modules-monitor-service</artifactId>
     <packaging>jar</packaging>
 
     <description>
-        Dimple-modules-system系统service模块
+        Dimple-modules-monitor系统service模块
     </description>
 
     <dependencies>
+
+        <!-- SpringBoot Admin -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+            <version>${spring-boot-admin.version}</version>
+        </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
 
         <!-- SpringCloud Alibaba Nacos -->
         <dependency>
@@ -78,7 +91,30 @@
             <groupId>com.dimple</groupId>
             <artifactId>dimple-common-swagger</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>5.8.12</version>
+        </dependency>
+
     </dependencies>
 
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

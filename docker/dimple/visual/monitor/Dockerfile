@@ -10,6 +10,6 @@ RUN mkdir -p /home/dimple
 # 指定路径
 WORKDIR /home/dimple
 # 复制jar文件到路径
-COPY ./jar/dimple-visual-monitor.jar /home/dimple/dimple-visual-monitor.jar
+COPY ./jar/dimple-modules-monitor.jar /home/dimple/dimple-modules-monitor.jar
 # 启动系统服务
-ENTRYPOINT ["java","-jar","dimple-visual-monitor.jar"]
+ENTRYPOINT ["java","-jar","dimple-modules-monitor.jar"]

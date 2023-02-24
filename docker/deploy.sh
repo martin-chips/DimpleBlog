@@ -35,7 +35,7 @@ base() {
 
 # The Program Modules (Required)
 modules() {
-  docker compose up -d --build dimple-nginx dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-visual-monitor dimple-modules-blog
+  docker compose up -d --build dimple-nginx dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog
 }
 
 # Stop all modules which contains base environment and program modules.

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.dimple</groupId>
+        <artifactId>dimple-modules</artifactId>
+        <version>3.5.0</version>
+    </parent>
+    <packaging>pom</packaging>
+    <modules>
+        <module>dimple-monitor-web</module>
+        <module>dimple-monitor-service</module>
+    </modules>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dimple-modules-monitor</artifactId>
+
+    <description>
+        Dimple-modules-Monitor业务模块
+    </description>
+</project>
