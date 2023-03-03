@@ -40,4 +40,5 @@ public interface BlogArticleMapper {
     @MapKey("category_id")
     List<KeyValue<Long,Long>> selectBlogArticleCountByCategoryIds(Set<Long> categoryIds);
 
+    List<BlogArticle> selectBlogArticlePrevNext(Long id);
 }

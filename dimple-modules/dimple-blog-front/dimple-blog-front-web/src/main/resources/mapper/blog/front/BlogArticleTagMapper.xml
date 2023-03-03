@@ -28,7 +28,7 @@
         where id = #{id}
     </select>
 
-    <select id="selectBlogArticleTagByArticleId" resultType="com.dimple.blog.front.service.entity.BlogArticleTag"
+    <select id="selectBlogArticleTagByArticleId" resultMap="BlogArticleTagResult"
             parameterType="java.lang.Long">
         <include refid="selectBlogArticleTagVo"/>
         where article_id = #{articleId}

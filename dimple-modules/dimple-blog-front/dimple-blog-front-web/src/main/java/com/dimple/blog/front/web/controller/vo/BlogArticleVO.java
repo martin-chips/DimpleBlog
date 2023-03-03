@@ -1,6 +1,5 @@
 package com.dimple.blog.front.web.controller.vo;
 
-import com.dimple.blog.front.service.service.bo.BlogTagBO;
 import com.dimple.common.core.web.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -64,7 +63,7 @@ public class BlogArticleVO extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    private List<BlogTagBO> blogTags;
+    private List<String> blogTags;
 
     private Long pv;
 

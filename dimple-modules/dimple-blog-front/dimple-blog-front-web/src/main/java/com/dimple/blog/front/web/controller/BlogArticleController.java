@@ -2,6 +2,8 @@ package com.dimple.blog.front.web.controller;
 
 import com.dimple.blog.front.service.service.BlogArticleService;
 import com.dimple.blog.front.service.service.bo.BlogArticleBO;
+import com.dimple.blog.front.service.service.bo.BlogArticlePrevNextBO;
+import com.dimple.blog.front.web.controller.vo.BlogArticlePrevNextVO;
 import com.dimple.blog.front.web.controller.vo.BlogArticleVO;
 import com.dimple.blog.front.web.controller.vo.params.BlogArticleVOParams;
 import com.dimple.common.core.utils.bean.BeanMapper;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -38,13 +41,15 @@ public class BlogArticleController extends BaseController {
 
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return success(blogArticleService.selectBlogArticleById(id));
+        BlogArticleBO blogArticleBO = blogArticleService.selectBlogArticleById(id);
+        return success(BeanMapper.convert(blogArticleBO, BlogArticleVO.class));
     }
 
 
     @GetMapping("prevNext")
-    public AjaxResult getPreAndNextArticle() {
-        return success();
+    public AjaxResult getPreAndNextArticle(@RequestParam Long id) {
+        BlogArticlePrevNextBO blogArticlePrevNextBO = blogArticleService.selectPrevNextArticle(id);
+        return success(BeanMapper.convert(blogArticlePrevNextBO, BlogArticlePrevNextVO.class));
     }
 
 

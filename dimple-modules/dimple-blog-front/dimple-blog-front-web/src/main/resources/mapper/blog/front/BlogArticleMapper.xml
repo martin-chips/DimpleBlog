@@ -67,12 +67,12 @@
         <include refid="selectBlogArticleBaseVO"/>
         where id = #{id}
     </select>
-    <select id="selectBlogArticleDetailById" resultType="com.dimple.blog.front.service.entity.BlogArticle"
+    <select id="selectBlogArticleDetailById" resultMap="BlogArticleResult"
             parameterType="java.lang.Long">
         <include refid="selectBlogArticleDetailVo"/>
         where id = #{id}
     </select>
-    <select id="selectBlogArticleByIds" resultType="com.dimple.blog.front.service.entity.BlogArticle">
+    <select id="selectBlogArticleByIds" resultMap="BlogArticleResult">
         <include refid="selectBlogArticleBaseVO"/>
         where id in
         <foreach item="id" collection="collection" open="(" separator="," close=")">
@@ -86,5 +86,17 @@
             #{id}
         </foreach>
         group by category_id
+    </select>
+    <select id="selectBlogArticlePrevNext" resultMap="BlogArticleResult"
+            parameterType="java.lang.Long">
+        select id,title,header_image
+        from blog_article
+        where id in ((select max(id)
+        from blog_article
+        where id &lt; #{id})
+        union all
+        (select min(id)
+        from blog_article
+        where id &gt; #{id}))
     </select>
 </mapper>

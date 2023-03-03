@@ -2,6 +2,7 @@ package com.dimple.blog.front.service.service;
 
 
 import com.dimple.blog.front.service.service.bo.BlogArticleBO;
+import com.dimple.blog.front.service.service.bo.BlogArticlePrevNextBO;
 
 import java.util.List;
 import java.util.Map;
@@ -42,4 +43,6 @@ public interface BlogArticleService {
     List<BlogArticleBO> selectBlogArticleList(BlogArticleBO blogArticle);
 
     Map<Long, Long> selectBlogArticleCountByCategoryIds(Set<Long> collect);
+
+    BlogArticlePrevNextBO selectPrevNextArticle(Long id);
 }

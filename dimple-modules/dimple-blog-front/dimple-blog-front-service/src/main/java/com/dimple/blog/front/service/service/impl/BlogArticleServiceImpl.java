@@ -8,6 +8,8 @@ import com.dimple.blog.front.service.service.BlogArticleService;
 import com.dimple.blog.front.service.service.BlogArticleTagService;
 import com.dimple.blog.front.service.service.BlogTagService;
 import com.dimple.blog.front.service.service.bo.BlogArticleBO;
+import com.dimple.blog.front.service.service.bo.BlogArticlePreNextItemBO;
+import com.dimple.blog.front.service.service.bo.BlogArticlePrevNextBO;
 import com.dimple.blog.front.service.service.bo.BlogArticleTagBO;
 import com.dimple.blog.front.service.service.bo.BlogTagBO;
 import com.dimple.common.core.utils.bean.BeanMapper;
@@ -65,9 +67,9 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     private void fillArticleTags(BlogArticleBO blogArticleBO) {
         List<BlogArticleTagBO> blogArticleTagBOS = blogArticleTagService.selectBlogArticleTagByArticleId(blogArticleBO.getId());
         List<Long> tagIds = blogArticleTagBOS.stream().map(BlogArticleTagBO::getTagId).collect(Collectors.toList());
-        List<BlogTagBO> blogTagBOS = new ArrayList<>();
+        List<String> blogTagBOS = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(tagIds)) {
-            blogTagBOS = blogTagService.selectBlogTagByIds(tagIds);
+            blogTagBOS = blogTagService.selectBlogTagByIds(tagIds).stream().map(BlogTagBO::getTitle).collect(Collectors.toList());
         }
         blogArticleBO.setBlogTags(blogTagBOS);
     }
@@ -86,5 +88,22 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         }
         return blogArticleMapper.selectBlogArticleCountByCategoryIds(categoryIds).stream()
                 .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e1));
+    }
+
+    @Override
+    public BlogArticlePrevNextBO selectPrevNextArticle(Long id) {
+        List<BlogArticle> blogArticles = blogArticleMapper.selectBlogArticlePrevNext(id);
+        BlogArticlePreNextItemBO prevBlogArticle = blogArticles.stream()
+                .filter(e -> e.getId() < id)
+                .findFirst()
+                .map(e -> new BlogArticlePreNextItemBO(e.getId(), e.getHeaderImage(), e.getTitle()))
+                .orElse(null);
+        BlogArticlePreNextItemBO nextBlogArticle = blogArticles.stream()
+                .filter(e -> e.getId() > id)
+                .findFirst()
+                .map(e -> new BlogArticlePreNextItemBO(e.getId(), e.getHeaderImage(), e.getTitle()))
+                .orElse(null);
+        return new BlogArticlePrevNextBO(prevBlogArticle, nextBlogArticle);
+
     }
 }

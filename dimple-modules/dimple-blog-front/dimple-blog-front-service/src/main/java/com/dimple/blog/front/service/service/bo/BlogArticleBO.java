@@ -60,6 +60,6 @@ public class BlogArticleBO extends BaseEntity {
     @Excel(name = "状态")
     private Integer articleStatus;
 
-    private List<BlogTagBO> blogTags;
+    private List<String> blogTags;
 
 }
