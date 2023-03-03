@@ -39,7 +39,8 @@ public class SysOperLogServiceImpl implements SysOperLogService {
      */
     @Override
     public List<SysOperLogBO> selectOperLogList(SysOperLogBO operLog) {
-        return BeanMapper.convertList(operLogMapper.selectOperLogList(BeanMapper.convert(operLog, SysOperLog.class)), SysOperLogBO.class);
+        List<SysOperLog> sysOperLogs = operLogMapper.selectOperLogList(BeanMapper.convert(operLog, SysOperLog.class));
+        return BeanMapper.convertList(sysOperLogs, SysOperLogBO.class);
     }
 
     /**

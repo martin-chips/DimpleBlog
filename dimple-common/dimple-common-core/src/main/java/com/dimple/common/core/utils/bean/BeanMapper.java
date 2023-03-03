@@ -1,5 +1,6 @@
 package com.dimple.common.core.utils.bean;
 
+import com.github.pagehelper.Page;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
@@ -92,9 +93,15 @@ public class BeanMapper {
      * @return 目标实体集合
      */
     public static <S, T> List<T> convertList(List<S> sourceEntityList, Class<T> targetClass) {
-        return convertList(sourceEntityList, targetClass, null);
+        if (sourceEntityList instanceof Page) {
+            Page convert = convert(sourceEntityList, Page.class);
+            convert.clear();
+            convert.addAll(convertList(sourceEntityList, targetClass, null));
+            return convert;
+        } else {
+            return convertList(sourceEntityList, targetClass, null);
+        }
     }
-
 
     /**
      * 注册属性
