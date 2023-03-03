@@ -13,6 +13,7 @@
         <module>dimple-job</module>
         <module>dimple-file</module>
         <module>dimple-blog</module>
+        <module>dimple-blog-front</module>
         <module>dimple-gen</module>
         <module>dimple-monitor</module>
     </modules>

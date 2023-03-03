@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.blog.front.service.mapper.BlogArticleTagMapper">
+
+    <resultMap type="com.dimple.blog.front.service.entity.BlogArticleTag" id="BlogArticleTagResult">
+        <result property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="tagId" column="tag_id"/>
+    </resultMap>
+
+    <sql id="selectBlogArticleTagVo">
+        select id, article_id, tag_id
+        from blog_article_tag
+    </sql>
+
+    <select id="selectBlogArticleTagList" parameterType="BlogArticleTag" resultMap="BlogArticleTagResult">
+        <include refid="selectBlogArticleTagVo"/>
+        <where>
+            <if test="articleId != null ">and article_id = #{articleId}</if>
+            <if test="tagId != null ">and tag_id = #{tagId}</if>
+        </where>
+    </select>
+
+    <select id="selectBlogArticleTagById" parameterType="Long" resultMap="BlogArticleTagResult">
+        <include refid="selectBlogArticleTagVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBlogArticleTagByArticleId" resultType="com.dimple.blog.front.service.entity.BlogArticleTag"
+            parameterType="java.lang.Long">
+        <include refid="selectBlogArticleTagVo"/>
+        where article_id = #{articleId}
+    </select>
+
+</mapper>

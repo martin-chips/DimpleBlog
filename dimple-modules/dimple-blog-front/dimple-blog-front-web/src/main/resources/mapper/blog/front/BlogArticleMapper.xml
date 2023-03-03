@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.blog.front.service.mapper.BlogArticleMapper">
+
+    <resultMap type="com.dimple.blog.front.service.entity.BlogArticle" id="BlogArticleResult">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="headerImage" column="header_image"/>
+        <result property="content" column="content"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="original" column="original"/>
+        <result property="summary" column="summary"/>
+        <result property="articleStatus" column="article_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectBlogArticleBaseVO">
+        select id,
+               title,
+               header_image,
+               category_id,
+               original,
+               summary,
+               article_status,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from blog_article
+    </sql>
+
+    <sql id="selectBlogArticleDetailVo">
+        select id,
+               title,
+               header_image,
+               category_id,
+               original,
+               content,
+               summary,
+               article_status,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from blog_article
+    </sql>
+
+    <select id="selectBlogArticleList" parameterType="BlogArticle" resultMap="BlogArticleResult">
+        <include refid="selectBlogArticleBaseVO"/>
+        <where>
+            <if test="title != null  and title != ''">and title = #{title}</if>
+            <if test="headerImage != null  and headerImage != ''">and header_image = #{headerImage}</if>
+            <if test="content != null  and content != ''">and content = #{content}</if>
+            <if test="categoryId != null ">and category_id = #{categoryId}</if>
+            <if test="original != null ">and original = #{original}</if>
+            <if test="summary != null  and summary != ''">and summary = #{summary}</if>
+            <if test="articleStatus != null ">and article_status = #{articleStatus}</if>
+        </where>
+    </select>
+
+    <select id="selectBlogArticleById" parameterType="Long" resultMap="BlogArticleResult">
+        <include refid="selectBlogArticleBaseVO"/>
+        where id = #{id}
+    </select>
+    <select id="selectBlogArticleDetailById" resultType="com.dimple.blog.front.service.entity.BlogArticle"
+            parameterType="java.lang.Long">
+        <include refid="selectBlogArticleDetailVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBlogArticleByIds" resultType="com.dimple.blog.front.service.entity.BlogArticle">
+        <include refid="selectBlogArticleBaseVO"/>
+        where id in
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectBlogArticleCountByCategoryIds" resultType="com.dimple.blog.front.service.entity.KeyValue">
+        select  category_id as `key`, count(*) as `value`  from blog_article
+        where category_id in
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        group by category_id
+    </select>
+</mapper>

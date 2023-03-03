@@ -2,6 +2,7 @@ package com.dimple.blog.web.controller;
 
 import com.dimple.blog.service.service.BlogArticleService;
 import com.dimple.blog.service.service.bo.BlogArticleBO;
+import com.dimple.blog.web.controller.vo.BlogArticleVO;
 import com.dimple.blog.web.controller.vo.params.BlogArticleVOParams;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.utils.poi.ExcelUtil;
@@ -42,7 +43,7 @@ public class BlogArticleController extends BaseController {
         startPage();
         BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
         List<BlogArticleBO> list = blogArticleService.selectBlogArticleList(blogArticleBO);
-        return getDataTable(BeanMapper.convertList(list, BlogArticleBO.class));
+        return getDataTable(BeanMapper.convertList(list, BlogArticleVO.class));
     }
 
     @RequiresPermissions("blog:article:export")

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.blog.front.service.mapper.BlogArchivesMapper">
+
+
+    <select id="getArchives" resultType="com.dimple.blog.front.service.entity.BlogArchives">
+        select date_format(create_time, '%Y-%m') as dateStr, count(*) as count
+        from blog_article
+        group by date_format(create_time, '%Y-%m')
+    </select>
+</mapper>
