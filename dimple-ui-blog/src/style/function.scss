@@ -1,0 +1,18 @@
+/**
+ * @desc 函数
+ */
+
+@function merge($maps...) {
+  $copy: ();
+  @each $mv in $maps {
+    @each $k, $v in $mv {
+      $copy: map-merge(
+        $copy,
+        (
+          $k: $v
+        )
+      );
+    }
+  }
+  @return $copy;
+}

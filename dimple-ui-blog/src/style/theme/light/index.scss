@@ -1,0 +1,6 @@
+// 亮色，默认色系
+@import './color.scss';
+@import './font.scss';
+@import '~@/style/function.scss';
+
+$light: merge($color, $font);

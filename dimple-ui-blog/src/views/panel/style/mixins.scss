@@ -1,0 +1,64 @@
+@mixin panel-frame {
+  .panel__item-title {
+    font-size: 16px;
+
+    > [class*='el-icon-'] {
+      font-size: 18px;
+      margin-right: 12px;
+    }
+  }
+  .panel__item-body {
+    margin-top: 10px;
+  }
+}
+
+@mixin articles-comments {
+  @include panel-frame;
+  .panel__item-body {
+    .body-item {
+      display: flex;
+      padding: 8px 0;
+    }
+    .body-pic {
+      flex: 0 0 auto;
+      width: 60px;
+      height: 60px;
+      overflow: hidden;
+      img {
+        transition: all ease 0.38s;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      img:hover {
+        transform: scale(1.2);
+      }
+    }
+    .body-info {
+      margin-left: 12px;
+      &__title a {
+        transition: all 0.38s ease-in-out;
+        @include clamp(2);
+      }
+      &__title:hover a,
+      &__title:hover {
+        @include themeify() {
+          color: themed('color-ele-primary');
+        }
+      }
+      &__name {
+        @include themeify() {
+          color: themed('color-home-article-detail');
+        }
+        font-size: 12px;
+      }
+      &__date {
+        @include themeify() {
+          color: themed('color-home-article-detail');
+        }
+        font-size: 12px;
+        padding: 4px 0;
+      }
+    }
+  }
+}

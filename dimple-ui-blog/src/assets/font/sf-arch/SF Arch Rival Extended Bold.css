@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "SF Arch Rival Extended Bold";
+    src: url("SF Arch Rival Extended Bold.eot"); /* IE9 */
+    src: url("SF Arch Rival Extended Bold.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    
+    url("SF Arch Rival Extended Bold.woff") format("woff"), /* chrome、firefox */
+    url("SF Arch Rival Extended Bold.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */
+    
+    url("SF Arch Rival Extended Bold.svg#SF Arch Rival Extended Bold") format("svg"); /* iOS 4.1- */
+    font-style: normal;
+    font-weight: normal;
+}
+
+

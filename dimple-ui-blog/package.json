@@ -1,0 +1,78 @@
+{
+  "name": "Dimple",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@octokit/core": "^3.5.1",
+    "archiver": "^2.1.1",
+    "axios": "^0.17.1",
+    "element-ui": "^2.15.6",
+    "emojilib": "^3.0.4",
+    "express": "^4.16.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "qs": "^6.5.1",
+    "resize-observer-polyfill": "^1.5.1",
+    "ueditor": "^1.2.3",
+    "vue": "^2.6.10",
+    "vue-meta": "^1.5.0",
+    "vue-router": "^3.5.2",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.12.0",
+    "@vue/cli-plugin-eslint": "^3.12.0",
+    "@vue/cli-service": "^4.1.2",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-import": "^1.6.3",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-register": "^6.22.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "html-webpack-plugin": "^2.30.1",
+    "script-ext-html-webpack-plugin": "2.1.3",
+    "vue-awesome-swiper": "^3.1.3",
+    "vue-template-compiler": "^2.6.10",
+    "node-sass": "^4.14.1",
+    "sass": "^1.0.0-beta.4",
+    "autoprefixer": "^7.1.2",
+    "sass-loader": "^6.0.6",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1",
+    "mini-css-extract-plugin": "^2.7.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}

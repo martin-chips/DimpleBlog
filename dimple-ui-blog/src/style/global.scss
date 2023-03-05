@@ -1,0 +1,14 @@
+// 文字
+
+$font12: 12px;
+$font14: 14px;
+$font16: 16px;
+$font18: 18px;
+$font56: 56px;
+
+// 字体文件
+@font-face {
+  font-family: 'sf-arch';
+  src: url('~@/assets/font/sf-arch/SF Arch Rival Extended Bold.woff') format('woff'),
+    url('~@/assets/font/sf-arch/SF Arch Rival Extended Bold.ttf') format('truetype');
+}

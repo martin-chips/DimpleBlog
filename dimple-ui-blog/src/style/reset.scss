@@ -1,0 +1,91 @@
+// 全局样式覆盖
+@import './index.scss';
+body,
+button,
+input,
+p,
+div,
+section,
+article,
+td,
+th,
+span,
+textarea,
+form,
+footer,
+header,
+nav,
+main,
+address,
+aside,
+pre,
+ul,
+li,
+canvas {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+}
+body {
+  font: 400 14px/20px -apple-system, BlinkMacSystemFont, Arial, Helvetica, Tahoma, '华文细黑', 'Microsoft YaHei',
+    '微软雅黑', sans-serif;
+
+  @include themeify() {
+    color: themed('color-default');
+  }
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  @include themeify() {
+    color: themed('color-default');
+  }
+}
+#app {
+  overflow: hidden;
+}
+.code-toolbar {
+  border-radius: 8px;
+  padding-top: 24px;
+  > pre {
+    border-radius: 0 0 8px 8px;
+  }
+  > .toolbar {
+    opacity: 1 !important;
+    width: 100%;
+    top: 0px !important;
+    right: 0px !important;
+    background: #30343f;
+    border-radius: 8px 8px 0 0;
+    .toolbar-item:first-child {
+      float: right;
+      margin-right: 12px;
+    }
+    .copy-to-clipboard-button {
+      color: #bbb !important;
+      cursor: pointer;
+      background: transparent !important;
+    }
+    .copy-to-clipboard-button:hover {
+      color: #bbb !important;
+    }
+  }
+  .toolbar-item__content {
+    width: 100%;
+    height: 32px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 6px;
+      background: rgb(252, 98, 93);
+      box-shadow: rgb(253, 188, 64) 20px 0px, rgb(53, 205, 75) 40px 0px;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+// 暗黑色系
+@import './color.scss';
+@import './font.scss';
+@import '~@/style/function.scss';
+
+$dark: merge($color, $font);

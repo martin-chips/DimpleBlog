@@ -1,0 +1,66 @@
+// 全局混入宏
+
+@mixin flex {
+  display: flex;
+}
+@mixin flex-box-space {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@mixin flex-box-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin flex-box-wrap-space {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+@mixin flex-box-end-space {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@mixin themeify($themes: $themes) {
+  @each $key, $theme-map in $themes {
+    $d_theme: if($key==light, null, '.mapblog-theme-#{$key}');
+    #{$d_theme} & {
+      $theme-map-copy: () !global;
+      @each $theme-map-key, $theme-map-value in $theme-map {
+        $theme-map-copy: map-merge(
+          $theme-map-copy,
+          (
+            $theme-map-key: $theme-map-value
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map-copy: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map-copy, $key);
+}
+$break_points: (
+  xs: 'screen and (max-width: 768px)',
+  sm: 'screen and (min-width: 769px)',
+  md: 'screen and (min-width: 992px)',
+  lg: 'screen and (min-width: 1200px)'
+);
+
+@mixin respond-to($point) {
+  $query: map-get($break_points, $point);
+  @media #{$query} {
+    @content;
+  }
+}
+@mixin clamp($num){
+  display: -webkit-box;
+  -webkit-line-clamp: $num;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
