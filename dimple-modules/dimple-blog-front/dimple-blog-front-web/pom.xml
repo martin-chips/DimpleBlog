@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.dimple</groupId>
         <artifactId>dimple-modules-blog-front</artifactId>
-        <version>3.5.0</version>
+        <version>3.0.0</version>
     </parent>
 
     <artifactId>dimple-modules-blog-front-web</artifactId>

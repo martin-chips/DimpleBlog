@@ -68,8 +68,8 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
-import { storage } from "@/utils/storage";
+import {mapMutations, mapState} from "vuex";
+import {storage} from "@/utils/storage";
 import emoji from "@/components/emoji";
 import cover from "@/assets/img/avatar/avatar.jpeg";
 
@@ -123,7 +123,7 @@ export default {
   created() {
   },
   computed: {
-    ...mapState(["visitorInfo"]),
+    ...mapState(["visitorInfo"])
   },
   methods: {
     ...mapMutations(["setVisitor"]),
@@ -136,13 +136,6 @@ export default {
     register() {
       this.$refs.customForm.validate(async (valid) => {
         if (valid) {
-          // const res = await this.$api.saveVisitor({
-          //   ...this.customInfo,
-          //   imgUrl: "/img/avatar/avatar.jpeg",
-          //   type: 0
-          // });
-          // if (res.code === 200) {
-          //   this.setVisitorInfo(res.data);
           this.setVisitorInfo({
             ...this.customInfo,
             headerImage: this.cover,
@@ -154,14 +147,18 @@ export default {
             email: "",
             link: ""
           };
-          // }
         }
       });
     },
     handleQQCb() {
+      this.$message({
+        message: "拼命开发中😭"
+      });
     },
     handleGithubCb(e) {
-
+      this.$message({
+        message: "拼命开发中😭"
+      });
     },
     setVisitorInfo(info) {
       this.setVisitor(info);

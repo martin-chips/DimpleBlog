@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableCustomConfig
 @EnableCustomSwagger2
 @EnableDimpleFeignClients
-@SpringBootApplication(scanBasePackages = {"com.dimple.blog"})
+@SpringBootApplication(scanBasePackages = {"com.dimple.blog.front"})
 public class DimpleBlogFrontApplication {
     public static void main(String[] args) {
         SpringApplication.run(DimpleBlogFrontApplication.class, args);

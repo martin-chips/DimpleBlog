@@ -11,6 +11,8 @@ import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
+import com.dimple.common.redis.constants.CacheConstants;
+import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.common.security.utils.SecurityUtils;
@@ -62,6 +64,8 @@ public class SysUserController extends BaseController {
 
     @Autowired
     private SysConfigService configService;
+    @Autowired
+    private RedisService redisService;
 
     /**
      * 获取用户列表
@@ -73,6 +77,14 @@ public class SysUserController extends BaseController {
         SysUserBO sysUserBO = BeanMapper.convert(user, SysUserBO.class);
         List<SysUserBO> list = userService.selectUserList(sysUserBO);
         return getDataTable(BeanMapper.convertList(list, SysUserVO.class));
+    }
+
+    @RequiresPermissions("system:user:unlock")
+    @OperationLog(title = "账户解锁", businessType = BusinessType.OTHER)
+    @GetMapping("/unlock/{userName}")
+    public AjaxResult unlock(@PathVariable("userName") String userName) {
+        redisService.deleteObject(CacheConstants.PWD_ERR_CNT_KEY_DEFINE.formatKey(userName));
+        return success();
     }
 
     @OperationLog(title = "用户管理", businessType = BusinessType.EXPORT)

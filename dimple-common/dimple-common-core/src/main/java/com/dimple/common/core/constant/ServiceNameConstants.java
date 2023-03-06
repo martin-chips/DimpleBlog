@@ -15,6 +15,7 @@ public class ServiceNameConstants {
      * 系统模块的serviceid
      */
     public static final String SYSTEM_SERVICE = "dimple-system";
+    public static final String LOG_SERVICE = "dimple-log";
 
     /**
      * 文件服务的serviceid

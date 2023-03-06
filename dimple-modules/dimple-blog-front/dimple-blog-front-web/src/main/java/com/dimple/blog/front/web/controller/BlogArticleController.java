@@ -10,6 +10,7 @@ import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
+import com.dimple.common.log.annotation.VisitLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class BlogArticleController extends BaseController {
     }
 
     @GetMapping("/{id}")
+    @VisitLog(title = "文章",pageId = "#id")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         BlogArticleBO blogArticleBO = blogArticleService.selectBlogArticleById(id);
         return success(BeanMapper.convert(blogArticleBO, BlogArticleVO.class));

@@ -52,8 +52,8 @@ services:
       - ./redis/data:/data
       - ./redis/logs:/logs
     command: redis-server /home/dimple/redis/redis.conf
-  dimple-nginx:
-    container_name: dimple-nginx
+  dimple-ui-admin:
+    container_name: dimple-ui-admin
     image: nginx
     privileged: true
     build:
@@ -61,10 +61,27 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/html/dist/:/home/dimple/projects/dimple-ui/
-      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/logs:/var/log/nginx
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/html/dist/:/home/dimple/projects/dimple-ui-admin/
+      - ./nginx/conf/nginx.conf:/etc/nginx/dimple-ui-admin/nginx.conf
+      - ./nginx/logs:/var/log/dimple-ui-admin/nginx
+      - ./nginx/conf.d:/etc/nginx/dimple-ui-admin/conf.d
+    depends_on:
+      - dimple-gateway
+    links:
+      - dimple-gateway
+  dimple-ui-blog:
+    container_name: dimple-ui-blog
+    image: nginx
+    privileged: true
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/html/dist/:/home/dimple/projects/dimple-ui-blog/
+      - ./nginx/conf/nginx.conf:/etc/nginx/dimple-ui-blog/nginx.conf
+      - ./nginx/logs:/var/log/dimple-ui-blog/nginx
+      - ./nginx/conf.d:/etc/nginx/dimple-ui-blog/conf.d
     depends_on:
       - dimple-gateway
     links:
@@ -138,6 +155,32 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9401:9401"
+    depends_on:
+      - dimple-redis
+      - dimple-mysql
+    links:
+      - dimple-redis
+      - dimple-mysql
+  dimple-modules-blog-front:
+    container_name: dimple-modules-blog-front
+    build:
+      context: ./dimple/modules/blog-front/
+      dockerfile: Dockerfile
+    ports:
+      - "9300:9300"
+    depends_on:
+      - dimple-redis
+      - dimple-mysql
+    links:
+      - dimple-redis
+      - dimple-mysql
+  dimple-modules-blog-log:
+    container_name: dimple-modules-blog-log
+    build:
+      context: ./dimple/modules/log/
+      dockerfile: Dockerfile
+    ports:
+      - "9408:9408"
     depends_on:
       - dimple-redis
       - dimple-mysql

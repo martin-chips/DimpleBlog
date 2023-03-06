@@ -168,11 +168,11 @@ insert into sys_menu
 values ('116', '系统接口', '3', '3', 'http://localhost:8080/swagger-ui/index.html', '', '', 0, 0, 'C', '0', '0',
         'tool:swagger:list', 'swagger', 'admin', sysdate(), '', null, '系统接口菜单');
 insert into sys_menu
-values ('500', '操作日志', '5', '1', 'operlog', 'system/operlog/index', '', 1, 0, 'C', '0', '0',
-        'system:operlog:list', 'form', 'admin', sysdate(), '', null, '操作日志菜单');
+values ('500', '操作日志', '5', '1', 'operlog', 'log/operlog/index', '', 1, 0, 'C', '0', '0',
+        'log:operlog:list', 'form', 'admin', sysdate(), '', null, '操作日志菜单');
 insert into sys_menu
-values ('501', '登录日志', '5', '2', 'logininfor', 'system/logininfor/index', '', 1, 0, 'C', '0', '0',
-        'system:logininfor:list', 'logininfor', 'admin', sysdate(), '', null, '登录日志菜单');
+values ('501', '登录日志', '5', '2', 'logininfor', 'log/logininfor/index', '', 1, 0, 'C', '0', '0',
+        'log:logininfor:list', 'logininfor', 'admin', sysdate(), '', null, '登录日志菜单');
 insert into sys_menu values('114',  '表单构建',       '3',   '1', 'build',      'tool/build/index',                  '', 1, 0, 'C', '0', '0', 'tool:build:list',         'build',         'admin', sysdate(), '', null, '表单构建菜单');
 insert into sys_menu values('115',  '代码生成',       '3',   '2', 'gen',        'tool/gen/index',                    '', 1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
 insert into sys_menu values('116',  '系统接口',       '3',   '3', 'http://localhost:8080/swagger-ui/index.html', '', '', 0, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
@@ -274,26 +274,26 @@ values ('1038', '公告删除', '107', '4', '#', '', '', 1, 0, 'F', '0', '0', 's
         sysdate(), '', null, '');
 -- 操作日志按钮
 insert into sys_menu
-values ('1039', '操作查询', '500', '1', '#', '', '', 1, 0, 'F', '0', '0', 'system:operlog:query', '#', 'admin',
+values ('1039', '操作查询', '500', '1', '#', '', '', 1, 0, 'F', '0', '0', 'log:operlog:query', '#', 'admin',
         sysdate(), '', null, '');
 insert into sys_menu
-values ('1040', '操作删除', '500', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:operlog:remove', '#', 'admin',
+values ('1040', '操作删除', '500', '2', '#', '', '', 1, 0, 'F', '0', '0', 'log:operlog:remove', '#', 'admin',
         sysdate(), '', null, '');
 insert into sys_menu
-values ('1041', '日志导出', '500', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:operlog:export', '#', 'admin',
+values ('1041', '日志导出', '500', '3', '#', '', '', 1, 0, 'F', '0', '0', 'log:operlog:export', '#', 'admin',
         sysdate(), '', null, '');
 -- 登录日志按钮
 insert into sys_menu
-values ('1042', '登录查询', '501', '1', '#', '', '', 1, 0, 'F', '0', '0', 'system:logininfor:query', '#', 'admin',
+values ('1042', '登录查询', '501', '1', '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:query', '#', 'admin',
         sysdate(), '', null, '');
 insert into sys_menu
-values ('1043', '登录删除', '501', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:logininfor:remove', '#', 'admin',
+values ('1043', '登录删除', '501', '2', '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:remove', '#', 'admin',
         sysdate(), '', null, '');
 insert into sys_menu
-values ('1044', '日志导出', '501', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:logininfor:export', '#', 'admin',
+values ('1044', '日志导出', '501', '3', '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:export', '#', 'admin',
         sysdate(), '', null, '');
 insert into sys_menu
-values ('1045', '账户解锁', '501', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:logininfor:unlock', '#', 'admin',
+values ('1045', '账户解锁', '501', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:user:unlock', '#', 'admin',
         sysdate(), '', null, '');
 -- 在线用户按钮
 insert into sys_menu

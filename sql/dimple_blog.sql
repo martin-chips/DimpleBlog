@@ -74,19 +74,30 @@ create table blog_article_tag
     tag_id     bigint not null
 );
 
-drop table if exists blog_comment_board;
-create table blog_comment_board
+drop table if exists blog_visit_log;
+create table blog_visit_log
 (
-    id          bigint auto_increment primary key,
-    username    varchar(255)      not null comment 'user name',
-    parent_id   bigint default -1 not null comment 'parent comment is, default is -1',
-    head_image  varchar(255)      null comment 'user head image',
-    content     varchar(1024)     not null comment 'comment content, max length is 1024',
-    email       varchar(128)      null comment 'user email, if email is not null will reply when the comment has been replied',
-    create_by   varchar(50)       null,
-    create_time datetime          null,
-    update_by   varchar(55)       null,
-    update_time datetime          null
+    id              bigint auto_increment primary key,
+    title           varchar(255)  default null comment 'blog visit module, eg, HOME,CATEGORY...',
+    page_id         bigint        default 0 comment 'page id',
+    request_uri     varchar(255)  default '' comment 'user request uri',
+    referer         varchar(255)  default '' comment ' user referer in the http request',
+    user_agent      varchar(255)  default '' comment '',
+    request_method  varchar(255)  default '' comment '',
+    request_params  varchar(2000) default '' comment '',
+    response_params varchar(2000) default '' comment '',
+    exception       varchar(2000) default '' comment '',
+    status_code     int(11)       default 1 comment 'http request status',
+    controller_name varchar(255)  default '' comment 'the handler name',
+    method_name     varchar(255)  default '' comment ' the handler method name',
+    os              varchar(255)  default ' ' comment 'the os name',
+    spider          varchar(255)  default '' comment 'the spider name',
+    browser         varchar(255)  default '' comment 'the browser name',
+    ip              varchar(255)  default '' comment 'the ip address',
+    location        varchar(255)  default '' comment 'location',
+    create_by       varchar(50) null,
+    create_time     datetime    null,
+    update_by       varchar(55) null,
+    update_time     datetime    null
 );
-
 

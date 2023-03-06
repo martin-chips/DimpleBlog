@@ -4,6 +4,7 @@ import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.constant.ServiceNameConstants;
 import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.system.api.factory.RemoteLogFallbackFactory;
+import com.dimple.system.api.model.BlogVisitLogBO;
 import com.dimple.system.api.model.SysLogininforBO;
 import com.dimple.system.api.model.SysOperLogBO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
  *
  * @author Dimple
  */
-@FeignClient(contextId = "remoteLogService", value = ServiceNameConstants.SYSTEM_SERVICE, fallbackFactory = RemoteLogFallbackFactory.class)
+@FeignClient(contextId = "remoteLogService", value = ServiceNameConstants.LOG_SERVICE, fallbackFactory = RemoteLogFallbackFactory.class)
 public interface RemoteLogService {
     /**
      * 保存系统日志
@@ -27,6 +28,17 @@ public interface RemoteLogService {
      */
     @PostMapping("/operlog")
     ResponseEntity<Boolean> saveLog(@RequestBody SysOperLogBO sysOperLog, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
+
+
+    /**
+     * 保存访问日志
+     *
+     * @param blogVisitLogBO 日志实体
+     * @param source     请求来源
+     * @return affected lines
+     */
+    @PostMapping("/visitLog")
+    ResponseEntity<Boolean> saveVisitLog(@RequestBody BlogVisitLogBO blogVisitLogBO, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
 
     /**
      * 保存访问记录

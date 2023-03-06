@@ -6,14 +6,14 @@
 
     <groupId>com.dimple</groupId>
     <artifactId>dimple</artifactId>
-    <version>3.5.0</version>
+    <version>3.0.0</version>
 
     <name>Dimple</name>
     <url>http://www.bianxf.com</url>
     <description>Dimple微服务系统</description>
 
     <properties>
-        <dimple.version>3.5.0</dimple.version>
+        <dimple.version>3.0.0</dimple.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>

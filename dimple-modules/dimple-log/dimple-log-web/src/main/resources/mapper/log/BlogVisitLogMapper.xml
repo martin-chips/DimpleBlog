@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.log.service.mapper.BlogVisitLogMapper">
+
+    <resultMap type="com.dimple.log.service.entity.BlogVisitLog" id="BlogVisitLogMap">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="pageId" column="page_id"/>
+        <result property="requestUri" column="request_uri"/>
+        <result property="referer" column="referer"/>
+        <result property="userAgent" column="user_agent"/>
+        <result property="statusCode" column="status_code"/>
+        <result property="controllerName" column="controller_name"/>
+        <result property="methodName" column="method_name"/>
+        <result property="requestMethod" column="request_method"/>
+        <result property="requestParams" column="request_params"/>
+        <result property="responseParams" column="response_params"/>
+        <result property="os" column="os"/>
+        <result property="spider" column="spider"/>
+        <result property="browser" column="browser"/>
+        <result property="ip" column="ip"/>
+        <result property="location" column="location"/>
+        <result property="exception" column="exception"/>
+    </resultMap>
+    <insert id="insertVisitLog">
+        insert into blog_visit_log (title, page_id, request_uri, referer, user_agent, request_method, request_params, response_params,
+                                    exception, status_code, controller_name, method_name, os, spider, browser, ip, location, create_by, create_time)
+        values (#{title}, #{pageId}, #{requestUri}, #{referer},#{userAgent}, #{requestMethod},#{requestParams}, #{responseParams},
+                #{exception}, #{statusCode},#{controllerName},#{methodName}, #{os}, #{spider}, #{browser}, #{ip}, #{location}, #{createBy}, sysdate())
+    </insert>
+    <delete id="deleteVisitLogByIds">
+        delete from blog_visit_log where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="cleanVisitLog">
+        truncate table blog_visit_log
+    </delete>
+    <select id="selectVisitLogList" resultMap="BlogVisitLogMap">
+        select id,
+        username,
+        title,
+        page_id,
+        request_uri,
+        referer,
+        status_code,
+        controller_name,
+        method_name,
+        os,
+        spider,
+        browser,
+        ip,
+        location,
+        create_by,
+        create_time,
+        update_by,
+        update_time
+        from blog_visit_log
+        <where>
+            <if test="ip != null and ip != ''">
+                AND ip like concat('%', #{ip}, '%')
+            </if>
+            <if test="statusCode != null and statusCode != ''">
+                AND status_code = #{statusCode}
+            </if>
+            <if test="browser != null and browser != ''">
+                AND browser like concat('%', #{browser}, '%')
+            </if>
+            <if test="pageId != null ">
+                AND page_id like concat('%', #{pageId}, '%')
+            </if>
+            <if test="title != null ">
+                AND title like concat('%', #{title}, '%')
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(access_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(access_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        order by info_id desc
+    </select>
+
+
+</mapper> 

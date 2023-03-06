@@ -2,6 +2,7 @@ package com.dimple.system.api.factory;
 
 import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.system.api.RemoteLogService;
+import com.dimple.system.api.model.BlogVisitLogBO;
 import com.dimple.system.api.model.SysLogininforBO;
 import com.dimple.system.api.model.SysOperLogBO;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,11 @@ public class RemoteLogFallbackFactory implements FallbackFactory<RemoteLogServic
         return new RemoteLogService() {
             @Override
             public ResponseEntity<Boolean> saveLog(SysOperLogBO sysOperLog, String source) {
+                return null;
+            }
+
+            @Override
+            public ResponseEntity<Boolean> saveVisitLog(BlogVisitLogBO blogVisitLogBO, String source) {
                 return null;
             }
 

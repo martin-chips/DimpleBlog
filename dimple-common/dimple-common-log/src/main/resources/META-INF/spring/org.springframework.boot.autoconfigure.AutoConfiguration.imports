@@ -1,2 +1,3 @@
 com.dimple.common.log.service.AsyncLogService
-com.dimple.common.log.aspect.LogAspect
+com.dimple.common.log.aspect.OperateLogAspect
+com.dimple.common.log.aspect.VisitLogAspect
