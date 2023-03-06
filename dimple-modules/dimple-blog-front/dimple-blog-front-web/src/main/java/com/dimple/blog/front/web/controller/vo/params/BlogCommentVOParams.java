@@ -27,6 +27,8 @@ public class BlogCommentVOParams extends BaseVOParams {
      */
     private Long parentId;
 
+    private Long replyId;
+
     /**
      * user head image
      */

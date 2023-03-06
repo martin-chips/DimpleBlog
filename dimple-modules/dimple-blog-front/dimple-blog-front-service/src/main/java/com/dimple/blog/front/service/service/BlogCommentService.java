@@ -27,6 +27,10 @@ public interface BlogCommentService {
      */
     List<BlogCommentBO> selectBlogCommentList(BlogCommentBO blogComment);
 
+
+    List<BlogCommentBO> selectBlogCommentListWithSub(BlogCommentBO blogComment);
+
+
     /**
      * 新增
      *
@@ -35,4 +39,5 @@ public interface BlogCommentService {
      */
     int insertBlogComment(BlogCommentBO blogComment);
 
+    int addBlogCommentLikeCount(Long id);
 }

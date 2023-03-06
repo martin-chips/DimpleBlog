@@ -12,6 +12,8 @@
         <result property="headImage" column="head_image"/>
         <result property="content" column="content"/>
         <result property="email" column="email"/>
+        <result property="replyId" column="reply_id"/>
+        <result property="likeCount" column="like_count"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -26,6 +28,8 @@
                head_image,
                content,
                email,
+               reply_id,
+               like_count,
                create_by,
                create_time,
                update_by,
@@ -37,17 +41,29 @@
         <include refid="selectBlogCommentVo"/>
         <where>
             <if test="articleId != null ">and article_id = #{articleId}</if>
+            <if test="articleId == null ">and article_id &gt; 0</if>
             <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
             <if test="parentId != null ">and parent_id = #{parentId}</if>
             <if test="headImage != null  and headImage != ''">and head_image = #{headImage}</if>
             <if test="content != null  and content != ''">and content = #{content}</if>
             <if test="email != null  and email != ''">and email = #{email}</if>
+            and reply_id &lt; 0
         </where>
     </select>
 
     <select id="selectBlogCommentById" parameterType="Long" resultMap="BlogCommentResult">
         <include refid="selectBlogCommentVo"/>
         where id = #{id}
+    </select>
+
+
+    <select id="selectBlogCommentByParentIds" resultMap="BlogCommentResult">
+        <include refid="selectBlogCommentVo"/>
+        where parent_id in
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by create_time desc
     </select>
 
 
@@ -60,6 +76,7 @@
             <if test="headImage != null">head_image,</if>
             <if test="content != null">content,</if>
             <if test="email != null">email,</if>
+            <if test="replyId != null">reply_id,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
@@ -72,11 +89,15 @@
             <if test="headImage != null">#{headImage},</if>
             <if test="content != null">#{content},</if>
             <if test="email != null">#{email},</if>
+            <if test="replyId != null">#{replyId},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
         </trim>
+    </insert>
+    <insert id="addCommentLikeCount">
+        update blog_comment set like_count=like_count+1 where id =#{id}
     </insert>
 
 </mapper>

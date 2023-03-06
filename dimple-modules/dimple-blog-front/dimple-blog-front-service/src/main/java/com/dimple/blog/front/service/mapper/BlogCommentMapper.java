@@ -36,4 +36,7 @@ public interface BlogCommentMapper {
      */
     List<BlogComment> selectBlogCommentList(BlogComment blogComment);
 
+    List<BlogComment> selectBlogCommentByParentIds(List<Long> ids);
+
+    int addCommentLikeCount(Long id);
 }

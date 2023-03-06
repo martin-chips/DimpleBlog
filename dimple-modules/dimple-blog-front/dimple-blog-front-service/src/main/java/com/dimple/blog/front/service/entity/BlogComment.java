@@ -30,6 +30,10 @@ public class BlogComment extends BaseEntity {
      */
     private Long parentId;
 
+    private Long replyId;
+
+    private Long likeCount;
+
     /**
      * user head image
      */

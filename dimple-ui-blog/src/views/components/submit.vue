@@ -2,8 +2,8 @@
   <div class="submit">
     <div class="submit__avatar">
       <div class="submit__avatar-default">
-        <img v-show="!!visitorInfo.headerImage" :src="visitorInfo.headerImage" :title="visitorInfo.username" />
-        <i v-show="!visitorInfo.headerImage" class="el-icon-user" :title="visitorInfo.username"></i>
+        <img v-show="!!visitorInfo.headImage" :src="visitorInfo.headImage" :title="visitorInfo.username" />
+        <i v-show="!visitorInfo.headImage" class="el-icon-user" :title="visitorInfo.username"></i>
       </div>
       <div class="submit__avatar-rel"></div>
     </div>
@@ -138,7 +138,7 @@ export default {
         if (valid) {
           this.setVisitorInfo({
             ...this.customInfo,
-            headerImage: this.cover,
+              headImage: this.cover,
             id: 123
           });
           this.customVisible = false;

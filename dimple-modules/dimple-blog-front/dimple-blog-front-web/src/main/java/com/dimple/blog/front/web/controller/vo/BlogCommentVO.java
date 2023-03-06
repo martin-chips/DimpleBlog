@@ -3,6 +3,8 @@ package com.dimple.blog.front.web.controller.vo;
 import com.dimple.common.core.web.vo.params.BaseVOParams;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * BlogCommentVO
  *
@@ -42,4 +44,12 @@ public class BlogCommentVO extends BaseVOParams {
      * user email, if email is not null will reply when the comment has been replied
      */
     private String email;
+
+    private Long replyId;
+
+    private String replyUsername;
+
+    private Long likeCount;
+
+    private List<BlogCommentVO> subComments;
 }

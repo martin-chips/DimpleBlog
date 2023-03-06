@@ -1,68 +1,75 @@
 <template>
-  <div class="comments-item">
-    <div class="comments-item__avatar" :class="{ 'comments-item__avatar--small': subType }">
-      <a :href="message.link" target="_blank">
-        <img :src="message.headImage" alt="" />
-      </a>
-    </div>
-    <div class="comments-item__content">
-      <div class="comments-item__visitor">
-        <a :href="message.link" target="_blank">
+    <div class="comments-item">
+        <div class="comments-item__avatar" :class="{ 'comments-item__avatar--small': subType }">
+            <a :href="message.link" target="_blank">
+                <img :src="message.headImage" alt=""/>
+            </a>
+        </div>
+        <div class="comments-item__content">
+            <div class="comments-item__visitor">
+                <a :href="message.link" target="_blank">
           <span class="detail-visitor-name" :class="{ 'detail-visitor-name--bold': message.admin }">
-            {{ message.name }}
+            {{ message.username }}
           </span>
-        </a>
-        <span class="detail-visitor-aite" v-if="message.aite" style="fontweight: bold">&nbsp;@&nbsp;</span>
-        <span class="detail-visitor-aited" v-if="message.aite">{{ message.aite }} :</span>
-      </div>
+                </a>
+                <span class="detail-visitor-aite" v-if="message.replyId>0" style="fontweight: bold">&nbsp;@&nbsp;</span>
+                <span class="detail-visitor-aited" v-if="message.replyId>0">{{ message.replyUsername }} :</span>
+            </div>
 
-      <div class="comments-item__say">{{ message.content }}</div>
+            <div class="comments-item__say">{{ message.content }}</div>
 
-      <div class="comments-item__detail">
-        <i class="el-icon-date"></i>
-        <span class="detail-visitor-date">{{ message.date | formatDate }}</span>
-        <i
-          class="el-icon-thumb"
-          @click="addLike(message)"
-          :class="{ 'el-icon-thumb--active': message.liked === 1 }"
-        ></i>
-        <span :class="{ 'el-icon-thumb--active': message.liked === 1 }">{{ message.like }}</span>
-        <i class="el-icon-chat-dot-round" @click="changeCurrentReplyMessage(message)"></i>
-        <span>{{ message | replycCount }}</span>
-      </div>
+            <div class="comments-item__detail">
+                <i class="el-icon-date"></i>
+                <span class="detail-visitor-date">{{ message.date | formatDate }}</span>
+                <i
+                        class="el-icon-thumb"
+                        @click="addLike(message)"
+                        :class="{ 'el-icon-thumb--active': message.liked == 1 }"
+                ></i>
+                <span :class="{ 'el-icon-thumb--active': message.replyId == 1 }">{{ message.likeCount }}</span>
+                <i class="el-icon-chat-dot-round" @click="changeCurrentReplyMessage(message)"></i>
+                <span>{{ message | replycCount }}</span>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
-  name: 'commentsItem',
-  props: {
-    subType: {
-      type: Boolean,
-      default: false
+    name: 'commentsItem',
+    props: {
+        subType: {
+            type: Boolean,
+            default: false
+        },
+        message: {
+            type: Object,
+            default() {
+                return {}
+            }
+        }
     },
-    message: {
-      type: Object,
-      default() {
-        return {}
-      }
-    }
-  },
-  components: {},
-  filters: {
-    replycCount(message) {
-      if (message.reply && message.reply.length) return message.reply.length
-      return ''
-    }
-  },
-  methods: {
-    addLike(message) {
-      this.$emit('addLike', message)
+    components: {},
+    filters: {
+        replycCount(message) {
+            if (message.subComments && message.subComments.length) return message.subComments.length
+            return ''
+        }
     },
-    changeCurrentReplyMessage(message) {
-      this.$emit('changeCurrentReplyMessage', message)
+    methods: {
+        addLike(message) {
+            if (message.liked == 1) {
+                this.$message({
+                    type: 'warning',
+                    message: "已经点赞过了哦!"
+                })
+                return
+            }
+            this.$emit('addLike', message);
+        },
+        changeCurrentReplyMessage(message) {
+            this.$emit('changeCurrentReplyMessage', message)
+        }
     }
-  }
 }
 </script>
 <style lang="scss">
@@ -72,10 +79,12 @@ export default {
   display: flex;
   padding: 14px 0;
   border-bottom: 1px solid rgb(245, 240, 240);
+
   &__content {
     flex: 1 1 auto;
     padding-left: 20px;
   }
+
   &__avatar {
     width: 50px;
     height: 50px;
@@ -87,23 +96,30 @@ export default {
       height: 100%;
     }
   }
+
   &__avatar--small {
     width: 36px;
     height: 36px;
   }
+
   &__visitor {
     height: 50px;
+
     .detail-visitor-name {
     }
+
     .detail-visitor-name--bold {
       color: #eaa156;
       font-weight: 700;
     }
+
     .detail-visitor-aite {
     }
+
     .detail-visitor-aited {
     }
   }
+
   &__detail {
     display: flex;
     justify-content: flex-end;
@@ -114,25 +130,31 @@ export default {
       color: themed('color-home-article-detail');
     }
     margin-top: 10px;
+
     i {
       font-size: 16px;
       margin-left: 12px;
       // font-weight: 600;
     }
+
     i:hover {
       color: #409eff;
     }
+
     span {
       margin-left: 6px;
     }
+
     .el-icon-thumb,
     .el-icon-chat-dot-round {
       cursor: pointer;
     }
+
     .el-icon-thumb--active {
       color: #409eff;
     }
   }
+
   &__say {
     word-break: break-word;
   }

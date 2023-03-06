@@ -34,7 +34,7 @@ public class BlogCommentController extends BaseController {
     public TableDataInfo list(BlogCommentVOParams blogComment) {
         startPage();
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
-        List<BlogCommentBO> list = blogCommentService.selectBlogCommentList(blogCommentBO);
+        List<BlogCommentBO> list = blogCommentService.selectBlogCommentListWithSub(blogCommentBO);
         return getDataTable(BeanMapper.convertList(list, BlogCommentVO.class));
     }
 
@@ -48,6 +48,11 @@ public class BlogCommentController extends BaseController {
     public AjaxResult add(@RequestBody BlogCommentVOParams blogComment) {
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
         return toAjax(blogCommentService.insertBlogComment(blogCommentBO));
+    }
+
+    @PostMapping("likeCount/{id}")
+    public AjaxResult like(@PathVariable Long  id) {
+        return toAjax(blogCommentService.addBlogCommentLikeCount(id));
     }
 
 }

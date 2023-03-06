@@ -12,8 +12,8 @@
         @changeCurrentReplyMessage="changeCurrentReplyMessage"
         @submitContent="submitContent"
       ></submit>
-      <div class="comments__sub" v-if="msg.reply && msg.reply.length">
-        <template v-for="(reply, _index) in msg.reply">
+      <div class="comments__sub" v-if="msg.subComments && msg.subComments.length">
+        <template v-for="(reply, _index) in msg.subComments">
           <comments-item
             :key="'reply_' + _index"
             :message="reply"

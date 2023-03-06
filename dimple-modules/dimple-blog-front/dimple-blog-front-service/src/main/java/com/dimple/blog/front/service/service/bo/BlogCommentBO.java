@@ -4,6 +4,8 @@ import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
+import java.util.List;
+
 
 /**
  * 对象 blog_comment
@@ -53,4 +55,12 @@ public class BlogCommentBO extends BaseEntity {
      */
     @Excel(name = "邮件")
     private String email;
+
+    private Long replyId;
+
+    private String replyUsername;
+
+    private Long likeCount;
+
+    private List<BlogCommentBO> subComments;
 }
