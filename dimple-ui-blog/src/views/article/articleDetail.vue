@@ -136,7 +136,7 @@ export default {
             return "";
         },
         url() {
-            return `${process.env.BASE_URL}/app/article/${this.article.id}`;
+            return `${process.env.VUE_APP_BASE_URL}/app/article/${this.article.id}`;
         },
         likeText() {
             return this.article.liked ? "已赞" : "赞";
