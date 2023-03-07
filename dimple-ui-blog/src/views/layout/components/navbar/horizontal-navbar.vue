@@ -33,7 +33,7 @@
       <i class="el-icon-chat-dot-round"></i>
       <span>留言板</span>
     </div>
-    <div class="horizontal-navbar__menu" @click="friendLink">
+    <div class="horizontal-navbar__menu" @click="goTo('links')">
       <i class="el-icon-ship"></i>
       <span>友链</span>
     </div>
@@ -47,11 +47,6 @@ export default {
     },
     openSearch() {
       this.$emit('openSearch')
-    },
-    friendLink() {
-      this.$message({
-        message: '拼命开发中😭'
-      })
     }
   }
 }

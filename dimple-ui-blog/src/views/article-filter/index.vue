@@ -1,6 +1,6 @@
 <template>
     <div class="article-filter">
-        <layout :_title="title" :cover="cover">
+        <layout :title="title" :cover="cover">
             <template slot="custom-body">
                 <article-iterator :articles="articles"></article-iterator>
                 <div class="article-filter__page">
@@ -25,10 +25,14 @@ import cover from "@/assets/img/cover/articles.jpeg";
 async function fetchArticles(route, page) {
     const params = {...page}
     // 按标签筛选
-    if (route.params.type === 'tag') params.tag = route.params.param
+    if (route.params.type === 'tag') {
+        params.tagId = route.params.param
+    }
     // 按分类筛选
-    if (route.params.type === 'category') params.categoryId = route.params.param
-
+    if (route.params.type === 'category') {
+        params.categoryId = route.params.param
+    }
+    console.log(params)
     const articleRes = await api.listArticle(params, {pageNum: 1, pageSize: 10})
     return articleRes
 }
@@ -56,20 +60,16 @@ export default {
             pageSize: 10,
             pageNum: 1,
             articles: [],
-            total: []
+            total: 0
         }
     },
     created() {
+        this.getArticles()
     },
     components: {articleIterator},
-    async asyncData({route}) {
-        const articleRes = await fetchArticles(route)
-        if (articleRes.code === 200) return {articles: articleRes.data, total: articleRes.total}
-    },
     computed: {
         title() {
-            if (this.$route.params.type === 'category') return this.$route.query.name
-            return this.$route.params.param
+            return this.$route.query.title
         }
     },
     methods: {
@@ -78,9 +78,9 @@ export default {
             this.getArticles()
         },
         async getArticles() {
-            const articleRes = await fetchArticles(this.$route, {page: this.pageNum, limit: this.pageSize})
+            const articleRes = await fetchArticles(this.$route, {pageNum: this.pageNum, pageSize: this.pageSize})
             if (articleRes.code === 200) {
-                this.articles = articleRes.data
+                this.articles = articleRes.rows
                 this.total = articleRes.total
             }
         }

@@ -32,7 +32,7 @@
       </el-card>
     </template>
     <el-card class="article-iterator__item" v-else>
-      <empty text="您还没有文章，赶快去创建吧~"></empty>
+      <ElEmpty description="您还没有文章，赶快去创建吧~"></ElEmpty>
     </el-card>
   </div>
 </template>

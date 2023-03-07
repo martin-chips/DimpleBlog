@@ -2,6 +2,11 @@ package com.dimple.blog.front.web.controller.vo.params;
 
 import com.dimple.common.core.web.vo.params.BaseVOParams;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * BlogCommentVOParams
@@ -15,11 +20,13 @@ public class BlogCommentVOParams extends BaseVOParams {
     /**
      * comment article id
      */
+    @NotNull
     private Long articleId;
 
     /**
      * user name
      */
+    @NotEmpty
     private String username;
 
     /**
@@ -32,6 +39,7 @@ public class BlogCommentVOParams extends BaseVOParams {
     /**
      * user head image
      */
+    @NotNull
     private String headImage;
 
     private String link;
@@ -39,10 +47,13 @@ public class BlogCommentVOParams extends BaseVOParams {
     /**
      * comment content, max length is 1024
      */
+    @NotNull
+    @Length( max = 1000)
     private String content;
 
     /**
      * user email, if email is not null will reply when the comment has been replied
      */
+    @Email
     private String email;
 }

@@ -5,6 +5,7 @@ import com.dimple.blog.front.service.entity.BlogArticle;
 import com.dimple.blog.front.service.entity.KeyValue;
 import org.apache.ibatis.annotations.MapKey;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +39,13 @@ public interface BlogArticleMapper {
     List<BlogArticle> selectBlogArticleByIds(List<Long> ids);
 
     @MapKey("category_id")
-    List<KeyValue<Long,Long>> selectBlogArticleCountByCategoryIds(Set<Long> categoryIds);
+    List<KeyValue<Long, Long>> selectBlogArticleCountByCategoryIds(Set<Long> categoryIds);
 
     List<BlogArticle> selectBlogArticlePrevNext(Long id);
+
+    List<BlogArticle> selectBlogArticleByTagId(Long tagId);
+
+    int likeArticle(Long id);
+
+    List<KeyValue<Long, Long>> getPvByArticleId(Collection<Long> ids);
 }

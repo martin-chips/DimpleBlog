@@ -9,6 +9,7 @@ import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,13 +46,13 @@ public class BlogCommentController extends BaseController {
     }
 
     @PostMapping
-    public AjaxResult add(@RequestBody BlogCommentVOParams blogComment) {
+    public AjaxResult add(@RequestBody @Validated BlogCommentVOParams blogComment) {
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
         return toAjax(blogCommentService.insertBlogComment(blogCommentBO));
     }
 
     @PostMapping("likeCount/{id}")
-    public AjaxResult like(@PathVariable Long  id) {
+    public AjaxResult like(@PathVariable Long id) {
         return toAjax(blogCommentService.addBlogCommentLikeCount(id));
     }
 

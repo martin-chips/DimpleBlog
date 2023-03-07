@@ -28,10 +28,16 @@ public class BlogArchivesController extends BaseController {
     private BlogArchivesService archivesService;
 
     @GetMapping("list")
+    public TableDataInfo getArchiveList(BlogArchivesVOParams params) {
+        startPage();
+        List<BlogArchivesBO> archives = archivesService.getArchiveList(params.getCountType());
+        return getDataTable(BeanMapper.convertList(archives, BlogArchivesVO.class));
+    }
+
+    @GetMapping
     public TableDataInfo getArchives(BlogArchivesVOParams params) {
         startPage();
         List<BlogArchivesBO> archives = archivesService.getArchives(params.getCountType());
         return getDataTable(BeanMapper.convertList(archives, BlogArchivesVO.class));
     }
-
 }

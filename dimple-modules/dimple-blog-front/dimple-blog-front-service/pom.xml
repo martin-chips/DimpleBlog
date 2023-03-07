@@ -66,6 +66,11 @@
             <artifactId>dimple-common-datascope</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>dimple-common-redis</artifactId>
+        </dependency>
+
         <!-- Dimple Common Log -->
         <dependency>
             <groupId>com.dimple</groupId>

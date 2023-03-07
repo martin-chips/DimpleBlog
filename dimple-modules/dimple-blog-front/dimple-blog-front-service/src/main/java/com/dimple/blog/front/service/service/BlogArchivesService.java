@@ -11,5 +11,7 @@ import java.util.List;
  * @date 2/28/2023 11:09 AM
  */
 public interface BlogArchivesService {
+    List<BlogArchivesBO> getArchiveList(String countType);
+
     List<BlogArchivesBO> getArchives(String countType);
 }

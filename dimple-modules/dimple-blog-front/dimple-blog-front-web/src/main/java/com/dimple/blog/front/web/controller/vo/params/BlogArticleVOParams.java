@@ -46,4 +46,5 @@ public class BlogArticleVOParams extends BaseEntity {
      */
     private Integer articleStatus;
 
+    private Long tagId;
 }

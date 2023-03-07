@@ -7,18 +7,18 @@
             </div>
             <div class="panel__item-body">
                 <ul v-if="category.length">
-                    <li v-for="(item, index) in category" :key="index" @click="filterArticles(item.name, item.id)">
+                    <li v-for="(item, index) in category" :key="index" @click="filterArticles(item.title, item.id)">
                         <span>{{ item.title }}</span>
                         <span>{{ item.articleCount }}</span>
                     </li>
                 </ul>
-                <empty v-else></empty>
+                <ElEmpty v-else></ElEmpty>
             </div>
         </el-card>
     </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
     name: 'panelCategory',
@@ -30,7 +30,7 @@ export default {
         ...mapState(['category'])
     },
     methods: {
-        filterArticles(name, id) {
+        filterArticles(title, id) {
             this.$router.push({
                 name: 'articleFilter',
                 params: {
@@ -38,7 +38,7 @@ export default {
                     param: id
                 },
                 query: {
-                    name
+                    title
                 }
             })
         }

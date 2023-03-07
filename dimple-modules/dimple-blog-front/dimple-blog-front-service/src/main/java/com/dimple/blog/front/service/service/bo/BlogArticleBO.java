@@ -59,7 +59,10 @@ public class BlogArticleBO extends BaseEntity {
      */
     @Excel(name = "状态")
     private Integer articleStatus;
+    @Excel(name = "点赞数量")
+    private Long likeCount;
 
+    private Long pv;
     private List<String> blogTags;
 
 }

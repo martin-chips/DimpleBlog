@@ -31,7 +31,7 @@
         <i class="el-icon-chat-dot-round"></i>
         <span>留言板</span>
       </el-menu-item>
-      <el-menu-item index="4" @click="friendLink">
+      <el-menu-item index="links" >
         <i class="el-icon-ship"></i>
         <span>友链</span>
       </el-menu-item>

@@ -16,6 +16,7 @@
     "express": "^4.16.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "@toast-ui/editor": "3.2.2",
     "qs": "^6.5.1",
     "resize-observer-polyfill": "^1.5.1",
     "ueditor": "^1.2.3",

@@ -10,7 +10,7 @@ const archives = () => import("@/views/archives/");
 const tags = () => import("@/views/tags/");
 const articleFilter = () => import("@/views/article-filter/");
 const category = () => import("@/views/category/");
-
+const friendLink = () => import("@/views/links/");
 Vue.use(Router);
 Vue.use(Meta);
 // 避免重复点击相同路由 报错问题
@@ -57,6 +57,11 @@ export function createRouter() {
         path: "/app/category",
         name: "category",
         component: category
+      },
+      {
+        path: "/app/links",
+        name: "links",
+        component: friendLink
       },
       {
         path: "/app/articles/:type/:param",

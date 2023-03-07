@@ -12,13 +12,13 @@
             <span>{{ archive.count }}</span>
           </li>
         </ul>
-        <empty v-else></empty>
+        <ElEmpty v-else></ElEmpty>
       </div>
     </el-card>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
   name: 'panelArchives',

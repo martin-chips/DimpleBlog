@@ -25,14 +25,14 @@
               </div>
             </div>
           </template>
-          <empty v-else></empty>
+          <ElEmpty v-else></ElEmpty>
         </div>
       </div>
     </el-card>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
   name: 'panelComments',

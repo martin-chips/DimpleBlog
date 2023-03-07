@@ -15,12 +15,11 @@ export default {
             params: query
         })
     },
-    likeArticleComment(){
+    likeArticleComment(id){
         return request({
-            url: '/blog-front/comment/list',
-            method: 'get',
-            params: query
-        })
+            url: "/blog-front/comment/likeCount/"+id,
+            method: "post",
+        });
     },
 
     getComment(id) {

@@ -6,7 +6,7 @@
                     <li v-for="(item, index) in categories" :key="index" @click="filterArticles(item.title, item.id)">
                         <div>
                             <dot>
-                                <span>{{ item.name }}</span>
+                                <span>{{ item.title }}</span>
                                 <span>（{{ item.articleCount }}）</span>
                             </dot>
                         </div>
@@ -41,16 +41,22 @@ export default {
     },
     data() {
         return {
-            cover:cover,
+            cover: cover,
             categories: []
         }
     },
     components: {dot},
-    async asyncData() {
-        const categoryRes = await api.getCategory({})
-        if (categoryRes.code === 200) return {categories: categoryRes.data}
+    created() {
+        this.getCategorys()
     },
     methods: {
+        async getCategorys() {
+            const categoryRes = await api.listCategory({pageNum:1, pageSize: 1000})
+            if (categoryRes.code === 200) {
+                this.categories = categoryRes.rows
+            }
+        },
+
         filterArticles(title, id) {
             this.$router.push({
                 name: 'articleFilter',
@@ -59,7 +65,7 @@ export default {
                     param: id
                 },
                 query: {
-                    title
+                    title: title
                 }
             })
         }

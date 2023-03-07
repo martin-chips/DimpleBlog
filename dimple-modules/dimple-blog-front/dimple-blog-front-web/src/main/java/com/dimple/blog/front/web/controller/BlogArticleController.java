@@ -14,6 +14,7 @@ import com.dimple.common.log.annotation.VisitLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,10 +34,16 @@ public class BlogArticleController extends BaseController {
     private BlogArticleService blogArticleService;
 
     @GetMapping("/list")
-    public TableDataInfo list(BlogArticleVOParams blogArticle) {
+    public TableDataInfo list(BlogArticleVOParams params) {
         startPage();
-        BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticle, BlogArticleBO.class);
-        List<BlogArticleBO> list = blogArticleService.selectBlogArticleList(blogArticleBO);
+        BlogArticleBO blogArticleBO = BeanMapper.convert(params, BlogArticleBO.class);
+        List<BlogArticleBO> list;
+        if (params.getTagId() != null) {
+            // means this request from tag page.
+            list = blogArticleService.selectBlogArticleListByTagId(params.getTagId());
+        } else {
+            list = blogArticleService.selectBlogArticleList(blogArticleBO);
+        }
         return getDataTable(BeanMapper.convertList(list, BlogArticleVO.class));
     }
 
@@ -54,6 +61,11 @@ public class BlogArticleController extends BaseController {
         return success(BeanMapper.convert(blogArticlePrevNextBO, BlogArticlePrevNextVO.class));
     }
 
+
+    @PutMapping("/{id}/like")
+    public AjaxResult likeArticle(@PathVariable Long id) {
+        return success(blogArticleService.likeArticle(id));
+    }
 
     @GetMapping("latest")
     public TableDataInfo getLatestArticle(BlogArticleVOParams blogArticle) {

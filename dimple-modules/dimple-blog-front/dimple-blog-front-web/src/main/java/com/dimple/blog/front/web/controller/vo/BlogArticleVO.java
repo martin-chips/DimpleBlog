@@ -71,6 +71,4 @@ public class BlogArticleVO extends BaseEntity {
 
     private Long likeCount;
 
-    private Boolean liked;
-
 }

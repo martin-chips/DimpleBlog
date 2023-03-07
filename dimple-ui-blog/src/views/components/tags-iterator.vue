@@ -1,74 +1,79 @@
 <template>
-  <div class="tags-iterator">
-    <div class="tags-iterator__content" v-if="tags.length">
+    <div class="tags-iterator">
+        <div class="tags-iterator__content" v-if="tags.length">
       <span
-        class="tags-iterator__item"
-        v-for="(tag, index) in tags"
-        :key="index"
-        :style="{ color: color(), fontSize: fontSize(), padding: tagPadding }"
-        @click="filterArticles(tag.id)"
+              class="tags-iterator__item"
+              v-for="(tag, index) in tags"
+              :key="index"
+              :style="{ color: color(), fontSize: fontSize(), padding: tagPadding }"
+              @click="filterArticles(tag.id,tag.title)"
       >
         {{ tag.title }}
       </span>
+        </div>
+        <ElEmpty v-else></ElEmpty>
     </div>
-    <empty v-else></empty>
-  </div>
 </template>
 <script>
-import { getRandomColor } from "@/utils/getRandomColor";
+import {getRandomColor} from "@/utils/getRandomColor";
 
 export default {
-  name: 'tagsIterator',
-  data() {
-    return {}
-  },
-  props: {
-    tags: {
-      type: Array,
-      default() {
-        return []
-      }
+    name: 'tagsIterator',
+    data() {
+        return {}
     },
-    size: {
-      type: String,
-      default: 'big'
-    }
-  },
-  computed: {
-    tagPadding() {
-      if (this.size === 'small') return '6px'
-      return '12px'
-    }
-  },
-  methods: {
-    filterArticles(tag) {
-      this.$router.push({
-        name: 'articleFilter',
-        params: {
-          type: 'tag',
-          param: tag
+    props: {
+        tags: {
+            type: Array,
+            default() {
+                return []
+            }
+        },
+        size: {
+            type: String,
+            default: 'big'
         }
-      })
     },
-    color() {
-      return getRandomColor()
+    computed: {
+        tagPadding() {
+            if (this.size === 'small') return '6px'
+            return '12px'
+        }
     },
-    fontSize() {
-      const sizes = [26, 24, 22, 20, 18, 16, 14]
-      const index = (parseFloat(Math.random().toFixed(2)) * 100) % sizes.length
-      return sizes[index] + 'px'
+    methods: {
+        filterArticles(id, title) {
+            this.$router.push({
+                name: 'articleFilter',
+                params: {
+                    type: 'tag',
+                    param: id
+                },
+                query: {
+                    title
+                }
+            })
+        },
+        color() {
+            return getRandomColor()
+        },
+        fontSize() {
+            const sizes = [26, 24, 22, 20, 18, 16, 14]
+            const index = (parseFloat(Math.random().toFixed(2)) * 100) % sizes.length
+            return sizes[index] + 'px'
+        }
     }
-  }
 }
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
+
 .tags-iterator {
   &__item {
     display: inline-block;
     cursor: pointer;
     transition: all ease 0.38s;
   }
+
   &__item:hover {
     transform: scale(1.2);
   }

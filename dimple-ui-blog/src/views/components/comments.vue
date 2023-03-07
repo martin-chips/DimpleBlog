@@ -31,7 +31,7 @@
         </template>
       </div>
     </div>
-    <div class="comments__empty" v-if="!messages.length">emm...没人理我</div>
+    <ElEmpty class="comments__empty" description="emm...没人理我" v-if="!messages.length"></ElEmpty>
   </div>
 </template>
 <script>

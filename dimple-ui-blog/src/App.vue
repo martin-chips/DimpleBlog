@@ -27,11 +27,10 @@ export default {
     methods: {
         ...mapMutations(["setArchives", "setCategory", "setTags", "setNewComments", "setNewArticles", "setTotals"]),
         initPanel() {
-            this.$api.listArchive({countType: "month", pageNum: 1, pageSize: 1000}).then((res) => {
+            this.$api.listArchive({countType: "month", pageNum: 1, pageSize: 5}).then((res) => {
                 if (res.code === 200) {
                     this.setArchives(res.rows);
                 }
-                ;
             });
             this.$api.listCategory().then((res) => {
                 if (res.code === 200) {
@@ -47,13 +46,17 @@ export default {
             });
             this.$api.listComment({
                 pageNum: 1,
-                pageSize: 5
+                pageSize: 5,
+                orderByColumn: "createTime",
+                isAsc: "desc",
             }).then((res) => {
                 if (res.code === 200) this.setNewComments(res.rows);
             });
             this.$api.listArticle({
                 pageNum: 1,
                 pageSize: 5,
+                orderByColumn: "createTime",
+                isAsc: "desc",
             }).then((res) => {
                 if (res.code === 200) {
                     this.setTotals({key: "article", value: res.total});

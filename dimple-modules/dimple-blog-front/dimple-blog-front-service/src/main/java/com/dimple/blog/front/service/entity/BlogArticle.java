@@ -46,6 +46,8 @@ public class BlogArticle extends BaseEntity {
      */
     private String summary;
 
+    private Long likeCount;
+
     /**
      * article status, 1 is published, 2 is draft
      */

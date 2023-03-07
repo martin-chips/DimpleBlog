@@ -1,6 +1,9 @@
 package com.dimple.blog.front.web.controller.vo;
 
+import com.dimple.blog.front.service.service.bo.BlogArchiveItemBO;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * ArchivesVO
@@ -13,4 +16,6 @@ public class BlogArchivesVO {
     private Long count;
 
     private String dateStr;
+
+    List<BlogArchiveItemBO> items;
 }

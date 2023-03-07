@@ -12,6 +12,7 @@ create table blog_article
     original       tinyint      not null default 1 comment 'is original, 1 yes, 0 no',
     summary        varchar(512) not null default '' comment 'article summary,max length 512',
     article_status tinyint      not null default 1 comment 'article status, 1 is published, 2 is draft',
+    like_count     bigint       not null default 0 comment 'article like count',
     create_by      varchar(64)  null,
     create_time    datetime     null,
     update_by      varchar(50)  null,

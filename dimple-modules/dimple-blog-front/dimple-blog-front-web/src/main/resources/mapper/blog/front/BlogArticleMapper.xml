@@ -12,6 +12,7 @@
         <result property="categoryId" column="category_id"/>
         <result property="original" column="original"/>
         <result property="summary" column="summary"/>
+        <result property="likeCount" column="like_count"/>
         <result property="articleStatus" column="article_status"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -42,6 +43,7 @@
                original,
                content,
                summary,
+               like_count,
                article_status,
                create_by,
                create_time,
@@ -49,6 +51,11 @@
                update_time
         from blog_article
     </sql>
+    <update id="likeArticle">
+        update blog_article
+        set like_count=like_count + 1
+        where id = #{id}
+    </update>
 
     <select id="selectBlogArticleList" parameterType="BlogArticle" resultMap="BlogArticleResult">
         <include refid="selectBlogArticleBaseVO"/>
@@ -98,5 +105,16 @@
         (select min(id)
         from blog_article
         where id &gt; #{id}))
+    </select>
+    <select id="selectBlogArticleByTagId" resultMap="BlogArticleResult">
+        <include refid="selectBlogArticleBaseVO"/>
+        where article_status=1 and  id in (select article_id from blog_article_tag where tag_id=#{tagId})
+    </select>
+    <select id="getPvByArticleId" resultType="com.dimple.blog.front.service.entity.KeyValue">
+        select page_id as `key`, count(*) as `value`
+        from blog_visit_log
+        where page_id is not null
+          and page_id > 0
+        group by page_id
     </select>
 </mapper>

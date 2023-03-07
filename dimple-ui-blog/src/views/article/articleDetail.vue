@@ -22,7 +22,7 @@
                     <span>&nbsp;|&nbsp;</span>
                     <span>
             <i class="el-icon-chat-dot-round"></i>
-            评论数 {{ article.commentCount }}
+            评论数 {{ total }}
           </span>
                     <span>&nbsp;|&nbsp;</span>
                     <span>
@@ -34,12 +34,13 @@
             <note>
                 <p>{{ article.summary }}</p>
             </note>
-            <div v-html="article.content" class="article-detail__body ql-editor"></div>
+            <div v-show="!loading" ref="viewer" class="article-detail__body ql-editor"></div>
+            <ElSkeleton :rows="10" animated v-show="loading"></ElSkeleton>
             <div class="article-detail__update">
                 <span>最后编辑于：{{ article.updateTime | formatDate }}</span>
             </div>
             <div class="article-detail__like">
-                <el-button type="primary" :plain="article.liked === 0" @click="likeArticle">👍🏻 {{ likeText }}
+                <el-button type="primary" :plain="article.liked==0" @click="likeArticle">👍🏻 {{ likeText }}
                 </el-button>
             </div>
             <div class="article-detail__copyright">
@@ -90,8 +91,10 @@ import submit from "@/views/components/submit";
 import copyright from "./components/copyright";
 import share from "./components/share";
 import prevnext from "./components/prevnext";
-import "@/assets/css/quill.snow.css";
+// import "@/assets/css/quill.snow.css";
 import Prism from "@/assets/js/prism.js";
+import {storage} from "@/utils/storage";
+import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
 
 function jumpAnchor(route) {
     if (route.query.anchor === "a_cm") {
@@ -122,12 +125,15 @@ export default {
     // 动态属性
     data() {
         return {
+            loading: true,
             pageNum: 1,
-            pageSize: 5,
+            pageSize: 10,
             total: 0,
+            likeText: "赞",
             article: {},
             messages: [],
-            flatTree: null
+            flatTree: null,
+            viewer: null
         };
     },
     computed: {
@@ -138,9 +144,6 @@ export default {
         url() {
             return `${process.env.VUE_APP_BASE_URL}/app/article/${this.article.id}`;
         },
-        likeText() {
-            return this.article.liked ? "已赞" : "赞";
-        }
     },
     created() {
         this.getArticleDetails();
@@ -154,9 +157,16 @@ export default {
     },
     filters: {},
     mounted() {
-        this.$nextTick(function () {
-            Prism.highlightAll();
+        this.viewer = new Viewer({
+            el: this.$refs.viewer,
+            initialValue: '',
         });
+        Prism.plugins.toolbar.registerButton('macostyle', function () {
+            const content = document.createElement('div')
+            content.setAttribute('class', 'toolbar-item__content')
+            content.innerHTML = '<span class="toolbar-item__icon"></span>'
+            return content
+        })
         window.addEventListener("scroll", this.handleScroll, false);
     },
     methods: {
@@ -166,27 +176,34 @@ export default {
             const articleRes = await api.getArticle(id);
             if (articleRes.code === 200) {
                 this.article = articleRes.data;
+                this.article.liked = 0;
+                this.viewer.setMarkdown(this.article.content);
                 this.$nextTick(() => {
                     setTimeout(() => this.collectTitles(), 500);
                     setTimeout(() => jumpAnchor(this.$route), 1);
+                    Prism.highlightAll();
                 });
+                this.loading = false;
             }
             await this.currentChange(1);
         },
         async likeArticle() {
-            const inc = this.article.liked ? -1 : 1;
-
-            const likeRes = await this.$api.likeArticle({
-                id: this.article.id,
-                inc
-            });
+            if (this.article.liked == 1) {
+                this.$message({
+                    type: "warning",
+                    message: "已经点过赞了哦!"
+                });
+                return
+            }
+            const likeRes = await this.$api.likeArticle(this.article.id);
             if (likeRes.code === 200) {
                 this.$message({
                     type: "success",
-                    message: likeRes.info
+                    message: "点赞成功!"
                 });
-                this.article.likeNum = likeRes.data.like;
-                this.article.liked = likeRes.data.liked;
+                this.article.likeCount = this.article.likeCount + 1;
+                this.article.liked = 1;
+                this.likeText = this.article.liked === 1 ? "已赞" : "赞"
             }
         },
         async currentChange(val) {
@@ -194,6 +211,8 @@ export default {
             const commentRes = await api.listComment({
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
+                orderByColumn: "createTime",
+                isAsc: "desc",
                 articleId: this.article.id
             });
             if (commentRes.code === 200) {
@@ -226,6 +245,15 @@ export default {
             this.setCatalogs(catalogs);
         },
         async addLike(message) {
+            message.liked = 1;
+            const likeRes = await api.likeArticleComment(message.id)
+            if (likeRes.code === 200) {
+                message.likeCount += 1;
+                this.$message({
+                    type: 'success',
+                    message: "点赞成功!"
+                })
+            }
         },
         submitContent(content, cb) {
             this.submit(content, null, cb);
@@ -235,25 +263,33 @@ export default {
         },
         async submit(content, currentReplyComment, cb) {
             let parentId;
-            let aite;
+            let replyId;
             if (currentReplyComment) {
-                if (currentReplyComment.parentId) parentId = currentReplyComment.parentId;
-                else parentId = currentReplyComment._id;
-                aite = currentReplyComment.name;
+                if (currentReplyComment.parentId && currentReplyComment.parentId > 0) {
+                    parentId = currentReplyComment.parentId;
+                    replyId = currentReplyComment.id;
+                } else {
+                    parentId = currentReplyComment.id;
+                    replyId = currentReplyComment.id;
+                }
             }
-            const res = await api.saveArticleComment({
+            var visitor = storage.getVisitor();
+            const res = await api.addComment({
                 articleId: this.$route.params.id,
                 content: content,
-                parentId,
-                aite
+                replyId: replyId,
+                parentId: parentId,
+                username: visitor.username,
+                headImage: visitor.headImage,
+                email: visitor.email
             });
-            if (res.status === 200) {
+            if (res.code === 200) {
                 if (cb) cb();
                 this.$message({
                     type: "success",
                     message: "评论成功"
                 });
-                this.getArticleComments();
+                await this.currentChange(this.pageNum);
             }
         },
         addTreeLevel(catalogs, level, order) {

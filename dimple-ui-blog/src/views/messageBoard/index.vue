@@ -127,7 +127,9 @@ export default {
             const msgRes = await api.getMessageBoard({
                 page: this.pageNum,
                 pageSize: this.pageSize,
-                articleId: this.articleId
+                articleId: this.articleId,
+                orderByColumn: "createTime",
+                isAsc: "desc",
             })
             if (msgRes.code === 200) {
                 this.messages = msgRes.rows

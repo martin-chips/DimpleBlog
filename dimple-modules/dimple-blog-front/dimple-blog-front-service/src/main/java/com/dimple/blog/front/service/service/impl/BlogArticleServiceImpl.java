@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,7 +46,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     public BlogArticleBO selectBlogArticleById(Long id) {
         BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticleMapper.selectBlogArticleDetailById(id), BlogArticleBO.class);
         fillArticleTags(blogArticleBO);
-
+        fillPvInfo(Arrays.asList(blogArticleBO));
         return blogArticleBO;
     }
 
@@ -61,7 +63,20 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     public BlogArticleBO selectBlogArticleDetailById(Long id) {
         BlogArticleBO blogArticleBO = BeanMapper.convert(blogArticleMapper.selectBlogArticleDetailById(id), BlogArticleBO.class);
         fillArticleTags(blogArticleBO);
+        fillPvInfo(Arrays.asList(blogArticleBO));
         return blogArticleBO;
+    }
+
+    private void fillPvInfo(List<BlogArticleBO> blogArticleBOS) {
+        List<Long> ids = blogArticleBOS.stream().map(BlogArticleBO::getId).collect(Collectors.toList());
+        Map<Long, Long> articlePv = getArticlePvs(ids);
+        for (BlogArticleBO blogArticleBO : blogArticleBOS) {
+            blogArticleBO.setPv(articlePv.getOrDefault(blogArticleBO.getId(), 0L));
+        }
+    }
+
+    private Map<Long, Long> getArticlePvs(Collection<Long> ids) {
+        return blogArticleMapper.getPvByArticleId(ids).stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e1));
     }
 
     private void fillArticleTags(BlogArticleBO blogArticleBO) {
@@ -78,7 +93,9 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     public List<BlogArticleBO> selectBlogArticleList(BlogArticleBO blogArticleBO) {
         BlogArticle blogArticle = BeanMapper.convert(blogArticleBO, BlogArticle.class);
         List<BlogArticle> blogArticles = blogArticleMapper.selectBlogArticleList(blogArticle);
-        return BeanMapper.convertList(blogArticles, BlogArticleBO.class);
+        List<BlogArticleBO> blogArticleBOS = BeanMapper.convertList(blogArticles, BlogArticleBO.class);
+        fillPvInfo(blogArticleBOS);
+        return blogArticleBOS;
     }
 
     @Override
@@ -105,5 +122,18 @@ public class BlogArticleServiceImpl implements BlogArticleService {
                 .orElse(null);
         return new BlogArticlePrevNextBO(prevBlogArticle, nextBlogArticle);
 
+    }
+
+    @Override
+    public List<BlogArticleBO> selectBlogArticleListByTagId(Long tagId) {
+        BlogArticleTagBO blogArticleTagBO = new BlogArticleTagBO();
+        blogArticleTagBO.setTagId(tagId);
+        List<BlogArticle> blogArticles = blogArticleMapper.selectBlogArticleByTagId(tagId);
+        return BeanMapper.convertList(blogArticles, BlogArticleBO.class);
+    }
+
+    @Override
+    public int likeArticle(Long id) {
+        return blogArticleMapper.likeArticle(id);
     }
 }

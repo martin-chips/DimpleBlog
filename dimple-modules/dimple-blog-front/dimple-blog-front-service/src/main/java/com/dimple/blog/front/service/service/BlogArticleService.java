@@ -45,4 +45,8 @@ public interface BlogArticleService {
     Map<Long, Long> selectBlogArticleCountByCategoryIds(Set<Long> collect);
 
     BlogArticlePrevNextBO selectPrevNextArticle(Long id);
+
+    List<BlogArticleBO> selectBlogArticleListByTagId(Long tagId);
+
+    int likeArticle(Long id);
 }
