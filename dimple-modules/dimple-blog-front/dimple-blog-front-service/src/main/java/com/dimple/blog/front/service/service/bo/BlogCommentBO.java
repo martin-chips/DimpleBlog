@@ -62,5 +62,7 @@ public class BlogCommentBO extends BaseEntity {
 
     private Long likeCount;
 
+    private String link;
+
     private List<BlogCommentBO> subComments;
 }

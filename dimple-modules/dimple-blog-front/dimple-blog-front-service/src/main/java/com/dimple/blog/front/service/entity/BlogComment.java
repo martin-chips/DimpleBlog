@@ -34,6 +34,8 @@ public class BlogComment extends BaseEntity {
 
     private Long likeCount;
 
+    private String link;
+
     /**
      * user head image
      */

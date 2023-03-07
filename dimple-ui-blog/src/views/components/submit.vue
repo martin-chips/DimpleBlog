@@ -1,71 +1,74 @@
 <template>
-  <div class="submit">
-    <div class="submit__avatar">
-      <div class="submit__avatar-default">
-        <img v-show="!!visitorInfo.headImage" :src="visitorInfo.headImage" :title="visitorInfo.username" />
-        <i v-show="!visitorInfo.headImage" class="el-icon-user" :title="visitorInfo.username"></i>
-      </div>
-      <div class="submit__avatar-rel"></div>
-    </div>
-    <div class="submit__content">
-      <div class="submit__input">
-        <span v-if="currentReplyMessage.username" class="reply-name">回复 {{ currentReplyMessage.username }} :</span>
-        <el-input
-          ref="comment"
-          type="textarea"
-          :rows="3"
-          placeholder="说点什么"
-          @focus="focus"
-          v-model="comment"
-        ></el-input>
-      </div>
-      <div class="submit__handle">
-        <div class="submit__emoji-userTag">
-          <div class="submit__emoji">
-            <emoji @getEmoji="getEmoji"></emoji>
-          </div>
-          <div class="submit__userTag" v-show="visitorInfo.username">
-            <span>欢迎，{{ visitorInfo.username }}</span>
-            <i class="el-icon-circle-close" title="退出" @click="logout"></i>
-          </div>
+    <div class="submit">
+        <div class="submit__avatar">
+            <div class="submit__avatar-default">
+                <img v-show="!!visitorInfo.headImage" :src="visitorInfo.headImage" :title="visitorInfo.username"/>
+                <i v-show="!visitorInfo.headImage" class="el-icon-user" :title="visitorInfo.username"></i>
+            </div>
+            <div class="submit__avatar-rel"></div>
         </div>
+        <div class="submit__content">
+            <div class="submit__input">
+                <span v-if="currentReplyMessage.username" class="reply-name">回复 {{
+                    currentReplyMessage.username
+                    }} :</span>
+                <el-input
+                        ref="comment"
+                        type="textarea"
+                        :rows="3"
+                        placeholder="说点什么"
+                        @focus="focus"
+                        v-model="comment"
+                ></el-input>
+            </div>
+            <div class="submit__handle">
+                <div class="submit__emoji-userTag">
+                    <div class="submit__emoji">
+                        <emoji @getEmoji="getEmoji"></emoji>
+                    </div>
+                    <div class="submit__userTag" v-show="visitorInfo.username">
+                        <span>欢迎，{{ visitorInfo.username }}</span>
+                        <i class="el-icon-circle-close" title="退出" @click="logout"></i>
+                    </div>
+                </div>
 
-        <div class="submit__btn">
-          <el-button v-if="currentReplyMessage.id" size="medium" @click="cancelReply">取消</el-button>
-          <el-button size="medium" :disabled="!visitorInfo.id" @click="submitMessage">提交</el-button>
+                <div class="submit__btn">
+                    <el-button v-if="currentReplyMessage.id" size="medium" @click="cancelReply">取消</el-button>
+                    <el-button size="medium" :disabled="!visitorInfo.id" @click="submitMessage">提交</el-button>
+                </div>
+            </div>
         </div>
-      </div>
+        <el-dialog title="登录" :visible.sync="customVisible" width="30%" custom-class="visitor-submit-box">
+            <div class="submit__login">
+                <el-form label-width="60px" :model="customInfo" :rules="submitRules" ref="customForm">
+                    <el-form-item label="昵称" prop="username">
+                        <el-input v-model="customInfo.username" placeholder="请输入昵称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱" prop="email">
+                        <el-input v-model="customInfo.email" placeholder="请输入邮箱"></el-input>
+                    </el-form-item>
+                    <el-form-item label="网址" prop="link">
+                        <el-input v-model="customInfo.link"
+                                  placeholder="请输入你的主页 例如：https://awesome.me"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div class="submit__register">
+                    <el-button size="small" type="primary" @click="register">注册</el-button>
+                </div>
+                <div class="submit__third-part">
+                    <div class="line">第三方登录</div>
+                    <div class="submit__third-app">
+                        <a href="javascript: void(0)" @click="openQQ" class="login-qq">
+                            <img src="~@img/qq.png" alt="QQ登录"/>
+                        </a>
+                        <a href="javascript: void(0)" class="login-github" @click="openGithub">
+                            <img src="~@img/github.png" alt="github登录"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </el-dialog>
     </div>
-    <el-dialog title="登录" :visible.sync="customVisible" width="30%" custom-class="visitor-submit-box">
-      <div class="submit__login">
-        <el-form label-width="60px" :model="customInfo" :rules="submitRules" ref="customForm">
-          <el-form-item label="昵称" prop="username">
-            <el-input v-model="customInfo.username" placeholder="请输入昵称"></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-model="customInfo.email" placeholder="请输入邮箱"></el-input>
-          </el-form-item>
-          <el-form-item label="网址" prop="link">
-            <el-input v-model="customInfo.link" placeholder="请输入你的主页 例如：https://awesome.me"></el-input>
-          </el-form-item>
-        </el-form>
-        <div class="submit__register">
-          <el-button size="small" type="primary" @click="register">注册</el-button>
-        </div>
-        <div class="submit__third-part">
-          <div class="line">第三方登录</div>
-          <div class="submit__third-app">
-            <a href="javascript: void(0)" @click="openQQ" class="login-qq">
-              <img src="~@img/qq.png" alt="QQ登录" />
-            </a>
-            <a href="javascript: void(0)" class="login-github" @click="openGithub">
-              <img src="~@img/github.png" alt="github登录" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </el-dialog>
-  </div>
 </template>
 <script>
 import {mapMutations, mapState} from "vuex";
@@ -74,123 +77,124 @@ import emoji from "@/components/emoji";
 import cover from "@/assets/img/avatar/avatar.jpeg";
 
 export default {
-  name: "submit",
-  props: {
-    currentReplyMessage: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  },
-  components: {
-    emoji
-  },
-  data() {
-    const nameValidator = (rule, value, callback) => {
-      const reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]{1,16}$/gi;
-      if (value === "") {
-        callback(new Error("请输入昵称"));
-      } else if (!reg.test(value)) {
-        callback(new Error("昵称支持中英文、数字、下划线的组合，限16位"));
-      } else {
-        callback();
-      }
-    };
-    return {
-      cover: cover,
-      comment: "",
-      customVisible: false,
-      perfectVisible: false,
-      customInfo: {
-        username: "",
-        email: "",
-        link: ""
-      },
-      tempInfo: {},
-      submitRules: {
-        username: [{ required: true, validator: nameValidator, trigger: "blur" }],
-        email: [{ type: "email", required: true, message: "请填写邮箱", trigger: "blur" }],
-        link: [{ type: "url", required: false, message: "请输入合法地址" }]
-      }
-    };
-  },
-  mounted() {
-    if (storage.getVisitor()) {
-      this.setVisitorInfo(storage.getVisitor());
-    }
-  },
-  created() {
-  },
-  computed: {
-    ...mapState(["visitorInfo"])
-  },
-  methods: {
-    ...mapMutations(["setVisitor"]),
-    openGithub() {
-
-    },
-    openQQ() {
-
-    },
-    register() {
-      this.$refs.customForm.validate(async (valid) => {
-        if (valid) {
-          this.setVisitorInfo({
-            ...this.customInfo,
-              headImage: this.cover,
-            id: 123
-          });
-          this.customVisible = false;
-          this.customInfo = {
-            username: "",
-            email: "",
-            link: ""
-          };
+    name: "submit",
+    props: {
+        currentReplyMessage: {
+            type: Object,
+            default() {
+                return {};
+            }
         }
-      });
     },
-    handleQQCb() {
-      this.$message({
-        message: "拼命开发中😭"
-      });
+    components: {
+        emoji
     },
-    handleGithubCb(e) {
-      this.$message({
-        message: "拼命开发中😭"
-      });
+    data() {
+        const nameValidator = (rule, value, callback) => {
+            const reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]{1,16}$/gi;
+            if (value === "") {
+                callback(new Error("请输入昵称"));
+            } else if (!reg.test(value)) {
+                callback(new Error("昵称支持中英文、数字、下划线的组合，限16位"));
+            } else {
+                callback();
+            }
+        };
+        return {
+            cover: cover,
+            comment: "",
+            customVisible: false,
+            perfectVisible: false,
+            customInfo: {
+                username: "",
+                email: "",
+                link: ""
+            },
+            tempInfo: {},
+            submitRules: {
+                username: [{required: true, validator: nameValidator, trigger: "blur"}],
+                email: [{type: "email", required: true, message: "请填写邮箱", trigger: "blur"}],
+                link: [{type: "url", required: false, message: "请输入合法地址"}]
+            }
+        };
     },
-    setVisitorInfo(info) {
-      this.setVisitor(info);
-      storage.setVisitor(info);
+    mounted() {
+        if (storage.getVisitor()) {
+            this.setVisitorInfo(storage.getVisitor());
+        }
     },
-    submitMessage() {
-      if (this.comment.trim() === "") {
-        this.$message({
-          type: "warning",
-          message: "Oops 至少得说两句~"
-        });
-        return;
-      }
-      this.$emit("submitContent", this.comment.trim(), () => {
-        this.comment = "";
-      });
+    created() {
     },
-    cancelReply() {
-      this.$emit("changeCurrentReplyMessage", {});
+    computed: {
+        ...mapState(["visitorInfo"])
     },
-    logout() {
-      this.setVisitor({});
-      storage.removeVisitor();
-    },
-    focus() {
-      if (!storage.getVisitor()) this.customVisible = true;
-    },
-    getEmoji(emoji) {
-      this.$refs.comment.focus();
-      this.comment += emoji;
+    methods: {
+        ...mapMutations(["setVisitor"]),
+        openGithub() {
+
+        },
+        openQQ() {
+
+        },
+        register() {
+            this.$refs.customForm.validate(async (valid) => {
+                if (valid) {
+                    this.setVisitorInfo({
+                        ...this.customInfo,
+                        headImage: this.cover,
+                        id: 123
+                    });
+                    this.customVisible = false;
+                    this.customInfo = {
+                        username: "",
+                        email: "",
+                        link: ""
+                    };
+                }
+            });
+        },
+        handleQQCb() {
+            this.$message({
+                message: "拼命开发中😭"
+            });
+        },
+        handleGithubCb(e) {
+            this.$message({
+                message: "拼命开发中😭"
+            });
+        },
+        setVisitorInfo(info) {
+            this.setVisitor(info);
+            storage.setVisitor(info);
+        },
+        submitMessage() {
+            if (this.comment.trim() === "") {
+                this.$message({
+                    type: "warning",
+                    message: "Oops 至少得说两句~"
+                });
+                return;
+            }
+            this.$emit("submitContent", this.comment.trim(), () => {
+                this.comment = "";
+            });
+            this.cancelReply();
+        },
+        cancelReply() {
+            this.$emit("changeCurrentReplyMessage", {});
+        },
+        logout() {
+            this.setVisitor({});
+            storage.removeVisitor();
+        },
+        focus() {
+            if (!storage.getVisitor()) this.customVisible = true;
+        },
+        getEmoji(emoji) {
+            this.$refs.comment.focus();
+            this.comment += emoji;
+        }
     }
-  }
 };
 </script>
 <style lang="scss">

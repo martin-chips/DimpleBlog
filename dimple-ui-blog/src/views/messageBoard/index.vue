@@ -99,6 +99,7 @@ export default {
                     replyId = currentReplyMessage.id;
                 } else {
                     parentId = currentReplyMessage.id;
+                    replyId = currentReplyMessage.id;
                 }
             }
             var visitor = storage.getVisitor();

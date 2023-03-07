@@ -29,6 +29,7 @@
                content,
                email,
                reply_id,
+               link,
                like_count,
                create_by,
                create_time,

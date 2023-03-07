@@ -47,6 +47,8 @@ public class BlogCommentVO extends BaseVOParams {
 
     private Long replyId;
 
+    private String link;
+
     private String replyUsername;
 
     private Long likeCount;
