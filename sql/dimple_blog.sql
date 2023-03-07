@@ -104,4 +104,18 @@ create table blog_visit_log
     update_by       varchar(55) null,
     update_time     datetime    null
 );
+drop table if exists blog_link;
+create table blog_link
+(
+    id           bigint auto_increment primary key,
+    title        varchar(255) default null comment 'blog visit module, eg, HOME,CATEGORY...',
+    header_image varchar(255) default '',
+    description  varchar(255) default '' comment 'user request uri',
+    url          varchar(255) default '' comment ' user referer in the http request',
+    link_status  tinyint      default 1 comment '1 not approve, 2 rejected, 3 approve',
+    create_by    varchar(50) null,
+    create_time  datetime    null,
+    update_by    varchar(55) null,
+    update_time  datetime    null
+);
 

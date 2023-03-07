@@ -1,7 +1,7 @@
 <template>
   <div class="site-introduction">
     <div class="site-introduction__avatar" @click="goTo('home')">
-      <img src="https://avatars.githubusercontent.com/u/35912907?v=4" alt="" />
+      <img src="https://avatars.githubusercontent.com/u/33685170?s=48&v=4" alt="Martin Chips" />
     </div>
     <div class="site-introduction__info" @click="goTo('home')">
       <p class="site-introduction__sitename">Dimple</p>
@@ -53,7 +53,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
   name: 'panelIntroduction',

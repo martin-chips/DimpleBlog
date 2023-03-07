@@ -74,7 +74,7 @@
 import {mapMutations, mapState} from "vuex";
 import {storage} from "@/utils/storage";
 import emoji from "@/components/emoji";
-import cover from "@/assets/img/avatar/avatar.jpeg";
+import cover from "@/assets/img/avatar/avatar.png";
 
 export default {
     name: "submit",
