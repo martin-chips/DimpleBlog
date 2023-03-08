@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * BlogArchiveItemVO
  *
- * @author BianXiaofeng
+ * @author Dimple
  * @date 3/7/2023 10:13 AM
  */
 @Data
