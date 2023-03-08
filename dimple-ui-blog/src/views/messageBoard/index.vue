@@ -120,7 +120,7 @@ export default {
                     type: 'success',
                     message: '留言成功'
                 })
-                this.getMessageBoard()
+                await this.getMessageBoard()
             }
         },
         async getMessageBoard() {

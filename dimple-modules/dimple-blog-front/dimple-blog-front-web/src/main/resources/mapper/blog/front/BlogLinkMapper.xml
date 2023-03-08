@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.blog.front.service.mapper.BlogLinkMapper">
+    <resultMap type="com.dimple.blog.front.service.entity.BlogLink" id="BlogLinkResult">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="headerImage" column="header_image"/>
+        <result property="description" column="description"/>
+        <result property="url" column="url"/>
+        <result property="email" column="email"/>
+        <result property="linkStatus" column="link_status"/>
+        <result property="visitCount" column="visit_count"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+    <insert id="insertBlogLink" parameterType="com.dimple.blog.front.service.entity.BlogLink">
+        insert into blog_link
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="headerImage != null">header_image,</if>
+            <if test="description != null">`description`,</if>
+            <if test="url != null">url,</if>
+            <if test="email != null">email,</if>
+            <if test="linkStatus != null">link_status,</if>
+            <if test="visitCount != null">visit_count,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="headerImage != null">#{headerImage},</if>
+            <if test="description != null">#{description},</if>
+            <if test="url != null">#{url},</if>
+            <if test="email != null">#{email},</if>
+            <if test="linkStatus != null">#{linkStatus},</if>
+            <if test="visitCount != null">#{visitCount},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+    <insert id="addLinkVisitCount" parameterType="java.lang.Long">
+        update blog_link set visit_count=visit_count+1 where id =#{id}
+    </insert>
+    <select id="selectBlogLinkList" resultType="com.dimple.blog.front.service.entity.BlogLink"
+            resultMap="BlogLinkResult">
+        select id, title, header_image, description, url,  visit_count from blog_link where link_status=3
+    </select>
+</mapper>
