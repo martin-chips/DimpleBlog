@@ -49,34 +49,6 @@
             <div class="article-detail__share">
                 <share :tags="article.blogTags" :summary="article.summary" :title="article.title"></share>
             </div>
-            <div class="article-detail__prevnext">
-                <prevnext :article="article"></prevnext>
-            </div>
-            <div class="article-detail__comment">
-                <a id="a_cm"></a>
-                <div class="comment__title">
-                    <i class="el-icon-chat-dot-round"></i>
-                    <span>文章评论</span>
-                </div>
-                <div class="comment__submit">
-                    <submit @submitContent="submitContent"></submit>
-                </div>
-                <div class="comment__total">
-                    <span>{{ total }}条评论</span>
-                </div>
-                <div class="comment__list">
-                    <comments :messages="messages" @submitReply="submitReply" @addLike="addLike"></comments>
-                </div>
-                <div class="comment__page" v-if="total">
-                    <el-pagination
-                            :current-page.sync="pageNum"
-                            :total="total"
-                            layout="prev, pager, next"
-                            :page-size="pageSize"
-                            @current-change="currentChange"
-                    ></el-pagination>
-                </div>
-            </div>
         </layout>
     </div>
 </template>
@@ -86,26 +58,14 @@ import api from "@/api/";
 import note from "@/components/note/";
 import {generateTree} from "@/utils/generateTree";
 import {getRandomCharacter} from "@/utils/getRandomCharacter";
-import comments from "@/views/components/comments";
-import submit from "@/views/components/submit";
-import copyright from "./components/copyright";
-import share from "./components/share";
-import prevnext from "./components/prevnext";
-// import "@/assets/css/quill.snow.css";
+import copyright from "../article/components/copyright";
+import share from "../article/components/share";
 import Prism from "@/assets/js/prism.js";
-import {storage} from "@/utils/storage";
 import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
-
-function jumpAnchor(route) {
-    if (route.query.anchor === "a_cm") {
-        const el = document.querySelector("#a_cm");
-        el.scrollIntoView();
-    }
-}
 
 export default {
     name: "articleDetail",
-    components: {note, comments, submit, copyright, share, prevnext},
+    components: {note, copyright, share},
     props: {},
     metaInfo() {
         return {
@@ -148,13 +108,6 @@ export default {
     created() {
         this.getArticleDetails();
     },
-    watch: {
-        $route(to, from) {
-            if (to.params.id !== from.params.id) {
-                this.getArticleDetails();
-            }
-        }
-    },
     filters: {},
     mounted() {
         this.viewer = new Viewer({
@@ -172,7 +125,7 @@ export default {
     methods: {
         ...mapMutations(["setCatalogs", "setActiveCatalog"]),
         async getArticleDetails() {
-            var id = this.$route.params.id;
+            var id = 37;
             const articleRes = await api.getArticle(id);
             if (articleRes.code === 200) {
                 this.article = articleRes.data;
@@ -180,7 +133,7 @@ export default {
                 this.viewer.setMarkdown(this.article.content);
                 this.$nextTick(() => {
                     setTimeout(() => this.collectTitles(), 500);
-                    setTimeout(() => jumpAnchor(this.$route), 1);
+                    // setTimeout(() => jumpAnchor(this.$route), 1);
                     Prism.highlightAll();
                 });
                 this.loading = false;
@@ -204,20 +157,6 @@ export default {
                 this.article.likeCount = this.article.likeCount + 1;
                 this.article.liked = 1;
                 this.likeText = this.article.liked === 1 ? "已赞" : "赞"
-            }
-        },
-        async currentChange(val) {
-            this.pageNum = val;
-            const commentRes = await api.listComment({
-                pageNum: this.pageNum,
-                pageSize: this.pageSize,
-                orderByColumn: "createTime",
-                isAsc: "desc",
-                articleId: this.article.id
-            });
-            if (commentRes.code === 200) {
-                this.messages = commentRes.rows;
-                this.total = commentRes.total;
             }
         },
         collectTitles() {
@@ -255,43 +194,6 @@ export default {
                 })
             }
         },
-        submitContent(content, cb) {
-            this.submit(content, null, cb);
-        },
-        submitReply(content, currentReplyComment, cb) {
-            this.submit(content, currentReplyComment, cb);
-        },
-        async submit(content, currentReplyComment, cb) {
-            let parentId;
-            let replyId;
-            if (currentReplyComment) {
-                if (currentReplyComment.parentId && currentReplyComment.parentId > 0) {
-                    parentId = currentReplyComment.parentId;
-                    replyId = currentReplyComment.id;
-                } else {
-                    parentId = currentReplyComment.id;
-                    replyId = currentReplyComment.id;
-                }
-            }
-            var visitor = storage.getVisitor();
-            const res = await api.addComment({
-                articleId: this.$route.params.id,
-                content: content,
-                replyId: replyId,
-                parentId: parentId,
-                username: visitor.username,
-                headImage: visitor.headImage,
-                email: visitor.email
-            });
-            if (res.code === 200) {
-                if (cb) cb();
-                this.$message({
-                    type: "success",
-                    message: "评论成功"
-                });
-                await this.currentChange(this.pageNum);
-            }
-        },
         addTreeLevel(catalogs, level, order) {
             catalogs.forEach((catalog, index) => {
                 if (!level) level = 0;
@@ -327,152 +229,152 @@ export default {
 @import '~@/style/index.scss';
 
 .article-detail {
-  &__header {
-    width: 100%;
-    height: 100%;
-    @include flex-box-center;
-    flex-direction: column;
-  }
-
-  &__body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC',
-    'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
-    line-height: 2;
-    color: #4c4948;
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  &__title {
-    line-height: 1.5;
-    padding: 0 12px;
-    text-align: center;
-    @include themeify() {
-      color: themed('color-title');
-    }
-    @include respond-to(xs) {
-      font-size: 18px;
-    }
-  }
-
-  &__info {
-    padding: 0 12px;
-    @include themeify() {
-      color: themed('color-navbar');
-    }
-  }
-
-  .info-2 {
-    margin-top: 8px;
-  }
-
-  &__update {
-    margin-top: 20px;
-    padding: 14px;
-    text-align: right;
-    @include themeify() {
-      color: themed('color-ele-holder');
-    }
-  }
-
-  &__like {
-    margin-top: 20px;
-    padding: 14px;
-    text-align: center;
-  }
-
-  &__copyright {
-    margin-top: 28px;
-  }
-
-  &__share {
-    margin-top: 12px;
-  }
-
-  &__prevnext {
-    margin-top: 28px;
-  }
-
-  &__comment {
-    margin-top: 32px;
-
-    .comment__title {
-      padding: 16px 0;
-      font-size: 20px;
-      font-weight: 700;
-
-      > [class^='el-icon-'] {
-        font-weight: 700;
-      }
-
-      span {
-        margin-left: 12px;
-      }
+    &__header {
+        width: 100%;
+        height: 100%;
+        @include flex-box-center;
+        flex-direction: column;
     }
 
-    .comment__total {
-      color: #4c4948;
-      font-size: 25px;
-      font-weight: bold;
-      margin-top: 28px;
+    &__body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC',
+        'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
+        line-height: 2;
+        color: #4c4948;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
     }
 
-    .comment__list {
-      margin-top: 28px;
+    &__title {
+        line-height: 1.5;
+        padding: 0 12px;
+        text-align: center;
+        @include themeify() {
+            color: themed('color-title');
+        }
+        @include respond-to(xs) {
+            font-size: 18px;
+        }
     }
 
-    .comment__page {
-      @include flex-box-center;
-      padding: 16px 0;
-    }
-  }
-
-  // 覆盖 quill.js 中的部分css
-  .ql-editor {
-    padding: 0;
-    line-height: 2;
-
-    .code-toolbar {
-      margin-top: 12px;
+    &__info {
+        padding: 0 12px;
+        @include themeify() {
+            color: themed('color-navbar');
+        }
     }
 
-    a {
-      color: #409eff;
+    .info-2 {
+        margin-top: 8px;
     }
 
-    a:hover {
-      text-decoration: underline;
+    &__update {
+        margin-top: 20px;
+        padding: 14px;
+        text-align: right;
+        @include themeify() {
+            color: themed('color-ele-holder');
+        }
     }
 
-    ul,
-    ol {
-      padding-left: 0;
+    &__like {
+        margin-top: 20px;
+        padding: 14px;
+        text-align: center;
     }
 
-    li.ql-indent-1:not(.ql-direction-rtl) {
-      padding-left: 3.5em;
+    &__copyright {
+        margin-top: 28px;
     }
 
-    pre > code {
-      background: 0 0 !important;
+    &__share {
+        margin-top: 12px;
     }
 
-    code:not([class*='language-']) {
-      background-color: #f0f0f0;
-      border-radius: 3px;
-      font-size: 90%;
-      padding: 3px 5px;
+    &__prevnext {
+        margin-top: 28px;
     }
 
-    blockquote {
-      border-left: 4px solid #ccc;
-      margin-bottom: 5px;
-      margin-top: 5px;
-      padding-left: 16px;
+    &__comment {
+        margin-top: 32px;
+
+        .comment__title {
+            padding: 16px 0;
+            font-size: 20px;
+            font-weight: 700;
+
+            > [class^='el-icon-'] {
+                font-weight: 700;
+            }
+
+            span {
+                margin-left: 12px;
+            }
+        }
+
+        .comment__total {
+            color: #4c4948;
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 28px;
+        }
+
+        .comment__list {
+            margin-top: 28px;
+        }
+
+        .comment__page {
+            @include flex-box-center;
+            padding: 16px 0;
+        }
     }
-  }
+
+    // 覆盖 quill.js 中的部分css
+    .ql-editor {
+        padding: 0;
+        line-height: 2;
+
+        .code-toolbar {
+            margin-top: 12px;
+        }
+
+        a {
+            color: #409eff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul,
+        ol {
+            padding-left: 0;
+        }
+
+        li.ql-indent-1:not(.ql-direction-rtl) {
+            padding-left: 3.5em;
+        }
+
+        pre > code {
+            background: 0 0 !important;
+        }
+
+        code:not([class*='language-']) {
+            background-color: #f0f0f0;
+            border-radius: 3px;
+            font-size: 90%;
+            padding: 3px 5px;
+        }
+
+        blockquote {
+            border-left: 4px solid #ccc;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            padding-left: 16px;
+        }
+    }
 }
 </style>

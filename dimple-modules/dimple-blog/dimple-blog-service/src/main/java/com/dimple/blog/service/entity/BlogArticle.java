@@ -50,4 +50,8 @@ public class BlogArticle extends BaseEntity {
      * article status, 1 is published, 2 is draft
      */
     private Integer articleStatus;
+
+    private String categoryTitle;
+
+    private Long likeCount;
 }

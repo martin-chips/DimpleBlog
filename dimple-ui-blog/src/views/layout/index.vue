@@ -30,7 +30,7 @@
       <slot name="footer">
         <div class="layout__footer-content" :style="{ backgroundImage: 'url(' + cover + ')' }">
           <div class="layout__footer-item">
-            <span>©2018 - 2022&nbsp;&nbsp;&nbsp;</span>
+            <span>©2018 - 2023&nbsp;&nbsp;&nbsp;</span>
             <a href="https://github.com/martin-chips" target="_blank">Martin Chips</a>
           </div>
           <div class="layout__footer-item">Powered by Dimple</div>

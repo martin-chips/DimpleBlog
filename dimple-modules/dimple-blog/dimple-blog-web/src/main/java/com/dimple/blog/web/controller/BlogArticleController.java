@@ -59,7 +59,8 @@ public class BlogArticleController extends BaseController {
     @RequiresPermissions("blog:article:query")
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return success(blogArticleService.selectBlogArticleById(id));
+        BlogArticleBO blogArticleBO = blogArticleService.selectBlogArticleById(id);
+        return success(BeanMapper.convert(blogArticleBO, BlogArticleVO.class));
     }
 
     @RequiresPermissions("blog:article:add")

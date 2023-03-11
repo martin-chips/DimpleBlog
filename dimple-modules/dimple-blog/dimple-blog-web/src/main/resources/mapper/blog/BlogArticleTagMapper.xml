@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-    <select id="selectBlogArticleTagByArticleId" resultType="com.dimple.blog.service.entity.BlogArticleTag"
+    <select id="selectBlogArticleTagByArticleId" resultMap="BlogArticleTagResult"
             parameterType="java.lang.Long">
         <include refid="selectBlogArticleTagVo"/>
         where article_id = #{articleId}
@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <delete id="deleteBlogArticleTagByIds" parameterType="String">
         delete from blog_article_tag where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>

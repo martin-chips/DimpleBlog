@@ -19,8 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectBlogCategoryList" parameterType="BlogCategory" resultMap="BlogCategoryResult">
         <include refid="selectBlogCategoryVo"/>
-        <where>  
-            <if test="title != null  and title != ''"> and title = #{title}</if>
+        <where>
+            <if test="title != null  and title != ''">  and title like concat('%', #{title}, '%')</if>
         </where>
     </select>
     
@@ -28,7 +28,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectBlogCategoryVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectBlogCategoryByIds" resultMap="BlogCategoryResult">
+        <include refid="selectBlogCategoryVo"/>
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
     <insert id="insertBlogCategory" parameterType="BlogCategory" useGeneratedKeys="true" keyProperty="id">
         insert into blog_category
         <trim prefix="(" suffix=")" suffixOverrides=",">

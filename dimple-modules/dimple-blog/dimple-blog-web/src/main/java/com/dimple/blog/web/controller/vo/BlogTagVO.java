@@ -1,5 +1,6 @@
 package com.dimple.blog.web.controller.vo;
 
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -9,7 +10,7 @@ import lombok.Data;
  * @date 2/14/2023 10:23 AM
  */
 @Data
-public class BlogTagVO {
+public class BlogTagVO extends BaseEntity {
     private Long id;
 
     /**

@@ -17,6 +17,17 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="创建时间">
+        <el-date-picker
+          v-model="dateRange"
+          end-placeholder="结束日期"
+          range-separator="-"
+          start-placeholder="开始日期"
+          style="width: 240px"
+          type="daterange"
+          value-format="yyyy-MM-dd"
+        ></el-date-picker>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -72,8 +83,20 @@
           <image-preview :src="scope.row.headImage" :width="50" :height="50"/>
         </template>
       </el-table-column>
-      <el-table-column label="内容" align="center" prop="content"/>
+      <el-table-column :show-overflow-tooltip="true" label="内容" align="center" prop="content"/>
+      <el-table-column :show-overflow-tooltip="true" label="点赞次数" align="center" prop="likeCount">
+        <template slot-scope="scope">
+          <el-badge type="primary" :value="scope.row.likeCount"/>
+        </template>
+      </el-table-column>
       <el-table-column label="邮箱" align="center" prop="email"/>
+      <el-table-column label="链接" align="center" prop="link"/>
+      <el-table-column align="center" label="评论时间" prop="createTime"
+                       sortable="custom" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -107,13 +130,16 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="文章标题" prop="articleId">
-          <el-input v-model="form.articleTitle" placeholder="请输入文章标题"/>
+          <el-input v-model="form.articleTitle" disabled placeholder="请输入文章标题"/>
         </el-form-item>
         <el-form-item label="用户名" prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名"/>
         </el-form-item>
         <el-form-item label="用户头像" prop="headImage">
-          <image-upload v-model="form.headImage"/>
+          <div style="display:inline-block" @click="openHeaderChange">
+            <img v-if="form.headImage" alt="头像" class="header-img-box" :src="(form.headImage && form.headImage.slice(0, 4) !== 'http')?'path'+form.headImage:form.headImage">
+            <div v-else class="header-img-box">从媒体库选择</div>
+          </div>
         </el-form-item>
         <el-form-item label="内容">
           <editor v-model="form.content" :min-height="192"/>
@@ -121,20 +147,26 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="form.email" placeholder="请输入邮箱"/>
         </el-form-item>
+        <el-form-item label="链接" prop="link">
+          <el-input v-model="form.link" placeholder="请输入链接"/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    <ChooseImg hidden v-on:onChooseImg="onChooseImg" ref="chooseImg"></ChooseImg>
   </div>
 </template>
 
 <script>
 import {delComment, getComment, listComment, updateComment} from "@/api/blog/comment";
+import ChooseImg from "@/components/ChooseImg/index.vue";
 
 export default {
   name: "Comment",
+  components: {ChooseImg},
   data() {
     return {
       // 遮罩层
@@ -147,9 +179,11 @@ export default {
       multiple: true,
       // 显示搜索条件
       showSearch: true,
+      // 日期范围
+      dateRange: [],
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 表格数据
       commentList: [],
       // 弹出层标题
       title: "",
@@ -174,10 +208,15 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    onChooseImg(value) {
+      this.form.headImage = value;
+    },
+    openHeaderChange() {
+      this.$refs.chooseImg.openDrawer();
+    },
     getList() {
       this.loading = true;
-      listComment(this.queryParams).then(response => {
+      listComment(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.commentList = response.rows;
         this.total = response.total;
         this.loading = false;

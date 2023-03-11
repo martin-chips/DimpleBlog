@@ -1,6 +1,6 @@
 package com.dimple.blog.web.controller.vo;
 
-import com.dimple.common.core.web.vo.params.BaseVOParams;
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2/14/2023 10:36 AM
  */
 @Data
-public class BlogCommentVO extends BaseVOParams {
+public class BlogCommentVO extends BaseEntity {
     private Long id;
 
     /**
@@ -42,4 +42,10 @@ public class BlogCommentVO extends BaseVOParams {
      * user email, if email is not null will reply when the comment has been replied
      */
     private String email;
+
+    private Long likeCount;
+
+    private String link;
+
+    private String articleTitle;
 }

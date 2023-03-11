@@ -34,6 +34,12 @@ public class BlogTagServiceImpl implements BlogTagService {
     }
 
     @Override
+    public List<BlogTagBO> selectBlogTagByTitles(List<String> titles) {
+        List<BlogTag> blogTags = blogTagMapper.selectBlogTagByTitles(titles);
+        return BeanMapper.convertList(blogTags, BlogTagBO.class);
+    }
+
+    @Override
     public List<BlogTagBO> selectBlogTagList(BlogTagBO blogTagBO) {
         BlogTag blogTag = BeanMapper.convert(blogTagBO, BlogTag.class);
         List<BlogTag> blogTags = blogTagMapper.selectBlogTagList(blogTag);
@@ -44,7 +50,8 @@ public class BlogTagServiceImpl implements BlogTagService {
     public Long insertBlogTag(BlogTagBO blogTagBO) {
         BlogTag blogTag = BeanMapper.convert(blogTagBO, BlogTag.class);
         blogTag.setCreateTime(DateUtils.getNowDate());
-        return blogTagMapper.insertBlogTag(blogTag);
+        blogTagMapper.insertBlogTag(blogTag);
+        return blogTag.getId();
     }
 
     @Override

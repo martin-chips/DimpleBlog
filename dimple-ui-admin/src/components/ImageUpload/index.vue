@@ -2,8 +2,8 @@
   <div class="component-upload-image">
     <el-upload
       multiple
+      class="upload-btn"
       :action="uploadImgUrl"
-      list-type="picture-card"
       :on-success="handleUploadSuccess"
       :before-upload="handleBeforeUpload"
       :limit="limit"
@@ -17,7 +17,7 @@
       :on-preview="handlePictureCardPreview"
       :on-remove="handleDelete"
     >
-      <i class="el-icon-plus"></i>
+      <el-button size="small" type="primary">点击上传</el-button>
     </el-upload>
 
     <!-- 上传提示 -->

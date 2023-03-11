@@ -1,13 +1,24 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="" prop="categoryId">
+      <el-form-item label="标题" prop="categoryId">
         <el-input
           v-model="queryParams.title"
           placeholder="请输入标题"
           clearable
           @keyup.enter.native="handleQuery"
         />
+      </el-form-item>
+      <el-form-item label="创建时间">
+        <el-date-picker
+          v-model="dateRange"
+          end-placeholder="结束日期"
+          range-separator="-"
+          start-placeholder="开始日期"
+          style="width: 240px"
+          type="daterange"
+          value-format="yyyy-MM-dd"
+        ></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -69,7 +80,18 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="" align="center" prop="id"/>
       <el-table-column label="标题" align="center" prop="title"/>
-      <el-table-column label="" align="center" prop="categoryId"/>
+      <el-table-column  align="center" label="创建日期" prop="createTime"
+                       sortable="custom" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column  align="center" label="最后修改日期" prop="updateTime"
+                       sortable="custom" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -125,6 +147,8 @@ export default {
       loading: true,
       // 选中数组
       ids: [],
+      // 日期范围
+      dateRange: [],
       // 非单个禁用
       single: true,
       // 非多个禁用

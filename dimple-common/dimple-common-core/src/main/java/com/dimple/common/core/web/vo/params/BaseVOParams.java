@@ -1,11 +1,9 @@
 package com.dimple.common.core.web.vo.params;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,12 +19,6 @@ public class BaseVOParams {
      */
     @JsonIgnore
     private String searchValue;
-
-    /**
-     * 创建时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
     /**
      * 请求参数
      */

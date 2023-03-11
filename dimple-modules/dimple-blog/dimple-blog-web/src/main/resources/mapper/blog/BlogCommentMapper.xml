@@ -19,7 +19,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectBlogCommentVo">
-        select id, article_id, username, parent_id, head_image, content, email, create_by, create_time, update_by, update_time from blog_comment
+        select id,
+               article_id,
+               username,
+               parent_id,
+               head_image,
+               content,
+               reply_id,
+               email,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from blog_comment
     </sql>
 
     <select id="selectBlogCommentList" parameterType="BlogComment" resultMap="BlogCommentResult">
@@ -31,6 +43,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="headImage != null  and headImage != ''"> and head_image = #{headImage}</if>
             <if test="content != null  and content != ''"> and content = #{content}</if>
             <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
         </where>
     </select>
     

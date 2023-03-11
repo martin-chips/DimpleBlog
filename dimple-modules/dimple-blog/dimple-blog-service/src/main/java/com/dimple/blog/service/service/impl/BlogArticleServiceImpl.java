@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -66,11 +67,11 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     private void fillArticleTags(BlogArticleBO blogArticleBO) {
         List<BlogArticleTagBO> blogArticleTagBOS = blogArticleTagService.selectBlogArticleTagByArticleId(blogArticleBO.getId());
         List<Long> tagIds = blogArticleTagBOS.stream().map(BlogArticleTagBO::getTagId).collect(Collectors.toList());
-        List<BlogTagBO> blogTagBOS = new ArrayList<>();
+        List<String> blogTagBOS = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(tagIds)) {
-            blogTagBOS = blogTagService.selectBlogTagByIds(tagIds);
+            blogTagBOS = blogTagService.selectBlogTagByIds(tagIds).stream().map(BlogTagBO::getTitle).collect(Collectors.toList());
         }
-        blogArticleBO.setBlogTags(blogTagBOS);
+        blogArticleBO.setTags(blogTagBOS);
     }
 
     @Override
@@ -87,22 +88,23 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         blogArticle.setCreateTime(DateUtils.getNowDate());
         blogArticleMapper.insertBlogArticle(blogArticle);
         Long articleId = blogArticle.getId();
-        saveBlogTags(blogArticleBO.getBlogTags(), articleId);
+        saveBlogTags(blogArticleBO.getTags(), articleId);
         return articleId;
     }
 
-    private void saveBlogTags(List<BlogTagBO> blogTags, Long articleId) {
+    private void saveBlogTags(List<String> blogTags, Long articleId) {
         if (CollectionUtils.isEmpty(blogTags)) {
             log.warn("Current blog article no tags, just ignore save blog tags.");
             return;
         }
         // remove all mapping
         deleteArticleTagMapping(Arrays.asList(articleId));
+        Map<String, Long> alreadyExistedTagsMap = blogTagService.selectBlogTagByTitles(blogTags).stream().collect(Collectors.toMap(e -> e.getTitle(), e -> e.getId()));
         // add new mapping
-        for (BlogTagBO blogTag : blogTags) {
-            Long tagId = blogTag.getId();
+        for (String blogTag : blogTags) {
+            Long tagId = alreadyExistedTagsMap.get(blogTag);
             if (Objects.isNull(tagId)) {
-                tagId = blogTagService.insertBlogTag(blogTag);
+                tagId = blogTagService.insertBlogTag(new BlogTagBO(blogTag));
             }
             // save mapping
             BlogArticleTagBO blogArticleTagBO = new BlogArticleTagBO();
@@ -116,7 +118,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     public int updateBlogArticle(BlogArticleBO blogArticleBO) {
         BlogArticle blogArticle = BeanMapper.convert(blogArticleBO, BlogArticle.class);
         blogArticle.setUpdateTime(DateUtils.getNowDate());
-        saveBlogTags(blogArticleBO.getBlogTags(), blogArticleBO.getId());
+        saveBlogTags(blogArticleBO.getTags(), blogArticleBO.getId());
         return blogArticleMapper.updateBlogArticle(blogArticle);
     }
 
@@ -137,6 +139,9 @@ public class BlogArticleServiceImpl implements BlogArticleService {
             searchArticleTagMapping.setArticleId(articleId);
             needRemoveRowIds.addAll(blogArticleTagService.selectBlogArticleTagList(searchArticleTagMapping).stream()
                     .map(BlogArticleTagBO::getId).collect(Collectors.toList()));
+        }
+        if (CollectionUtils.isEmpty(needRemoveRowIds)) {
+            return;
         }
         blogArticleTagService.deleteBlogArticleTagByIds(needRemoveRowIds);
     }

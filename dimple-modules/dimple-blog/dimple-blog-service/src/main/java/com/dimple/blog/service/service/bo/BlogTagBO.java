@@ -3,6 +3,7 @@ package com.dimple.blog.service.service.bo;
 import com.dimple.common.core.annotation.Excel;
 import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -12,6 +13,7 @@ import lombok.Data;
  * @date 2023-02-13
  */
 @Data
+@NoArgsConstructor
 public class BlogTagBO extends BaseEntity {
 
 
@@ -23,4 +25,8 @@ public class BlogTagBO extends BaseEntity {
     @Excel(name = "标题")
     private String title;
 
+
+    public BlogTagBO(String title) {
+        this.title = title;
+    }
 }

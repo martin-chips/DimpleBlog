@@ -2,6 +2,7 @@ package com.dimple.blog.service.service;
 
 import com.dimple.blog.service.service.bo.BlogCategoryBO;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -19,6 +20,7 @@ public interface BlogCategoryService {
      * @return blog category
      */
     BlogCategoryBO selectBlogCategoryById(Long id);
+    List<BlogCategoryBO> selectBlogCategoryByIds(Collection<Long> ids);
 
     /**
      * 查询blog category列表

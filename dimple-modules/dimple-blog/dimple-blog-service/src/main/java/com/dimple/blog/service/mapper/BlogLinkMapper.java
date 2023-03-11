@@ -1,6 +1,6 @@
 package com.dimple.blog.service.mapper;
 
-import com.dimple.blog.service.entity.BlogTag;
+import com.dimple.blog.service.entity.BlogLink;
 
 import java.util.List;
 
@@ -11,38 +11,38 @@ import java.util.List;
  * @author Dimple
  * @date 2023-02-13
  */
-public interface BlogTagMapper {
+public interface BlogLinkMapper {
     /**
      * 查询
      *
      * @param id 主键
      * @return
      */
-    BlogTag selectBlogTagById(Long id);
+    BlogLink selectBlogLinkById(Long id);
 
     /**
      * 查询列表
      *
-     * @param blogTag
+     * @param blogLink
      * @return 集合
      */
-    List<BlogTag> selectBlogTagList(BlogTag blogTag);
+    List<BlogLink> selectBlogLinkList(BlogLink blogLink);
 
     /**
      * 新增
      *
-     * @param blogTag
-     * @return the object id
+     * @param blogLink
+     * @return affected lines
      */
-    Long insertBlogTag(BlogTag blogTag);
+    int insertBlogLink(BlogLink blogLink);
 
     /**
      * 修改
      *
-     * @param blogTag
+     * @param blogLink
      * @return affected lines
      */
-    int updateBlogTag(BlogTag blogTag);
+    int updateBlogLink(BlogLink blogLink);
 
     /**
      * 删除
@@ -50,7 +50,7 @@ public interface BlogTagMapper {
      * @param id 主键
      * @return affected lines
      */
-    int deleteBlogTagById(Long id);
+    int deleteBlogLinkById(Long id);
 
     /**
      * 批量删除
@@ -58,9 +58,5 @@ public interface BlogTagMapper {
      * @param ids 需要删除的数据主键集合
      * @return affected lines
      */
-    int deleteBlogTagByIds(Long[] ids);
-
-    List<BlogTag> selectBlogTagListByIds(List<Long> ids);
-
-    List<BlogTag> selectBlogTagByTitles(List<String> titles);
+    int deleteBlogLinkByIds(Long[] ids);
 }

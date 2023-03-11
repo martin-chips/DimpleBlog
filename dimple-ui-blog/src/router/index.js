@@ -11,6 +11,7 @@ const tags = () => import("@/views/tags/");
 const articleFilter = () => import("@/views/article-filter/");
 const category = () => import("@/views/category/");
 const friendLink = () => import("@/views/links/");
+const about = () => import("@/views/about/");
 Vue.use(Router);
 Vue.use(Meta);
 // 避免重复点击相同路由 报错问题
@@ -62,6 +63,11 @@ export function createRouter() {
         path: "/app/links",
         name: "links",
         component: friendLink
+      },
+      {
+        path: "/app/about",
+        name: "about",
+        component: about
       },
       {
         path: "/app/articles/:type/:param",

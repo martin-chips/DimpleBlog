@@ -60,7 +60,7 @@
     <select id="selectBlogArticleList" parameterType="BlogArticle" resultMap="BlogArticleResult">
         <include refid="selectBlogArticleBaseVO"/>
         <where>
-            <if test="title != null  and title != ''">and title = #{title}</if>
+            <if test="title != null  and title != ''">  and title like concat('%', #{title}, '%')</if>
             <if test="headerImage != null  and headerImage != ''">and header_image = #{headerImage}</if>
             <if test="content != null  and content != ''">and content = #{content}</if>
             <if test="categoryId != null ">and category_id = #{categoryId}</if>

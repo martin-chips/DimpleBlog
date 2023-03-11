@@ -2,6 +2,7 @@ package com.dimple.blog.service.mapper;
 
 import com.dimple.blog.service.entity.BlogCategory;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -59,4 +60,6 @@ public interface BlogCategoryMapper {
      * @return affected lines
      */
     int deleteBlogCategoryByIds(Long[] ids);
+
+    List<BlogCategory> selectBlogCategoryByIds(Collection<Long> ids);
 }

@@ -53,4 +53,8 @@ public class BlogCommentBO extends BaseEntity {
      */
     @Excel(name = "邮件")
     private String email;
+
+    private Long likeCount;
+
+    private String link;
 }

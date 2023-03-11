@@ -20,7 +20,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectBlogTagList" parameterType="BlogTag" resultMap="BlogTagResult">
         <include refid="selectBlogTagVo"/>
         <where>  
-            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="title != null  and title != ''">  and title like concat('%', #{title}, '%')</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
         </where>
     </select>
     
@@ -33,6 +39,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id in
         <foreach item="id" collection="collection" open="(" separator="," close=")">
             #{id}
+        </foreach>
+    </select>
+    <select id="selectBlogTagByTitles" resultType="com.dimple.blog.service.entity.BlogTag">
+        <include refid="selectBlogTagVo"/>
+        where title in
+        <foreach item="title" collection="collection" open="(" separator="," close=")">
+           #{title}
         </foreach>
     </select>
 

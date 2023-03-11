@@ -1,5 +1,5 @@
 export default {
-  minHeight: '300px',
+  minHeight: '800px',
   previewStyle: 'vertical',  // Markdown Editor的预览样式（标签，垂直）
   useCommandShortcut: true,  // 是否使用键盘快捷键执行命令
   useDefaultHTMLSanitizer: true,
@@ -12,5 +12,6 @@ export default {
     ['ul', 'ol', 'task', 'indent', 'outdent'],
     ['table', 'image', 'link'],
     ['code', 'codeblock'],
+    ['scrollSync']
   ]
 }

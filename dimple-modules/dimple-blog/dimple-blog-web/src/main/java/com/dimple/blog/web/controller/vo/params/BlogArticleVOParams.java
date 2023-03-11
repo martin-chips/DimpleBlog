@@ -1,7 +1,9 @@
 package com.dimple.blog.web.controller.vo.params;
 
-import com.dimple.common.core.web.entity.BaseEntity;
+import com.dimple.common.core.web.vo.params.BaseVOParams;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * Blog table
@@ -9,7 +11,7 @@ import lombok.Data;
  * @author Dimple
  */
 @Data
-public class BlogArticleVOParams extends BaseEntity {
+public class BlogArticleVOParams extends BaseVOParams {
 
     /**
      * article title
@@ -45,5 +47,7 @@ public class BlogArticleVOParams extends BaseEntity {
      * article status, 1 is published, 2 is draft
      */
     private Integer articleStatus;
+
+    private List<String> tags;
 
 }

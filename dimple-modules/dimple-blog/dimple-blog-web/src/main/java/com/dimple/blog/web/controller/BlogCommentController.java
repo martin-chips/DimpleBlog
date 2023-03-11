@@ -59,7 +59,8 @@ public class BlogCommentController extends BaseController {
     @RequiresPermissions("blog:comment:query")
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return success(blogCommentService.selectBlogCommentById(id));
+        BlogCommentBO blogCommentBO = blogCommentService.selectBlogCommentById(id);
+        return success(BeanMapper.convert(blogCommentBO, BlogCommentVO.class));
     }
 
     @RequiresPermissions("blog:comment:add")

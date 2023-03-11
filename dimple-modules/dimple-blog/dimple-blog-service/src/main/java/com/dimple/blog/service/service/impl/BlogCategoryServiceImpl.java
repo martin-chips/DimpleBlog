@@ -11,6 +11,7 @@ import com.dimple.common.core.utils.bean.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -34,6 +35,12 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
         List<BlogArticleBO> blogArticleBOS = blogArticleService.selectBlogArticleList(blogArticleBO);
         blogCategoryBO.setArticles(blogArticleBOS);
         return blogCategoryBO;
+    }
+
+    @Override
+    public List<BlogCategoryBO> selectBlogCategoryByIds(Collection<Long> ids) {
+        List<BlogCategory> blogCategories = blogCategoryMapper.selectBlogCategoryByIds(ids);
+        return BeanMapper.convertList(blogCategories, BlogCategoryBO.class);
     }
 
     @Override

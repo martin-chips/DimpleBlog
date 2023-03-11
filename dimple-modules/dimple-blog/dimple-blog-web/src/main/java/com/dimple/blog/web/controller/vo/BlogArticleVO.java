@@ -3,6 +3,8 @@ package com.dimple.blog.web.controller.vo;
 import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Blog table
  *
@@ -46,4 +48,10 @@ public class BlogArticleVO extends BaseEntity {
      * article status, 1 is published, 2 is draft
      */
     private Integer articleStatus;
+
+    private List<String> tags;
+
+    private String categoryTitle;
+
+    private Long likeCount;
 }

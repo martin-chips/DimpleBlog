@@ -12,6 +12,8 @@
         <result property="categoryId" column="category_id"/>
         <result property="original" column="original"/>
         <result property="summary" column="summary"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="categoryTitle" column="category_title"/>
         <result property="articleStatus" column="article_status"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -26,6 +28,7 @@
                category_id,
                original,
                summary,
+               like_count,
                article_status,
                create_by,
                create_time,
@@ -51,28 +54,44 @@
     </sql>
 
     <select id="selectBlogArticleList" parameterType="BlogArticle" resultMap="BlogArticleResult">
-        <include refid="selectBlogArticleBaseVO"/>
-        <where>
-            <if test="title != null  and title != ''">and title = #{title}</if>
-            <if test="headerImage != null  and headerImage != ''">and header_image = #{headerImage}</if>
-            <if test="content != null  and content != ''">and content = #{content}</if>
-            <if test="categoryId != null ">and category_id = #{categoryId}</if>
-            <if test="original != null ">and original = #{original}</if>
-            <if test="summary != null  and summary != ''">and summary = #{summary}</if>
-            <if test="articleStatus != null ">and article_status = #{articleStatus}</if>
-        </where>
+        select blog_article.id as id,
+        blog_article.title as title,
+        header_image,
+        category_id,
+        original,
+        summary,
+        like_count,
+        article_status,
+        blog_article.create_by as create_by,
+        blog_article.create_time as create_time,
+        blog_category.title as category_title,
+        blog_article.update_by as update_by,
+        blog_article.update_time as update_time
+        from blog_article
+        left join blog_category
+        on  blog_article.category_id = blog_category.id
+        <if test="title != null  and title != ''">  and title like concat('%', #{title}, '%')</if>
+        <if test="categoryId != null ">and category_id = #{categoryId}</if>
+        <if test="original != null ">and original = #{original}</if>
+        <if test="articleStatus != null ">and article_status = #{articleStatus}</if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
     </select>
 
     <select id="selectBlogArticleById" parameterType="Long" resultMap="BlogArticleResult">
         <include refid="selectBlogArticleBaseVO"/>
         where id = #{id}
     </select>
-    <select id="selectBlogArticleDetailById" resultType="com.dimple.blog.service.entity.BlogArticle"
+    <select id="selectBlogArticleDetailById" resultMap="BlogArticleResult"
             parameterType="java.lang.Long">
         <include refid="selectBlogArticleDetailVo"/>
         where id = #{id}
     </select>
-    <select id="selectBlogArticleByIds" resultType="com.dimple.blog.service.entity.BlogArticle">
+    <select id="selectBlogArticleByIds" resultMap="BlogArticleResult">
         <include refid="selectBlogArticleBaseVO"/>
         where id in
         <foreach item="id" collection="collection" open="(" separator="," close=")">
@@ -80,7 +99,8 @@
         </foreach>
     </select>
 
-    <insert id="insertBlogArticle" parameterType="com.dimple.blog.service.entity.BlogArticle" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertBlogArticle" parameterType="com.dimple.blog.service.entity.BlogArticle" useGeneratedKeys="true"
+            keyProperty="id">
         insert into blog_article
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null and title != ''">title,</if>

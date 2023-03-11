@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.blog.service.mapper.BlogLinkMapper">
+
+    <resultMap type="com.dimple.blog.service.entity.BlogLink" id="BlogLinkResult">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="headerImage" column="header_image"/>
+        <result property="description" column="description"/>
+        <result property="url" column="url"/>
+        <result property="linkStatus" column="link_status"/>
+        <result property="visitCount" column="visit_count"/>
+        <result property="email" column="email"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectBlogLinkVo">
+        select id,
+               title,
+               header_image,
+               description,
+               url,
+               email,
+               link_status,
+               visit_count,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from blog_link
+    </sql>
+
+    <select id="selectBlogLinkList" parameterType="BlogLink" resultMap="BlogLinkResult">
+        <include refid="selectBlogLinkVo"/>
+        <where>
+            <if test="title != null  and title != ''">and title like concat('%', #{title}, '%')</if>
+            <if test="description != null  and description != ''">and description like concat('%', #{description}, '%')</if>
+            <if test="email != null  and email != ''">and email like concat('%', #{email}, '%')</if>
+            <if test="url != null  and url != ''">and url like concat('%', #{url}, '%')</if>
+            <if test="linkStatus != null ">and link_status = #{linkStatus}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBlogLinkById" parameterType="Long" resultMap="BlogLinkResult">
+        <include refid="selectBlogLinkVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBlogLink" parameterType="BlogLink" useGeneratedKeys="true" keyProperty="id">
+        insert into blog_link
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="headerImage != null">header_image,</if>
+            <if test="description != null">description,</if>
+            <if test="url != null">url,</if>
+            <if test="email != null">email,</if>
+            <if test="linkStatus != null">link_status,</if>
+            <if test="visitCount != null">visit_count,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="headerImage != null">#{headerImage},</if>
+            <if test="description != null">#{description},</if>
+            <if test="url != null">#{url},</if>
+            <if test="email != null">#{email},</if>
+            <if test="linkStatus != null">#{linkStatus},</if>
+            <if test="visitCount != null">#{visitCount},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBlogLink" parameterType="BlogLink">
+        update blog_link
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="headerImage != null">header_image = #{headerImage},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="linkStatus != null">link_status = #{linkStatus},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBlogLinkById" parameterType="Long">
+        delete
+        from blog_link
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteBlogLinkByIds" parameterType="String">
+        delete from blog_link where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

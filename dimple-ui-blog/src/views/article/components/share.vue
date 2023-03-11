@@ -58,7 +58,7 @@ export default {
       default: ""
     },
     // 分享内容摘要
-    abstract: {
+    summary: {
       type: String,
       default: ""
     }

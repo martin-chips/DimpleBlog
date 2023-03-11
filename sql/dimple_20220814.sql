@@ -403,6 +403,23 @@ values('标签删除', 604, '4',  '#', '', 1, 0, 'F', '0', '0', 'blog:tag:remove
 insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
 values('标签导出', 604, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:tag:export',       '#', 'admin', sysdate(), '', null, '');
 
+insert into sys_menu (menu_id,menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values(605,'友链', '6', '1', 'link', 'blog/link/index', 1, 0, 'C', '0', '0', 'blog:link:list', 'edit', 'admin', sysdate(), '', null, '友链菜单');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('友链查询', 601, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:query',        '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('友链新增', 601, '2',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:add',          '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('友链修改', 601, '3',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:edit',         '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('友链删除', 601, '4',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:remove',       '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('友链导出', 601, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:export',       '#', 'admin', sysdate(), '', null, '');
+
 -- ----------------------------
 -- 用户和角色关联表  用户N-1角色
 -- ----------------------------

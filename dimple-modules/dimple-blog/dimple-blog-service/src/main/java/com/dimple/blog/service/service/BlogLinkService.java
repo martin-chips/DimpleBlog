@@ -1,6 +1,6 @@
 package com.dimple.blog.service.service;
 
-import com.dimple.blog.service.service.bo.BlogTagBO;
+import com.dimple.blog.service.service.bo.BlogLinkBO;
 
 import java.util.List;
 
@@ -10,42 +10,38 @@ import java.util.List;
  * @author Dimple
  * @date 2023-02-13
  */
-public interface BlogTagService {
+public interface BlogLinkService {
     /**
      * 查询
      *
      * @param id 主键
      * @return
      */
-    BlogTagBO selectBlogTagById(Long id);
-
-    List<BlogTagBO> selectBlogTagByIds(List<Long> ids);
-
-    List<BlogTagBO> selectBlogTagByTitles(List<String> titles);
+    BlogLinkBO selectBlogLinkById(Long id);
 
     /**
      * 查询列表
      *
-     * @param blogTag
+     * @param blogLink
      * @return 集合
      */
-    List<BlogTagBO> selectBlogTagList(BlogTagBO blogTag);
+    List<BlogLinkBO> selectBlogLinkList(BlogLinkBO blogLink);
 
     /**
      * 新增
      *
-     * @param blogTag
-     * @return the object id
+     * @param blogLink
+     * @return affected lines
      */
-    Long insertBlogTag(BlogTagBO blogTag);
+    int insertBlogLink(BlogLinkBO blogLink);
 
     /**
      * 修改
      *
-     * @param blogTag
+     * @param blogLink
      * @return affected lines
      */
-    int updateBlogTag(BlogTagBO blogTag);
+    int updateBlogLink(BlogLinkBO blogLink);
 
     /**
      * 批量删除
@@ -53,7 +49,7 @@ public interface BlogTagService {
      * @param ids 需要删除的主键集合
      * @return affected lines
      */
-    int deleteBlogTagByIds(Long[] ids);
+    int deleteBlogLinkByIds(Long[] ids);
 
     /**
      * 删除信息
@@ -61,5 +57,5 @@ public interface BlogTagService {
      * @param id 主键
      * @return affected lines
      */
-    int deleteBlogTagById(Long id);
+    int deleteBlogLinkById(Long id);
 }
