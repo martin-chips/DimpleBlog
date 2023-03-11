@@ -1,5 +1,6 @@
-package com.dimple.file.service.service;
+package com.dimple.file.service.service.impl;
 
+import com.dimple.file.service.service.SysFileService;
 import com.dimple.file.service.utils.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;

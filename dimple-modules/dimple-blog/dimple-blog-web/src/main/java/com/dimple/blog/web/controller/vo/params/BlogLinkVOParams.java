@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * BlogLinkVOParams
  *
- * @author BianXiaofeng
+ * @author Dimple
  * @date 3/10/2023 11:27 AM
  */
 @Data
