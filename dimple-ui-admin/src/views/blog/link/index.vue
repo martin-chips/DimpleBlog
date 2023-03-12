@@ -167,7 +167,10 @@
           <el-input v-model="form.description" placeholder="请输入描述"/>
         </el-form-item>
         <el-form-item label="网站图标" prop="headerImage">
-          <image-upload :limit="1" v-model="form.headerImage"/>
+          <div style="display:inline-block" @click="openHeaderChange">
+            <img v-if="form.headerImage" alt="头像" class="header-img-box" :src="(form.headerImage && form.headerImage.slice(0, 4) !== 'http')?'path'+form.headerImage:form.headerImage">
+            <div v-else class="header-img-box">从媒体库选择</div>
+          </div>
         </el-form-item>
         <el-form-item label="链接" prop="url">
           <el-input v-model="form.url" placeholder="请输入链接"/>
@@ -196,14 +199,17 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    <ChooseImg hidden v-on:onChooseImg="onChooseImg" ref="chooseImg"></ChooseImg>
   </div>
 </template>
 
 <script>
 import {addLink, delLink, getLink, listLink, updateLink} from "@/api/blog/link";
+import ChooseImg from "@/components/ChooseImg";
 
 export default {
   dicts: ['blog_link_status'],
+  components:{ChooseImg},
   name: "Link",
   data() {
     return {
@@ -243,6 +249,12 @@ export default {
     this.getList();
   },
   methods: {
+    onChooseImg(value) {
+      this.form.headerImage = value;
+    },
+    openHeaderChange() {
+      this.$refs.chooseImg.openDrawer();
+    },
     getList() {
       this.loading = true;
       listLink(this.addDateRange(this.queryParams, this.dateRange)).then(response => {

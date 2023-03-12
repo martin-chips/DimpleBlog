@@ -4,15 +4,16 @@
     <el-drawer :visible.sync="drawerVisible"
                :append-to-body="true"
                title="媒体库" size="650px">
-      <el-alert
-        title="点击“文件名/备注”可以编辑文件名或者备注内容。"/>
+      <el-alert class="chooseImage-alert">
+        请上传 大小不超过 <b style="color: #f56c6c">5MB.</b>格式为 <b style="color: #f56c6c">"png", "jpg", "jpeg"</b>的文件
+      </el-alert >
       <div class="gva-btn-list">
         <el-form ref="searchForm" :inline="true" :model="queryParams">
           <el-form-item>
-          <ImageUpload class="upload-btn-media-library" :isShowTip="false"/>
+            <UploadImage class="upload-btn-media-library" v-on:uploadSuccess="getList"/>
           </el-form-item>
           <el-form-item label="文件名">
-            <el-input v-model="queryParams.title" class="keyword" placeholder="请输入文件名或备注"/>
+            <el-input v-model="queryParams.name" class="keyword" placeholder="请输入文件名"/>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="search" @click="getList">查询</el-button>
@@ -42,6 +43,7 @@
       <pagination
         v-show="total>0"
         :total="total"
+        :smail="true"
         :page.sync="queryParams.pageNum"
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
@@ -51,12 +53,12 @@
 </template>
 
 <script>
-import {MessageBox} from "element-ui";
-import ImageUpload from "@/components/ImageUpload";
+import UploadImage from "@/components/ChooseImg/components/UploadImage";
+import {listFile} from "@/api/file/file"
 
 export default {
   name: "chooseImg",
-  components: {ImageUpload},
+  components: {UploadImage},
   data() {
     return {
       drawerVisible: false,
@@ -68,7 +70,9 @@ export default {
       picList: [],
       queryParams: {
         pageNum: 1,
-        title: "",
+        name: "",
+        orderByColumn: "createTime",
+        isAsc: "desc",
         pageSize: 10,
       },
     }
@@ -77,29 +81,6 @@ export default {
     this.getList();
   },
   methods: {
-    editFileName(row) {
-      MessageBox.prompt('请输入文件名或者备注', '编辑', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /\S/,
-        inputErrorMessage: '不能为空',
-        inputValue: row.name
-      }).then(async ({value}) => {
-        // row.name = value
-        // const res = await editFileName(row)
-        // if (res.code === 0) {
-        //   this.$notify({
-        //     type: 'success',
-        //     message: '编辑成功!',
-        //   })
-        // }
-      }).catch(() => {
-        this.$notify({
-          type: 'info',
-          message: '取消修改'
-        })
-      })
-    },
     openDrawer() {
       this.drawerVisible = true;
     },
@@ -108,59 +89,47 @@ export default {
       this.drawerVisible = false;
     },
     getList() {
-      this.picList = [{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/gvalogo.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      },{
-        name: "test",
-        url: "https://qmplusimg.henrongyi.top/1576554439myAvatar.png",
-      }]
-      this.total = 12
+      this.loading = true;
+      listFile(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+          this.picList = response.rows;
+          this.total = response.total;
+          this.loading = false;
+        }
+      );
     },
 
   }
 }
 </script>
 <style lang="scss">
+.chooseImage-alert{
+  margin-bottom: 5px;
+}
+.gva-btn-list{
+  margin-top: 10px;
+}
+.header-img-box {
+  width: 200px;
+  height: 200px;
+  border: 1px dashed #ccc;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 200px;
+  cursor: pointer;
+}
+
 .upload-btn-media-library {
   margin-left: 20px;
 }
+
 .media {
   display: flex;
   flex-wrap: wrap;
+
   .media-box {
     width: 120px;
     margin-left: 20px;
+
     .img-title {
       white-space: nowrap;
       overflow: hidden;
@@ -169,6 +138,7 @@ export default {
       text-align: center;
       cursor: pointer;
     }
+
     .header-img-box-list {
       width: 120px;
       height: 120px;
@@ -178,6 +148,7 @@ export default {
       line-height: 120px;
       cursor: pointer;
       overflow: hidden;
+
       .el-image__inner {
         max-width: 120px;
         max-height: 120px;

@@ -47,6 +47,31 @@
             <artifactId>dimple-api-system</artifactId>
         </dependency>
 
+        <!-- Swagger UI -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.fox.version}</version>
+        </dependency>
+
+        <!-- Dimple Common DataSource -->
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>dimple-common-datasource</artifactId>
+        </dependency>
+
+        <!-- Dimple Common DataScope -->
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>dimple-common-datascope</artifactId>
+        </dependency>
+
+        <!-- Mysql Connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
         <!-- Dimple Common Swagger -->
         <dependency>
             <groupId>com.dimple</groupId>

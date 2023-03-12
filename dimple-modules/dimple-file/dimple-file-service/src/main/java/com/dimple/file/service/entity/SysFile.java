@@ -1,19 +1,27 @@
-package com.dimple.file.service.service.bo;
+package com.dimple.file.service.entity;
 
 import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 /**
- * SysFileBO
+ * SysFile
  *
- * @author Dimple
- * @date 2023/3/11 22:22
+ * @author BianXiaofeng
+ * @date 2023/3/12 15:15
  */
 @Data
-public class SysFileBO extends BaseEntity {
+public class SysFile extends BaseEntity {
     private Long id;
-    private String title;
+    /**
+     * 文件名称
+     */
+    private String name;
+
+    /**
+     * 文件地址
+     */
     private String url;
+
     private String extension;
     /**
      * the file type,IMAGE/OTHER

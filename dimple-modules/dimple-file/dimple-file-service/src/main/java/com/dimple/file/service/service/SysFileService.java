@@ -1,6 +1,9 @@
 package com.dimple.file.service.service;
 
+import com.dimple.system.api.model.SysFileBO;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 文件上传接口
@@ -16,4 +19,6 @@ public interface SysFileService {
      * @throws Exception
      */
     String uploadFile(MultipartFile file) throws Exception;
+
+    List<SysFileBO> selectFileList(SysFileBO sysFileBO);
 }

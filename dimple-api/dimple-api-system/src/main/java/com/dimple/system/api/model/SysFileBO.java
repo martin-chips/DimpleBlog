@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class SysFileBO {
+    private Long id;
     /**
      * 文件名称
      */
@@ -18,4 +19,10 @@ public class SysFileBO {
      * 文件地址
      */
     private String url;
+
+    private String extension;
+    /**
+     * the file type,IMAGE/OTHER
+     */
+    private String type;
 }

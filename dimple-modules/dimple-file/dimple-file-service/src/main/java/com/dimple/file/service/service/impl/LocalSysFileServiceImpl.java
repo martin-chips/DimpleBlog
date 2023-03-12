@@ -1,11 +1,19 @@
 package com.dimple.file.service.service.impl;
 
+import com.dimple.common.core.utils.bean.BeanMapper;
+import com.dimple.common.core.utils.file.FileTypeUtils;
+import com.dimple.file.service.entity.SysFile;
+import com.dimple.file.service.mapper.SysFileMapper;
 import com.dimple.file.service.service.SysFileService;
 import com.dimple.file.service.utils.FileUploadUtils;
+import com.dimple.system.api.model.SysFileBO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 本地文件存储
@@ -15,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Primary
 @Service
 public class LocalSysFileServiceImpl implements SysFileService {
+    @Autowired
+    private SysFileMapper sysFileMapper;
     /**
      * 资源映射路径 前缀
      */
@@ -43,7 +53,19 @@ public class LocalSysFileServiceImpl implements SysFileService {
     @Override
     public String uploadFile(MultipartFile file) throws Exception {
         String name = FileUploadUtils.upload(localFilePath, file);
+        SysFileBO sysFileBO = new SysFileBO();
         String url = domain + localFilePrefix + name;
+        sysFileBO.setName(name);
+        sysFileBO.setUrl(url);
+        sysFileBO.setExtension(FileTypeUtils.getFileType(name));
+        sysFileBO.setType(FileTypeUtils.getFileType(name));
+        sysFileMapper.saveFileMetaInfo(BeanMapper.convert(sysFileBO, SysFile.class));
         return url;
+    }
+
+    @Override
+    public List<SysFileBO> selectFileList(SysFileBO sysFileBO) {
+        List<SysFile> sysFiles = sysFileMapper.selectFileList(BeanMapper.convert(sysFileBO, SysFile.class));
+        return BeanMapper.convertList(sysFiles, SysFileBO.class);
     }
 }

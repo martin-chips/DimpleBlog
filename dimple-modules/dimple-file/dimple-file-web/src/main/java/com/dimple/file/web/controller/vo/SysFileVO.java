@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class SysFileVO extends BaseEntity {
     private Long id;
-    private String title;
+    private String name;
     private String url;
     private String extension;
     /**
