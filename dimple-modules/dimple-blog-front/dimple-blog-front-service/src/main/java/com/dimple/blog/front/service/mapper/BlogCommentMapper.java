@@ -1,8 +1,10 @@
 package com.dimple.blog.front.service.mapper;
 
 import com.dimple.blog.front.service.entity.BlogComment;
+import com.dimple.blog.front.service.entity.KeyValue;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -39,4 +41,6 @@ public interface BlogCommentMapper {
     List<BlogComment> selectBlogCommentByParentIds(List<Long> ids);
 
     int addCommentLikeCount(Long id);
+
+    List<KeyValue<Long, Long>> selectBlogCommentCountByArticleId(Set<Long> articleIds);
 }

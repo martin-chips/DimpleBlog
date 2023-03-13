@@ -2,6 +2,7 @@ package com.dimple.blog.front.service.service.impl;
 
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
 import com.dimple.blog.front.service.entity.BlogComment;
+import com.dimple.blog.front.service.entity.KeyValue;
 import com.dimple.blog.front.service.mapper.BlogCommentMapper;
 import com.dimple.blog.front.service.service.BlogArticleService;
 import com.dimple.blog.front.service.service.BlogCommentService;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -93,6 +95,13 @@ public class BlogCommentServiceImpl implements BlogCommentService {
     @Override
     public int addBlogCommentLikeCount(Long id) {
         return blogCommentMapper.addCommentLikeCount(id);
+    }
+
+    @Override
+    public Map<Long,Long> selectCommentCountByArticleIds(Set<Long> articleIds) {
+        List<KeyValue<Long, Long>> keyValues = blogCommentMapper.selectBlogCommentCountByArticleId(articleIds);
+        Map<Long, Long> articleIdAndCountMap = keyValues.stream().collect(Collectors.toMap(KeyValue::getKey, KeyValue::getValue));
+        return articleIdAndCountMap;
     }
 
 }

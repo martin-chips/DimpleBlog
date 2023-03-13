@@ -66,6 +66,14 @@
         </foreach>
         order by create_time desc
     </select>
+    <select id="selectBlogCommentCountByArticleId" resultType="com.dimple.blog.front.service.entity.KeyValue">
+        select article_id as `key`,count(*) as `value` from blog_comment
+        where article_id in
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        group by article_id
+    </select>
 
 
     <insert id="insertBlogComment" parameterType="BlogComment" useGeneratedKeys="true" keyProperty="id">

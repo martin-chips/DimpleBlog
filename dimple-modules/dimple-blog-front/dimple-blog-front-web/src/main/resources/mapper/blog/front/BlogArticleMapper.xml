@@ -26,6 +26,7 @@
                header_image,
                category_id,
                original,
+               like_count,
                summary,
                article_status,
                create_by,

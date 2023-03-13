@@ -3,6 +3,8 @@ package com.dimple.blog.front.service.service;
 import com.dimple.blog.front.service.service.bo.BlogCommentBO;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Service接口
@@ -40,4 +42,6 @@ public interface BlogCommentService {
     int insertBlogComment(BlogCommentBO blogComment);
 
     int addBlogCommentLikeCount(Long id);
+
+    Map<Long,Long> selectCommentCountByArticleIds(Set<Long> articleIds);
 }

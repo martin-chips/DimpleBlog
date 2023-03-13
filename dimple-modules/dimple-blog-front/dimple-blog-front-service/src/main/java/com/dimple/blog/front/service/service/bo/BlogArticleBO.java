@@ -62,6 +62,8 @@ public class BlogArticleBO extends BaseEntity {
     @Excel(name = "点赞数量")
     private Long likeCount;
 
+    private Long commentCount;
+
     private Long pv;
     private List<String> blogTags;
 

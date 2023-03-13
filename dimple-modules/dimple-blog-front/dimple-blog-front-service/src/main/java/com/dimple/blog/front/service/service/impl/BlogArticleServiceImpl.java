@@ -4,6 +4,7 @@ import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
 import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
 import com.dimple.blog.front.service.entity.BlogArticle;
 import com.dimple.blog.front.service.mapper.BlogArticleMapper;
+import com.dimple.blog.front.service.mapper.BlogCommentMapper;
 import com.dimple.blog.front.service.service.BlogArticleService;
 import com.dimple.blog.front.service.service.BlogArticleTagService;
 import com.dimple.blog.front.service.service.BlogTagService;
@@ -41,6 +42,8 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     private BlogTagService blogTagService;
     @Autowired
     private BlogArticleTagService blogArticleTagService;
+    @Autowired
+    private BlogCommentMapper blogCommentMapper;
 
     @Override
     public BlogArticleBO selectBlogArticleById(Long id) {
@@ -67,6 +70,18 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         return blogArticleBO;
     }
 
+    private void fillCommentCountInfo(List<BlogArticleBO> blogArticleBOS) {
+        Set<Long> articleIds = blogArticleBOS.stream().map(BlogArticleBO::getId).collect(Collectors.toSet());
+        if (CollectionUtils.isEmpty(articleIds)) {
+            return;
+        }
+        Map<Long, Long> articleIdAndCountMap = blogCommentMapper.selectBlogCommentCountByArticleId(articleIds)
+                .stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+        for (BlogArticleBO blogArticleBO : blogArticleBOS) {
+            blogArticleBO.setCommentCount(articleIdAndCountMap.getOrDefault(blogArticleBO.getId(), 0L));
+        }
+
+    }
     private void fillPvInfo(List<BlogArticleBO> blogArticleBOS) {
         List<Long> ids = blogArticleBOS.stream().map(BlogArticleBO::getId).collect(Collectors.toList());
         Map<Long, Long> articlePv = getArticlePvs(ids);
@@ -95,6 +110,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         List<BlogArticle> blogArticles = blogArticleMapper.selectBlogArticleList(blogArticle);
         List<BlogArticleBO> blogArticleBOS = BeanMapper.convertList(blogArticles, BlogArticleBO.class);
         fillPvInfo(blogArticleBOS);
+        fillCommentCountInfo(blogArticleBOS);
         return blogArticleBOS;
     }
 
@@ -129,7 +145,9 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         BlogArticleTagBO blogArticleTagBO = new BlogArticleTagBO();
         blogArticleTagBO.setTagId(tagId);
         List<BlogArticle> blogArticles = blogArticleMapper.selectBlogArticleByTagId(tagId);
-        return BeanMapper.convertList(blogArticles, BlogArticleBO.class);
+        List<BlogArticleBO> blogArticleBOS = BeanMapper.convertList(blogArticles, BlogArticleBO.class);
+        fillCommentCountInfo(blogArticleBOS);
+        return blogArticleBOS;
     }
 
     @Override
