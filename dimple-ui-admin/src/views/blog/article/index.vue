@@ -72,6 +72,18 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
+          type="success"
+          plain
+          icon="el-icon-edit"
+          size="mini"
+          :disabled="single"
+          @click="handleUpdate"
+          v-hasPermi="['blog:article:edit']"
+        >修改
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
           type="danger"
           plain
           icon="el-icon-delete"
@@ -100,7 +112,7 @@
       <el-table-column type="selection" align="center"/>
       <el-table-column label="" align="center" prop="id"/>
       <el-table-column :show-overflow-tooltip="true" label="标题" align="center" prop="title"/>
-      <el-table-column label="图片" align="center" prop="headerImage">
+      <el-table-column label="文章标图" align="center" prop="headerImage">
         <template slot-scope="scope">
           <image-preview :src="scope.row.headerImage" :width="50" :height="50"/>
         </template>
@@ -146,7 +158,6 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
             v-hasPermi="['blog:article:edit']"
           >
             <router-link :to="'article/edit/'+scope.row.id">修改
@@ -175,7 +186,7 @@
 </template>
 
 <script>
-import {getArticle, listArticle} from "@/api/blog/article";
+import {listArticle} from "@/api/blog/article";
 import {listCategory} from '@/api/blog/category'
 
 export default {
@@ -183,7 +194,7 @@ export default {
   name: "Article",
   data() {
     return {
-      categoryOptions:[],
+      categoryOptions: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -228,9 +239,15 @@ export default {
       }
     };
   },
+  activated() {
+    this.getList();
+  },
   created() {
     this.getList();
     this.getCategoryOptions();
+  },
+  mounted() {
+    this.getList();
   },
   methods: {
     /** 查询文章列表 */
@@ -286,11 +303,7 @@ export default {
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getArticle(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改文章";
-      });
+      this.$router.push({path: 'article/edit/' + id})
     },
     /** 提交按钮 */
     submitForm() {

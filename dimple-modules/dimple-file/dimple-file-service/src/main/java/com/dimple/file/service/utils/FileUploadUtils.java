@@ -8,6 +8,7 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.file.FileTypeUtils;
 import com.dimple.common.core.utils.file.MimeTypeUtils;
 import com.dimple.common.core.utils.uuid.Seq;
+import com.dimple.common.core.utils.uuid.UUID;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,9 @@ import java.util.Objects;
  * @author Dimple
  */
 public class FileUploadUtils {
+
+    public static final String LOCAL_TYPE = "local";
+    public static final String QINIU_TYPE = "qiNiu";
     /**
      * 默认大小 50M
      */
@@ -46,6 +50,13 @@ public class FileUploadUtils {
         } catch (Exception e) {
             throw new IOException(e.getMessage(), e);
         }
+    }
+
+    public static final String getRandomFileName(String fileName) {
+        if (fileName.length() < 50) {
+            return fileName + UUID.randomUUID().toString().substring(0, 5);
+        }
+        return fileName.substring(0, 50) + UUID.randomUUID().toString().substring(0, 5);
     }
 
     /**

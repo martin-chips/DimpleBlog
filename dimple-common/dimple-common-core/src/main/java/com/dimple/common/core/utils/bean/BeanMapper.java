@@ -94,8 +94,7 @@ public class BeanMapper {
      */
     public static <S, T> List<T> convertList(List<S> sourceEntityList, Class<T> targetClass) {
         if (sourceEntityList instanceof Page) {
-            Page convert = convert(sourceEntityList, Page.class);
-            convert.clear();
+            Page convert = new Page(((Page<S>) sourceEntityList).getPageNum(),((Page<S>) sourceEntityList).getPageSize(),((Page<S>) sourceEntityList).isCount());
             convert.addAll(convertList(sourceEntityList, targetClass, null));
             return convert;
         } else {

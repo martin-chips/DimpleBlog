@@ -10,13 +10,22 @@
         <result property="url" column="url"/>
         <result property="extension" column="extension"/>
         <result property="type" column="type"/>
+        <result property="path" column="path"/>
     </resultMap>
 
 
     <insert id="saveFileMetaInfo" parameterType="com.dimple.file.service.entity.SysFile">
-        insert into sys_file (name, url, extension, type, create_by, create_time)
-        values (#{name}, #{url}, #{extension}, #{type}, #{createBy}, sysdate())
+        insert into sys_file (name, url, extension, type, path, create_by, create_time)
+        values (#{name}, #{url}, #{extension}, #{type}, #{path}, #{createBy}, sysdate())
     </insert>
+    <update id="updateFileName">
+        update sys_file set name =#{name} where id =#{id}
+    </update>
+    <delete id="deleteFileById" parameterType="java.lang.Long">
+        delete
+        from sys_file
+        where id = #{id}
+    </delete>
     <select id="selectFileList" resultMap="FileResult">
         select id,name,url,extension,type from sys_file
         <where>
@@ -30,5 +39,19 @@
                 and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
+    </select>
+    <select id="selectFileById" resultMap="FileResult">
+        select id,
+               name,
+               url,
+               extension,
+               type,
+               path,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from sys_file
+        where id = #{id}
     </select>
 </mapper>

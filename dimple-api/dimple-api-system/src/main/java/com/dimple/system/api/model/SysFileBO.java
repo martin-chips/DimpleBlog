@@ -20,9 +20,17 @@ public class SysFileBO {
      */
     private String url;
 
+
     private String extension;
+
     /**
-     * the file type,IMAGE/OTHER
+     * local or qiNiu
      */
     private String type;
+
+    /**
+     * if type is qiNiu, the path value is file name.
+     * if type is local, the path value is local path
+     */
+    private String path;
 }

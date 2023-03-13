@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * SysFile
  *
- * @author BianXiaofeng
+ * @author Dimple
  * @date 2023/3/12 15:15
  */
 @Data
@@ -27,4 +27,6 @@ public class SysFile extends BaseEntity {
      * the file type,IMAGE/OTHER
      */
     private String type;
+
+    private String path;
 }

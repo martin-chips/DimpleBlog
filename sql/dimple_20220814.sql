@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS `dimple-cloud`;
 
-CREATE DATABASE  `dimple-cloud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE `dimple-cloud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -15,7 +15,7 @@ SET NAMES utf8mb4;
 drop table if exists sys_user;
 create table sys_user
 (
-    user_id     bigint(20) not null auto_increment comment '用户ID',
+    user_id     bigint(20)  not null auto_increment comment '用户ID',
     user_name   varchar(30) not null comment '用户账号',
     nick_name   varchar(30) not null comment '用户昵称',
     user_type   varchar(2)   default '00' comment '用户类型（00系统用户）',
@@ -34,7 +34,8 @@ create table sys_user
     update_time datetime comment '更新时间',
     remark      varchar(500) default null comment '备注',
     primary key (user_id)
-) engine=innodb auto_increment=100 comment = '用户信息表';
+) engine = innodb
+  auto_increment = 100 comment = '用户信息表';
 
 -- ----------------------------
 -- 初始化-用户信息表数据
@@ -54,12 +55,12 @@ values (2, 'test', 'Dimple', '00', 'test@qq.com', '15666666666', '1', '',
 drop table if exists sys_role;
 create table sys_role
 (
-    role_id             bigint(20) not null auto_increment comment '角色ID',
+    role_id             bigint(20)   not null auto_increment comment '角色ID',
     role_name           varchar(30)  not null comment '角色名称',
     role_key            varchar(100) not null comment '角色权限字符串',
-    role_sort           int(4) not null comment '显示顺序',
+    role_sort           int(4)       not null comment '显示顺序',
     data_scope          char(1)      default '1' comment '数据范围（1：全部数据权限 2：自定数据权限）',
-    menu_check_strictly tinyint(1) default 1 comment '菜单树选择项是否关联显示',
+    menu_check_strictly tinyint(1)   default 1 comment '菜单树选择项是否关联显示',
     status              char(1)      not null comment '角色状态（0正常 1停用）',
     del_flag            char(1)      default '0' comment '删除标志（0代表存在 2代表删除）',
     create_by           varchar(64)  default '' comment '创建者',
@@ -68,7 +69,8 @@ create table sys_role
     update_time         datetime comment '更新时间',
     remark              varchar(500) default null comment '备注',
     primary key (role_id)
-) engine=innodb auto_increment=100 comment = '角色信息表';
+) engine = innodb
+  auto_increment = 100 comment = '角色信息表';
 
 -- ----------------------------
 -- 初始化-角色信息表数据
@@ -85,15 +87,15 @@ values ('2', '普通角色', 'common', 2, 2, 1, 1, '0', 'admin', sysdate(), '', 
 drop table if exists sys_menu;
 create table sys_menu
 (
-    menu_id     bigint(20) not null auto_increment comment '菜单ID',
+    menu_id     bigint(20)  not null auto_increment comment '菜单ID',
     menu_name   varchar(50) not null comment '菜单名称',
-    parent_id   bigint(20) default 0 comment '父菜单ID',
-    order_num   int(4) default 0 comment '显示顺序',
+    parent_id   bigint(20)   default 0 comment '父菜单ID',
+    order_num   int(4)       default 0 comment '显示顺序',
     path        varchar(200) default '' comment '路由地址',
     component   varchar(255) default null comment '组件路径',
     query       varchar(255) default null comment '路由参数',
-    is_frame    int(1) default 1 comment '是否为外链（0是 1否）',
-    is_cache    int(1) default 0 comment '是否缓存（0缓存 1不缓存）',
+    is_frame    int(1)       default 1 comment '是否为外链（0是 1否）',
+    is_cache    int(1)       default 0 comment '是否缓存（0缓存 1不缓存）',
     menu_type   char(1)      default '' comment '菜单类型（M目录 C菜单 F按钮）',
     visible     char(1)      default 0 comment '菜单状态（0显示 1隐藏）',
     status      char(1)      default 0 comment '菜单状态（0正常 1停用）',
@@ -105,7 +107,8 @@ create table sys_menu
     update_time datetime comment '更新时间',
     remark      varchar(500) default '' comment '备注',
     primary key (menu_id)
-) engine=innodb auto_increment=2000 comment = '菜单权限表';
+) engine = innodb
+  auto_increment = 2000 comment = '菜单权限表';
 
 -- ----------------------------
 -- 初始化-菜单信息表数据
@@ -173,9 +176,15 @@ values ('500', '操作日志', '5', '1', 'operlog', 'log/operlog/index', '', 1, 
 insert into sys_menu
 values ('501', '登录日志', '5', '2', 'logininfor', 'log/logininfor/index', '', 1, 0, 'C', '0', '0',
         'log:logininfor:list', 'logininfor', 'admin', sysdate(), '', null, '登录日志菜单');
-insert into sys_menu values('114',  '表单构建',       '3',   '1', 'build',      'tool/build/index',                  '', 1, 0, 'C', '0', '0', 'tool:build:list',         'build',         'admin', sysdate(), '', null, '表单构建菜单');
-insert into sys_menu values('115',  '代码生成',       '3',   '2', 'gen',        'tool/gen/index',                    '', 1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
-insert into sys_menu values('116',  '系统接口',       '3',   '3', 'http://localhost:8080/swagger-ui/index.html', '', '', 0, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
+insert into sys_menu
+values ('114', '表单构建', '3', '1', 'build', 'tool/build/index', '', 1, 0, 'C', '0', '0', 'tool:build:list', 'build',
+        'admin', sysdate(), '', null, '表单构建菜单');
+insert into sys_menu
+values ('115', '代码生成', '3', '2', 'gen', 'tool/gen/index', '', 1, 0, 'C', '0', '0', 'tool:gen:list', 'code', 'admin',
+        sysdate(), '', null, '代码生成菜单');
+insert into sys_menu
+values ('116', '系统接口', '3', '3', 'http://localhost:8080/swagger-ui/index.html', '', '', 0, 0, 'C', '0', '0',
+        'tool:swagger:list', 'swagger', 'admin', sysdate(), '', null, '系统接口菜单');
 -- 用户管理按钮
 insert into sys_menu
 values ('1000', '用户查询', '100', '1', '', '', '', 1, 0, 'F', '0', '0', 'system:user:query', '#', 'admin', sysdate(),
@@ -325,100 +334,159 @@ insert into sys_menu
 values ('1054', '任务导出', '110', '6', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:export', '#', 'admin', sysdate(),
         '', null, '');
 -- 代码生成按钮
-insert into sys_menu values('1055', '生成查询', '115', '1', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:query',             '#', 'admin', sysdate(), '', null, '');
-insert into sys_menu values('1056', '生成修改', '115', '2', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:edit',              '#', 'admin', sysdate(), '', null, '');
-insert into sys_menu values('1057', '生成删除', '115', '3', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:remove',            '#', 'admin', sysdate(), '', null, '');
-insert into sys_menu values('1058', '导入代码', '115', '2', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import',            '#', 'admin', sysdate(), '', null, '');
-insert into sys_menu values('1059', '预览代码', '115', '4', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview',           '#', 'admin', sysdate(), '', null, '');
-insert into sys_menu values('1060', '生成代码', '115', '5', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code',              '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu
+values ('1055', '生成查询', '115', '1', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:query', '#', 'admin', sysdate(), '',
+        null, '');
+insert into sys_menu
+values ('1056', '生成修改', '115', '2', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:edit', '#', 'admin', sysdate(), '',
+        null, '');
+insert into sys_menu
+values ('1057', '生成删除', '115', '3', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:remove', '#', 'admin', sysdate(),
+        '', null, '');
+insert into sys_menu
+values ('1058', '导入代码', '115', '2', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import', '#', 'admin', sysdate(),
+        '', null, '');
+insert into sys_menu
+values ('1059', '预览代码', '115', '4', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', sysdate(),
+        '', null, '');
+insert into sys_menu
+values ('1060', '生成代码', '115', '5', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', sysdate(), '',
+        null, '');
 -- blog
-insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, query, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values  (6, '博客管理', 0, 6, 'blog', '', '', 1, 0, 'M', '0', '0', '', 'post', 'admin', sysdate(), '', null, 'Blog管理菜单');
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, query, is_frame, is_cache, menu_type,
+                      visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values (6, '博客管理', 0, 6, 'blog', '', '', 1, 0, 'M', '0', '0', '', 'post', 'admin', sysdate(), '', null,
+        'Blog管理菜单');
 
-insert into sys_menu (menu_id,menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values(601,'文章', '6', '1', 'article', 'blog/article/index', 1, 0, 'C', '0', '0', 'blog:article:list', 'edit', 'admin', sysdate(), '', null, '文章菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('文章查询', 601, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:article:query',        '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
+                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values (601, '文章', '6', '1', 'article', 'blog/article/index', 1, 0, 'C', '0', '0', 'blog:article:list', 'edit',
+        'admin', sysdate(), '', null, '文章菜单');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('文章查询', 601, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:article:query', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('文章新增', 601, '2',  '#', '', 1, 0, 'F', '0', '0', 'blog:article:add',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('文章新增', 601, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:article:add', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('文章修改', 601, '3',  '#', '', 1, 0, 'F', '0', '0', 'blog:article:edit',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('文章修改', 601, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:article:edit', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('文章删除', 601, '4',  '#', '', 1, 0, 'F', '0', '0', 'blog:article:remove',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('文章删除', 601, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:article:remove', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('文章导出', 601, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:article:export',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('文章导出', 601, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:article:export', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_id,menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values(602,'分类', 6, '1', 'category', 'blog/category/index', 1, 0, 'C', '0', '0', 'blog:category:list', 'skill', 'admin', sysdate(), '', null, '分类菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('分类查询', 602, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:category:query',        '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
+                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values (602, '分类', 6, '1', 'category', 'blog/category/index', 1, 0, 'C', '0', '0', 'blog:category:list', 'skill',
+        'admin', sysdate(), '', null, '分类菜单');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('分类查询', 602, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:category:query', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('分类新增', 602, '2',  '#', '', 1, 0, 'F', '0', '0', 'blog:category:add',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('分类新增', 602, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:category:add', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('分类修改', 602, '3',  '#', '', 1, 0, 'F', '0', '0', 'blog:category:edit',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('分类修改', 602, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:category:edit', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('分类删除', 602, '4',  '#', '', 1, 0, 'F', '0', '0', 'blog:category:remove',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('分类删除', 602, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:category:remove', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('分类导出', 602, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:category:export',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('分类导出', 602, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:category:export', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values(603,'评论',6, '1', 'comment', 'blog/comment/index', 1, 0, 'C', '0', '0', 'blog:comment:list', 'message', 'admin', sysdate(), '', null, '评论菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('评论查询', 603, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:comment:query',        '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
+                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values (603, '评论', 6, '1', 'comment', 'blog/comment/index', 1, 0, 'C', '0', '0', 'blog:comment:list', 'message',
+        'admin', sysdate(), '', null, '评论菜单');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('评论查询', 603, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:query', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('评论新增', 603, '2',  '#', '', 1, 0, 'F', '0', '0', 'blog:comment:add',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('评论新增', 603, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:add', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('评论修改', 603, '3',  '#', '', 1, 0, 'F', '0', '0', 'blog:comment:edit',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('评论修改', 603, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:edit', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('评论删除', 603, '4',  '#', '', 1, 0, 'F', '0', '0', 'blog:comment:remove',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('评论删除', 603, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:remove', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('评论导出', 603, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:comment:export',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('评论导出', 603, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:export', '#', 'admin', sysdate(), '', null,
+        '');
 
-insert into sys_menu (menu_id,menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values(604,'标签', 6, '1', 'tag', 'blog/tag/index', 1, 0, 'C', '0', '0', 'blog:tag:list', 'row', 'admin', sysdate(), '', null, '标签菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('标签查询', 604, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:tag:query',        '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
+                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values (604, '标签', 6, '1', 'tag', 'blog/tag/index', 1, 0, 'C', '0', '0', 'blog:tag:list', 'row', 'admin', sysdate(),
+        '', null, '标签菜单');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('标签查询', 604, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:query', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('标签新增', 604, '2',  '#', '', 1, 0, 'F', '0', '0', 'blog:tag:add',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('标签新增', 604, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:add', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('标签修改', 604, '3',  '#', '', 1, 0, 'F', '0', '0', 'blog:tag:edit',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('标签修改', 604, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:edit', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('标签删除', 604, '4',  '#', '', 1, 0, 'F', '0', '0', 'blog:tag:remove',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('标签删除', 604, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:remove', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('标签导出', 604, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:tag:export',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('标签导出', 604, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:export', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_id,menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values(605,'友链', '6', '1', 'link', 'blog/link/index', 1, 0, 'C', '0', '0', 'blog:link:list', 'edit', 'admin', sysdate(), '', null, '友链菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('友链查询', 601, '1',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:query',        '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
+                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values (605, '友链', '6', '1', 'link', 'blog/link/index', 1, 0, 'C', '0', '0', 'blog:link:list', 'edit', 'admin',
+        sysdate(), '', null, '友链菜单');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('友链查询', 601, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:link:query', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('友链新增', 601, '2',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:add',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('友链新增', 601, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:link:add', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('友链修改', 601, '3',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:edit',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('友链修改', 601, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:link:edit', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('友链删除', 601, '4',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:remove',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('友链删除', 601, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:link:remove', '#', 'admin', sysdate(), '', null, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('友链导出', 601, '5',  '#', '', 1, 0, 'F', '0', '0', 'blog:link:export',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
+                      perms, icon, create_by, create_time, update_by, update_time, remark)
+values ('友链导出', 601, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:link:export', '#', 'admin', sysdate(), '', null, '');
 
 -- ----------------------------
 -- 用户和角色关联表  用户N-1角色
@@ -429,7 +497,7 @@ create table sys_user_role
     user_id bigint(20) not null comment '用户ID',
     role_id bigint(20) not null comment '角色ID',
     primary key (user_id, role_id)
-) engine=innodb comment = '用户和角色关联表';
+) engine = innodb comment = '用户和角色关联表';
 
 -- ----------------------------
 -- 初始化-用户和角色关联表数据
@@ -449,7 +517,7 @@ create table sys_role_menu
     role_id bigint(20) not null comment '角色ID',
     menu_id bigint(20) not null comment '菜单ID',
     primary key (role_id, menu_id)
-) engine=innodb comment = '角色和菜单关联表';
+) engine = innodb comment = '角色和菜单关联表';
 
 -- ----------------------------
 -- 初始化-角色和菜单关联表数据
@@ -630,21 +698,22 @@ create table sys_oper_log
 (
     oper_id        bigint(20) not null auto_increment comment '日志主键',
     title          varchar(50)   default '' comment '模块标题',
-    business_type  int(2) default 0 comment '业务类型（0其它 1新增 2修改 3删除）',
+    business_type  int(2)        default 0 comment '业务类型（0其它 1新增 2修改 3删除）',
     method         varchar(100)  default '' comment '方法名称',
     request_method varchar(10)   default '' comment '请求方式',
-    operator_type  int(1) default 0 comment '操作类别（0其它 1后台用户 2手机端用户）',
+    operator_type  int(1)        default 0 comment '操作类别（0其它 1后台用户 2手机端用户）',
     oper_name      varchar(50)   default '' comment '操作人员',
     oper_url       varchar(255)  default '' comment '请求URL',
     oper_ip        varchar(128)  default '' comment '主机地址',
     oper_location  varchar(255)  default '' comment '操作地点',
     oper_param     varchar(2000) default '' comment '请求参数',
     json_result    varchar(2000) default '' comment '返回参数',
-    status         int(1) default 0 comment '操作状态（0正常 1异常）',
+    status         int(1)        default 0 comment '操作状态（0正常 1异常）',
     error_msg      varchar(2000) default '' comment '错误消息',
     oper_time      datetime comment '操作时间',
     primary key (oper_id)
-) engine=innodb auto_increment=100 comment = '操作日志记录';
+) engine = innodb
+  auto_increment = 100 comment = '操作日志记录';
 
 
 -- ----------------------------
@@ -664,7 +733,8 @@ create table sys_dict_type
     remark      varchar(500) default null comment '备注',
     primary key (dict_id),
     unique (dict_type)
-) engine=innodb auto_increment=100 comment = '字典类型表';
+) engine = innodb
+  auto_increment = 100 comment = '字典类型表';
 
 insert into sys_dict_type
 values (1, '用户性别', 'sys_user_sex', '0', 'admin', sysdate(), '', null, '用户性别列表');
@@ -695,7 +765,7 @@ drop table if exists sys_dict_data;
 create table sys_dict_data
 (
     dict_code   bigint(20) not null auto_increment comment '字典编码',
-    dict_sort   int(4) default 0 comment '字典排序',
+    dict_sort   int(4)       default 0 comment '字典排序',
     dict_label  varchar(100) default '' comment '字典标签',
     dict_value  varchar(100) default '' comment '字典键值',
     dict_type   varchar(100) default '' comment '字典类型',
@@ -709,7 +779,8 @@ create table sys_dict_data
     update_time datetime comment '更新时间',
     remark      varchar(500) default null comment '备注',
     primary key (dict_code)
-) engine=innodb auto_increment=100 comment = '字典数据表';
+) engine = innodb
+  auto_increment = 100 comment = '字典数据表';
 
 insert into sys_dict_data
 values (1, 1, '男', '0', 'sys_user_sex', '', '', 'Y', '0', 'admin', sysdate(), '', null, '性别男');
@@ -788,7 +859,8 @@ create table sys_config
     update_time  datetime comment '更新时间',
     remark       varchar(500) default null comment '备注',
     primary key (config_id)
-) engine=innodb auto_increment=100 comment = '参数配置表';
+) engine = innodb
+  auto_increment = 100 comment = '参数配置表';
 
 insert into sys_config
 values (1, '主框架页-默认皮肤样式名称', 'sys.index.skinName', 'skin-blue', 'Y', 'admin', sysdate(), '', null,
@@ -817,7 +889,8 @@ create table sys_logininfor
     msg         varchar(255) default '' comment '提示信息',
     access_time datetime comment '访问时间',
     primary key (info_id)
-) engine=innodb auto_increment=100 comment = '系统访问记录';
+) engine = innodb
+  auto_increment = 100 comment = '系统访问记录';
 
 
 -- ----------------------------
@@ -826,7 +899,7 @@ create table sys_logininfor
 drop table if exists sys_job;
 create table sys_job
 (
-    job_id          bigint(20) not null auto_increment comment '任务ID',
+    job_id          bigint(20)   not null auto_increment comment '任务ID',
     job_name        varchar(64)  default '' comment '任务名称',
     job_group       varchar(64)  default 'DEFAULT' comment '任务组名',
     invoke_target   varchar(500) not null comment '调用目标字符串',
@@ -840,7 +913,8 @@ create table sys_job
     update_time     datetime comment '更新时间',
     remark          varchar(500) default '' comment '备注信息',
     primary key (job_id, job_name, job_group)
-) engine=innodb auto_increment=100 comment = '定时任务调度表';
+) engine = innodb
+  auto_increment = 100 comment = '定时任务调度表';
 
 insert into sys_job
 values (1, '系统默认（无参）', 'DEFAULT', 'dimpleTask.dimpleNoParams', '0/10 * * * * ?', '3', '1', '1', 'admin',
@@ -862,7 +936,7 @@ values (3, '系统默认（多参）', 'DEFAULT', 'dimpleTask.dimpleMultiplePara
 drop table if exists sys_job_log;
 create table sys_job_log
 (
-    job_log_id     bigint(20) not null auto_increment comment '任务日志ID',
+    job_log_id     bigint(20)   not null auto_increment comment '任务日志ID',
     job_name       varchar(64)  not null comment '任务名称',
     job_group      varchar(64)  not null comment '任务组名',
     invoke_target  varchar(500) not null comment '调用目标字符串',
@@ -871,7 +945,7 @@ create table sys_job_log
     exception_info varchar(2000) default '' comment '异常信息',
     create_time    datetime comment '创建时间',
     primary key (job_log_id)
-) engine=innodb comment = '定时任务调度日志表';
+) engine = innodb comment = '定时任务调度日志表';
 
 
 -- ----------------------------
@@ -880,7 +954,7 @@ create table sys_job_log
 drop table if exists sys_notice;
 create table sys_notice
 (
-    notice_id      int(4) not null auto_increment comment '公告ID',
+    notice_id      int(4)      not null auto_increment comment '公告ID',
     notice_title   varchar(50) not null comment '公告标题',
     notice_type    char(1)     not null comment '公告类型（1通知 2公告）',
     notice_content longblob     default null comment '公告内容',
@@ -891,7 +965,8 @@ create table sys_notice
     update_time    datetime comment '更新时间',
     remark         varchar(255) default null comment '备注',
     primary key (notice_id)
-) engine=innodb auto_increment=10 comment = '通知公告表';
+) engine = innodb
+  auto_increment = 10 comment = '通知公告表';
 
 -- ----------------------------
 -- 初始化-公告信息表数据
@@ -906,73 +981,80 @@ values ('2', '维护通知：2018-07-01 Dimple系统凌晨维护', '1', '维护�
 -- 代码生成业务表
 -- ----------------------------
 drop table if exists gen_table;
-create table gen_table (
-                           table_id          bigint(20)      not null auto_increment    comment '编号',
-                           table_name        varchar(200)    default ''                 comment '表名称',
-                           table_comment     varchar(500)    default ''                 comment '表描述',
-                           sub_table_name    varchar(64)     default null               comment '关联子表的表名',
-                           sub_table_fk_name varchar(64)     default null               comment '子表关联的外键名',
-                           class_name        varchar(100)    default ''                 comment '实体类名称',
-                           tpl_category      varchar(200)    default 'crud'             comment '使用的模板（crud单表操作 tree树表操作）',
-                           package_name      varchar(100)                               comment '生成包路径',
-                           module_name       varchar(30)                                comment '生成模块名',
-                           business_name     varchar(30)                                comment '生成业务名',
-                           function_name     varchar(50)                                comment '生成功能名',
-                           function_author   varchar(50)                                comment '生成功能作者',
-                           gen_type          char(1)         default '0'                comment '生成代码方式（0zip压缩包 1自定义路径）',
-                           gen_path          varchar(200)    default '/'                comment '生成路径（不填默认项目路径）',
-                           options           varchar(1000)                              comment '其它生成选项',
-                           create_by         varchar(64)     default ''                 comment '创建者',
-                           create_time 	    datetime                                   comment '创建时间',
-                           update_by         varchar(64)     default ''                 comment '更新者',
-                           update_time       datetime                                   comment '更新时间',
-                           remark            varchar(500)    default null               comment '备注',
-                           primary key (table_id)
-) engine=innodb auto_increment=1 comment = '代码生成业务表';
+create table gen_table
+(
+    table_id          bigint(20) not null auto_increment comment '编号',
+    table_name        varchar(200) default '' comment '表名称',
+    table_comment     varchar(500) default '' comment '表描述',
+    sub_table_name    varchar(64)  default null comment '关联子表的表名',
+    sub_table_fk_name varchar(64)  default null comment '子表关联的外键名',
+    class_name        varchar(100) default '' comment '实体类名称',
+    tpl_category      varchar(200) default 'crud' comment '使用的模板（crud单表操作 tree树表操作）',
+    package_name      varchar(100) comment '生成包路径',
+    module_name       varchar(30) comment '生成模块名',
+    business_name     varchar(30) comment '生成业务名',
+    function_name     varchar(50) comment '生成功能名',
+    function_author   varchar(50) comment '生成功能作者',
+    gen_type          char(1)      default '0' comment '生成代码方式（0zip压缩包 1自定义路径）',
+    gen_path          varchar(200) default '/' comment '生成路径（不填默认项目路径）',
+    options           varchar(1000) comment '其它生成选项',
+    create_by         varchar(64)  default '' comment '创建者',
+    create_time       datetime comment '创建时间',
+    update_by         varchar(64)  default '' comment '更新者',
+    update_time       datetime comment '更新时间',
+    remark            varchar(500) default null comment '备注',
+    primary key (table_id)
+) engine = innodb
+  auto_increment = 1 comment = '代码生成业务表';
 
 
 -- ----------------------------
 -- 代码生成业务表字段
 -- ----------------------------
 drop table if exists gen_table_column;
-create table gen_table_column (
-                                  column_id         bigint(20)      not null auto_increment    comment '编号',
-                                  table_id          varchar(64)                                comment '归属表编号',
-                                  column_name       varchar(200)                               comment '列名称',
-                                  column_comment    varchar(500)                               comment '列描述',
-                                  column_type       varchar(100)                               comment '列类型',
-                                  java_type         varchar(500)                               comment 'JAVA类型',
-                                  java_field        varchar(200)                               comment 'JAVA字段名',
-                                  is_pk             char(1)                                    comment '是否主键（1是）',
-                                  is_increment      char(1)                                    comment '是否自增（1是）',
-                                  is_required       char(1)                                    comment '是否必填（1是）',
-                                  is_insert         char(1)                                    comment '是否为插入字段（1是）',
-                                  is_edit           char(1)                                    comment '是否编辑字段（1是）',
-                                  is_list           char(1)                                    comment '是否列表字段（1是）',
-                                  is_query          char(1)                                    comment '是否查询字段（1是）',
-                                  query_type        varchar(200)    default 'EQ'               comment '查询方式（等于、不等于、大于、小于、范围）',
-                                  html_type         varchar(200)                               comment '显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）',
-                                  dict_type         varchar(200)    default ''                 comment '字典类型',
-                                  sort              int                                        comment '排序',
-                                  create_by         varchar(64)     default ''                 comment '创建者',
-                                  create_time 	    datetime                                   comment '创建时间',
-                                  update_by         varchar(64)     default ''                 comment '更新者',
-                                  update_time       datetime                                   comment '更新时间',
-                                  primary key (column_id)
-) engine=innodb auto_increment=1 comment = '代码生成业务表字段';
+create table gen_table_column
+(
+    column_id      bigint(20) not null auto_increment comment '编号',
+    table_id       varchar(64) comment '归属表编号',
+    column_name    varchar(200) comment '列名称',
+    column_comment varchar(500) comment '列描述',
+    column_type    varchar(100) comment '列类型',
+    java_type      varchar(500) comment 'JAVA类型',
+    java_field     varchar(200) comment 'JAVA字段名',
+    is_pk          char(1) comment '是否主键（1是）',
+    is_increment   char(1) comment '是否自增（1是）',
+    is_required    char(1) comment '是否必填（1是）',
+    is_insert      char(1) comment '是否为插入字段（1是）',
+    is_edit        char(1) comment '是否编辑字段（1是）',
+    is_list        char(1) comment '是否列表字段（1是）',
+    is_query       char(1) comment '是否查询字段（1是）',
+    query_type     varchar(200) default 'EQ' comment '查询方式（等于、不等于、大于、小于、范围）',
+    html_type      varchar(200) comment '显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）',
+    dict_type      varchar(200) default '' comment '字典类型',
+    sort           int comment '排序',
+    create_by      varchar(64)  default '' comment '创建者',
+    create_time    datetime comment '创建时间',
+    update_by      varchar(64)  default '' comment '更新者',
+    update_time    datetime comment '更新时间',
+    primary key (column_id)
+) engine = innodb
+  auto_increment = 1 comment = '代码生成业务表字段';
 
 
 
 drop table if exists sys_file;
-create table sys_file (
-                           id          bigint(20)      not null auto_increment    comment '编号',
-                           name        varchar(200)    default ''                 comment '名称',
-                           url     varchar(500)    default ''                 comment '地址',
-                           extension    varchar(64)     default null               comment '关联子表的表名',
-                           type varchar(64)     default null               comment '子表关联的外键名',
-                           create_by         varchar(64)     default ''                 comment '创建者',
-                           create_time 	    datetime                                   comment '创建时间',
-                           update_by         varchar(64)     default ''                 comment '更新者',
-                           update_time       datetime                                   comment '更新时间',
-                           primary key (id)
-) engine=innodb auto_increment=1 comment = '文件表';
+create table sys_file
+(
+    id          bigint(20) not null auto_increment comment '编号',
+    name        varchar(200) default '' comment '名称',
+    url         varchar(500) default '' comment '地址',
+    extension   varchar(64)  default null comment '',
+    type        varchar(64)  default null comment '',
+    path        varchar(128)  default null comment '',
+    create_by   varchar(64)  default '' comment '创建者',
+    create_time datetime comment '创建时间',
+    update_by   varchar(64)  default '' comment '更新者',
+    update_time datetime comment '更新时间',
+    primary key (id)
+) engine = innodb
+  auto_increment = 1 comment = '文件表';

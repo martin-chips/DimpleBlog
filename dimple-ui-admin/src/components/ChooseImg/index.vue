@@ -6,7 +6,7 @@
                title="媒体库" size="650px">
       <el-alert class="chooseImage-alert">
         请上传 大小不超过 <b style="color: #f56c6c">5MB.</b>格式为 <b style="color: #f56c6c">"png", "jpg", "jpeg"</b>的文件
-      </el-alert >
+      </el-alert>
       <div class="gva-btn-list">
         <el-form ref="searchForm" :inline="true" :model="queryParams">
           <el-form-item>
@@ -28,16 +28,19 @@
               :src="item.url"
               @click="chooseImg(item.url,item.title)"
             >
-              <template #error>
+              <template>
                 <div class="header-img-box-list">
                   <el-icon>
                     <picture/>
                   </el-icon>
                 </div>
               </template>
+              <div slot="error" class="image-slot">
+                <i class="el-icon-picture-outline"></i>
+              </div>
             </el-image>
           </div>
-          <div @click="editFileName(item)" class="img-title">{{ item.name }}</div>
+          <div :title="item.name" @click="editName(item)" class="img-title">{{ item.name }}</div>
         </div>
       </div>
       <pagination
@@ -54,7 +57,7 @@
 
 <script>
 import UploadImage from "@/components/ChooseImg/components/UploadImage";
-import {listFile} from "@/api/file/file"
+import {editFileName, listFile} from "@/api/file/file"
 
 export default {
   name: "chooseImg",
@@ -72,6 +75,7 @@ export default {
         pageNum: 1,
         name: "",
         orderByColumn: "createTime",
+        type: "image",
         isAsc: "desc",
         pageSize: 10,
       },
@@ -81,6 +85,25 @@ export default {
     this.getList();
   },
   methods: {
+    editName(row) {
+      this.$prompt('请输入文件名', '编辑', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputErrorMessage: '不能为空',
+        inputValue: row.name
+      }).then(({value}) => {
+        row.name = value
+        console.log(12121)
+        editFileName(row).then(response => {
+          this.$notify({
+            type: 'success',
+            message: '编辑成功!',
+          })
+        })
+      }).catch((reason) => {
+        console.log(reason)
+      })
+    },
     openDrawer() {
       this.drawerVisible = true;
     },
@@ -102,12 +125,14 @@ export default {
 }
 </script>
 <style lang="scss">
-.chooseImage-alert{
+.chooseImage-alert {
   margin-bottom: 5px;
 }
-.gva-btn-list{
+
+.gva-btn-list {
   margin-top: 10px;
 }
+
 .header-img-box {
   width: 200px;
   height: 200px;
