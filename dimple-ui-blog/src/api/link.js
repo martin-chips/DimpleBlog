@@ -14,5 +14,11 @@ export default {
             method: 'post',
             data: data
         })
+    },
+    addLinkVisitCount(id) {
+        return request({
+            url: '/blog-front/link/'+id+"/visitCount",
+            method: 'put',
+        })
     }
 }

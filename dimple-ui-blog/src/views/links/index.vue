@@ -8,7 +8,7 @@
                     </div>
                     <div class="flink-list" v-if="links.length">
                         <div v-for="(link, index) in links" :key="index" class="flink-list-item">
-                            <a :href="link.url" :title="link.title" target="_blank">
+                            <a @click="addLinkVisitCount(link.id)" :href="link.url" :title="link.title" target="_blank">
                                 <div class="flink-item-icon">
                                     <img
                                             v-lazy="link.headerImage"
@@ -70,17 +70,7 @@
     </div>
 </template>
 <script>
-import api from "@/api/";
 import cover from "@/assets/img/cover/archive.jpeg";
-
-async function getArchiveRes(pageNum = 1, pageSize = 10) {
-    const params = {
-        pageSize,
-        pageNum
-    };
-    const archiveRes = await api.getArchives(params);
-    return archiveRes;
-}
 
 export default {
     name: "archives",
@@ -149,6 +139,9 @@ export default {
                     return false;
                 }
             });
+        },
+        async addLinkVisitCount(id) {
+            const archiveRes = await this.$api.addLinkVisitCount(id);
         },
         async getLinks() {
             const archiveRes = await this.$api.listLink(this.pageNum, this.pageSize);
