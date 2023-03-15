@@ -2,8 +2,8 @@
     <div class="submit">
         <div class="submit__avatar">
             <div class="submit__avatar-default">
-                <img v-show="!!visitorInfo.headImage" :src="visitorInfo.headImage" :title="visitorInfo.username"/>
-                <i v-show="!visitorInfo.headImage" class="el-icon-user" :title="visitorInfo.username"></i>
+                <img v-show="!!visitorInfo.avatars" :src="visitorInfo.avatars" :title="visitorInfo.username"/>
+                <i v-show="!visitorInfo.avatars" class="el-icon-user" :title="visitorInfo.username"></i>
             </div>
             <div class="submit__avatar-rel"></div>
         </div>
@@ -16,6 +16,7 @@
                         ref="comment"
                         type="textarea"
                         :rows="3"
+                        maxlength="400"
                         placeholder="说点什么"
                         @focus="focus"
                         v-model="comment"
@@ -34,7 +35,7 @@
 
                 <div class="submit__btn">
                     <el-button v-if="currentReplyMessage.id" size="medium" @click="cancelReply">取消</el-button>
-                    <el-button size="medium" :disabled="!visitorInfo.id" @click="submitMessage">提交</el-button>
+                    <el-button size="medium" :disabled="!visitorInfo.visitorId" @click="submitMessage">提交</el-button>
                 </div>
             </div>
         </div>
@@ -65,6 +66,33 @@
                             <img src="~@img/github.png" alt="github登录"/>
                         </a>
                     </div>
+                </div>
+            </div>
+        </el-dialog>
+        <el-dialog
+                title="请完善你的信息"
+                width="30%"
+                :visible.sync="perfectVisible"
+                :show-close="false"
+                :close-on-click-modal="false"
+                :close-on-press-escape="false"
+                custom-class="visitor-submit-box"
+        >
+            <div class="submit__perfect">
+                <el-form label-width="80px" :model="perfect" :rules="submitRules" ref="perfectForm">
+                    <el-form-item label="邮箱" prop="email">
+                        <el-input v-model="perfect.email" placeholder="请输入邮箱"></el-input>
+                    </el-form-item>
+                    <el-form-item label="网址" prop="link">
+                        <el-input
+                                v-model="perfect.link"
+                                placeholder="请输入你的主页 例如：https://awesome.me"
+                                prop="link"
+                        ></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="submit__perfect-footer">
+                    <el-button type="primary" size="small" @click="submitPerfect">确 定</el-button>
                 </div>
             </div>
         </el-dialog>
@@ -105,33 +133,57 @@ export default {
             comment: "",
             customVisible: false,
             perfectVisible: false,
+            perfect: {
+                email: '',
+                link: ''
+            },
             customInfo: {
                 username: "",
+                visitorId: 0,
                 email: "",
                 link: ""
             },
             tempInfo: {},
             submitRules: {
-                username: [{required: true, validator: nameValidator, trigger: "blur"}],
-                email: [{type: "email", required: true, message: "请填写邮箱", trigger: "blur"}],
-                link: [{type: "url", required: false, message: "请输入合法地址"}]
+                username: [{required: true, validator: nameValidator, trigger: "blur"},
+                    {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'blur'}],
+                email: [{type: "email", required: true, message: "请填写邮箱", trigger: "blur"},
+                    {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'blur'}],
+                link: [{type: "url", required: false, message: "请输入合法地址"},
+                    {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'blur'}]
             }
         };
     },
     mounted() {
+        this.addMessageListener();
         if (storage.getVisitor()) {
             this.setVisitorInfo(storage.getVisitor());
         }
-    },
-    created() {
     },
     computed: {
         ...mapState(["visitorInfo"])
     },
     methods: {
         ...mapMutations(["setVisitor"]),
+        submitPerfect() {
+            this.$refs.perfectForm.validate(async (valid) => {
+                if (valid) {
+                    var info = {
+                        ...this.tempInfo,
+                        ...this.perfect,
+                    }
+                    this.setVisitorInfo(info)
+                    this.perfect = {
+                        email: '',
+                        link: ''
+                    }
+                    this.tempInfo = {}
+                    this.perfectVisible = false
+                }
+            })
+        },
         openGithub() {
-
+            window.open(`https://github.com/login/oauth/authorize?scope=['user:admin']&client_id=fca4ba1e780fd9c444b2&scope=['user']&redirect_uri=http://localhost/login/github`, '_blank', 'height=600,width=800,toolbar=no, menubar=no, scrollbars=no')
         },
         openQQ() {
 
@@ -141,17 +193,22 @@ export default {
                 if (valid) {
                     this.setVisitorInfo({
                         ...this.customInfo,
-                        headImage: this.cover,
-                        id: 123
+                        avatars: this.cover,
+                        id: -1,
+                        type: 0
                     });
                     this.customVisible = false;
                     this.customInfo = {
                         username: "",
                         email: "",
+                        visitorId: 0,
                         link: ""
                     };
                 }
             });
+        },
+        addMessageListener() {
+            window.addEventListener('message', this.handleGithubCb, false)
         },
         handleQQCb() {
             this.$message({
@@ -159,9 +216,28 @@ export default {
             });
         },
         handleGithubCb(e) {
-            this.$message({
-                message: "拼命开发中😭"
-            });
+            if (e.data.type === 'github') {
+                console.log('github登陆成功=====>>>>', e.data.data, 'isSaved::::', e.data.data._saved)
+                // 此用户已登陆过
+                if (e.data.data._saved) {
+                    delete e.data.data._saved
+                    // 初始化访客信息
+                    this.setVisitorInfo(e.data.data)
+                    this.customVisible = false
+                } else {
+                    const info = e.data.data
+                    this.tempInfo = {
+                        username: info.username,
+                        avatars: info.avatars,
+                        link: info.link,
+                        type: 1,
+                        visitorId: info.id
+                    }
+                    this.perfect.link = this.tempInfo.link;
+                    this.customVisible = false
+                    this.perfectVisible = true
+                }
+            }
         },
         setVisitorInfo(info) {
             this.setVisitor(info);

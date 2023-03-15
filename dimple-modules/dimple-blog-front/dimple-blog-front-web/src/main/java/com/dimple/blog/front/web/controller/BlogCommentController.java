@@ -39,12 +39,6 @@ public class BlogCommentController extends BaseController {
         return getDataTable(BeanMapper.convertList(list, BlogCommentVO.class));
     }
 
-
-    @GetMapping("/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return success(blogCommentService.selectBlogCommentById(id));
-    }
-
     @PostMapping
     public AjaxResult add(@RequestBody @Validated BlogCommentVOParams blogComment) {
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);

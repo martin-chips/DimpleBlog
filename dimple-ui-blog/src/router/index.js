@@ -12,6 +12,7 @@ const articleFilter = () => import("@/views/article-filter/");
 const category = () => import("@/views/category/");
 const friendLink = () => import("@/views/links/");
 const about = () => import("@/views/about/");
+const github = () => import("@/views/components/third/github.vue");
 Vue.use(Router);
 Vue.use(Meta);
 // 避免重复点击相同路由 报错问题
@@ -21,13 +22,18 @@ Router.prototype.push = function push(location) {
 };
 
 export function createRouter() {
-  return new Router({
+  var router = new Router({
     mode: "history",
     routes: [
       {
         path: "*",
         name: "miss",
         component: miss
+      },
+      {
+        path: "/login/github",
+        name: "github",
+        component: github
       },
       {
         path: "/",
@@ -84,4 +90,5 @@ export function createRouter() {
       }
     }
   });
+  return router;
 }

@@ -31,7 +31,12 @@ public class BlogCommentVO extends BaseEntity {
     /**
      * user head image
      */
-    private String headImage;
+    private String avatars;
+    private String os;
+    private String browser;
+    private String ip;
+    private String location;
+    private Long visitorId;
 
     /**
      * comment content, max length is 1024

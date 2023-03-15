@@ -3,7 +3,7 @@
     <div class="site-introduction__avatar" @click="goTo('home')">
       <img src="https://avatars.githubusercontent.com/u/33685170?s=48&v=4" alt="Martin Chips" />
     </div>
-    <div class="site-introduction__info" @click="goTo('home')">
+    <div class="site-introduction__info" >
       <p class="site-introduction__sitename">Dimple</p>
       <p>
         Hi，欢迎来到 Dimple's Blog，这是一个使用 vue ssr 开发的，记录学习与生活的个人博客，你可以在

@@ -1,20 +1,21 @@
 package com.dimple.blog.front.service.service.impl;
 
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
+import com.dimple.blog.front.service.config.GithubTokenInfoConfig;
 import com.dimple.blog.front.service.entity.BlogComment;
 import com.dimple.blog.front.service.entity.KeyValue;
+import com.dimple.blog.front.service.enums.BlogCommentType;
 import com.dimple.blog.front.service.mapper.BlogCommentMapper;
-import com.dimple.blog.front.service.service.BlogArticleService;
 import com.dimple.blog.front.service.service.BlogCommentService;
-import com.dimple.blog.front.service.service.bo.BlogArticleBO;
 import com.dimple.blog.front.service.service.bo.BlogCommentBO;
 import com.dimple.common.core.utils.DateUtils;
+import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
+import com.dimple.common.core.utils.ip.IpUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,23 +33,7 @@ public class BlogCommentServiceImpl implements BlogCommentService {
     @Autowired
     private BlogCommentMapper blogCommentMapper;
     @Autowired
-    private BlogArticleService blogArticleService;
-
-    @Override
-    public BlogCommentBO selectBlogCommentById(Long id) {
-        BlogCommentBO blogCommentBO = BeanMapper.convert(blogCommentMapper.selectBlogCommentById(id), BlogCommentBO.class);
-        fillCommentInfo(Arrays.asList(blogCommentBO));
-        return blogCommentBO;
-    }
-
-    @Override
-    public List<BlogCommentBO> selectBlogCommentList(BlogCommentBO blogCommentBO) {
-        BlogComment blogComment = BeanMapper.convert(blogCommentBO, BlogComment.class);
-        List<BlogComment> blogComments = blogCommentMapper.selectBlogCommentList(blogComment);
-        List<BlogCommentBO> blogCommentBOS = BeanMapper.convertList(blogComments, BlogCommentBO.class);
-        fillCommentInfo(blogCommentBOS);
-        return blogCommentBOS;
-    }
+    private GithubTokenInfoConfig githubTokenInfoConfig;
 
     @Override
     public List<BlogCommentBO> selectBlogCommentListWithSub(BlogCommentBO blogCommentBO) {
@@ -77,18 +62,20 @@ public class BlogCommentServiceImpl implements BlogCommentService {
         return resultList;
     }
 
-    private void fillCommentInfo(List<BlogCommentBO> blogCommentBOList) {
-        List<Long> articleIds = blogCommentBOList.stream().map(BlogCommentBO::getArticleId).collect(Collectors.toList());
-        Map<Long, String> articleIdAndTitleMap = blogArticleService.selectBlogArticleByIds(articleIds).stream().collect(Collectors.toMap(BlogArticleBO::getId, BlogArticleBO::getTitle));
-        for (BlogCommentBO blogCommentBO : blogCommentBOList) {
-            blogCommentBO.setArticleTitle(articleIdAndTitleMap.getOrDefault(blogCommentBO.getArticleId(), "已删除的文章"));
-        }
-    }
-
     @Override
     public int insertBlogComment(BlogCommentBO blogCommentBO) {
         BlogComment blogComment = BeanMapper.convert(blogCommentBO, BlogComment.class);
         blogComment.setCreateTime(DateUtils.getNowDate());
+        if (Objects.equals(blogComment.getType(), BlogCommentType.GITHUB.getType())
+                && Objects.equals(blogComment.getVisitorId(), githubTokenInfoConfig.getAdminId())) {
+            blogComment.setAdmin(Boolean.TRUE);
+        }
+        String ip = IpUtils.getServletIp();
+        String ipLocation = IpUtils.getIpLocation(ip);
+        blogComment.setIp(ip);
+        blogComment.setLocation(ipLocation);
+        blogComment.setOs(ServletUtils.getUserAgentOs());
+        blogComment.setBrowser(ServletUtils.getUserAgentBrowser());
         return blogCommentMapper.insertBlogComment(blogComment);
     }
 
@@ -98,7 +85,7 @@ public class BlogCommentServiceImpl implements BlogCommentService {
     }
 
     @Override
-    public Map<Long,Long> selectCommentCountByArticleIds(Set<Long> articleIds) {
+    public Map<Long, Long> selectCommentCountByArticleIds(Set<Long> articleIds) {
         List<KeyValue<Long, Long>> keyValues = blogCommentMapper.selectBlogCommentCountByArticleId(articleIds);
         Map<Long, Long> articleIdAndCountMap = keyValues.stream().collect(Collectors.toMap(KeyValue::getKey, KeyValue::getValue));
         return articleIdAndCountMap;

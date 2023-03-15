@@ -69,7 +69,7 @@ export default {
     props: {},
     metaInfo() {
         return {
-            title: `${this.article.title || "Loading"} - Dimple's Blog`,
+            title: `关于我 - Dimple's Blog`,
             meta: [
                 {
                     name: "description",
@@ -125,7 +125,7 @@ export default {
     methods: {
         ...mapMutations(["setCatalogs", "setActiveCatalog"]),
         async getArticleDetails() {
-            var id = 37;
+            var id = 47;
             const articleRes = await api.getArticle(id);
             if (articleRes.code === 200) {
                 this.article = articleRes.data;
@@ -138,7 +138,6 @@ export default {
                 });
                 this.loading = false;
             }
-            await this.currentChange(1);
         },
         async likeArticle() {
             if (this.article.liked == 1) {

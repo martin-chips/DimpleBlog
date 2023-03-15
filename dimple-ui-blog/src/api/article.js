@@ -36,8 +36,9 @@ export default {
     },
     searchArticle(query) {
         return request({
-            url: '/blog-front/article/',
-            method: 'get'
+            url: '/blog-front/article/list',
+            method: 'get',
+            params: query
         })
     }
 }

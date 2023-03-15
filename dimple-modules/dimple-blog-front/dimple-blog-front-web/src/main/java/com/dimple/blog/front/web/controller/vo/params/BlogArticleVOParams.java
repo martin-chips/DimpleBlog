@@ -27,4 +27,5 @@ public class BlogArticleVOParams extends BaseEntity {
     private String summary;
 
     private Long tagId;
+
 }

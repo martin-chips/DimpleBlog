@@ -103,15 +103,12 @@ export default {
                 }
             }
             var visitor = storage.getVisitor();
-            const res = await api.saveMessageBoard({
+            const res = await api.saveMessageBoard(Object.assign({
                 content: content,
-                replyId:replyId,
+                replyId: replyId,
                 parentId: parentId,
                 articleId: this.articleId,
-                username: visitor.username,
-                headImage: visitor.headImage,
-                email: visitor.email
-            })
+            }, visitor))
             if (res.code === 200) {
                 if (cb) {
                     cb()
@@ -137,10 +134,10 @@ export default {
             }
         },
         async addLike(message) {
-            message.liked=1;
+            message.liked = 1;
             const likeRes = await api.likeMessageBoard(message.id)
             if (likeRes.code === 200) {
-                message.likeCount+=1;
+                message.likeCount += 1;
                 this.$message({
                     type: 'success',
                     message: "点赞成功!"

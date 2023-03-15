@@ -2,15 +2,15 @@
     <div class="comments-item">
         <div class="comments-item__avatar" :class="{ 'comments-item__avatar--small': subType }">
             <a :href="message.link" target="_blank">
-                <img :src="message.headImage" alt=""/>
+                <img :src="message.avatars" alt=""/>
             </a>
         </div>
         <div class="comments-item__content">
             <div class="comments-item__visitor">
                 <a :href="message.link" target="_blank">
-          <span class="detail-visitor-name" :class="{ 'detail-visitor-name--bold': message.admin }">
-            {{ message.username }}
-          </span>
+                    <span class="detail-visitor-name" :class="{ 'detail-visitor-name--bold': message.admin }">
+                      {{ message.username }}
+                    </span>
                 </a>
                 <span class="detail-visitor-aite" v-if="message.replyId>0" style="fontweight: bold">&nbsp;@&nbsp;</span>
                 <span class="detail-visitor-aited" v-if="message.replyId>0">{{ message.replyUsername }} :</span>
@@ -29,6 +29,8 @@
                 <span :class="{ 'el-icon-thumb--active': message.replyId == 1 }">{{ message.likeCount }}</span>
                 <i class="el-icon-chat-dot-round" @click="changeCurrentReplyMessage(message)"></i>
                 <span>{{ message | replycCount }}</span>
+                <i class="el-icon-location-outline"></i>
+                <span>{{ message.location }}</span>
             </div>
         </div>
     </div>
@@ -114,9 +116,11 @@ export default {
     }
 
     .detail-visitor-aite {
+        font-weight: bold;
     }
 
     .detail-visitor-aited {
+        font-size: smaller;
     }
   }
 

@@ -9,9 +9,16 @@
         <result property="articleId" column="article_id"/>
         <result property="username" column="username"/>
         <result property="parentId" column="parent_id"/>
-        <result property="headImage" column="head_image"/>
+        <result property="avatars" column="avatars"/>
         <result property="content" column="content"/>
         <result property="email" column="email"/>
+        <result property="os" column="os"/>
+        <result property="visitorId" column="visitor_id"/>
+        <result property="type" column="type"/>
+        <result property="location" column="location"/>
+        <result property="admin" column="admin"/>
+        <result property="browser" column="browser"/>
+        <result property="ip" column="ip"/>
         <result property="replyId" column="reply_id"/>
         <result property="likeCount" column="like_count"/>
         <result property="createBy" column="create_by"/>
@@ -25,9 +32,12 @@
                article_id,
                username,
                parent_id,
-               head_image,
+               avatars,
                content,
-               email,
+               location,
+               browser,
+               os,
+               admin,
                reply_id,
                link,
                like_count,
@@ -45,7 +55,7 @@
             <if test="articleId == null ">and article_id &gt; 0</if>
             <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
             <if test="parentId != null ">and parent_id = #{parentId}</if>
-            <if test="headImage != null  and headImage != ''">and head_image = #{headImage}</if>
+            <if test="avatars != null  and avatars != ''">and head_image = #{headImage}</if>
             <if test="content != null  and content != ''">and content = #{content}</if>
             <if test="email != null  and email != ''">and email = #{email}</if>
             and reply_id &lt; 0
@@ -82,9 +92,17 @@
             <if test="articleId != null">article_id,</if>
             <if test="username != null">username,</if>
             <if test="parentId != null">parent_id,</if>
-            <if test="headImage != null">head_image,</if>
+            <if test="avatars != null">avatars,</if>
             <if test="content != null">content,</if>
             <if test="email != null">email,</if>
+            <if test="ip != null">ip,</if>
+            <if test="link != null">link,</if>
+            <if test="location != null">location,</if>
+            <if test="os != null">os,</if>
+            <if test="type != null">type,</if>
+            <if test="browser != null">browser,</if>
+            <if test="visitorId != null">visitor_id,</if>
+            <if test="admin != null">admin,</if>
             <if test="replyId != null">reply_id,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
@@ -95,9 +113,17 @@
             <if test="articleId != null">#{articleId},</if>
             <if test="username != null">#{username},</if>
             <if test="parentId != null">#{parentId},</if>
-            <if test="headImage != null">#{headImage},</if>
+            <if test="avatars != null">#{avatars},</if>
             <if test="content != null">#{content},</if>
             <if test="email != null">#{email},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="link != null">#{link},</if>
+            <if test="location != null">#{location},</if>
+            <if test="os != null">#{os},</if>
+            <if test="type != null">#{type},</if>
+            <if test="browser != null">#{browser},</if>
+            <if test="visitorId != null">#{visitorId},</if>
+            <if test="admin != null">#{admin},</if>
             <if test="replyId != null">#{replyId},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -106,7 +132,9 @@
         </trim>
     </insert>
     <insert id="addCommentLikeCount">
-        update blog_comment set like_count=like_count+1 where id =#{id}
+        update blog_comment
+        set like_count=like_count + 1
+        where id = #{id}
     </insert>
 
 </mapper>

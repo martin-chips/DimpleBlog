@@ -21,7 +21,7 @@
     </resultMap>
 
     <sql id="selectBlogArticleBaseVO">
-        select id,
+        select distinct id,
                title,
                header_image,
                category_id,
@@ -66,8 +66,9 @@
             <if test="content != null  and content != ''">and content = #{content}</if>
             <if test="categoryId != null ">and category_id = #{categoryId}</if>
             <if test="original != null ">and original = #{original}</if>
-            <if test="summary != null  and summary != ''">and summary = #{summary}</if>
+            <if test="summary != null  and summary != ''">and summary like concat('%', #{summary}, '%')</if>
             <if test="articleStatus != null ">and article_status = #{articleStatus}</if>
+            <if test="searchValue != null ">and ((summary like concat('%', #{searchValue}, '%')) or (title like concat('%', #{searchValue}, '%')))</if>
         </where>
     </select>
 

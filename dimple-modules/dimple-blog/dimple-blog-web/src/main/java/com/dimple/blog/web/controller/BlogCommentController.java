@@ -63,14 +63,6 @@ public class BlogCommentController extends BaseController {
         return success(BeanMapper.convert(blogCommentBO, BlogCommentVO.class));
     }
 
-    @RequiresPermissions("blog:comment:add")
-    @OperationLog(title = "评论", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@RequestBody BlogCommentVOParams blogComment) {
-        BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
-        return toAjax(blogCommentService.insertBlogComment(blogCommentBO));
-    }
-
     @RequiresPermissions("blog:comment:edit")
     @OperationLog(title = "评论", businessType = BusinessType.UPDATE)
     @PutMapping("/{id}")

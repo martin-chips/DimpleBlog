@@ -39,7 +39,12 @@ public class BlogComment extends BaseEntity {
     /**
      * user head image
      */
-    private String headImage;
+    private String avatars;
+    private Long visitorId;
+    private String os;
+    private String browser;
+    private String ip;
+    private String location;
 
     /**
      * comment content, max length is 1024

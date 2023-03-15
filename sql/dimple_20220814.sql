@@ -424,10 +424,6 @@ values ('评论查询', 603, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:qu
 
 insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
                       perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('评论新增', 603, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:add', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
 values ('评论修改', 603, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:edit', '#', 'admin', sysdate(), '', null, '');
 
 insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,

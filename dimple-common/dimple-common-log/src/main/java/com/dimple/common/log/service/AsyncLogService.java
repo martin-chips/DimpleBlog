@@ -1,6 +1,7 @@
 package com.dimple.common.log.service;
 
 import com.dimple.common.core.constant.SecurityConstants;
+import com.dimple.common.core.utils.ip.IpUtils;
 import com.dimple.common.log.utils.SpiderUtils;
 import com.dimple.system.api.RemoteLogService;
 import com.dimple.system.api.model.BlogVisitLogBO;
@@ -35,6 +36,7 @@ public class AsyncLogService {
         String spider = SpiderUtils.parseUserAgent(userAgent.toString());
         blogVisitLogBO.setSpider(spider);
         blogVisitLogBO.setBrowser(userAgent.getBrowser().getName());
+        blogVisitLogBO.setLocation(IpUtils.getIpLocation(blogVisitLogBO.getIp()));
         blogVisitLogBO.setOs(userAgent.getOperatingSystem().getName());
         remoteLogService.saveVisitLog(blogVisitLogBO, SecurityConstants.INNER);
     }

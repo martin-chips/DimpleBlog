@@ -54,13 +54,6 @@ public class BlogCommentServiceImpl implements BlogCommentService {
     }
 
     @Override
-    public int insertBlogComment(BlogCommentBO blogCommentBO) {
-        BlogComment blogComment = BeanMapper.convert(blogCommentBO, BlogComment.class);
-        blogComment.setCreateTime(DateUtils.getNowDate());
-        return blogCommentMapper.insertBlogComment(blogComment);
-    }
-
-    @Override
     public int updateBlogComment(BlogCommentBO blogCommentBO) {
         BlogComment blogComment = BeanMapper.convert(blogCommentBO, BlogComment.class);
         blogComment.setUpdateTime(DateUtils.getNowDate());

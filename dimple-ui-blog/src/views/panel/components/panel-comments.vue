@@ -11,7 +11,7 @@
             <div class="body-item" v-for="(comment, index) in newComments" :key="index">
               <div class="body-pic">
                 <router-link :to="'/app/article/' + comment.articleId + '?anchor=a_cm'">
-                  <img v-lazy="comment.headImage" alt="" />
+                  <img v-lazy="comment.avatars" alt="" />
                 </router-link>
               </div>
               <div class="body-info">

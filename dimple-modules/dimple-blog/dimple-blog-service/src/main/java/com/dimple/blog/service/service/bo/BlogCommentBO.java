@@ -40,7 +40,12 @@ public class BlogCommentBO extends BaseEntity {
      * user head image
      */
     @Excel(name = "用户头像")
-    private String headImage;
+    private String avatars;
+    private String os;
+    private String browser;
+    private String ip;
+    private String location;
+    private Long visitorId;
 
     /**
      * comment content, max length is 1024

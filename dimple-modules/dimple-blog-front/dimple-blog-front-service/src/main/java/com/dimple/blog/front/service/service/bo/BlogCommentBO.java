@@ -28,6 +28,20 @@ public class BlogCommentBO extends BaseEntity {
     private String articleTitle;
 
     /**
+     * login type, 0 local,1 GitHub
+     */
+
+    private Integer type;
+
+    private Long visitorId;
+
+    private String ip;
+    private String browser;
+    private String location;
+    private String os;
+    private Boolean admin;
+
+    /**
      * user name
      */
     @Excel(name = "用户昵称")
@@ -42,7 +56,7 @@ public class BlogCommentBO extends BaseEntity {
      * user head image
      */
     @Excel(name = "用户头像")
-    private String headImage;
+    private String avatars;
 
     /**
      * comment content, max length is 1024

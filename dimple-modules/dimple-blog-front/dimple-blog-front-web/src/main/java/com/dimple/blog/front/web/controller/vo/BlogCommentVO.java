@@ -33,7 +33,15 @@ public class BlogCommentVO extends BaseVOParams {
     /**
      * user head image
      */
-    private String headImage;
+    private String avatars;
+
+    private Integer type;
+
+    private Long visitorId;
+
+    private String location;
+
+    private Boolean admin;
 
     /**
      * comment content, max length is 1024

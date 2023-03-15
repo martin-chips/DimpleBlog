@@ -78,9 +78,9 @@
       <el-table-column label="" align="center" prop="id"/>
       <el-table-column label="文章标题" align="center" prop="articleTitle"/>
       <el-table-column label="用户名" align="center" prop="username"/>
-      <el-table-column label="头像" align="center" prop="headImage" width="100">
+      <el-table-column label="头像" align="center" prop="avatars" width="100">
         <template slot-scope="scope">
-          <image-preview :src="scope.row.headImage" :width="50" :height="50"/>
+          <image-preview :src="scope.row.avatars" :width="50" :height="50"/>
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" label="内容" align="center" prop="content"/>
@@ -90,6 +90,10 @@
         </template>
       </el-table-column>
       <el-table-column label="邮箱" align="center" prop="email"/>
+      <el-table-column label="IP" align="center" prop="ip"/>
+      <el-table-column label="地理位置" align="center" prop="location"/>
+      <el-table-column label="浏览器" align="center" prop="browser"/>
+      <el-table-column label="操作系统" align="center" prop="os"/>
       <el-table-column label="链接" align="center" prop="link"/>
       <el-table-column align="center" label="评论时间" prop="createTime"
                        sortable="custom" width="180">
@@ -135,9 +139,10 @@
         <el-form-item label="用户名" prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名"/>
         </el-form-item>
-        <el-form-item label="用户头像" prop="headImage">
+        <el-form-item label="用户头像" prop="avatars">
           <div style="display:inline-block" @click="openHeaderChange">
-            <img v-if="form.headImage" alt="头像" class="header-img-box" :src="(form.headImage && form.headImage.slice(0, 4) !== 'http')?'path'+form.headImage:form.headImage">
+            <img v-if="form.avatars" alt="头像" class="header-img-box"
+                 :src="(form.avatars && form.avatars.slice(0, 4) !== 'http')?'path'+form.avatars:form.avatars">
             <div v-else class="header-img-box">从媒体库选择</div>
           </div>
         </el-form-item>
@@ -209,7 +214,7 @@ export default {
   },
   methods: {
     onChooseImg(value) {
-      this.form.headImage = value;
+      this.form.avatars = value;
     },
     openHeaderChange() {
       this.$refs.chooseImg.openDrawer();
@@ -234,7 +239,7 @@ export default {
         articleId: null,
         articleTitle: null,
         username: null,
-        headImage: null,
+        avatars: null,
         content: null,
         email: null
       };

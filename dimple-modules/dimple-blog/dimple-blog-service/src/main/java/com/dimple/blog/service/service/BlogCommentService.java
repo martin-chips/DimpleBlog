@@ -28,14 +28,6 @@ public interface BlogCommentService {
     List<BlogCommentBO> selectBlogCommentList(BlogCommentBO blogComment);
 
     /**
-     * 新增
-     *
-     * @param blogComment
-     * @return affected lines
-     */
-    int insertBlogComment(BlogCommentBO blogComment);
-
-    /**
      * 修改
      *
      * @param blogComment

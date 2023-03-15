@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 import panelIntroduction from "./components/panel-introduction";
 import panelCatalog from "./components/panel-catalog";
 import panelArticles from "./components/panel-articles";
@@ -21,8 +21,8 @@ import panelComments from "./components/panel-comments";
 import panelCategory from "./components/panel-category";
 import panelTags from "./components/panel-tags.vue";
 import panelArchives from "./components/panel-archives";
-import { getScrollTop } from "@/utils/getScrollTop";
-import { getElementTop } from "@/utils/getElementTop";
+import {getScrollTop} from "@/utils/getScrollTop";
+import {getElementTop} from "@/utils/getElementTop";
 import debounce from "lodash/debounce";
 
 export default {
@@ -92,9 +92,11 @@ export default {
                     })
                 }
             }
-            if (this.$router.currentRoute.name !== 'articleDetail') {
-                const index = def.indexOf('panel-catalog')
-                if (index !== -1) def.splice(index, 1)
+            if (this.$router.currentRoute.name !== 'articleDetail' && this.$router.currentRoute.name !== 'about') {
+                const index = def.indexOf('panel-catalog');
+                if (index !== -1) {
+                }
+                def.splice(index, 1);
             }
             return def
         }

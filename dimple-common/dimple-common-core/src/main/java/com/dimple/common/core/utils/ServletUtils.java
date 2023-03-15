@@ -5,6 +5,7 @@ import com.dimple.common.core.constant.Constants;
 import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.common.core.text.Convert;
 import com.dimple.common.core.utils.response.ResponseEntityUtils;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,23 @@ import java.util.Map;
  * @author Dimple
  */
 public class ServletUtils {
+
+    public static String getUserAgent() {
+        return getRequest().getHeader("User-Agent");
+    }
+
+    public static String getUserAgentOs() {
+        String header = getUserAgent();
+        UserAgent userAgent = UserAgent.parseUserAgentString(header);
+        return userAgent.getOperatingSystem().getName();
+    }
+
+    public static String getUserAgentBrowser() {
+        String header = getUserAgent();
+        UserAgent userAgent = UserAgent.parseUserAgentString(header);
+        return userAgent.getBrowser().getName();
+    }
+
     /**
      * 获取String参数
      */

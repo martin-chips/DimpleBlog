@@ -34,12 +34,28 @@ public class BlogComment extends BaseEntity {
 
     private Long likeCount;
 
+    /**
+     * login type, 0 local,1 GitHub
+     */
+
+    private Integer type;
+
+    private Long visitorId;
+
+    private String ip;
+    private String location;
+    private String os;
+
+    private String browser;
+
+    private Boolean admin;
+
     private String link;
 
     /**
      * user head image
      */
-    private String headImage;
+    private String avatars;
 
     /**
      * comment content, max length is 1024

@@ -39,11 +39,18 @@ create table blog_comment
     article_id  bigint                  not null comment 'comment article id',
     username    varchar(255)            not null comment 'user name',
     parent_id   bigint       default -1 not null comment 'parent comment is, default is -1',
-    head_image  varchar(255)            null comment 'user head image',
+    avatars     varchar(255)            null comment 'user head image',
     content     varchar(1024)           not null comment 'comment content, max length is 1024',
     email       varchar(128)            null comment 'user email, if email is not null will reply when the comment has been replied',
     reply_id    bigint       default -1 comment '',
     link        varchar(255) default '' comment '',
+    visitor_id  bigint       default 0 comment '',
+    type        tinyint      default 0 comment '',
+    admin       tinyint      default 0 comment '',
+    ip          varchar(64)  default '' comment '',
+    location    varchar(128) default '' comment '',
+    browser     varchar(128) default '' comment '',
+    os          varchar(128) default '' comment '',
     like_count  bigint       default 0 comment 'like count',
     create_by   varchar(50)             null,
     create_time datetime                null,
@@ -121,3 +128,15 @@ create table blog_link
     update_time  datetime     null
 );
 
+drop table if exists blog_config;
+create table blog_config
+(
+    id           bigint auto_increment primary key,
+    config_key   varchar(255) not null comment 'config key ',
+    config_value varchar(255) not null comment 'config value',
+    remark       varchar(255) default '' comment 'config remark',
+    create_by    varchar(50)  null,
+    create_time  datetime     null,
+    update_by    varchar(55)  null,
+    update_time  datetime     null
+);

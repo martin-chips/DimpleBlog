@@ -274,15 +274,12 @@ export default {
                 }
             }
             var visitor = storage.getVisitor();
-            const res = await api.addComment({
-                articleId: this.$route.params.id,
+            const res = await api.addComment(Object.assign({
                 content: content,
                 replyId: replyId,
                 parentId: parentId,
-                username: visitor.username,
-                headImage: visitor.headImage,
-                email: visitor.email
-            });
+                articleId: this.$route.params.id,
+            }, visitor));
             if (res.code === 200) {
                 if (cb) cb();
                 this.$message({

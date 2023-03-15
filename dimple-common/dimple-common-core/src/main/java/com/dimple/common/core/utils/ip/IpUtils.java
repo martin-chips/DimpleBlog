@@ -1,96 +1,91 @@
 package com.dimple.common.core.utils.ip;
 
+import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.StringUtils;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.lionsoul.ip2region.xdb.Searcher;
 
+import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Objects;
 
 /**
  * 获取IP方法
  *
  * @author Dimple
  */
+@Slf4j
 public class IpUtils {
-    /**
-     * 获取客户端IP
-     *
-     * @param request 请求对象
-     * @return IP地址
-     */
-    public static String getIpAddr(HttpServletRequest request) {
-        if (request == null) {
-            return "unknown";
-        }
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("X-Forwarded-For");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("X-Real-IP");
+    private static String ip2region_db_path;
+    private static Searcher searcher = null;
+
+    static {
+        // 1、从 dbPath 中预先加载 VectorIndex 缓存，并且把这个得到的数据作为全局变量，后续反复使用。
+        byte[] vIndex = new byte[0];
+        try {
+            ip2region_db_path = IpUtils.class.getClassLoader().getResource("ip2region/ip2region.xdb").getPath();
+            vIndex = Searcher.loadVectorIndexFromFile(ip2region_db_path);
+        } catch (Exception e) {
+            log.error("failed to load vector index from {},", ip2region_db_path, e);
         }
 
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
+        // 2、使用全局的 vIndex 创建带 VectorIndex 缓存的查询对象。
+        try {
+            searcher = Searcher.newWithVectorIndex(ip2region_db_path, vIndex);
+        } catch (Exception e) {
+            log.error("failed to create vectorIndex cached searcher with {}", ip2region_db_path, e);
         }
-
-        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : getMultistageReverseProxyIp(ip);
     }
 
-    /**
-     * 检查是否为内部IP地址
-     *
-     * @param ip IP地址
-     * @return affected lines
-     */
-    public static boolean internalIp(String ip) {
-        byte[] addr = textToNumericFormatV4(ip);
-        return internalIp(addr) || "127.0.0.1".equals(ip);
+    @PreDestroy
+    public void close() throws IOException {
+        log.info("start close search.");
+        if (Objects.isNull(searcher)) {
+            return;
+        }
+        searcher.close();
     }
 
-    /**
-     * 检查是否为内部IP地址
-     *
-     * @param addr byte地址
-     * @return affected lines
-     */
-    private static boolean internalIp(byte[] addr) {
-        if (StringUtils.isNull(addr) || addr.length < 2) {
-            return true;
+    @SneakyThrows
+    public static String getIpLocation(String ip) {
+        if (internalIp(ip)) {
+            return "内网IP";
         }
-        final byte b0 = addr[0];
-        final byte b1 = addr[1];
-        // 10.x.x.x/8
-        final byte SECTION_1 = 0x0A;
-        // 172.16.x.x/12
-        final byte SECTION_2 = (byte) 0xAC;
-        final byte SECTION_3 = (byte) 0x10;
-        final byte SECTION_4 = (byte) 0x1F;
-        // 192.168.x.x/16
-        final byte SECTION_5 = (byte) 0xC0;
-        final byte SECTION_6 = (byte) 0xA8;
-        switch (b0) {
-            case SECTION_1:
-                return true;
-            case SECTION_2:
-                if (b1 >= SECTION_3 && b1 <= SECTION_4) {
-                    return true;
-                }
-            case SECTION_5:
-                switch (b1) {
-                    case SECTION_6:
-                        return true;
-                }
-            default:
-                return false;
-        }
+        IpLocationInfo ipLocationInfo = getIpLocationInfo(ip);
+        return ipLocationInfo.getLocationInfo();
     }
+
+    public static IpLocationInfo getIpLocationInfo(String ip) {
+        IpLocationInfo ipLocationInfo = new IpLocationInfo();
+        try {
+            String region = searcher.search(ip);
+            String[] ipRegionArr = region.split("\\|");
+            if (ipRegionArr.length == 5) {
+                ipLocationInfo.setCountry(ipRegionArr[0]);
+                ipLocationInfo.setRegion(ipRegionArr[1]);
+                ipLocationInfo.setProvince(ipRegionArr[2]);
+                ipLocationInfo.setCity(ipRegionArr[3]);
+                ipLocationInfo.setIsp(ipRegionArr[4]);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return ipLocationInfo;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getIpLocationInfo("127.0.0.1"));
+    }
+
+    public static String getServletIp() {
+        return getIpAddr(ServletUtils.getRequest());
+    }
+
 
     /**
      * 将IPv4地址转换成字节
@@ -165,6 +160,88 @@ public class IpUtils {
         }
         return bytes;
     }
+
+    /**
+     * 检查是否为内部IP地址
+     *
+     * @param ip IP地址
+     * @return affected lines
+     */
+    public static boolean internalIp(String ip) {
+        byte[] addr = textToNumericFormatV4(ip);
+        return internalIp(addr) || "127.0.0.1".equals(ip);
+    }
+
+    /**
+     * 检查是否为内部IP地址
+     *
+     * @param addr byte地址
+     * @return affected lines
+     */
+    private static boolean internalIp(byte[] addr) {
+        if (StringUtils.isNull(addr) || addr.length < 2) {
+            return true;
+        }
+        final byte b0 = addr[0];
+        final byte b1 = addr[1];
+        // 10.x.x.x/8
+        final byte SECTION_1 = 0x0A;
+        // 172.16.x.x/12
+        final byte SECTION_2 = (byte) 0xAC;
+        final byte SECTION_3 = (byte) 0x10;
+        final byte SECTION_4 = (byte) 0x1F;
+        // 192.168.x.x/16
+        final byte SECTION_5 = (byte) 0xC0;
+        final byte SECTION_6 = (byte) 0xA8;
+        switch (b0) {
+            case SECTION_1:
+                return true;
+            case SECTION_2:
+                if (b1 >= SECTION_3 && b1 <= SECTION_4) {
+                    return true;
+                }
+            case SECTION_5:
+                switch (b1) {
+                    case SECTION_6:
+                        return true;
+                }
+            default:
+                return false;
+        }
+    }
+
+
+    /**
+     * 获取客户端IP
+     *
+     * @param request 请求对象
+     * @return IP地址
+     */
+    public static String getIpAddr(HttpServletRequest request) {
+        if (request == null) {
+            return "unknown";
+        }
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Forwarded-For");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Real-IP");
+        }
+
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+
+        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : getMultistageReverseProxyIp(ip);
+    }
+
 
     /**
      * 获取IP地址

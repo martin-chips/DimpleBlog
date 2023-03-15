@@ -6,23 +6,22 @@
                     <div slot="header" class="clearfix">
                         <h2>友链列表</h2>
                     </div>
-                    <el-row :gutter="20" v-if="links.length">
-                        <div v-for="(link, index) in links" :key="index">
-                            <el-col el-col :span="8">
-                                <el-card :title="link.description" shadow="hover" :body-style="{ padding: '0px' }">
-                                    <a :href="link.url">
-                                        <img v-lazy="link.headerImage" class="flink-item-icon">
-                                    </a>
-                                    <div style="padding: 14px;">
-                                        <span class="flink-item-name">{{ link.title }}</span>
-                                        <div>
-                                            <div class="flink-item-desc">{{ link.description }}</div>
-                                        </div>
-                                    </div>
-                                </el-card>
-                            </el-col>
+                    <div class="flink-list" v-if="links.length">
+                        <div v-for="(link, index) in links" :key="index" class="flink-list-item">
+                            <a :href="link.url" :title="link.title" target="_blank">
+                                <div class="flink-item-icon">
+                                    <img
+                                            v-lazy="link.headerImage"
+                                            :alt="link.title">
+                                </div>
+                                <div class="flink-item-name">{{ link.title }}</div>
+                                <div class="flink-item-desc"
+                                     :title="link.description">
+                                    {{ link.description }}
+                                </div>
+                            </a>
                         </div>
-                    </el-row>
+                    </div>
                     <ElEmpty v-else></ElEmpty>
                 </el-card>
             </template>
@@ -109,10 +108,13 @@ export default {
                 ],
                 url: [
                     {required: true, message: '请输入网站地址', trigger: 'blur'},
+                    {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'blur'}
                 ],
                 headerImage: [
                     {required: true, message: '请输入网站图标地址', trigger: 'blur'},
                 ],
+                email: [{type: 'email', required: true, message: '请填写邮箱', trigger: 'blur'},
+                    {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'blur'}],
                 description: [
                     {required: true, message: '请输入网站描述', trigger: 'blur'},
                     {min: 3, max: 100, message: '长度在 3 到 100 个字符', trigger: 'blur'}
@@ -158,15 +160,22 @@ export default {
     }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@/style/index.scss';
 
+.desc {
+  line-height: 2;
+}
+
+.flink-item-desc, .flink-item-name {
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+
 .flink-item-icon {
-  border-radius: 4px;
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
   -o-transform: translateZ(0);
@@ -174,17 +183,117 @@ export default {
   transform: translateZ(0)
 }
 
-.flink-item-name {
-  cursor: pointer;
-  @include themeify() {
-    color: themed('color-ele-primary');
+.flink-list {
+  overflow: auto;
+  padding: 10px 10px 0;
+  text-align: center
+}
+
+.flink-list > .flink-list-item {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  margin: 15px 7px;
+  width: calc(100% / 3 - 15px);
+  height: 90px;
+  border-radius: 8px;
+  line-height: 17px;
+  -webkit-transform: translateZ(0)
+}
+
+@media screen and (max-width: 1024px) {
+  .flink-list > .flink-list-item {
+    width: calc(50% - 15px) !important
   }
 }
 
-.flink-item-desc {
-  white-space: nowrap;
-  text-overflow: ellipsis;
+@media screen and (max-width: 600px) {
+  .flink-list > .flink-list-item {
+    width: calc(100% - 15px) !important
+  }
+}
+
+.flink-list > .flink-list-item:hover .flink-item-icon {
+  margin-left: -10px;
+  width: 0
+}
+
+.flink-list > .flink-list-item:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background: #4AB7BD;
+  content: '';
+  -webkit-transition: -webkit-transform .3s ease-out;
+  -moz-transition: -moz-transform .3s ease-out;
+  -o-transition: -o-transform .3s ease-out;
+  -ms-transition: -ms-transform .3s ease-out;
+  transition: transform .3s ease-out;
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  -o-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0)
+}
+
+.flink-list > .flink-list-item:active:before, .flink-list > .flink-list-item:focus:before, .flink-list > .flink-list-item:hover:before {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1)
+}
+
+.flink-list > .flink-list-item a {
+  color: var(--font-color);
+  text-decoration: none
+}
+
+.flink-list > .flink-list-item a .flink-item-icon {
+  float: left;
   overflow: hidden;
+  margin: 15px 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 35px;
+  -webkit-transition: width .3s ease-out;
+  -moz-transition: width .3s ease-out;
+  -o-transition: width .3s ease-out;
+  -ms-transition: width .3s ease-out;
+  transition: width .3s ease-out
+}
+
+.flink-list > .flink-list-item a .flink-item-icon img {
+  width: 100%;
+  height: 100%;
+  -webkit-transition: filter 375ms ease-in .2s, -webkit-transform .3s;
+  -moz-transition: filter 375ms ease-in .2s, -moz-transform .3s;
+  -o-transition: filter 375ms ease-in .2s, -o-transform .3s;
+  -ms-transition: filter 375ms ease-in .2s, -ms-transform .3s;
+  transition: filter 375ms ease-in .2s, transform .3s;
+  object-fit: cover
+}
+
+.flink-item-name {
+  padding: 16px 10px 0 0;
+  height: 40px;
+  font-weight: 700;
+  font-size: 1.43em
+}
+
+.flink-item-desc {
+  padding: 16px 10px 16px 0;
+  height: 50px;
+  font-size: .93em
+}
+
+.flink-name {
+  margin-bottom: 5px;
+  font-weight: 700;
+  font-size: 1.5em
 }
 
 </style>

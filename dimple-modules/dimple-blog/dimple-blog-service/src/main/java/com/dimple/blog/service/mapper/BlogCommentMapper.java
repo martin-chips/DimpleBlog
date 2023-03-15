@@ -29,14 +29,6 @@ public interface BlogCommentMapper {
     List<BlogComment> selectBlogCommentList(BlogComment blogComment);
 
     /**
-     * 新增
-     *
-     * @param blogComment
-     * @return affected lines
-     */
-    int insertBlogComment(BlogComment blogComment);
-
-    /**
      * 修改
      *
      * @param blogComment

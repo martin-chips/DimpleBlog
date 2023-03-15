@@ -28,11 +28,5 @@
             <artifactId>dimple-common-redis</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
-            <version>1.21</version>
-        </dependency>
-
     </dependencies>
 </project>

@@ -28,6 +28,13 @@ public class BlogCommentVOParams extends BaseVOParams {
      */
     @NotEmpty
     private String username;
+    /**
+     * login type, 0 local,1 GitHub
+     */
+
+    private Integer type;
+
+    private Long visitorId;
 
     /**
      * parent comment is, default is -1
@@ -40,7 +47,7 @@ public class BlogCommentVOParams extends BaseVOParams {
      * user head image
      */
     @NotNull
-    private String headImage;
+    private String avatars;
 
     private String link;
 
@@ -48,7 +55,7 @@ public class BlogCommentVOParams extends BaseVOParams {
      * comment content, max length is 1024
      */
     @NotNull
-    @Length( max = 1000)
+    @Length(max = 1000)
     private String content;
 
     /**

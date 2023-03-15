@@ -13,22 +13,6 @@ import java.util.Set;
  * @date 2023-02-13
  */
 public interface BlogCommentService {
-    /**
-     * 查询
-     *
-     * @param id 主键
-     * @return
-     */
-    BlogCommentBO selectBlogCommentById(Long id);
-
-    /**
-     * 查询列表
-     *
-     * @param blogComment
-     * @return 集合
-     */
-    List<BlogCommentBO> selectBlogCommentList(BlogCommentBO blogComment);
-
 
     List<BlogCommentBO> selectBlogCommentListWithSub(BlogCommentBO blogComment);
 
