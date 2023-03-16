@@ -68,7 +68,7 @@ cp_jar() {
   /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-log/dimple-log-web/target/dimple-modules-log-web.jar $PROJECT_DOCKER_PATH/dimple/modules/log/jar
 
   echo "begin copy dimple-modules-monitor "
-  /bin/cp -rf   $PROJECT_ROOT_PATH/dimple-modules/dimple-monitor/target/dimple-modules-monitor-web.jar  $PROJECT_DOCKER_PATH/dimple/modules/monitor/jar
+  /bin/cp -rf   $PROJECT_ROOT_PATH/dimple-modules/dimple-monitor/dimple-monitor-web/target/dimple-modules-monitor-web.jar  $PROJECT_DOCKER_PATH/dimple/modules/monitor/jar
 
   echo "begin copy dimple-modules-system "
   /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-system/dimple-system-web/target/dimple-modules-system-web.jar $PROJECT_DOCKER_PATH/dimple/modules/system/jar
