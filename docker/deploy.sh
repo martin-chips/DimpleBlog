@@ -65,6 +65,10 @@ init() {
   cd dimple-ui-admin
   npm install
   npm run build:prod
+  cd ..
+  cd dimple-ui-blog
+  npm install
+  npm run build:prod
   echo 'start copy files'
   cd ../docker
   ./env.sh cp
