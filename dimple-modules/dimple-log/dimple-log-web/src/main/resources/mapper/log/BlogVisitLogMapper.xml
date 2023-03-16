@@ -10,9 +10,7 @@
         <result property="pageId" column="page_id"/>
         <result property="requestUri" column="request_uri"/>
         <result property="referer" column="referer"/>
-        <result property="userAgent" column="user_agent"/>
         <result property="statusCode" column="status_code"/>
-        <result property="controllerName" column="controller_name"/>
         <result property="methodName" column="method_name"/>
         <result property="requestMethod" column="request_method"/>
         <result property="requestParams" column="request_params"/>
@@ -25,10 +23,10 @@
         <result property="exception" column="exception"/>
     </resultMap>
     <insert id="insertVisitLog">
-        insert into blog_visit_log (title, page_id, request_uri, referer, user_agent, request_method, request_params, response_params,
-                                    exception, status_code, controller_name, method_name, os, spider, browser, ip, location, create_by, create_time)
-        values (#{title}, #{pageId}, #{requestUri}, #{referer},#{userAgent}, #{requestMethod},#{requestParams}, #{responseParams},
-                #{exception}, #{statusCode},#{controllerName},#{methodName}, #{os}, #{spider}, #{browser}, #{ip}, #{location}, #{createBy}, sysdate())
+        insert into blog_visit_log (title, page_id, request_uri, referer, request_method, request_params, response_params,
+                                    exception, status_code, method_name, os, spider, browser, ip, location, create_by, create_time)
+        values (#{title}, #{pageId}, #{requestUri}, #{referer}, #{requestMethod},#{requestParams}, #{responseParams},
+                #{exception}, #{statusCode},#{methodName}, #{os}, #{spider}, #{browser}, #{ip}, #{location}, #{createBy}, sysdate())
     </insert>
     <delete id="deleteVisitLogByIds">
         delete from blog_visit_log where id in
@@ -47,7 +45,6 @@
         request_uri,
         referer,
         status_code,
-        controller_name,
         method_name,
         os,
         spider,

@@ -1,5 +1,7 @@
 package com.dimple.common.log.annotation;
 
+import com.dimple.common.log.enums.VisitLogTitle;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -19,7 +21,7 @@ public @interface VisitLog {
     /**
      * 模块
      */
-    String title() default "";
+    VisitLogTitle title() default VisitLogTitle.UNKNOWN;
 
     /**
      * the page id mark the page that visitor accessed.

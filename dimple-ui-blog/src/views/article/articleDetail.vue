@@ -67,15 +67,15 @@
                 <div class="comment__list">
                     <comments :messages="messages" @submitReply="submitReply" @addLike="addLike"></comments>
                 </div>
-                <div class="comment__page" v-if="total">
-                    <el-pagination
-                            :current-page.sync="pageNum"
-                            :total="total"
-                            layout="prev, pager, next"
-                            :page-size="pageSize"
-                            @current-change="currentChange"
-                    ></el-pagination>
-                </div>
+                <el-pagination
+                        class="comment__page"
+                        :current-page.sync="pageNum"
+                        :total="total"
+                        v-if="total>messages.length"
+                        layout="prev, pager, next"
+                        :page-size="pageSize"
+                        @current-change="currentChange"
+                ></el-pagination>
             </div>
         </layout>
     </div>

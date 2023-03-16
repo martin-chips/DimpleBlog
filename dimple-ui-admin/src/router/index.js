@@ -72,7 +72,7 @@ export const constantRoutes = [
         name: 'AddBlog',
         meta: {title: '新增文章', noCache: false, activeMenu: '/blog/article'},
       }, {
-        path: 'article/edit/:id(\\d+)',
+        path: 'article/edit/:id',
         component: () => import('@/views/blog/article/edit'),
         name: 'EditBlog',
         meta: {title: '修改文章', noCache: false, activeMenu: '/blog/article'},

@@ -20,6 +20,34 @@ create table blog_article
 )
     comment 'Blog article';
 
+insert into blog_article (id, title, header_image, content, category_id, original, summary, article_status, like_count, create_by, create_time, update_by, update_time)
+values  (-2000, '关于我', 'http://rrfyveqgo.hn-bkt.clouddn.com/lake-g57a1ac87a_1920.jpgd85e5.jpg', '<p align="center"><a href="https://www.bianxf.com">Hello, I''m Martin. I do open source!</a></p>
+
+<br />
+
+I''m a passionate developer from China
+
+**About me**
+
+- ? Java Engineer
+
+- ? The only sustainable competitive advantage is the ability to learn over competitors.
+
+- ❤️ I love Coding, and building fun experiments
+
+- ? Ask me about anything [here](https://bianxf.com/app/aboutme)
+
+| <a href="https://bianxf.com"><img align="center" src="https://github-readme-stats.vercel.app/api?username=martin-chips&show_icons=true&include_all_commits=true&theme=buefy&hide_border=true" alt="Martin''s github stats" /></a> | <a href="https://bianxf.com"><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=martin-chips&layout=compact&theme=buefy&hide_border=true" /></a> |
+| ------------- | ------------- |
+
+#### Top Repositories
+| <a href="https://github.com/martin-chips/DimpleBlog"><img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=martin-chips&repo=DimpleBlog&theme=buefy"/></a> | <a href="https://github.com/martin-chips/EAMS"><img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=martin-chips&repo=EAMS&theme=buefy" /></a> |
+| ------------- | ------------- |
+|<a href="https://github.com/martin-chips/online_exam_system"><img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=martin-chips&repo=online_exam_system&theme=buefy" /></a>||
+
+<br />
+<br />
+', 0, 1, null, 1, 0, 'Dimple', sysdate(), null, null);
 drop table if exists blog_category;
 create table blog_category
 (
@@ -93,13 +121,11 @@ create table blog_visit_log
     page_id         bigint        default 0 comment 'page id',
     request_uri     varchar(255)  default '' comment 'user request uri',
     referer         varchar(255)  default '' comment ' user referer in the http request',
-    user_agent      varchar(255)  default '' comment '',
     request_method  varchar(255)  default '' comment '',
     request_params  varchar(2000) default '' comment '',
     response_params varchar(2000) default '' comment '',
     exception       varchar(2000) default '' comment '',
     status_code     int(11)       default 1 comment 'http request status',
-    controller_name varchar(255)  default '' comment 'the handler name',
     method_name     varchar(255)  default '' comment ' the handler method name',
     os              varchar(255)  default ' ' comment 'the os name',
     spider          varchar(255)  default '' comment 'the spider name',

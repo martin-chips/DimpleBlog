@@ -22,19 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Controller
+ * BlogMessageBoardController
  *
- * @author Dimple
- * @date 2023-02-13
+ * @author BianXiaofeng
+ * @date 2023/3/16
  */
 @RestController
-@RequestMapping("/comment")
-public class BlogCommentController extends BaseController {
+@RequestMapping("/messageBoard")
+public class BlogMessageBoardController extends BaseController {
     @Autowired
     private BlogCommentService blogCommentService;
 
     @GetMapping("/list")
-    @VisitLog(title = VisitLogTitle.LIST_COMMENT, pageId = "#blogComment.articleId")
+    @VisitLog(title = VisitLogTitle.LIST_MESSAGE_BOARD)
     public TableDataInfo list(BlogCommentVOParams blogComment) {
         startPage();
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
@@ -43,14 +43,14 @@ public class BlogCommentController extends BaseController {
     }
 
     @PostMapping
-    @VisitLog(title = VisitLogTitle.ADD_COMMENT, pageId = "#blogComment.articleId")
+    @VisitLog(title = VisitLogTitle.ADD_MESSAGE_BOARD)
     public AjaxResult add(@RequestBody @Validated BlogCommentVOParams blogComment) {
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
         return toAjax(blogCommentService.insertBlogComment(blogCommentBO));
     }
 
     @PostMapping("likeCount/{id}")
-    @VisitLog(title = VisitLogTitle.LIKE_COMMENT, pageId = "#id")
+    @VisitLog(title = VisitLogTitle.LIKE_MESSAGE_BOARD, pageId = "#id")
     public AjaxResult like(@PathVariable Long id) {
         return toAjax(blogCommentService.addBlogCommentLikeCount(id));
     }

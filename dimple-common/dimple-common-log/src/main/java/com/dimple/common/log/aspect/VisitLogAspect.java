@@ -6,6 +6,7 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.ip.IpUtils;
 import com.dimple.common.log.annotation.VisitLog;
 import com.dimple.common.log.enums.BusinessStatus;
+import com.dimple.common.log.enums.VisitLogTitle;
 import com.dimple.common.log.service.AsyncLogService;
 import com.dimple.system.api.model.BlogVisitLogBO;
 import io.netty.util.internal.ThrowableUtil;
@@ -70,16 +71,15 @@ public class VisitLogAspect {
             String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
             blogVisitLogBO.setIp(ip);
             blogVisitLogBO.setRequestUri(StringUtils.substring(ServletUtils.getRequest().getRequestURI(), 0, 255));
-            String controllerName = joinPoint.getTarget().getClass().getName();
+            String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
-            blogVisitLogBO.setControllerName(controllerName);
-            blogVisitLogBO.setMethodName(methodName);
+            blogVisitLogBO.setMethodName(className + "." + methodName + "()");
             blogVisitLogBO.setRequestMethod(ServletUtils.getRequest().getMethod());
-            setControllerMethodDescription(joinPoint, visitLog, blogVisitLogBO, jsonResult);
             String userAgent = ServletUtils.getRequest().getHeader("User-Agent");
             String referer = ServletUtils.getRequest().getHeader("Referer");
             blogVisitLogBO.setUserAgent(userAgent);
             blogVisitLogBO.setReferer(referer);
+            setControllerMethodDescription(joinPoint, visitLog, blogVisitLogBO, jsonResult);
             if (!Objects.isNull(e)) {
                 blogVisitLogBO.setStatusCode(BusinessStatus.FAIL.ordinal());
                 blogVisitLogBO.setException(ThrowableUtil.stackTraceToString(e).substring(0, 2000));
@@ -130,8 +130,8 @@ public class VisitLogAspect {
     }
 
     public void setControllerMethodDescription(JoinPoint joinPoint, VisitLog log, BlogVisitLogBO blogVisitLogBO, Object jsonResult) throws Exception {
-        String title = log.title();
-        blogVisitLogBO.setTitle(title);
+        VisitLogTitle title = log.title();
+        blogVisitLogBO.setTitle(title.name());
         blogVisitLogBO.setPageId(getPageId(joinPoint, log));
         if (log.saveRequestData()) {
             blogVisitLogBO.setRequestParams(LogAspectUtils.getRequestParams(joinPoint, blogVisitLogBO.getRequestMethod(), EXCLUDE_PROPERTIES));

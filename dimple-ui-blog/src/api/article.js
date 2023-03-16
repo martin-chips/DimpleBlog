@@ -8,13 +8,6 @@ export default {
             params: query
         })
     },
-    listLatestArticle(query) {
-        return request({
-            url: '/blog-front/article/list',
-            method: 'get',
-            params: query
-        })
-    },
     getPrevNextArticle(query) {
         return request({
             url: '/blog-front/article/prevNext',

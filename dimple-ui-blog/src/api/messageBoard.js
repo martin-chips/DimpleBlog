@@ -4,7 +4,7 @@ import request from "@/utils/request";
 export default {
   getMessageBoard(query) {
     return request({
-      url: "/blog-front/comment/list",
+      url: "/blog-front/messageBoard/list",
       method: "get",
       params: query
     });
@@ -12,7 +12,7 @@ export default {
 
   saveMessageBoard(data) {
     return request({
-      url: "/blog-front/comment",
+      url: "/blog-front/messageBoard",
       method: "post",
       data: data
     });
@@ -20,7 +20,7 @@ export default {
 
   likeMessageBoard(id) {
     return request({
-      url: "/blog-front/comment/likeCount/"+id,
+      url: "/blog-front/messageBoard/likeCount/"+id,
       method: "post",
     });
   }

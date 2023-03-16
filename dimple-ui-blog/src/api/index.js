@@ -6,6 +6,8 @@ import tags from "./tag";
 import archives from "./archives";
 import link from "./link";
 import visitor from "./visitor";
+import panel from "./panel";
+import about from "./about";
 
 export default {
     ...article,
@@ -14,6 +16,8 @@ export default {
     ...category,
     ...messageBoard,
     ...link,
+    ...about,
+    ...panel,
     ...visitor,
     ...tags,
 }

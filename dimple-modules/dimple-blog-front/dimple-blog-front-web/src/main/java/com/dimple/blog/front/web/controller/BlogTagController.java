@@ -7,10 +7,10 @@ import com.dimple.blog.front.web.controller.vo.params.BlogTagVOParams;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
-import com.dimple.common.core.web.vo.params.AjaxResult;
+import com.dimple.common.log.annotation.VisitLog;
+import com.dimple.common.log.enums.VisitLogTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,16 +29,11 @@ public class BlogTagController extends BaseController {
     private BlogTagService blogTagService;
 
     @GetMapping("/list")
+    @VisitLog(title = VisitLogTitle.LIST_TAG)
     public TableDataInfo list(BlogTagVOParams blogTag) {
         startPage();
         BlogTagBO blogTagBO = BeanMapper.convert(blogTag, BlogTagBO.class);
         List<BlogTagBO> list = blogTagService.selectBlogTagList(blogTagBO);
         return getDataTable(BeanMapper.convertList(list, BlogTagVO.class));
     }
-
-    @GetMapping("/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return success(blogTagService.selectBlogTagById(id));
-    }
-
 }

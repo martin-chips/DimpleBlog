@@ -19,15 +19,15 @@
                     </div>
                     <div class="message-board__list">
                         <comments :messages="messages" @submitReply="submitReply" @addLike="addLike"></comments>
-                        <div class="message-board__page" v-if="messages.length">
-                            <el-pagination
-                                    :current-page.sync="pageNum"
-                                    :total="total"
-                                    layout="prev, pager, next"
-                                    :page-size="pageSize"
-                                    @current-change="currentChange"
-                            ></el-pagination>
-                        </div>
+                        <el-pagination
+                                class="message-board__page"
+                                :current-page.sync="pageNum"
+                                :total="total"
+                                v-if="total>messages.length"
+                                layout="prev, pager, next"
+                                :page-size="pageSize"
+                                @current-change="currentChange"
+                        ></el-pagination>
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@ export default {
         },
         async getMessageBoard() {
             const msgRes = await api.getMessageBoard({
-                page: this.pageNum,
+                pageNum: this.pageNum,
                 pageSize: this.pageSize,
                 articleId: this.articleId,
                 orderByColumn: "createTime",

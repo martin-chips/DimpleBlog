@@ -79,7 +79,7 @@ public class OperateLogAspect {
             // 设置请求方式
             operLog.setRequestMethod(ServletUtils.getRequest().getMethod());
             // 处理设置注解上的参数
-            getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
+            setControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
             // 保存数据库
             asyncLogService.saveSysLog(operLog);
         } catch (Exception exp) {
@@ -95,7 +95,7 @@ public class OperateLogAspect {
      * @param operLog 操作日志
      * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, OperationLog log, SysOperLogBO operLog, Object jsonResult) throws Exception {
+    public void setControllerMethodDescription(JoinPoint joinPoint, OperationLog log, SysOperLogBO operLog, Object jsonResult) throws Exception {
         // 设置action动作
         operLog.setBusinessType(log.businessType().ordinal());
         // 设置标题

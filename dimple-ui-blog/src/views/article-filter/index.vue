@@ -3,14 +3,14 @@
         <layout :title="title" :cover="cover">
             <template slot="custom-body">
                 <article-iterator :articles="articles"></article-iterator>
-                <div class="article-filter__page">
-                    <el-pagination
-                            :total="total"
-                            layout="prev, pager, next"
-                            :page-size="pageSize"
-                            @current-change="currentChange"
-                    ></el-pagination>
-                </div>
+                <el-pagination
+                        class="article-filter__page"
+                        :total="total"
+                        v-if="total>articles.length"
+                        layout="prev, pager, next"
+                        :page-size="pageSize"
+                        @current-change="currentChange"
+                ></el-pagination>
             </template>
         </layout>
     </div>
@@ -32,7 +32,6 @@ async function fetchArticles(route, page) {
     if (route.params.type === 'category') {
         params.categoryId = route.params.param
     }
-    console.log(params)
     const articleRes = await api.listArticle(params, {pageNum: 1, pageSize: 10})
     return articleRes
 }
@@ -61,6 +60,11 @@ export default {
             pageNum: 1,
             articles: [],
             total: 0
+        }
+    },
+    watch: {
+        title() {
+            this.getArticles();
         }
     },
     created() {

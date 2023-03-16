@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+    <div id="app">
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
@@ -27,24 +27,24 @@ export default {
     methods: {
         ...mapMutations(["setArchives", "setCategory", "setTags", "setNewComments", "setNewArticles", "setTotals"]),
         initPanel() {
-            this.$api.listArchive({countType: "month", pageNum: 1, pageSize: 5}).then((res) => {
+            this.$api.listPanelArchive({countType: "month", pageNum: 1, pageSize: 5}).then((res) => {
                 if (res.code === 200) {
                     this.setArchives(res.rows);
                 }
             });
-            this.$api.listCategory().then((res) => {
+            this.$api.listPanelCategory().then((res) => {
                 if (res.code === 200) {
                     this.setTotals({key: "category", value: res.total});
                     this.setCategory(res.rows);
                 }
             });
-            this.$api.listTag().then((res) => {
+            this.$api.listPanelTag().then((res) => {
                 if (res.code === 200) {
                     this.setTotals({key: "tag", value: res.total});
                     this.setTags(res.rows);
                 }
             });
-            this.$api.listComment({
+            this.$api.listPanelComment({
                 pageNum: 1,
                 pageSize: 5,
                 orderByColumn: "createTime",
@@ -52,7 +52,7 @@ export default {
             }).then((res) => {
                 if (res.code === 200) this.setNewComments(res.rows);
             });
-            this.$api.listArticle({
+            this.$api.listPanelArticle({
                 pageNum: 1,
                 pageSize: 5,
                 orderByColumn: "createTime",

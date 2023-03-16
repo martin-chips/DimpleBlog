@@ -16,15 +16,14 @@
             </div>
             <div class="home-article__body" slot="custom-body">
                 <article-iterator :articles="articles"></article-iterator>
-                <div class="home-article__page">
-                    <el-pagination
-                            v-if="articles.length"
-                            :total="total"
-                            layout="total,prev, pager, next"
-                            :page-size="pageSize"
-                            @current-change="currentChange"
-                    ></el-pagination>
-                </div>
+                <el-pagination
+                        class="home-article__page"
+                        v-if="total>articles.length"
+                        :total="total"
+                        layout="total,prev, pager, next"
+                        :page-size="pageSize"
+                        @current-change="currentChange"
+                ></el-pagination>
             </div>
         </layout>
     </div>

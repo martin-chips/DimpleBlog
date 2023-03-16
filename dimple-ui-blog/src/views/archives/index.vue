@@ -3,7 +3,7 @@
         <layout title="归档" :cover="cover">
             <template v-if="archives.length">
                 <div class="archives__year" v-for="(range, index) in archives" :key="index">
-                    <div class="year-text">{{ range.dateStr}}</div>
+                    <div class="year-text">{{ range.dateStr }}</div>
                     <el-timeline>
                         <el-timeline-item
                                 v-for="(article, mi) in range.items"
@@ -35,14 +35,14 @@
             </template>
             <ElEmpty v-else></ElEmpty>
 
-            <div class="archives__page" v-if="archives.length">
-                <el-pagination
-                        :total="total"
-                        layout="prev, pager, next"
-                        :page-size="pageSize"
-                        @current-change="currentChange"
-                ></el-pagination>
-            </div>
+            <el-pagination
+                    class="archives__page"
+                    :total="total"
+                    v-if="total>archives.length"
+                    layout="prev, pager, next"
+                    :page-size="pageSize"
+                    @current-change="currentChange"
+            ></el-pagination>
         </layout>
     </div>
 </template>

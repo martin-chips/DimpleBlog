@@ -1,30 +1,27 @@
 <template>
     <div>
         <layout title="友链" :cover="cover">
-            <template>
-                <el-card shadow="hover">
-                    <div slot="header" class="clearfix">
-                        <h2>友链列表</h2>
+            <el-card shadow="hover">
+                <div slot="header" class="clearfix">
+                    <h2>友链列表</h2>
+                </div>
+                <div class="flink-list" v-if="links.length">
+                    <div v-for="(link, index) in links" :key="index" class="flink-list-item">
+                        <a @click="addLinkVisitCount(link.id)" :href="link.url" :title="link.title" target="_blank">
+                            <div class="flink-item-icon">
+                                <img v-lazy="link.headerImage"
+                                     :alt="link.title">
+                            </div>
+                            <div class="flink-item-name">{{ link.title }}</div>
+                            <div class="flink-item-desc"
+                                 :title="link.description">
+                                {{ link.description }}
+                            </div>
+                        </a>
                     </div>
-                    <div class="flink-list" v-if="links.length">
-                        <div v-for="(link, index) in links" :key="index" class="flink-list-item">
-                            <a @click="addLinkVisitCount(link.id)" :href="link.url" :title="link.title" target="_blank">
-                                <div class="flink-item-icon">
-                                    <img
-                                            v-lazy="link.headerImage"
-                                            :alt="link.title">
-                                </div>
-                                <div class="flink-item-name">{{ link.title }}</div>
-                                <div class="flink-item-desc"
-                                     :title="link.description">
-                                    {{ link.description }}
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <ElEmpty v-else></ElEmpty>
-                </el-card>
-            </template>
+                </div>
+                <ElEmpty v-else></ElEmpty>
+            </el-card>
             <el-card>
                 <div slot="header" class="clearfix">
                     <h2>申请须知</h2>

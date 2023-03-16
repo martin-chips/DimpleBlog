@@ -7,10 +7,10 @@ import com.dimple.blog.front.web.controller.vo.params.BlogCategoryVOParams;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
-import com.dimple.common.core.web.vo.params.AjaxResult;
+import com.dimple.common.log.annotation.VisitLog;
+import com.dimple.common.log.enums.VisitLogTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,16 +29,12 @@ public class BlogCategoryController extends BaseController {
     private BlogCategoryService blogCategoryService;
 
     @GetMapping("/list")
+    @VisitLog(title = VisitLogTitle.LIST_CATEGORY)
     public TableDataInfo list(BlogCategoryVOParams blogCategory) {
         startPage();
         BlogCategoryBO blogCategoryBO = BeanMapper.convert(blogCategory, BlogCategoryBO.class);
         List<BlogCategoryBO> list = blogCategoryService.selectBlogCategoryList(blogCategoryBO);
         List<BlogCategoryVO> blogCategoryVOS = BeanMapper.convertList(list, BlogCategoryVO.class);
         return getDataTable(blogCategoryVOS);
-    }
-
-    @GetMapping("/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return success(blogCategoryService.selectBlogCategoryById(id));
     }
 }

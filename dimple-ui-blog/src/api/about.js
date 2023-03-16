@@ -1,12 +1,10 @@
 import request from "@/utils/request";
 
 export default {
-    // archive page used
-    getArchives(query) {
+    getAbout() {
         return request({
-            url: '/blog-front/archives',
+            url: '/blog-front/about',
             method: 'get',
-            params: query
         })
     }
 }

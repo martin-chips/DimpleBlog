@@ -17,7 +17,6 @@ public class BlogVisitLogVOParams extends BaseEntity {
     private String referer;
     private String userAgent;
     private Integer statusCode;
-    private String controllerName;
     private String methodName;
     private String requestMethod;
     private String requestParams;

@@ -125,8 +125,7 @@ export default {
     methods: {
         ...mapMutations(["setCatalogs", "setActiveCatalog"]),
         async getArticleDetails() {
-            var id = 47;
-            const articleRes = await api.getArticle(id);
+            const articleRes = await api.getAbout();
             if (articleRes.code === 200) {
                 this.article = articleRes.data;
                 this.article.liked = 0;
@@ -228,152 +227,152 @@ export default {
 @import '~@/style/index.scss';
 
 .article-detail {
-    &__header {
-        width: 100%;
-        height: 100%;
-        @include flex-box-center;
-        flex-direction: column;
+  &__header {
+    width: 100%;
+    height: 100%;
+    @include flex-box-center;
+    flex-direction: column;
+  }
+
+  &__body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC',
+    'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
+    line-height: 2;
+    color: #4c4948;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__title {
+    line-height: 1.5;
+    padding: 0 12px;
+    text-align: center;
+    @include themeify() {
+      color: themed('color-title');
+    }
+    @include respond-to(xs) {
+      font-size: 18px;
+    }
+  }
+
+  &__info {
+    padding: 0 12px;
+    @include themeify() {
+      color: themed('color-navbar');
+    }
+  }
+
+  .info-2 {
+    margin-top: 8px;
+  }
+
+  &__update {
+    margin-top: 20px;
+    padding: 14px;
+    text-align: right;
+    @include themeify() {
+      color: themed('color-ele-holder');
+    }
+  }
+
+  &__like {
+    margin-top: 20px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  &__copyright {
+    margin-top: 28px;
+  }
+
+  &__share {
+    margin-top: 12px;
+  }
+
+  &__prevnext {
+    margin-top: 28px;
+  }
+
+  &__comment {
+    margin-top: 32px;
+
+    .comment__title {
+      padding: 16px 0;
+      font-size: 20px;
+      font-weight: 700;
+
+      > [class^='el-icon-'] {
+        font-weight: 700;
+      }
+
+      span {
+        margin-left: 12px;
+      }
     }
 
-    &__body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC',
-        'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
-        line-height: 2;
-        color: #4c4948;
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
+    .comment__total {
+      color: #4c4948;
+      font-size: 25px;
+      font-weight: bold;
+      margin-top: 28px;
     }
 
-    &__title {
-        line-height: 1.5;
-        padding: 0 12px;
-        text-align: center;
-        @include themeify() {
-            color: themed('color-title');
-        }
-        @include respond-to(xs) {
-            font-size: 18px;
-        }
+    .comment__list {
+      margin-top: 28px;
     }
 
-    &__info {
-        padding: 0 12px;
-        @include themeify() {
-            color: themed('color-navbar');
-        }
+    .comment__page {
+      @include flex-box-center;
+      padding: 16px 0;
+    }
+  }
+
+  // 覆盖 quill.js 中的部分css
+  .ql-editor {
+    padding: 0;
+    line-height: 2;
+
+    .code-toolbar {
+      margin-top: 12px;
     }
 
-    .info-2 {
-        margin-top: 8px;
+    a {
+      color: #409eff;
     }
 
-    &__update {
-        margin-top: 20px;
-        padding: 14px;
-        text-align: right;
-        @include themeify() {
-            color: themed('color-ele-holder');
-        }
+    a:hover {
+      text-decoration: underline;
     }
 
-    &__like {
-        margin-top: 20px;
-        padding: 14px;
-        text-align: center;
+    ul,
+    ol {
+      padding-left: 0;
     }
 
-    &__copyright {
-        margin-top: 28px;
+    li.ql-indent-1:not(.ql-direction-rtl) {
+      padding-left: 3.5em;
     }
 
-    &__share {
-        margin-top: 12px;
+    pre > code {
+      background: 0 0 !important;
     }
 
-    &__prevnext {
-        margin-top: 28px;
+    code:not([class*='language-']) {
+      background-color: #f0f0f0;
+      border-radius: 3px;
+      font-size: 90%;
+      padding: 3px 5px;
     }
 
-    &__comment {
-        margin-top: 32px;
-
-        .comment__title {
-            padding: 16px 0;
-            font-size: 20px;
-            font-weight: 700;
-
-            > [class^='el-icon-'] {
-                font-weight: 700;
-            }
-
-            span {
-                margin-left: 12px;
-            }
-        }
-
-        .comment__total {
-            color: #4c4948;
-            font-size: 25px;
-            font-weight: bold;
-            margin-top: 28px;
-        }
-
-        .comment__list {
-            margin-top: 28px;
-        }
-
-        .comment__page {
-            @include flex-box-center;
-            padding: 16px 0;
-        }
+    blockquote {
+      border-left: 4px solid #ccc;
+      margin-bottom: 5px;
+      margin-top: 5px;
+      padding-left: 16px;
     }
-
-    // 覆盖 quill.js 中的部分css
-    .ql-editor {
-        padding: 0;
-        line-height: 2;
-
-        .code-toolbar {
-            margin-top: 12px;
-        }
-
-        a {
-            color: #409eff;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        ul,
-        ol {
-            padding-left: 0;
-        }
-
-        li.ql-indent-1:not(.ql-direction-rtl) {
-            padding-left: 3.5em;
-        }
-
-        pre > code {
-            background: 0 0 !important;
-        }
-
-        code:not([class*='language-']) {
-            background-color: #f0f0f0;
-            border-radius: 3px;
-            font-size: 90%;
-            padding: 3px 5px;
-        }
-
-        blockquote {
-            border-left: 4px solid #ccc;
-            margin-bottom: 5px;
-            margin-top: 5px;
-            padding-left: 16px;
-        }
-    }
+  }
 }
 </style>

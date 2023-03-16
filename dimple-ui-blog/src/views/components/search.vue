@@ -10,26 +10,26 @@
             <splitLine></splitLine>
             <el-scrollbar>
                 <div class="search__content">
+                    <el-skeleton v-if="loading" :rows="6" animated/>
                     <ul class="search__list">
                         <li v-for="(article, index) in articles" :key="index">
                             <div class="list-item">
                                 <div class="list-item__title" v-html="article.title" @click="goto(article)"></div>
-                                <div class="list-item__content" v-html="article.content_plain"></div>
+                                <div class="list-item__content" v-html="article.summary"></div>
                             </div>
                         </li>
                     </ul>
                     <div class="search__empty" v-if="showEmptyResult">Oops~ 暂未找到关键词为”{{ keyword }}“的文章</div>
                 </div>
             </el-scrollbar>
-            <div class="search__page">
-                <el-pagination
-                        v-if="articles.length < total"
-                        :total="total"
-                        layout="prev, pager, next"
-                        :page-size="pageSize"
-                        @current-change="currentChange"
-                ></el-pagination>
-            </div>
+            <el-pagination
+                    class="search__page"
+                    v-if="total>articles.length"
+                    :total="total"
+                    layout="prev, pager, next"
+                    :page-size="pageSize"
+                    @current-change="currentChange"
+            ></el-pagination>
         </div>
     </div>
 </template>
@@ -41,6 +41,7 @@ export default {
     props: {},
     data() {
         return {
+            loading: false,
             keyword: '',
             searched: false,
             total: 0,
@@ -71,16 +72,35 @@ export default {
                 })
                 return
             }
+            this.loading = true;
             const searchRes = await this.$api.searchArticle({
                 searchValue: this.keyword.trim(),
                 pageNum: this.pageNum,
                 pageSize: this.pageSize
-            })
-            if (searchRes.code === 200) {
-                this.articles = searchRes.rows
-                this.searched = true
-                this.total = searchRes.total
+            }).catch(e => {
+                console.log(e)
+            });
+            if (searchRes && searchRes.code === 200) {
+                var result = searchRes.rows;
+                for (let resultElement of result) {
+                    const reg = new RegExp(this.keyword.trim(), 'ig')
+                    resultElement.title = resultElement.title.replace(reg, (val) => {
+                        return `<span style="color:red">${val}</span>`
+                    });
+                    resultElement.summary = resultElement.summary.replace(reg, (val) => {
+                        return `<span style="color:red">${val}</span>`
+                    });
+                }
+                this.articles = result;
+
+                this.searched = true;
+                this.total = searchRes.total;
+                this.loading = false;
+            } else {
+
+                this.loading = false;
             }
+
         },
         currentChange(val) {
             this.pageNum = val

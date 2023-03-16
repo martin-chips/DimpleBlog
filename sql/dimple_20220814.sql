@@ -101,8 +101,8 @@ create table sys_menu
     status      char(1)      default 0 comment '菜单状态（0正常 1停用）',
     perms       varchar(100) default null comment '权限标识',
     icon        varchar(100) default '#' comment '菜单图标',
-    create_by   varchar(64)  default '' comment '创建者',
-    create_time datetime comment '创建时间',
+    create_by   varchar(64)  default sysdate() comment '创建者',
+    create_time datetime default now() comment '创建时间',
     update_by   varchar(64)  default '' comment '更新者',
     update_time datetime comment '更新时间',
     remark      varchar(500) default '' comment '备注',
@@ -113,377 +113,111 @@ create table sys_menu
 -- ----------------------------
 -- 初始化-菜单信息表数据
 -- ----------------------------
--- 一级菜单
-insert into sys_menu
-values ('1', '系统管理', '0', '1', 'system', null, '', 1, 0, 'M', '0', '0', '', 'system', 'admin', sysdate(), '', null,
-        '系统管理目录');
-insert into sys_menu
-values ('2', '系统监控', '0', '2', 'monitor', null, '', 1, 0, 'M', '0', '0', '', 'monitor', 'admin', sysdate(), '',
-        null, '系统监控目录');
-insert into sys_menu
-values ('3', '系统工具', '0', '3', 'tool', null, '', 1, 0, 'M', '0', '0', '', 'tool', 'admin', sysdate(), '', null,
-        '系统工具目录');
-insert into sys_menu
-values ('4', 'Dimple官网', '0', '10', 'http://bianxf.com', null, '', 0, 0, 'M', '0', '0', '', 'guide', 'admin',
-        sysdate(),
-        '', null, 'Dimple官网地址');
-insert into sys_menu
-values ('5', '日志管理', '0', '9', 'log', '', '', 1, 0, 'M', '0', '0', '', 'log', 'admin', sysdate(), '', null,
-        '日志管理菜单');
--- 二级菜单
-insert into sys_menu
-values ('100', '用户管理', '1', '1', 'user', 'system/user/index', '', 1, 0, 'C', '0', '0', 'system:user:list', 'user',
-        'admin', sysdate(), '', null, '用户管理菜单');
-insert into sys_menu
-values ('101', '角色管理', '1', '2', 'role', 'system/role/index', '', 1, 0, 'C', '0', '0', 'system:role:list',
-        'peoples', 'admin', sysdate(), '', null, '角色管理菜单');
-insert into sys_menu
-values ('102', '菜单管理', '1', '3', 'menu', 'system/menu/index', '', 1, 0, 'C', '0', '0', 'system:menu:list',
-        'tree-table', 'admin', sysdate(), '', null, '菜单管理菜单');
-insert into sys_menu
-values ('105', '字典管理', '1', '6', 'dict', 'system/dict/index', '', 1, 0, 'C', '0', '0', 'system:dict:list', 'dict',
-        'admin', sysdate(), '', null, '字典管理菜单');
-insert into sys_menu
-values ('106', '参数设置', '1', '7', 'config', 'system/config/index', '', 1, 0, 'C', '0', '0', 'system:config:list',
-        'edit', 'admin', sysdate(), '', null, '参数设置菜单');
-insert into sys_menu
-values ('107', '通知公告', '1', '8', 'notice', 'system/notice/index', '', 1, 0, 'C', '0', '0', 'system:notice:list',
-        'message', 'admin', sysdate(), '', null, '通知公告菜单');
-insert into sys_menu
-values ('109', '在线用户', '2', '1', 'online', 'monitor/online/index', '', 1, 0, 'C', '0', '0', 'monitor:online:list',
-        'online', 'admin', sysdate(), '', null, '在线用户菜单');
-insert into sys_menu
-values ('108', 'Redis监控', '2', '1', 'online', 'monitor/redis/index', '', 1, 0, 'C', '0', '0', 'monitor:redis:list',
-        'online', 'admin', sysdate(), '', null, 'Redis监控菜单');
-insert into sys_menu
-values ('110', '定时任务', '3', '2', 'job', 'monitor/job/index', '', 1, 0, 'C', '0', '0', 'monitor:job:list', 'job',
-        'admin', sysdate(), '', null, '定时任务菜单');
-insert into sys_menu
-values ('111', 'Sentinel控制台', '2', '3', 'http://localhost:8718', '', '', 0, 0, 'C', '0', '0',
-        'monitor:sentinel:list', 'sentinel', 'admin', sysdate(), '', null, '流量控制菜单');
-insert into sys_menu
-values ('112', 'Nacos控制台', '2', '4', 'http://localhost:8848/nacos', '', '', 0, 0, 'C', '0', '0',
-        'monitor:nacos:list', 'nacos', 'admin', sysdate(), '', null, '服务治理菜单');
-insert into sys_menu
-values ('113', 'Admin控制台', '2', '5', 'http://localhost:9100/login', '', '', 0, 0, 'C', '0', '0',
-        'monitor:server:list', 'server', 'admin', sysdate(), '', null, '服务监控菜单');
-insert into sys_menu
-values ('116', '系统接口', '3', '3', 'http://localhost:8080/swagger-ui/index.html', '', '', 0, 0, 'C', '0', '0',
-        'tool:swagger:list', 'swagger', 'admin', sysdate(), '', null, '系统接口菜单');
-insert into sys_menu
-values ('500', '操作日志', '5', '1', 'operlog', 'log/operlog/index', '', 1, 0, 'C', '0', '0',
-        'log:operlog:list', 'form', 'admin', sysdate(), '', null, '操作日志菜单');
-insert into sys_menu
-values ('501', '登录日志', '5', '2', 'logininfor', 'log/logininfor/index', '', 1, 0, 'C', '0', '0',
-        'log:logininfor:list', 'logininfor', 'admin', sysdate(), '', null, '登录日志菜单');
-insert into sys_menu
-values ('114', '表单构建', '3', '1', 'build', 'tool/build/index', '', 1, 0, 'C', '0', '0', 'tool:build:list', 'build',
-        'admin', sysdate(), '', null, '表单构建菜单');
-insert into sys_menu
-values ('115', '代码生成', '3', '2', 'gen', 'tool/gen/index', '', 1, 0, 'C', '0', '0', 'tool:gen:list', 'code', 'admin',
-        sysdate(), '', null, '代码生成菜单');
-insert into sys_menu
-values ('116', '系统接口', '3', '3', 'http://localhost:8080/swagger-ui/index.html', '', '', 0, 0, 'C', '0', '0',
-        'tool:swagger:list', 'swagger', 'admin', sysdate(), '', null, '系统接口菜单');
--- 用户管理按钮
-insert into sys_menu
-values ('1000', '用户查询', '100', '1', '', '', '', 1, 0, 'F', '0', '0', 'system:user:query', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1001', '用户新增', '100', '2', '', '', '', 1, 0, 'F', '0', '0', 'system:user:add', '#', 'admin', sysdate(), '',
-        null, '');
-insert into sys_menu
-values ('1002', '用户修改', '100', '3', '', '', '', 1, 0, 'F', '0', '0', 'system:user:edit', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1003', '用户删除', '100', '4', '', '', '', 1, 0, 'F', '0', '0', 'system:user:remove', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1004', '用户导出', '100', '5', '', '', '', 1, 0, 'F', '0', '0', 'system:user:export', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1005', '用户导入', '100', '6', '', '', '', 1, 0, 'F', '0', '0', 'system:user:import', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1006', '重置密码', '100', '7', '', '', '', 1, 0, 'F', '0', '0', 'system:user:resetPwd', '#', 'admin',
-        sysdate(), '', null, '');
--- 角色管理按钮
-insert into sys_menu
-values ('1007', '角色查询', '101', '1', '', '', '', 1, 0, 'F', '0', '0', 'system:role:query', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1008', '角色新增', '101', '2', '', '', '', 1, 0, 'F', '0', '0', 'system:role:add', '#', 'admin', sysdate(), '',
-        null, '');
-insert into sys_menu
-values ('1009', '角色修改', '101', '3', '', '', '', 1, 0, 'F', '0', '0', 'system:role:edit', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1010', '角色删除', '101', '4', '', '', '', 1, 0, 'F', '0', '0', 'system:role:remove', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1011', '角色导出', '101', '5', '', '', '', 1, 0, 'F', '0', '0', 'system:role:export', '#', 'admin', sysdate(),
-        '', null, '');
--- 菜单管理按钮
-insert into sys_menu
-values ('1012', '菜单查询', '102', '1', '', '', '', 1, 0, 'F', '0', '0', 'system:menu:query', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1013', '菜单新增', '102', '2', '', '', '', 1, 0, 'F', '0', '0', 'system:menu:add', '#', 'admin', sysdate(), '',
-        null, '');
-insert into sys_menu
-values ('1014', '菜单修改', '102', '3', '', '', '', 1, 0, 'F', '0', '0', 'system:menu:edit', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1015', '菜单删除', '102', '4', '', '', '', 1, 0, 'F', '0', '0', 'system:menu:remove', '#', 'admin', sysdate(),
-        '', null, '');
--- 字典管理按钮
-insert into sys_menu
-values ('1025', '字典查询', '105', '1', '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:query', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1026', '字典新增', '105', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:add', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1027', '字典修改', '105', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:edit', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1028', '字典删除', '105', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:remove', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1029', '字典导出', '105', '5', '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:export', '#', 'admin', sysdate(),
-        '', null, '');
--- 参数设置按钮
-insert into sys_menu
-values ('1030', '参数查询', '106', '1', '#', '', '', 1, 0, 'F', '0', '0', 'system:config:query', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1031', '参数新增', '106', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:config:add', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1032', '参数修改', '106', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:config:edit', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1033', '参数删除', '106', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:config:remove', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1034', '参数导出', '106', '5', '#', '', '', 1, 0, 'F', '0', '0', 'system:config:export', '#', 'admin',
-        sysdate(), '', null, '');
--- 通知公告按钮
-insert into sys_menu
-values ('1035', '公告查询', '107', '1', '#', '', '', 1, 0, 'F', '0', '0', 'system:notice:query', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1036', '公告新增', '107', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:notice:add', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1037', '公告修改', '107', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:notice:edit', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1038', '公告删除', '107', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:notice:remove', '#', 'admin',
-        sysdate(), '', null, '');
--- 操作日志按钮
-insert into sys_menu
-values ('1039', '操作查询', '500', '1', '#', '', '', 1, 0, 'F', '0', '0', 'log:operlog:query', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1040', '操作删除', '500', '2', '#', '', '', 1, 0, 'F', '0', '0', 'log:operlog:remove', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1041', '日志导出', '500', '3', '#', '', '', 1, 0, 'F', '0', '0', 'log:operlog:export', '#', 'admin',
-        sysdate(), '', null, '');
--- 登录日志按钮
-insert into sys_menu
-values ('1042', '登录查询', '501', '1', '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:query', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1043', '登录删除', '501', '2', '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:remove', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1044', '日志导出', '501', '3', '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:export', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1045', '账户解锁', '501', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:user:unlock', '#', 'admin',
-        sysdate(), '', null, '');
--- 在线用户按钮
-insert into sys_menu
-values ('1046', '在线查询', '109', '1', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:query', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1047', '批量强退', '109', '2', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:batchLogout', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1048', '单条强退', '109', '3', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:forceLogout', '#', 'admin',
-        sysdate(), '', null, '');
--- 定时任务按钮
-insert into sys_menu
-values ('1049', '任务查询', '110', '1', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:query', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1050', '任务新增', '110', '2', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:add', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1051', '任务修改', '110', '3', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:edit', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1052', '任务删除', '110', '4', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:remove', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1053', '状态修改', '110', '5', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:changeStatus', '#', 'admin',
-        sysdate(), '', null, '');
-insert into sys_menu
-values ('1054', '任务导出', '110', '6', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:export', '#', 'admin', sysdate(),
-        '', null, '');
--- 代码生成按钮
-insert into sys_menu
-values ('1055', '生成查询', '115', '1', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:query', '#', 'admin', sysdate(), '',
-        null, '');
-insert into sys_menu
-values ('1056', '生成修改', '115', '2', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:edit', '#', 'admin', sysdate(), '',
-        null, '');
-insert into sys_menu
-values ('1057', '生成删除', '115', '3', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:remove', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1058', '导入代码', '115', '2', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1059', '预览代码', '115', '4', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', sysdate(),
-        '', null, '');
-insert into sys_menu
-values ('1060', '生成代码', '115', '5', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', sysdate(), '',
-        null, '');
--- blog
-insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, query, is_frame, is_cache, menu_type,
-                      visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values (6, '博客管理', 0, 6, 'blog', '', '', 1, 0, 'M', '0', '0', '', 'post', 'admin', sysdate(), '', null,
-        'Blog管理菜单');
-
-insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
-                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values (601, '文章', '6', '1', 'article', 'blog/article/index', 1, 0, 'C', '0', '0', 'blog:article:list', 'edit',
-        'admin', sysdate(), '', null, '文章菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('文章查询', 601, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:article:query', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('文章新增', 601, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:article:add', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('文章修改', 601, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:article:edit', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('文章删除', 601, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:article:remove', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('文章导出', 601, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:article:export', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
-                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values (602, '分类', 6, '1', 'category', 'blog/category/index', 1, 0, 'C', '0', '0', 'blog:category:list', 'skill',
-        'admin', sysdate(), '', null, '分类菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('分类查询', 602, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:category:query', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('分类新增', 602, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:category:add', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('分类修改', 602, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:category:edit', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('分类删除', 602, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:category:remove', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('分类导出', 602, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:category:export', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
-                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values (603, '评论', 6, '1', 'comment', 'blog/comment/index', 1, 0, 'C', '0', '0', 'blog:comment:list', 'message',
-        'admin', sysdate(), '', null, '评论菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('评论查询', 603, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:query', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('评论修改', 603, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:edit', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('评论删除', 603, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:remove', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('评论导出', 603, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:comment:export', '#', 'admin', sysdate(), '', null,
-        '');
-
-insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
-                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values (604, '标签', 6, '1', 'tag', 'blog/tag/index', 1, 0, 'C', '0', '0', 'blog:tag:list', 'row', 'admin', sysdate(),
-        '', null, '标签菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('标签查询', 604, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:query', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('标签新增', 604, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:add', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('标签修改', 604, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:edit', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('标签删除', 604, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:remove', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('标签导出', 604, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:tag:export', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible,
-                      status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values (605, '友链', '6', '1', 'link', 'blog/link/index', 1, 0, 'C', '0', '0', 'blog:link:list', 'edit', 'admin',
-        sysdate(), '', null, '友链菜单');
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('友链查询', 601, '1', '#', '', 1, 0, 'F', '0', '0', 'blog:link:query', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('友链新增', 601, '2', '#', '', 1, 0, 'F', '0', '0', 'blog:link:add', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('友链修改', 601, '3', '#', '', 1, 0, 'F', '0', '0', 'blog:link:edit', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('友链删除', 601, '4', '#', '', 1, 0, 'F', '0', '0', 'blog:link:remove', '#', 'admin', sysdate(), '', null, '');
-
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status,
-                      perms, icon, create_by, create_time, update_by, update_time, remark)
-values ('友链导出', 601, '5', '#', '', 1, 0, 'F', '0', '0', 'blog:link:export', '#', 'admin', sysdate(), '', null, '');
-
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, query, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, remark)
+values  (1, '系统管理', 0, 1, 'system', null, '', 1, 0, 'M', '0', '0', '', 'system', 'admin', '系统管理目录'),
+        (2, '系统监控', 0, 2, 'monitor', null, '', 1, 0, 'M', '0', '0', '', 'monitor', 'admin', '系统监控目录'),
+        (3, '系统工具', 0, 3, 'tool', null, '', 1, 0, 'M', '0', '0', '', 'tool', 'admin', '系统工具目录'),
+        (4, 'Dimple官网', 0, 10, 'http://bianxf.com', null, '', 0, 0, 'M', '0', '0', '', 'guide', 'admin', 'Dimple官网地址'),
+        (5, '日志管理', 0, 9, 'log', '', '', 1, 0, 'M', '0', '0', '', 'log', 'admin', '日志管理菜单'),
+        (6, '博客管理', 0, 6, 'blog', '', '', 1, 0, 'M', '0', '0', '', 'post', 'admin', 'Blog管理菜单'),
+        (100, '用户管理', 1, 1, 'user', 'system/user/index', '', 1, 0, 'C', '0', '0', 'system:user:list', 'user', 'admin', '用户管理菜单'),
+        (101, '角色管理', 1, 2, 'role', 'system/role/index', '', 1, 0, 'C', '0', '0', 'system:role:list', 'peoples', 'admin', '角色管理菜单'),
+        (102, '菜单管理', 1, 3, 'menu', 'system/menu/index', '', 1, 0, 'C', '0', '0', 'system:menu:list', 'tree-table', 'admin', '菜单管理菜单'),
+        (105, '字典管理', 1, 6, 'dict', 'system/dict/index', '', 1, 0, 'C', '0', '0', 'system:dict:list', 'dict', 'admin', '字典管理菜单'),
+        (106, '参数设置', 1, 7, 'config', 'system/config/index', '', 1, 0, 'C', '0', '0', 'system:config:list', 'edit', 'admin', '参数设置菜单'),
+        (107, '通知公告', 1, 8, 'notice', 'system/notice/index', '', 1, 0, 'C', '0', '0', 'system:notice:list', 'message', 'admin', '通知公告菜单'),
+        (108, 'Redis监控', 2, 1, 'online', 'monitor/redis/index', '', 1, 0, 'C', '0', '0', 'monitor:redis:list', 'online', 'admin', 'Redis监控菜单'),
+        (109, '在线用户', 2, 1, 'online', 'monitor/online/index', '', 1, 0, 'C', '0', '0', 'monitor:online:list', 'online', 'admin', '在线用户菜单'),
+        (111, 'Sentinel控制台', 2, 3, 'http://localhost:8718', '', '', 0, 0, 'C', '0', '0', 'monitor:sentinel:list', 'sentinel', 'admin', '流量控制菜单'),
+        (112, 'Nacos控制台', 2, 4, 'http://localhost:8848/nacos', '', '', 0, 0, 'C', '0', '0', 'monitor:nacos:list', 'nacos', 'admin', '服务治理菜单'),
+        (113, 'Admin控制台', 2, 5, 'http://localhost:9100/login', '', '', 0, 0, 'C', '0', '0', 'monitor:server:list', 'server', 'admin', '服务监控菜单'),
+        (110, '定时任务', 3, 2, 'job', 'monitor/job/index', '', 1, 0, 'C', '0', '0', 'monitor:job:list', 'job', 'admin', '定时任务菜单'),
+        (114, '表单构建', 3, 1, 'build', 'tool/build/index', '', 1, 0, 'C', '0', '0', 'tool:build:list', 'build', 'admin', '表单构建菜单'),
+        (115, '代码生成', 3, 2, 'gen', 'tool/gen/index', '', 1, 0, 'C', '0', '0', 'tool:gen:list', 'code', 'admin', '代码生成菜单'),
+        (116, '系统接口', 3, 3, 'http://localhost:8080/swagger-ui/index.html', '', '', 0, 0, 'C', '0', '0', 'tool:swagger:list', 'swagger', 'admin', '系统接口菜单'),
+        (500, '操作日志', 5, 1, 'operlog', 'log/operlog/index', '', 1, 0, 'C', '0', '0', 'log:operlog:list', 'form', 'admin', '操作日志菜单'),
+        (501, '登录日志', 5, 2, 'logininfor', 'log/logininfor/index', '', 1, 0, 'C', '0', '0', 'log:logininfor:list', 'logininfor', 'admin', '登录日志菜单'),
+        (601, '文章管理', 6, 1, 'article', 'blog/article/index', null, 1, 0, 'C', '0', '0', 'blog:article:list', 'edit', 'admin', '文章菜单'),
+        (602, '分类管理', 6, 1, 'category', 'blog/category/index', null, 1, 0, 'C', '0', '0', 'blog:category:list', 'skill', 'admin', '分类菜单'),
+        (603, '评论管理', 6, 1, 'comment', 'blog/comment/index', null, 1, 0, 'C', '0', '0', 'blog:comment:list', 'message', 'admin', '评论菜单'),
+        (604, '标签管理', 6, 1, 'tag', 'blog/tag/index', null, 1, 0, 'C', '0', '0', 'blog:tag:list', 'row', 'admin', '标签菜单'),
+        (605, '友链管理', 6, 1, 'link', 'blog/link/index', null, 1, 0, 'C', '0', '0', 'blog:link:list', 'edit', 'admin', '友链菜单'),
+        (1000, '用户查询', 100, 1, '', '', '', 1, 0, 'F', '0', '0', 'system:user:query', '#', 'admin', ''),
+        (1001, '用户新增', 100, 2, '', '', '', 1, 0, 'F', '0', '0', 'system:user:add', '#', 'admin', ''),
+        (1002, '用户修改', 100, 3, '', '', '', 1, 0, 'F', '0', '0', 'system:user:edit', '#', 'admin', ''),
+        (1003, '用户删除', 100, 4, '', '', '', 1, 0, 'F', '0', '0', 'system:user:remove', '#', 'admin', ''),
+        (1004, '用户导出', 100, 5, '', '', '', 1, 0, 'F', '0', '0', 'system:user:export', '#', 'admin', ''),
+        (1005, '用户导入', 100, 6, '', '', '', 1, 0, 'F', '0', '0', 'system:user:import', '#', 'admin', ''),
+        (1006, '重置密码', 100, 7, '', '', '', 1, 0, 'F', '0', '0', 'system:user:resetPwd', '#', 'admin', ''),
+        (1007, '角色查询', 101, 1, '', '', '', 1, 0, 'F', '0', '0', 'system:role:query', '#', 'admin', ''),
+        (1008, '角色新增', 101, 2, '', '', '', 1, 0, 'F', '0', '0', 'system:role:add', '#', 'admin', ''),
+        (1009, '角色修改', 101, 3, '', '', '', 1, 0, 'F', '0', '0', 'system:role:edit', '#', 'admin', ''),
+        (1010, '角色删除', 101, 4, '', '', '', 1, 0, 'F', '0', '0', 'system:role:remove', '#', 'admin', ''),
+        (1011, '角色导出', 101, 5, '', '', '', 1, 0, 'F', '0', '0', 'system:role:export', '#', 'admin', ''),
+        (1012, '菜单查询', 102, 1, '', '', '', 1, 0, 'F', '0', '0', 'system:menu:query', '#', 'admin', ''),
+        (1013, '菜单新增', 102, 2, '', '', '', 1, 0, 'F', '0', '0', 'system:menu:add', '#', 'admin', ''),
+        (1014, '菜单修改', 102, 3, '', '', '', 1, 0, 'F', '0', '0', 'system:menu:edit', '#', 'admin', ''),
+        (1015, '菜单删除', 102, 4, '', '', '', 1, 0, 'F', '0', '0', 'system:menu:remove', '#', 'admin', ''),
+        (1025, '字典查询', 105, 1, '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:query', '#', 'admin', ''),
+        (1026, '字典新增', 105, 2, '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:add', '#', 'admin', ''),
+        (1027, '字典修改', 105, 3, '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:edit', '#', 'admin', ''),
+        (1028, '字典删除', 105, 4, '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:remove', '#', 'admin', ''),
+        (1029, '字典导出', 105, 5, '#', '', '', 1, 0, 'F', '0', '0', 'system:dict:export', '#', 'admin', ''),
+        (1030, '参数查询', 106, 1, '#', '', '', 1, 0, 'F', '0', '0', 'system:config:query', '#', 'admin', ''),
+        (1031, '参数新增', 106, 2, '#', '', '', 1, 0, 'F', '0', '0', 'system:config:add', '#', 'admin', ''),
+        (1032, '参数修改', 106, 3, '#', '', '', 1, 0, 'F', '0', '0', 'system:config:edit', '#', 'admin', ''),
+        (1033, '参数删除', 106, 4, '#', '', '', 1, 0, 'F', '0', '0', 'system:config:remove', '#', 'admin', ''),
+        (1034, '参数导出', 106, 5, '#', '', '', 1, 0, 'F', '0', '0', 'system:config:export', '#', 'admin', ''),
+        (1035, '公告查询', 107, 1, '#', '', '', 1, 0, 'F', '0', '0', 'system:notice:query', '#', 'admin', ''),
+        (1036, '公告新增', 107, 2, '#', '', '', 1, 0, 'F', '0', '0', 'system:notice:add', '#', 'admin', ''),
+        (1037, '公告修改', 107, 3, '#', '', '', 1, 0, 'F', '0', '0', 'system:notice:edit', '#', 'admin', ''),
+        (1038, '公告删除', 107, 4, '#', '', '', 1, 0, 'F', '0', '0', 'system:notice:remove', '#', 'admin', ''),
+        (1046, '在线查询', 109, 1, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:query', '#', 'admin', ''),
+        (1047, '批量强退', 109, 2, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:batchLogout', '#', 'admin', ''),
+        (1048, '单条强退', 109, 3, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:forceLogout', '#', 'admin', ''),
+        (1049, '任务查询', 110, 1, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:query', '#', 'admin', ''),
+        (1050, '任务新增', 110, 2, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:add', '#', 'admin', ''),
+        (1051, '任务修改', 110, 3, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:edit', '#', 'admin', ''),
+        (1052, '任务删除', 110, 4, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:remove', '#', 'admin', ''),
+        (1053, '状态修改', 110, 5, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:changeStatus', '#', 'admin', ''),
+        (1054, '任务导出', 110, 6, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:export', '#', 'admin', ''),
+        (1055, '生成查询', 115, 1, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:query', '#', 'admin', ''),
+        (1056, '生成修改', 115, 2, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:edit', '#', 'admin', ''),
+        (1057, '生成删除', 115, 3, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:remove', '#', 'admin', ''),
+        (1058, '导入代码', 115, 2, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import', '#', 'admin', ''),
+        (1059, '预览代码', 115, 4, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', ''),
+        (1060, '生成代码', 115, 5, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', ''),
+        (1039, '操作查询', 500, 1, '#', '', '', 1, 0, 'F', '0', '0', 'log:operlog:query', '#', 'admin', ''),
+        (1040, '操作删除', 500, 2, '#', '', '', 1, 0, 'F', '0', '0', 'log:operlog:remove', '#', 'admin', ''),
+        (1041, '日志导出', 500, 3, '#', '', '', 1, 0, 'F', '0', '0', 'log:operlog:export', '#', 'admin', ''),
+        (1042, '登录查询', 501, 1, '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:query', '#', 'admin', ''),
+        (1043, '登录删除', 501, 2, '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:remove', '#', 'admin', ''),
+        (1044, '日志导出', 501, 3, '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:export', '#', 'admin', ''),
+        (1045, '账户解锁', 501, 4, '#', '', '', 1, 0, 'F', '0', '0', 'system:user:unlock', '#', 'admin', ''),
+        (2000, '文章查询', 601, 1, '#', '', null, 1, 0, 'F', '0', '0', 'blog:article:query', '#', 'admin', ''),
+        (2001, '文章新增', 601, 2, '#', '', null, 1, 0, 'F', '0', '0', 'blog:article:add', '#', 'admin', ''),
+        (2002, '文章修改', 601, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:article:edit', '#', 'admin', ''),
+        (2003, '文章删除', 601, 4, '#', '', null, 1, 0, 'F', '0', '0', 'blog:article:remove', '#', 'admin', ''),
+        (2004, '文章导出', 601, 5, '#', '', null, 1, 0, 'F', '0', '0', 'blog:article:export', '#', 'admin', ''),
+        (2005, '分类查询', 602, 1, '#', '', null, 1, 0, 'F', '0', '0', 'blog:category:query', '#', 'admin', ''),
+        (2006, '分类新增', 602, 2, '#', '', null, 1, 0, 'F', '0', '0', 'blog:category:add', '#', 'admin', ''),
+        (2007, '分类修改', 602, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:category:edit', '#', 'admin', ''),
+        (2008, '分类删除', 602, 4, '#', '', null, 1, 0, 'F', '0', '0', 'blog:category:remove', '#', 'admin', ''),
+        (2009, '分类导出', 602, 5, '#', '', null, 1, 0, 'F', '0', '0', 'blog:category:export', '#', 'admin', ''),
+        (2010, '评论查询', 603, 1, '#', '', null, 1, 0, 'F', '0', '0', 'blog:comment:query', '#', 'admin', ''),
+        (2011, '评论修改', 603, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:comment:edit', '#', 'admin', ''),
+        (2012, '评论删除', 603, 4, '#', '', null, 1, 0, 'F', '0', '0', 'blog:comment:remove', '#', 'admin', ''),
+        (2013, '评论导出', 603, 5, '#', '', null, 1, 0, 'F', '0', '0', 'blog:comment:export', '#', 'admin', ''),
+        (2014, '标签查询', 604, 1, '#', '', null, 1, 0, 'F', '0', '0', 'blog:tag:query', '#', 'admin', ''),
+        (2015, '标签新增', 604, 2, '#', '', null, 1, 0, 'F', '0', '0', 'blog:tag:add', '#', 'admin', ''),
+        (2016, '标签修改', 604, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:tag:edit', '#', 'admin', ''),
+        (2017, '标签删除', 604, 4, '#', '', null, 1, 0, 'F', '0', '0', 'blog:tag:remove', '#', 'admin', ''),
+        (2018, '标签导出', 604, 5, '#', '', null, 1, 0, 'F', '0', '0', 'blog:tag:export', '#', 'admin', ''),
+        (2019, '友链查询', 605, 1, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:query', '#', 'admin', ''),
+        (2020, '友链新增', 605, 2, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:add', '#', 'admin', ''),
+        (2021, '友链修改', 605, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:edit', '#', 'admin', ''),
+        (2022, '友链删除', 605, 4, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:remove', '#', 'admin', ''),
+        (2023, '友链导出', 605, 5, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:export', '#', 'admin', '');
 -- ----------------------------
 -- 用户和角色关联表  用户N-1角色
 -- ----------------------------
