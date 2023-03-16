@@ -57,14 +57,14 @@ services:
     image: nginx
     privileged: true
     build:
-      context: ./nginx
+      context: nginx-admin
     ports:
-      - "80:80"
+      - "81:80"
     volumes:
-      - ./nginx/html/dist/:/home/dimple/projects/dimple-ui-admin/
-      - ./nginx/conf/nginx.conf:/etc/nginx/dimple-ui-admin/nginx.conf
-      - ./nginx/logs:/var/log/dimple-ui-admin/nginx
-      - ./nginx/conf.d:/etc/nginx/dimple-ui-admin/conf.d
+      - ./nginx-admin/html/dist/:/home/dimple/projects/dimple-ui-admin/
+      - ./nginx-admin/conf/nginx.conf:/etc/nginx/dimple-ui-admin/nginx.conf
+      - ./nginx-admin/logs:/var/log/dimple-ui-admin/nginx
+      - ./nginx-admin/conf.d:/etc/nginx/dimple-ui-admin/conf.d
     depends_on:
       - dimple-gateway
     links:
@@ -74,14 +74,14 @@ services:
     image: nginx
     privileged: true
     build:
-      context: ./nginx
+      context: nginx-admin
     ports:
       - "80:80"
     volumes:
-      - ./nginx/html/dist/:/home/dimple/projects/dimple-ui-blog/
-      - ./nginx/conf/nginx.conf:/etc/nginx/dimple-ui-blog/nginx.conf
-      - ./nginx/logs:/var/log/dimple-ui-blog/nginx
-      - ./nginx/conf.d:/etc/nginx/dimple-ui-blog/conf.d
+      - ./nginx-blog/html/dist/:/home/dimple/projects/dimple-ui-blog/
+      - ./nginx-blog/conf/nginx.conf:/etc/nginx/dimple-ui-blog/nginx.conf
+      - ./nginx-blog/logs:/var/log/dimple-ui-blog/nginx
+      - ./nginx-blog/conf.d:/etc/nginx/dimple-ui-blog/conf.d
     depends_on:
       - dimple-gateway
     links:
