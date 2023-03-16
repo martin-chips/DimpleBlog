@@ -31,7 +31,8 @@ clean_sql() {
 
 clean_html() {
   echo "begin clean html "
-  rm -rf $PROJECT_DOCKER_PATH/nginx/html/dist/*
+  rm -rf $PROJECT_DOCKER_PATH/nginx-admin/html/dist/*
+  rm -rf $PROJECT_DOCKER_PATH/nginx-blog/html/dist/*
 }
 
 cp_sql() {
@@ -49,13 +50,13 @@ cp_jar() {
   /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-auth/target/dimple-auth.jar $PROJECT_DOCKER_PATH/dimple/auth/jar
 
   echo "begin copy dimple-modules-blog "
-  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-blog/dimple-blog-web/target/dimple-modules-blog.jar $PROJECT_DOCKER_PATH/dimple/modules/blog/jar
+  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-blog/dimple-blog-web/target/dimple-modules-blog-web.jar $PROJECT_DOCKER_PATH/dimple/modules/blog/jar
 
   echo "begin copy dimple-modules-blog-front "
-  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-blog-front/dimple-blog-front-web/target/dimple-modules-blog-front.jar $PROJECT_DOCKER_PATH/dimple/modules/blog-front/jar
+  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-blog-front/dimple-blog-front-web/target/dimple-modules-blog-front-web.jar $PROJECT_DOCKER_PATH/dimple/modules/blog-front/jar
 
   echo "begin copy dimple-modules-file "
-  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-file/dimple-file-web/target/dimple-modules-file.jar $PROJECT_DOCKER_PATH/dimple/modules/file/jar
+  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-file/dimple-file-web/target/dimple-modules-file-web.jar $PROJECT_DOCKER_PATH/dimple/modules/file/jar
 
  echo "begin copy dimple-modules-gen "
   /bin/cp -rf   $PROJECT_ROOT_PATH/dimple-modules/dimple-gen/target/dimple-modules-gen.jar  $PROJECT_DOCKER_PATH/dimple/modules/gen/jar
@@ -67,10 +68,10 @@ cp_jar() {
   /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-log/dimple-log-web/target/dimple-modules-log-web.jar $PROJECT_DOCKER_PATH/dimple/modules/log/jar
 
   echo "begin copy dimple-modules-monitor "
-  /bin/cp -rf   $PROJECT_ROOT_PATH/dimple-modules/dimple-monitor/target/dimple-modules-monitor.jar  $PROJECT_DOCKER_PATH/dimple/modules/monitor/jar
+  /bin/cp -rf   $PROJECT_ROOT_PATH/dimple-modules/dimple-monitor/target/dimple-modules-monitor--web.jar  $PROJECT_DOCKER_PATH/dimple/modules/monitor/jar
 
   echo "begin copy dimple-modules-system "
-  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-system/dimple-system-web/target/dimple-modules-system.jar $PROJECT_DOCKER_PATH/dimple/modules/system/jar
+  /bin/cp -rf  $PROJECT_ROOT_PATH/dimple-modules/dimple-system/dimple-system-web/target/dimple-modules-system--web.jar $PROJECT_DOCKER_PATH/dimple/modules/system/jar
 }
 
 cp_html() {
