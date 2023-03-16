@@ -62,7 +62,7 @@ init() {
   cd ..
   mvn clean package -Dmaven.test.skip=true
   echo 'start compile ui'
-  cd dimple-ui
+  cd dimple-ui-admin
   npm install
   npm run build:prod
   echo 'start copy files'
