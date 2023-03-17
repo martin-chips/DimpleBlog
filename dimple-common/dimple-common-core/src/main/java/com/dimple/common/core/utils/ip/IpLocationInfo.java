@@ -17,6 +17,6 @@ public class IpLocationInfo {
     private String isp;
 
     public String getLocationInfo() {
-        return country + province + country + isp;
+        return country + province + city + isp;
     }
 }

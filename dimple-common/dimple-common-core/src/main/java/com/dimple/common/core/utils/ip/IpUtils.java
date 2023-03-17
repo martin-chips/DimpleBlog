@@ -5,6 +5,7 @@ import com.dimple.common.core.utils.StringUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.xdb.Searcher;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class IpUtils {
         // 1、从 dbPath 中预先加载 VectorIndex 缓存，并且把这个得到的数据作为全局变量，后续反复使用。
         byte[] vIndex = new byte[0];
         try {
-            ip2region_db_path = IpUtils.class.getClassLoader().getResource("ip2region/ip2region.xdb").getPath();
+            ip2region_db_path = new ClassPathResource("ip2region/ip2region.xdb").getPath();
             vIndex = Searcher.loadVectorIndexFromFile(ip2region_db_path);
         } catch (Exception e) {
             log.error("failed to load vector index from {},", ip2region_db_path, e);
@@ -79,7 +80,7 @@ public class IpUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(getIpLocationInfo("127.0.0.1"));
+        System.out.println(getIpLocation("220.196.160.51"));
     }
 
     public static String getServletIp() {

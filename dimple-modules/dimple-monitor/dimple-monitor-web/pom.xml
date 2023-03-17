@@ -18,7 +18,6 @@
         <dependency>
             <groupId>com.dimple</groupId>
             <artifactId>dimple-modules-monitor-service</artifactId>
-            <version>${dimple.version}</version>
         </dependency>
     </dependencies>
 

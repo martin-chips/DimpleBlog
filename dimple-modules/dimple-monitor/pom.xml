@@ -19,4 +19,14 @@
     <description>
         Dimple-modules-Monitor业务模块
     </description>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.dimple</groupId>
+                <artifactId>dimple-modules-monitor-service</artifactId>
+                <version>${dimple.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
