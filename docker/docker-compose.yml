@@ -3,10 +3,14 @@ services:
   dimple-nacos:
     container_name: dimple-nacos
     image: nacos/nacos-server
+    hostname: dimple-nacos
     build:
       context: ./nacos
     environment:
       - MODE=standalone
+      - JVM_XMS=512m
+      - JVM_XMX=512m
+      - JVM_XMN=128m
     volumes:
       - ./nacos/logs/:/home/nacos/logs
       - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
@@ -19,6 +23,7 @@ services:
   dimple-mysql:
     container_name: dimple-mysql
     image: mysql
+    hostname: dimple-mysql
     build:
       context: ./mysql
     security_opt:
@@ -40,9 +45,14 @@ services:
     environment:
       MYSQL_DATABASE: 'dimple-cloud'
       MYSQL_ROOT_PASSWORD: password
+    deploy:
+      resources:
+        limits:
+          memory: 512M
   dimple-redis:
     container_name: dimple-redis
     image: redis
+    hostname: dimple-redis
     build:
       context: ./redis
     ports:
@@ -52,6 +62,10 @@ services:
       - ./redis/data:/data
       - ./redis/logs:/logs
     command: redis-server /home/dimple/redis/redis.conf
+    deploy:
+      resources:
+        limits:
+          memory: 512M
   dimple-ui-admin:
     container_name: dimple-ui-admin
     image: nginx
@@ -59,7 +73,7 @@ services:
     build:
       context: nginx-admin
     ports:
-      - "81:80"
+      - "81:81"
     volumes:
       - ./nginx-admin/html/dist/:/home/dimple/projects/dimple-ui-admin/
       - ./nginx-admin/conf/nginx.conf:/etc/nginx/dimple-ui-admin/nginx.conf
@@ -69,12 +83,16 @@ services:
       - dimple-gateway
     links:
       - dimple-gateway
+    deploy:
+      resources:
+        limits:
+          memory: 256M
   dimple-ui-blog:
     container_name: dimple-ui-blog
     image: nginx
     privileged: true
     build:
-      context: nginx-admin
+      context: nginx-blog
     ports:
       - "80:80"
     volumes:
@@ -84,8 +102,13 @@ services:
       - ./nginx-blog/conf.d:/etc/nginx/dimple-ui-blog/conf.d
     depends_on:
       - dimple-gateway
+      - dimple-modules-blog-front
     links:
       - dimple-gateway
+    deploy:
+      resources:
+        limits:
+          memory: 256M
   dimple-gateway:
     container_name: dimple-gateway
     build:
@@ -97,6 +120,8 @@ services:
       - dimple-redis
     links:
       - dimple-redis
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
   dimple-auth:
     container_name: dimple-auth
     build:
@@ -108,6 +133,8 @@ services:
       - dimple-redis
     links:
       - dimple-redis
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
   dimple-modules-system:
     container_name: dimple-modules-system
     build:
@@ -121,6 +148,8 @@ services:
     links:
       - dimple-redis
       - dimple-mysql
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
   dimple-modules-job:
     container_name: dimple-modules-job
     build:
@@ -132,6 +161,8 @@ services:
       - dimple-mysql
     links:
       - dimple-mysql
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
   dimple-modules-file:
     container_name: dimple-modules-file
     build:
@@ -141,6 +172,8 @@ services:
       - "9300:9300"
     volumes:
       - ./file/uploadPath:/home/dimple/uploadPath
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
   dimple-modules-monitor:
     container_name: dimple-modules-monitor
     build:
@@ -148,11 +181,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9100:9100"
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
   dimple-modules-blog:
     container_name: dimple-modules-blog
     build:
       context: ./dimple/modules/blog/
       dockerfile: Dockerfile
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
     ports:
       - "9401:9401"
     depends_on:
@@ -167,15 +204,17 @@ services:
       context: ./dimple/modules/blog-front/
       dockerfile: Dockerfile
     ports:
-      - "9300:9300"
+      - "9500:9500"
     depends_on:
       - dimple-redis
       - dimple-mysql
     links:
       - dimple-redis
       - dimple-mysql
-  dimple-modules-blog-log:
-    container_name: dimple-modules-blog-log
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+  dimple-modules-log:
+    container_name: dimple-modules-log
     build:
       context: ./dimple/modules/log/
       dockerfile: Dockerfile
@@ -187,3 +226,5 @@ services:
     links:
       - dimple-redis
       - dimple-mysql
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m

@@ -30,12 +30,12 @@ port() {
 # 'docker compose logs dimple-nacos'.
 # restart nacos by using 'docker compose restart dimple-nacos'
 base() {
-  docker compose up -d dimple-mysql dimple-redis dimple-nacos
+  docker compose --compatibility up -d dimple-mysql dimple-redis dimple-nacos
 }
 
 # The Program Modules (Required)
 modules() {
-  docker compose up -d --build dimple-ui-admin dimple-ui-blog dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front
+  docker compose --compatibility up -d --build dimple-ui-admin dimple-ui-blog dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
 }
 
 # Stop all modules which contains base environment and program modules.
@@ -46,6 +46,7 @@ stop() {
 # Remove all modules which contains base environment and program modules.
 rm() {
   docker compose rm
+  docker images|grep none|awk '{print $3}'|xargs docker rmi
 }
 
 down() {
