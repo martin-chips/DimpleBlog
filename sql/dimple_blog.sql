@@ -7,7 +7,7 @@ create table blog_article
         primary key,
     title          varchar(255) not null comment 'article title',
     header_image   varchar(255) not null default '' comment 'article header image',
-    content        text         not null default '' comment 'article content',
+    content        text         not null comment 'article content',
     category_id    bigint                default -1 not null comment 'article category id',
     original       tinyint      not null default 1 comment 'is original, 1 yes, 0 no',
     summary        varchar(512) not null default '' comment 'article summary,max length 512',
@@ -20,10 +20,12 @@ create table blog_article
 )
     comment 'Blog article';
 
-insert into blog_article (id, title, header_image, content, category_id, original, summary, article_status, like_count, create_by, create_time, update_by, update_time)
-values  (-2000, '关于我', 'http://rrfyveqgo.hn-bkt.clouddn.com/lake-g57a1ac87a_1920.jpgd85e5.jpg', '<p align="center"><a href="https://www.bianxf.com">Hello, I''m Martin. I do open source!</a></p>
+insert into blog_article (id, title, header_image, content, category_id, original, summary, article_status, like_count,
+                          create_by, create_time, update_by, update_time)
+values (-2000, '关于我', 'http://rrfyveqgo.hn-bkt.clouddn.com/lake-g57a1ac87a_1920.jpgd85e5.jpg', '<p align="center"><a href="https://www.bianxf.com">Hello, I''m Martin. I do open source!</a></p>
 
 <br />
+
 
 I''m a passionate developer from China
 
@@ -47,7 +49,7 @@ I''m a passionate developer from China
 
 <br />
 <br />
-', 0, 1, null, 1, 0, 'Dimple', sysdate(), null, null);
+', 0, 1, '', 1, 0, 'Dimple', sysdate(), null, null);
 drop table if exists blog_category;
 create table blog_category
 (

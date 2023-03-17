@@ -101,7 +101,7 @@ create table sys_menu
     status      char(1)      default 0 comment '菜单状态（0正常 1停用）',
     perms       varchar(100) default null comment '权限标识',
     icon        varchar(100) default '#' comment '菜单图标',
-    create_by   varchar(64)  default sysdate() comment '创建者',
+    create_by   varchar(64)  default '' comment '创建者',
     create_time datetime default now() comment '创建时间',
     update_by   varchar(64)  default '' comment '更新者',
     update_time datetime comment '更新时间',
