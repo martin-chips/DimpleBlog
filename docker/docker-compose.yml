@@ -66,43 +66,23 @@ services:
       resources:
         limits:
           memory: 512M
-  dimple-ui-admin:
-    container_name: dimple-ui-admin
+  dimple-ui:
+    container_name: dimple-ui
     image: nginx
     privileged: true
     build:
-      context: nginx-admin
-    ports:
-      - "81:81"
-    volumes:
-      - ./nginx-admin/html/dist/:/home/dimple/projects/dimple-ui-admin/
-      - ./nginx-admin/conf/nginx.conf:/etc/nginx/dimple-ui-admin/nginx.conf
-      - ./nginx-admin/logs:/var/log/dimple-ui-admin/nginx
-      - ./nginx-admin/conf.d:/etc/nginx/dimple-ui-admin/conf.d
-    depends_on:
-      - dimple-gateway
-    links:
-      - dimple-gateway
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-  dimple-ui-blog:
-    container_name: dimple-ui-blog
-    image: nginx
-    privileged: true
-    build:
-      context: nginx-blog
+      context: nginx
     ports:
       - "80:80"
+      - "81:81"
     volumes:
-      - ./nginx-blog/html/dist/:/home/dimple/projects/dimple-ui-blog/
+      - ./nginx-blog/admin/dist/:/home/dimple/projects/dimple-ui-admin/
+      - ./nginx-blog/blog/dist/:/home/dimple/projects/dimple-ui-blog/
       - ./nginx-blog/conf/nginx.conf:/etc/nginx/dimple-ui-blog/nginx.conf
       - ./nginx-blog/logs:/var/log/dimple-ui-blog/nginx
       - ./nginx-blog/conf.d:/etc/nginx/dimple-ui-blog/conf.d
     depends_on:
       - dimple-gateway
-      - dimple-modules-blog-front
     links:
       - dimple-gateway
     deploy:

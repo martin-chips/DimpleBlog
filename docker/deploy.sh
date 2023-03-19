@@ -35,7 +35,7 @@ base() {
 
 # The Program Modules (Required)
 modules() {
-  docker compose --compatibility up -d --build dimple-ui-admin dimple-ui-blog dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
+  docker compose --compatibility up -d --build dimple-ui dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
 }
 
 # Stop all modules which contains base environment and program modules.
@@ -76,8 +76,8 @@ init() {
 }
 
 start() {
-  base
   init
+  base
   docker compose restart dimple-nacos
   sleep 10
   modules

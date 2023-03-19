@@ -31,8 +31,8 @@ clean_sql() {
 
 clean_html() {
   echo "begin clean html "
-  rm -rf $PROJECT_DOCKER_PATH/nginx-admin/html/dist/*
-  rm -rf $PROJECT_DOCKER_PATH/nginx-blog/html/dist/*
+  rm -rf $PROJECT_DOCKER_PATH/nginx/admin/dist/*
+  rm -rf $PROJECT_DOCKER_PATH/nginx/blog/dist/*
 }
 
 cp_sql() {
@@ -77,10 +77,10 @@ cp_jar() {
 cp_html() {
   # copy html
   echo "begin copy html "
-  mkdir -p $PROJECT_DOCKER_PATH/nginx-admin/html/dist
-  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-admin/dist/** $PROJECT_DOCKER_PATH/nginx-admin/html/dist
-  mkdir -p $PROJECT_DOCKER_PATH/nginx-blog/html/dist
-  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-blog/dist/** $PROJECT_DOCKER_PATH/nginx-blog/html/dist
+  mkdir -p $PROJECT_DOCKER_PATH/nginx/admin/dist
+  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-admin/dist/** $PROJECT_DOCKER_PATH/nginx/admin/dist
+  mkdir -p $PROJECT_DOCKER_PATH/nginx/blog/dist
+  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-blog/dist/** $PROJECT_DOCKER_PATH/nginx/blog/dist
 }
 
 
