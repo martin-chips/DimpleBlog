@@ -63,6 +63,7 @@ init() {
   sed -i "s/$default_password/$input_password/g" ./redis/conf/redis.conf
   sed -i "s/$default_password/$input_password/g" ./nacos/conf/application.properties
   sed -i "s/$default_password/$input_password/g" ./mysql/db/*
+  sed -i "s/$default_password/$input_password/g" ./docker-compose.yml
 }
 
 build(){
