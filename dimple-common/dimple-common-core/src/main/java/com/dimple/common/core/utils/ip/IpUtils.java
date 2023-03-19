@@ -4,15 +4,13 @@ import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.StringUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.lionsoul.ip2region.xdb.Searcher;
-import org.springframework.core.io.ClassPathResource;
 
-import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Objects;
 
 /**
  * 获取IP方法
@@ -21,35 +19,7 @@ import java.util.Objects;
  */
 @Slf4j
 public class IpUtils {
-    private static String ip2region_db_path;
-    private static Searcher searcher = null;
 
-    static {
-        // 1、从 dbPath 中预先加载 VectorIndex 缓存，并且把这个得到的数据作为全局变量，后续反复使用。
-        byte[] vIndex = new byte[0];
-        try {
-            ip2region_db_path = new ClassPathResource("ip2region/ip2region.xdb").getPath();
-            vIndex = Searcher.loadVectorIndexFromFile(ip2region_db_path);
-        } catch (Exception e) {
-            log.error("failed to load vector index from {},", ip2region_db_path, e);
-        }
-
-        // 2、使用全局的 vIndex 创建带 VectorIndex 缓存的查询对象。
-        try {
-            searcher = Searcher.newWithVectorIndex(ip2region_db_path, vIndex);
-        } catch (Exception e) {
-            log.error("failed to create vectorIndex cached searcher with {}", ip2region_db_path, e);
-        }
-    }
-
-    @PreDestroy
-    public void close() throws IOException {
-        log.info("start close search.");
-        if (Objects.isNull(searcher)) {
-            return;
-        }
-        searcher.close();
-    }
 
     @SneakyThrows
     public static String getIpLocation(String ip) {
@@ -63,6 +33,8 @@ public class IpUtils {
     public static IpLocationInfo getIpLocationInfo(String ip) {
         IpLocationInfo ipLocationInfo = new IpLocationInfo();
         try {
+            InputStream stream = IpUtils.class.getResourceAsStream("/ip2region/ip2region.xdb");
+            Searcher searcher = Searcher.newWithBuffer(IOUtils.toByteArray(stream));
             String region = searcher.search(ip);
             String[] ipRegionArr = region.split("\\|");
             if (ipRegionArr.length == 5) {
