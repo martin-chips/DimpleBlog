@@ -38,8 +38,6 @@ clean_html() {
 cp_sql() {
   echo "begin cp sql "
   /bin/cp -rf $PROJECT_ROOT_PATH/sql/*.sql $PROJECT_DOCKER_PATH/mysql/db
-  mkdir -p $PROJECT_DOCKER_PATH/mysql/sql
-  /bin/cp -rf $PROJECT_ROOT_PATH/sql/*.sql $PROJECT_DOCKER_PATH/mysql/sql
 }
 
 cp_jar() {

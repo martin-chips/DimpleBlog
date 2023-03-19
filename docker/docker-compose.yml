@@ -44,7 +44,7 @@ services:
         ]
     environment:
       MYSQL_DATABASE: 'dimple-cloud'
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: Di^&7so@c@drxMe4
     deploy:
       resources:
         limits:

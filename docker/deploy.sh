@@ -47,18 +47,25 @@ stop() {
 rm() {
   docker compose rm
   docker images|grep none|awk '{print $3}'|xargs docker rmi
-}
-
-down() {
-  docker compose down
+  docker images|grep dimple|awk '{print $3}'|xargs docker rmi
 }
 
 # Build the maven jar package and compile the UI, then copy all file to the dir.
 init() {
   echo 'Add the execute permission to the env script'
   chmod +x env.sh
-  echo 'call the rm function.'
-  ./env.sh rm
+  ./en env.sh clean
+  build
+  default_password="Di^&7so@c@drxMe4"
+  echo "please input the password:(We strongly recommend that you change the default password: ${default_password} )"
+  read input_password
+  echo "start change default password to $input_password"
+  sed -i "s/$default_password/$input_password/g" ./redis/conf/redis.conf
+  sed -i "s/$default_password/$input_password/g" ./nacos/conf/application.properties
+  sed -i "s/$default_password/$input_password/g" ./mysql/db/*
+}
+
+build(){
   echo 'start build maven jar package'
   cd ..
   mvn clean package -Dmaven.test.skip=true
@@ -72,15 +79,8 @@ init() {
   npm run build:prod
   echo 'start copy files'
   cd ../docker
-  ./env.sh cp
-}
-
-start() {
-  init
-  base
-  docker compose restart dimple-nacos
-  sleep 10
-  modules
+  ./env.sh cp_jar
+  ./env.sh cp_html
 }
 
 # 根据输入参数，选择执行对应方法，不输入则执行使用说明

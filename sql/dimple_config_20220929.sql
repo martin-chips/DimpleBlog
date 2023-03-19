@@ -70,7 +70,7 @@ management:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
   cloud:
     gateway:
       discovery:
@@ -170,7 +170,7 @@ security:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
 ', '8bd9dada9a94822feeab40de55efced6', '2020-11-20 00:00:00', '2022-09-29 02:48:42', 'nacos', '0:0:0:0:0:0:0:1', '', '', '认证中心', 'null', 'null', 'yaml', '', ''),
     (4, 'dimple-monitor-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
@@ -185,7 +185,7 @@ spring:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
   datasource:
     druid:
       stat-view-servlet:
@@ -214,7 +214,7 @@ spring:
             driver-class-name: com.mysql.cj.jdbc.Driver
             url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
             username: root
-            password: password
+            password: Di^&7so@c@drxMe4
           # 从库数据源
           # slave:
             # username:
@@ -238,7 +238,7 @@ spring:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
   datasource:
     dynamic:
       druid:
@@ -262,7 +262,7 @@ spring:
             driver-class-name: com.mysql.cj.jdbc.Driver
             url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
             username: root
-            password: password
+            password: Di^&7so@c@drxMe4
           # 从库数据源
           # slave:
             # username:
@@ -287,12 +287,12 @@ spring:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
-    password: password
+    password: Di^&7so@c@drxMe4
 
 # mybatis配置
 mybatis:
@@ -316,7 +316,7 @@ spring:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
   datasource:
     dynamic:
       druid:
@@ -340,7 +340,7 @@ spring:
             driver-class-name: com.mysql.cj.jdbc.Driver
             url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
             username: root
-            password: password
+            password: Di^&7so@c@drxMe4
           # 从库数据源
           # slave:
             # username:
@@ -444,7 +444,7 @@ spring:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
   datasource:
     dynamic:
       druid:
@@ -468,7 +468,7 @@ spring:
             driver-class-name: com.mysql.cj.jdbc.Driver
             url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
             username: root
-            password: password
+            password: Di^&7so@c@drxMe4
           # 从库数据源
           # slave:
             # username:
@@ -493,12 +493,12 @@ spring:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
-    password: password
+    password: Di^&7so@c@drxMe4
 
 # mybatis配置
 mybatis:
@@ -529,7 +529,7 @@ spring:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
   datasource:
     dynamic:
       druid:
@@ -553,7 +553,7 @@ spring:
             driver-class-name: com.mysql.cj.jdbc.Driver
             url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
             username: root
-            password: password
+            password: Di^&7so@c@drxMe4
           # 从库数据源
           # slave:
             # username:
@@ -586,12 +586,12 @@ spring:
   redis:
     host: dimple-redis
     port: 6379
-    password: password
+    password: Di^&7so@c@drxMe4
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
-    password: password
+    password: Di^&7so@c@drxMe4
 
 # mybatis配置
 mybatis:
