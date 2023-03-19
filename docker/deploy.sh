@@ -54,7 +54,7 @@ rm() {
 init() {
   echo 'Add the execute permission to the env script'
   chmod +x env.sh
-  ./en env.sh clean
+  ./env.sh clean
   build
   default_password="Di^&7so@c@drxMe4"
   echo "please input the password:(We strongly recommend that you change the default password: ${default_password} )"
