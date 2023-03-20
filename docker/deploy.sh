@@ -47,11 +47,11 @@ init() {
   clean_html
   clean_jar
   cp_sql
-  build
-  default_password="Di^&7so@c@drxMe4"
   echo "please input the password:(We strongly recommend that you change the default password: ${default_password} )"
   # shellcheck disable=SC2162
   read input_password
+  build
+  default_password="Di^&7so@c@drxMe4"
   echo "start change default password to $input_password"
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/redis/conf/redis.conf
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/nacos/conf/application.properties

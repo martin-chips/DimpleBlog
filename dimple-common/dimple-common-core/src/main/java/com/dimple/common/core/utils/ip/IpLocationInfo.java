@@ -18,6 +18,6 @@ public class IpLocationInfo {
     private String isp;
 
     public String getLocationInfo() {
-        return StringUtils.format("{}-{}-{}-{}", country, region, province, city);
+        return StringUtils.format("{}-{}-{}-{}", country, province, city, isp);
     }
 }
