@@ -1,115 +1,116 @@
 <template>
-  <div class="share">
-    <div class="share__tags">
-      <el-tag size="small" class="tag" v-for="(tag, index) in tags" :key="index" effect="plain" type="">
-        {{ tag }}
-      </el-tag>
-    </div>
-    <div class="share__apps">
-      <a
-        href="javascript: void(0)"
-        @click="share('QQ', 'http://connect.qq.com/widget/shareqq/index.html')"
-        class="design-bg-qq"
-      ></a>
-      <a
-        href="javascript: void(0)"
-        @click="share('qzone', 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey')"
-        class="design-bg-qzone"
-      ></a>
-      <a
-        href="javascript: void(0)"
-        @click="share('sina', 'http://v.t.sina.com.cn/share/share.php')"
-        class="design-bg-sina"
-      ></a>
-      <el-popover placement="top" width="200" trigger="hover" @show="gQrcode" @hide="hideQrcode">
-        <div class="wx-qrcode">
-          <div class="wx-qrcode__title">微信扫一扫：分享</div>
-          <div id="qrcode"></div>
+    <div class="share">
+        <div class="share__tags">
+            <i class="el-icon-price-tag"/>
+            <el-tag size="small" class="tag" v-for="(tag, index) in tags" :key="index" effect="plain" type="">
+                {{ tag }}
+            </el-tag>
         </div>
-        <a href="javascript: void(0)" slot="reference" class="design-bg-weixin"></a>
-      </el-popover>
-      <a
-        href="javascript: void(0)"
-        @click="share('douban', 'http://shuo.douban.com/!service/share')"
-        class="design-bg-douban"
-      ></a>
+        <div class="share__apps">
+            <a
+                    href="javascript: void(0)"
+                    @click="share('QQ', 'http://connect.qq.com/widget/shareqq/index.html')"
+                    class="design-bg-qq"
+            ></a>
+            <a
+                    href="javascript: void(0)"
+                    @click="share('qzone', 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey')"
+                    class="design-bg-qzone"
+            ></a>
+            <a
+                    href="javascript: void(0)"
+                    @click="share('sina', 'http://v.t.sina.com.cn/share/share.php')"
+                    class="design-bg-sina"
+            ></a>
+            <el-popover placement="top" width="200" trigger="hover" @show="gQrcode" @hide="hideQrcode">
+                <div class="wx-qrcode">
+                    <div class="wx-qrcode__title">微信扫一扫：分享</div>
+                    <div id="qrcode"></div>
+                </div>
+                <a href="javascript: void(0)" slot="reference" class="design-bg-weixin"></a>
+            </el-popover>
+            <a
+                    href="javascript: void(0)"
+                    @click="share('douban', 'http://shuo.douban.com/!service/share')"
+                    class="design-bg-douban"
+            ></a>
+        </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
-  name: "share",
-  props: {
-    // 文章标签
-    tags: {
-      type: Array,
-      default() {
-        return [];
-      }
+    name: "share",
+    props: {
+        // 文章标签
+        tags: {
+            type: Array,
+            default() {
+                return [];
+            }
+        },
+        // 文章标题
+        url: {
+            type: String,
+            default: ""
+        },
+        // 文章链接
+        title: {
+            type: String,
+            default: ""
+        },
+        // 分享内容摘要
+        summary: {
+            type: String,
+            default: ""
+        }
     },
-    // 文章标题
-    url: {
-      type: String,
-      default: ""
+    data() {
+        return {};
     },
-    // 文章链接
-    title: {
-      type: String,
-      default: ""
-    },
-    // 分享内容摘要
-    summary: {
-      type: String,
-      default: ""
-    }
-  },
-  data() {
-    return {};
-  },
-  components: {},
-  methods: {
-    share(type, appUrl) {
-      const title = this.title;
-      const el = document.createElement("a");
-      // 分享的指向地址
-      let url = this.url || window.location.href;
-      let href = "";
+    components: {},
+    methods: {
+        share(type, appUrl) {
+            const title = this.title;
+            const el = document.createElement("a");
+            // 分享的指向地址
+            let url = this.url || window.location.href;
+            let href = "";
 
-      switch (type) {
-        case "QQ":
-          href = `${appUrl}?title=${title}&url=${url}&desc=${this.summary}&site=Dimple's Blog`;
-          break;
-        case "qzone":
-          href = `${appUrl}?title=${title}&url=${url}&desc=${this.summary}&site=Dimple's Blog&summary=${this.summary}`;
-          break;
-        case "sina":
-          href = `${appUrl}?title=${title}&url=${url}`;
-          break;
-        case "weixin":
-          href = `${appUrl}&url=${url}`;
-          break;
-        case "douban":
-          href = `${appUrl}?name=${title}&href=${url}`;
-      }
-      el.target = "_blank";
-      el.href = href;
-      el.click();
-    },
-    gQrcode() {
-      const url = this.url || window.location.href;
-      new QRCode(document.getElementById("qrcode"), {
-        text: url,
-        width: 160,
-        height: 160,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    },
-    hideQrcode() {
-      document.getElementById("qrcode").innerHTML = "";
+            switch (type) {
+                case "QQ":
+                    href = `${appUrl}?title=${title}&url=${url}&desc=${this.summary}&site=Dimple's Blog`;
+                    break;
+                case "qzone":
+                    href = `${appUrl}?title=${title}&url=${url}&desc=${this.summary}&site=Dimple's Blog&summary=${this.summary}`;
+                    break;
+                case "sina":
+                    href = `${appUrl}?title=${title}&url=${url}`;
+                    break;
+                case "weixin":
+                    href = `${appUrl}&url=${url}`;
+                    break;
+                case "douban":
+                    href = `${appUrl}?name=${title}&href=${url}`;
+            }
+            el.target = "_blank";
+            el.href = href;
+            el.click();
+        },
+        gQrcode() {
+            const url = this.url || window.location.href;
+            new QRCode(document.getElementById("qrcode"), {
+                text: url,
+                width: 160,
+                height: 160,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        },
+        hideQrcode() {
+            document.getElementById("qrcode").innerHTML = "";
+        }
     }
-  }
 };
 </script>
 <style lang="scss">

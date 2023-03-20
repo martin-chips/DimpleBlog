@@ -18,8 +18,6 @@ services:
       - "8848:8848"
       - "9848:9848"
       - "9849:9849"
-    depends_on:
-      - dimple-mysql
   dimple-mysql:
     container_name: dimple-mysql
     image: mysql
@@ -34,6 +32,7 @@ services:
       - ./mysql/conf:/etc/mysql/conf.d
       - ./mysql/logs:/logs
       - ./mysql/data:/var/lib/mysql
+      - ./mysql/db/:/docker-entrypoint-initdb.d
     command: [
       'mysqld',
       '--innodb-buffer-pool-size=80M',
@@ -76,19 +75,17 @@ services:
       - "80:80"
       - "81:81"
     volumes:
-      - ./nginx-blog/admin/dist/:/home/dimple/projects/dimple-ui-admin/
-      - ./nginx-blog/blog/dist/:/home/dimple/projects/dimple-ui-blog/
-      - ./nginx-blog/conf/nginx.conf:/etc/nginx/dimple-ui-blog/nginx.conf
-      - ./nginx-blog/logs:/var/log/dimple-ui-blog/nginx
-      - ./nginx-blog/conf.d:/etc/nginx/dimple-ui-blog/conf.d
-    depends_on:
-      - dimple-gateway
+      - ./nginx/admin/dist/:/home/dimple/projects/dimple-ui-admin/
+      - ./nginx/blog/dist/:/home/dimple/projects/dimple-ui-blog/
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
     links:
       - dimple-gateway
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 512M
   dimple-gateway:
     container_name: dimple-gateway
     build:
@@ -96,8 +93,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    depends_on:
-      - dimple-redis
     links:
       - dimple-redis
     environment:
@@ -109,8 +104,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9200:9200"
-    depends_on:
-      - dimple-redis
     links:
       - dimple-redis
     environment:
@@ -122,9 +115,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9201:9201"
-    depends_on:
-      - dimple-redis
-      - dimple-mysql
     links:
       - dimple-redis
       - dimple-mysql
@@ -137,8 +127,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9203:9203"
-    depends_on:
-      - dimple-mysql
     links:
       - dimple-mysql
     environment:
@@ -172,9 +160,6 @@ services:
       - JAVA_OPTS=-Xms512m -Xmx512m
     ports:
       - "9401:9401"
-    depends_on:
-      - dimple-redis
-      - dimple-mysql
     links:
       - dimple-redis
       - dimple-mysql
@@ -185,9 +170,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9500:9500"
-    depends_on:
-      - dimple-redis
-      - dimple-mysql
     links:
       - dimple-redis
       - dimple-mysql
@@ -200,9 +182,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9408:9408"
-    depends_on:
-      - dimple-redis
-      - dimple-mysql
     links:
       - dimple-redis
       - dimple-mysql

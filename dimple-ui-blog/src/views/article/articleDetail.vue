@@ -32,7 +32,7 @@
                 </div>
             </div>
             <note>
-                <p>{{ article.summary }}</p>
+                <p v-if="article.summary">{{ article.summary }}</p>
             </note>
             <div v-show="!loading" ref="viewer" class="article-detail__body ql-editor"></div>
             <ElSkeleton :rows="10" animated v-show="loading"></ElSkeleton>

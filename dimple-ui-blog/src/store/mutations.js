@@ -5,6 +5,9 @@ export default {
     setArchives(state, archives) {
         state.archives = archives
     },
+    setVisitLoginConfig(state, config) {
+        state.visitLoginConfig = config
+    },
     setCategory(state, category) {
         state.category = category
     },

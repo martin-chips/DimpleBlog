@@ -1,5 +1,6 @@
 package com.dimple.common.core.utils.ip;
 
+import com.dimple.common.core.utils.StringUtils;
 import lombok.Data;
 
 /**
@@ -17,6 +18,6 @@ public class IpLocationInfo {
     private String isp;
 
     public String getLocationInfo() {
-        return country + province + city + isp;
+        return StringUtils.format("{}-{}-{}-{}", country, region, province, city);
     }
 }

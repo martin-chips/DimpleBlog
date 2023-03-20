@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Objects;
 
 /**
  * 获取IP方法
@@ -28,6 +29,26 @@ public class IpUtils {
         }
         IpLocationInfo ipLocationInfo = getIpLocationInfo(ip);
         return ipLocationInfo.getLocationInfo();
+    }
+
+    public static String getFriendlyIpLocation(String ip) {
+        IpLocationInfo ipLocationInfo = getIpLocationInfo(ip);
+        if (Objects.equals(ipLocationInfo.getCountry(), "中国")) {
+            return ipLocationInfo.getProvince();
+        }
+        return StringUtils.format("{}-{}", ipLocationInfo.getCountry(), ipLocationInfo.getProvince());
+    }
+
+    public static String getFriendlyIpLocationByLocation(String location) {
+        String[] split = location.split("-");
+        if (split.length != 4) {
+            return "未知地址";
+        }
+        String country = split[0];
+        if (country.equals("中国")) {
+            return StringUtils.format("{}", split[1]);
+        }
+        return StringUtils.format("{}-{}", country, split[1]);
     }
 
     public static IpLocationInfo getIpLocationInfo(String ip) {

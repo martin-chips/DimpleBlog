@@ -4,4 +4,4 @@ FROM mysql
 MAINTAINER dimple
 
 # 执行sql脚本
-ADD ./db/*.sql /docker-entrypoint-initdb.d/
+COPY ./db/*.sql /docker-entrypoint-initdb.d/

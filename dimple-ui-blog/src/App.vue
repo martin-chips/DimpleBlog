@@ -25,7 +25,7 @@ export default {
     },
     computed: {},
     methods: {
-        ...mapMutations(["setArchives", "setCategory", "setTags", "setNewComments", "setNewArticles", "setTotals"]),
+        ...mapMutations(["setArchives", "setCategory", "setTags", "setNewComments", "setVisitLoginConfig", "setNewArticles", "setTotals"]),
         initPanel() {
             this.$api.listPanelArchive({countType: "month", pageNum: 1, pageSize: 5}).then((res) => {
                 if (res.code === 200) {

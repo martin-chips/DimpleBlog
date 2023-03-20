@@ -7,8 +7,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 USE `dimple-cloud`;
 
-SET NAMES utf8mb4;
-
 -- ----------------------------
 -- 用户信息表
 -- ----------------------------

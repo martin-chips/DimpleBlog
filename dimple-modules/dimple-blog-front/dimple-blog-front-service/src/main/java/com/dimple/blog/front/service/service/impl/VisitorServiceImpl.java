@@ -14,9 +14,6 @@ import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-
 /**
  * VisitorServiceImpl
  *
@@ -49,7 +46,6 @@ public class VisitorServiceImpl implements VisitorService {
     @SneakyThrows
     private JSONObject getGithubUserInfo(String accessToken) {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .proxy(new  Proxy(Proxy.Type.HTTP,new InetSocketAddress("127.0.0.1",7890)))
                 .build();
         Request request = new Request.Builder()
                 .url(githubTokenInfoConfig.getUserInfoUrl())
@@ -63,7 +59,6 @@ public class VisitorServiceImpl implements VisitorService {
     @SneakyThrows
     private String getAccessToken(String code) {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .proxy(new  Proxy(Proxy.Type.HTTP,new InetSocketAddress("127.0.0.1",7890)))
                 .build();
         FormBody formBody = new FormBody.Builder()
                 .add("client_id", githubTokenInfoConfig.getClientId())

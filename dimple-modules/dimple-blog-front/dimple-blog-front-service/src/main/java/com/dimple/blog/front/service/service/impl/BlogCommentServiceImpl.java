@@ -41,8 +41,10 @@ public class BlogCommentServiceImpl implements BlogCommentService {
         if (CollectionUtils.isEmpty(blogCommentEntityList)) {
             return Lists.newArrayList();
         }
+        handCommentWithFriendlyLocation(blogCommentEntityList);
         List<Long> ids = blogCommentEntityList.stream().map(e -> e.getId()).collect(Collectors.toList());
         List<BlogComment> blogCommentByParentIds = blogCommentMapper.selectBlogCommentByParentIds(ids);
+        handCommentWithFriendlyLocation(blogCommentByParentIds);
         List<BlogCommentBO> resultList = BeanMapper.convertList(blogCommentEntityList, BlogCommentBO.class);
         Map<Long, String> idUsernameMap = resultList.stream().collect(Collectors.toMap(BlogCommentBO::getId, BlogCommentBO::getUsername));
         idUsernameMap.putAll(blogCommentByParentIds.stream().collect(Collectors.toMap(BlogComment::getId, BlogComment::getUsername)));
@@ -60,6 +62,12 @@ public class BlogCommentServiceImpl implements BlogCommentService {
             resultItem.setSubComments(subCommentBOList);
         }
         return resultList;
+    }
+
+    private void handCommentWithFriendlyLocation(List<BlogComment> comments) {
+        for (BlogComment comment : comments) {
+            comment.setLocation(IpUtils.getFriendlyIpLocationByLocation(comment.getLocation()));
+        }
     }
 
     @Override

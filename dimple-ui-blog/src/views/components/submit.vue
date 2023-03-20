@@ -194,7 +194,7 @@ export default {
                     this.setVisitorInfo({
                         ...this.customInfo,
                         avatars: this.cover,
-                        id: -1,
+                        visitorId: -1,
                         type: 0
                     });
                     this.customVisible = false;

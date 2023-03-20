@@ -12,7 +12,7 @@ const articleFilter = () => import("@/views/article-filter/");
 const category = () => import("@/views/category/");
 const friendLink = () => import("@/views/links/");
 const about = () => import("@/views/about/");
-const github = () => import("@/views/components/third/github.vue");
+const thirdPartLogin = () => import("@/views/components/third/thirdPartLogin.vue");
 Vue.use(Router);
 Vue.use(Meta);
 // 避免重复点击相同路由 报错问题
@@ -31,9 +31,9 @@ export function createRouter() {
         component: miss
       },
       {
-        path: "/login/github",
-        name: "github",
-        component: github
+        path: "/login/auth/:type",
+        name: "thirdPartLogin",
+        component: thirdPartLogin
       },
       {
         path: "/",

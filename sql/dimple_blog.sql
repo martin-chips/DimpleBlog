@@ -1,4 +1,6 @@
 use `dimple-cloud`;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
 drop table if exists blog_article;
 create table blog_article

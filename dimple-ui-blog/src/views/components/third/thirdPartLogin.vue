@@ -9,12 +9,12 @@ import api from "@/api/visitor";
 export default {
     name: "github",
     created() {
-        this.test();
+        this.getVisitInfo();
     },
     computed: {
     },
     methods: {
-        test() {
+        getVisitInfo() {
             console.log(window.location.href)
             if (window.location.href.indexOf("code=") == -1) {
 
