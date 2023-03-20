@@ -37,7 +37,7 @@ public interface RemoteLogService {
      * @param source     请求来源
      * @return affected lines
      */
-    @PostMapping("/visitLog")
+    @PostMapping("/visitlog")
     ResponseEntity<Boolean> saveVisitLog(@RequestBody BlogVisitLogBO blogVisitLogBO, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
 
     /**

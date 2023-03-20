@@ -87,6 +87,7 @@ build_html() {
 }
 
 deploy() {
+  down
   deploy_jar
   deploy_html
 }

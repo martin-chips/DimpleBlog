@@ -46,7 +46,7 @@ public class IpUtils {
         }
         String country = split[0];
         if (country.equals("中国")) {
-            return StringUtils.format("{}", split[1]);
+            return StringUtils.format("{}", split[1].replace("省","").replace("市", ""));
         }
         return StringUtils.format("{}-{}", country, split[1]);
     }
