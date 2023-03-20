@@ -14,13 +14,7 @@ import com.dimple.log.web.controller.vo.BlogVisitLogVO;
 import com.dimple.log.web.controller.vo.params.BlogVisitLogVOParams;
 import com.dimple.system.api.model.BlogVisitLogBO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -32,12 +26,12 @@ import java.util.List;
  * @date 3/6/2023 8:27 PM
  */
 @RestController
-@RequestMapping("/visitLog")
+@RequestMapping("/visitlog")
 public class BlogVisitLogController extends BaseController {
     @Autowired
     private BlogVisitLogService blogVisitLogService;
 
-    @RequiresPermissions("log:visitLog:list")
+    @RequiresPermissions("log:visitlog:list")
     @GetMapping("/list")
     public TableDataInfo list(BlogVisitLogVOParams params) {
         startPage();
@@ -47,7 +41,7 @@ public class BlogVisitLogController extends BaseController {
     }
 
     @OperationLog(title = "访问日志", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("log:visitLog:export")
+    @RequiresPermissions("log:visitlog:export")
     @PostMapping("/export")
     public void export(HttpServletResponse response, BlogVisitLogVOParams params) {
         BlogVisitLogBO blogVisitLogBO = BeanMapper.convert(params, BlogVisitLogBO.class);
@@ -57,13 +51,13 @@ public class BlogVisitLogController extends BaseController {
     }
 
     @OperationLog(title = "访问日志", businessType = BusinessType.DELETE)
-    @RequiresPermissions("log:visitLog:remove")
+    @RequiresPermissions("log:visitlog:remove")
     @DeleteMapping("/{operIds}")
     public AjaxResult remove(@PathVariable List<Long> ids) {
         return toAjax(blogVisitLogService.deleteVisitLogByIds(ids));
     }
 
-    @RequiresPermissions("log:visitLog:remove")
+    @RequiresPermissions("log:visitlog:remove")
     @OperationLog(title = "访问日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
     public AjaxResult clean() {
