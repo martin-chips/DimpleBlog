@@ -39,11 +39,14 @@
     </delete>
     <select id="selectVisitLogList" resultMap="BlogVisitLogMap">
         select id,
-        username,
         title,
         page_id,
         request_uri,
         referer,
+        request_method,
+        request_params,
+        response_params,
+        exception,
         status_code,
         method_name,
         os,

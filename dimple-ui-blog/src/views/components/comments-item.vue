@@ -21,6 +21,8 @@
             <div class="comments-item__detail">
                 <i class="el-icon-date"></i>
                 <span class="detail-visitor-date">{{ message.date | formatDate }}</span>
+                <i class="el-icon-location-outline"></i>
+                <span>{{ message.location }}</span>
                 <i
                         class="el-icon-thumb"
                         @click="addLike(message)"
@@ -29,8 +31,6 @@
                 <span :class="{ 'el-icon-thumb--active': message.replyId == 1 }">{{ message.likeCount }}</span>
                 <i class="el-icon-chat-dot-round" @click="changeCurrentReplyMessage(message)"></i>
                 <span>{{ message | replycCount }}</span>
-                <i class="el-icon-location-outline"></i>
-                <span>{{ message.location }}</span>
             </div>
         </div>
     </div>

@@ -13,14 +13,7 @@ import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -79,7 +72,7 @@ public class BlogArticleController extends BaseController {
         blogArticleBO.setId(id);
         return toAjax(blogArticleService.updateBlogArticle(blogArticleBO));
     }
-    
+
     @RequiresPermissions("blog:article:edit")
     @OperationLog(title = "文章", businessType = BusinessType.UPDATE)
     @PutMapping("/{id}/status/{articleStatus}}")

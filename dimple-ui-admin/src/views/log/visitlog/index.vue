@@ -10,6 +10,21 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="类型" prop="title">
+        <el-select
+          v-model="queryParams.title"
+          clearable
+          placeholder="操作类型"
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in dict.type.blog_log_title"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select
           v-model="queryParams.status"
@@ -83,8 +98,12 @@
     <el-table ref="tables" v-loading="loading" :data="list" :default-sort="defaultSort"
               @selection-change="handleSelectionChange" @sort-change="handleSortChange">
       <el-table-column align="center" type="selection" width="55"/>
-      <el-table-column align="center" label="日志编号" prop="operId"/>
-      <el-table-column align="center" label="访问模块" prop="title"/>
+      <el-table-column align="center" label="日志编号" prop="id"/>
+      <el-table-column align="center" label="访问未知" prop="title">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.blog_log_title" :value="scope.row.title"/>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="请求方式" prop="requestMethod"/>
       <el-table-column :show-overflow-tooltip="true" align="center" label="请求地址" prop="requestUri" width="130"/>
       <el-table-column :show-overflow-tooltip="true" align="center" label="操作系统" prop="os" width="130"/>
@@ -129,7 +148,7 @@
       <el-form ref="form" :model="form" label-width="100px" size="mini">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="访问模块：">{{ form.title }}</el-form-item>
+            <el-form-item label="访问未知：">{{ form.title }} / {{ titleFormat(form) }}</el-form-item>
             <el-form-item
               label="登录信息："
             >{{ form.location }} / {{ form.ip }} / {{ form.os }} / {{ form.browser }}
@@ -174,7 +193,7 @@ import {cleanVisitLog, delVisitLog, list} from "@/api/log/visitLog";
 
 export default {
   name: "VisitLog",
-  dicts: ['sys_common_status'],
+  dicts: ['sys_common_status', 'blog_log_title'],
   data() {
     return {
       // 遮罩层
@@ -210,6 +229,10 @@ export default {
     this.getList();
   },
   methods: {
+    // 字典翻译
+    titleFormat(row, column) {
+      return this.selectDictLabel(this.dict.type.blog_log_title, row.title);
+    },
     /** 查询登录日志 */
     getList() {
       this.loading = true;

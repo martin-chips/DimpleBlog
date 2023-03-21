@@ -1,13 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 PROJECT_ROOT_PATH="/home/project/DimpleBlog"
 PROJECT_DOCKER_PATH="$PROJECT_ROOT_PATH/docker"
-
-# 使用说明，用来提示输入参数
-usage() {
-  echo "Usage: sh 执行脚本.sh [base|modules|stop|rm|init|build|build_jar|build_html|deploy|deploy_jar|deploy_html]"
-  exit 1
-}
 
 base() {
   echo "build and start dimple-mysql/dimple-redis/dimple-nacos"
@@ -88,6 +82,7 @@ build_html() {
 
 deploy() {
   down
+  base
   deploy_jar
   deploy_html
 }
@@ -180,51 +175,73 @@ cp() {
   cp_html
 }
 
-# 根据输入参数，选择执行对应方法，不输入则执行使用说明
-case "$1" in
-"port")
-  port
-  ;;
-"base")
-  base
-  ;;
-"down")
-  down
-  ;;
-"init")
-  init
-  ;;
-"modules")
-  modules
-  ;;
-"stop")
-  stop
-  ;;
-"build")
-  build
-  ;;
-"build_jar")
-  build_jar
-  ;;
-"build_html")
-  build_html
-  ;;
-"deploy")
-  deploy
-  ;;
-"clean")
-  clean
-  ;;
-"deploy_html")
-  deploy_html
-  ;;
-"deploy_jar")
-  deploy_jar
-  ;;
-"rm")
-  rm
-  ;;
-*)
-  usage
-  ;;
-esac
+bye() {
+  echo "Goodbye!"
+  exit 0
+}
+
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+
+# 设置选项数组
+options=(
+  "Init: only first deploy the service can using this method.",
+  "Base: deploy dimple-mysql,dimple-redis,dimple-nacos services.",
+  "Modules: deploy all customer modules services.",
+  "Stop: Stop all customer modules services",
+  "Build: Build all customer modules service,contains jar and html",
+  "Build Jar: Only build jar",
+  "Build html: Only build html",
+  "Deploy: Deploy all customer modules service,contains jar and html",
+  "Deploy Jar: Only deploy jar",
+  "Deploy html: Only deploy html",
+  "Remove: Remove all customer service",
+  "Exit"
+)
+commands=(
+  "init"
+  "base"
+  "modules"
+  "stop"
+  "build"
+  "build_jar"
+  "build_html"
+  "deploy"
+  "deploy_jar"
+  "deploy_html"
+  "rm"
+  "bye"
+)
+
+# 设置默认选项
+selected=0
+
+# 循环监听用户输入
+while true; do
+  # 清空屏幕
+  tput clear
+  printf "%sDimple Deploy System%s\n" "$BOLD" "$RESET"
+  printf "\n%s\n" "Please select an option by ↑ and ↓."
+  # 打印选项列表
+  for i in "${!options[@]}"; do
+    if [ $i -eq $selected ]; then
+      printf "\n > %s\n" "${options[$i]}"
+    else
+      printf "\n   %s\n" "${options[$i]}"
+    fi
+  done
+
+  # 监听用户输入
+  read -rsn1 input
+
+  # 根据用户输入更新选项
+  if [[ $input == "A" ]] && [ $selected -gt 0 ]; then
+    selected=$((selected - 1))
+  elif [[ $input == "B" ]] && [ $selected -lt $((${#options[@]} - 1)) ]; then
+    selected=$((selected + 1))
+  elif [[ $input == "" ]]; then
+    break
+  fi
+done
+
+eval "${commands[$selected]}"

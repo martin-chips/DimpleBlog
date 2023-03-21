@@ -1,7 +1,6 @@
 package com.dimple.system.service.service;
 
 
-
 import com.dimple.system.api.model.SysDictDataBO;
 
 import java.util.List;
@@ -42,7 +41,7 @@ public interface SysDictDataService {
      *
      * @param dictCodes 需要删除的字典数据ID
      */
-    public void deleteDictDataByIds(Long[] dictCodes);
+    void deleteDictDataByIds(Long[] dictCodes);
 
     /**
      * 新增保存字典数据信息

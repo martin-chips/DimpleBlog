@@ -77,21 +77,33 @@
         </el-form-item>
 
         <el-form-item style="margin: auto;text-align: center;">
-          <el-button v-if="active==1" @click="active--">上一步</el-button>
-          <el-button v-if="active==0" @click="active++">下一步</el-button>
+          <el-button icon="el-icon-arrow-left" v-if="active==1" @click="active--">
+            上一步
+          </el-button>
+          <el-upload style="display: inline;    padding: 10px 20px"
+                     action="/"
+                     :auto-upload="false"
+                     :before-upload="handleFileSelect"
+                     :show-file-list="false"
+                     v-if="active==0">
+            <el-button type="info" icon="el-icon-upload">上传文件
+            </el-button>
+          </el-upload>
+          <el-button v-if="active==0" @click="active++"><i class="el-icon-arrow-right el-icon--right"></i>下一步
+          </el-button>
 
-          <el-button v-if="active==1" v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
+          <el-button icon="el-icon-finished" v-if="active==1" v-loading="loading" style="margin-left: 10px;"
+                     type="success" @click="submitForm">
             发布
           </el-button>
-          <el-button v-if="active==1" v-loading="loading" type="warning" @click="draftForm">
+          <el-button icon="el-icon-edit-outline" v-if="active==1" v-loading="loading" type="warning" @click="draftForm">
             暂存
           </el-button>
         </el-form-item>
 
       </el-form>
-
     </el-card>
-      <ChooseImg hidden v-on:onChooseImg="onChooseImg" ref="chooseImg"></ChooseImg>
+    <ChooseImg hidden v-if="showChooseImg" v-on:onChooseImg="onChooseImg" ref="chooseImg"></ChooseImg>
   </div>
 </template>
 
@@ -110,7 +122,6 @@ const defaultForm = {
   headerImage: '', // 文章图片
   id: undefined,
   categoryId: null,
-  enableComment: false,
   original: true,
   tags: []
 };
@@ -125,6 +136,7 @@ export default {
   },
   data() {
     return {
+      showChooseImg: false,
       active: 0,
       postForm: Object.assign({}, defaultForm),
       tagOptions: [],
@@ -168,13 +180,25 @@ export default {
         this.postForm.content = content;
       },
       immediate: true,
-    }
+    },
   },
   methods: {
+    handleFileSelect(file) {
+      const reader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = () => {
+        this.postForm.title = file.name;
+        this.postForm.content = reader.result;
+        this.postForm.summary = reader.result.substring(0, 50).replace("#", "").replace("\n", "");
+      };
+      return false;
+    },
     onChooseImg(value) {
       this.postForm.headerImage = value;
     },
     openHeaderChange() {
+      this.showChooseImg = true;
       this.$refs.chooseImg.openDrawer();
     },
     async getTagOptions(query) {

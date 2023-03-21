@@ -1,28 +1,25 @@
 package com.dimple.system.web.controller;
 
 import com.dimple.common.core.constant.UserConstants;
+import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.utils.poi.ExcelUtil;
+import com.dimple.common.core.utils.response.ResponseEntityUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
+import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
+import com.dimple.system.api.model.SysDictDataBO;
 import com.dimple.system.service.service.SysDictTypeService;
 import com.dimple.system.service.service.bo.SysDictTypeBO;
 import com.dimple.system.web.controller.vo.SysDictTypeVO;
 import com.dimple.system.web.controller.vo.params.SysDictTypeVOParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -123,4 +120,15 @@ public class SysDictTypeController extends BaseController {
         List<SysDictTypeBO> dictTypes = dictTypeService.selectDictTypeAll();
         return success(BeanMapper.convertList(dictTypes, SysDictTypeVO.class));
     }
+
+
+    @InnerAuth
+    @GetMapping("/dict/type/{type}")
+    public ResponseEntity<List<SysDictDataBO>> info(@PathVariable String type) {
+        List<SysDictDataBO> sysDictDataBOS = dictTypeService.selectDictDataByType(type);
+        return ResponseEntityUtils.ok(sysDictDataBOS);
+    }
+
+
+
 }
