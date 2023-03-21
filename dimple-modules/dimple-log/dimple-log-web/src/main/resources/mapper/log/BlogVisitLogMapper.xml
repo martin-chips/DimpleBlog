@@ -57,7 +57,7 @@
         create_by,
         create_time,
         update_by,
-        update_time
+        update_ktime
         from blog_visit_log
         <where>
             <if test="ip != null and ip != ''">
@@ -82,7 +82,6 @@
                 and date_format(access_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
-        order by info_id desc
     </select>
 
 
