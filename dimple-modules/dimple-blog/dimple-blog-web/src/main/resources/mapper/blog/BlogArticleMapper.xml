@@ -72,15 +72,15 @@
         on blog_article.category_id = blog_category.id
         <where>
             blog_article.id>0
-            <if test="title != null  and title != ''">and title like concat('%', #{title}, '%')</if>
-            <if test="categoryId != null ">and category_id = #{categoryId}</if>
-            <if test="original != null ">and original = #{original}</if>
-            <if test="articleStatus != null ">and article_status = #{articleStatus}</if>
+            <if test="title != null  and title != ''">and blog_article.title like concat('%', #{title}, '%')</if>
+            <if test="categoryId != null ">and blog_article.category_id = #{categoryId}</if>
+            <if test="original != null ">and blog_article.original = #{original}</if>
+            <if test="articleStatus != null ">and blog_article.article_status = #{articleStatus}</if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+                AND date_format(blog_article.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
             <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+                AND date_format(blog_article.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
 
         </where>
