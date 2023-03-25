@@ -103,7 +103,7 @@
       <el-table-column :show-overflow-tooltip="true" align="center" label="地理位置" prop="location" width="130"/>
       <el-table-column align="center" label="访问状态" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_common_status" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.sys_common_status" :value="scope.row.statusCode"/>
         </template>
       </el-table-column>
       <el-table-column :sort-orders="['descending', 'ascending']" align="center" label="访问日期" prop="createTime"
