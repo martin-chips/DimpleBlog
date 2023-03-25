@@ -237,3 +237,13 @@ export async function blobValidate(data) {
     return true;
   }
 }
+
+export function unEscapeSpecialCharacters(str) {
+  return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+}
+
+export function escapeSpecialCharacters(str) {
+  return str
+    .replace(/[<]/g, '&lt;')
+    .replace(/[>]/g, '&gt;');
+}

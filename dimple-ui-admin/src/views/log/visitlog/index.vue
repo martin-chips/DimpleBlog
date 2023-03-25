@@ -1,16 +1,7 @@
 <template>
   <div class="app-container">
     <el-form v-show="showSearch" ref="queryForm" :inline="true" :model="queryParams" label-width="68px" size="small">
-      <el-form-item label="模块名" prop="title">
-        <el-input
-          v-model="queryParams.title"
-          clearable
-          placeholder="请输入模块名称"
-          style="width: 240px;"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="类型" prop="title">
+      <el-form-item label="访问位置" prop="title">
         <el-select
           v-model="queryParams.title"
           clearable
@@ -27,7 +18,7 @@
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select
-          v-model="queryParams.status"
+          v-model="queryParams.statusCode"
           clearable
           placeholder="操作状态"
           style="width: 240px"
@@ -99,7 +90,7 @@
               @selection-change="handleSelectionChange" @sort-change="handleSortChange">
       <el-table-column align="center" type="selection" width="55"/>
       <el-table-column align="center" label="日志编号" prop="id"/>
-      <el-table-column align="center" label="访问未知" prop="title">
+      <el-table-column align="center" label="访问位置" prop="title">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.blog_log_title" :value="scope.row.title"/>
         </template>
@@ -148,7 +139,7 @@
       <el-form ref="form" :model="form" label-width="100px" size="mini">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="访问未知：">{{ form.title }} / {{ titleFormat(form) }}</el-form-item>
+            <el-form-item label="访问位置：">{{ titleFormat(form) }}</el-form-item>
             <el-form-item
               label="登录信息："
             >{{ form.location }} / {{ form.ip }} / {{ form.os }} / {{ form.browser }}
@@ -169,8 +160,8 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="访问状态：">
-              <div v-if="form.status === 0">正常</div>
-              <div v-else-if="form.status === 1">失败</div>
+              <div v-if="form.statusCode === 0">正常</div>
+              <div v-else-if="form.statusCode === 1">失败</div>
             </el-form-item>
           </el-col>
           <el-col :span="12">

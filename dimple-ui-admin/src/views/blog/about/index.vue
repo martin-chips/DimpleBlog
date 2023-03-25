@@ -9,7 +9,7 @@
       <el-form :style="active==0?'width: 450px;margin: 0 auto;':''"
                ref="postForm" :model="postForm" :rules="rules" class="form-container">
         <el-form-item v-show="active==0" label="标题" prop="title">
-          <el-input v-model="postForm.title" placeholder="请输入标题"/>
+          <el-input disabled v-model="postForm.title" placeholder="请输入标题"/>
         </el-form-item>
         <el-form-item v-show="active==0" label="摘要:">
           <el-input
@@ -20,31 +20,12 @@
             show-word-limit
           />
         </el-form-item>
-        <el-form-item v-show="active==0" label="原创">
-          <el-switch :active-value="true" :inactive-value="false" v-model="postForm.original"></el-switch>
-        </el-form-item>
         <el-form-item v-show="active==0" label="文章标图">
           <div style="display: inherit;margin-top: 40px;" @click="openHeaderChange">
             <img style="width: 100%" v-if="postForm.headerImage" alt="文章标图" class="header-img-box"
                  :src="postForm.headerImage">
             <div style="width: 100%" v-else class="header-img-box">从媒体库选择</div>
           </div>
-        </el-form-item>
-        <el-form-item v-show="active==0" label="分类">
-          <el-select style="width: 100%"
-                     v-model="postForm.categoryId"
-                     filterable
-                     remote
-                     :remote-method="getCategoryOptions"
-                     default-first-option
-                     placeholder="请选择文章分类">
-            <el-option
-              v-for="item in categoryOptions"
-              :key="item.id"
-              :label="item.title"
-              :value="item.id">
-            </el-option>
-          </el-select>
         </el-form-item>
         <el-form-item v-show="active==0" label="标签">
           <el-select style="width: 100%"
@@ -80,23 +61,12 @@
           <el-button icon="el-icon-arrow-left" v-if="active==1" @click="active--">
             上一步
           </el-button>
-          <el-upload style="display: inline;    padding: 10px 20px"
-                     action=""
-                     :before-upload="handleFileSelect"
-                     :show-file-list="false"
-                     v-if="active==0">
-            <el-button type="info" icon="el-icon-upload">上传文件
-            </el-button>
-          </el-upload>
           <el-button v-if="active==0" @click="active++"><i class="el-icon-arrow-right el-icon--right"></i>下一步
           </el-button>
 
           <el-button icon="el-icon-finished" v-if="active==1" v-loading="loading" style="margin-left: 10px;"
                      type="success" @click="submitForm">
             发布
-          </el-button>
-          <el-button icon="el-icon-edit-outline" v-if="active==1" v-loading="loading" type="warning" @click="draftForm">
-            暂存
           </el-button>
         </el-form-item>
 
@@ -108,9 +78,8 @@
 
 <script>
 import MarkdownEditor from '@/components/MarkdownEditor'
-import {addArticle, getArticle, updateArticle} from '@/api/blog/article'
+import {getAbout, updateAbout} from '@/api/blog/about'
 import {listTag} from '@/api/blog/tag'
-import {listCategory} from '@/api/blog/category'
 import ChooseImg from "@/components/ChooseImg/index.vue";
 
 const defaultForm = {
@@ -127,12 +96,6 @@ const defaultForm = {
 export default {
   name: 'ArticleDetail',
   components: {MarkdownEditor, ChooseImg},
-  props: {
-    isEdit: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       showChooseImg: false,
@@ -158,40 +121,11 @@ export default {
     }
   },
   created() {
-    if (this.isEdit) {
-      const id = this.$route.params && this.$route.params.id;
-      this.fetchData(id);
-    } else {
-      if (window.localStorage && localStorage.getItem("md")) {
-        this.postForm.content = localStorage.getItem("md");
-      }
-    }
-    this.tempRoute = Object.assign({}, this.$route);
+    const id = -2000;
+    this.fetchData(id);
     this.getTagOptions();
-    this.getCategoryOptions();
-  },
-  watch: {
-    'postForm.content': {
-      handler(content, preContent) {
-        if (window.localStorage && preContent && preContent != '') {
-          localStorage.setItem("md", content);
-        }
-        this.postForm.content = content;
-      },
-      immediate: true,
-    },
   },
   methods: {
-    handleFileSelect(file) {
-      const reader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = () => {
-        this.postForm.title = file.name;
-        this.postForm.content = reader.result;
-        this.postForm.summary = reader.result.substring(0, 50).replace("#", "").replace("\n", "");
-      };
-      return false;
-    },
     onChooseImg(value) {
       this.postForm.headerImage = value;
     },
@@ -204,13 +138,8 @@ export default {
         this.tagOptions = response.rows
       })
     },
-    getCategoryOptions(query) {
-      listCategory({title: query}).then(response => {
-        this.categoryOptions = response.rows
-      })
-    },
     fetchData(id) {
-      getArticle(id).then(response => {
+      getAbout(id).then(response => {
         this.postForm = response.data;
         this.postForm.content = this.unEscapeSpecialCharacters(this.postForm.content)
         // set tagsview title
@@ -220,12 +149,11 @@ export default {
       })
     },
     setTagsViewTitle() {
-      const title = '编辑文章'
+      const title = '编辑关于我'
       const route = Object.assign({}, this.tempRoute, {title: `${title}-${this.postForm.title}`})
       this.$store.dispatch('tagsView/updateVisitedView', route)
     },
     toArticleList() {
-      this.active++;
       this.$store.dispatch('tagsView/delView', this.$route);
       this.$router.push({path: '/blog/article'})
     },
@@ -235,75 +163,25 @@ export default {
           this.postForm.articleStatus = 1;
           this.loading = false;
           var form = Object.assign({}, this.postForm);
-          form.content = this.escapeSpecialCharacters(this.postForm.content);
-          if (!form.id) {
-            addArticle(form).then(response => {
-              if (response.code != 200) {
-                this.$notify({
-                  title: '失败',
-                  message: '发布文章失败',
-                  type: 'fail',
-                  duration: 2000
-                })
-                return false;
-              }
-              localStorage.removeItem("md");
-              this.active++;
-            });
-          } else {
-            updateArticle(form).then(response => {
-              this.loading = true;
-              if (response.code != 200) {
-                this.$notify({
-                  title: '失败',
-                  message: '修改文章失败',
-                  type: 'fail',
-                  duration: 2000
-                });
-                return false
-              }
-              localStorage.removeItem("md");
-              this.active++;
-            });
-          }
-
+          form.content = this.escapeSpecialCharacters(form.content);
+          updateAbout(form).then(response => {
+            this.loading = true;
+            if (response.code != 200) {
+              this.$notify({
+                title: '失败',
+                message: '修改关于我失败',
+                type: 'fail',
+                duration: 2000
+              });
+              return false
+            }
+            this.active++;
+          });
         } else {
           return false
         }
       })
     },
-    draftForm() {
-      if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
-        this.$message({
-          message: '请填写必要的标题和内容',
-          type: 'warning'
-        })
-        return
-      }
-      this.postForm.articleStatus = 2;
-      if (!this.postForm.id) {
-        addArticle(this.postForm).then(response => {
-          this.$message({
-            message: '保存成功',
-            type: 'success',
-            showClose: true,
-            duration: 1000
-          });
-          this.postForm.id = response.data;
-        });
-      } else {
-        updateArticle(this.postForm).then(response => {
-          this.$message({
-            message: '保存成功',
-            type: 'success',
-            showClose: true,
-            duration: 1000
-          });
-        });
-      }
-      localStorage.removeItem("md");
-      this.active++;
-    }
   }
 }
 </script>

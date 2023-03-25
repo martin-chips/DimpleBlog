@@ -18,7 +18,16 @@ import './assets/icons' // icon
 import './permission' // permission control
 import {getDicts} from "@/api/system/dict/data";
 import {getConfigKey} from "@/api/system/config";
-import {addDateRange, handleTree, parseTime, resetForm, selectDictLabel, selectDictLabels} from "@/utils/dimple";
+import {
+  addDateRange,
+  escapeSpecialCharacters,
+  handleTree,
+  parseTime,
+  resetForm,
+  selectDictLabel,
+  selectDictLabels,
+  unEscapeSpecialCharacters
+} from "@/utils/dimple";
 // 分页组件
 import Pagination from "@/components/Pagination";
 // 自定义表格工具组件
@@ -46,6 +55,8 @@ Vue.prototype.resetForm = resetForm
 Vue.prototype.addDateRange = addDateRange
 Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
+Vue.prototype.unEscapeSpecialCharacters = unEscapeSpecialCharacters
+Vue.prototype.escapeSpecialCharacters = escapeSpecialCharacters
 Vue.prototype.download = download
 Vue.prototype.handleTree = handleTree
 

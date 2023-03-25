@@ -21,6 +21,10 @@
         <result property="ip" column="ip"/>
         <result property="location" column="location"/>
         <result property="exception" column="exception"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
     </resultMap>
     <insert id="insertVisitLog">
         insert into blog_visit_log (title, page_id, request_uri, referer, request_method, request_params, response_params,
@@ -57,7 +61,7 @@
         create_by,
         create_time,
         update_by,
-        update_ktime
+        update_time
         from blog_visit_log
         <where>
             <if test="ip != null and ip != ''">
