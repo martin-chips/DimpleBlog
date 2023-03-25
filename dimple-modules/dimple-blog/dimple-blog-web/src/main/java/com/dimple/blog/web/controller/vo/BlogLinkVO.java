@@ -1,5 +1,6 @@
 package com.dimple.blog.web.controller.vo;
 
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -9,7 +10,7 @@ import lombok.Data;
  * @date 3/10/2023 11:26 AM
  */
 @Data
-public class BlogLinkVO {
+public class BlogLinkVO extends BaseEntity {
     private Long id;
     private String title;
     private String headerImage;

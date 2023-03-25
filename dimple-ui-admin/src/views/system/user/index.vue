@@ -143,7 +143,7 @@
           <el-table-column
             align="center"
             class-name="small-padding fixed-width"
-            label="操作"
+            label="操作" fixed="right"
             width="160"
           >
             <template v-if="scope.row.userId !== 1" slot-scope="scope">

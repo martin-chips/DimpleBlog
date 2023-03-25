@@ -150,7 +150,7 @@
               <el-table-column label="缓存键名" align="center" :show-overflow-tooltip="true">
                 <template v-slot="scope">{{ scope.row }}</template>
               </el-table-column>
-              <el-table-column label="操作" width="60" align="center" class-name="small-padding fixed-width">
+              <el-table-column label="操作" fixed="right" width="60" align="center" class-name="small-padding fixed-width">
                 <template v-slot="scope">
                   <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDeleteKey(scope.row)"/>
                 </template>

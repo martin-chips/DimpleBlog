@@ -68,8 +68,8 @@
           <MarkdownEditor v-model="postForm.content" :markdown="postForm.content"/>
         </el-form-item>
 
-        <el-form-item v-show="active==2">
-          <el-result icon="success" title="操作成功" subTitle="可能存在系统缓存,博客页面需要等待缓存刷新!">
+        <el-form-item v-show="active==2||active==3">
+          <el-result :icon="loading?'info':'success'" title="操作成功" subTitle="可能存在系统缓存,博客页面需要等待缓存刷新!">
             <template slot="extra">
               <el-button type="primary" @click="toArticleList" size="medium">返回</el-button>
             </template>
@@ -225,15 +225,15 @@ export default {
       this.$store.dispatch('tagsView/updateVisitedView', route)
     },
     toArticleList() {
-      this.active++;
       this.$store.dispatch('tagsView/delView', this.$route);
       this.$router.push({path: '/blog/article'})
     },
     submitForm() {
       this.$refs.postForm.validate(valid => {
+        this.loading = true;
         if (valid) {
           this.postForm.articleStatus = 1;
-          this.loading = false;
+
           var form = Object.assign({}, this.postForm);
           form.content = this.escapeSpecialCharacters(this.postForm.content);
           if (!form.id) {
@@ -248,11 +248,9 @@ export default {
                 return false;
               }
               localStorage.removeItem("md");
-              this.active++;
             });
           } else {
             updateArticle(form).then(response => {
-              this.loading = true;
               if (response.code != 200) {
                 this.$notify({
                   title: '失败',
@@ -263,11 +261,14 @@ export default {
                 return false
               }
               localStorage.removeItem("md");
-              this.active++;
+
             });
           }
-
+          this.active++;
+          this.active++;
+          this.loading = false;
         } else {
+          this.loading = false;
           return false
         }
       })

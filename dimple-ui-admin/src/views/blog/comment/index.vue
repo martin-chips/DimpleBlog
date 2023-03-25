@@ -94,14 +94,18 @@
       <el-table-column label="地理位置" align="center" prop="location"/>
       <el-table-column label="浏览器" align="center" prop="browser"/>
       <el-table-column label="操作系统" align="center" prop="os"/>
-      <el-table-column label="链接" align="center" prop="link"/>
+      <el-table-column label="访问者链接" align="center" prop="link">
+        <template slot-scope="scope">
+          <a target="_blank" :href="scope.row.link">{{scope.row.link}}</a>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="评论时间" prop="createTime"
-                       sortable="custom" width="180">
+                       width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column  label="操作" fixed="right" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -152,7 +156,7 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="form.email" placeholder="请输入邮箱"/>
         </el-form-item>
-        <el-form-item label="链接" prop="link">
+        <el-form-item label="访问者链接" prop="link">
           <el-input v-model="form.link" placeholder="请输入链接"/>
         </el-form-item>
       </el-form>

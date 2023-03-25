@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="browser"    column="browser"    />
         <result property="ip"    column="ip"    />
         <result property="location"    column="location"    />
+        <result property="likeCount"    column="like_count"    />
         <result property="content"    column="content"    />
         <result property="email"    column="email"    />
         <result property="createBy"    column="create_by"    />
@@ -35,8 +36,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                visitor_id,
                ip,
                location,
+               like_count,
                os,
-               broswer,
+               browser,
                email,
                create_by,
                create_time,

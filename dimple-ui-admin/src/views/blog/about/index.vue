@@ -49,10 +49,10 @@
           <MarkdownEditor v-model="postForm.content" :markdown="postForm.content"/>
         </el-form-item>
 
-        <el-form-item v-show="active==2">
+        <el-form-item v-show="active==2||active==3">
           <el-result icon="success" title="操作成功" subTitle="可能存在系统缓存,博客页面需要等待缓存刷新!">
             <template slot="extra">
-              <el-button type="primary" @click="toArticleList" size="medium">返回</el-button>
+              <el-button type="primary" @click="deleteView" size="medium">返回</el-button>
             </template>
           </el-result>
         </el-form-item>
@@ -121,8 +121,7 @@ export default {
     }
   },
   created() {
-    const id = -2000;
-    this.fetchData(id);
+    this.fetchData();
     this.getTagOptions();
   },
   methods: {
@@ -138,8 +137,8 @@ export default {
         this.tagOptions = response.rows
       })
     },
-    fetchData(id) {
-      getAbout(id).then(response => {
+    fetchData() {
+      getAbout().then(response => {
         this.postForm = response.data;
         this.postForm.content = this.unEscapeSpecialCharacters(this.postForm.content)
         // set tagsview title
@@ -153,9 +152,9 @@ export default {
       const route = Object.assign({}, this.tempRoute, {title: `${title}-${this.postForm.title}`})
       this.$store.dispatch('tagsView/updateVisitedView', route)
     },
-    toArticleList() {
+    deleteView() {
       this.$store.dispatch('tagsView/delView', this.$route);
-      this.$router.push({path: '/blog/article'})
+      this.$router.push({path: '/'})
     },
     submitForm() {
       this.$refs.postForm.validate(valid => {
@@ -175,6 +174,7 @@ export default {
               });
               return false
             }
+            this.active++;
             this.active++;
           });
         } else {

@@ -155,7 +155,7 @@ values (1, '系统管理', 0, 1, 'system', null, '', 1, 0, 'M', '0', '0', '', 's
        (501, '登录日志', 5, 2, 'logininfor', 'log/logininfor/index', '', 1, 0, 'C', '0', '0', 'log:logininfor:list',
         'logininfor', 'admin', '登录日志菜单'),
        (502, '访问日志', 5, 2, 'visitlog', 'log/visitlog/index', '', 1, 0, 'C', '0', '0', 'log:visitlog:list',
-        'visitlog', 'admin', '访问日志菜单'),
+        'eye-open', 'admin', '访问日志菜单'),
        (601, '文章管理', 6, 1, 'article', 'blog/article/index', null, 1, 0, 'C', '0', '0', 'blog:article:list', 'edit',
         'admin', '文章菜单'),
        (602, '分类管理', 6, 1, 'category', 'blog/category/index', null, 1, 0, 'C', '0', '0', 'blog:category:list',
@@ -164,9 +164,9 @@ values (1, '系统管理', 0, 1, 'system', null, '', 1, 0, 'M', '0', '0', '', 's
         'message', 'admin', '评论菜单'),
        (604, '标签管理', 6, 1, 'tag', 'blog/tag/index', null, 1, 0, 'C', '0', '0', 'blog:tag:list', 'row', 'admin',
         '标签菜单'),
-       (605, '友链管理', 6, 1, 'link', 'blog/link/index', null, 1, 0, 'C', '0', '0', 'blog:link:list', 'edit', 'admin',
+       (605, '友链管理', 6, 1, 'link', 'blog/link/index', null, 1, 0, 'C', '0', '0', 'blog:link:list', 'peoples', 'admin',
         '友链菜单'),
-       (606, '关于我管理', 6, 1, 'about', 'blog/about/index', null, 1, 0, 'C', '0', '0', 'blog:about:query', 'edit',
+       (606, '关于我管理', 6, 1, 'about', 'blog/about/index', null, 1, 0, 'C', '0', '0', 'blog:about:query', 'people',
         'admin',
         '友链菜单'),
        (1000, '用户查询', 100, 1, '', '', '', 1, 0, 'F', '0', '0', 'system:user:query', '#', 'admin', ''),
@@ -681,7 +681,7 @@ insert into sys_config
 values (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', sysdate(), '', null,
         '初始化密码 123456');
 insert into sys_config
-values (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', sysdate(), '', null,
+values (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-light', 'Y', 'admin', sysdate(), '', null,
         '深色主题theme-dark，浅色主题theme-light');
 insert into sys_config
 values (4, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 'Y', 'admin', sysdate(), '', null,

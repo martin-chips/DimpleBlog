@@ -69,7 +69,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="" align="center" prop="id"/>
       <el-table-column label="标题" align="center" prop="title"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" fixed="right" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"

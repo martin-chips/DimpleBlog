@@ -122,7 +122,7 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" class-name="small-padding fixed-width" label="操作">
+      <el-table-column align="center" class-name="small-padding fixed-width" label="操作" fixed="right">
         <template v-if="scope.row.roleId !== 1" slot-scope="scope">
           <el-button
             v-hasPermi="['system:role:edit']"

@@ -109,7 +109,11 @@
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" label="描述" align="center" prop="description"/>
-      <el-table-column :show-overflow-tooltip="true" label="网站地址" align="center" prop="url"/>
+      <el-table-column :show-overflow-tooltip="true" label="网站地址" align="center" prop="url">
+        <template slot-scope="scope">
+          <a target="_blank" :href="scope.row.url">{{scope.row.url}}</a>
+        </template>
+      </el-table-column>
       <el-table-column :show-overflow-tooltip="true" label="邮箱" align="center" prop="email"/>
       <el-table-column label="状态" align="center" prop="linkStatus">
         <template slot-scope="scope">
@@ -121,14 +125,13 @@
           <el-badge type="primary" :value="scope.row.visitCount"/>
         </template>
       </el-table-column>
-      <el-table-column label="链接" align="center" prop="url"/>
       <el-table-column align="center" label="申请时间" prop="createTime"
                        sortable="custom" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" fixed="right" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
