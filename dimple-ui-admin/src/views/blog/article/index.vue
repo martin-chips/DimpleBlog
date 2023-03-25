@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item label="状态" prop="articleStatus">
         <el-select
-          v-model="queryParams.businessType"
+          v-model="queryParams.articleStatus"
           clearable
           placeholder="状态"
           style="width: 240px"
