@@ -165,6 +165,7 @@ security:
       - /*/v2/api-docs
       - /csrf
       - /blog-front/**
+      - /system/config/configKey/**
 ', '58f0b035894aafb9f4af51a1670c9bfb', '2020-05-14 14:17:55', '2023-03-06 05:57:26', 'nacos', '0:0:0:0:0:0:0:1', '', '', '网关模块', 'null', 'null', 'yaml', '', ''),
     (3, 'dimple-auth-dev.yml', 'DEFAULT_GROUP', 'spring:
   redis:

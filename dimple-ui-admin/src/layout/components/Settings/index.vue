@@ -7,7 +7,7 @@
             <h3 class="drawer-title">主题风格设置</h3>
           </div>
           <div class="setting-drawer-block-checbox">
-            <div class="setting-drawer-block-checbox-item" @click="handleTheme('theme-dark')">
+            <div class="setting-drawer-block-checbox-item" @click="sideThemeChange('theme-dark')">
               <img alt="dark" src="@/assets/images/dark.svg">
               <div v-if="sideTheme === 'theme-dark'" class="setting-drawer-block-checbox-selectIcon"
                    style="display: block;">
@@ -20,7 +20,7 @@
                 </i>
               </div>
             </div>
-            <div class="setting-drawer-block-checbox-item" @click="handleTheme('theme-light')">
+            <div class="setting-drawer-block-checbox-item" @click="sideThemeChange('theme-light')">
               <img alt="light" src="@/assets/images/light.svg">
               <div v-if="sideTheme === 'theme-light'" class="setting-drawer-block-checbox-selectIcon"
                    style="display: block;">
@@ -91,6 +91,9 @@ export default {
       sideTheme: this.$store.state.settings.sideTheme
     };
   },
+  created() {
+    this.getSystemConfig();
+  },
   computed: {
     visible: {
       get() {
@@ -158,6 +161,13 @@ export default {
     },
   },
   methods: {
+    async getSystemConfig() {
+      var res = await this.getConfigKey("sys.index.sideTheme");
+      if (res.code == 200) {
+          this.sideTheme = res.msg
+          this.sideThemeChange(res.msg);
+      }
+    },
     themeChange(val) {
       this.$store.dispatch('settings/changeSetting', {
         key: 'theme',
@@ -165,7 +175,7 @@ export default {
       })
       this.theme = val;
     },
-    handleTheme(val) {
+    sideThemeChange(val) {
       this.$store.dispatch('settings/changeSetting', {
         key: 'sideTheme',
         value: val

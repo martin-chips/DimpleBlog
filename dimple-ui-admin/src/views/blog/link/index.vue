@@ -111,7 +111,7 @@
       <el-table-column :show-overflow-tooltip="true" label="描述" align="center" prop="description"/>
       <el-table-column :show-overflow-tooltip="true" label="网站地址" align="center" prop="url">
         <template slot-scope="scope">
-          <a target="_blank" :href="scope.row.url">{{scope.row.url}}</a>
+          <a target="_blank" :href="scope.row.url">{{ scope.row.url }}</a>
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" label="邮箱" align="center" prop="email"/>
@@ -161,41 +161,73 @@
       @pagination="getList"
     />
 
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="网站名称" prop="title">
-          <el-input v-model="form.title" placeholder="请输入网站名称"/>
-        </el-form-item>
-        <el-form-item label="描述" prop="description">
-          <el-input v-model="form.description" placeholder="请输入描述"/>
-        </el-form-item>
-        <el-form-item label="网站图标" prop="headerImage">
-          <div style="display:inline-block" @click="openHeaderChange">
-            <img v-if="form.headerImage" alt="头像" class="header-img-box" :src="(form.headerImage && form.headerImage.slice(0, 4) !== 'http')?'path'+form.headerImage:form.headerImage">
-            <div v-else class="header-img-box">从媒体库选择</div>
-          </div>
-        </el-form-item>
-        <el-form-item label="链接" prop="url">
-          <el-input v-model="form.url" placeholder="请输入链接"/>
-        </el-form-item>
-        <el-form-item label="邮箱地址" prop="email">
-          <el-input v-model="form.email" placeholder="请输入邮箱地址"/>
-        </el-form-item>
-        <el-form-item label="状态" prop="link">
-          <el-select
-            v-model="form.linkStatus"
-            default-first-option
-            placeholder="请输入状态"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="dict in dict.type.blog_link_status"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            />
-          </el-select>
-        </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="网站名称" prop="title">
+              <el-input v-model="form.title" placeholder="请输入网站名称"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="网站图标" prop="headerImage">
+              <div style="display:inline-block" @click="openHeaderChange">
+                <img v-if="form.headerImage" alt="头像" class="header-img-box"
+                     :src="(form.headerImage && form.headerImage.slice(0, 4) !== 'http')?'path'+form.headerImage:form.headerImage">
+                <div v-else class="header-img-box">从媒体库选择</div>
+              </div>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="14">
+            <el-form-item label="描述" prop="description">
+              <el-input type="textarea" rows="3" v-model="form.description" placeholder="请输入描述"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="14">
+            <el-form-item label="链接" prop="url">
+              <el-input v-model="form.url" placeholder="请输入链接"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="14">
+            <el-form-item label="邮箱地址" prop="email">
+              <el-input v-model="form.email" placeholder="请输入邮箱地址"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="10">
+            <el-form-item label="状态" prop="link">
+              <el-select
+                v-model="form.linkStatus"
+                default-first-option
+                placeholder="请输入状态"
+                style="width: 240px"
+              >
+                <el-option
+                  v-for="dict in dict.type.blog_link_status"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="14">
+            <el-form-item label="发送邮件" prop="sendEmail">
+              <el-switch
+                v-model="form.sendEmail"
+                active-color="#13ce66"
+                inactive-color="#ff4949">
+              </el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="邮件内容">
+              <editor v-model="form.emailContent" :min-height="192"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -212,7 +244,7 @@ import ChooseImg from "@/components/ChooseImg";
 
 export default {
   dicts: ['blog_link_status'],
-  components:{ChooseImg},
+  components: {ChooseImg},
   name: "Link",
   data() {
     return {
@@ -281,6 +313,8 @@ export default {
         headerImage: null,
         linkStatus: null,
         url: null,
+        emailContent: "",
+        sendEmail: true,
         email: null
       };
       this.resetForm("form");
@@ -308,6 +342,8 @@ export default {
       getLink(id).then(response => {
         this.form = response.data;
         this.form.linkStatus = response.data.linkStatus.toString();
+        this.form.sendEmail = true;
+        this.form.emailContent = this.unEscapeSpecialCharacters(this.form.emailContent);
         this.open = true;
         this.title = "修改友链";
       });
@@ -316,14 +352,16 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.id != null) {
-            updateLink(this.form).then(response => {
+          var commitForm = Object.assign({}, this.form);
+          commitForm.emailContent = this.escapeSpecialCharacters(commitForm.emailContent);
+          if (commitForm.id != null) {
+            updateLink(commitForm).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addLink(this.form).then(response => {
+            addLink(commitForm).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

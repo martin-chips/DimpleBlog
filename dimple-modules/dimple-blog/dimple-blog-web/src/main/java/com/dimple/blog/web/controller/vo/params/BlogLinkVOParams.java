@@ -18,4 +18,6 @@ public class BlogLinkVOParams extends BaseVOParams {
     private Integer linkStatus;
     private Long visitCount;
     private String email;
+    private Boolean sendEmail;
+    private String emailContent;
 }

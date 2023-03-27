@@ -96,7 +96,7 @@
       <el-table-column label="操作系统" align="center" prop="os"/>
       <el-table-column label="访问者链接" align="center" prop="link">
         <template slot-scope="scope">
-          <a target="_blank" :href="scope.row.link">{{scope.row.link}}</a>
+          <a target="_blank" :href="scope.row.link">{{ scope.row.link }}</a>
         </template>
       </el-table-column>
       <el-table-column align="center" label="评论时间" prop="createTime"
@@ -105,7 +105,7 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column  label="操作" fixed="right" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" fixed="right" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -135,30 +135,42 @@
       @pagination="getList"
     />
 
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="文章标题" prop="articleId">
-          <el-input v-model="form.articleTitle" disabled placeholder="请输入文章标题"/>
-        </el-form-item>
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="form.username" placeholder="请输入用户名"/>
-        </el-form-item>
-        <el-form-item label="用户头像" prop="avatars">
-          <div style="display:inline-block" @click="openHeaderChange">
-            <img v-if="form.avatars" alt="头像" class="header-img-box"
-                 :src="(form.avatars && form.avatars.slice(0, 4) !== 'http')?'path'+form.avatars:form.avatars">
-            <div v-else class="header-img-box">从媒体库选择</div>
-          </div>
-        </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="文章标题" prop="articleId">
+              <el-input v-model="form.articleTitle" disabled placeholder="请输入文章标题"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="10">
+            <el-form-item label="用户头像" prop="avatars">
+              <div style="display:inline-block" @click="openHeaderChange">
+                <img v-if="form.avatars" alt="头像" class="header-img-box"
+                     :src="(form.avatars && form.avatars.slice(0, 4) !== 'http')?'path'+form.avatars:form.avatars">
+                <div v-else class="header-img-box">从媒体库选择</div>
+              </div>
+            </el-form-item>
+          </el-col>
+          <el-col :span="14">
+            <el-form-item label="用户名" prop="username">
+              <el-input v-model="form.username" placeholder="请输入用户名"/>
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email">
+              <el-input v-model="form.email" placeholder="请输入邮箱"/>
+            </el-form-item>
+            <el-form-item label="链接" prop="link">
+              <el-input v-model="form.link" placeholder="请输入链接"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
         <el-form-item label="内容">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="form.email" placeholder="请输入邮箱"/>
-        </el-form-item>
-        <el-form-item label="访问者链接" prop="link">
-          <el-input v-model="form.link" placeholder="请输入链接"/>
-        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

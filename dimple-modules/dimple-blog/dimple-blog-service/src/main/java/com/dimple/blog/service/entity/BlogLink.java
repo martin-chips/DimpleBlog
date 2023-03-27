@@ -3,8 +3,6 @@ package com.dimple.blog.service.entity;
 import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * BlogLink
  *
@@ -21,8 +19,6 @@ public class BlogLink extends BaseEntity {
     private Integer linkStatus;
     private Long visitCount;
     private String email;
-    private String createBy;
-    private Date createTime;
-    private String updateBy;
-    private Date updateTime;
+
+    private String emailContent;
 }

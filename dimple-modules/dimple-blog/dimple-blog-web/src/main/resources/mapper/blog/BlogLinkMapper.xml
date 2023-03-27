@@ -12,6 +12,7 @@
         <result property="url" column="url"/>
         <result property="linkStatus" column="link_status"/>
         <result property="visitCount" column="visit_count"/>
+        <result property="emailContent" column="email_content"/>
         <result property="email" column="email"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -26,6 +27,7 @@
                description,
                url,
                email,
+               email_content,
                link_status,
                visit_count,
                create_by,
@@ -67,6 +69,7 @@
             <if test="email != null">email,</if>
             <if test="linkStatus != null">link_status,</if>
             <if test="visitCount != null">visit_count,</if>
+            <if test="emailContent != null">email_content,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
@@ -80,6 +83,7 @@
             <if test="email != null">#{email},</if>
             <if test="linkStatus != null">#{linkStatus},</if>
             <if test="visitCount != null">#{visitCount},</if>
+            <if test="emailContent != null">#{emailContent},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
@@ -96,6 +100,7 @@
             <if test="url != null">url = #{url},</if>
             <if test="linkStatus != null">link_status = #{linkStatus},</if>
             <if test="email != null">email = #{email},</if>
+            <if test="emailContent != null">email_content = #{emailContent},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
         </trim>

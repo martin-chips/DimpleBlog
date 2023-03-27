@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       showChooseImg: false,
-      active: 0,
+      active: 1,
       postForm: Object.assign({}, defaultForm),
       tagOptions: [],
       categoryOptions: [],

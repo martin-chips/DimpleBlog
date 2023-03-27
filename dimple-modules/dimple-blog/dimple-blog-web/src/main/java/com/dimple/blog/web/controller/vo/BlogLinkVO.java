@@ -19,4 +19,5 @@ public class BlogLinkVO extends BaseEntity {
     private Integer linkStatus;
     private Long visitCount;
     private String email;
+    private String emailContent;
 }

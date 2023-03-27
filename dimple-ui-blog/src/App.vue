@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" :class="{ grayedOut: mask }">
         <router-view></router-view>
     </div>
 </template>
@@ -15,6 +15,7 @@ export default {
         return {
             location: [],
             timer: "",
+            mask: false,
             showBackTop: true
         };
     },
@@ -27,6 +28,7 @@ export default {
     methods: {
         ...mapMutations(["setArchives", "setCategory", "setTags", "setNewComments", "setVisitLoginConfig", "setNewArticles", "setTotals"]),
         initPanel() {
+            this.$api.
             this.$api.listPanelArchive({countType: "month", pageNum: 1, pageSize: 5}).then((res) => {
                 if (res.code === 200) {
                     this.setArchives(res.rows);
@@ -72,4 +74,7 @@ export default {
 @import '~@/style/reset.scss';
 @import './assets/css/prism.css';
 @import './assets/css/emoji-sprite.css';
+.grayedOut {
+    filter: grayscale(100%);
+}
 </style>
