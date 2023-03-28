@@ -10,7 +10,7 @@
   "dependencies": {
     "@octokit/core": "^3.5.1",
     "archiver": "^2.1.1",
-    "axios": "^0.17.1",
+    "axios": "^0.21.2",
     "element-ui": "^2.15.6",
     "emojilib": "^3.0.4",
     "express": "^4.16.2",
