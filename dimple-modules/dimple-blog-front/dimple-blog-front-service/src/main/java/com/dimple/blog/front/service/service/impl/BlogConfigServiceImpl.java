@@ -2,6 +2,8 @@ package com.dimple.blog.front.service.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.dimple.blog.front.service.entity.config.BlogConfig;
+import com.dimple.blog.front.service.entity.config.CommentConfig;
+import com.dimple.blog.front.service.entity.config.GithubLoginConfig;
 import com.dimple.blog.front.service.mapper.BlogConfigMapper;
 import com.dimple.blog.front.service.service.BlogConfigService;
 import com.dimple.common.core.utils.StringUtils;
@@ -10,6 +12,8 @@ import com.dimple.common.redis.core.RedisKeyDefine;
 import com.dimple.common.redis.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * BlogConfigServiceImpl
@@ -32,5 +36,12 @@ public class BlogConfigServiceImpl implements BlogConfigService {
             jsonStr = blogConfigMapper.getBlogConfig();
         }
         return JSONObject.parseObject(jsonStr, BlogConfig.class);
+    }
+
+    @Override
+    public GithubLoginConfig getGithubLoginConfig() {
+        BlogConfig blogConfig = this.getBlogConfig();
+        GithubLoginConfig githubLoginConfig = Optional.ofNullable(blogConfig.getCommentConfig()).map(CommentConfig::getGithubLoginConfig).orElse(null);
+        return githubLoginConfig;
     }
 }

@@ -129,6 +129,7 @@ export default {
             if (articleRes.code === 200) {
                 this.article = articleRes.data;
                 this.article.liked = 0;
+                this.article.content=this.article.content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
                 this.viewer.setMarkdown(this.article.content);
                 this.$nextTick(() => {
                     setTimeout(() => this.collectTitles(), 500);

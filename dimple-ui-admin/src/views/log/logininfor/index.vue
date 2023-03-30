@@ -164,6 +164,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderByColumn: "createTime",
+        isAsc: "desc",
         ipaddr: undefined,
         userName: undefined,
         status: undefined

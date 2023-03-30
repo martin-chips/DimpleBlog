@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <el-dialog title="登录" :visible.sync="customVisible" width="30%" custom-class="visitor-submit-box">
+        <el-dialog style="z-index: 20000;" title="登录" :visible.sync="customVisible" width="30%" custom-class="visitor-submit-box">
             <div class="submit__login">
                 <el-form label-width="60px" :model="customInfo" :rules="submitRules" ref="customForm">
                     <el-form-item label="昵称" prop="username">

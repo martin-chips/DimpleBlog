@@ -1,8 +1,6 @@
 package com.dimple.blog.front.service.config;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * GithubTokenInfo
@@ -10,9 +8,7 @@ import org.springframework.stereotype.Component;
  * @author Dimple
  * @date 2023/3/14 13:42
  */
-@ConfigurationProperties(prefix = "github.oauth")
 @Data
-@Component
 public class GithubTokenInfoConfig {
     private String clientId;
     private String clientSecrets;

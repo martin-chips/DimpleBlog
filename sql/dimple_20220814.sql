@@ -169,6 +169,9 @@ values (1, '系统管理', 0, 1, 'system', null, '', 1, 0, 'M', '0', '0', '', 's
        (606, '关于我管理', 6, 1, 'about', 'blog/about/index', null, 1, 0, 'C', '0', '0', 'blog:about:query', 'people',
         'admin',
         '友链菜单'),
+       (607, '站点管理', 6, 1, 'config', 'blog/config/index', null, 1, 0, 'C', '0', '0', 'blog:config:query', 'server',
+        'admin',
+        '友链菜单'),
        (1000, '用户查询', 100, 1, '', '', '', 1, 0, 'F', '0', '0', 'system:user:query', '#', 'admin', ''),
        (1001, '用户新增', 100, 2, '', '', '', 1, 0, 'F', '0', '0', 'system:user:add', '#', 'admin', ''),
        (1002, '用户修改', 100, 3, '', '', '', 1, 0, 'F', '0', '0', 'system:user:edit', '#', 'admin', ''),
@@ -248,8 +251,13 @@ values (1, '系统管理', 0, 1, 'system', null, '', 1, 0, 'M', '0', '0', '', 's
        (2021, '友链修改', 605, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:edit', '#', 'admin', ''),
        (2022, '友链删除', 605, 4, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:remove', '#', 'admin', ''),
        (2023, '友链导出', 605, 5, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:export', '#', 'admin', ''),
-       (2024, '关于我查询', 606, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:query', '#', 'admin', ''),
-       (2025, '关于我修改', 606, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:link:edit', '#', 'admin', '');
+       (2024, '关于我查询', 606, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:about:query', '#', 'admin', ''),
+       (2025, '关于我修改', 606, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:about:edit', '#', 'admin', ''),
+       (2026, '站点配置编辑', 607, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:config:edit', '#', 'admin', ''),
+       (2027, '站点配置查询', 607, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:config:query', '#', 'admin', ''),
+       (2028, '站点配置缓存删除', 607, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:config:remove', '#', 'admin', '')
+
+       ;
 -- ----------------------------
 -- 用户和角色关联表  用户N-1角色
 -- ----------------------------
@@ -683,6 +691,8 @@ values (2, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-light',
 insert into sys_config
 values (4, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 'Y', 'admin', sysdate(), '', null,
         '是否开启注册用户功能`（true开启，false关闭）');
+insert into sys_config (config_id, config_name, config_key, config_value, config_type, create_by, create_time, update_by, update_time, remark)
+values  (5, '管理系统全局-灰色遮罩', 'sys.index.mask', 'false', 'Y', 'admin', '2023-03-26 12:25:45', 'admin', '2023-03-27 20:31:57', 'true 表示开启，false表示关闭');
 
 
 -- ----------------------------

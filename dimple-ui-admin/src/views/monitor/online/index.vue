@@ -76,6 +76,8 @@ export default {
       pageSize: 10,
       // 查询参数
       queryParams: {
+        orderByColumn: "createTime",
+        isAsc: "desc",
         ipaddr: undefined,
         userName: undefined
       }

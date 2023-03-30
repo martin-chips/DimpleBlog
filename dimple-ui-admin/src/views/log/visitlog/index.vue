@@ -209,6 +209,8 @@ export default {
       form: {},
       // 查询参数
       queryParams: {
+        orderByColumn: "createTime",
+        isAsc: "desc",
         pageNum: 1,
         pageSize: 10,
         title: undefined,

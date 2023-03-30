@@ -214,6 +214,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderByColumn: "createTime",
+        isAsc: "desc",
         articleId: null,
         username: null,
         content: null,

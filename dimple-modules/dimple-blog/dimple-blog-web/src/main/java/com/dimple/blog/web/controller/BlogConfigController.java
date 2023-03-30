@@ -8,6 +8,7 @@ import com.dimple.blog.service.service.BlogConfigService;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.vo.params.AjaxResult;
+import com.dimple.common.security.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,7 @@ public class BlogConfigController extends BaseController {
     private static final String MASK_STR = "***********";
 
     @PutMapping
+    @RequiresPermissions("blog:config:edit")
     public AjaxResult updateConfig(@RequestBody BlogConfig blogConfig) {
         BlogConfig blogConfigInDb = blogConfigService.getBlogConfig();
         String emailPassword = Optional.ofNullable(blogConfig.getEmailConfig()).map(EmailConfig::getPassword).orElse("");
@@ -42,12 +44,14 @@ public class BlogConfigController extends BaseController {
     }
 
     @DeleteMapping
+    @RequiresPermissions("blog:config:remove")
     public AjaxResult deleteConfigCache() {
         blogConfigService.deleteConfigCache();
         return success();
     }
 
     @GetMapping
+    @RequiresPermissions("blog:config:query")
     public AjaxResult getBlogConfig() {
         BlogConfig blogConfig = blogConfigService.getBlogConfig();
         String githubClientSecrets = Optional.ofNullable(blogConfig.getCommentConfig()).map(CommentConfig::getGithubLoginConfig).map(GithubLoginConfig::getClientSecrets).orElse("");

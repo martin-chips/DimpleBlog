@@ -75,8 +75,8 @@ export default {
         pageNum: 1,
         name: "",
         orderByColumn: "createTime",
-        type: "image",
         isAsc: "desc",
+        type: "image",
         pageSize: 10,
       },
     }

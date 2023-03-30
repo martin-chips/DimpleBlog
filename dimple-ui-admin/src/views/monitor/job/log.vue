@@ -215,6 +215,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderByColumn: "createTime",
+        isAsc: "desc",
         jobName: undefined,
         jobGroup: undefined,
         status: undefined

@@ -217,6 +217,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderByColumn: "createTime",
+        isAsc: "desc",
         tableName: undefined,
         tableComment: undefined
       },

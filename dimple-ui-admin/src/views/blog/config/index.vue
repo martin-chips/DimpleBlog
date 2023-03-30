@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="configForm" :rules="rules" ref="configForm"
-             label-width="100px">
+             label-width="120px">
       <el-tabs ref="tabs">
         <el-tab-pane>
           <span slot="label"><i class="el-icon-date"></i> 站点配置</span>

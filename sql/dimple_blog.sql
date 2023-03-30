@@ -51,7 +51,7 @@ I''m a passionate developer from China
 
 <br />
 <br />
-', 0, 1, '', 1, 0, 'Dimple', sysdate(), null, null);
+', 0, 1, 'Hello, I''m Martin. I do open source!', 1, 0, 'Dimple', sysdate(), null, null);
 drop table if exists blog_category;
 create table blog_category
 (
@@ -163,7 +163,7 @@ drop table if exists blog_config;
 create table blog_config
 (
     id           bigint auto_increment primary key,
-    config_value varchar(255) not null comment 'config value',
+    config_value text not null comment 'config value',
     create_by    varchar(50)  null,
     create_time  datetime     null,
     update_by    varchar(55)  null,

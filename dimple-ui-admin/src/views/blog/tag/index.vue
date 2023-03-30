@@ -144,6 +144,8 @@ export default {
         pageNum: 1,
         pageSize: 10,
         title: null,
+        orderByColumn: "createTime",
+        isAsc: "desc",
       },
       // 表单参数
       form: {},

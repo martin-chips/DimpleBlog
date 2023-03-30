@@ -220,6 +220,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderByColumn: "createTime",
+        isAsc: "desc",
         configName: undefined,
         configKey: undefined,
         configType: undefined

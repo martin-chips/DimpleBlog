@@ -227,6 +227,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderByColumn: "createTime",
+        isAsc: "desc",
         dictName: undefined,
         dictType: undefined,
         status: undefined

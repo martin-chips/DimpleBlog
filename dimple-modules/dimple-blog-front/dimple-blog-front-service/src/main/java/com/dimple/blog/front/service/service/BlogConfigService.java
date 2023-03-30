@@ -1,6 +1,7 @@
 package com.dimple.blog.front.service.service;
 
 import com.dimple.blog.front.service.entity.config.BlogConfig;
+import com.dimple.blog.front.service.entity.config.GithubLoginConfig;
 
 /**
  * BlogConfigService
@@ -10,4 +11,6 @@ import com.dimple.blog.front.service.entity.config.BlogConfig;
  */
 public interface BlogConfigService {
     BlogConfig getBlogConfig();
+
+    GithubLoginConfig getGithubLoginConfig();
 }
