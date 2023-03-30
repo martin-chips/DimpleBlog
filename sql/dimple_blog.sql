@@ -163,11 +163,40 @@ drop table if exists blog_config;
 create table blog_config
 (
     id           bigint auto_increment primary key,
-    config_key   varchar(255) not null comment 'config key ',
     config_value varchar(255) not null comment 'config value',
-    remark       varchar(255) default '' comment 'config remark',
     create_by    varchar(50)  null,
     create_time  datetime     null,
     update_by    varchar(55)  null,
     update_time  datetime     null
 );
+insert into blog_config (id, config_value, create_by, create_time, update_by, update_time)
+values  (1, '{
+    "commentConfig": {
+        "enableGithubLogin": true,
+        "enableLocalLogin": true,
+        "enableQQLogin": true,
+        "githubLoginConfig": {
+            "accessTokenUrl": "https://github.com/login/oauth/access_token",
+            "adminId": "33685170",
+            "clientId": "fca4ba1e780fd9c444b2",
+            "clientSecrets": "",
+            "loginUrl": "https://github.com/login/oauth/authorize?scope=[''user:admin'']&client_id=fca4ba1e780fd9c444b2&scope=[''user'']&redirect_uri=http://124.221.138.118/login/auth/github",
+            "userInfoUrl": "https://api.github.com/user"
+        }
+    },
+    "emailConfig": {
+        "host": "smtp.126.com",
+        "password": "",
+        "username": "dimple_blog@126.com"
+    },
+    "siteConfig": {
+        "avatars": "https://avatars.githubusercontent.com/u/33685170?s=48&v=4",
+        "copyright": "©2018 - 2023&nbsp;&nbsp;&nbsp;",
+        "githubUrl": "https://github.com/martin-chips",
+        "githubUserName": "Martin Chips",
+        "icp": "蜀1-2234",
+        "infoPanel": "&lt;p&gt;Hi，欢迎来到Dimple''s Blog，一个记录学习和生活的个人博客，你可以在&lt;a href=\\"https://bianxf.com\\" rel=\\"noopener noreferrer\\" target=\\"_blank\\"&gt;这里&lt;/a&gt;了解到关于本站的技术细节。&lt;/p&gt;",
+        "mask": false,
+        "siteName": "Dimple Blog"
+    }
+}', 'admin', sysdate(), null, null);
