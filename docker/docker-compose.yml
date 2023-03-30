@@ -96,7 +96,7 @@ services:
     links:
       - dimple-redis
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-auth:
     container_name: dimple-auth
     build:
@@ -107,7 +107,7 @@ services:
     links:
       - dimple-redis
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-system:
     container_name: dimple-modules-system
     build:
@@ -119,7 +119,7 @@ services:
       - dimple-redis
       - dimple-mysql
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-job:
     container_name: dimple-modules-job
     build:
@@ -130,7 +130,7 @@ services:
     links:
       - dimple-mysql
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-file:
     container_name: dimple-modules-file
     build:
@@ -141,7 +141,7 @@ services:
     volumes:
       - ./file/uploadPath:/home/dimple/uploadPath
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-monitor:
     container_name: dimple-modules-monitor
     build:
@@ -150,14 +150,14 @@ services:
     ports:
       - "9100:9100"
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms256 -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-blog:
     container_name: dimple-modules-blog
     build:
       context: ./dimple/modules/blog/
       dockerfile: Dockerfile
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
     ports:
       - "9401:9401"
     links:
@@ -168,13 +168,15 @@ services:
     build:
       context: ./dimple/modules/blog-front/
       dockerfile: Dockerfile
+    extra_hosts:
+      - "github.com:140.82.112.3"
     ports:
       - "9500:9500"
     links:
       - dimple-redis
       - dimple-mysql
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-log:
     container_name: dimple-modules-log
     build:
@@ -186,4 +188,4 @@ services:
       - dimple-redis
       - dimple-mysql
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
