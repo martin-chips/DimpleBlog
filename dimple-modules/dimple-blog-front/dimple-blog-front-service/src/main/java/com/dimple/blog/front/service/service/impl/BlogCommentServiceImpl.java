@@ -1,12 +1,12 @@
 package com.dimple.blog.front.service.service.impl;
 
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
-import com.dimple.blog.front.service.config.GithubTokenInfoConfig;
 import com.dimple.blog.front.service.entity.BlogComment;
 import com.dimple.blog.front.service.entity.KeyValue;
 import com.dimple.blog.front.service.enums.BlogCommentType;
 import com.dimple.blog.front.service.mapper.BlogCommentMapper;
 import com.dimple.blog.front.service.service.BlogCommentService;
+import com.dimple.blog.front.service.service.BlogConfigService;
 import com.dimple.blog.front.service.service.bo.BlogCommentBO;
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.ServletUtils;
@@ -33,7 +33,7 @@ public class BlogCommentServiceImpl implements BlogCommentService {
     @Autowired
     private BlogCommentMapper blogCommentMapper;
     @Autowired
-    private GithubTokenInfoConfig githubTokenInfoConfig;
+    private BlogConfigService blogConfigService;
 
     @Override
     public List<BlogCommentBO> selectBlogCommentListWithSub(BlogCommentBO blogCommentBO) {
@@ -75,7 +75,8 @@ public class BlogCommentServiceImpl implements BlogCommentService {
         BlogComment blogComment = BeanMapper.convert(blogCommentBO, BlogComment.class);
         blogComment.setCreateTime(DateUtils.getNowDate());
         if (Objects.equals(blogComment.getType(), BlogCommentType.GITHUB.getType())
-                && Objects.equals(blogComment.getVisitorId(), githubTokenInfoConfig.getAdminId())) {
+                && Objects.equals(blogComment.getVisitorId(), blogConfigService.getGithubLoginConfig().getAdminId())) {
+
             blogComment.setAdmin(Boolean.TRUE);
         }
         String ip = IpUtils.getServletIp();
