@@ -234,7 +234,7 @@ export default {
         if (valid) {
           this.postForm.articleStatus = 1;
 
-          var form = Object.assign({}, this.postForm);
+          var form = JSON.parse(JSON.stringify(this.postForm));
           form.content = this.escapeSpecialCharacters(this.postForm.content);
           if (!form.id) {
             addArticle(form).then(response => {
@@ -282,8 +282,10 @@ export default {
         return
       }
       this.postForm.articleStatus = 2;
-      if (!this.postForm.id) {
-        addArticle(this.postForm).then(response => {
+      var form = JSON.parse(JSON.stringify(this.postForm));
+      form.content = this.escapeSpecialCharacters(this.postForm.content);
+      if (!form.id) {
+        addArticle(form).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',
@@ -293,7 +295,7 @@ export default {
           this.postForm.id = response.data;
         });
       } else {
-        updateArticle(this.postForm).then(response => {
+        updateArticle(form).then(response => {
           this.$message({
             message: '保存成功',
             type: 'success',

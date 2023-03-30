@@ -49,6 +49,7 @@ public class BlogLinkServiceImpl implements BlogLinkService {
         blogLink.setCreateTime(DateUtils.getNowDate());
         return blogLinkMapper.insertBlogLink(blogLink);
     }
+
     private void sendEmail(BlogLinkBO blogLinkBO) {
         String recipient = blogLinkBO.getEmail();
         if (StringUtils.isEmpty(recipient)) {

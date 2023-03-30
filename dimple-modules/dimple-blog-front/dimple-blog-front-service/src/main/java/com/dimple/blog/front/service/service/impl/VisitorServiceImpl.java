@@ -14,6 +14,8 @@ import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+
 /**
  * VisitorServiceImpl
  *
@@ -28,6 +30,7 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public GithubVisitorInfoBO getGithubVisitorInfo(String code) {
+        log.info("start login with github, code is {}.", code);
         GithubVisitorInfoBO githubVisitorInfoBO = new GithubVisitorInfoBO();
         String token = getAccessToken(code);
         if (StringUtils.isEmpty(token)) {
@@ -46,6 +49,7 @@ public class VisitorServiceImpl implements VisitorService {
     @SneakyThrows
     private JSONObject getGithubUserInfo(String accessToken) {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .readTimeout(Duration.ofMinutes(1))
                 .build();
         Request request = new Request.Builder()
                 .url(githubTokenInfoConfig.getUserInfoUrl())
@@ -59,6 +63,7 @@ public class VisitorServiceImpl implements VisitorService {
     @SneakyThrows
     private String getAccessToken(String code) {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .readTimeout(Duration.ofMinutes(1))
                 .build();
         FormBody formBody = new FormBody.Builder()
                 .add("client_id", githubTokenInfoConfig.getClientId())

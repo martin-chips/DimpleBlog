@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.blog.service.mapper.BlogConfigMapper">
+
+    <update id="updateConfig">
+        update blog_config
+        set config_value=#{configValue}
+        where id=1;
+    </update>
+    <select id="getConfig" resultType="java.lang.String">
+        select config_value
+        from blog_config
+        where id = 1;
+    </select>
+</mapper>

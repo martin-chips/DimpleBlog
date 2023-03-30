@@ -343,6 +343,9 @@ export default {
         this.form = response.data;
         this.form.linkStatus = response.data.linkStatus.toString();
         this.form.sendEmail = true;
+        if (!this.form.emailContent) {
+          this.form.emailContent="&lt;p&gt;尊敬的站长，您好，&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;您在&lt;a href=\"www.bianxf.com\" rel=\"noopener noreferrer\" target=\"_blank\"&gt;&lt;strong&gt;DimpleBlog&lt;/strong&gt;&lt;/a&gt;提交的友链申请已通过！&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=\"color: rgb(0, 0, 0);\"&gt;（本邮件为系统自动发出请勿回复）&lt;/span&gt;&lt;/p&gt;"
+        }
         this.form.emailContent = this.unEscapeSpecialCharacters(this.form.emailContent);
         this.open = true;
         this.title = "修改友链";
@@ -352,7 +355,7 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          var commitForm = Object.assign({}, this.form);
+          var commitForm = JSON.parse(JSON.stringify(this.form));
           commitForm.emailContent = this.escapeSpecialCharacters(commitForm.emailContent);
           if (commitForm.id != null) {
             updateLink(commitForm).then(response => {

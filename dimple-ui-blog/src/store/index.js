@@ -24,7 +24,7 @@ export function createStore() {
       newArticles: [],
       // 访客信息
       visitorInfo: {},
-      visitLoginConfig: {},
+      globalConfig: {},
       totals: {
         article: 0,
         tag: 0,

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * BlogAboutController
  *
- * @author BianXiaofeng
+ * @author Dimple
  * @date 2023/3/16
  */
 @RestController

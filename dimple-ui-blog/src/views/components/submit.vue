@@ -56,13 +56,16 @@
                 <div class="submit__register">
                     <el-button size="small" type="primary" @click="register">注册</el-button>
                 </div>
-                <div class="submit__third-part">
+                <div v-if="globalConfig.commentConfig.enableGithubLogin||globalConfig.commentConfig.enableQQLogin"
+                     class="submit__third-part">
                     <div class="line">第三方登录</div>
                     <div class="submit__third-app">
-                        <a href="javascript: void(0)" @click="openQQ" class="login-qq">
+                        <a v-if="globalConfig.commentConfig.enableQQLogin" href="javascript: void(0)" @click="openQQ"
+                           class="login-qq">
                             <img src="~@img/qq.png" alt="QQ登录"/>
                         </a>
-                        <a href="javascript: void(0)" class="login-github" @click="openGithub">
+                        <a v-if="globalConfig.commentConfig.enableGithubLogin" href="javascript: void(0)"
+                           class="login-github" @click="openGithub">
                             <img src="~@img/github.png" alt="github登录"/>
                         </a>
                     </div>
@@ -161,7 +164,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(["visitorInfo"])
+        ...mapState(["visitorInfo", "globalConfig"])
     },
     methods: {
         ...mapMutations(["setVisitor"]),
@@ -183,7 +186,7 @@ export default {
             })
         },
         openGithub() {
-            window.open(`https://github.com/login/oauth/authorize?scope=['user:admin']&client_id=fca4ba1e780fd9c444b2&scope=['user']&redirect_uri=http://localhost/login/github`, '_blank', 'height=600,width=800,toolbar=no, menubar=no, scrollbars=no')
+            window.open(encodeURI(this.globalConfig.commentConfig.githubLoginConfig.loginUrl), '_blank', 'height=600,width=800,toolbar=no, menubar=no, scrollbars=no');
         },
         openQQ() {
 

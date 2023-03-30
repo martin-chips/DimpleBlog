@@ -1,6 +1,12 @@
 import request from "@/utils/request";
 
 export default {
+    getSiteConfig() {
+        return request({
+            url: '/blog-front/config',
+            method: 'get',
+        })
+    },
     listPanelArchive(query) {
         return request({
             url: '/blog-front/panel/archives',

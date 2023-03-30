@@ -161,7 +161,7 @@ export default {
         if (valid) {
           this.postForm.articleStatus = 1;
           this.loading = false;
-          var form = Object.assign({}, this.postForm);
+          var form = JSON.parse(JSON.stringify(this.postForm));
           form.content = this.escapeSpecialCharacters(form.content);
           updateAbout(form).then(response => {
             this.loading = true;

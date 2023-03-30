@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * RemoteDictService
  *
- * @author BianXiaofeng
+ * @author Dimple
  * @date 3/21/2023
  */
 @FeignClient(contextId = "remoteDictService", value = ServiceNameConstants.SYSTEM_SERVICE, fallbackFactory = RemoteDictFallbackFactory.class)

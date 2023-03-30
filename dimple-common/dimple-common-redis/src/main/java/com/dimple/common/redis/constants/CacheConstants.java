@@ -57,8 +57,9 @@ public class CacheConstants {
     /**
      * 密码锁定时间，默认10（分钟）
      */
-    private static final long PASSWORD_LOCK_TIME = 10;
     public static final RedisKeyDefine PWD_ERR_CNT_KEY_DEFINE
-            = new RedisKeyDefine("登录账户密码错误次数 redis key", "pwd_err_cnt:%s", RedisKeyTypeEnum.STRING, String.class, Duration.ofMinutes(PASSWORD_LOCK_TIME));
+            = new RedisKeyDefine("登录账户密码错误次数 redis key", "pwd_err_cnt:%s", RedisKeyTypeEnum.STRING, String.class, Duration.ofMinutes(10));
 
+    public static final RedisKeyDefine BLOG_FRONT_CONFIG_KEY_DEFINE
+            = new RedisKeyDefine("Blog网站配置 redis key", "blog_front_config", RedisKeyTypeEnum.STRING, String.class, Duration.ofMinutes(10));
 }

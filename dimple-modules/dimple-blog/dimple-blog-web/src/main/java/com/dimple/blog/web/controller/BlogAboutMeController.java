@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * BlogAboutMeController
  *
- * @author BianXiaofeng
+ * @author Dimple
  * @date 3/24/2023
  */
 @RestController

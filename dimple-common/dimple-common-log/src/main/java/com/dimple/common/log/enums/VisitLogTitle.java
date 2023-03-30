@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * VisitLogTitle
  *
- * @author BianXiaofeng
+ * @author Dimple
  * @date 2023/3/16
  */
 @Getter
