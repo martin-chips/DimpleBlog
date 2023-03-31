@@ -1,4 +1,4 @@
-version : '3.9'
+version: '3.9'
 services:
   dimple-nacos:
     container_name: dimple-nacos
@@ -11,6 +11,7 @@ services:
       - JVM_XMS=512m
       - JVM_XMX=512m
       - JVM_XMN=128m
+      - TZ=Asia/Shanghai
     volumes:
       - ./nacos/logs/:/home/nacos/logs
       - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
@@ -18,6 +19,10 @@ services:
       - "8848:8848"
       - "9848:9848"
       - "9849:9849"
+    restart: always
+    depends_on:
+      dimple-mysql:
+        condition: service_healthy
   dimple-mysql:
     container_name: dimple-mysql
     image: mysql
@@ -37,11 +42,18 @@ services:
       'mysqld',
       '--innodb-buffer-pool-size=80M',
       '--character-set-server=utf8mb4',
-          '--collation-server=utf8mb4_unicode_ci',
-          '--default-time-zone=+8:00',
-          '--lower-case-table-names=1'
-        ]
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-time-zone=+8:00',
+      '--lower-case-table-names=1'
+    ]
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
     environment:
+      TZ: Asia/Shanghai
       MYSQL_DATABASE: 'dimple-cloud'
       MYSQL_ROOT_PASSWORD: Di^&7so@c@drxMe4
     deploy:
@@ -54,6 +66,9 @@ services:
     hostname: dimple-redis
     build:
       context: ./redis
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
     ports:
       - "6379:6379"
     volumes:
@@ -71,15 +86,18 @@ services:
     privileged: true
     build:
       context: nginx
+    environment:
+      - TZ=Asia/Shanghai
     ports:
       - "80:80"
-      - "81:81"
+      - "443:443"
     volumes:
       - ./nginx/admin/dist/:/home/dimple/projects/dimple-ui-admin/
       - ./nginx/blog/dist/:/home/dimple/projects/dimple-ui-blog/
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/logs:/var/log/nginx
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
     links:
       - dimple-gateway
     deploy:
@@ -96,6 +114,7 @@ services:
     links:
       - dimple-redis
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-auth:
     container_name: dimple-auth
@@ -107,6 +126,7 @@ services:
     links:
       - dimple-redis
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-system:
     container_name: dimple-modules-system
@@ -119,6 +139,7 @@ services:
       - dimple-redis
       - dimple-mysql
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-job:
     container_name: dimple-modules-job
@@ -130,6 +151,7 @@ services:
     links:
       - dimple-mysql
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-file:
     container_name: dimple-modules-file
@@ -141,6 +163,7 @@ services:
     volumes:
       - ./file/uploadPath:/home/dimple/uploadPath
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-monitor:
     container_name: dimple-modules-monitor
@@ -150,6 +173,7 @@ services:
     ports:
       - "9100:9100"
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256 -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-blog:
     container_name: dimple-modules-blog
@@ -157,6 +181,7 @@ services:
       context: ./dimple/modules/blog/
       dockerfile: Dockerfile
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
     ports:
       - "9401:9401"
@@ -176,6 +201,7 @@ services:
       - dimple-redis
       - dimple-mysql
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
   dimple-modules-log:
     container_name: dimple-modules-log
@@ -188,4 +214,5 @@ services:
       - dimple-redis
       - dimple-mysql
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log

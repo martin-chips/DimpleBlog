@@ -2,6 +2,3 @@
 FROM mysql
 # author
 MAINTAINER dimple
-
-# 执行sql脚本
-COPY ./db/*.sql /docker-entrypoint-initdb.d/

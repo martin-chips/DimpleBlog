@@ -1,6 +1,7 @@
 #!/bin/bash
-
+# the project home path
 PROJECT_ROOT_PATH="/home/project/DimpleBlog"
+# the docker compose home path
 PROJECT_DOCKER_PATH="$PROJECT_ROOT_PATH/docker"
 
 base() {
@@ -37,16 +38,21 @@ init() {
   echo 'This method only using the first deploy, <CTRL-C> exit and press any key will continue.'
   # shellcheck disable=SC2162
   read any_key
+  default_password="Di^&7so@c@drxMe4"
+  echo "please input the password:(We strongly recommend that you change the default password: ${default_password} )"
+  # shellcheck disable=SC2162
+  read input_password
   clean_sql
   clean_html
   clean_jar
   cp_sql
-  echo "please input the password:(We strongly recommend that you change the default password: ${default_password} )"
-  # shellcheck disable=SC2162
-  read input_password
   build
-  default_password="Di^&7so@c@drxMe4"
   echo "start change default password to $input_password"
+  change_default_password
+}
+
+# change the default password in MySQL，Redis，Nacos
+change_default_password() {
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/redis/conf/redis.conf
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/nacos/conf/application.properties
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/mysql/db/*
@@ -183,11 +189,13 @@ bye() {
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
+# build : only build jar, dist html... but not call docker run.
+# deploy: stop and remove all service, then build jar, dist html ... and finally call docker run.
 # 设置选项数组
 options=(
   "Init: only first deploy the service can using this method.",
-  "Base: deploy dimple-mysql,dimple-redis,dimple-nacos services.",
-  "Modules: deploy all customer modules services.",
+  "Base: deploy MySQL,Naocs,Redis base services.",
+  "Modules: deploy all customer modules services. contains HTML and Jar",
   "Stop: Stop all customer modules services",
   "Build: Build all customer modules service,contains jar and html",
   "Build Jar: Only build jar",
