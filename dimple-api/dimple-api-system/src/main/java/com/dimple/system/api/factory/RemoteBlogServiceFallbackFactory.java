@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class RemoteBlogServiceFallbackFactory implements FallbackFactory<RemoteBlogService> {
     @Override
     public RemoteBlogService create(Throwable cause) {
-        log.error("日志服务调用失败:{}", cause.getMessage());
+        log.error("博客服务调用失败:{}", cause.getMessage());
         return () -> null;
 
     }

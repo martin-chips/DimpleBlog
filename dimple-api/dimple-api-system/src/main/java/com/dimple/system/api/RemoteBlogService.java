@@ -5,7 +5,7 @@ import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.system.api.factory.RemoteDictFallbackFactory;
 import com.dimple.system.api.model.config.BlogGlobalConfig;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * RemoteBlogGlobalConfigService
@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @FeignClient(contextId = "remoteBlogGlobalConfigService", value = ServiceNameConstants.BLOG_SERVICE, fallbackFactory = RemoteDictFallbackFactory.class)
 public interface RemoteBlogService {
-    @PostMapping(value = "/blog/config/global")
+    @GetMapping(value = "/blog/config/global")
     ResponseEntity<BlogGlobalConfig> getBlogGlobalConfig();
 }
