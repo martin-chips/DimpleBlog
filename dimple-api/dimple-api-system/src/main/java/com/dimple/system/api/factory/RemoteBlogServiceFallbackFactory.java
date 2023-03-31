@@ -16,7 +16,7 @@ public class RemoteBlogServiceFallbackFactory implements FallbackFactory<RemoteB
     @Override
     public RemoteBlogService create(Throwable cause) {
         log.error("博客服务调用失败:{}", cause.getMessage());
-        return () -> null;
+        return source -> null;
 
     }
 }

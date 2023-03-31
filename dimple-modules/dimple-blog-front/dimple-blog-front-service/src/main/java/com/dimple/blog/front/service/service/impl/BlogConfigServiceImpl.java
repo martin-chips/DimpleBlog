@@ -1,9 +1,8 @@
 package com.dimple.blog.front.service.service.impl;
 
-import com.alibaba.fastjson2.JSONObject;
 import com.dimple.blog.front.service.service.BlogConfigService;
+import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.domain.ResponseEntity;
-import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.redis.core.RedisKeyDefine;
 import com.dimple.common.redis.service.RedisService;
@@ -14,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -33,18 +33,18 @@ public class BlogConfigServiceImpl implements BlogConfigService {
 
     @Override
     public BlogGlobalConfig getBlogGlobalConfig() {
-        String jsonStr = redisService.getCacheObject(redisKeyDefine.getKeyTemplate());
-        if (StringUtils.isNotEmpty(jsonStr)) {
-            return JSONObject.parseObject(jsonStr, BlogGlobalConfig.class);
+        BlogGlobalConfig blogGlobalConfig = redisService.getCacheObject(redisKeyDefine.getKeyTemplate());
+        if (!Objects.isNull(blogGlobalConfig)) {
+            return blogGlobalConfig;
         }
-        ResponseEntity<BlogGlobalConfig> globalConfigResponseEntity = remoteBlogService.getBlogGlobalConfig();
+        ResponseEntity<BlogGlobalConfig> globalConfigResponseEntity = remoteBlogService.getBlogGlobalConfig(SecurityConstants.INNER);
         if (globalConfigResponseEntity == null || globalConfigResponseEntity.getCode() != 200) {
-            log.error("Call remote blog service failed.");
+            log.error("Call remote blog service failed.{}", globalConfigResponseEntity);
             return null;
         }
-        BlogGlobalConfig responseEntityData = globalConfigResponseEntity.getData();
-        redisService.setCacheObject(redisKeyDefine.getKeyTemplate(), responseEntityData);
-        return responseEntityData;
+        blogGlobalConfig = globalConfigResponseEntity.getData();
+        redisService.setCacheObject(redisKeyDefine.getKeyTemplate(), blogGlobalConfig);
+        return blogGlobalConfig;
 
     }
 
