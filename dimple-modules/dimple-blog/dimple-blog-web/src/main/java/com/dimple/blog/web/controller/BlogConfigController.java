@@ -4,6 +4,7 @@ import com.dimple.blog.service.service.BlogConfigService;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.vo.params.AjaxResult;
+import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import com.dimple.system.api.model.config.BlogGlobalConfig;
 import com.dimple.system.api.model.config.CommentConfig;
@@ -64,5 +65,11 @@ public class BlogConfigController extends BaseController {
             blogGlobalConfig.getEmailConfig().setPassword(MASK_STR);
         }
         return success(blogGlobalConfig);
+    }
+
+    @InnerAuth
+    @GetMapping("global")
+    public AjaxResult getGlobaclConfig() {
+        return success(blogConfigService.getBlogConfig());
     }
 }

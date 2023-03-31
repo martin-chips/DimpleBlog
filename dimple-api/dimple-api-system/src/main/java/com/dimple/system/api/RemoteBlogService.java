@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @FeignClient(contextId = "remoteBlogGlobalConfigService", value = ServiceNameConstants.BLOG_SERVICE, fallbackFactory = RemoteDictFallbackFactory.class)
 public interface RemoteBlogService {
-    @PostMapping(value = "/blog/config")
+    @PostMapping(value = "/blog/config/global")
     ResponseEntity<BlogGlobalConfig> getBlogGlobalConfig();
 }
