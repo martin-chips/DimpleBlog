@@ -1,11 +1,11 @@
 package com.dimple.blog.front.service.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.dimple.blog.front.service.entity.config.GithubLoginConfig;
 import com.dimple.blog.front.service.service.BlogConfigService;
 import com.dimple.blog.front.service.service.VisitorService;
 import com.dimple.blog.front.service.service.bo.GithubVisitorInfoBO;
 import com.dimple.common.core.utils.StringUtils;
+import com.dimple.system.api.model.config.GithubLoginConfig;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.FormBody;
@@ -79,7 +79,7 @@ public class VisitorServiceImpl implements VisitorService {
         Response response = okHttpClient.newCall(request).execute();
         //access_token=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&scope=&token_type=bearer
         String responseStr = response.body().string();
-        log.info("response is {} ",responseStr);
+        log.info("response is {} ", responseStr);
         return responseStr.substring(0, responseStr.indexOf("&scope")).replace("access_token=", "");
     }
 

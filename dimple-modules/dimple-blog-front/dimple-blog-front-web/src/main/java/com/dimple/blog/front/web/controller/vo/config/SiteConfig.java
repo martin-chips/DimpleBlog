@@ -1,4 +1,4 @@
-package com.dimple.blog.front.service.entity.config;
+package com.dimple.blog.front.web.controller.vo.config;
 
 import lombok.Data;
 

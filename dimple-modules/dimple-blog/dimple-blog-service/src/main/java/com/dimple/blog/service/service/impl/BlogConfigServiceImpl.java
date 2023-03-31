@@ -1,12 +1,12 @@
 package com.dimple.blog.service.service.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.dimple.blog.service.entity.config.BlogConfig;
 import com.dimple.blog.service.mapper.BlogConfigMapper;
 import com.dimple.blog.service.service.BlogConfigService;
 import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.redis.core.RedisKeyDefine;
 import com.dimple.common.redis.service.RedisService;
+import com.dimple.system.api.model.config.BlogGlobalConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +25,8 @@ public class BlogConfigServiceImpl implements BlogConfigService {
     private RedisKeyDefine redisKeyDefine = CacheConstants.BLOG_FRONT_CONFIG_KEY_DEFINE;
 
     @Override
-    public int updateConfig(BlogConfig blogConfig) {
-        String jsonString = JSON.toJSONString(blogConfig);
+    public int updateConfig(BlogGlobalConfig blogGlobalConfig) {
+        String jsonString = JSON.toJSONString(blogGlobalConfig);
         return blogConfigMapper.updateConfig(jsonString);
     }
 
@@ -36,8 +36,8 @@ public class BlogConfigServiceImpl implements BlogConfigService {
     }
 
     @Override
-    public BlogConfig getBlogConfig() {
+    public BlogGlobalConfig getBlogConfig() {
         String config = blogConfigMapper.getConfig();
-        return JSON.parseObject(config, BlogConfig.class);
+        return JSON.parseObject(config, BlogGlobalConfig.class);
     }
 }

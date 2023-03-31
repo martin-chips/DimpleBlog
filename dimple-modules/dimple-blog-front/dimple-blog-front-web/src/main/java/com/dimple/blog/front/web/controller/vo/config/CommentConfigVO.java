@@ -1,4 +1,4 @@
-package com.dimple.blog.service.entity.config;
+package com.dimple.blog.front.web.controller.vo.config;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 3/29/2023
  */
 @Data
-public class CommentConfig {
+public class CommentConfigVO {
     private boolean enableLocalLogin;
     private boolean enableGithubLogin;
     private boolean enableQQLogin;

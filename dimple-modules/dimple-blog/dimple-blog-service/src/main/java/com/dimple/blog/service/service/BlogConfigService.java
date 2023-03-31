@@ -1,6 +1,6 @@
 package com.dimple.blog.service.service;
 
-import com.dimple.blog.service.entity.config.BlogConfig;
+import com.dimple.system.api.model.config.BlogGlobalConfig;
 
 /**
  * BlogConfigService
@@ -9,11 +9,11 @@ import com.dimple.blog.service.entity.config.BlogConfig;
  * @date 3/30/2023
  */
 public interface BlogConfigService {
-    int updateConfig(BlogConfig blogConfig);
+    int updateConfig(BlogGlobalConfig blogGlobalConfig);
 
     void deleteConfigCache();
 
-    BlogConfig getBlogConfig();
+    BlogGlobalConfig getBlogConfig();
 
 
 }

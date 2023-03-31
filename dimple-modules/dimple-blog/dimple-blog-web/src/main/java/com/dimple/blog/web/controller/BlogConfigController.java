@@ -1,14 +1,14 @@
 package com.dimple.blog.web.controller;
 
-import com.dimple.blog.service.entity.config.BlogConfig;
-import com.dimple.blog.service.entity.config.CommentConfig;
-import com.dimple.blog.service.entity.config.EmailConfig;
-import com.dimple.blog.service.entity.config.GithubLoginConfig;
 import com.dimple.blog.service.service.BlogConfigService;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.security.annotation.RequiresPermissions;
+import com.dimple.system.api.model.config.BlogGlobalConfig;
+import com.dimple.system.api.model.config.CommentConfig;
+import com.dimple.system.api.model.config.EmailConfig;
+import com.dimple.system.api.model.config.GithubLoginConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,18 +29,18 @@ public class BlogConfigController extends BaseController {
 
     @PutMapping
     @RequiresPermissions("blog:config:edit")
-    public AjaxResult updateConfig(@RequestBody BlogConfig blogConfig) {
-        BlogConfig blogConfigInDb = blogConfigService.getBlogConfig();
-        String emailPassword = Optional.ofNullable(blogConfig.getEmailConfig()).map(EmailConfig::getPassword).orElse("");
+    public AjaxResult updateConfig(@RequestBody BlogGlobalConfig blogGlobalConfig) {
+        BlogGlobalConfig blogGlobalConfigInDb = blogConfigService.getBlogConfig();
+        String emailPassword = Optional.ofNullable(blogGlobalConfig.getEmailConfig()).map(EmailConfig::getPassword).orElse("");
         if (StringUtils.isNotEmpty(emailPassword) && emailPassword.contains(MASK_STR)) {
             // means the password not update, so just using the db value
-            blogConfig.getEmailConfig().setPassword(blogConfigInDb.getEmailConfig().getPassword());
+            blogGlobalConfig.getEmailConfig().setPassword(blogGlobalConfigInDb.getEmailConfig().getPassword());
         }
-        String githubClientSecrets = Optional.ofNullable(blogConfig.getCommentConfig()).map(CommentConfig::getGithubLoginConfig).map(GithubLoginConfig::getClientSecrets).orElse("");
+        String githubClientSecrets = Optional.ofNullable(blogGlobalConfig.getCommentConfig()).map(CommentConfig::getGithubLoginConfig).map(GithubLoginConfig::getClientSecrets).orElse("");
         if (StringUtils.isNotEmpty(githubClientSecrets) && githubClientSecrets.contains(MASK_STR)) {
-            blogConfig.getCommentConfig().getGithubLoginConfig().setClientSecrets(blogConfigInDb.getCommentConfig().getGithubLoginConfig().getClientSecrets());
+            blogGlobalConfig.getCommentConfig().getGithubLoginConfig().setClientSecrets(blogGlobalConfigInDb.getCommentConfig().getGithubLoginConfig().getClientSecrets());
         }
-        return success(blogConfigService.updateConfig(blogConfig));
+        return success(blogConfigService.updateConfig(blogGlobalConfig));
     }
 
     @DeleteMapping
@@ -53,16 +53,16 @@ public class BlogConfigController extends BaseController {
     @GetMapping
     @RequiresPermissions("blog:config:query")
     public AjaxResult getBlogConfig() {
-        BlogConfig blogConfig = blogConfigService.getBlogConfig();
-        String githubClientSecrets = Optional.ofNullable(blogConfig.getCommentConfig()).map(CommentConfig::getGithubLoginConfig).map(GithubLoginConfig::getClientSecrets).orElse("");
+        BlogGlobalConfig blogGlobalConfig = blogConfigService.getBlogConfig();
+        String githubClientSecrets = Optional.ofNullable(blogGlobalConfig.getCommentConfig()).map(CommentConfig::getGithubLoginConfig).map(GithubLoginConfig::getClientSecrets).orElse("");
         if (StringUtils.isNotEmpty(githubClientSecrets)) {
-            GithubLoginConfig githubLoginConfig = blogConfig.getCommentConfig().getGithubLoginConfig();
+            GithubLoginConfig githubLoginConfig = blogGlobalConfig.getCommentConfig().getGithubLoginConfig();
             githubLoginConfig.setClientSecrets(githubLoginConfig.getClientSecrets().substring(0, 1) + MASK_STR);
         }
-        String emailPassword = Optional.ofNullable(blogConfig.getEmailConfig()).map(EmailConfig::getPassword).orElse("");
+        String emailPassword = Optional.ofNullable(blogGlobalConfig.getEmailConfig()).map(EmailConfig::getPassword).orElse("");
         if (StringUtils.isNotEmpty(emailPassword)) {
-            blogConfig.getEmailConfig().setPassword(MASK_STR);
+            blogGlobalConfig.getEmailConfig().setPassword(MASK_STR);
         }
-        return success(blogConfig);
+        return success(blogGlobalConfig);
     }
 }

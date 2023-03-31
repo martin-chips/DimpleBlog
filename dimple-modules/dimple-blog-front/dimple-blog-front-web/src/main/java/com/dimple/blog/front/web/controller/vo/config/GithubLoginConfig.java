@@ -1,4 +1,4 @@
-package com.dimple.blog.service.entity.config;
+package com.dimple.blog.front.web.controller.vo.config;
 
 import lombok.Data;
 
@@ -12,8 +12,5 @@ import lombok.Data;
 public class GithubLoginConfig {
     private String adminId;
     private String clientId;
-    private String clientSecrets;
-    private String accessTokenUrl;
     private String loginUrl;
-    private String userInfoUrl;
 }

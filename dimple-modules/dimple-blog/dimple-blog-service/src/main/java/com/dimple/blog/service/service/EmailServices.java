@@ -1,7 +1,7 @@
 package com.dimple.blog.service.service;
 
-import com.dimple.blog.service.entity.config.BlogConfig;
-import com.dimple.blog.service.entity.config.EmailConfig;
+import com.dimple.system.api.model.config.BlogGlobalConfig;
+import com.dimple.system.api.model.config.EmailConfig;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,8 @@ public class EmailServices {
     @SneakyThrows
     @Async
     public void sendEmail(String emailTo, String subject, String content) {
-        BlogConfig blogConfig = configService.getBlogConfig();
-        EmailConfig emailConfig = blogConfig.getEmailConfig();
+        BlogGlobalConfig blogGlobalConfig = configService.getBlogConfig();
+        EmailConfig emailConfig = blogGlobalConfig.getEmailConfig();
         if (Objects.isNull(emailConfig)) {
             log.error("No email config, just ignore send email: to {}. subject {}. content {}", emailTo, subject, content);
             return;

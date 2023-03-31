@@ -1,4 +1,4 @@
-package com.dimple.blog.service.entity.config;
+package com.dimple.system.api.model.config;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 3/29/2023
  */
 @Data
-public class BlogConfig {
+public class BlogGlobalConfig {
     private SiteConfig siteConfig;
     private CommentConfig commentConfig;
     private EmailConfig emailConfig;

@@ -1,6 +1,5 @@
-package com.dimple.blog.front.service.entity.config;
+package com.dimple.system.api.model.config;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -11,10 +10,8 @@ import lombok.Data;
  */
 @Data
 public class GithubLoginConfig {
-    @JsonIgnore
     private String adminId;
     private String clientId;
-    @JsonIgnore
     private String clientSecrets;
     private String accessTokenUrl;
     private String loginUrl;

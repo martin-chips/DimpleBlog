@@ -1,4 +1,4 @@
-package com.dimple.blog.service.entity.config;
+package com.dimple.system.api.model.config;
 
 import lombok.Data;
 

@@ -6,16 +6,13 @@ package com.dimple.common.core.constant;
  * @author Dimple
  */
 public class ServiceNameConstants {
-    /**
-     * 认证服务的serviceid
-     */
-    public static final String AUTH_SERVICE = "dimple-auth";
 
     /**
      * 系统模块的serviceid
      */
     public static final String SYSTEM_SERVICE = "dimple-system";
     public static final String LOG_SERVICE = "dimple-log";
+    public static final String BLOG_SERVICE = "dimple-blog";
 
     /**
      * 文件服务的serviceid
