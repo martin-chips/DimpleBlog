@@ -1,4 +1,4 @@
-package com.dimple.blog.front.service.enums;
+package com.dimple.common.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

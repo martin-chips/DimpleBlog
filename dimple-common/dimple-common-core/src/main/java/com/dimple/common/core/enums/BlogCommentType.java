@@ -1,4 +1,4 @@
-package com.dimple.blog.front.service.enums;
+package com.dimple.common.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +13,7 @@ import lombok.Getter;
 @Getter
 public enum BlogCommentType {
     LOCAL(0),
-    GITHUB(1);
+    GITHUB(1),
+    QQ(2),;
     private Integer type;
 }

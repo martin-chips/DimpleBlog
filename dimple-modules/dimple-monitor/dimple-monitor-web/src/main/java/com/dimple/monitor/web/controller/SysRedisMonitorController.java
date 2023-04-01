@@ -64,7 +64,7 @@ public class SysRedisMonitorController extends BaseController {
     }
 
     @GetMapping("/keyDefines")
-    @RequiresPermissions("monitor:redis:list")
+    @RequiresPermissions("monitor:redis:query")
     public AjaxResult getKeyDefineList() {
         List<RedisKeyDefine> keyDefines = RedisKeyRegistry.list();
         return success(BeanMapper.convertList(keyDefines, RedisKeyDefineVO.class));
@@ -72,7 +72,7 @@ public class SysRedisMonitorController extends BaseController {
 
 
     @GetMapping("keys")
-    @RequiresPermissions("monitor:redis:list")
+    @RequiresPermissions("monitor:redis:query")
     public AjaxResult getKeys(@RequestParam("keyTemplate") String keyTemplate) {
         return success(getRedisKeys(keyTemplate));
     }
@@ -94,21 +94,21 @@ public class SysRedisMonitorController extends BaseController {
     }
 
     @GetMapping("/key/{key}")
-    @RequiresPermissions("monitor:redis:list")
+    @RequiresPermissions("monitor:redis:query")
     public AjaxResult getKeyValue(@PathVariable("key") String key) {
         String value = stringRedisTemplate.opsForValue().get(key);
         return success(new RedisKeyValueVO(key, value));
     }
 
     @DeleteMapping("/key/{key}")
-    @RequiresPermissions("monitor:redis:list")
+    @RequiresPermissions("monitor:redis:remove")
     public AjaxResult deleteKey(@PathVariable("key") String key) {
         stringRedisTemplate.delete(key);
         return success(Boolean.TRUE);
     }
 
     @DeleteMapping("/key/template")
-    @RequiresPermissions("monitor:redis:list")
+    @RequiresPermissions("monitor:redis:remove")
     public AjaxResult deleteKeys(@RequestParam("keyTemplate") String keyTemplate) {
         Set<String> keys = getRedisKeys(keyTemplate);
         if (CollUtil.isNotEmpty(keys)) {

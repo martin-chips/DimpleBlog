@@ -6,6 +6,7 @@ import com.dimple.blog.service.service.BlogArticleService;
 import com.dimple.blog.service.service.BlogCommentService;
 import com.dimple.blog.service.service.bo.BlogArticleBO;
 import com.dimple.blog.service.service.bo.BlogCommentBO;
+import com.dimple.common.core.enums.BlogPageId;
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class BlogCommentServiceImpl implements BlogCommentService {
     private void fillCommentInfo(List<BlogCommentBO> blogCommentBOList) {
         List<Long> articleIds = blogCommentBOList.stream().map(BlogCommentBO::getArticleId).collect(Collectors.toList());
         Map<Long, String> articleIdAndTitleMap = blogArticleService.selectBlogArticleByIds(articleIds).stream().collect(Collectors.toMap(BlogArticleBO::getId, BlogArticleBO::getTitle));
+        articleIdAndTitleMap.putAll(BlogPageId.getPageIdAndDescMap());
         for (BlogCommentBO blogCommentBO : blogCommentBOList) {
             blogCommentBO.setArticleTitle(articleIdAndTitleMap.getOrDefault(blogCommentBO.getArticleId(), "已删除的文章"));
         }

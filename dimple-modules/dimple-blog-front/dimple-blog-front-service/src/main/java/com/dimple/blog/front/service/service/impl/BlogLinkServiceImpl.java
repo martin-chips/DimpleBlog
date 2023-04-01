@@ -1,10 +1,10 @@
 package com.dimple.blog.front.service.service.impl;
 
 import com.dimple.blog.front.service.entity.BlogLink;
-import com.dimple.blog.front.service.enums.BlogLinkStatus;
 import com.dimple.blog.front.service.mapper.BlogLinkMapper;
 import com.dimple.blog.front.service.service.BlogLinkService;
 import com.dimple.blog.front.service.service.bo.BlogLinkBO;
+import com.dimple.common.core.enums.BlogLinkStatus;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,9 +1,9 @@
 package com.dimple.blog.front.web.controller;
 
-import com.dimple.blog.front.service.enums.BlogPageId;
 import com.dimple.blog.front.service.service.BlogArticleService;
 import com.dimple.blog.front.service.service.bo.BlogArticleBO;
 import com.dimple.blog.front.web.controller.vo.BlogArticleVO;
+import com.dimple.common.core.enums.BlogPageId;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.vo.params.AjaxResult;
