@@ -23,10 +23,10 @@ import java.util.List;
     /**
      * 通过调度任务ID查询调度信息
      *
-     * @param jobId 调度任务ID
+     * @param id 调度任务ID
      * @return 调度任务对象信息
      */
-    SysJobBO selectJobById(Long jobId);
+    SysJobBO selectJobById(Long id);
 
     /**
      * 暂停任务
@@ -55,10 +55,10 @@ import java.util.List;
     /**
      * 批量删除调度信息
      *
-     * @param jobIds 需要删除的任务ID
+     * @param ids 需要删除的任务ID
      * @return affected lines
      */
-     void deleteJobByIds(Long[] jobIds) throws SchedulerException;
+     void deleteJobByIds(Long[] ids) throws SchedulerException;
 
     /**
      * 任务调度状态修改

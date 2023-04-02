@@ -38,7 +38,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:add']"
+          v-hasPermi="['tool:job:add']"
           icon="el-icon-plus"
           plain
           size="mini"
@@ -49,7 +49,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:edit']"
+          v-hasPermi="['tool:job:edit']"
           :disabled="single"
           icon="el-icon-edit"
           plain
@@ -61,7 +61,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:remove']"
+          v-hasPermi="['tool:job:remove']"
           :disabled="multiple"
           icon="el-icon-delete"
           plain
@@ -73,7 +73,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:export']"
+          v-hasPermi="['tool:job:export']"
           icon="el-icon-download"
           plain
           size="mini"
@@ -84,7 +84,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:query']"
+          v-hasPermi="['tool:job:query']"
           icon="el-icon-s-operation"
           plain
           size="mini"
@@ -98,7 +98,7 @@
 
     <el-table v-loading="loading" :data="jobList" @selection-change="handleSelectionChange">
       <el-table-column align="center" type="selection" width="55"/>
-      <el-table-column align="center" label="任务编号" prop="jobId" width="100"/>
+      <el-table-column align="center" label="任务编号" prop="id" width="100"/>
       <el-table-column :show-overflow-tooltip="true" align="center" label="任务名称" prop="jobName"/>
       <el-table-column align="center" label="任务组名" prop="jobGroup">
         <template slot-scope="scope">
@@ -120,7 +120,7 @@
       <el-table-column align="center" class-name="small-padding fixed-width" label="操作" fixed="right">
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['monitor:job:edit']"
+            v-hasPermi="['tool:job:edit']"
             icon="el-icon-edit"
             size="mini"
             type="text"
@@ -128,24 +128,24 @@
           >修改
           </el-button>
           <el-button
-            v-hasPermi="['monitor:job:remove']"
+            v-hasPermi="['tool:job:remove']"
             icon="el-icon-delete"
             size="mini"
             type="text"
             @click="handleDelete(scope.row)"
           >删除
           </el-button>
-          <el-dropdown v-hasPermi="['monitor:job:changeStatus', 'monitor:job:query']" size="mini"
+          <el-dropdown v-hasPermi="['tool:job:changeStatus', 'tool:job:query']" size="mini"
                        @command="(command) => handleCommand(command, scope.row)">
             <el-button icon="el-icon-d-arrow-right" size="mini" type="text">更多</el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-hasPermi="['monitor:job:changeStatus']" command="handleRun"
+              <el-dropdown-item v-hasPermi="['tool:job:changeStatus']" command="handleRun"
                                 icon="el-icon-caret-right">执行一次
               </el-dropdown-item>
-              <el-dropdown-item v-hasPermi="['monitor:job:query']" command="handleView"
+              <el-dropdown-item v-hasPermi="['tool:job:query']" command="handleView"
                                 icon="el-icon-view">任务详细
               </el-dropdown-item>
-              <el-dropdown-item v-hasPermi="['monitor:job:query']" command="handleJobLog"
+              <el-dropdown-item v-hasPermi="['tool:job:query']" command="handleJobLog"
                                 icon="el-icon-s-operation">调度日志
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -257,7 +257,7 @@
       <el-form ref="form" :model="form" label-width="120px" size="mini">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="任务编号：">{{ form.jobId }}</el-form-item>
+            <el-form-item label="任务编号：">{{ form.id }}</el-form-item>
             <el-form-item label="任务名称：">{{ form.jobName }}</el-form-item>
           </el-col>
           <el-col :span="12">
@@ -303,7 +303,7 @@
 </template>
 
 <script>
-import {addJob, changeJobStatus, delJob, getJob, listJob, runJob, updateJob} from "@/api/monitor/job";
+import {addJob, changeJobStatus, delJob, getJob, listJob, runJob, updateJob} from "@/api/tool/job";
 import Crontab from '@/components/Crontab'
 
 export default {
@@ -387,7 +387,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        jobId: undefined,
+        id: undefined,
         jobName: undefined,
         jobGroup: undefined,
         invokeTarget: undefined,
@@ -410,7 +410,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.jobId);
+      this.ids = selection.map(item => item.id);
       this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
@@ -434,7 +434,7 @@ export default {
     handleStatusChange(row) {
       let text = row.status === "0" ? "启用" : "停用";
       this.$modal.confirm('确认要"' + text + '""' + row.jobName + '"任务吗？').then(function () {
-        return changeJobStatus(row.jobId, row.status);
+        return changeJobStatus(row.id, row.status);
       }).then(() => {
         this.$modal.msgSuccess(text + "成功");
       }).catch(function () {
@@ -444,7 +444,7 @@ export default {
     /* 立即执行一次 */
     handleRun(row) {
       this.$modal.confirm('确认要立即执行一次"' + row.jobName + '"任务吗？').then(function () {
-        return runJob(row.jobId, row.jobGroup);
+        return runJob(row.id, row.jobGroup);
       }).then(() => {
         this.$modal.msgSuccess("执行成功");
       }).catch(() => {
@@ -452,7 +452,7 @@ export default {
     },
     /** 任务详细信息 */
     handleView(row) {
-      getJob(row.jobId).then(response => {
+      getJob(row.id).then(response => {
         this.form = response.data;
         this.openView = true;
       });
@@ -468,8 +468,8 @@ export default {
     },
     /** 任务日志列表查询 */
     handleJobLog(row) {
-      const jobId = row.jobId || 0;
-      this.$router.push('/monitor/job-log/index/' + jobId)
+      const id = row.id || 0;
+      this.$router.push('/job/log/joblog/index/' + id)
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -480,8 +480,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const jobId = row.jobId || this.ids;
-      getJob(jobId).then(response => {
+      const id = row.id || this.ids;
+      getJob(id).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改任务";
@@ -491,7 +491,7 @@ export default {
     submitForm: function () {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.jobId != undefined) {
+          if (this.form.id != undefined) {
             updateJob(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
@@ -509,9 +509,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const jobIds = row.jobId || this.ids;
-      this.$modal.confirm('是否确认删除定时任务编号为"' + jobIds + '"的数据项？').then(function () {
-        return delJob(jobIds);
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否确认删除定时任务编号为"' + ids + '"的数据项？').then(function () {
+        return delJob(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");

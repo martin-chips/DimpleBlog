@@ -7,6 +7,7 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.web.entity.BaseEntity;
 import com.dimple.job.service.util.CronUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -17,6 +18,7 @@ import java.util.Date;
  *
  * @author Dimple
  */
+@Data
 public class SysJob extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +26,7 @@ public class SysJob extends BaseEntity {
      * 任务ID
      */
     @Excel(name = "任务序号", cellType = ColumnType.NUMERIC)
-    private Long jobId;
+    private Long id;
 
     /**
      * 任务名称
@@ -68,13 +70,7 @@ public class SysJob extends BaseEntity {
     @Excel(name = "任务状态", readConverterExp = "0=正常,1=暂停")
     private String status;
 
-    public Long getJobId() {
-        return jobId;
-    }
 
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
-    }
 
     @NotBlank(message = "任务名称不能为空")
     @Size(min = 0, max = 64, message = "任务名称不能超过64个字符")

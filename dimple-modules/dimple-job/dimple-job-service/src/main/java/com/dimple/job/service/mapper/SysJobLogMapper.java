@@ -52,10 +52,10 @@ public interface SysJobLogMapper {
     /**
      * 删除任务日志
      *
-     * @param jobId 调度日志ID
+     * @param id 调度日志ID
      * @return affected lines
      */
-    int deleteJobLogById(Long jobId);
+    int deleteJobLogById(Long id);
 
     /**
      * 清空任务日志

@@ -22,7 +22,7 @@ public class SysJobVOParamsParams extends BaseEntity {
      * 任务ID
      */
     @Excel(name = "任务序号", cellType = ColumnType.NUMERIC)
-    private Long jobId;
+    private Long id;
 
     /**
      * 任务名称

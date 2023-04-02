@@ -29,18 +29,18 @@ public interface SysJobMapper {
     /**
      * 通过调度ID查询调度任务信息
      *
-     * @param jobId 调度ID
+     * @param id 调度ID
      * @return 角色对象信息
      */
-    SysJob selectJobById(Long jobId);
+    SysJob selectJobById(Long id);
 
     /**
      * 通过调度ID删除调度任务信息
      *
-     * @param jobId 调度ID
+     * @param id 调度ID
      * @return affected lines
      */
-    int deleteJobById(Long jobId);
+    int deleteJobById(Long id);
 
     /**
      * 批量删除调度任务信息

@@ -60,7 +60,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:remove']"
+          v-hasPermi="['tool:job:remove']"
           :disabled="multiple"
           icon="el-icon-delete"
           plain
@@ -72,7 +72,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:remove']"
+          v-hasPermi="['tool:job:remove']"
           icon="el-icon-delete"
           plain
           size="mini"
@@ -83,7 +83,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:export']"
+          v-hasPermi="['tool:job:export']"
           icon="el-icon-download"
           plain
           size="mini"
@@ -129,7 +129,7 @@
       <el-table-column align="center" class-name="small-padding fixed-width" label="操作" fixed="right">
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['monitor:job:query']"
+            v-hasPermi="['tool:job:query']"
             icon="el-icon-view"
             size="mini"
             type="text"
@@ -185,8 +185,8 @@
 </template>
 
 <script>
-import {getJob} from "@/api/monitor/job";
-import {cleanJobLog, delJobLog, listJobLog} from "@/api/monitor/jobLog";
+import {getJob} from "@/api/tool/job";
+import {cleanJobLog, delJobLog, listJobLog} from "@/api/log/jobLog";
 
 export default {
   name: "JobLog",
@@ -224,9 +224,9 @@ export default {
     };
   },
   created() {
-    const jobId = this.$route.params && this.$route.params.jobId;
-    if (jobId !== undefined && jobId != 0) {
-      getJob(jobId).then(response => {
+    const id = this.$route.params && this.$route.params.id;
+    if (id !== undefined && id != 0) {
+      getJob(id).then(response => {
         this.queryParams.jobName = response.data.jobName;
         this.queryParams.jobGroup = response.data.jobGroup;
         this.getList();
@@ -248,7 +248,7 @@ export default {
     },
     // 返回按钮
     handleClose() {
-      const obj = {path: "/monitor/job"};
+      const obj = {path: "/tool/job"};
       this.$tab.closeOpenPage(obj);
     },
     /** 搜索按钮操作 */

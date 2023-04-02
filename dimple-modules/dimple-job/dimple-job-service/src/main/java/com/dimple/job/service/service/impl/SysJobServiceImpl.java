@@ -59,12 +59,12 @@ public class SysJobServiceImpl implements SysJobService {
     /**
      * 通过调度任务ID查询调度信息
      *
-     * @param jobId 调度任务ID
+     * @param id 调度任务ID
      * @return 调度任务对象信息
      */
     @Override
-    public SysJobBO selectJobById(Long jobId) {
-        return BeanMapper.convert(jobMapper.selectJobById(jobId), SysJobBO.class);
+    public SysJobBO selectJobById(Long id) {
+        return BeanMapper.convert(jobMapper.selectJobById(id), SysJobBO.class);
     }
 
     /**
@@ -76,12 +76,12 @@ public class SysJobServiceImpl implements SysJobService {
     @Transactional(rollbackFor = Exception.class)
     public int pauseJob(SysJobBO job) throws SchedulerException {
         SysJob sysJob = BeanMapper.convert(job, SysJob.class);
-        Long jobId = sysJob.getJobId();
+        Long id = sysJob.getId();
         String jobGroup = sysJob.getJobGroup();
         sysJob.setStatus(ScheduleConstants.Status.PAUSE.getValue());
         int rows = jobMapper.updateJob(sysJob);
         if (rows > 0) {
-            scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));
+            scheduler.pauseJob(ScheduleUtils.getJobKey(id, jobGroup));
         }
         return rows;
     }
@@ -95,12 +95,12 @@ public class SysJobServiceImpl implements SysJobService {
     @Transactional(rollbackFor = Exception.class)
     public int resumeJob(SysJobBO job) throws SchedulerException {
         SysJob sysJob = BeanMapper.convert(job, SysJob.class);
-        Long jobId = sysJob.getJobId();
+        Long id = sysJob.getId();
         String jobGroup = sysJob.getJobGroup();
         sysJob.setStatus(ScheduleConstants.Status.NORMAL.getValue());
         int rows = jobMapper.updateJob(sysJob);
         if (rows > 0) {
-            scheduler.resumeJob(ScheduleUtils.getJobKey(jobId, jobGroup));
+            scheduler.resumeJob(ScheduleUtils.getJobKey(id, jobGroup));
         }
         return rows;
     }
@@ -113,11 +113,11 @@ public class SysJobServiceImpl implements SysJobService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteJob(SysJobBO job) throws SchedulerException {
-        Long jobId = job.getJobId();
+        Long id = job.getId();
         String jobGroup = job.getJobGroup();
-        int rows = jobMapper.deleteJobById(jobId);
+        int rows = jobMapper.deleteJobById(id);
         if (rows > 0) {
-            scheduler.deleteJob(ScheduleUtils.getJobKey(jobId, jobGroup));
+            scheduler.deleteJob(ScheduleUtils.getJobKey(id, jobGroup));
         }
         return rows;
     }
@@ -125,14 +125,14 @@ public class SysJobServiceImpl implements SysJobService {
     /**
      * 批量删除调度信息
      *
-     * @param jobIds 需要删除的任务ID
+     * @param ids 需要删除的任务ID
      * @return affected lines
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteJobByIds(Long[] jobIds) throws SchedulerException {
-        for (Long jobId : jobIds) {
-            SysJob job = jobMapper.selectJobById(jobId);
+    public void deleteJobByIds(Long[] ids) throws SchedulerException {
+        for (Long id : ids) {
+            SysJob job = jobMapper.selectJobById(id);
             deleteJob(BeanMapper.convert(job, SysJobBO.class));
         }
     }
@@ -164,13 +164,13 @@ public class SysJobServiceImpl implements SysJobService {
     @Transactional(rollbackFor = Exception.class)
     public boolean run(SysJobBO job) throws SchedulerException {
         boolean result = false;
-        Long jobId = job.getJobId();
+        Long id = job.getId();
         String jobGroup = job.getJobGroup();
-        SysJobBO properties = selectJobById(job.getJobId());
+        SysJobBO properties = selectJobById(job.getId());
         // 参数
         JobDataMap dataMap = new JobDataMap();
         dataMap.put(ScheduleConstants.TASK_PROPERTIES, properties);
-        JobKey jobKey = ScheduleUtils.getJobKey(jobId, jobGroup);
+        JobKey jobKey = ScheduleUtils.getJobKey(id, jobGroup);
         if (scheduler.checkExists(jobKey)) {
             result = true;
             scheduler.triggerJob(jobKey, dataMap);
@@ -203,7 +203,7 @@ public class SysJobServiceImpl implements SysJobService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateJob(SysJobBO job) throws SchedulerException, TaskException {
-        SysJobBO properties = selectJobById(job.getJobId());
+        SysJobBO properties = selectJobById(job.getId());
         SysJob sysJob = BeanMapper.convert(job, SysJob.class);
         int rows = jobMapper.updateJob(sysJob);
         if (rows > 0) {
@@ -219,9 +219,9 @@ public class SysJobServiceImpl implements SysJobService {
      * @param jobGroup 任务组名
      */
     public void updateSchedulerJob(SysJobBO job, String jobGroup) throws SchedulerException, TaskException {
-        Long jobId = job.getJobId();
+        Long id = job.getId();
         // 判断是否存在
-        JobKey jobKey = ScheduleUtils.getJobKey(jobId, jobGroup);
+        JobKey jobKey = ScheduleUtils.getJobKey(id, jobGroup);
         if (scheduler.checkExists(jobKey)) {
             // 防止创建时存在数据问题 先移除，然后在执行创建操作
             scheduler.deleteJob(jobKey);

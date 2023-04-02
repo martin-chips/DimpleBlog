@@ -10,9 +10,9 @@ export function listJob(query) {
 }
 
 // 查询定时任务调度详细
-export function getJob(jobId) {
+export function getJob(id) {
   return request({
-    url: '/schedule/job/' + jobId,
+    url: '/schedule/job/' + id,
     method: 'get'
   })
 }
@@ -36,17 +36,17 @@ export function updateJob(data) {
 }
 
 // 删除定时任务调度
-export function delJob(jobId) {
+export function delJob(id) {
   return request({
-    url: '/schedule/job/' + jobId,
+    url: '/schedule/job/' + id,
     method: 'delete'
   })
 }
 
 // 任务状态修改
-export function changeJobStatus(jobId, status) {
+export function changeJobStatus(id, status) {
   const data = {
-    jobId,
+    id,
     status
   }
   return request({
@@ -58,9 +58,9 @@ export function changeJobStatus(jobId, status) {
 
 
 // 定时任务立即执行一次
-export function runJob(jobId, jobGroup) {
+export function runJob(id, jobGroup) {
   const data = {
-    jobId,
+    id,
     jobGroup
   }
   return request({

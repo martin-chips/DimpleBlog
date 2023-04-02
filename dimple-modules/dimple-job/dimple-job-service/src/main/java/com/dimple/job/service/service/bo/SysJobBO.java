@@ -21,7 +21,7 @@ public class SysJobBO extends BaseEntity {
     /**
      * 任务ID
      */
-    private Long jobId;
+    private Long id;
 
     /**
      * 任务名称

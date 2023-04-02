@@ -37,7 +37,7 @@ public class SysJobLogController extends BaseController {
     /**
      * 查询定时任务调度日志列表
      */
-    @RequiresPermissions("monitor:job:list")
+    @RequiresPermissions("log:joblog:list")
     @GetMapping("/list")
     public TableDataInfo list(SysJobLogVOParams sysJobLog) {
         startPage();
@@ -48,7 +48,7 @@ public class SysJobLogController extends BaseController {
     /**
      * 导出定时任务调度日志列表
      */
-    @RequiresPermissions("monitor:job:export")
+    @RequiresPermissions("log:joblog:export")
     @OperationLog(title = "任务调度日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJobLogVOParams sysJobLog) {
@@ -60,7 +60,7 @@ public class SysJobLogController extends BaseController {
     /**
      * 根据调度编号获取详细信息
      */
-    @RequiresPermissions("monitor:job:query")
+    @RequiresPermissions("log:joblog:query")
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable Long id) {
         return success(jobLogService.selectJobLogById(id));
@@ -69,7 +69,7 @@ public class SysJobLogController extends BaseController {
     /**
      * 删除定时任务调度日志
      */
-    @RequiresPermissions("monitor:job:remove")
+    @RequiresPermissions("log:joblog:remove")
     @OperationLog(title = "定时任务调度日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
@@ -79,7 +79,7 @@ public class SysJobLogController extends BaseController {
     /**
      * 清空定时任务调度日志
      */
-    @RequiresPermissions("monitor:job:remove")
+    @RequiresPermissions("log:joblog:remove")
     @OperationLog(title = "调度日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
     public AjaxResult clean() {

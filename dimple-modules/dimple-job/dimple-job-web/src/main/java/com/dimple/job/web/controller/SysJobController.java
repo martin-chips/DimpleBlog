@@ -46,7 +46,7 @@ public class SysJobController extends BaseController {
     /**
      * 查询定时任务列表
      */
-    @RequiresPermissions("monitor:job:list")
+    @RequiresPermissions("tool:job:list")
     @GetMapping("/list")
     public TableDataInfo list(SysJobVOParamsParams sysJob) {
         startPage();
@@ -58,7 +58,7 @@ public class SysJobController extends BaseController {
     /**
      * 导出定时任务列表
      */
-    @RequiresPermissions("monitor:job:export")
+    @RequiresPermissions("tool:job:export")
     @OperationLog(title = "定时任务", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJobVOParamsParams sysJob) {
@@ -70,16 +70,16 @@ public class SysJobController extends BaseController {
     /**
      * 获取定时任务详细信息
      */
-    @RequiresPermissions("monitor:job:query")
-    @GetMapping("/{jobId}")
-    public AjaxResult getInfo(@PathVariable("jobId") Long jobId) {
-        return success(jobService.selectJobById(jobId));
+    @RequiresPermissions("tool:job:query")
+    @GetMapping("/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
+        return success(jobService.selectJobById(id));
     }
 
     /**
      * 新增定时任务
      */
-    @RequiresPermissions("monitor:job:add")
+    @RequiresPermissions("tool:job:add")
     @OperationLog(title = "定时任务", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SysJob job) throws SchedulerException, TaskException {
@@ -102,7 +102,7 @@ public class SysJobController extends BaseController {
     /**
      * 修改定时任务
      */
-    @RequiresPermissions("monitor:job:edit")
+    @RequiresPermissions("tool:job:edit")
     @OperationLog(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SysJob job) throws SchedulerException, TaskException {
@@ -125,11 +125,11 @@ public class SysJobController extends BaseController {
     /**
      * 定时任务状态修改
      */
-    @RequiresPermissions("monitor:job:changeStatus")
+    @RequiresPermissions("tool:job:changeStatus")
     @OperationLog(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysJobVOParamsParams job) throws SchedulerException {
-        SysJobBO newJob = jobService.selectJobById(job.getJobId());
+        SysJobBO newJob = jobService.selectJobById(job.getId());
         newJob.setStatus(job.getStatus());
         return toAjax(jobService.changeStatus(newJob));
     }
@@ -137,7 +137,7 @@ public class SysJobController extends BaseController {
     /**
      * 定时任务立即执行一次
      */
-    @RequiresPermissions("monitor:job:changeStatus")
+    @RequiresPermissions("tool:job:changeStatus")
     @OperationLog(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/run")
     public AjaxResult run(@RequestBody SysJobVOParamsParams job) throws SchedulerException {
@@ -148,11 +148,11 @@ public class SysJobController extends BaseController {
     /**
      * 删除定时任务
      */
-    @RequiresPermissions("monitor:job:remove")
+    @RequiresPermissions("tool:job:remove")
     @OperationLog(title = "定时任务", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{jobIds}")
-    public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException {
-        jobService.deleteJobByIds(jobIds);
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) throws SchedulerException {
+        jobService.deleteJobByIds(ids);
         return success();
     }
 }

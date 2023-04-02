@@ -24,7 +24,7 @@ public class SysJobVO extends BaseEntity {
      * 任务ID
      */
     @Excel(name = "任务序号", cellType = ColumnType.NUMERIC)
-    private Long jobId;
+    private Long id;
 
     /**
      * 任务名称
@@ -68,17 +68,7 @@ public class SysJobVO extends BaseEntity {
     @Excel(name = "任务状态", readConverterExp = "0=正常,1=暂停")
     private String status;
 
-    public Long getJobId() {
-        return jobId;
-    }
 
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
-    }
-
-    public String getJobName() {
-        return jobName;
-    }
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getNextValidTime() {

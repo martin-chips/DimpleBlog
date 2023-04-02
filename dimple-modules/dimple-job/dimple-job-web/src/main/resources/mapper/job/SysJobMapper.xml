@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dimple.job.mapper.SysJobMapper">
+<mapper namespace="com.dimple.job.service.mapper.SysJobMapper">
 
     <resultMap type="SysJob" id="SysJobResult">
-        <id property="jobId" column="job_id"/>
+        <id property="id" column="id"/>
         <result property="jobName" column="job_name"/>
         <result property="jobGroup" column="job_group"/>
         <result property="invokeTarget" column="invoke_target"/>
@@ -21,7 +21,7 @@
     </resultMap>
 
     <sql id="selectJobVo">
-        select job_id,
+        select id,
                job_name,
                job_group,
                invoke_target,
@@ -59,19 +59,19 @@
 
     <select id="selectJobById" parameterType="Long" resultMap="SysJobResult">
         <include refid="selectJobVo"/>
-        where job_id = #{jobId}
+        where id = #{id}
     </select>
 
     <delete id="deleteJobById" parameterType="Long">
         delete
         from sys_job
-        where job_id = #{jobId}
+        where id = #{id}
     </delete>
 
     <delete id="deleteJobByIds" parameterType="Long">
-        delete from sys_job where job_id in
-        <foreach collection="array" item="jobId" open="(" separator="," close=")">
-            #{jobId}
+        delete from sys_job where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 
@@ -89,12 +89,12 @@
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()
         </set>
-        where job_id = #{jobId}
+        where id = #{id}
     </update>
 
-    <insert id="insertJob" parameterType="SysJob" useGeneratedKeys="true" keyProperty="jobId">
+    <insert id="insertJob" parameterType="SysJob" useGeneratedKeys="true" keyProperty="id">
         insert into sys_job(
-        <if test="jobId != null and jobId != 0">job_id,</if>
+        <if test="id != null and id != 0">id,</if>
         <if test="jobName != null and jobName != ''">job_name,</if>
         <if test="jobGroup != null and jobGroup != ''">job_group,</if>
         <if test="invokeTarget != null and invokeTarget != ''">invoke_target,</if>
@@ -106,7 +106,7 @@
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         )values(
-        <if test="jobId != null and jobId != 0">#{jobId},</if>
+        <if test="id != null and id != 0">#{id},</if>
         <if test="jobName != null and jobName != ''">#{jobName},</if>
         <if test="jobGroup != null and jobGroup != ''">#{jobGroup},</if>
         <if test="invokeTarget != null and invokeTarget != ''">#{invokeTarget},</if>

@@ -126,7 +126,7 @@ values  (1, '系统管理', 0, 800, 'system', null, '', 1, 0, 'M', '0', '0', '',
     (107, '通知公告', 1, 8, 'notice', 'system/notice/index', '', 1, 0, 'C', '0', '0', 'system:notice:list', 'message', 'admin', sysdate(), '', null, '通知公告菜单'),
     (108, 'Redis监控', 2, 1, 'redis', 'monitor/redis/index', '', 1, 0, 'C', '0', '0', 'monitor:redis:list', 'online', 'admin', sysdate(), '', null, 'Redis监控菜单'),
     (109, '在线用户', 2, 1, 'online', 'monitor/online/index', '', 1, 0, 'C', '0', '0', 'monitor:online:list', 'online', 'admin', sysdate(), '', null, '在线用户菜单'),
-    (110, '定时任务', 3, 2, 'job', 'monitor/job/index', '', 1, 0, 'C', '0', '0', 'monitor:job:list', 'job', 'admin', sysdate(), '', null, '定时任务菜单'),
+    (110, '定时任务', 3, 2, 'job', 'tool/job/index', '', 1, 0, 'C', '0', '0', 'tool:job:list', 'job', 'admin', sysdate(), '', null, '定时任务菜单'),
     (111, 'Sentinel控制台', 2, 3, 'http://www.bianxf.com::8718', '', '', 0, 0, 'C', '0', '0', 'monitor:sentinel:list', 'sentinel', 'admin', sysdate(), '', null, '流量控制菜单'),
     (112, 'Nacos控制台', 2, 4, 'http://www.bianxf.com:8848/nacos/', '', '', 0, 0, 'C', '0', '0', 'monitor:nacos:list', 'nacos', 'admin', sysdate(), '', null, '服务治理菜单'),
     (113, 'Admin控制台', 2, 5, 'http://www.bianxf.com:9100/login', '', '', 0, 0, 'C', '0', '0', 'monitor:server:list', 'server', 'admin', sysdate(), '', null, '服务监控菜单'),
@@ -134,6 +134,7 @@ values  (1, '系统管理', 0, 800, 'system', null, '', 1, 0, 'M', '0', '0', '',
     (500, '操作日志', 5, 1, 'operlog', 'log/operlog/index', '', 1, 0, 'C', '0', '0', 'log:operlog:list', 'form', 'admin', sysdate(), '', null, '操作日志菜单'),
     (501, '登录日志', 5, 2, 'logininfor', 'log/logininfor/index', '', 1, 0, 'C', '0', '0', 'log:logininfor:list', 'logininfor', 'admin', sysdate(), '', null, '登录日志菜单'),
     (502, '访问日志', 5, 2, 'visitlog', 'log/visitlog/index', '', 1, 0, 'C', '0', '0', 'log:visitlog:list', 'eye-open', 'admin', sysdate(), '', null, '访问日志菜单'),
+    (503, '任务日志', 5, 3, 'joblog', 'log/joblog/index', '', 1, 0, 'C', '0', '0', 'log:joblog:list', 'skill', 'admin', sysdate(), '', null, '任务日志菜单'),
     (601, '文章管理', 6, 1, 'article', 'blog/article/index', null, 1, 0, 'C', '0', '0', 'blog:article:list', 'edit', 'admin', sysdate(), '', null, '文章菜单'),
     (602, '分类管理', 6, 1, 'category', 'blog/category/index', null, 1, 0, 'C', '0', '0', 'blog:category:list', 'skill', 'admin', sysdate(), '', null, '分类菜单'),
     (603, '评论管理', 6, 1, 'comment', 'blog/comment/index', null, 1, 0, 'C', '0', '0', 'blog:comment:list', 'message', 'admin', sysdate(), '', null, '评论菜单'),
@@ -183,12 +184,12 @@ values  (1, '系统管理', 0, 800, 'system', null, '', 1, 0, 'M', '0', '0', '',
     (1048, '单条强退', 109, 3, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:forceLogout', '#', 'admin', sysdate(), '', null, ''),
     (1081, 'RedisKey删除', 108, 3, '#', '', '', 1, 0, 'F', '0', '0', 'mmonitor:redis:remove', '#', 'admin', sysdate(), '', null, ''),
     (1082, 'RedisKey查询', 108, 3, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:redis:query', '#', 'admin', sysdate(), '', null, ''),
-    (1049, '任务查询', 110, 1, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:query', '#', 'admin', sysdate(), '', null, ''),
-    (1050, '任务新增', 110, 2, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:add', '#', 'admin', sysdate(), '', null, ''),
-    (1051, '任务修改', 110, 3, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:edit', '#', 'admin', sysdate(), '', null, ''),
-    (1052, '任务删除', 110, 4, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:remove', '#', 'admin', sysdate(), '', null, ''),
-    (1053, '状态修改', 110, 5, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:changeStatus', '#', 'admin', sysdate(), '', null, ''),
-    (1054, '任务导出', 110, 6, '#', '', '', 1, 0, 'F', '0', '0', 'monitor:job:export', '#', 'admin', sysdate(), '', null, ''),
+    (1049, '任务查询', 110, 1, '#', '', '', 1, 0, 'F', '0', '0', 'tool:job:query', '#', 'admin', sysdate(), '', null, ''),
+    (1050, '任务新增', 110, 2, '#', '', '', 1, 0, 'F', '0', '0', 'tool:job:add', '#', 'admin', sysdate(), '', null, ''),
+    (1051, '任务修改', 110, 3, '#', '', '', 1, 0, 'F', '0', '0', 'tool:job:edit', '#', 'admin', sysdate(), '', null, ''),
+    (1052, '任务删除', 110, 4, '#', '', '', 1, 0, 'F', '0', '0', 'tool:job:remove', '#', 'admin', sysdate(), '', null, ''),
+    (1053, '状态修改', 110, 5, '#', '', '', 1, 0, 'F', '0', '0', 'tool:job:changeStatus', '#', 'admin', sysdate(), '', null, ''),
+    (1054, '任务导出', 110, 6, '#', '', '', 1, 0, 'F', '0', '0', 'tool:job:export', '#', 'admin', sysdate(), '', null, ''),
     (2000, '文章查询', 601, 1, '#', '', null, 1, 0, 'F', '0', '0', 'blog:article:query', '#', 'admin', sysdate(), '', null, ''),
     (2001, '文章新增', 601, 2, '#', '', null, 1, 0, 'F', '0', '0', 'blog:article:add', '#', 'admin', sysdate(), '', null, ''),
     (2002, '文章修改', 601, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:article:edit', '#', 'admin', sysdate(), '', null, ''),
@@ -220,7 +221,11 @@ values  (1, '系统管理', 0, 800, 'system', null, '', 1, 0, 'M', '0', '0', '',
     (2028, '站点配置缓存删除', 607, 3, '#', '', null, 1, 0, 'F', '0', '0', 'blog:config:remove', '#', 'admin', sysdate(), '', null, ''),
     (5021, '登录查询', 502, 1, '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:query', '#', 'admin', sysdate(), '', null, ''),
     (5022, '登录删除', 502, 2, '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:remove', '#', 'admin', sysdate(), '', null, ''),
-    (5023, '日志导出', 502, 3, '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:export', '#', 'admin', sysdate(), '', null, '');
+    (5023, '日志导出', 502, 3, '#', '', '', 1, 0, 'F', '0', '0', 'log:logininfor:export', '#', 'admin', sysdate(), '', null, ''),
+    (5031, '日志查询', 503, 1, '#', '', '', 1, 0, 'F', '0', '0', 'log:joblog:query', '#', 'admin', sysdate(), '', null, ''),
+    (5032, '登录删除', 503, 2, '#', '', '', 1, 0, 'F', '0', '0', 'log:joblog:remove', '#', 'admin', sysdate(), '', null, ''),
+    (5033, '日志导出', 503, 3, '#', '', '', 1, 0, 'F', '0', '0', 'log:joblog:export', '#', 'admin', sysdate(), '', null, '');
+
 -- ----------------------------
 -- 用户和角色关联表  用户N-1角色
 -- ----------------------------
@@ -555,7 +560,7 @@ create table sys_logininfor
 drop table if exists sys_job;
 create table sys_job
 (
-    job_id          bigint(20)   not null auto_increment comment '任务ID',
+    id          bigint(20)   not null auto_increment comment '任务ID',
     job_name        varchar(64)  default '' comment '任务名称',
     job_group       varchar(64)  default 'DEFAULT' comment '任务组名',
     invoke_target   varchar(500) not null comment '调用目标字符串',
@@ -568,7 +573,7 @@ create table sys_job
     update_by       varchar(64)  default '' comment '更新者',
     update_time     datetime comment '更新时间',
     remark          varchar(500) default '' comment '备注信息',
-    primary key (job_id, job_name, job_group)
+    primary key (id, job_name, job_group)
 ) engine = innodb
   auto_increment = 100 comment = '定时任务调度表';
 

@@ -153,16 +153,16 @@ export const dynamicRoutes = [
     ]
   },
   {
-    path: '/monitor/job-log',
+    path: '/job/log/joblog',
     component: Layout,
     hidden: true,
-    permissions: ['monitor:job:list'],
+    permissions: ['tool:job:list'],
     children: [
       {
-        path: 'index/:jobId(\\d+)',
-        component: () => import('@/views/monitor/job/log'),
+        path: 'index/:id(\\d+)',
+        component: () => import('@/views/log/joblog'),
         name: 'JobLog',
-        meta: {title: '调度日志', activeMenu: '/monitor/job'}
+        meta: {title: '调度日志', activeMenu: '/tool/job'}
       }
     ]
   }
