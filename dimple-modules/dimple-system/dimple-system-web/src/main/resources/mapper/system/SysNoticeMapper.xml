@@ -5,7 +5,7 @@
 <mapper namespace="com.dimple.system.service.mapper.SysNoticeMapper">
 
     <resultMap type="SysNotice" id="SysNoticeResult">
-        <result property="noticeId" column="notice_id"/>
+        <result property="id" column="id"/>
         <result property="noticeTitle" column="notice_title"/>
         <result property="noticeType" column="notice_type"/>
         <result property="noticeContent" column="notice_content"/>
@@ -18,7 +18,7 @@
     </resultMap>
 
     <sql id="selectNoticeVo">
-        select notice_id,
+        select id,
                notice_title,
                notice_type,
                cast(notice_content as char) as notice_content,
@@ -33,7 +33,7 @@
 
     <select id="selectNoticeById" parameterType="Long" resultMap="SysNoticeResult">
         <include refid="selectNoticeVo"/>
-        where notice_id = #{noticeId}
+        where id = #{id}
     </select>
 
     <select id="selectNoticeList" parameterType="SysNotice" resultMap="SysNoticeResult">
@@ -81,19 +81,19 @@
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()
         </set>
-        where notice_id = #{noticeId}
+        where id = #{id}
     </update>
 
     <delete id="deleteNoticeById" parameterType="Long">
         delete
         from sys_notice
-        where notice_id = #{noticeId}
+        where id = #{id}
     </delete>
 
     <delete id="deleteNoticeByIds" parameterType="Long">
-        delete from sys_notice where notice_id in
-        <foreach item="noticeId" collection="array" open="(" separator="," close=")">
-            #{noticeId}
+        delete from sys_notice where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 

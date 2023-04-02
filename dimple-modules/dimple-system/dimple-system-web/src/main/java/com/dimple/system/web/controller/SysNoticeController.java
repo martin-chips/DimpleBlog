@@ -51,9 +51,9 @@ public class SysNoticeController extends BaseController {
      * 根据通知公告编号获取详细信息
      */
     @RequiresPermissions("system:notice:query")
-    @GetMapping("/{noticeId}")
-    public AjaxResult getInfo(@PathVariable Long noticeId) {
-        SysNoticeBO sysNoticeBO = noticeService.selectNoticeById(noticeId);
+    @GetMapping("/{id}")
+    public AjaxResult getInfo(@PathVariable Long id) {
+        SysNoticeBO sysNoticeBO = noticeService.selectNoticeById(id);
         return success(BeanMapper.convert(sysNoticeBO, SysNoticeVO.class));
     }
 
@@ -84,8 +84,8 @@ public class SysNoticeController extends BaseController {
      */
     @RequiresPermissions("system:notice:remove")
     @OperationLog(title = "通知公告", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{noticeIds}")
-    public AjaxResult remove(@PathVariable Long[] noticeIds) {
-        return toAjax(noticeService.deleteNoticeByIds(noticeIds));
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
+        return toAjax(noticeService.deleteNoticeByIds(ids));
     }
 }

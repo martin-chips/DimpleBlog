@@ -14,10 +14,10 @@ import java.util.List;
     /**
      * 查询公告信息
      *
-     * @param noticeId 公告ID
+     * @param id 公告ID
      * @return 公告信息
      */
-     SysNotice selectNoticeById(Long noticeId);
+     SysNotice selectNoticeById(Long id);
 
     /**
      * 查询公告列表
@@ -46,16 +46,16 @@ import java.util.List;
     /**
      * 批量删除公告
      *
-     * @param noticeId 公告ID
+     * @param id 公告ID
      * @return affected lines
      */
-     int deleteNoticeById(Long noticeId);
+     int deleteNoticeById(Long id);
 
     /**
      * 批量删除公告信息
      *
-     * @param noticeIds 需要删除的公告ID
+     * @param ids 需要删除的公告ID
      * @return affected lines
      */
-     int deleteNoticeByIds(Long[] noticeIds);
+     int deleteNoticeByIds(Long[] ids);
 }

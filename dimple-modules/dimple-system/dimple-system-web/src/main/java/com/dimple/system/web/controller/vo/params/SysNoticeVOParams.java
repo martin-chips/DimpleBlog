@@ -17,7 +17,7 @@ public class SysNoticeVOParams extends BaseVOParams {
     /**
      * 公告ID
      */
-    private Long noticeId;
+    private Long id;
 
     /**
      * 公告标题

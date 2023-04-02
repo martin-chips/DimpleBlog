@@ -23,12 +23,12 @@ public class SysNoticeServiceImpl implements SysNoticeService {
     /**
      * 查询公告信息
      *
-     * @param noticeId 公告ID
+     * @param id 公告ID
      * @return 公告信息
      */
     @Override
-    public SysNoticeBO selectNoticeById(Long noticeId) {
-        return BeanMapper.convert(noticeMapper.selectNoticeById(noticeId), SysNoticeBO.class);
+    public SysNoticeBO selectNoticeById(Long id) {
+        return BeanMapper.convert(noticeMapper.selectNoticeById(id), SysNoticeBO.class);
     }
 
     /**
@@ -67,22 +67,22 @@ public class SysNoticeServiceImpl implements SysNoticeService {
     /**
      * 删除公告对象
      *
-     * @param noticeId 公告ID
+     * @param id 公告ID
      * @return affected lines
      */
     @Override
-    public int deleteNoticeById(Long noticeId) {
-        return noticeMapper.deleteNoticeById(noticeId);
+    public int deleteNoticeById(Long id) {
+        return noticeMapper.deleteNoticeById(id);
     }
 
     /**
      * 批量删除公告信息
      *
-     * @param noticeIds 需要删除的公告ID
+     * @param ids 需要删除的公告ID
      * @return affected lines
      */
     @Override
-    public int deleteNoticeByIds(Long[] noticeIds) {
-        return noticeMapper.deleteNoticeByIds(noticeIds);
+    public int deleteNoticeByIds(Long[] ids) {
+        return noticeMapper.deleteNoticeByIds(ids);
     }
 }

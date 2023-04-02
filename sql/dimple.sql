@@ -610,7 +610,7 @@ create table sys_job_log
 drop table if exists sys_notice;
 create table sys_notice
 (
-    notice_id      int(4)      not null auto_increment comment '公告ID',
+    id      int(4)      not null auto_increment comment '公告ID',
     notice_title   varchar(50) not null comment '公告标题',
     notice_type    char(1)     not null comment '公告类型（1通知 2公告）',
     notice_content longblob     default null comment '公告内容',
@@ -620,7 +620,7 @@ create table sys_notice
     update_by      varchar(64)  default '' comment '更新者',
     update_time    datetime comment '更新时间',
     remark         varchar(255) default null comment '备注',
-    primary key (notice_id)
+    primary key (id)
 ) engine = innodb
   auto_increment = 10 comment = '通知公告表';
 
