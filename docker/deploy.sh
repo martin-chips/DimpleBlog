@@ -150,9 +150,6 @@ cp_jar() {
   echo "begin copy dimple-modules-file "
   /bin/cp -rf $PROJECT_ROOT_PATH/dimple-modules/dimple-file/dimple-file-web/target/dimple-modules-file-web.jar $PROJECT_DOCKER_PATH/dimple/modules/file/jar
 
-  echo "begin copy dimple-modules-gen "
-  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-modules/dimple-gen/target/dimple-modules-gen.jar $PROJECT_DOCKER_PATH/dimple/modules/gen/jar
-
   echo "begin copy dimple-modules-job "
   /bin/cp -rf $PROJECT_ROOT_PATH/dimple-modules/dimple-job/dimple-job-web/target/dimple-modules-job-web.jar $PROJECT_DOCKER_PATH/dimple/modules/job/jar
 

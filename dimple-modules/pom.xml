@@ -15,7 +15,6 @@
         <module>dimple-log</module>
         <module>dimple-blog</module>
         <module>dimple-blog-front</module>
-        <module>dimple-gen</module>
         <module>dimple-monitor</module>
     </modules>
 

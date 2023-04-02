@@ -21,7 +21,7 @@
     <select id="selectLogininforList" parameterType="SysLogininfor" resultMap="SysLogininforResult">
         select info_id, user_name, ipaddr, status, msg, access_time from sys_logininfor
         <where>
-            <if test="ipaddr != null and ipaddr != ''">
+            <if test="ipaddr != null and ipaddr != '">
                 AND ipaddr like concat('%', #{ipaddr}, '%')
             </if>
             <if test="status != null and status != ''">

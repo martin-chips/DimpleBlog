@@ -137,13 +137,6 @@ management:
             - Path=/blog-front/**
           filters:
             - StripPrefix=1
-        # 代码生成服务
-        - id: dimple-gen
-          uri: lb://dimple-gen
-          predicates:
-            - Path=/code/**
-          filters:
-            - StripPrefix=1
 
 # 安全配置
 security:
@@ -430,14 +423,6 @@ file:
         "limitApp": "default",
         "strategy": 0,
         "controlBehavior": 0
-    },
-    {
-        "resource": "dimple-gen",
-        "count": 300,
-        "grade": 1,
-        "limitApp": "default",
-        "strategy": 0,
-        "controlBehavior": 0
     }
 ]', 'bd887503ee7702f7192fa67da1d72942', '2020-11-20 00:00:00', '2023-03-06 05:57:45', 'nacos', '0:0:0:0:0:0:0:1', '', '', '限流策略', 'null', 'null', 'json', '', ''),
     (9, 'dimple-blog-dev.yml', 'DEFAULT_GROUP', '# spring配置
@@ -489,43 +474,7 @@ swagger:
   title: 系统模块接口文档
   license: Powered By Dimple
   licenseUrl: https://www.bianxf.com', '9f0788d8c80350df38abdfb67d3c8f41', '2022-12-29 07:46:52', '2023-03-06 06:21:11', 'nacos', '0:0:0:0:0:0:0:1', '', '', 'BLOG模块', '', '', 'yaml', '', null),
-    (10, 'dimple-gen-dev.yml', 'DEFAULT_GROUP', '# spring配置
-spring:
-  redis:
-    host: dimple-redis
-    port: 6379
-    password: Di^&7so@c@drxMe4
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-    username: root
-    password: Di^&7so@c@drxMe4
-
-# mybatis配置
-mybatis:
-    # 搜索指定包别名
-    typeAliasesPackage: com.dimple.gen.service.entity
-    # 配置mapper的扫描，找到所有的mapper.xml映射文件
-    mapperLocations: classpath:mapper/**/*.xml
-
-# swagger配置
-swagger:
-  title: 代码生成接口文档
-  license: Powered By Dimple
-  licenseUrl: https://bianxf.com
-
-# 代码生成
-gen:
-  # 作者
-  author: Dimple
-  # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool
-  packageName: com.dimple.blog
-  # 自动去除表前缀，默认是false
-  autoRemovePre: false
-  # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
-  tablePrefix: blog_
-', '6314245f573c8a490502bc62c43f59d4', '2020-11-20 00:00:00', '2023-03-06 06:21:23', 'nacos', '0:0:0:0:0:0:0:1', '', '', '代码生成', 'null', 'null', 'yaml', '', ''),
-    (19, 'dimple-blog-front-dev.yml', 'DEFAULT_GROUP', '# spring配置
+     (19, 'dimple-blog-front-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   redis:
     host: dimple-redis
