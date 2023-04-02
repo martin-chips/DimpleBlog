@@ -19,7 +19,7 @@ public class SysJobLogBO extends BaseEntity {
      * ID
      */
     @Excel(name = "日志序号")
-    private Long jobLogId;
+    private Long id;
 
     /**
      * 任务名称

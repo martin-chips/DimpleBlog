@@ -61,9 +61,9 @@ public class SysJobLogController extends BaseController {
      * 根据调度编号获取详细信息
      */
     @RequiresPermissions("monitor:job:query")
-    @GetMapping("/{jobLogId}")
-    public AjaxResult getInfo(@PathVariable Long jobLogId) {
-        return success(jobLogService.selectJobLogById(jobLogId));
+    @GetMapping("/{id}")
+    public AjaxResult getInfo(@PathVariable Long id) {
+        return success(jobLogService.selectJobLogById(id));
     }
 
     /**
@@ -71,9 +71,9 @@ public class SysJobLogController extends BaseController {
      */
     @RequiresPermissions("monitor:job:remove")
     @OperationLog(title = "定时任务调度日志", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{jobLogIds}")
-    public AjaxResult remove(@PathVariable Long[] jobLogIds) {
-        return toAjax(jobLogService.deleteJobLogByIds(jobLogIds));
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
+        return toAjax(jobLogService.deleteJobLogByIds(ids));
     }
 
     /**

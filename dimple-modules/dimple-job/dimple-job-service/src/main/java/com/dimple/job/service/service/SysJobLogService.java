@@ -21,10 +21,10 @@ public interface SysJobLogService {
     /**
      * 通过调度任务日志ID查询调度信息
      *
-     * @param jobLogId 调度任务日志ID
+     * @param id 调度任务日志ID
      * @return 调度任务日志对象信息
      */
-    SysJobLogBO selectJobLogById(Long jobLogId);
+    SysJobLogBO selectJobLogById(Long id);
 
     /**
      * 新增任务日志

@@ -28,10 +28,10 @@ public interface SysJobLogMapper {
     /**
      * 通过调度任务日志ID查询调度信息
      *
-     * @param jobLogId 调度任务日志ID
+     * @param id 调度任务日志ID
      * @return 调度任务日志对象信息
      */
-    SysJobLog selectJobLogById(Long jobLogId);
+    SysJobLog selectJobLogById(Long id);
 
     /**
      * 新增任务日志

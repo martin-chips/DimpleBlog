@@ -35,12 +35,12 @@ public class SysJobLogServiceImpl implements SysJobLogService {
     /**
      * 通过调度任务日志ID查询调度信息
      *
-     * @param jobLogId 调度任务日志ID
+     * @param id 调度任务日志ID
      * @return 调度任务日志对象信息
      */
     @Override
-    public SysJobLogBO selectJobLogById(Long jobLogId) {
-        return BeanMapper.convert(jobLogMapper.selectJobLogById(jobLogId), SysJobLogBO.class);
+    public SysJobLogBO selectJobLogById(Long id) {
+        return BeanMapper.convert(jobLogMapper.selectJobLogById(id), SysJobLogBO.class);
     }
 
     /**
