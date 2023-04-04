@@ -31,17 +31,17 @@ public interface SysDictDataService {
     /**
      * 根据字典数据ID查询信息
      *
-     * @param dictCode 字典数据ID
+     * @param id 字典数据ID
      * @return 字典数据
      */
-    SysDictDataBO selectDictDataById(Long dictCode);
+    SysDictDataBO selectDictDataById(Long id);
 
     /**
      * 批量删除字典数据信息
      *
-     * @param dictCodes 需要删除的字典数据ID
+     * @param ids 需要删除的字典数据ID
      */
-    void deleteDictDataByIds(Long[] dictCodes);
+    void deleteDictDataByIds(Long[] ids);
 
     /**
      * 新增保存字典数据信息

@@ -15,10 +15,10 @@ public interface SysConfigService {
     /**
      * 查询参数配置信息
      *
-     * @param configId 参数配置ID
+     * @param id 参数配置ID
      * @return 参数配置信息
      */
-    SysConfigBO selectConfigById(Long configId);
+    SysConfigBO selectConfigById(Long id);
 
     /**
      * 根据键名查询参数配置信息
@@ -55,9 +55,9 @@ public interface SysConfigService {
     /**
      * 批量删除参数信息
      *
-     * @param configIds 需要删除的参数ID
+     * @param ids 需要删除的参数ID
      */
-    void deleteConfigByIds(Long[] configIds);
+    void deleteConfigByIds(Long[] ids);
 
     /**
      * 加载参数缓存数据

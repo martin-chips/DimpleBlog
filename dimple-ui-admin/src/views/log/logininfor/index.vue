@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-form v-show="showSearch" ref="queryForm" :inline="true" :model="queryParams" label-width="68px" size="small">
-      <el-form-item label="登录地址" prop="ipaddr">
+      <el-form-item label="登录地址" prop="ip">
         <el-input
-          v-model="queryParams.ipaddr"
+          v-model="queryParams.ip"
           clearable
           placeholder="请输入登录地址"
           style="width: 240px;"
@@ -104,10 +104,10 @@
     <el-table ref="tables" v-loading="loading" :data="list" :default-sort="defaultSort"
               @selection-change="handleSelectionChange" @sort-change="handleSortChange">
       <el-table-column align="center" type="selection" width="55"/>
-      <el-table-column align="center" label="访问编号" prop="infoId"/>
+      <el-table-column align="center" label="访问编号" prop="id"/>
       <el-table-column :show-overflow-tooltip="true" :sort-orders="['descending', 'ascending']" align="center" label="用户名称" prop="userName"
                        sortable="custom"/>
-      <el-table-column :show-overflow-tooltip="true" align="center" label="地址" prop="ipaddr" width="130"/>
+      <el-table-column :show-overflow-tooltip="true" align="center" label="地址" prop="ip" width="130"/>
       <el-table-column align="center" label="登录状态" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_common_status" :value="scope.row.status"/>
@@ -166,7 +166,7 @@ export default {
         pageSize: 10,
         orderByColumn: "createTime",
         isAsc: "desc",
-        ipaddr: undefined,
+        ip: undefined,
         userName: undefined,
         status: undefined
       }
@@ -200,7 +200,7 @@ export default {
     },
     /** 多选框选中数据 */
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.infoId)
+      this.ids = selection.map(item => item.id)
       this.single = selection.length != 1
       this.multiple = !selection.length
       this.selectName = selection.map(item => item.userName);
@@ -213,9 +213,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const infoIds = row.infoId || this.ids;
-      this.$modal.confirm('是否确认删除访问编号为"' + infoIds + '"的数据项？').then(function () {
-        return delLogininfor(infoIds);
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否确认删除访问编号为"' + ids + '"的数据项？').then(function () {
+        return delLogininfor(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");

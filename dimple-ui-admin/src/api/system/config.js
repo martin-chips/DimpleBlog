@@ -10,9 +10,9 @@ export function listConfig(query) {
 }
 
 // 查询参数详细
-export function getConfig(configId) {
+export function getConfig(id) {
   return request({
-    url: '/system/config/' + configId,
+    url: '/system/config/' + id,
     method: 'get'
   })
 }
@@ -44,9 +44,9 @@ export function updateConfig(data) {
 }
 
 // 删除参数配置
-export function delConfig(configId) {
+export function delConfig(id) {
   return request({
-    url: '/system/config/' + configId,
+    url: '/system/config/' + id,
     method: 'delete'
   })
 }

@@ -18,7 +18,7 @@ public class SysConfigVO extends BaseEntity {
      * 参数主键
      */
     @Excel(name = "参数主键", cellType = ColumnType.NUMERIC)
-    private Long configId;
+    private Long id;
 
     /**
      * 参数名称

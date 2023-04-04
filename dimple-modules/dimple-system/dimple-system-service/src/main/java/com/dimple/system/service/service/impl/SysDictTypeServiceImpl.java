@@ -88,12 +88,12 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
     /**
      * 根据字典类型ID查询信息
      *
-     * @param dictId 字典类型ID
+     * @param id 字典类型ID
      * @return 字典类型
      */
     @Override
-    public SysDictTypeBO selectDictTypeById(Long dictId) {
-        return BeanMapper.convert(dictTypeMapper.selectDictTypeById(dictId), SysDictTypeBO.class);
+    public SysDictTypeBO selectDictTypeById(Long id) {
+        return BeanMapper.convert(dictTypeMapper.selectDictTypeById(id), SysDictTypeBO.class);
     }
 
     /**
@@ -110,16 +110,16 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
     /**
      * 批量删除字典类型信息
      *
-     * @param dictIds 需要删除的字典ID
+     * @param ids 需要删除的字典ID
      */
     @Override
-    public void deleteDictTypeByIds(Long[] dictIds) {
-        for (Long dictId : dictIds) {
-            SysDictTypeBO dictType = selectDictTypeById(dictId);
+    public void deleteDictTypeByIds(Long[] ids) {
+        for (Long id : ids) {
+            SysDictTypeBO dictType = selectDictTypeById(id);
             if (dictDataMapper.countDictDataByType(dictType.getDictType()) > 0) {
                 throw new ServiceException(String.format("%1$s已分配,不能删除", dictType.getDictName()));
             }
-            dictTypeMapper.deleteDictTypeById(dictId);
+            dictTypeMapper.deleteDictTypeById(id);
             DictUtils.removeDictCache(dictType.getDictType());
         }
     }
@@ -179,7 +179,7 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateDictType(SysDictTypeBO dict) {
-        SysDictType oldDict = dictTypeMapper.selectDictTypeById(dict.getDictId());
+        SysDictType oldDict = dictTypeMapper.selectDictTypeById(dict.getId());
         dictDataMapper.updateDictDataType(oldDict.getDictType(), dict.getDictType());
         SysDictType sysDictType = BeanMapper.convert(dict, SysDictType.class);
         int row = dictTypeMapper.updateDictType(sysDictType);
@@ -198,9 +198,9 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
      */
     @Override
     public String checkDictTypeUnique(SysDictTypeBO dict) {
-        Long dictId = StringUtils.isNull(dict.getDictId()) ? -1L : dict.getDictId();
+        Long id = StringUtils.isNull(dict.getId()) ? -1L : dict.getId();
         SysDictType dictType = dictTypeMapper.checkDictTypeUnique(dict.getDictType());
-        if (StringUtils.isNotNull(dictType) && dictType.getDictId().longValue() != dictId.longValue()) {
+        if (StringUtils.isNotNull(dictType) && dictType.getId().longValue() != id.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

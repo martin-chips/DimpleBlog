@@ -1,12 +1,12 @@
 package com.dimple.common.security.service;
 
-import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.utils.JwtUtils;
 import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.ip.IpUtils;
 import com.dimple.common.core.utils.uuid.IdUtils;
+import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.redis.core.RedisKeyDefine;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.common.security.utils.SecurityUtils;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * token验证处理
@@ -43,7 +42,7 @@ public class TokenService {
         loginUser.setToken(token);
         loginUser.setUserid(userId);
         loginUser.setUsername(userName);
-        loginUser.setIpaddr(IpUtils.getIpAddr(ServletUtils.getRequest()));
+        loginUser.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         refreshToken(loginUser);
 
         // Jwt存储信息

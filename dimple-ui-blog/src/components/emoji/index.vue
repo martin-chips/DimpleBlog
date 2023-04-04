@@ -5,7 +5,7 @@
       placement="bottom-start"
       width="400"
       trigger="click"
-      content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
+      content="这是一段内容"
     >
       <el-tabs type="card">
         <el-tab-pane v-for="(tab, index) in tabs" :key="index" :label="tab.label">

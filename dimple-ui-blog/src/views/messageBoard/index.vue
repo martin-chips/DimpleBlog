@@ -48,7 +48,7 @@ export default {
     name: 'messageBoard',
     metaInfo() {
         return {
-            title: `留言板  - Dimple's Blog`,
+            title: `留言板  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
             meta: [
                 {
                     name: 'description',

@@ -73,7 +73,7 @@ export default {
     name: "archives",
     metaInfo() {
         return {
-            title: `友链  - Dimple's Blog`,
+            title: `友链  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
             meta: [
                 {
                     name: "description",

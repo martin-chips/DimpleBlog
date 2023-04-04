@@ -17,7 +17,7 @@ public class SysLogininforBO extends BaseEntity {
     /**
      * ID
      */
-    private Long infoId;
+    private Long id;
 
     /**
      * 用户账号
@@ -32,7 +32,7 @@ public class SysLogininforBO extends BaseEntity {
     /**
      * 地址
      */
-    private String ipaddr;
+    private String ip;
 
     /**
      * 描述

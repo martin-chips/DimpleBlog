@@ -17,7 +17,7 @@ public class SysOperLog extends BaseEntity {
     /**
      * 日志主键
      */
-    private Long operId;
+    private Long id;
 
     /**
      * 操作模块
@@ -62,7 +62,7 @@ public class SysOperLog extends BaseEntity {
     /**
      * 操作地址
      */
-    private String operIp;
+    private String ip;
 
     /**
      * 请求参数
@@ -87,5 +87,5 @@ public class SysOperLog extends BaseEntity {
     /**
      * 操作时间
      */
-    private Date operTime;
+    private Date createTme;
 }

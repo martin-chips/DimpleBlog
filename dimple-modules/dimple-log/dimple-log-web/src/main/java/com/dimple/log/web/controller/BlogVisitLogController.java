@@ -52,7 +52,7 @@ public class BlogVisitLogController extends BaseController {
 
     @OperationLog(title = "访问日志", businessType = BusinessType.DELETE)
     @RequiresPermissions("log:visitlog:remove")
-    @DeleteMapping("/{operIds}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable List<Long> ids) {
         return toAjax(blogVisitLogService.deleteVisitLogByIds(ids));
     }

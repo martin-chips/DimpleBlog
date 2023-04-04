@@ -46,23 +46,23 @@ public class SysOperLogServiceImpl implements SysOperLogService {
     /**
      * 批量删除系统操作日志
      *
-     * @param operIds 需要删除的操作日志ID
+     * @param ids 需要删除的操作日志ID
      * @return affected lines
      */
     @Override
-    public int deleteOperLogByIds(Long[] operIds) {
-        return operLogMapper.deleteOperLogByIds(operIds);
+    public int deleteOperLogByIds(Long[] ids) {
+        return operLogMapper.deleteOperLogByIds(ids);
     }
 
     /**
      * 查询操作日志详细
      *
-     * @param operId 操作ID
+     * @param id 操作ID
      * @return 操作日志对象
      */
     @Override
-    public SysOperLogBO selectOperLogById(Long operId) {
-        return BeanMapper.convert(operLogMapper.selectOperLogById(operId), SysOperLogBO.class);
+    public SysOperLogBO selectOperLogById(Long id) {
+        return BeanMapper.convert(operLogMapper.selectOperLogById(id), SysOperLogBO.class);
     }
 
     /**

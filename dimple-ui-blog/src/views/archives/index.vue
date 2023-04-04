@@ -63,7 +63,7 @@ export default {
     name: "archives",
     metaInfo() {
         return {
-            title: `归档  - Dimple's Blog`,
+            title: `归档  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
             meta: [
                 {
                     name: "description",

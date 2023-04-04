@@ -39,10 +39,10 @@ import java.util.List;
     /**
      * 根据字典数据ID查询信息
      *
-     * @param dictCode 字典数据ID
+     * @param id 字典数据ID
      * @return 字典数据
      */
-     SysDictData selectDictDataById(Long dictCode);
+     SysDictData selectDictDataById(Long id);
 
     /**
      * 查询字典数据
@@ -55,18 +55,18 @@ import java.util.List;
     /**
      * 通过字典ID删除字典数据信息
      *
-     * @param dictCode 字典数据ID
+     * @param id 字典数据ID
      * @return affected lines
      */
-     int deleteDictDataById(Long dictCode);
+     int deleteDictDataById(Long id);
 
     /**
      * 批量删除字典数据信息
      *
-     * @param dictCodes 需要删除的字典数据ID
+     * @param ids 需要删除的字典数据ID
      * @return affected lines
      */
-     int deleteDictDataByIds(Long[] dictCodes);
+     int deleteDictDataByIds(Long[] ids);
 
     /**
      * 新增字典数据信息

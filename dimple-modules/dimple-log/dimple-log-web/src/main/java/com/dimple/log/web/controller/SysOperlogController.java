@@ -14,13 +14,7 @@ import com.dimple.log.web.controller.vo.SysOperLogVO;
 import com.dimple.log.web.controller.vo.params.SysOperLogVOParams;
 import com.dimple.system.api.model.SysOperLogBO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -57,9 +51,9 @@ public class SysOperlogController extends BaseController {
 
     @OperationLog(title = "操作日志", businessType = BusinessType.DELETE)
     @RequiresPermissions("log:operlog:remove")
-    @DeleteMapping("/{operIds}")
-    public AjaxResult remove(@PathVariable Long[] operIds) {
-        return toAjax(operLogService.deleteOperLogByIds(operIds));
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
+        return toAjax(operLogService.deleteOperLogByIds(ids));
     }
 
     @RequiresPermissions("log:operlog:remove")

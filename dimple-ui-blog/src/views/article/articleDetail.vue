@@ -109,11 +109,11 @@ export default {
     props: {},
     metaInfo() {
         return {
-            title: `${this.article.title || "Loading"} - Dimple's Blog`,
+            title: `${this.article.title || "Loading"} - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
             meta: [
                 {
                     name: "description",
-                    content: this.article.summary + ` - Dimple's Blog`
+                    content: this.article.summary + ` - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside")
                 },
                 {
                     name: "keywords",

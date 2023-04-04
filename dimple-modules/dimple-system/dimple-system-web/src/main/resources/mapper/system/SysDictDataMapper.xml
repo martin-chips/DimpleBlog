@@ -5,7 +5,7 @@
 <mapper namespace="com.dimple.system.service.mapper.SysDictDataMapper">
 
     <resultMap type="SysDictData" id="SysDictDataResult">
-        <id property="dictCode" column="dict_code"/>
+        <id property="id" column="id"/>
         <result property="dictSort" column="dict_sort"/>
         <result property="dictLabel" column="dict_label"/>
         <result property="dictValue" column="dict_value"/>
@@ -21,7 +21,7 @@
     </resultMap>
 
     <sql id="selectDictDataVo">
-        select dict_code,
+        select id,
                dict_sort,
                dict_label,
                dict_value,
@@ -66,7 +66,7 @@
 
     <select id="selectDictDataById" parameterType="Long" resultMap="SysDictDataResult">
         <include refid="selectDictDataVo"/>
-        where dict_code = #{dictCode}
+        where id = #{id}
     </select>
 
     <select id="countDictDataByType" resultType="Integer">
@@ -78,13 +78,13 @@
     <delete id="deleteDictDataById" parameterType="Long">
         delete
         from sys_dict_data
-        where dict_code = #{dictCode}
+        where id = #{id}
     </delete>
 
     <delete id="deleteDictDataByIds" parameterType="Long">
-        delete from sys_dict_data where dict_code in
-        <foreach collection="array" item="dictCode" open="(" separator="," close=")">
-            #{dictCode}
+        delete from sys_dict_data where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 
@@ -103,7 +103,7 @@
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()
         </set>
-        where dict_code = #{dictCode}
+        where id = #{id}
     </update>
 
     <update id="updateDictDataType" parameterType="String">

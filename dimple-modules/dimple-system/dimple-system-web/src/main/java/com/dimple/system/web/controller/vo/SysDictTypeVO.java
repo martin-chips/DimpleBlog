@@ -18,7 +18,7 @@ public class SysDictTypeVO extends BaseEntity {
      * 字典主键
      */
     @Excel(name = "字典主键", cellType = ColumnType.NUMERIC)
-    private Long dictId;
+    private Long id;
 
     /**
      * 字典名称

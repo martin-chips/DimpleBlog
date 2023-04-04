@@ -5,7 +5,7 @@
 <mapper namespace="com.dimple.system.service.mapper.SysDictTypeMapper">
 
     <resultMap type="SysDictType" id="SysDictTypeResult">
-        <id property="dictId" column="dict_id"/>
+        <id property="id" column="id"/>
         <result property="dictName" column="dict_name"/>
         <result property="dictType" column="dict_type"/>
         <result property="status" column="status"/>
@@ -16,7 +16,7 @@
     </resultMap>
 
     <sql id="selectDictTypeVo">
-        select dict_id, dict_name, dict_type, status, create_by, create_time, remark
+        select id, dict_name, dict_type, status, create_by, create_time, remark
         from sys_dict_type
     </sql>
 
@@ -47,7 +47,7 @@
 
     <select id="selectDictTypeById" parameterType="Long" resultMap="SysDictTypeResult">
         <include refid="selectDictTypeVo"/>
-        where dict_id = #{dictId}
+        where id = #{id}
     </select>
 
     <select id="selectDictTypeByType" parameterType="String" resultMap="SysDictTypeResult">
@@ -63,13 +63,13 @@
     <delete id="deleteDictTypeById" parameterType="Long">
         delete
         from sys_dict_type
-        where dict_id = #{dictId}
+        where id = #{id}
     </delete>
 
     <delete id="deleteDictTypeByIds" parameterType="Long">
-        delete from sys_dict_type where dict_id in
-        <foreach collection="array" item="dictId" open="(" separator="," close=")">
-            #{dictId}
+        delete from sys_dict_type where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 
@@ -83,7 +83,7 @@
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()
         </set>
-        where dict_id = #{dictId}
+        where id = #{id}
     </update>
 
     <insert id="insertDictType" parameterType="SysDictType">

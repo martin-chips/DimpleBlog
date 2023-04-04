@@ -3,7 +3,9 @@
         <layout :cover="cover">
             <div id="home-article-header" class="home-article__header" slot="header">
                 <div class="home-article__dictum">
-                    <div class="home-article__site-name">Dimple's Blog</div>
+                    <div class="home-article__site-name">
+                        {{ this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside" }}
+                    </div>
                     <div class="home-article__dictum-info">
                         <span>{{ dictumInfo }}</span>
                         <span class="home-article__typed-cursor"
@@ -41,11 +43,11 @@ export default {
     name: "home",
     metaInfo() {
         return {
-            title: `首页  - Dimple's Blog`,
+            title: `首页  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
             meta: [
                 {
                     name: "description",
-                    content: `这是一个用vue ssr 开发的个人博客，记录学习与生活 - Dimple's Blog`
+                    content: `这是一个用vue ssr 开发的个人博客，记录学习与生活 - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside")
                 },
                 {
                     name: "keywords",
@@ -58,7 +60,6 @@ export default {
     components: {
         articleIterator
     },
-    props: {},
     data() {
         return {
             cover: cover,
@@ -70,14 +71,9 @@ export default {
             watingTyped: false,
             hidePage: false,
             articles: [],
-            dictums: [
-                ["你瞧这些白云聚了又散，散了又聚，人生离合，亦复如斯。", "出自：金庸"],
-                ["人在江湖，身不由己。", "出自：古龙"],
-                ["天涯思君不可忘。", "出自：《倚天屠龙记》"]
-            ]
+            labels: this.$store.state.globalConfig.siteConfig.labels
         };
     },
-    computed: {},
     watch: {},
     async mounted() {
         this.startPlay();
@@ -109,8 +105,11 @@ export default {
             scrollTo(height);
         },
         async startPlay() {
-            const dictums = this.dictums.flat();
-            const tasks = dictums.map((dictum) => {
+            if (this.labels.length == 0) {
+                return
+            }
+            const labels = this.labels.flat();
+            const tasks = labels.map((dictum) => {
                 return this.createTask(async (resolve) => {
                     let i = 0;
                     this.timer = setInterval(async () => {

@@ -49,9 +49,9 @@ public class SysLogininforController extends BaseController {
 
     @RequiresPermissions("log:logininfor:remove")
     @OperationLog(title = "登录日志", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{infoIds}")
-    public AjaxResult remove(@PathVariable Long[] infoIds) {
-        return toAjax(logininforService.deleteLogininforByIds(infoIds));
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
+        return toAjax(logininforService.deleteLogininforByIds(ids));
     }
 
     @RequiresPermissions("log:logininfor:remove")

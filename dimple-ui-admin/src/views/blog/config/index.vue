@@ -52,16 +52,17 @@
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane>
-          <span slot="label"><i class="el-icon-date"></i> 评论配置</span>
+          <span slot="label"><i class="el-icon-date"></i> 第三方登录配置</span>
           <el-row style="margin-bottom: 10px">
             <el-card>
               <div slot="header" class="card-header">
                 <span>启用GitHub登录</span>
-                <el-switch style="float: right; padding: 3px 0" v-model="configForm.commentConfig.enableGithubLogin"></el-switch>
+                <el-switch style="float: right; padding: 3px 0"
+                           v-model="configForm.commentConfig.enableGithubLogin"></el-switch>
               </div>
               <el-alert
                 type="info"
-                description="用户在评论的时候可以选择使用GitHub一键登录。"
+                description="用户在评论的时候可以选择使用GitHub一键登录,需要在GitHub上配置信息，由于网络原因，可能会存在调用接口超时问题！"
                 style="margin-bottom: 10px"
                 show-icon>
               </el-alert>
@@ -120,18 +121,6 @@
               </div>
             </el-card>
           </el-row>
-          <el-card>
-            <div slot="header" class="card-header">
-              <span>启用本地登录</span>
-              <el-switch disabled="" style="float: right; padding: 3px 0"
-                         v-model="configForm.commentConfig.enableLocalLogin"></el-switch>
-            </div>
-            <el-alert
-              type="warning"
-              description="本地登录必须启用，不可更改！"
-              show-icon>
-            </el-alert>
-          </el-card>
         </el-tab-pane>
         <el-tab-pane>
           <span slot="label"><i class="el-icon-date"></i> 邮件配置</span>
@@ -190,12 +179,12 @@ export default {
         siteConfig: {
           mask: false,
           infoPanel: "",
-          siteName: "Dimple Blog",
-          avatars: "https://avatars.githubusercontent.com/u/33685170?s=48&v=4",
-          icp: "蜀1-2234",
-          githubUrl: "https://github.com/martin-chips",
-          copyright: "©2018 - 2023&nbsp;&nbsp;&nbsp;",
-          githubUserName: "Martin Chips",
+          siteName: "",
+          avatars: "",
+          icp: "",
+          githubUrl: "",
+          copyright: "",
+          githubUserName: "",
         },
         emailConfig: {
           host: "",
@@ -204,7 +193,6 @@ export default {
           password: ""
         },
         commentConfig: {
-          enableLocalLogin: true,
           enableGithubLogin: false,
           enableQQLogin: false,
           githubLoginConfig: {
@@ -238,7 +226,7 @@ export default {
         if (res.code === 200) {
           this.configForm = res.data;
           this.configForm.siteConfig.infoPanel = this.unEscapeSpecialCharacters(this.configForm.siteConfig.infoPanel)
-          this.configForm.siteConfig.copyright = this.unEscapeSpecialCharacters(this.configForm.siteConfig.copyright)
+          this.configForm.siteConfig.copyright = this.unEscapeSpecialCharacters(this.configForm.siteConfig.copyright);
         }
       })
     },

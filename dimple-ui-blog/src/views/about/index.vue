@@ -69,7 +69,7 @@ export default {
     props: {},
     metaInfo() {
         return {
-            title: `关于我 - Dimple's Blog`,
+            title: `关于我 - `+(this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
             meta: [
                 {
                     name: "description",

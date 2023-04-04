@@ -21,7 +21,7 @@ public class SysLogininforVOParams extends BaseVOParams {
      * ID
      */
     @Excel(name = "序号", cellType = ColumnType.NUMERIC)
-    private Long infoId;
+    private Long id;
 
     /**
      * 用户账号
@@ -39,7 +39,7 @@ public class SysLogininforVOParams extends BaseVOParams {
      * 地址
      */
     @Excel(name = "地址")
-    private String ipaddr;
+    private String ip;
 
     /**
      * 描述

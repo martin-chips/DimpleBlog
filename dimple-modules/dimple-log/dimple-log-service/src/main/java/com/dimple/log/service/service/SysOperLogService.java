@@ -31,18 +31,18 @@ public interface SysOperLogService {
     /**
      * 批量删除系统操作日志
      *
-     * @param operIds 需要删除的操作日志ID
+     * @param ids 需要删除的操作日志ID
      * @return affected lines
      */
-    int deleteOperLogByIds(Long[] operIds);
+    int deleteOperLogByIds(Long[] ids);
 
     /**
      * 查询操作日志详细
      *
-     * @param operId 操作ID
+     * @param id 操作ID
      * @return 操作日志对象
      */
-    SysOperLogBO selectOperLogById(Long operId);
+    SysOperLogBO selectOperLogById(Long id);
 
     /**
      * 清空操作日志

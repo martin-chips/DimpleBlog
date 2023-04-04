@@ -114,11 +114,11 @@
 
     <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
       <el-table-column align="center" type="selection" width="55"/>
-      <el-table-column align="center" label="字典编号" prop="dictId"/>
+      <el-table-column align="center" label="字典编号" prop="id"/>
       <el-table-column :show-overflow-tooltip="true" align="center" label="字典名称" prop="dictName"/>
       <el-table-column :show-overflow-tooltip="true" align="center" label="字典类型">
         <template slot-scope="scope">
-          <router-link :to="'/system/dict-data/index/' + scope.row.dictId" class="link-type">
+          <router-link :to="'/system/dict-data/index/' + scope.row.id" class="link-type">
             <span>{{ scope.row.dictType }}</span>
           </router-link>
         </template>
@@ -268,7 +268,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        dictId: undefined,
+        id: undefined,
         dictName: undefined,
         dictType: undefined,
         status: "0",
@@ -295,15 +295,15 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.dictId)
+      this.ids = selection.map(item => item.id)
       this.single = selection.length != 1
       this.multiple = !selection.length
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const dictId = row.dictId || this.ids
-      getType(dictId).then(response => {
+      const id = row.id || this.ids
+      getType(id).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改字典类型";
@@ -313,7 +313,7 @@ export default {
     submitForm: function () {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.dictId != undefined) {
+          if (this.form.id != undefined) {
             updateType(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
@@ -331,9 +331,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const dictIds = row.dictId || this.ids;
-      this.$modal.confirm('是否确认删除字典编号为"' + dictIds + '"的数据项？').then(function () {
-        return delType(dictIds);
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否确认删除字典编号为"' + ids + '"的数据项？').then(function () {
+        return delType(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");

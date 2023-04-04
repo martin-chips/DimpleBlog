@@ -47,24 +47,24 @@ public class SysDictDataServiceImpl implements SysDictDataService {
     /**
      * 根据字典数据ID查询信息
      *
-     * @param dictCode 字典数据ID
+     * @param id 字典数据ID
      * @return 字典数据
      */
     @Override
-    public SysDictDataBO selectDictDataById(Long dictCode) {
-        return BeanMapper.convert(dictDataMapper.selectDictDataById(dictCode), SysDictDataBO.class);
+    public SysDictDataBO selectDictDataById(Long id) {
+        return BeanMapper.convert(dictDataMapper.selectDictDataById(id), SysDictDataBO.class);
     }
 
     /**
      * 批量删除字典数据信息
      *
-     * @param dictCodes 需要删除的字典数据ID
+     * @param ids 需要删除的字典数据ID
      */
     @Override
-    public void deleteDictDataByIds(Long[] dictCodes) {
-        for (Long dictCode : dictCodes) {
-            SysDictDataBO data = selectDictDataById(dictCode);
-            dictDataMapper.deleteDictDataById(dictCode);
+    public void deleteDictDataByIds(Long[] ids) {
+        for (Long id : ids) {
+            SysDictDataBO data = selectDictDataById(id);
+            dictDataMapper.deleteDictDataById(id);
             List<SysDictDataBO> dictDatas = BeanMapper.convertList(dictDataMapper.selectDictDataByType(data.getDictType()), SysDictDataBO.class);
             DictUtils.setDictCache(data.getDictType(), dictDatas);
         }

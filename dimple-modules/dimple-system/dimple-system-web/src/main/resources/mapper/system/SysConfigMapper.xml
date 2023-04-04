@@ -5,7 +5,7 @@
 <mapper namespace="com.dimple.system.service.mapper.SysConfigMapper">
 
     <resultMap type="SysConfig" id="SysConfigResult">
-        <id property="configId" column="config_id"/>
+        <id property="id" column="id"/>
         <result property="configName" column="config_name"/>
         <result property="configKey" column="config_key"/>
         <result property="configValue" column="config_value"/>
@@ -17,7 +17,7 @@
     </resultMap>
 
     <sql id="selectConfigVo">
-        select config_id,
+        select id,
                config_name,
                config_key,
                config_value,
@@ -33,8 +33,8 @@
     <!-- 查询条件 -->
     <sql id="sqlwhereSearch">
         <where>
-            <if test="configId !=null">
-                and config_id = #{configId}
+            <if test="id !=null">
+                and id = #{id}
             </if>
             <if test="configKey !=null and configKey != ''">
                 and config_key = #{configKey}
@@ -49,7 +49,7 @@
 
     <select id="selectConfigById" parameterType="Long" resultMap="SysConfigResult">
         <include refid="selectConfigVo"/>
-        where config_id = #{configId}
+        where id = #{id}
     </select>
 
     <select id="selectConfigList" parameterType="SysConfig" resultMap="SysConfigResult">
@@ -70,7 +70,7 @@
             <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
                 and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
-            and config_id>0
+            and id>0
         </where>
     </select>
 
@@ -110,19 +110,19 @@
             <if test="remark != null">remark = #{remark},</if>
             update_time = sysdate()
         </set>
-        where config_id = #{configId}
+        where id = #{id}
     </update>
 
     <delete id="deleteConfigById" parameterType="Long">
         delete
         from sys_config
-        where config_id = #{configId}
+        where id = #{id}
     </delete>
 
     <delete id="deleteConfigByIds" parameterType="Long">
-        delete from sys_config where config_id in
-        <foreach item="configId" collection="array" open="(" separator="," close=")">
-            #{configId}
+        delete from sys_config where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 

@@ -40,7 +40,7 @@ export default {
     name: 'articleFilter',
     metaInfo() {
         return {
-            title: `文章筛选：${this.title}  - Dimple's Blog`,
+            title: `文章筛选：${this.title}  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
             meta: [
                 {
                     name: 'description',

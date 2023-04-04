@@ -21,7 +21,7 @@ public class SysConfigVOParams extends BaseVOParams {
      * 参数主键
      */
     @Excel(name = "参数主键", cellType = ColumnType.NUMERIC)
-    private Long configId;
+    private Long id;
 
     /**
      * 参数名称

@@ -15,7 +15,7 @@ public class SysDictDataBO extends BaseEntity {
     /**
      * 字典编码
      */
-    private Long dictCode;
+    private Long id;
 
     /**
      * 字典排序

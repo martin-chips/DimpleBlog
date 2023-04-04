@@ -107,7 +107,7 @@
     <el-table ref="tables" v-loading="loading" :data="list" :default-sort="defaultSort"
               @selection-change="handleSelectionChange" @sort-change="handleSortChange">
       <el-table-column align="center" type="selection" width="55"/>
-      <el-table-column align="center" label="日志编号" prop="operId"/>
+      <el-table-column align="center" label="日志编号" prop="id"/>
       <el-table-column align="center" label="系统模块" prop="title"/>
       <el-table-column align="center" label="操作类型" prop="businessType">
         <template slot-scope="scope">
@@ -117,16 +117,16 @@
       <el-table-column align="center" label="请求方式" prop="requestMethod"/>
       <el-table-column :show-overflow-tooltip="true" :sort-orders="['descending', 'ascending']" align="center" label="操作人员" prop="operName"
                        sortable="custom" width="100"/>
-      <el-table-column :show-overflow-tooltip="true" align="center" label="主机" prop="operIp" width="130"/>
+      <el-table-column :show-overflow-tooltip="true" align="center" label="主机" prop="ip" width="130"/>
       <el-table-column align="center" label="操作状态" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_common_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column :sort-orders="['descending', 'ascending']" align="center" label="操作日期" prop="operTime"
+      <el-table-column :sort-orders="['descending', 'ascending']" align="center" label="操作日期" prop="createTme"
                        sortable="custom" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.operTime) }}</span>
+          <span>{{ parseTime(scope.row.createTme) }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" class-name="small-padding fixed-width" label="操作" fixed="right">
@@ -159,7 +159,7 @@
             <el-form-item label="操作模块：">{{ form.title }} / {{ typeFormat(form) }}</el-form-item>
             <el-form-item
               label="登录信息："
-            >{{ form.operName }} / {{ form.operIp }}
+            >{{ form.operName }} / {{ form.ip }}
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -182,7 +182,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="操作时间：">{{ parseTime(form.operTime) }}</el-form-item>
+            <el-form-item label="操作时间：">{{ parseTime(form.createTme) }}</el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item v-if="form.status === 1" label="异常信息：">{{ form.errorMsg }}</el-form-item>
@@ -221,7 +221,7 @@ export default {
       // 日期范围
       dateRange: [],
       // 默认排序
-      defaultSort: {prop: 'operTime', order: 'descending'},
+      defaultSort: {prop: 'createTme', order: 'descending'},
       // 表单参数
       form: {},
       // 查询参数
@@ -269,7 +269,7 @@ export default {
     },
     /** 多选框选中数据 */
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.operId)
+      this.ids = selection.map(item => item.id)
       this.multiple = !selection.length
     },
     /** 排序触发事件 */
@@ -285,9 +285,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const operIds = row.operId || this.ids;
-      this.$modal.confirm('是否确认删除日志编号为"' + operIds + '"的数据项？').then(function () {
-        return delOperlog(operIds);
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否确认删除日志编号为"' + ids + '"的数据项？').then(function () {
+        return delOperlog(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");

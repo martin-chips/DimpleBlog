@@ -22,7 +22,7 @@ public class SysUserOnline {
     /**
      * 登录IP地址
      */
-    private String ipaddr;
+    private String ip;
 
     /**
      * 登录地址

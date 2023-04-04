@@ -13,11 +13,7 @@ import com.dimple.monitor.service.service.SysUserOnlineService;
 import com.dimple.monitor.service.service.impl.bo.SysUserOnlineBO;
 import com.dimple.system.api.model.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,18 +36,18 @@ public class SysUserOnlineController extends BaseController {
 
     @RequiresPermissions("monitor:online:list")
     @GetMapping("/list")
-    public TableDataInfo list(String ipaddr, String userName) {
+    public TableDataInfo list(String ip, String userName) {
         Collection<String> keys = redisService.keys(CacheConstants.LOGIN_TOKEN_KEY_DEFINE.formatKey("*"));
         List<SysUserOnlineBO> userOnlineList = new ArrayList<>();
         for (String key : keys) {
             LoginUser user = redisService.getCacheObject(key);
-            if (StringUtils.isNotEmpty(ipaddr) && StringUtils.isNotEmpty(userName)) {
-                if (StringUtils.equals(ipaddr, user.getIpaddr()) && StringUtils.equals(userName, user.getUsername())) {
-                    userOnlineList.add(userOnlineService.selectOnlineByInfo(ipaddr, userName, user));
+            if (StringUtils.isNotEmpty(ip) && StringUtils.isNotEmpty(userName)) {
+                if (StringUtils.equals(ip, user.getIp()) && StringUtils.equals(userName, user.getUsername())) {
+                    userOnlineList.add(userOnlineService.selectOnlineByInfo(ip, userName, user));
                 }
-            } else if (StringUtils.isNotEmpty(ipaddr)) {
-                if (StringUtils.equals(ipaddr, user.getIpaddr())) {
-                    userOnlineList.add(userOnlineService.selectOnlineByIpaddr(ipaddr, user));
+            } else if (StringUtils.isNotEmpty(ip)) {
+                if (StringUtils.equals(ip, user.getIp())) {
+                    userOnlineList.add(userOnlineService.selectOnlineByip(ip, user));
                 }
             } else if (StringUtils.isNotEmpty(userName)) {
                 if (StringUtils.equals(userName, user.getUsername())) {

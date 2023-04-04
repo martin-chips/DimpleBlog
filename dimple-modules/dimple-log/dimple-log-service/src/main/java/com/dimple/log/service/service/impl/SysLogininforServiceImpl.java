@@ -47,12 +47,12 @@ public class SysLogininforServiceImpl implements SysLogininforService {
     /**
      * 批量删除系统登录日志
      *
-     * @param infoIds 需要删除的登录日志ID
+     * @param ids 需要删除的登录日志ID
      * @return affected lines
      */
     @Override
-    public int deleteLogininforByIds(Long[] infoIds) {
-        return logininforMapper.deleteLogininforByIds(infoIds);
+    public int deleteLogininforByIds(Long[] ids) {
+        return logininforMapper.deleteLogininforByIds(ids);
     }
 
     /**

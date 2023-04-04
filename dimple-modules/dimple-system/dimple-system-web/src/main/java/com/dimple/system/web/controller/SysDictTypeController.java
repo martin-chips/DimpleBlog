@@ -56,9 +56,9 @@ public class SysDictTypeController extends BaseController {
      * 查询字典类型详细
      */
     @RequiresPermissions("system:dict:query")
-    @GetMapping("/{dictId}")
-    public AjaxResult getInfo(@PathVariable Long dictId) {
-        SysDictTypeBO sysDictTypeBO = dictTypeService.selectDictTypeById(dictId);
+    @GetMapping("/{id}")
+    public AjaxResult getInfo(@PathVariable Long id) {
+        SysDictTypeBO sysDictTypeBO = dictTypeService.selectDictTypeById(id);
         return success(BeanMapper.convert(sysDictTypeBO, SysDictTypeVO.class));
     }
 
@@ -95,9 +95,9 @@ public class SysDictTypeController extends BaseController {
      */
     @RequiresPermissions("system:dict:remove")
     @OperationLog(title = "字典类型", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{dictIds}")
-    public AjaxResult remove(@PathVariable Long[] dictIds) {
-        dictTypeService.deleteDictTypeByIds(dictIds);
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
+        dictTypeService.deleteDictTypeByIds(ids);
         return success();
     }
 

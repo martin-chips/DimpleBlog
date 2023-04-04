@@ -22,10 +22,10 @@ public interface SysConfigMapper {
     /**
      * 通过ID查询配置
      *
-     * @param configId 参数ID
+     * @param id 参数ID
      * @return 参数配置信息
      */
-    SysConfig selectConfigById(Long configId);
+    SysConfig selectConfigById(Long id);
 
     /**
      * 查询参数配置列表
@@ -62,16 +62,16 @@ public interface SysConfigMapper {
     /**
      * 删除参数配置
      *
-     * @param configId 参数ID
+     * @param id 参数ID
      * @return affected lines
      */
-    int deleteConfigById(Long configId);
+    int deleteConfigById(Long id);
 
     /**
      * 批量删除参数信息
      *
-     * @param configIds 需要删除的参数ID
+     * @param ids 需要删除的参数ID
      * @return affected lines
      */
-    int deleteConfigByIds(Long[] configIds);
+    int deleteConfigByIds(Long[] ids);
 }

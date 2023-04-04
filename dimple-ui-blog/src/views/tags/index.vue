@@ -14,15 +14,15 @@ export default {
     name: "tags",
     metaInfo() {
         return {
-            title: `标签  - Dimple's Blog`,
+            title: `标签  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
             meta: [
                 {
                     name: "description",
-                    content: "用nodejs开发的豆瓣爬虫 douban-spider-v，同步我的观影记录"
+                    content: "标签"
                 },
                 {
                     name: "keywords",
-                    content: "豆瓣电影,豆瓣爬虫,豆瓣爬虫,douban spider"
+                    content: "标签页面"
                 }
             ]
         };

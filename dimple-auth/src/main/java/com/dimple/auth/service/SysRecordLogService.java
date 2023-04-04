@@ -31,7 +31,7 @@ public class SysRecordLogService {
     public void recordLogininfor(String username, String status, String message) {
         SysLogininforBO logininfor = new SysLogininforBO();
         logininfor.setUserName(username);
-        logininfor.setIpaddr(IpUtils.getIpAddr(ServletUtils.getRequest()));
+        logininfor.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         logininfor.setMsg(message);
         // 日志状态
         if (StringUtils.equalsAny(status, Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER)) {

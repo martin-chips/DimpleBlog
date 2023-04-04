@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-form ref="queryForm" :inline="true" :model="queryParams" label-width="68px" size="small">
-      <el-form-item label="登录地址" prop="ipaddr">
+      <el-form-item label="登录地址" prop="ip">
         <el-input
-          v-model="queryParams.ipaddr"
+          v-model="queryParams.ip"
           clearable
           placeholder="请输入登录地址"
           @keyup.enter.native="handleQuery"
@@ -35,7 +35,7 @@
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" align="center" label="会话编号" prop="tokenId"/>
       <el-table-column :show-overflow-tooltip="true" align="center" label="登录名称" prop="userName"/>
-      <el-table-column :show-overflow-tooltip="true" align="center" label="主机" prop="ipaddr"/>
+      <el-table-column :show-overflow-tooltip="true" align="center" label="主机" prop="ip"/>
       <el-table-column align="center" label="登录时间" prop="loginTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.loginTime) }}</span>
@@ -78,7 +78,7 @@ export default {
       queryParams: {
         orderByColumn: "createTime",
         isAsc: "desc",
-        ipaddr: undefined,
+        ip: undefined,
         userName: undefined
       }
     };

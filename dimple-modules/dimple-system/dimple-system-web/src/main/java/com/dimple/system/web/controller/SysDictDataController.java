@@ -16,14 +16,7 @@ import com.dimple.system.web.controller.vo.SysDictDataVO;
 import com.dimple.system.web.controller.vo.params.SysDictDataVOParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -64,9 +57,9 @@ public class SysDictDataController extends BaseController {
      * 查询字典数据详细
      */
     @RequiresPermissions("system:dict:query")
-    @GetMapping("/{dictCode}")
-    public AjaxResult getInfo(@PathVariable Long dictCode) {
-        return success(dictDataService.selectDictDataById(dictCode));
+    @GetMapping("/{id}")
+    public AjaxResult getInfo(@PathVariable Long id) {
+        return success(dictDataService.selectDictDataById(id));
     }
 
     /**
@@ -108,9 +101,9 @@ public class SysDictDataController extends BaseController {
      */
     @RequiresPermissions("system:dict:remove")
     @OperationLog(title = "字典类型", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{dictCodes}")
-    public AjaxResult remove(@PathVariable Long[] dictCodes) {
-        dictDataService.deleteDictDataByIds(dictCodes);
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
+        dictDataService.deleteDictDataByIds(ids);
         return success();
     }
 }

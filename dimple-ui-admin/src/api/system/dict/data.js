@@ -10,9 +10,9 @@ export function listData(query) {
 }
 
 // 查询字典数据详细
-export function getData(dictCode) {
+export function getData(id) {
   return request({
-    url: '/system/dict/data/' + dictCode,
+    url: '/system/dict/data/' + id,
     method: 'get'
   })
 }
@@ -44,9 +44,9 @@ export function updateData(data) {
 }
 
 // 删除字典数据
-export function delData(dictCode) {
+export function delData(id) {
   return request({
-    url: '/system/dict/data/' + dictCode,
+    url: '/system/dict/data/' + id,
     method: 'delete'
   })
 }

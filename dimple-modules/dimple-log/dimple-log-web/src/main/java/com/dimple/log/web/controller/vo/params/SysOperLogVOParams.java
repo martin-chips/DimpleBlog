@@ -21,7 +21,7 @@ public class SysOperLogVOParams extends BaseVOParams {
      * 日志主键
      */
     @Excel(name = "操作序号", cellType = ColumnType.NUMERIC)
-    private Long operId;
+    private Long id;
 
     /**
      * 操作模块
@@ -74,7 +74,7 @@ public class SysOperLogVOParams extends BaseVOParams {
      * 操作地址
      */
     @Excel(name = "操作地址")
-    private String operIp;
+    private String ip;
 
     /**
      * 请求参数
@@ -105,5 +105,5 @@ public class SysOperLogVOParams extends BaseVOParams {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "操作时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
-    private Date operTime;
+    private Date createTme;
 }

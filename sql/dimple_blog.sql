@@ -173,7 +173,6 @@ insert into blog_config (id, config_value, create_by, create_time, update_by, up
 values  (1, '{
     "commentConfig": {
         "enableGithubLogin": true,
-        "enableLocalLogin": true,
         "enableQQLogin": true,
         "githubLoginConfig": {
             "accessTokenUrl": "https://github.com/login/oauth/access_token",
@@ -194,7 +193,7 @@ values  (1, '{
         "copyright": "©2018 - 2023&nbsp;&nbsp;&nbsp;",
         "githubUrl": "https://github.com/martin-chips",
         "githubUserName": "Martin Chips",
-        "icp": "蜀1-2234",
+        "icp": "蜀ICP备2023006757号",
         "infoPanel": "&lt;p&gt;Hi，欢迎来到Dimple''s Blog，一个记录学习和生活的个人博客，你可以在&lt;a href=\\"https://bianxf.com\\" rel=\\"noopener noreferrer\\" target=\\"_blank\\"&gt;这里&lt;/a&gt;了解到关于本站的技术细节。&lt;/p&gt;",
         "mask": false,
         "siteName": "Dimple Blog"

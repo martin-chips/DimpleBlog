@@ -46,13 +46,18 @@ export default {
             this.setGlobalConfig({
                 "siteConfig": {
                     "mask": false,
-                    "infoPanel": " Hi，欢迎来到 Dimple's Blog，一个记录学习与生活的个人博客，你可以在<a href=\"https://bianxf.com\">这里</a> 了解到关于本站的更多技术细节。",
-                    "siteName": "Dimple Blog",
-                    "avatars": "https://avatars.githubusercontent.com/u/33685170?s=48&v=4",
-                    "icp": "蜀备-12345",
-                    "githubUrl": "https://github.com/martin-chips",
-                    "copyright": "©2018 - 2024&nbsp;&nbsp;&nbsp;",
-                    "githubUserName": "Martin Chips"
+                    "infoPanel": "",
+                    "siteName": "",
+                    "avatars": "",
+                    "icp": "",
+                    "labels":  [
+                        ["你瞧这些白云聚了又散，散了又聚，人生离合，亦复如斯。", "出自：金庸"],
+                        ["人在江湖，身不由己。", "出自：古龙"],
+                        ["天涯思君不可忘。", "出自：《倚天屠龙记》"]
+                    ],
+                    "githubUrl": "",
+                    "copyright": "",
+                    "githubUserName": ""
                 },
                 "commentConfig": {
                     "enableLocalLogin": false,

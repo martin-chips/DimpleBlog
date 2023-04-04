@@ -1,11 +1,11 @@
 package com.dimple.system.service.service.impl;
 
-import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.core.constant.UserConstants;
 import com.dimple.common.core.exception.ServiceException;
 import com.dimple.common.core.text.Convert;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
+import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.redis.service.RedisService;
 import com.dimple.system.service.entity.SysConfig;
 import com.dimple.system.service.mapper.SysConfigMapper;
@@ -42,13 +42,13 @@ public class SysConfigServiceImpl implements SysConfigService {
     /**
      * 查询参数配置信息
      *
-     * @param configId 参数配置ID
+     * @param id 参数配置ID
      * @return 参数配置信息
      */
     @Override
-    public SysConfigBO selectConfigById(Long configId) {
+    public SysConfigBO selectConfigById(Long id) {
         SysConfig config = new SysConfig();
-        config.setConfigId(configId);
+        config.setId(id);
         return BeanMapper.convert(configMapper.selectConfig(config), SysConfigBO.class);
     }
 
@@ -109,7 +109,7 @@ public class SysConfigServiceImpl implements SysConfigService {
      */
     @Override
     public int updateConfig(SysConfigBO config) {
-        SysConfig temp = configMapper.selectConfigById(config.getConfigId());
+        SysConfig temp = configMapper.selectConfigById(config.getId());
         if (!StringUtils.equals(temp.getConfigKey(), config.getConfigKey())) {
             redisService.deleteObject(getCacheKey(temp.getConfigKey()));
         }
@@ -124,16 +124,16 @@ public class SysConfigServiceImpl implements SysConfigService {
     /**
      * 批量删除参数信息
      *
-     * @param configIds 需要删除的参数ID
+     * @param ids 需要删除的参数ID
      */
     @Override
-    public void deleteConfigByIds(Long[] configIds) {
-        for (Long configId : configIds) {
-            SysConfigBO config = selectConfigById(configId);
+    public void deleteConfigByIds(Long[] ids) {
+        for (Long id : ids) {
+            SysConfigBO config = selectConfigById(id);
             if (StringUtils.equals(UserConstants.YES, config.getConfigType())) {
                 throw new ServiceException(String.format("内置参数【%1$s】不能删除 ", config.getConfigKey()));
             }
-            configMapper.deleteConfigById(configId);
+            configMapper.deleteConfigById(id);
             redisService.deleteObject(getCacheKey(config.getConfigKey()));
         }
     }
@@ -175,9 +175,9 @@ public class SysConfigServiceImpl implements SysConfigService {
      */
     @Override
     public String checkConfigKeyUnique(SysConfigBO config) {
-        Long configId = StringUtils.isNull(config.getConfigId()) ? -1L : config.getConfigId();
+        Long id = StringUtils.isNull(config.getId()) ? -1L : config.getId();
         SysConfig info = configMapper.checkConfigKeyUnique(config.getConfigKey());
-        if (StringUtils.isNotNull(info) && info.getConfigId().longValue() != configId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != id.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

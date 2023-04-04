@@ -29,10 +29,10 @@ import java.util.List;
     /**
      * 根据字典类型ID查询信息
      *
-     * @param dictId 字典类型ID
+     * @param id 字典类型ID
      * @return 字典类型
      */
-     SysDictType selectDictTypeById(Long dictId);
+     SysDictType selectDictTypeById(Long id);
 
     /**
      * 根据字典类型查询信息
@@ -45,18 +45,18 @@ import java.util.List;
     /**
      * 通过字典ID删除字典信息
      *
-     * @param dictId 字典ID
+     * @param id 字典ID
      * @return affected lines
      */
-     int deleteDictTypeById(Long dictId);
+     int deleteDictTypeById(Long id);
 
     /**
      * 批量删除字典类型信息
      *
-     * @param dictIds 需要删除的字典ID
+     * @param ids 需要删除的字典ID
      * @return affected lines
      */
-     int deleteDictTypeByIds(Long[] dictIds);
+     int deleteDictTypeByIds(Long[] ids);
 
     /**
      * 新增字典类型信息

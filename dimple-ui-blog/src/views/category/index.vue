@@ -26,7 +26,7 @@ export default {
     name: 'category',
     metaInfo() {
         return {
-            title: `文章分类  - Dimple's Blog`,
+            title: `文章分类  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
             meta: [
                 {
                     name: 'description',
