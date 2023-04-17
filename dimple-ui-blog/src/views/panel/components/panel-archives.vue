@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import {mapState} from "vuex";
+import {mapState} from 'vuex'
 
 export default {
   name: 'panelArchives',
@@ -47,6 +47,7 @@ export default {
 
 .panel-archives {
   @include panel-frame;
+
   .panel__item-body {
     li {
       display: flex;
@@ -56,6 +57,7 @@ export default {
       cursor: pointer;
       transition: all ease 0.38s;
     }
+
     li:hover {
       padding: 8px 12px;
       @include themeify() {

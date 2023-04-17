@@ -1,111 +1,107 @@
 <template>
-    <div class="archives">
-        <layout title="归档" :cover="cover">
-            <template v-if="archives.length">
-                <div class="archives__year" v-for="(range, index) in archives" :key="index">
-                    <div class="year-text">{{ range.dateStr }}</div>
-                    <el-timeline>
-                        <el-timeline-item
-                                v-for="(article, mi) in range.items"
-                                :key="'art_' + mi"
-                                type="primary"
-                                :hide-timestamp="true"
-                        >
-                            <div class="archives__content">
-                                <div class="content-left">
-                                    <router-link :to="'/app/article/' + article.id">
-                                        <img v-lazy="article.headerImage" alt=""/>
-                                    </router-link>
-                                </div>
-                                <div class="content-right">
-                                    <div class="content-right__title">
-                                        <router-link :to="'/app/article/' + article.id">
-                                            {{ article.title }}
-                                        </router-link>
-                                    </div>
-                                    <div class="content-right__date">
-                                        <i class="el-icon-date"></i>
-                                        {{ article.createTime | formatDate }}
-                                    </div>
-                                </div>
-                            </div>
-                        </el-timeline-item>
-                    </el-timeline>
+  <div class="archives">
+    <layout title="归档" cover="/img/cover/archive.jpg">
+      <template v-if="archives.length">
+        <div class="archives__year" v-for="(range, index) in archives" :key="index">
+          <div class="year-text">{{ range.dateStr }}</div>
+          <el-timeline>
+            <el-timeline-item
+              v-for="(article, mi) in range.items"
+              :key="'art_' + mi"
+              type="primary"
+              :hide-timestamp="true"
+            >
+              <div class="archives__content">
+                <div class="content-left">
+                  <router-link :to="'/app/article/' + article.id">
+                    <img v-lazy="article.headerImage" alt=""/>
+                  </router-link>
                 </div>
-            </template>
-            <ElEmpty v-else></ElEmpty>
+                <div class="content-right">
+                  <div class="content-right__title">
+                    <router-link :to="'/app/article/' + article.id">
+                      {{ article.title }}
+                    </router-link>
+                  </div>
+                  <div class="content-right__date">
+                    <i class="el-icon-date"></i>
+                    {{ article.createTime | formatDate }}
+                  </div>
+                </div>
+              </div>
+            </el-timeline-item>
+          </el-timeline>
+        </div>
+      </template>
+      <ElEmpty v-else></ElEmpty>
 
-            <el-pagination
-                    class="archives__page"
-                    :total="total"
-                    v-if="total>archives.length"
-                    layout="prev, pager, next"
-                    :page-size="pageSize"
-                    @current-change="currentChange"
-            ></el-pagination>
-        </layout>
-    </div>
+      <el-pagination
+        class="archives__page"
+        :total="total"
+        v-if="total>archives.length"
+        layout="prev, pager, next"
+        :page-size="pageSize"
+        @current-change="currentChange"
+      ></el-pagination>
+    </layout>
+  </div>
 </template>
 <script>
 import api from "@/api/";
-import cover from "@/assets/img/cover/archive.jpeg";
-
-async function getArchiveRes(pageNum = 1, pageSize = 10) {
-    const params = {
-        pageSize,
-        pageNum
-    };
-    const archiveRes = await api.getArchives(params);
-    return archiveRes;
-}
 
 export default {
-    name: "archives",
-    metaInfo() {
-        return {
-            title: `归档  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
-            meta: [
-                {
-                    name: "description",
-                    content: "文章归档"
-                },
-                {
-                    name: "keywords",
-                    content: "文章归档"
-                }
-            ]
-        };
-    },
-    data() {
-        return {
-            cover: cover,
-            pageNum: 1,
-            pageSize: 10,
-            total: 0,
-            archives: []
-        };
-    },
-    watch: {
-        $route() {
-            this.getArchiveRes();
-        }
-    },
-    created() {
-        this.getArchiveRes()
-    },
-    methods: {
-        currentChange(val) {
-            this.pageNum = val;
-            this.getArchiveRes();
+  name: "archives",
+  metaInfo() {
+    return {
+      title: `归档  - ` + "Dimple's Blog",
+      meta: [
+        {
+          name: "description",
+          content: "文章归档"
         },
-        async getArchiveRes() {
-            const archiveRes = await getArchiveRes(this.pageNum, this.pageSize);
-            if (archiveRes.code === 200) {
-                this.archives = archiveRes.rows;
-                this.total = archiveRes.total;
-            }
+        {
+          name: "keywords",
+          content: "文章归档"
         }
+      ]
+    };
+  },
+  data() {
+    return {
+      pageNum: 1,
+      pageSize: 10,
+      total: 0,
+      archives: []
+    };
+  },
+  async asyncData() {
+    const archiveRes = await api.getArchives({
+      pageSize: 10,
+      pageNum: 1
+    });
+    if (archiveRes.code === 200) {
+      console.log(archiveRes.rows)
+      return {
+        archives: archiveRes.rows,
+        total: archiveRes.total
+      }
     }
+  },
+  methods: {
+    currentChange(val) {
+      this.pageNum = val;
+      this.getArchiveRes();
+    },
+    async getArchiveRes() {
+      const archiveRes = await api.getArchives({
+        pageNum: this.pageNum, pageSize: this.pageSize,
+      });
+      if (archiveRes.code === 200) {
+        this.archives = archiveRes.rows;
+        this.total = archiveRes.total;
+      }
+    }
+  }
 };
 </script>
 <style lang="scss">

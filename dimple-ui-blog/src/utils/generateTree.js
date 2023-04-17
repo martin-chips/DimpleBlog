@@ -1,11 +1,3 @@
-/**
- * @desc  将打平的用层级关系维护的树状数据，组装成树结构
- * @param {*} flatList Object[]
- * @param {*} options  { level: Number} level，维护层级关系的字段
- * @used  目前用于自动生成文章的目录结构
- * @returns Array
- * @author justJokee
- */
 export function generateTree(flatList, options = { level: 'level' }) {
   const result = []
   let stack = []

@@ -82,7 +82,9 @@ build_html() {
   echo 'start compile dimple-blog ui'
   cd $PROJECT_ROOT_PATH/dimple-ui-blog
   npm install
-  npm run build:prod
+  npm run build
+  cp ./dist
+  npm install
   cp_html
 }
 
@@ -94,13 +96,11 @@ deploy() {
 }
 
 deploy_jar() {
-  build_jar
   echo "start deploy"
   cd $PROJECT_DOCKER_PATH
   docker compose --compatibility up -d --build dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
 }
 deploy_html() {
-  build_html
   echo "start deploy"
   cd $PROJECT_DOCKER_PATH
   docker compose --compatibility up -d --build dimple-ui
@@ -168,8 +168,8 @@ cp_html() {
   echo "begin copy html "
   mkdir -p $PROJECT_DOCKER_PATH/nginx/admin/dist
   /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-admin/dist/** $PROJECT_DOCKER_PATH/nginx/admin/dist
-  mkdir -p $PROJECT_DOCKER_PATH/nginx/blog/dist
-  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-blog/dist/** $PROJECT_DOCKER_PATH/nginx/blog/dist
+  mkdir -p $PROJECT_DOCKER_PATH/node/blog/dist
+  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-blog/dist/** $PROJECT_DOCKER_PATH/node/blog/dist
 }
 
 cp() {

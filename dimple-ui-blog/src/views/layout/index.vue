@@ -1,81 +1,77 @@
 <template>
-    <div class="layout">
-        <header class="layout__header">
-            <navbar></navbar>
-            <slot name="header">
-                <div class="layout__header-content">
-                    <layout-header :cover="cover" v-bind="$attrs">
-                        <slot name="custom-header"></slot>
-                    </layout-header>
-                </div>
+  <div class="layout">
+    <header class="layout__header">
+      <navbar></navbar>
+      <slot name="header">
+        <div class="layout__header-content">
+          <layout-header :cover="cover" v-bind="$attrs">
+            <slot name="custom-header"></slot>
+          </layout-header>
+        </div>
+      </slot>
+    </header>
+    <main class="layout__body">
+      <div class="layout__body-content">
+        <div class="layout__body-page">
+          <div class="body-page__wrapper">
+            <slot name="custom-body">
+              <el-card class="layout__body-default">
+                <slot></slot>
+              </el-card>
             </slot>
-        </header>
-        <main class="layout__body">
-            <div class="layout__body-content">
-                <div class="layout__body-page">
-                    <div class="body-page__wrapper">
-                        <slot name="custom-body">
-                            <el-card class="layout__body-default">
-                                <slot></slot>
-                            </el-card>
-                        </slot>
-                    </div>
-                </div>
-                <div v-if="panelShow" class="layout__body-panel">
-                    <panel></panel>
-                </div>
-            </div>
-        </main>
-        <footer class="layout__footer">
-            <slot name="footer">
-                <div class="layout__footer-content" :style="{ backgroundImage: 'url(' + cover + ')' }">
-                    <div class="layout__footer-item">
-                        <span v-html="globalConfig.siteConfig.copyright"></span>
-                        <a :href="globalConfig.siteConfig.githubUrl"
-                           target="_blank">{{ globalConfig.siteConfig.githubUserName }}</a>
-                    </div>
-                    <div class="layout__footer-item">{{'Powered by '+globalConfig.siteConfig.githubUserName}}</div>
-                    <div class="layout__footer-item item-icp">
-                        <img src="@img/icp.png" alt=""/>
-                        <a href="http://www.beian.gov.cn/portal/index.do"
-                           target="_blank">{{ globalConfig.siteConfig.icp }}</a>
-                    </div>
-                </div>
-            </slot>
-        </footer>
-    </div>
+          </div>
+        </div>
+        <div v-if="panelShow" class="layout__body-panel">
+          <panel></panel>
+        </div>
+      </div>
+    </main>
+    <footer class="layout__footer">
+      <slot name="footer">
+        <div class="layout__footer-content" :style="{ backgroundImage: 'url(' + cover + ')' }">
+          <div class="layout__footer-item">
+            <span>©2018 - 2023&nbsp;&nbsp;&nbsp;</span>
+            <a href="https://github.com/martin-chips" target="_blank">Martin Chips</a>
+          </div>
+          <div class="layout__footer-item">Powered by Dimple's Blog</div>
+          <div class="layout__footer-item item-icp">
+            <img src="@/assets/img/icp.png" alt=""/>
+            <!--<a href="http://www.beian.gov.cn/portal/index.do" target="_blank">鲁公安网备 37012502000331号</a>-->
+            <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">蜀ICP备2023006757号</a>
+          </div>
+        </div>
+      </slot>
+    </footer>
+  </div>
 </template>
 <script>
-import navbar from "@/views/layout/components/navbar/";
-import layoutHeader from "@/views/layout/components/header/";
+import navbar from '@/views/layout/components/navbar/'
+import layoutHeader from '@/views/layout/components/header/'
 
-import panel from "@/views/panel/";
-import {mapState} from "vuex";
+import panel from '@/views/panel/'
 
 export default {
-    props: {
-        panelShow: {
-            type: Boolean,
-            default: true
-        },
-        cover: {
-            type: String,
-            default: '/img/article/cover.jpg'
-        }
-    },
-    components: {
-        panel,
-        layoutHeader,
-        navbar
-    },
 
-    data() {
-        return {}
+  props: {
+    panelShow: {
+      type: Boolean,
+      default: true
     },
-    computed: {
-        ...mapState(['globalConfig'])
-    },
-    methods: {}
+    cover: {
+      type: String,
+      default: '/img/article/cover.jpg'
+    }
+  },
+  components: {
+    panel,
+    layoutHeader,
+    navbar
+  },
+
+  data() {
+    return {}
+  },
+  methods: {}
 }
 </script>
 <style lang="scss">

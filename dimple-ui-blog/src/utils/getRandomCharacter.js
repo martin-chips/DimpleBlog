@@ -1,10 +1,3 @@
-/**
- * @desc 获取随机字符串
- * @param {*} digits: Number   指定位数
- * @param {*} join:   String   分隔字符串
- * @returns String
- * @auther justJokee
- */
 export function getRandomCharacter(digits = 4, join = '') {
   const words = [
     'A',

@@ -1,51 +1,42 @@
 <template>
-    <div class="tags">
-        <layout title="标签" :cover="cover">
-            <tags-iterator :tags="tags"></tags-iterator>
-        </layout>
-    </div>
+  <div class="tags">
+    <layout title="标签" cover="/img/cover/tags.jpg">
+      <tags-iterator :tags="tags"></tags-iterator>
+    </layout>
+  </div>
 </template>
 <script>
-import api from "@/api/";
-import tagsIterator from "@/views/components/tags-iterator";
-import cover from "@/assets/img/cover/tags.jpg";
+import api from '@/api/'
+import tagsIterator from '@/views/components/tags-iterator'
 
 export default {
-    name: "tags",
-    metaInfo() {
-        return {
-            title: `标签  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
-            meta: [
-                {
-                    name: "description",
-                    content: "标签"
-                },
-                {
-                    name: "keywords",
-                    content: "标签页面"
-                }
-            ]
-        };
-    },
-    components: {tagsIterator},
-    data() {
-        return {
-            cover: cover,
-            tags: []
-        };
-    },
-    created() {
-        this.getTagList();
-    },
-    methods: {
-        async getTagList() {
-            const tagRes = await api.listTag({});
-            if (tagRes.code === 200) {
-                this.tags = tagRes.rows, this.total = tagRes.total;
-            }
+  name: 'tags',
+  metaInfo() {
+    return {
+      title: `标签  - Dimple's Blog`,
+      meta: [
+        {
+          name: 'description',
+          content: '用nodejs开发的豆瓣爬虫 douban-spider-v，同步我的观影记录'
         },
-    },
-};
+        {
+          name: 'keywords',
+          content: '豆瓣电影,豆瓣爬虫,豆瓣爬虫,douban spider'
+        }
+      ]
+    }
+  },
+  components: { tagsIterator },
+  data() {
+    return {
+      tags: []
+    }
+  },
+  async asyncData() {
+    const tagRes = await api.listTag({})
+    if (tagRes.code === 200) return { tags: tagRes.rows, total: tagRes.total }
+  }
+}
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';

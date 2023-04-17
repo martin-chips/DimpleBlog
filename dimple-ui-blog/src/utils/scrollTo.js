@@ -1,11 +1,4 @@
-/**
- * @desc 窗口滚动动画
- * @param {*} pos      需要设置的scrollTop值
- * @param {*} duration 动画时长
- * @returns
- * @author justJokee
- */
-import { getScrollTop } from "@/utils/getScrollTop";
+import {getScrollTop} from '@/utils/getScrollTop'
 
 export default function scrollTo(pos = 0, duration = 250) {
   // 计算需要滚动的距离

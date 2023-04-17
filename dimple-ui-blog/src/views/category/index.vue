@@ -1,75 +1,66 @@
 <template>
-    <div class="category">
-        <layout title="分类" :cover="cover">
-            <div class="category__content">
-                <ul>
-                    <li v-for="(item, index) in categories" :key="index" @click="filterArticles(item.title, item.id)">
-                        <div>
-                            <dot>
-                                <span>{{ item.title }}</span>
-                                <span>（{{ item.articleCount }}）</span>
-                            </dot>
-                        </div>
-                    </li>
-                </ul>
+  <div class="category">
+    <layout title="分类" cover="/img/cover/category.jpg">
+      <div class="category__content">
+        <ul>
+          <li v-for="(item, index) in categories" :key="index" @click="filterArticles(item.title, item.id)">
+            <div>
+              <dot>
+                <span>{{ item.title }}</span>
+                <span>（{{ item.articleCount }}）</span>
+              </dot>
             </div>
-        </layout>
-    </div>
+          </li>
+        </ul>
+      </div>
+    </layout>
+  </div>
 </template>
 <script>
-import api from "@/api/";
-import dot from "@/components/dot";
-
-import cover from "@/assets/img/cover/category.jpg";
+import api from '@/api/'
+import dot from '@/components/dot'
 
 export default {
-    name: 'category',
-    metaInfo() {
-        return {
-            title: `文章分类  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
-            meta: [
-                {
-                    name: 'description',
-                    content: '文章分类'
-                },
-                {
-                    name: 'keywords',
-                    content: '技术文档，生活感悟'
-                }
-            ]
-        }
-    },
-    data() {
-        return {
-            cover: cover,
-            categories: []
-        }
-    },
-    components: {dot},
-    created() {
-        this.getCategorys()
-    },
-    methods: {
-        async getCategorys() {
-            const categoryRes = await api.listCategory({pageNum:1, pageSize: 1000})
-            if (categoryRes.code === 200) {
-                this.categories = categoryRes.rows
-            }
+  name: 'category',
+  metaInfo() {
+    return {
+      title: `文章分类  - Dimple's Blog`,
+      meta: [
+        {
+          name: 'description',
+          content: '文章分类'
         },
-
-        filterArticles(title, id) {
-            this.$router.push({
-                name: 'articleFilter',
-                params: {
-                    type: 'category',
-                    param: id
-                },
-                query: {
-                    title: title
-                }
-            })
+        {
+          name: 'keywords',
+          content: '技术文档，生活感悟'
         }
+      ]
     }
+  },
+  data() {
+    return {
+      categories: []
+    }
+  },
+  components: {dot},
+  async asyncData() {
+    const categoryRes = await api.listCategory({pageNum: 1, pageSize: 1000})
+    if (categoryRes.code == 200) return {categories: categoryRes.rows}
+  },
+  methods: {
+    filterArticles(title, id) {
+      this.$router.push({
+        name: 'articleFilter',
+        params: {
+          type: 'category',
+          param: id
+        },
+        query: {
+          title
+        }
+      })
+    }
+  }
 }
 </script>
 <style lang="scss">

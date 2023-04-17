@@ -1,26 +1,24 @@
 <template>
-    <div class="dot">
-        <slot></slot>
-    </div>
+  <div class="dot">
+    <slot></slot>
+  </div>
 </template>
 <script>
 export default {
-    name: 'dot',
-    data() {
-        return {}
-    }
+  name: 'dot',
+  data() {
+    return {}
+  }
 }
 </script>
-<style lang="scss" >
+<style lang="scss">
 @import '~@/style/index.scss';
-
 .dot {
   position: relative;
   display: flex;
   align-items: center;
   padding-left: 20px;
 }
-
 .dot:before {
   content: '';
   position: absolute;

@@ -1,8 +1,3 @@
-/**
- * @desc   localStorage信息存储
- * @author Justjokee
- */
-
 // 访客信息key
 const visitorKey = 'v_k_i'
 

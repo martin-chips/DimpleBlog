@@ -1,48 +1,47 @@
 <template>
-    <div class="panel-category">
-        <el-card>
-            <div class="panel__item-title">
-                <i class="el-icon-c-scale-to-original"></i>
-                <span>文章分类</span>
-            </div>
-            <div class="panel__item-body">
-                <ul v-if="category.length">
-                    <li v-for="(item, index) in category" :key="index" @click="filterArticles(item.title, item.id)">
-                        <span>{{ item.title }}</span>
-                        <span>{{ item.articleCount }}</span>
-                    </li>
-                </ul>
-                <ElEmpty v-else></ElEmpty>
-            </div>
-        </el-card>
-    </div>
+  <div class="panel-category">
+    <el-card>
+      <div class="panel__item-title">
+        <i class="el-icon-c-scale-to-original"></i>
+        <span>文章分类</span>
+      </div>
+      <div class="panel__item-body">
+        <ul>
+          <li v-for="(item, index) in category" :key="index" @click="filterArticles(item.title, item.id)">
+            <span>{{ item.title }}</span>
+            <span>{{ item.articleCount }}</span>
+          </li>
+        </ul>
+      </div>
+    </el-card>
+  </div>
 </template>
 <script>
-import {mapState} from "vuex";
+import {mapState} from 'vuex'
 
 export default {
-    name: 'panelCategory',
-    props: {},
-    data() {
-        return {}
-    },
-    computed: {
-        ...mapState(['category'])
-    },
-    methods: {
-        filterArticles(title, id) {
-            this.$router.push({
-                name: 'articleFilter',
-                params: {
-                    type: 'category',
-                    param: id
-                },
-                query: {
-                    title
-                }
-            })
+  name: 'panelCategory',
+  props: {},
+  data() {
+    return {}
+  },
+  computed: {
+    ...mapState(['category'])
+  },
+  methods: {
+    filterArticles(title, id) {
+      this.$router.push({
+        name: 'articleFilter',
+        params: {
+          type: 'category',
+          param: id
+        },
+        query: {
+          title
         }
+      })
     }
+  }
 }
 </script>
 <style lang="scss">

@@ -25,7 +25,7 @@
 
 @mixin themeify($themes: $themes) {
   @each $key, $theme-map in $themes {
-    $d_theme: if($key==light, null, '.mapblog-theme-#{$key}');
+    $d_theme: if($key==light, null, '.dimple-theme-#{$key}');
     #{$d_theme} & {
       $theme-map-copy: () !global;
       @each $theme-map-key, $theme-map-value in $theme-map {

@@ -1,3 +1,7 @@
+/**
+ * @desc: 主题映射表
+ * @use   key即为主题后缀 .dimple—theme-${key}
+ */
 @import './dark/index.scss';
 @import './light/index.scss';
 

@@ -14,6 +14,27 @@
             </template>
             <el-switch v-model="configForm.siteConfig.mask"></el-switch>
           </el-form-item>
+          <el-form-item :label="'打字机内容'+(index+1)" v-for="(item,index) in configForm.labels">
+            <el-row>
+              <el-col :span="6">
+                <el-input
+                  v-model="item[0]"
+                  placeholder="请输入内容"
+                  :key="'first'+index"></el-input>
+              </el-col>
+              <el-col :span="6">
+                <el-input
+                  v-model="item[1]"
+                  placeholder="请输入内容"
+                  :key="'second'+index"></el-input>
+              </el-col>
+              <el-col :offset="1" :span="6">
+                <el-button size="mini" type="info" circle icon="el-icon-plus" @click="addRow"></el-button>
+                <el-button type="danger" icon="el-icon-close" size="mini" circle @click="deleteRow(index)"
+                           v-show="configForm.labels.length > 1"></el-button>
+              </el-col>
+            </el-row>
+          </el-form-item>
           <el-form-item prop="siteConfig.infoPanel">
             <template slot="label">
               <span>网站介绍信息</span>
@@ -176,6 +197,9 @@ export default {
   data() {
     return {
       configForm: {
+        labels: [
+          ['', ''],
+        ],
         siteConfig: {
           mask: false,
           infoPanel: "",
@@ -209,11 +233,11 @@ export default {
     };
   },
   mounted() {
-    const scrollBar = this.$refs.tabs.$el.querySelector('.el-tabs__nav-scroll')
-    scrollBar.appendChild(this.$refs.btnGroup.$el);
-  },
-  created() {
-    this.getConfig();
+    this.$nextTick(() => {
+      this.getConfig();
+      const scrollBar = this.$refs.tabs.$el.querySelector('.el-tabs__nav-scroll')
+      scrollBar.appendChild(this.$refs.btnGroup.$el);
+    });
   },
   methods: {
     deleteCache() {
@@ -224,13 +248,21 @@ export default {
     getConfig() {
       getConfig().then(res => {
         if (res.code === 200) {
-          this.configForm = res.data;
+          this.configForm = Object.assign(this.configForm, res.data);
           this.configForm.siteConfig.infoPanel = this.unEscapeSpecialCharacters(this.configForm.siteConfig.infoPanel)
           this.configForm.siteConfig.copyright = this.unEscapeSpecialCharacters(this.configForm.siteConfig.copyright);
         }
       })
     },
+    deleteRow(index) {
+      this.configForm.labels.splice(index, 1)
+    },
+    addRow() {
+      this.configForm.labels.push(['', '']);
+    },
     submitForm() {
+      console.log(JSON.parse(JSON.stringify(this.configForm)));
+      return
       this.$refs['configForm'].validate((valid) => {
         if (valid) {
           var form = JSON.parse(JSON.stringify(this.configForm));

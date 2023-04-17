@@ -2,6 +2,8 @@ package com.dimple.system.api.model.config;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * SiteConfig
  *
@@ -18,4 +20,5 @@ public class SiteConfig {
     private String githubUrl;
     private String copyright;
     private String githubUserName;
+    private List<List<String>> lables;
 }

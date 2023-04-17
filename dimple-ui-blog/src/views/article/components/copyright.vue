@@ -52,28 +52,34 @@ export default {
   ul {
     padding: 12px;
     margin: 0;
+
     li {
       padding: 4px 0;
     }
   }
+
   a {
     text-decoration: underline !important;
   }
+
   a:hover {
     @include themeify() {
       color: themed('color-ele-primary');
     }
   }
+
   border: 1px solid #eee;
   @include themeify() {
     border-color: themed('color-navbar');
   }
+
   &__label {
     font-weight: bold;
     @include themeify() {
       color: themed('color-copyright-label');
     }
   }
+
   &__licence {
   }
 }

@@ -1,6 +1,5 @@
 import request from "@/utils/request";
 
-
 export default {
   getMessageBoard(query) {
     return request({
@@ -20,7 +19,7 @@ export default {
 
   likeMessageBoard(id) {
     return request({
-      url: "/blog-front/messageBoard/likeCount/"+id,
+      url: "/blog-front/messageBoard/likeCount/" + id,
       method: "post",
     });
   }

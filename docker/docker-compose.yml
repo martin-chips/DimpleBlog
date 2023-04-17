@@ -80,6 +80,23 @@ services:
       resources:
         limits:
           memory: 512M
+
+  dimple-node:
+    container_name: dimple-node
+    image: node
+    privileged: true
+    build:
+      context: node
+    ports:
+      - "8820:8820"
+    volumes:
+      - ./node/blog/dist/:/home/dimple/projects/dimple-ui-blog/
+    links:
+      - dimple-gateway
+    deploy:
+      resources:
+        limits:
+          memory: 512M
   dimple-ui:
     container_name: dimple-ui
     image: nginx
@@ -93,7 +110,6 @@ services:
       - "443:443"
     volumes:
       - ./nginx/admin/dist/:/home/dimple/projects/dimple-ui-admin/
-      - ./nginx/blog/dist/:/home/dimple/projects/dimple-ui-blog/
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/logs:/var/log/nginx
       - ./nginx/conf.d:/etc/nginx/conf.d
@@ -103,7 +119,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 512M
+          memory: 256M
   dimple-gateway:
     container_name: dimple-gateway
     build:

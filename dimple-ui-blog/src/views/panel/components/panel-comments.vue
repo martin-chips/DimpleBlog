@@ -21,7 +21,7 @@
                   </router-link>
                 </div>
                 <div class="body-info__name">{{ comment.username }}</div>
-                <div class="body-info__date">发表于：{{ comment.date | formatDate }}</div>
+                <div class="body-info__date">发表于：{{ comment.createTime | formatDate }}</div>
               </div>
             </div>
           </template>
@@ -32,7 +32,7 @@
   </div>
 </template>
 <script>
-import {mapState} from "vuex";
+import {mapState} from 'vuex'
 
 export default {
   name: 'panelComments',

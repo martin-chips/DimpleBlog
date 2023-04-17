@@ -1,172 +1,171 @@
 <template>
-    <div class="home-article">
-        <layout :cover="cover">
-            <div id="home-article-header" class="home-article__header" slot="header">
-                <div class="home-article__dictum">
-                    <div class="home-article__site-name">
-                        {{ this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside" }}
-                    </div>
-                    <div class="home-article__dictum-info">
-                        <span>{{ dictumInfo }}</span>
-                        <span class="home-article__typed-cursor"
-                              :class="{ 'is-typed-cursor-anmation': watingTyped }">|</span>
-                    </div>
-                </div>
-                <div class="home-article__go" @click="go">
-                    <i class="el-icon-arrow-down"></i>
-                </div>
-            </div>
-            <div class="home-article__body" slot="custom-body">
-                <article-iterator :articles="articles"></article-iterator>
-                <el-pagination
-                        class="home-article__page"
-                        v-if="total>articles.length"
-                        :total="total"
-                        layout="total,prev, pager, next"
-                        :page-size="pageSize"
-                        @current-change="currentChange"
-                ></el-pagination>
-            </div>
-        </layout>
-    </div>
+  <div class="home-article">
+    <layout cover="/img/cover/home.jpg">
+      <div id="home-article-header" class="home-article__header" slot="header">
+        <div class="home-article__dictum">
+          <div class="home-article__site-name">Dimple's Blog</div>
+          <div class="home-article__dictum-info">
+            <span>{{ dictumInfo }}</span>
+            <span class="home-article__typed-cursor" :class="{ 'is-typed-cursor-anmation': watingTyped }">|</span>
+          </div>
+        </div>
+        <div class="home-article__go" @click="go">
+          <i class="el-icon-arrow-down"></i>
+        </div>
+      </div>
+      <div class="home-article__body" slot="custom-body">
+        <article-iterator :articles="articles"></article-iterator>
+
+        <div class="home-article__page">
+          <el-pagination
+            v-if="articles.length"
+            :total="total"
+            layout="prev, pager, next"
+            :page-size="pageSize"
+            @current-change="currentChange"
+          ></el-pagination>
+        </div>
+      </div>
+    </layout>
+  </div>
 </template>
 
 <script>
 // 导入工具/组件
-import scrollTo from "@/utils/scrollTo";
-import api from "@/api/";
-import articleIterator from "@/views/components/article-iterator";
-import cover from "@/assets/img/cover/home.jpg";
+import scrollTo from '@/utils/scrollTo'
+import api from '@/api/'
+import articleIterator from '@/views/components/article-iterator'
 
 export default {
-    // 组件名称
-    name: "home",
-    metaInfo() {
-        return {
-            title: `首页  - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside"),
-            meta: [
-                {
-                    name: "description",
-                    content: `这是一个用vue ssr 开发的个人博客，记录学习与生活 - ` + (this.$store.state.globalConfig.siteConfig.siteName || "Dimple's Blog Inside")
-                },
-                {
-                    name: "keywords",
-                    content: "vue ssr,vue博客,技术博客"
-                }
-            ]
-        };
-    },
-    // 子组件
-    components: {
-        articleIterator
-    },
-    data() {
-        return {
-            cover: cover,
-            total: 0,
-            pageSize: 10,
-            dictumInfo: "",
-            timer: null,
-            backTimer: null,
-            watingTyped: false,
-            hidePage: false,
-            articles: [],
-            labels: this.$store.state.globalConfig.siteConfig.labels
-        };
-    },
-    watch: {},
-    async mounted() {
-        this.startPlay();
-        const articleRes = await api.listArticle({
-            pageNum: 1,
-            pageSize: this.pageSize,
-            orderByColumn: "createTime",
-            isAsc: "desc",
-        });
-        if (articleRes.code === 200) {
-            this.articles = articleRes.rows;
-            this.total = articleRes.total
+  // 组件名称
+  name: 'home',
+  metaInfo() {
+    return {
+      title: `首页  - Dimple's Blog`,
+      meta: [
+        {
+          name: 'description',
+          content: `这是一个用vue ssr 开发的个人博客，记录学习与生活 - Dimple's Blog`
+        },
+        {
+          name: 'keywords',
+          content: 'vue ssr,vue博客,技术博客'
         }
-    },
-    methods: {
-        async currentChange(val) {
-            const articleRes = await api.listArticle({
-                pageSize: this.pageSize,
-                pageNum: val,
-            });
-            if (articleRes.code === 200) {
-                this.total = articleRes.total;
-                this.articles = articleRes.rows;
-            }
-        },
-
-        go() {
-            const height = document.querySelector("#home-article-header").clientHeight;
-            scrollTo(height);
-        },
-        async startPlay() {
-            if (this.labels.length == 0) {
-                return
-            }
-            const labels = this.labels.flat();
-            const tasks = labels.map((dictum) => {
-                return this.createTask(async (resolve) => {
-                    let i = 0;
-                    this.timer = setInterval(async () => {
-                        this.dictumInfo = dictum.substring(0, i + 1);
-                        i++;
-                        if (i >= dictum.length) {
-                            if (this.timer) {
-                                clearInterval(this.timer);
-                                this.watingTyped = true;
-                                await this.sleep(800);
-                                this.watingTyped = false;
-                                this.backTimer = setInterval(async () => {
-                                    this.dictumInfo = dictum.substring(0, i);
-                                    i--;
-                                    if (i < 0) {
-                                        this.watingTyped = true;
-                                        await this.sleep(200);
-                                        this.watingTyped = false;
-                                        resolve();
-                                        if (this.backTimer) clearInterval(this.backTimer);
-                                    }
-                                }, 100);
-                            }
-                        }
-                    }, 250);
-                });
-            });
-            await tasks.reduce((pre, next) => pre.then((ret) => next(ret)), Promise.resolve());
-            this.startPlay();
-        },
-        createTask(cb) {
-            return () =>
-                new Promise((resolve) => {
-                    cb(resolve);
-                });
-        },
-        sleep(delay = 500) {
-            return new Promise((resolve) => {
-                setTimeout(resolve, delay);
-            });
-        }
-    },
-    destroyed() {
-        if (this.timer) clearInterval(this.timer);
-        if (this.backTimer) clearInterval(this.backTimer);
+      ]
     }
-};
+  },
+  // 子组件
+  components: {
+    articleIterator
+  },
+  props: {},
+  data() {
+    return {
+      total: 0, //
+      pageSize: 8,
+      dictumInfo: '',
+      timer: null,
+      backTimer: null,
+      watingTyped: false,
+      hidePage: false,
+      articles: [],
+      dictums: [
+        ['你瞧这些白云聚了又散，散了又聚，人生离合，亦复如斯。', '出自：金庸'],
+        ['人在江湖，身不由己。', '出自：古龙'],
+        ['天涯思君不可忘。', '出自：《倚天屠龙记》']
+      ]
+    }
+  },
+  async mounted() {
+    this.startPlay()
+  },
+  async asyncData() {
+    const articleRes = await api.listArticle({
+      pageNum: 1,
+      pageSize: this.pageSize,
+      orderByColumn: "createTime",
+      isAsc: "desc",
+    })
+    if (articleRes.code === 200) return {articles: articleRes.rows, total: articleRes.total}
+  },
+  methods: {
+    async currentChange(val) {
+      const articleRes = await api.listArticle({
+        publish: 1,
+        pageSize: 1,
+        pageNum: val,
+        content: 0
+      })
+      if (articleRes.code === 200) {
+        this.total = articleRes.total
+        this.articles = articleRes.rows
+      }
+    },
+
+    go() {
+      const height = document.querySelector('#home-article-header').clientHeight
+      scrollTo(height)
+    },
+    async startPlay() {
+      const dictums = this.dictums.flat()
+      const tasks = dictums.map((dictum) => {
+        return this.createTask(async (resolve) => {
+          let i = 0
+          this.timer = setInterval(async () => {
+            this.dictumInfo = dictum.substring(0, i + 1)
+            i++
+            if (i >= dictum.length) {
+              if (this.timer) {
+                clearInterval(this.timer)
+                this.watingTyped = true
+                await this.sleep(800)
+                this.watingTyped = false
+                this.backTimer = setInterval(async () => {
+                  this.dictumInfo = dictum.substring(0, i)
+                  i--
+                  if (i < 0) {
+                    this.watingTyped = true
+                    await this.sleep(200)
+                    this.watingTyped = false
+                    resolve()
+                    if (this.backTimer) clearInterval(this.backTimer)
+                  }
+                }, 100)
+              }
+            }
+          }, 250)
+        })
+      })
+      await tasks.reduce((pre, next) => pre.then((ret) => next(ret)), Promise.resolve())
+      this.startPlay()
+    },
+    createTask(cb) {
+      return () =>
+        new Promise((resolve) => {
+          cb(resolve)
+        })
+    },
+    sleep(delay = 500) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, delay)
+      })
+    }
+  },
+  destroyed() {
+    if (this.timer) clearInterval(this.timer)
+    if (this.backTimer) clearInterval(this.backTimer)
+  }
+}
 </script>
 
-<style lang="scss">
+<style rel="stylesheet/scss" lang="scss">
 @import '~@/style/index.scss';
 
 .home-article {
   &__header {
     width: 100vw;
     height: 100vh;
-    background-image: url('~@img/cover/home.jpg');
+    background-image: url('/img/cover/home.jpg');
     background-position: center;
     background-size: cover;
     position: relative;

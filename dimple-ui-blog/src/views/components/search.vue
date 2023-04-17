@@ -1,116 +1,116 @@
 <template>
-    <div class="search">
-        <div class="search__body">
-            <div class="search__input">
-                <el-input v-model="keyword" size="medium" placeholder="请输入关键字回车搜索"
-                          @keyup.enter.native="search">
-                    <i slot="suffix" class="el-input__icon el-icon-search" @click="search"></i>
-                </el-input>
-            </div>
-            <splitLine></splitLine>
-            <el-scrollbar>
-                <div class="search__content">
-                    <el-skeleton v-if="loading" :rows="6" animated/>
-                    <ul class="search__list">
-                        <li v-for="(article, index) in articles" :key="index">
-                            <div class="list-item">
-                                <div class="list-item__title" v-html="article.title" @click="goto(article)"></div>
-                                <div class="list-item__content" v-html="article.summary"></div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="search__empty" v-if="showEmptyResult">Oops~ 暂未找到关键词为”{{ keyword }}“的文章</div>
-                </div>
-            </el-scrollbar>
-            <el-pagination
-                    class="search__page"
-                    v-if="total>articles.length"
-                    :total="total"
-                    layout="prev, pager, next"
-                    :page-size="pageSize"
-                    @current-change="currentChange"
-            ></el-pagination>
+  <div class="search">
+    <div class="search__body">
+      <div class="search__input">
+        <el-input v-model="keyword" size="medium" placeholder="请输入关键字回车搜索"
+                  @keyup.enter.native="search">
+          <i slot="suffix" class="el-input__icon el-icon-search" @click="search"></i>
+        </el-input>
+      </div>
+      <splitLine></splitLine>
+      <el-scrollbar>
+        <div class="search__content">
+          <el-skeleton v-if="loading" :rows="6" animated/>
+          <ul class="search__list">
+            <li v-for="(article, index) in articles" :key="index">
+              <div class="list-item">
+                <div class="list-item__title" v-html="article.title" @click="goto(article)"></div>
+                <div class="list-item__content" v-html="article.summary"></div>
+              </div>
+            </li>
+          </ul>
+          <div class="search__empty" v-if="showEmptyResult">Oops~ 暂未找到关键词为”{{ keyword }}“的文章</div>
         </div>
+      </el-scrollbar>
+      <el-pagination
+        class="search__page"
+        v-if="total>articles.length"
+        :total="total"
+        layout="prev, pager, next"
+        :page-size="pageSize"
+        @current-change="currentChange"
+      ></el-pagination>
     </div>
+  </div>
 </template>
 <script>
 import splitLine from "@/components/splitLine/";
 
 export default {
-    name: 'search',
-    props: {},
-    data() {
-        return {
-            loading: false,
-            keyword: '',
-            searched: false,
-            total: 0,
-            pageSize: 10,
-            pageNum: 1,
-            articles: []
-        }
-    },
-    components: {splitLine},
-    watch: {
-        keyword() {
-            this.searched = false
-        }
-    },
-    computed: {
-        showEmptyResult() {
-            return !this.articles.length && this.searched
-        }
-    },
-    methods: {
-        async search() {
-            if (!this.keyword.trim()) {
-                this.searched = false
-                this.articles = []
-                this.$message({
-                    type: 'warning',
-                    message: '请输入关键词搜索'
-                })
-                return
-            }
-            this.loading = true;
-            const searchRes = await this.$api.searchArticle({
-                searchValue: this.keyword.trim(),
-                pageNum: this.pageNum,
-                pageSize: this.pageSize
-            }).catch(e => {
-                console.log(e)
-            });
-            if (searchRes && searchRes.code === 200) {
-                var result = searchRes.rows;
-                for (let resultElement of result) {
-                    const reg = new RegExp(this.keyword.trim(), 'ig')
-                    resultElement.title = resultElement.title.replace(reg, (val) => {
-                        return `<span style="color:red">${val}</span>`
-                    });
-                    resultElement.summary = resultElement.summary.replace(reg, (val) => {
-                        return `<span style="color:red">${val}</span>`
-                    });
-                }
-                this.articles = result;
-
-                this.searched = true;
-                this.total = searchRes.total;
-                this.loading = false;
-            } else {
-
-                this.loading = false;
-            }
-
-        },
-        currentChange(val) {
-            this.pageNum = val
-            this.search()
-        },
-        goto(article) {
-            this.$emit('hasJumped')
-            this.$router.push({name: 'articleDetail', params: {id: article.id}})
-        }
+  name: 'search',
+  props: {},
+  data() {
+    return {
+      loading: false,
+      keyword: '',
+      searched: false,
+      total: 0,
+      pageSize: 10,
+      pageNum: 1,
+      articles: []
     }
+  },
+  components: {splitLine},
+  watch: {
+    keyword() {
+      this.searched = false
+    }
+  },
+  computed: {
+    showEmptyResult() {
+      return !this.articles.length && this.searched
+    }
+  },
+  methods: {
+    async search() {
+      if (!this.keyword.trim()) {
+        this.searched = false
+        this.articles = []
+        this.$message({
+          type: 'warning',
+          message: '请输入关键词搜索'
+        })
+        return
+      }
+      this.loading = true;
+      const searchRes = await this.$api.searchArticle({
+        searchValue: this.keyword.trim(),
+        pageNum: this.pageNum,
+        pageSize: this.pageSize
+      }).catch(e => {
+        console.log(e)
+      });
+      if (searchRes && searchRes.code === 200) {
+        var result = searchRes.rows;
+        for (let resultElement of result) {
+          const reg = new RegExp(this.keyword.trim(), 'ig')
+          resultElement.title = resultElement.title.replace(reg, (val) => {
+            return `<span style="color:red">${val}</span>`
+          });
+          resultElement.summary = resultElement.summary.replace(reg, (val) => {
+            return `<span style="color:red">${val}</span>`
+          });
+        }
+        this.articles = result;
+
+        this.searched = true;
+        this.total = searchRes.total;
+        this.loading = false;
+      } else {
+
+        this.loading = false;
+      }
+
+    },
+    currentChange(val) {
+      this.pageNum = val
+      this.search()
+    },
+    goto(article) {
+      this.$emit('hasJumped')
+      this.$router.push({name: 'articleDetail', params: {id: article.id}})
+    }
+  }
 }
 </script>
 <style lang="scss">

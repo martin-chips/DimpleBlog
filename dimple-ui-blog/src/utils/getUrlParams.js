@@ -1,10 +1,3 @@
-/**
- * @desc 获取search & hash路由上的参数
- * @param {*} urlStr
- * @param {*} field
- * @returns string | Object
- * @author Justjokee
- */
 export function getUrlParams(urlStr, field) {
   let searchParams = {}
   let hashParams = {}

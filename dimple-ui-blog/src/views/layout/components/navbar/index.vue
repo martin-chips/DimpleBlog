@@ -30,12 +30,12 @@
   </nav>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
-import { getScrollTop } from "@/utils/getScrollTop";
-import search from "@/views/components/search";
-import horizontalNavbar from "./horizontal-navbar";
-import verticalNavbar from "./vertical-navbar";
-import debounce from "lodash/debounce";
+import {mapMutations, mapState} from 'vuex'
+import {getScrollTop} from '@/utils/getScrollTop'
+import search from '@/views/components/search'
+import horizontalNavbar from './horizontal-navbar'
+import verticalNavbar from './vertical-navbar'
+import debounce from 'lodash/debounce'
 
 export default {
   name: 'navbar',

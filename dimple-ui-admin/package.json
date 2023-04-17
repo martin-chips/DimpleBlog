@@ -1,8 +1,8 @@
 {
-  "name": "Dimple",
-  "version": "3.0.0",
+  "name": "Dimple-UI-Admin",
+  "version": "3.1.0",
   "description": "Dimple管理系统",
-  "author": "Dimple",
+  "author": "MartinChips",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",

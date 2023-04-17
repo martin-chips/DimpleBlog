@@ -1,61 +1,55 @@
 <template>
-    <div class="article-iterator">
-        <template v-if="articles.length">
-            <el-card class="article-iterator__item" v-for="(article, index) in articles" :key="index">
-                <div class="item-content">
-                    <div class="item-content__pic">
-                        <img :src="article.headerImage" alt=""/>
-                    </div>
-                    <div class="item-content__info">
-                        <div class="item-content__link">
-                            <router-link :to="'/app/article/' + article.id">{{ article.title }}</router-link>
-                        </div>
-                        <div class="item-content__detail">
+  <div class="article-iterator">
+    <template v-if="articles.length">
+      <el-card class="article-iterator__item" v-for="(article, index) in articles" :key="index">
+        <div class="item-content">
+          <div class="item-content__pic">
+            <img :src="article.headerImage" alt=""/>
+          </div>
+          <div class="item-content__info">
+            <div class="item-content__link">
+              <router-link :to="'/app/article/' + article.id">{{ article.title }}</router-link>
+            </div>
+            <div class="item-content__detail">
               <span>
                 <i class="el-icon-date"></i>
                 发表时间 {{ article.createTime | formatDate }}
               </span>
-                            <span>&nbsp;|&nbsp;</span>
-                            <span>
+              <span>&nbsp;|&nbsp;</span>
+              <span>
                 <i class="el-icon-chat-dot-round"></i>
                 评论数 {{ article.commentCount }}
               </span>
-                            <span>&nbsp;|&nbsp;</span>
-                            <span>
+              <span>&nbsp;|&nbsp;</span>
+              <span>
                 <i class="el-icon-star-off"></i>
                 点赞 {{ article.likeCount }}
               </span>
-                        </div>
-                        <div class="item-content__abstract">{{ article.summary }}</div>
-                    </div>
-                </div>
-            </el-card>
-        </template>
-        <el-card class="article-iterator__item" v-else>
-            <ElEmpty description="您还没有文章，赶快去创建吧~"></ElEmpty>
-        </el-card>
-    </div>
+            </div>
+            <div class="item-content__abstract">{{ article.summary }}</div>
+          </div>
+        </div>
+      </el-card>
+    </template>
+    <el-card class="article-iterator__item" v-else>
+      <ElEmpty description="您还没有文章，赶快去创建吧~"></ElEmpty>
+    </el-card>
+  </div>
 </template>
 <script>
 export default {
-    name: 'articleIterator',
-    props: {
-        loading: {
-            type: Boolean,
-            default() {
-                return true;
-            }
-        },
-        articles: {
-            type: Array,
-            default() {
-                return []
-            }
-        }
-    },
-    data() {
-        return {}
+  name: 'articleIterator',
+  props: {
+    articles: {
+      type: Array,
+      default() {
+        return []
+      }
     }
+  },
+  data() {
+    return {}
+  }
 }
 </script>
 <style lang="scss">

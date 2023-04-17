@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import siteIntroduction from "@/views/components/site-introduction";
+import siteIntroduction from '@/views/components/site-introduction'
 
 export default {
   name: 'panelIntroduction',

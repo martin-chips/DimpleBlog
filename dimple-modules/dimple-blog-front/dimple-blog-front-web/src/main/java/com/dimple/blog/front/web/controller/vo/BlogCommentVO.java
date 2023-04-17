@@ -1,6 +1,6 @@
 package com.dimple.blog.front.web.controller.vo;
 
-import com.dimple.common.core.web.vo.params.BaseVOParams;
+import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2/14/2023 10:36 AM
  */
 @Data
-public class BlogCommentVO extends BaseVOParams {
+public class BlogCommentVO extends BaseEntity {
     private Long id;
 
     /**

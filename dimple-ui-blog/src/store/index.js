@@ -1,15 +1,16 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import actions from "./actions";
-import mutations from "./mutations";
+import Vue from 'vue'
+import Vuex from 'vuex'
+import actions from './actions'
+import mutations from './mutations'
 
-Vue.use(Vuex);
-
+Vue.use(Vuex)
 export function createStore() {
   return new Vuex.Store({
     state: {
-      activeCatalog: "",
+      activeCatalog: '',
       rollBack: false,
+      // 访客信息
+      visitorInfo: {},
       // 文章目录树
       catalogs: [],
       // 文章归档 按月统计
@@ -22,9 +23,6 @@ export function createStore() {
       newComments: [],
       // 最新文章
       newArticles: [],
-      // 访客信息
-      visitorInfo: {},
-      globalConfig: {},
       totals: {
         article: 0,
         tag: 0,
@@ -33,5 +31,5 @@ export function createStore() {
     },
     mutations,
     actions
-  });
+  })
 }

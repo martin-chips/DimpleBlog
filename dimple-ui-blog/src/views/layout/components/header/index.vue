@@ -3,7 +3,7 @@
     <div class="header__content">
       <slot>
         <div class="header__default-title">
-          <h1>{{ title }}</h1>
+          <h1 style="    line-height: initial;">{{ title }}</h1>
         </div>
       </slot>
     </div>
@@ -35,11 +35,13 @@ export default {
   height: 400px;
   background-size: cover;
   background-position: center center;
+
   &__content {
     position: absolute;
     width: 100%;
     height: 100%;
   }
+
   &__default-title {
     width: 100%;
     height: 100%;
@@ -48,6 +50,7 @@ export default {
     @include flex-box-center;
   }
 }
+
 .header:before {
   content: '';
   position: absolute;
