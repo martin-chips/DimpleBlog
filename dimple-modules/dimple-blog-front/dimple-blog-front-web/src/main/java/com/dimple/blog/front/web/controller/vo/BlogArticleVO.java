@@ -36,6 +36,8 @@ public class BlogArticleVO extends BaseEntity {
      */
     private Long categoryId;
 
+    private String categoryTitle;
+
     /**
      * is original, true yes, false no
      */

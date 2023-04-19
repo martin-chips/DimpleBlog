@@ -26,6 +26,7 @@ public class BlogArticle extends BaseEntity {
      */
     private String headerImage;
 
+
     /**
      * article content
      */
@@ -35,6 +36,7 @@ public class BlogArticle extends BaseEntity {
      * article category id
      */
     private Long categoryId;
+    private String categoryTitle;
 
     /**
      * is original, true yes, false no

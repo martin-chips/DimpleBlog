@@ -6,7 +6,7 @@
         <div class="article-detail__info info-1">
           <span>
             <i class="el-icon-date"></i>
-            发表时间 {{ article.createTime | formatDate }}
+            发表于 {{ article.createTime | formatDate }}
           </span>
           <span>&nbsp;|&nbsp;</span>
           <span>
@@ -231,7 +231,7 @@ export default {
     line-height: 1.5;
     padding: 0 12px;
     text-align: center;
-    @include themeify() {
+    @include themify() {
       color: themed('color-title');
     }
     @include respond-to(xs) {
@@ -241,7 +241,7 @@ export default {
 
   &__info {
     padding: 0 12px;
-    @include themeify() {
+    @include themify() {
       color: themed('color-navbar');
     }
   }
@@ -254,7 +254,7 @@ export default {
     margin-top: 20px;
     padding: 14px;
     text-align: right;
-    @include themeify() {
+    @include themify() {
       color: themed('color-ele-holder');
     }
   }

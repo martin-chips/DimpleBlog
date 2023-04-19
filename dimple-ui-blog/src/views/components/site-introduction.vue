@@ -101,7 +101,7 @@ export default {
     color: #4c4948;
 
     a {
-      @include themeify() {
+      @include themify() {
         color: themed('color-ele-primary');
       }
     }

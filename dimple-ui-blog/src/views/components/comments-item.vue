@@ -130,7 +130,7 @@ export default {
     align-items: center;
     font-size: 12px;
     // color: #909399;
-    @include themeify() {
+    @include themify() {
       color: themed('color-home-article-detail');
     }
     margin-top: 10px;

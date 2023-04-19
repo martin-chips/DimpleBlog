@@ -1,5 +1,5 @@
 /**
- * @desc: 颜色表 
+ * @desc: 颜色表
  */
 
 $color: (
@@ -21,5 +21,40 @@ $color: (
   color-copyright-label: #46adf1,
   color-comments: #4c4948,
   color-list-hover: #40a0ffb4,
-  color-catalog-active: #03c1b4
+  color-catalog-active: #03c1b4,
+  global-font-size: 14px,
+  global-bg: #fff,
+  font-color: #4c4948,
+  hr-border: #a4d8fa,
+  hr-before-color: #80c8f8,
+  search-bg: #f6f8fa,
+  search-input-color: #4c4948,
+  search-a-color: #4c4948,
+  preloader-bg: #37474f,
+  preloader-color: #fff,
+  tab-border-color: #f0f0f0,
+  tab-botton-bg: #f0f0f0,
+  tab-botton-color: #1f2d3d,
+  tab-button-hover-bg: #dcdcdc,
+  tab-button-active-bg: #fff,
+  card-bg: #fff,
+  sidebar-bg: #f6f8fa,
+  btn-hover-color: #ff7242,
+  btn-color: #fff,
+  btn-bg: #49b1f5,
+  text-bg-hover: rgba(73, 177, 245, 0.7),
+  light-grey: #eee,
+  dark-grey: #cacaca,
+  white: #fff,
+  text-highlight-color: #1f2d3d,
+  blockquote-color: #6a737d,
+  blockquote-bg: rgba(30, 147, 224, 0.1),
+  reward-pop: #f5f5f5,
+  toc-link-color: #666261,
+  card-box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05),
+  card-hover-box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.09),
+  pseudo-hover: #ff7242,
+  headline-presudo: #a0a0a0,
+  scrollbar-color: #49b1f5,
+  default-bg-color: #49b1f5
 );

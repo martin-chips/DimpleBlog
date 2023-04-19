@@ -1,23 +1,28 @@
 <template>
   <div class="article-detail">
-    <layout :cover="article.headerPic">
+    <layout :cover="article.headerImage">
       <div class="article-detail__header" slot="custom-header">
         <h1 class="article-detail__title">{{ article.title }}</h1>
         <div class="article-detail__info info-1">
           <span>
             <i class="el-icon-date"></i>
-            发表时间 {{ article.createTime | formatDate }}
+            发表于 {{ article.createTime | formatDate }}
           </span>
           <span>&nbsp;|&nbsp;</span>
           <span>
-            <i class="el-icon-price-tag"></i>
-            标签 {{ tags }}
+            <i class="el-icon-folder-opened"></i>
+            {{ article.categoryTitle }}
           </span>
         </div>
         <div class="article-detail__info info-2">
           <span>
-            <i class="el-icon-chat-dot-round"></i>
+            <i class="el-icon-view"></i>
             阅读量 {{ article.pv }}
+          </span>
+          <span>&nbsp;|&nbsp;</span>
+          <span>
+            <i class="el-icon-timer"></i>
+            阅读时长 {{ readingMinute }}分钟
           </span>
           <span>&nbsp;|&nbsp;</span>
           <span>
@@ -34,7 +39,7 @@
       <note>
         <p>{{ article.summary }}</p>
       </note>
-      <div v-html="article.content" class="article-detail__body ql-editor"></div>
+      <div v-html="article.content" class="article-detail__body"></div>
       <div class="article-detail__update">
         <span>最后编辑于：{{ article.updateTime | formatDate }}</span>
       </div>
@@ -136,6 +141,10 @@ export default {
     tags() {
       if (this.article.blogTags) return this.article.blogTags.join(" ");
       return "";
+    },
+    readingMinute() {
+      const wordsPerMinute = 200;
+      return Math.ceil(this.article.content.length / wordsPerMinute);
     },
     url() {
       return `${process.env.BASE_URL}/app/article/${this.article.id}`
@@ -347,13 +356,260 @@ export default {
       width: 100%;
       height: 100%;
     }
+
+    .table-wrap {
+      overflow-x: scroll;
+      margin: 0 0 20px
+    }
+
+    table {
+      display: table;
+      width: 100%;
+      border-spacing: 0;
+      border-collapse: collapse;
+      empty-cells: show
+    }
+
+    table thead {
+      background: rgba(18, 99, 208, 0.1)
+    }
+
+    table td, table th {
+      padding: 6px 12px;
+      @include themify() {
+        border: 1px solid themed('light-grey');
+      }
+      vertical-align: middle
+    }
+
+    code {
+      padding: 2px 4px;
+      background: rgba(27, 31, 35, .05);
+      color: #f47466
+    }
+
+    a {
+      color: #49b1f5
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    img {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 100%;
+      -webkit-transition: filter 375ms ease-in .2s;
+      -moz-transition: filter 375ms ease-in .2s;
+      -o-transition: filter 375ms ease-in .2s;
+      -ms-transition: filter 375ms ease-in .2s;
+      transition: filter 375ms ease-in .2s
+    }
+
+    p {
+      margin: 0 0 16px
+    }
+
+
+    blockquote {
+      margin: 0 0 20px;
+      padding: 12px 15px;
+      border-left: 3px solid #49b1f5;
+      @include themify() {
+        background-color: themed('blockquote-bg');
+        color: themed('blockquote-color')
+      }
+    }
+
+    blockquote footer cite:before {
+      padding: 0 5px;
+      content: '—'
+    }
+
+    blockquote > :last-child {
+      margin-bottom: 0 !important
+    }
+
+    a:after {
+      float: right;
+      @include themify() {
+        color: themed('headline-presudo');
+      }
+      content: '& ';
+      font-size: .95em;
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      -o-transition: all .3s;
+      -ms-transition: all .3s;
+      transition: all .3s
+    }
+
+    a:hover:after {
+      @include themify() {
+        color: themed('pseudo-hover')
+      }
+    }
+
+    a:after {
+      opacity: 0
+    }
+
+    h1:hover a.headerlink:after, h2:hover a.headerlink:after, h3:hover a.headerlink:after, h4:hover a.headerlink:after, h5:hover a.headerlink:after, h6:hover a.headerlink:after {
+      opacity: 1;
+      -ms-filter: none;
+      filter: none
+    }
+
+    ol ol, ol ul, ul ol, ul ul {
+      padding-left: 20px
+    }
+
+    ol li, ul li {
+      margin: 4px 0
+    }
+
+    ol p, ul p {
+      margin: 0 0 8px
+    }
+
+    hr {
+      margin: 20px 0
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      -webkit-transition: all .2s ease-out;
+      -moz-transition: all .2s ease-out;
+      -o-transition: all .2s ease-out;
+      -ms-transition: all .2s ease-out;
+      transition: all .2s ease-out
+    }
+
+    h1:before, h2:before, h3:before, h4:before, h5:before, h6:before {
+      position: inherit;
+      top: calc(50% - 7px);
+      color: #f47466;
+      content: '& ';
+      line-height: 1;
+      -webkit-transition: all .2s ease-out;
+      -moz-transition: all .2s ease-out;
+      -o-transition: all .2s ease-out;
+      -ms-transition: all .2s ease-out;
+      transition: all .2s ease-out
+    }
+
+    h1:hover:before, h2:hover:before, h3:hover:before, h4:hover:before, h5:hover:before, h6:hover:before {
+      color: #49b1f5
+    }
+
+    h1 {
+      padding-left: 32px
+    }
+
+    h1:before {
+      margin-left: -26px;
+      font-size: 20px
+    }
+
+    h1:hover {
+      padding-left: 38px
+    }
+
+    h2 {
+      padding-left: 30px
+    }
+
+    h2:before {
+      margin-left: -24px;
+      font-size: 18px
+    }
+
+    h2:hover {
+      padding-left: 36px
+    }
+
+    h3 {
+      padding-left: 28px
+    }
+
+    h3:before {
+      margin-left: -22px;
+      font-size: 16px
+    }
+
+    h3:hover {
+      padding-left: 34px
+    }
+
+    h4 {
+      padding-left: 26px
+    }
+
+    h4:before {
+      margin-left: -20px;
+      font-size: 14px
+    }
+
+    h4:hover {
+      padding-left: 32px
+    }
+
+    h5 {
+      padding-left: 24px
+    }
+
+    h5:before {
+      margin-left: -18px;
+      font-size: 12px
+    }
+
+    h5:hover {
+      padding-left: 30px
+    }
+
+    h6 {
+      padding-left: 24px
+    }
+
+    h6:before {
+      margin-left: -18px;
+      font-size: 12px
+    }
+
+    h6:hover {
+      padding-left: 30px
+    }
+
+    ol p, ul p {
+      margin: 0 0 8px
+    }
+
+    li::marker {
+      color: #49b1f5;
+      font-weight: 600;
+      font-size: 1.05em
+    }
+
+    li:hover::marker {
+      @include themify() {
+        color: themed('pseudo-hover')
+      }
+    }
+
+    ul > li {
+      list-style-type: circle
+    }
+
+    ol > li {
+      list-style-type: decimal;
+    }
   }
 
   &__title {
     line-height: 1.5;
     padding: 0 12px;
     text-align: center;
-    @include themeify() {
+    @include themify() {
       color: themed('color-title');
     }
     @include respond-to(xs) {
@@ -363,7 +619,7 @@ export default {
 
   &__info {
     padding: 0 12px;
-    @include themeify() {
+    @include themify() {
       color: themed('color-navbar');
     }
   }
@@ -376,7 +632,7 @@ export default {
     margin-top: 20px;
     padding: 14px;
     text-align: right;
-    @include themeify() {
+    @include themify() {
       color: themed('color-ele-holder');
     }
   }
@@ -433,49 +689,6 @@ export default {
     }
   }
 
-  // 覆盖 quill.js 中的部分css
-  .ql-editor {
-    padding: 0;
-    line-height: 2;
 
-    .code-toolbar {
-      margin-top: 12px;
-    }
-
-    a {
-      color: #409eff;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    ul,
-    ol {
-      padding-left: 0;
-    }
-
-    li.ql-indent-1:not(.ql-direction-rtl) {
-      padding-left: 3.5em;
-    }
-
-    pre > code {
-      background: 0 0 !important;
-    }
-
-    code:not([class*='language-']) {
-      background-color: #f0f0f0;
-      border-radius: 3px;
-      font-size: 90%;
-      padding: 3px 5px;
-    }
-
-    blockquote {
-      border-left: 4px solid #ccc;
-      margin-bottom: 5px;
-      margin-top: 5px;
-      padding-left: 16px;
-    }
-  }
 }
 </style>

@@ -3,37 +3,41 @@
 @mixin flex {
   display: flex;
 }
+
 @mixin flex-box-space {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 @mixin flex-box-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 @mixin flex-box-wrap-space {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 @mixin flex-box-end-space {
   display: flex;
   justify-content: flex-end;
 }
 
-@mixin themeify($themes: $themes) {
+@mixin themify($themes: $themes) {
   @each $key, $theme-map in $themes {
-    $d_theme: if($key==light, null, '.dimple-theme-#{$key}');
+    $d_theme: if($key==light, null, '.data-theme-#{$key}');
     #{$d_theme} & {
       $theme-map-copy: () !global;
       @each $theme-map-key, $theme-map-value in $theme-map {
         $theme-map-copy: map-merge(
-          $theme-map-copy,
-          (
-            $theme-map-key: $theme-map-value
-          )
+            $theme-map-copy,
+            (
+              $theme-map-key: $theme-map-value
+            )
         ) !global;
       }
       @content;
@@ -45,6 +49,7 @@
 @function themed($key) {
   @return map-get($theme-map-copy, $key);
 }
+
 $break_points: (
   xs: 'screen and (max-width: 768px)',
   sm: 'screen and (min-width: 769px)',
@@ -58,7 +63,8 @@ $break_points: (
     @content;
   }
 }
-@mixin clamp($num){
+
+@mixin clamp($num) {
   display: -webkit-box;
   -webkit-line-clamp: $num;
   -webkit-box-orient: vertical;

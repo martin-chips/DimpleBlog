@@ -71,7 +71,7 @@ export default {
       font-size: 15px;
     }
 
-    @include themeify() {
+    @include themify() {
       color: themed('color-navbar');
     }
 
@@ -108,7 +108,7 @@ export default {
 
 .navbar-rollup {
   .horizontal-navbar__menu {
-    @include themeify() {
+    @include themify() {
       color: themed('color-navbar-rollup-color');
     }
   }
@@ -116,7 +116,7 @@ export default {
 
 .navbar-transparent {
   .horizontal-navbar__menu {
-    @include themeify() {
+    @include themify() {
       color: themed('color-navbar');
     }
   }

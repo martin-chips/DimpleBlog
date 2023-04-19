@@ -20,7 +20,7 @@ export default {
     @include respond-to(xs) {
       margin: 20px 0;
     }
-    @include themeify() {
+    @include themify() {
       border: 2px dashed themed('color-hr-border');
     }
     overflow: visible;
@@ -38,7 +38,7 @@ export default {
     left: 5%;
     transition: all ease-in-out 1s;
     transform: rotate(90deg);
-    @include themeify() {
+    @include themify() {
       color: themed('color-hr-border');
     }
   }

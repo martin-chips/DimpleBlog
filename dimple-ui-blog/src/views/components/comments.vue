@@ -79,7 +79,7 @@ export default {
 @import '~@/style/index.scss';
 
 .comments {
-  @include themeify() {
+  @include themify() {
     color: themed('color-comments');
   }
 
@@ -96,7 +96,7 @@ export default {
   &__empty {
     padding: 16px;
     text-align: center;
-    @include themeify() {
+    @include themify() {
       color: themed('color-ele-holder');
     }
   }

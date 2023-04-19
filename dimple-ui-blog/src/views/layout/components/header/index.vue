@@ -58,7 +58,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  @include themeify() {
+  @include themify() {
     background: themed('bg-header-mask');
   }
 }

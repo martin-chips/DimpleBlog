@@ -145,7 +145,7 @@ export default {
       @include respond-to(xs) {
         padding: 0 12px;
       }
-      @include themeify() {
+      @include themify() {
         color: themed('color-title');
       }
     }

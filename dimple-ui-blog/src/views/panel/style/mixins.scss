@@ -42,18 +42,18 @@
       }
       &__title:hover a,
       &__title:hover {
-        @include themeify() {
+        @include themify() {
           color: themed('color-ele-primary');
         }
       }
       &__name {
-        @include themeify() {
+        @include themify() {
           color: themed('color-home-article-detail');
         }
         font-size: 12px;
       }
       &__date {
-        @include themeify() {
+        @include themify() {
           color: themed('color-home-article-detail');
         }
         font-size: 12px;

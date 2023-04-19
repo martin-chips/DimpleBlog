@@ -185,7 +185,15 @@ export default {
       })
     },
     openGithub() {
-      window.open(encodeURI("https://github.com/login/oauth/authorize?scope=['user:admin']&client_id=fca4ba1e780fd9c444b2&scope=['user']&redirect_uri=https://bianxf.com/gc_back.html"), '_blank', 'height=600,width=800,toolbar=no, menubar=no, scrollbars=no');
+      this.$api.getSiteConfig().then(res => {
+        if (res.code == 200) {
+          var config = res.data
+          const BASE_URL = process.env.BASE_URL;
+          window.open(
+            encodeURI(`https://github.com/login/oauth/authorize?client_id=${config.commentConfig.githubLoginConfig.clientId}&scope=['user']&redirect_uri=${BASE_URL}/app/login/auth/github`),
+            '_blank', 'height=600,width=800,toolbar=no, menubar=no, scrollbars=no');
+        }
+      });
     },
     openQQ() {
       // return
@@ -195,7 +203,7 @@ export default {
       //   'height=525,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes'
       // )
       QC.Login.showPopup({
-        appId: '102047456',
+        appId: '102049054',
         redirectURI: 'https://www.bianxf.com/qc_back.html'
       })
     },
@@ -239,26 +247,18 @@ export default {
     },
     handleGithubCb(e) {
       if (e.data.type === 'github') {
-        console.log('github登陆成功=====>>>>', e.data.data, 'isSaved::::', e.data.data._saved)
-        // 此用户已登陆过
-        if (e.data.data._saved) {
-          delete e.data.data._saved
-          // 初始化访客信息
-          this.setVisitorInfo(e.data.data)
-          this.customVisible = false
-        } else {
-          const info = e.data.data
-          this.tempInfo = {
-            username: info.username,
-            avatars: info.avatars,
-            link: info.link,
-            type: 1,
-            visitorId: info.id
-          }
-          this.perfect.link = this.tempInfo.link;
-          this.customVisible = false
-          this.perfectVisible = true
+        console.log('github登陆成功=====>>>>', e.data.data)
+        const info = e.data.data
+        this.tempInfo = {
+          username: info.username,
+          avatars: info.avatars,
+          link: info.link,
+          type: 1,
+          visitorId: info.id
         }
+        this.perfect.link = this.tempInfo.link;
+        this.customVisible = false
+        this.perfectVisible = true
       }
     },
     setVisitorInfo(info) {
@@ -306,7 +306,7 @@ export default {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    @include themeify() {
+    @include themify() {
       color: themed('color-avatar-icon');
       background: themed('color-avatar-bg');
     }

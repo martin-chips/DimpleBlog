@@ -1,5 +1,44 @@
 /**
- * @desc: 颜色表 
+ * @desc: 颜色表
  */
 
-$color: ();
+$color: (
+  global-bg: #0d0d0d,
+  font-color: rgba(255, 255, 255, 0.7),
+  hr-border: rgba(255, 255, 255, 0.4),
+  hr-before-color: rgba(255, 255, 255, 0.7),
+  search-bg: #121212,
+  search-input-color: rgba(255, 255, 255, 0.7),
+  search-a-color: rgba(255, 255, 255, 0.7),
+  preloader-bg: #0d0d0d,
+  preloader-color: rgba(255, 255, 255, 0.7),
+  tab-border-color: #2c2c2c,
+  tab-botton-bg: #2c2c2c,
+  tab-botton-color: rgba(255, 255, 255, 0.7),
+  tab-button-hover-bg: #383838,
+  tab-button-active-bg: #121212,
+  card-bg: #121212,
+  sidebar-bg: #121212,
+  btn-hover-color: #787878,
+  btn-color: rgba(255, 255, 255, 0.7),
+  btn-bg: #1f1f1f,
+  text-bg-hover: #383838,
+  light-grey: rgba(255, 255, 255, 0.7),
+  dark-grey: rgba(255, 255, 255, 0.2),
+  white: rgba(255, 255, 255, 0.9),
+  text-highlight-color: rgba(255, 255, 255, 0.9),
+  blockquote-color: rgba(255, 255, 255, 0.7),
+  blockquote-bg: #2c2c2c,
+  reward-pop: #2c2c2c,
+  toc-link-color: rgba(255, 255, 255, 0.6),
+  hl-color: rgba(255, 255, 255, 0.7),
+  hl-bg: #171717,
+  hltools-bg: #1a1a1a,
+  hltools-color: #90a4ae,
+  hlnumber-bg: #171717,
+  hlnumber-color: rgba(255, 255, 255, 0.4),
+  hlscrollbar-bg: #1f1f1f,
+  hlexpand-bg: linear-gradient(180deg, rgba(23, 23, 23, 0.6), rgba(23, 23, 23, 0.9)),
+  scrollbar-color: #1f1f1f,
+  timeline-bg: #1f1f1f
+);

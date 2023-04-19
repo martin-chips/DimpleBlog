@@ -17,7 +17,8 @@ export default {
   },
   watch: {},
   mounted() {
-    this.initPanel()
+    this.initPanel();
+    document.getElementsByTagName("body")[0].setAttribute("class", "data-theme-light");
   },
   computed: {},
   methods: {
@@ -67,4 +68,5 @@ export default {
 @import '~@/style/reset.scss';
 @import './assets/css/prism.css';
 @import './assets/css/emoji-sprite.css';
+
 </style>

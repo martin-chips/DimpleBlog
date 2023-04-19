@@ -162,14 +162,14 @@ export default {
 
       &__title:hover a,
       &__title:hover {
-        @include themeify() {
+        @include themify() {
           color: themed('color-ele-primary');
         }
         transform: translateX(12px);
       }
 
       &__date {
-        @include themeify() {
+        @include themify() {
           color: themed('color-home-article-detail');
         }
         padding: 8px 0;

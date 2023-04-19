@@ -31,7 +31,7 @@ export default {
   border-radius: 50%;
   font-weight: normal;
   transition: all ease 0.2s;
-  @include themeify() {
+  @include themify() {
     border-color: themed('color-ele-primary');
   }
 }

@@ -3,14 +3,14 @@
     <layout :title="title" cover="/img/cover/articles.jpg">
       <template slot="custom-body">
         <article-iterator :articles="articles"></article-iterator>
-        <el-pagination
+        <ElPagination
           class="article-filter__page"
           :total="total"
           v-if="total>articles.length"
           layout="prev, pager, next"
           :page-size="pageSize"
           @current-change="currentChange"
-        ></el-pagination>
+        ></ElPagination>
       </template>
     </layout>
   </div>

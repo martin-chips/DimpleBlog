@@ -68,13 +68,13 @@ export default {
     padding: 6px;
     &--active {
       color: #fff;
-      @include themeify() {
+      @include themify() {
         background: themed('color-catalog-active');
       }
     }
   }
   &__content:hover {
-    @include themeify() {
+    @include themify() {
       color: themed('color-catalog-active');
     }
   }
@@ -85,7 +85,7 @@ export default {
   &__empty {
     font-size: 12px;
     text-align: center;
-    @include themeify() {
+    @include themify() {
       color: themed('color-ele-holder');
     }
   }

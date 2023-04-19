@@ -13,7 +13,7 @@
             <div class="item-content__detail">
               <span>
                 <i class="el-icon-date"></i>
-                发表时间 {{ article.createTime | formatDate }}
+                发表于 {{ article.createTime | formatDate }}
               </span>
               <span>&nbsp;|&nbsp;</span>
               <span>
@@ -120,14 +120,14 @@ export default {
         }
 
         a:hover {
-          @include themeify() {
+          @include themify() {
             color: themed('color-ele-primary');
           }
         }
       }
 
       &__detail {
-        @include themeify() {
+        @include themify() {
           color: themed('color-home-article-detail');
         }
         font-size: 12px;

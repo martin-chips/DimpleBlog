@@ -191,7 +191,7 @@ export default {
     position: absolute;
     top: 45%;
     transform: translateY(-20px);
-    @include themeify() {
+    @include themify() {
       color: themed('color-navbar');
     }
   }
@@ -240,7 +240,7 @@ export default {
       animation: dance 1.5s ease-in infinite alternate;
       font-weight: 900;
       font-size: 24px;
-      @include themeify() {
+      @include themify() {
         color: themed('color-navbar');
       }
     }

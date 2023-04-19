@@ -108,7 +108,7 @@ export default {
   text-align: right;
   padding: 0 36px;
   @include flex-box-space;
-  @include themeify() {
+  @include themify() {
     color: themed('color-navbar');
   }
   @include respond-to(xs) {
@@ -161,12 +161,12 @@ export default {
   position: fixed;
   transform: translateY(100%);
   box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
-  @include themeify() {
+  @include themify() {
     color: themed('color-navbar-rollup-color');
     background: themed('color-navbar-rollup-bg');
   }
   .navbar__name a {
-    @include themeify() {
+    @include themify() {
       color: themed('color-navbar-rollup-color');
     }
   }
@@ -175,11 +175,11 @@ export default {
   transform: translateY(100%);
   background: transparent;
   box-shadow: none;
-  @include themeify() {
+  @include themify() {
     color: themed('color-navbar');
   }
   .navbar__name a {
-    @include themeify() {
+    @include themify() {
       color: themed('color-navbar');
     }
   }

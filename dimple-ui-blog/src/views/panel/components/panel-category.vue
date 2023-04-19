@@ -63,7 +63,7 @@ export default {
 
     li:hover {
       padding: 8px 12px;
-      @include themeify() {
+      @include themify() {
         background: themed('color-list-hover');
       }
     }

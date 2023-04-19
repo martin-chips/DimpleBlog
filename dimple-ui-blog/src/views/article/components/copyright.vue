@@ -63,19 +63,19 @@ export default {
   }
 
   a:hover {
-    @include themeify() {
+    @include themify() {
       color: themed('color-ele-primary');
     }
   }
 
   border: 1px solid #eee;
-  @include themeify() {
+  @include themify() {
     border-color: themed('color-navbar');
   }
 
   &__label {
     font-weight: bold;
-    @include themeify() {
+    @include themify() {
       color: themed('color-copyright-label');
     }
   }

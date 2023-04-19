@@ -42,6 +42,20 @@
         </div>
       </slot>
     </footer>
+    <div id="rightside" style="opacity: 0.8; transform: translateX(-58px);">
+      <div id="rightside-config-hide">
+        <button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button>
+        <button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button>
+        <button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button>
+      </div>
+      <div id="rightside-config-show">
+        <button id="rightside_config" type="button" title="设定"><i class="fas fa-cog fa-spin"></i></button>
+        <button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button>
+        <button id="translateLink" type="button" title="簡繁轉換">繁</button>
+        <button id="go-up" type="button" title="回到顶部" class="show-percent"><span class="scroll-percent">22</span><i
+          class="fas fa-arrow-up"></i></button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -200,7 +214,7 @@ export default {
       }
 
       a:hover {
-        @include themeify() {
+        @include themify() {
           color: themed('color-ele-primary');
         }
       }

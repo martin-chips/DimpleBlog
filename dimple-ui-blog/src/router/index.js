@@ -12,6 +12,7 @@ const articleFilter = () => import('@/views/article-filter/')
 const category = () => import('@/views/category/')
 const friendLink = () => import("@/views/links/");
 const about = () => import("@/views/about/");
+const thirdPartLogin = () => import("@/views/components/third/login.vue");
 
 Vue.use(Router)
 Vue.use(Meta)
@@ -28,6 +29,11 @@ export function createRouter() {
         path: '*',
         name: 'miss',
         component: miss
+      },
+      {
+        path: "/app/login/auth/:type",
+        name: "thirdPartLogin",
+        component: thirdPartLogin
       },
       {
         path: '/',

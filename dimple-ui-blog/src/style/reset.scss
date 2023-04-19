@@ -27,11 +27,25 @@ canvas {
   outline: none;
   box-sizing: border-box;
 }
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px
+}
+
+::-webkit-scrollbar-thumb {
+  @include themify() {
+    background: themed('scrollbar-color')
+  }
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent
+}
 body {
   font: 400 14px/20px -apple-system, BlinkMacSystemFont, Arial, Helvetica, Tahoma, '华文细黑', 'Microsoft YaHei',
     '微软雅黑', sans-serif;
 
-  @include themeify() {
+  @include themify() {
     color: themed('color-default');
   }
 }
@@ -40,7 +54,7 @@ li {
 }
 a {
   text-decoration: none;
-  @include themeify() {
+  @include themify() {
     color: themed('color-default');
   }
 }

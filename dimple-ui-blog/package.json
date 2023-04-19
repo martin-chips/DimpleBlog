@@ -26,6 +26,7 @@
     "element-ui": "^2.15.6",
     "emojilib": "^3.0.4",
     "express": "^4.16.2",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.21",
     "markdown-it": "^13.0.1",
     "moment": "^2.29.1",
