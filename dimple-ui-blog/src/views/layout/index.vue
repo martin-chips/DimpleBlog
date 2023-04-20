@@ -91,9 +91,20 @@ export default {
 
   &__header {
     min-height: 150px;
+    animation: header-effect 1s;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -o-transition: all .5s;
+    -ms-transition: all .5s;
+    transition: all .5s;
   }
 
   &__body {
+    -webkit-animation: bottom-top 1s;
+    -moz-animation: bottom-top 1s;
+    -o-animation: bottom-top 1s;
+    -ms-animation: bottom-top 1s;
+    animation: bottom-top 1s;
     padding-bottom: 140px;
     @include themify() {
       z-index: auto;
@@ -177,6 +188,11 @@ export default {
   }
 
   &__footer {
+    -webkit-animation: bottom-top 1s;
+    -moz-animation: bottom-top 1s;
+    -o-animation: bottom-top 1s;
+    -ms-animation: bottom-top 1s;
+    animation: bottom-top 1s;
     width: 100%;
     height: 140px;
     position: absolute;

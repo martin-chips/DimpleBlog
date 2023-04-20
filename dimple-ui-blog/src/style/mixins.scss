@@ -70,3 +70,17 @@ $break_points: (
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+@mixin zoom-trigger{
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+@mixin  zoom-define{
+  webkit-transition: filter 375ms ease-in .2s,-webkit-transform .6s;
+  -moz-transition: filter 375ms ease-in .2s,-moz-transform .6s;
+  -o-transition: filter 375ms ease-in .2s,-o-transform .6s;
+  -ms-transition: filter 375ms ease-in .2s,-ms-transform .6s;
+  transition: filter 375ms ease-in .2s,transform .6s;
+}

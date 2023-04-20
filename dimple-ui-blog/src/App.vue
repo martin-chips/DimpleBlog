@@ -75,4 +75,5 @@ export default {
 @import '~@/style/reset.scss';
 @import './assets/css/prism.css';
 @import './assets/css/emoji-sprite.css';
+@import 'animate.css';
 </style>

@@ -27,14 +27,14 @@
       overflow: hidden;
 
       img {
-        transition: all ease 0.38s;
+        @include zoom-define();
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
 
       img:hover {
-        transform: scale(1.2);
+        @include zoom-trigger();
       }
     }
 

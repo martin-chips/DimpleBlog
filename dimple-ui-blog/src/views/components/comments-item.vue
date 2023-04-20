@@ -92,7 +92,11 @@ export default {
     height: 50px;
     flex: 0 0 auto;
 
+    img:hover {
+      @include zoom-trigger();
+    }
     img {
+      @include zoom-define();
       border-radius: 4px;
       width: 100%;
       height: 100%;

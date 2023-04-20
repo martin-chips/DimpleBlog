@@ -95,9 +95,14 @@ export default {
         flex-direction: column;
       }
 
+      &__pic:hover {
+        @include zoom-trigger();
+      }
       &__pic {
         width: 45%;
         height: 100%;
+        @include zoom-define();
+        object-fit: cover;
         @include respond-to(xs) {
           width: 100%;
           height: 230px;

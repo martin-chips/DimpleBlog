@@ -319,8 +319,12 @@ export default {
       .el-icon-user {
         font-size: 42px;
       }
+      img:hover{
+        @include zoom-trigger
+      }
 
       img {
+        @include zoom-define();
         width: 100%;
         height: 100%;
         border-radius: 50% 50%;
