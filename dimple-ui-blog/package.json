@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@octokit/core": "^3.5.1",
+    "animate.css": "^4.1.1",
     "archiver": "^2.1.1",
     "axios": "^0.17.1",
     "element-ui": "^2.15.6",
