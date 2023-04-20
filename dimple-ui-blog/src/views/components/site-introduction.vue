@@ -28,7 +28,7 @@
     <div class="site-introduction__social">
       <div class="social-github">
         <a href="https://github.com/martin-chips/DimpleBlog" target="_blank">
-          <el-button type="primary" size="mini">
+          <el-button class="github-btn" type="primary" size="mini">
             <div class="social-github__icon">
               <svg
                 height="18"
@@ -98,11 +98,10 @@ export default {
     margin-top: 16px;
     text-align: center;
     line-height: 2;
-    color: #4c4948;
 
     a {
       @include themify() {
-        color: themed('color-ele-primary');
+        color: themed('a-color');
       }
     }
   }
@@ -133,7 +132,6 @@ export default {
 
     .el-button {
       width: 100%;
-
       > span {
         width: 100%;
         display: inline-block;

@@ -102,11 +102,6 @@ readyPromise.then(() => {
       const context = {
         title: `Dimple's Blog`, url: req.url
       }
-      // 文章详情页、留言板页面请求，在server-render运行时注入客户端IP，
-      // 否则在在查表时，获取的是生产环境的服务器IP，这将导致根据ip统计的点赞情况失效
-      if (req.url.startsWith('/app/article/') || req.url === '/app/messageBoard') {
-        // context._ip = getIp(req)
-      }
       renderer.renderToString(context, (err, html) => {
         if (err) {
           console.error(err)

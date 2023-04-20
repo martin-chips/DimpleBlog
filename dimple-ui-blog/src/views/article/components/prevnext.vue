@@ -96,7 +96,6 @@ export default {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.4);
         transition: all ease-in 0.38s;
       }
 
@@ -112,7 +111,6 @@ export default {
       }
 
       a:hover:before {
-        background: rgba(0, 0, 0, 0.2);
       }
 
       a:hover img {
@@ -146,7 +144,7 @@ export default {
         padding: 0 12px;
       }
       @include themify() {
-        color: themed('color-title');
+        color: themed('color-white');
       }
     }
   }

@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import {mapMutations} from 'vuex'
+import {mapMutations, mapState} from 'vuex'
 
 export default {
   components: {},
@@ -18,9 +18,15 @@ export default {
   watch: {},
   mounted() {
     this.initPanel();
-    document.getElementsByTagName("body")[0].setAttribute("class", "data-theme-light");
+    if (this.theme) {
+      document.getElementsByTagName("body")[0].setAttribute("class", this.theme);
+    } else {
+      document.getElementsByTagName("body")[0].setAttribute("class", "data-theme-light");
+    }
   },
-  computed: {},
+  computed: {
+    ...mapState(["theme"])
+  },
   methods: {
     ...mapMutations(['setArchives', 'setCategory', 'setTags', 'setNewComments', 'setNewArticles', 'setTotals']),
     async initPanel() {
@@ -65,8 +71,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import 'font-awesome/css/font-awesome.min.css';
 @import '~@/style/reset.scss';
 @import './assets/css/prism.css';
 @import './assets/css/emoji-sprite.css';
-
 </style>

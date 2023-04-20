@@ -212,6 +212,10 @@ public class IpUtils {
      * @return IP地址
      */
     public static String getIpAddr(HttpServletRequest request) {
+        log.info(request.getHeader("Proxy-Client-IP"));
+        log.info(request.getHeader("X-Forwarded-For"));
+        log.info(request.getHeader("WL-Proxy-Client-IP"));
+        log.info(request.getHeader("X-Real-IP"));
         if (request == null) {
             return "unknown";
         }

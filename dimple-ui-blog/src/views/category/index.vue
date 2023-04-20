@@ -76,7 +76,7 @@ export default {
     li:hover {
       cursor: pointer;
       @include themify() {
-        color: themed('color-ele-primary');
+        color: themed('btn-bg');
       }
     }
   }

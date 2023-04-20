@@ -131,7 +131,7 @@ export default {
     font-size: 12px;
     // color: #909399;
     @include themify() {
-      color: themed('color-home-article-detail');
+      color: themed('meta-grey');
     }
     margin-top: 10px;
 

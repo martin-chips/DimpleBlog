@@ -9,7 +9,7 @@
             发表于 {{ article.createTime | formatDate }}
           </span>
           <span>&nbsp;|&nbsp;</span>
-          <span>
+          <span @click="toCategory(article.categoryTitle,article.categoryId)">
             <i class="el-icon-folder-opened"></i>
             {{ article.categoryTitle }}
           </span>
@@ -39,7 +39,7 @@
       <note>
         <p>{{ article.summary }}</p>
       </note>
-      <div v-html="article.content" class="article-detail__body"></div>
+      <div v-html="article.content" class="article-detail__body" id="article-detail__body"></div>
       <div class="article-detail__update">
         <span>最后编辑于：{{ article.updateTime | formatDate }}</span>
       </div>
@@ -159,7 +159,6 @@ export default {
       }
     }
   },
-  filters: {},
   mounted() {
     this.$nextTick(function () {
       Prism.highlightAll()
@@ -190,6 +189,18 @@ export default {
   },
   methods: {
     ...mapMutations(['setCatalogs', 'setActiveCatalog']),
+    toCategory(title, id) {
+      this.$router.push({
+        name: 'articleFilter',
+        params: {
+          type: 'category',
+          param: id
+        },
+        query: {
+          title
+        }
+      })
+    },
     async likeArticle() {
       if (this.article.liked == 1) {
         this.$message({
@@ -350,7 +361,7 @@ export default {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC',
     'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
     line-height: 2;
-    color: #4c4948;
+
 
     img {
       width: 100%;
@@ -389,7 +400,10 @@ export default {
     }
 
     a {
-      color: #49b1f5
+      @include themify() {
+        color: themed('a-color')
+      }
+
     }
 
     a:hover {
@@ -415,8 +429,8 @@ export default {
     blockquote {
       margin: 0 0 20px;
       padding: 12px 15px;
-      border-left: 3px solid #49b1f5;
       @include themify() {
+        border-left: 3px solid themed('default-bg-color');
         background-color: themed('blockquote-bg');
         color: themed('blockquote-color')
       }
@@ -424,6 +438,7 @@ export default {
 
     blockquote footer cite:before {
       padding: 0 5px;
+      font-family: "FontAwesome";
       content: '—'
     }
 
@@ -436,7 +451,8 @@ export default {
       @include themify() {
         color: themed('headline-presudo');
       }
-      content: '& ';
+      font-family: "FontAwesome";
+      content: '\f0c1';
       font-size: .95em;
       -webkit-transition: all .3s;
       -moz-transition: all .3s;
@@ -488,8 +504,11 @@ export default {
     h1:before, h2:before, h3:before, h4:before, h5:before, h6:before {
       position: inherit;
       top: calc(50% - 7px);
-      color: #f47466;
-      content: '& ';
+      @include themify() {
+        color: themed('pseudo-hover')
+      }
+      font-family: "FontAwesome";
+      content: '\f0c1';
       line-height: 1;
       -webkit-transition: all .2s ease-out;
       -moz-transition: all .2s ease-out;
@@ -499,7 +518,9 @@ export default {
     }
 
     h1:hover:before, h2:hover:before, h3:hover:before, h4:hover:before, h5:hover:before, h6:hover:before {
-      color: #49b1f5
+      @include themify() {
+        color: themed('default-bg-color')
+      }
     }
 
     h1 {
@@ -585,7 +606,9 @@ export default {
     }
 
     li::marker {
-      color: #49b1f5;
+      @include themify() {
+        color: themed('default-bg-color')
+      }
       font-weight: 600;
       font-size: 1.05em
     }
@@ -610,7 +633,7 @@ export default {
     padding: 0 12px;
     text-align: center;
     @include themify() {
-      color: themed('color-title');
+      color: themed('color-white');
     }
     @include respond-to(xs) {
       font-size: 18px;
@@ -620,7 +643,7 @@ export default {
   &__info {
     padding: 0 12px;
     @include themify() {
-      color: themed('color-navbar');
+      color: themed('meta-grey');
     }
   }
 
@@ -633,7 +656,7 @@ export default {
     padding: 14px;
     text-align: right;
     @include themify() {
-      color: themed('color-ele-holder');
+      color: themed('headline-presudo');
     }
   }
 
@@ -673,7 +696,6 @@ export default {
     }
 
     .comment__total {
-      color: #4c4948;
       font-size: 25px;
       font-weight: bold;
       margin-top: 28px;

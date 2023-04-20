@@ -42,8 +42,6 @@ import {createRouter} from './router'
 import {createStore} from './store'
 import {sync} from 'vuex-router-sync'
 
-import 'font-awesome/css/font-awesome.min.css'
-
 import mergeAsyncData from '@/mixins/mergeAsyncData'
 
 Vue.component('layout', layout)
@@ -75,9 +73,9 @@ Vue.use(RadioGroup)
 Vue.use(RadioButton)
 Vue.use(Menu)
 Vue.use(MenuItem)
-
 Vue.use(Submenu)
 Vue.prototype.$message = Message
+
 // Vue.config.productionTip = false
 Vue.filter('formatDate', (val) => {
   if (val) {

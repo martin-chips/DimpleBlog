@@ -109,7 +109,7 @@ export default {
   padding: 0 36px;
   @include flex-box-space;
   @include themify() {
-    color: themed('color-navbar');
+    color: themed('meta-grey');
   }
   @include respond-to(xs) {
     padding: 0 16px;
@@ -176,11 +176,11 @@ export default {
   background: transparent;
   box-shadow: none;
   @include themify() {
-    color: themed('color-navbar');
+    color: themed('nav-header');
   }
   .navbar__name a {
     @include themify() {
-      color: themed('color-navbar');
+      color: themed('nav-header');
     }
   }
 }

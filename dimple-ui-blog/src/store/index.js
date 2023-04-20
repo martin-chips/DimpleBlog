@@ -9,12 +9,14 @@ export function createStore() {
     state: {
       activeCatalog: '',
       rollBack: false,
+      panelShow: true,
       // 访客信息
       visitorInfo: {},
       // 文章目录树
       catalogs: [],
       // 文章归档 按月统计
       archives: [],
+      theme: "data-theme-light",
       // 文章分类
       category: [],
       // 文章标签

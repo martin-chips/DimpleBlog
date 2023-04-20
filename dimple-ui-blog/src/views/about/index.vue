@@ -216,11 +216,6 @@ export default {
   }
 
   &__body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC',
-    'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
-    line-height: 2;
-    color: #4c4948;
-
     img {
       width: 100%;
       height: 100%;
@@ -232,7 +227,7 @@ export default {
     padding: 0 12px;
     text-align: center;
     @include themify() {
-      color: themed('color-title');
+      color: themed('color-white');
     }
     @include respond-to(xs) {
       font-size: 18px;
@@ -242,7 +237,7 @@ export default {
   &__info {
     padding: 0 12px;
     @include themify() {
-      color: themed('color-navbar');
+      color: themed('meta-grey');
     }
   }
 
@@ -255,7 +250,7 @@ export default {
     padding: 14px;
     text-align: right;
     @include themify() {
-      color: themed('color-ele-holder');
+      color: themed('headline-presudo');
     }
   }
 
@@ -295,7 +290,7 @@ export default {
     }
 
     .comment__total {
-      color: #4c4948;
+
       font-size: 25px;
       font-weight: bold;
       margin-top: 28px;
@@ -308,51 +303,6 @@ export default {
     .comment__page {
       @include flex-box-center;
       padding: 16px 0;
-    }
-  }
-
-  // 覆盖 quill.js 中的部分css
-  .ql-editor {
-    padding: 0;
-    line-height: 2;
-
-    .code-toolbar {
-      margin-top: 12px;
-    }
-
-    a {
-      color: #409eff;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    ul,
-    ol {
-      padding-left: 0;
-    }
-
-    li.ql-indent-1:not(.ql-direction-rtl) {
-      padding-left: 3.5em;
-    }
-
-    pre > code {
-      background: 0 0 !important;
-    }
-
-    code:not([class*='language-']) {
-      background-color: #f0f0f0;
-      border-radius: 3px;
-      font-size: 90%;
-      padding: 3px 5px;
-    }
-
-    blockquote {
-      border-left: 4px solid #ccc;
-      margin-bottom: 5px;
-      margin-top: 5px;
-      padding-left: 16px;
     }
   }
 }

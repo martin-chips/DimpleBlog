@@ -110,7 +110,6 @@ export default {
 .archives {
   &__year {
     padding: 12px;
-
     .year-text {
       font-size: 22px;
       padding: 16px 0 28px 0;
@@ -163,14 +162,14 @@ export default {
       &__title:hover a,
       &__title:hover {
         @include themify() {
-          color: themed('color-ele-primary');
+          color: themed('btn-bg');
         }
         transform: translateX(12px);
       }
 
       &__date {
         @include themify() {
-          color: themed('color-home-article-detail');
+          color: themed('meta-grey');
         }
         padding: 8px 0;
       }

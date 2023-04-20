@@ -192,7 +192,7 @@ export default {
     top: 45%;
     transform: translateY(-20px);
     @include themify() {
-      color: themed('color-navbar');
+      color: themed('nav-header');
     }
   }
 
@@ -241,7 +241,7 @@ export default {
       font-weight: 900;
       font-size: 24px;
       @include themify() {
-        color: themed('color-navbar');
+        color: themed('nav-header');
       }
     }
   }

@@ -10,6 +10,15 @@
          :style="{ width: stickyOffsetWidth }">
       <component v-for="(panel, index) in enums" class="panel__item" :is="panel" :key="index"></component>
     </div>
+    <div v-if="btnFlag" id="rightside" style="opacity: 0.8; transform: translateX(-58px);">
+      <div id="rightside-config-show">
+        <button id="darkmode" @click="changeTheme" type="button" title="浅色和深色模式转换"><i
+          class="fa fa-adjust"></i></button>
+        <button @click="backTop" id="go-up" type="button" title="回到顶部" class="show-percent"><span
+          class="scroll-percent">{{ backupValue }}</span><i
+          class="fa fa-arrow-up"></i></button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -24,6 +33,7 @@ import panelArchives from "./components/panel-archives";
 import {getScrollTop} from "@/utils/getScrollTop";
 import {getElementTop} from "@/utils/getElementTop";
 import debounce from "lodash/debounce";
+import {storage} from "@/utils/storage";
 
 export default {
   name: 'panel',
@@ -45,6 +55,9 @@ export default {
   props: {},
   data() {
     return {
+      backupValue: 0,
+      btnFlag: false,
+      showSide: true,
       sticky: false,
       stickyBottom: false,
       panelOffsetTop: 0,
@@ -58,7 +71,8 @@ export default {
     }
   },
   mounted() {
-    this.initStickyBehavior()
+    this.initStickyBehavior();
+    window.addEventListener('scroll', this.scrollToTop)
   },
   watch: {
     $route(to, from) {
@@ -70,7 +84,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['rollBack']),
+    ...mapState(['rollBack','panelShow']),
     enums() {
       // 路由进行自定义看板、顺序
       const def = [
@@ -98,10 +112,48 @@ export default {
         }
         def.splice(index, 1);
       }
-      return def
+      return def;
     }
   },
   methods: {
+    // 点击图片回到顶部方法，加计时器是为了过渡顺滑
+    backTop() {
+      const that = this
+      let timer = setInterval(() => {
+        let ispeed = Math.floor(-that.scrollTop / 5)
+        document.documentElement.scrollTop = document.body.scrollTop = that.scrollTop + ispeed
+        if (that.scrollTop === 0) {
+          clearInterval(timer)
+        }
+      }, 16)
+    },
+
+    // 为了计算距离顶部的高度，当高度大于60显示回顶部图标，小于60则隐藏
+    scrollToTop() {
+      const that = this
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      that.scrollTop = scrollTop;
+      if (that.scrollTop > 200) {
+        that.btnFlag = true
+      } else {
+        that.btnFlag = false
+      }
+      // 可视区高度
+      var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      // 滚动条总高度
+      var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+      this.backupValue = parseInt(+(scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100);
+    },
+    changeTheme() {
+      var currentTheme = document.getElementsByTagName("body")[0].getAttribute("class");
+      if (currentTheme === 'data-theme-dark') {
+        storage.setTheme("data-theme-light");
+        document.getElementsByTagName("body")[0].setAttribute("class", 'data-theme-light');
+      } else {
+        storage.setTheme("data-theme-dark");
+        document.getElementsByTagName("body")[0].setAttribute("class", 'data-theme-dark');
+      }
+    },
     initStickyBehavior() {
       window.addEventListener('scroll', this.stickyHandler, false)
       window.addEventListener('resize', this.resizeHandler, false)
@@ -177,12 +229,69 @@ export default {
   },
 
   destroyed() {
+    window.removeEventListener('scroll', this.scrollToTop)
     this.removeEffect()
   }
 }
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
+
+#rightside {
+  position: fixed;
+  right: -48px;
+  bottom: 40px;
+  z-index: 100;
+  opacity: 0;
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  -o-transition: all .5s;
+  -ms-transition: all .5s;
+  transition: all .5s
+}
+
+#rightside > div > a, #rightside > div > button {
+  display: block;
+  margin-bottom: 5px;
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  @include themify() {
+    background-color: themed('btn-bg');
+    color: themed('btn-color');
+  }
+  text-align: center;
+  font-size: 16px;
+  line-height: 35px
+}
+
+#rightside > div > a:hover, #rightside > div > button:hover {
+  @include themify() {
+    background-color: themed('btn-hover-color')
+  }
+}
+
+#rightside #go-up .scroll-percent {
+  display: none
+}
+
+#rightside #go-up.show-percent .scroll-percent {
+  display: block
+}
+
+#rightside #go-up.show-percent .scroll-percent + i {
+  display: none
+}
+
+#rightside #go-up:hover .scroll-percent {
+  display: none
+}
+
+#rightside #go-up:hover .scroll-percent + i {
+  display: block
+}
+
 
 .panel {
   position: relative;

@@ -5,6 +5,9 @@ export default {
   setArchives(state, archives) {
     state.archives = archives
   },
+  setTheme(state, archives) {
+    state.theme = archives
+  },
   setCategory(state, category) {
     state.category = category
   },

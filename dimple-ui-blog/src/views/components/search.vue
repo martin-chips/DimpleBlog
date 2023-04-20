@@ -155,7 +155,7 @@ export default {
 
       &__title:hover {
         @include themify() {
-          color: themed('color-ele-primary');
+          color: themed('btn-bg');
         }
       }
 
@@ -172,13 +172,13 @@ export default {
         font-weight: normal;
         transition: all ease 0.2s;
         @include themify() {
-          border-color: themed('color-ele-primary');
+          border-color: themed('btn-bg');
         }
       }
 
       &__title:hover:before {
         @include themify() {
-          border-color: themed('color-ele-danger');
+          border-color: themed('pseudo-hover');
         }
       }
 
@@ -190,7 +190,7 @@ export default {
 
     .search-keyword {
       @include themify() {
-        color: themed('color-ele-danger');
+        color: themed('pseudo-hover');
       }
     }
   }
@@ -198,7 +198,7 @@ export default {
   &__empty {
     text-align: center;
     @include themify() {
-      color: themed('color-ele-holder');
+      color: themed('headline-presudo');
     }
   }
 

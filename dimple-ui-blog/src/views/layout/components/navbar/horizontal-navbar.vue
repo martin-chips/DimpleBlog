@@ -72,7 +72,7 @@ export default {
     }
 
     @include themify() {
-      color: themed('color-navbar');
+      color: themed('nav-header');
     }
 
     .navbar-menu-title {
@@ -117,7 +117,7 @@ export default {
 .navbar-transparent {
   .horizontal-navbar__menu {
     @include themify() {
-      color: themed('color-navbar');
+      color: themed('nav-header');
     }
   }
 }

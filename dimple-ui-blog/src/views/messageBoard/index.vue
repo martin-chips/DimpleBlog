@@ -185,7 +185,6 @@ export default {
   }
 
   &__total {
-    color: #4c4948;
     font-size: 25px;
     font-weight: bold;
   }

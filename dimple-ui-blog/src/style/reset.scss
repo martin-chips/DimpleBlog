@@ -1,5 +1,6 @@
 // 全局样式覆盖
 @import './index.scss';
+
 body,
 button,
 input,
@@ -27,6 +28,7 @@ canvas {
   outline: none;
   box-sizing: border-box;
 }
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px
@@ -41,32 +43,44 @@ canvas {
 ::-webkit-scrollbar-track {
   background-color: transparent
 }
-body {
-  font: 400 14px/20px -apple-system, BlinkMacSystemFont, Arial, Helvetica, Tahoma, '华文细黑', 'Microsoft YaHei',
-    '微软雅黑', sans-serif;
 
+body {
+  position: relative;
+  min-height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", " Helvetica Neue ", Lato, Roboto, " PingFang SC ", " Microsoft JhengHei ", " Microsoft YaHei ", sans-serif;
+  line-height: 2;
+  -webkit-tap-highlight-color: transparent;
   @include themify() {
-    color: themed('color-default');
+    background: themed('global-bg');
+    color: themed('font-color');
+    font-size: themed('global-font-size');
+    color: themed('font-color');
   }
 }
+
 li {
   list-style: none;
 }
+
 a {
   text-decoration: none;
   @include themify() {
-    color: themed('color-default');
+    color: themed('font-color');
   }
 }
+
 #app {
   overflow: hidden;
 }
+
 .code-toolbar {
   border-radius: 8px;
   padding-top: 24px;
+
   > pre {
     border-radius: 0 0 8px 8px;
   }
+
   > .toolbar {
     opacity: 1 !important;
     width: 100%;
@@ -74,25 +88,30 @@ a {
     right: 0px !important;
     background: #30343f;
     border-radius: 8px 8px 0 0;
+
     .toolbar-item:first-child {
       float: right;
       margin-right: 12px;
     }
+
     .copy-to-clipboard-button {
       color: #bbb !important;
       cursor: pointer;
       background: transparent !important;
     }
+
     .copy-to-clipboard-button:hover {
       color: #bbb !important;
     }
   }
+
   .toolbar-item__content {
     width: 100%;
     height: 32px;
     padding: 0 14px;
     display: flex;
     align-items: center;
+
     span {
       display: inline-block;
       width: 12px;

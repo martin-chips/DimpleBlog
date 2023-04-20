@@ -1,5 +1,6 @@
 // 访客信息key
 const visitorKey = 'v_k_i'
+const themeKey = 'global_theme'
 
 export const storage = {
   getVisitor() {
@@ -12,5 +13,14 @@ export const storage = {
   },
   removeVisitor() {
     localStorage.removeItem(visitorKey)
-  }
+  },
+  getTheme() {
+    return localStorage.getItem(themeKey);
+  },
+  setTheme(theme) {
+    localStorage.setItem(themeKey, theme)
+  },
+  removeTheme() {
+    localStorage.removeItem(themeKey)
+  },
 }

@@ -86,7 +86,7 @@ export default {
     font-size: 12px;
     text-align: center;
     @include themify() {
-      color: themed('color-ele-holder');
+      color: themed('headline-presudo');
     }
   }
 }

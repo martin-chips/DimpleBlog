@@ -21,7 +21,7 @@ export default {
       margin: 20px 0;
     }
     @include themify() {
-      border: 2px dashed themed('color-hr-border');
+      border: 2px dashed themed('hr-border');
     }
     overflow: visible;
   }
@@ -39,7 +39,7 @@ export default {
     transition: all ease-in-out 1s;
     transform: rotate(90deg);
     @include themify() {
-      color: themed('color-hr-border');
+      color: themed('hr-border');
     }
   }
 }

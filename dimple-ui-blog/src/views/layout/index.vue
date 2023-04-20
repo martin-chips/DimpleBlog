@@ -36,32 +36,17 @@
           <div class="layout__footer-item">Powered by Dimple's Blog</div>
           <div class="layout__footer-item item-icp">
             <img src="@/assets/img/icp.png" alt=""/>
-            <!--<a href="http://www.beian.gov.cn/portal/index.do" target="_blank">鲁公安网备 37012502000331号</a>-->
+            <!--<a href="http://www.beian.gov.cn/portal/index.do" target="_blank">蜀公安网备 </a>-->
             <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">蜀ICP备2023006757号</a>
           </div>
         </div>
       </slot>
     </footer>
-    <div id="rightside" style="opacity: 0.8; transform: translateX(-58px);">
-      <div id="rightside-config-hide">
-        <button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button>
-        <button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button>
-        <button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button>
-      </div>
-      <div id="rightside-config-show">
-        <button id="rightside_config" type="button" title="设定"><i class="fas fa-cog fa-spin"></i></button>
-        <button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button>
-        <button id="translateLink" type="button" title="簡繁轉換">繁</button>
-        <button id="go-up" type="button" title="回到顶部" class="show-percent"><span class="scroll-percent">22</span><i
-          class="fas fa-arrow-up"></i></button>
-      </div>
-    </div>
   </div>
 </template>
 <script>
 import navbar from '@/views/layout/components/navbar/'
 import layoutHeader from '@/views/layout/components/header/'
-
 import panel from '@/views/panel/'
 
 export default {
@@ -81,15 +66,22 @@ export default {
     layoutHeader,
     navbar
   },
-
-  data() {
-    return {}
-  },
-  methods: {}
 }
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
+// clear the background color
+.el-pagination .btn-next, .el-pagination .btn-prev, .el-pager li, .el-textarea__inner {
+  background-color: transparent !important;
+}
+
+.el-button {
+  border: none;
+  @include themify() {
+    color: themed('btn-color');
+    background-color: themed('btn-bg');
+  }
+}
 
 .layout {
   position: relative;
@@ -103,6 +95,10 @@ export default {
 
   &__body {
     padding-bottom: 140px;
+    @include themify() {
+      z-index: auto;
+      background: themed('global-bg');
+    }
 
     &-content {
       display: flex;
@@ -119,6 +115,11 @@ export default {
       .el-card {
         box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.06);
         border-radius: 8px;
+        border: none;
+        @include themify() {
+          background: themed('card-bg');
+          color: themed('font-color');
+        }
       }
     }
 
@@ -139,6 +140,14 @@ export default {
       width: 25%;
       // border: 4px solid #ccc;
       margin-left: 16px;
+
+      .el-card {
+        border: none;
+        @include themify() {
+          background: themed('card-bg');
+          color: themed('font-color');
+        }
+      }
     }
 
     @include respond-to(xs) {

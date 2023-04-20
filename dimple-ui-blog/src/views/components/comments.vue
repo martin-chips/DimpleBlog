@@ -79,9 +79,6 @@ export default {
 @import '~@/style/index.scss';
 
 .comments {
-  @include themify() {
-    color: themed('color-comments');
-  }
 
   &__top {
   }
@@ -97,7 +94,7 @@ export default {
     padding: 16px;
     text-align: center;
     @include themify() {
-      color: themed('color-ele-holder');
+      color: themed('headline-presudo');
     }
   }
 }

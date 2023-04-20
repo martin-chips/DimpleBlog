@@ -16,6 +16,11 @@
                 发表于 {{ article.createTime | formatDate }}
               </span>
               <span>&nbsp;|&nbsp;</span>
+              <span @click="toCategory(article.categoryTitle,article.categoryId)">
+                <i class="el-icon-folder-opened"></i>
+                {{ article.categoryTitle }}
+              </span>
+              <span>&nbsp;|&nbsp;</span>
               <span>
                 <i class="el-icon-chat-dot-round"></i>
                 评论数 {{ article.commentCount }}
@@ -49,6 +54,20 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    toCategory(title, id) {
+      this.$router.push({
+        name: 'articleFilter',
+        params: {
+          type: 'category',
+          param: id
+        },
+        query: {
+          title
+        }
+      })
+    },
   }
 }
 </script>
@@ -121,15 +140,13 @@ export default {
 
         a:hover {
           @include themify() {
-            color: themed('color-ele-primary');
+            color: themed('a-color');
           }
         }
       }
 
       &__detail {
-        @include themify() {
-          color: themed('color-home-article-detail');
-        }
+        color: #858585;
         font-size: 12px;
         padding: 12px 0;
       }

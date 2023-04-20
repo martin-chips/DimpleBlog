@@ -15,7 +15,7 @@ Vue.use(VueLazyload, {
 
 Vue.mixin({
   beforeRouteUpdate(to, from, next) {
-    const { asyncData } = this.$options
+    const {asyncData} = this.$options
     if (asyncData) {
       asyncData({
         store: this.$store,
@@ -32,7 +32,7 @@ Vue.mixin({
   }
 })
 
-const { app, router, store } = createApp()
+const {app, router, store} = createApp()
 Prism.plugins.toolbar.registerButton('macostyle', function () {
   const content = document.createElement('div')
   content.setAttribute('class', 'toolbar-item__content')
@@ -45,6 +45,7 @@ if (window.__INITIAL_STATE__) {
 }
 // 同步访客登录信息
 if (storage.getVisitor()) store.commit('setVisitor', storage.getVisitor())
+if (storage.getTheme()) store.commit('setTheme', storage.getTheme())
 router.onReady(() => {
   router.beforeResolve(async (to, from, next) => {
     const matched = router.getMatchedComponents(to)
@@ -63,7 +64,7 @@ router.onReady(() => {
       await Promise.all(
         activated.map(async (Component) => {
           if (Component.asyncData) {
-            const res = await Component.asyncData({ store, route: to })
+            const res = await Component.asyncData({store, route: to})
             Component.__COMPONENT_ASYNCDATA__ = res || {}
           }
         })

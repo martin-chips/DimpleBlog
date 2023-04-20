@@ -49,6 +49,8 @@ export default {
 @import '~@/style/index.scss';
 
 .copyright {
+
+
   ul {
     padding: 12px;
     margin: 0;
@@ -64,19 +66,20 @@ export default {
 
   a:hover {
     @include themify() {
-      color: themed('color-ele-primary');
+      color: themed('btn-bg');
     }
   }
 
-  border: 1px solid #eee;
+
   @include themify() {
-    border-color: themed('color-navbar');
+    border: 1px solid themed('meta-grey');
+    border-color: themed('meta-grey');
   }
 
   &__label {
     font-weight: bold;
     @include themify() {
-      color: themed('color-copyright-label');
+      color: themed('default-bg-color');
     }
   }
 

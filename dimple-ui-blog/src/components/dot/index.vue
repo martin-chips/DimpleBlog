@@ -32,7 +32,7 @@ export default {
   font-weight: normal;
   transition: all ease 0.2s;
   @include themify() {
-    border-color: themed('color-ele-primary');
+    border-color: themed('btn-bg');
   }
 }
 </style>

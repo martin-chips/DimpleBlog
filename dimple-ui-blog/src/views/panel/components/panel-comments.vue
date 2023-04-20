@@ -58,7 +58,9 @@ export default {
     }
     &__name {
       padding-top: 4px;
-      @include clamp(1);
+      @include themify() {
+        color: themed('font-color');
+      }
     }
     &__date {
       padding: 2px 0 !important;
