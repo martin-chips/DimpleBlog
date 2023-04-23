@@ -1,9 +1,9 @@
 <template>
   <div>
     <layout title="友链" cover="/img/cover/links.jpg">
-      <el-card shadow="hover">
+      <el-card class='flink' shadow="hover">
         <div slot="header" class="clearfix">
-          <h2><i class="el-icon-s-unfold"></i>&nbsp;友链列表</h2>
+          <h2><i class="el-icon-s-unfold" style="color: #f66"></i>&nbsp;友链列表</h2>
         </div>
         <div class="flink-list" v-if="links.length">
           <div v-for="(link, index) in links" :key="index" class="flink-list-item">
@@ -24,7 +24,7 @@
       </el-card>
       <el-card>
         <div slot="header" class="clearfix">
-          <h2><i class="el-icon-s-opportunity"></i>&nbsp;申请须知</h2>
+          <h2><i class="el-icon-s-opportunity" style="color: #0cc"></i>&nbsp;申请须知</h2>
         </div>
         <p class="desc">
           ① .贵站需要先添加本站友链，友链信息见下方，本站会定时扫描所有友链，请确保网站访问正常，本站自动审核程序运行中，最迟会在24小时内跟上链接，谢谢！<br>
@@ -40,7 +40,7 @@
       </el-card>
       <el-card shadow="hover" style="margin-top: 10px">
         <div slot="header" class="clearfix">
-          <h2><i class="el-icon-edit-outline"></i>&nbsp;申请友链</h2>
+          <h2><i class="el-icon-edit-outline" style="    color: blue;"></i>&nbsp;申请友链</h2>
         </div>
         <el-form :model="linkForm" ref="linkForm" :rules="rules" id="submitLink">
           <el-form-item label="网站名称" prop="title">
@@ -152,37 +152,28 @@ export default {
 <style lang="scss" scoped>
 @import '~@/style/index.scss';
 
-.desc {
-  line-height: 2;
+.flink .flink-list > .flink-list-item:hover:before {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
 }
 
-.flink-item-desc, .flink-item-name {
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  white-space: nowrap
+.flink {
+  margin-bottom: 20px
 }
 
-
-.flink-item-icon {
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0)
-}
-
-.flink-list {
+.flink .flink-list {
   overflow: auto;
   padding: 10px 10px 0;
   text-align: center
 }
 
-.flink-list > .flink-list-item {
+.flink .flink-list > .flink-list-item {
   position: relative;
   float: left;
   overflow: hidden;
-  background-color: #F2F6FC;
   margin: 15px 7px;
   width: calc(100% / 3 - 15px);
   height: 90px;
@@ -192,30 +183,32 @@ export default {
 }
 
 @media screen and (max-width: 1024px) {
-  .flink-list > .flink-list-item {
+  .flink .flink-list > .flink-list-item {
     width: calc(50% - 15px) !important
   }
 }
 
 @media screen and (max-width: 600px) {
-  .flink-list > .flink-list-item {
+  .flink .flink-list > .flink-list-item {
     width: calc(100% - 15px) !important
   }
 }
 
-.flink-list > .flink-list-item:hover .flink-item-icon {
+.flink .flink-list > .flink-list-item:hover .flink-item-icon {
   margin-left: -10px;
   width: 0
 }
 
-.flink-list > .flink-list-item:before {
+.flink .flink-list > .flink-list-item:before {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: -1;
-  background: #4AB7BD;
+  @include themify() {
+    background: themed('text-bg-hover');
+  }
   content: '';
   -webkit-transition: -webkit-transform .3s ease-out;
   -moz-transition: -moz-transform .3s ease-out;
@@ -229,7 +222,7 @@ export default {
   transform: scale(0)
 }
 
-.flink-list > .flink-list-item:active:before, .flink-list > .flink-list-item:focus:before, .flink-list > .flink-list-item:hover:before {
+.flink .flink-list > .flink-list-item:active:before, .flink .flink-list > .flink-list-item:focus:before, .flink .flink-list > .flink-list-item:hover:before {
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   -o-transform: scale(1);
@@ -237,12 +230,14 @@ export default {
   transform: scale(1)
 }
 
-.flink-list > .flink-list-item a {
-  color: var(--font-color);
+.flink .flink-list > .flink-list-item a {
+  @include themify() {
+    color: themed('font-color');
+  }
   text-decoration: none
 }
 
-.flink-list > .flink-list-item a .flink-item-icon {
+.flink .flink-list > .flink-list-item a .flink-item-icon {
   float: left;
   overflow: hidden;
   margin: 15px 10px;
@@ -256,7 +251,7 @@ export default {
   transition: width .3s ease-out
 }
 
-.flink-list > .flink-list-item a .flink-item-icon img {
+.flink .flink-list > .flink-list-item a .flink-item-icon img {
   width: 100%;
   height: 100%;
   -webkit-transition: filter 375ms ease-in .2s, -webkit-transform .3s;
@@ -267,23 +262,26 @@ export default {
   object-fit: cover
 }
 
-.flink-item-name {
+.flink .flink-list > .flink-list-item a .img-alt {
+  display: none
+}
+
+.flink .flink-item-name {
   padding: 16px 10px 0 0;
   height: 40px;
   font-weight: 700;
   font-size: 1.43em
 }
 
-.flink-item-desc {
+.flink .flink-item-desc {
   padding: 16px 10px 16px 0;
   height: 50px;
   font-size: .93em
 }
 
-.flink-name {
+.flink .flink-name {
   margin-bottom: 5px;
   font-weight: 700;
   font-size: 1.5em
 }
-
 </style>

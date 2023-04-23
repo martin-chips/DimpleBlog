@@ -34,8 +34,7 @@ export default {
     font-weight: 700;
     content: '\E771';
     position: absolute;
-    top: -10px;
-    left: 5%;
+    top: -26px;
     transition: all ease-in-out 1s;
     transform: rotate(90deg);
     @include themify() {

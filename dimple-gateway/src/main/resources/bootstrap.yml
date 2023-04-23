@@ -34,6 +34,8 @@ spring:
         ds1:
           nacos:
             server-addr: dimple-nacos:8848
+            username:
+            password:
             dataId: sentinel-dimple-gateway
             groupId: DEFAULT_GROUP
             data-type: json

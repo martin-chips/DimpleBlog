@@ -2,7 +2,7 @@
   <div class="comments-item">
     <div class="comments-item__avatar" :class="{ 'comments-item__avatar--small': subType }">
       <a :href="message.link" target="_blank">
-        <img :src="message.avatars" alt=""/>
+        <img v-lazy="message.avatars" alt=""/>
       </a>
     </div>
     <div class="comments-item__content">

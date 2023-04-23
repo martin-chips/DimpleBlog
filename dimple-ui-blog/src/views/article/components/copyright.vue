@@ -16,9 +16,9 @@
       <li class="copyright__licence">
         <span class="copyright__label">版权声明：</span>
         <span>
-          本博客原创系列文章遵守
-          <a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>
-          （自由分享-署名-非商用-禁止演绎）
+          本站所有文章除特别声明外，均采用
+          <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>许可协议。
+          （非商用）
         </span>
       </li>
     </ul>
@@ -48,8 +48,33 @@ export default {
 <style lang="scss">
 @import '~@/style/index.scss';
 
-.copyright {
+.copyright:hover {
+  -webkit-box-shadow: 0 0 8px 0 #E8EDFA99, 0 2px 4px 0 #E8EDFA7F;
+  box-shadow: 0 0 8px 0 #2056E199, 0 2px 4px 0 #E8EDFA7F;
+}
 
+.copyright:before {
+  position: absolute;
+  top: 2px;
+  font-family: "FontAwesome";
+  right: 12px;
+  color: #49b1f5;
+  content: '\f1f9';
+  font-size: 1.3em;
+}
+.copyright {
+  position: relative;
+  -webkit-transition: box-shadow .3s ease-in-out;
+  -moz-transition: box-shadow .3s ease-in-out;
+  -o-transition: box-shadow .3s ease-in-out;
+  -ms-transition: box-shadow .3s ease-in-out;
+  transition: box-shadow .3s ease-in-out;
+  margin: 40px 0 10px;
+  padding: 10px 16px;
+
+  @include themify() {
+    border: 1px solid themed('light-grey');
+  }
 
   ul {
     padding: 12px;
@@ -61,6 +86,7 @@ export default {
   }
 
   a {
+    color: #99a9bf;
     text-decoration: underline !important;
   }
 
@@ -68,12 +94,6 @@ export default {
     @include themify() {
       color: themed('btn-bg');
     }
-  }
-
-
-  @include themify() {
-    border: 1px solid themed('meta-grey');
-    border-color: themed('meta-grey');
   }
 
   &__label {

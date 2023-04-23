@@ -1,7 +1,11 @@
 <template>
-  <nav class="navbar" :class="{ 'navbar-rollup': rollBack, 'navbar-transparent': rollbackTop }">
-    <div class="navbar__name">
-      <a href="/">Dimple's Blog</a>
+  <nav class="navbar" :class="{ 'navbar-rollup': rollBack&&!rollbackTop, 'navbar-transparent': rollbackTop }">
+    <div>
+      <a href="/">
+        <span class="navbar__name">
+          Dimple's Blog
+        </span>
+      </a>
     </div>
     <div class="navbar__menus">
       <horizontal-navbar @goTo="goTo" @openSearch="openSearch"></horizontal-navbar>
@@ -40,7 +44,7 @@ import debounce from 'lodash/debounce'
 export default {
   name: 'navbar',
   props: {},
-  components: { search, horizontalNavbar, verticalNavbar },
+  components: {search, horizontalNavbar, verticalNavbar},
   data() {
     return {
       lastTopPos: 0,
@@ -60,7 +64,7 @@ export default {
   methods: {
     ...mapMutations(['setRollBack']),
     goTo(name) {
-      this.$router.push({ name })
+      this.$router.push({name})
     },
     // 文章关键词搜索
     openSearch() {
@@ -97,6 +101,7 @@ export default {
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
+
 .navbar {
   width: 100%;
   height: 60px;
@@ -109,23 +114,30 @@ export default {
   padding: 0 36px;
   @include flex-box-space;
   @include themify() {
-    color: themed('meta-grey');
+    color: themed('font-color');
   }
   @include respond-to(xs) {
     padding: 0 16px;
   }
+
   &__name {
-    a {
-      color: inherit;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .15);
+    @include themify() {
+      color: themed('font-color');
     }
+    font-weight: 700;
+    font-size: 16px;
   }
+
   &__menus {
     display: flex;
     align-items: center;
   }
+
   .vertical-menu-trigger {
     display: none;
   }
+
   @include respond-to(xs) {
     .horizontal-navbar {
       display: none;
@@ -133,13 +145,16 @@ export default {
     .vertical-menu-trigger {
       display: flex;
       align-items: center;
+
       .trigger__search {
         margin-right: 20px;
       }
+
       > i {
         font-size: 18px;
         margin-left: 12px;
       }
+
       .el-icon-search {
         margin-right: 8px;
       }
@@ -153,34 +168,35 @@ export default {
     margin-right: 4px;
     font-size: 16px;
   }
+
   .popper__arrow {
     display: none;
   }
 }
+
 .navbar-rollup {
   position: fixed;
   transform: translateY(100%);
   box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
   @include themify() {
-    color: themed('color-navbar-rollup-color');
     background: themed('color-navbar-rollup-bg');
   }
+
   .navbar__name a {
     @include themify() {
-      color: themed('color-navbar-rollup-color');
+      color: themed('font-color');
     }
   }
 }
+
 .navbar-transparent {
   transform: translateY(100%);
   background: transparent;
   box-shadow: none;
-  @include themify() {
-    color: themed('nav-header');
-  }
+
   .navbar__name a {
     @include themify() {
-      color: themed('nav-header');
+      color: themed('light-grey');
     }
   }
 }

@@ -4,7 +4,7 @@
       <el-card class="article-iterator__item" v-for="(article, index) in articles" :key="index">
         <div class="item-content">
           <div class="item-content__pic">
-            <img :src="article.headerImage" alt=""/>
+            <img v-lazy="article.headerImage" alt=""/>
           </div>
           <div class="item-content__info">
             <div class="item-content__link">
@@ -98,6 +98,7 @@ export default {
       &__pic:hover {
         @include zoom-trigger();
       }
+
       &__pic {
         width: 45%;
         height: 100%;
@@ -133,8 +134,19 @@ export default {
       &__link {
         flex: 0 0 auto;
         @include clamp(2);
+        font-size: 1.72em;
+        line-height: 1.4;
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        -webkit-line-clamp: 2;
 
         a {
+          @include themify() {
+            color: themed('text-highlight-color') !important;
+          }
           font-size: 24px;
           line-height: 1.5;
           transition: all ease-in-out 0.25s;
@@ -145,7 +157,7 @@ export default {
 
         a:hover {
           @include themify() {
-            color: themed('a-color');
+            color: themed('a-hover-color');
           }
         }
       }

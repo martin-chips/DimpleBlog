@@ -10,5 +10,190 @@ $font56: 56px;
 @font-face {
   font-family: 'sf-arch';
   src: url('~@/assets/font/sf-arch/SF Arch Rival Extended Bold.woff') format('woff'),
-    url('~@/assets/font/sf-arch/SF Arch Rival Extended Bold.ttf') format('truetype');
+  url('~@/assets/font/sf-arch/SF Arch Rival Extended Bold.ttf') format('truetype');
+}
+
+
+body {
+  position: relative;
+  min-height: 100%;
+  @include themify() {
+    background: themed('global-bg');
+    color: themed('font-color');
+    font-size: themed('font14');
+  }
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Lato, Roboto, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
+  line-height: 2;
+  -webkit-tap-highlight-color: transparent
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color)
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color) transparent
+}
+
+input::placeholder {
+  color: var(--font-color)
+}
+
+h1, h2, h3, h4, h5, h6 {
+  position: relative;
+  margin: 20px 0 14px;
+  @include themify() {
+    color: themed('text-highlight-color');
+  }
+  font-weight: 700
+}
+
+h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
+  font-size: inherit !important
+}
+
+li {
+  list-style: none;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box
+}
+
+hr {
+  position: relative;
+  margin: 40px auto;
+  @include themify() {
+    border: 2px dashed themed('hr-border');
+  }
+  width: calc(100% - 4px)
+}
+
+hr:hover:before {
+  left: calc(95% - 20px)
+}
+
+hr:before {
+  position: absolute;
+  top: -10px;
+  left: 5%;
+  z-index: 1;
+  @include themify() {
+    color: themed('hr-before-color');
+  }
+
+  content: '\f0c4';
+  font-size: 20px;
+  line-height: 1;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out
+}
+
+.table-wrap {
+  overflow-x: scroll;
+  margin: 0 0 20px
+}
+
+table {
+  display: table;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  empty-cells: show
+}
+
+table thead {
+  background: rgba(153, 169, 191, .1)
+}
+
+table td, table th {
+  padding: 6px 12px;
+  @include themify() {
+    border: 1px solid themed('light-grey');
+  }
+  vertical-align: middle
+}
+
+::selection {
+  background: #00c4b6;
+  color: #f7f7f7
+}
+
+button {
+  padding: 0;
+  outline: 0;
+  border: none;
+  background: 0 0;
+  cursor: pointer;
+  touch-action: manipulation
+}
+
+a {
+  @include themify() {
+    color: themed('font-color');
+  }
+  text-decoration: none;
+  word-wrap: break-word;
+  -webkit-transition: all .2s;
+  -moz-transition: all .2s;
+  -o-transition: all .2s;
+  -ms-transition: all .2s;
+  transition: all .2s;
+  overflow-wrap: break-word
+}
+
+a:hover {
+  color: #49b1f5
+}
+
+
+.site-introduction__desc, site-introduction__sitename, .home-article__site-name, .home-article__dictum-info, .navbar__name {
+  font-family: Titillium Web, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
+}
+
+img:not([src]), img[src=''] {
+  opacity: 0
+}
+
+.img-alt {
+  margin: -10px 0 10px;
+  color: #858585
+}
+
+.img-alt:hover {
+  text-decoration: none !important
+}
+
+blockquote {
+  margin: 0 0 20px;
+  padding: 12px 15px;
+  border-left: 3px solid #49b1f5;
+  @include themify() {
+    background-color: themed('blockquote-bg');
+    color: themed('blockquote-color')
+  }
+}
+
+blockquote footer cite:before {
+  padding: 0 5px;
+  content: '—'
+}
+
+blockquote > :last-child {
+  margin-bottom: 0 !important
 }

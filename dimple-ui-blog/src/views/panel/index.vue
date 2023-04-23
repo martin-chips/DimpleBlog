@@ -14,7 +14,7 @@
       <div id="rightside-config-show">
         <button id="darkmode" @click="changeTheme" type="button" title="浅色和深色模式转换"><i
           class="fa fa-adjust"></i></button>
-        <button @click="backTop" id="go-up" type="button" title="回到顶部" class="show-percent"><span
+        <button @click="backTop" id="go-up" type="button" title="回到顶部" :class="[backupValue==100?'':'show-percent']"><span
           class="scroll-percent">{{ backupValue }}</span><i
           class="fa fa-arrow-up"></i></button>
       </div>
@@ -145,13 +145,13 @@ export default {
       this.backupValue = parseInt(+(scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100);
     },
     changeTheme() {
-      var currentTheme = document.getElementsByTagName("body")[0].getAttribute("class");
+      var currentTheme = document.getElementsByTagName("html")[0].getAttribute("class");
       if (currentTheme === 'data-theme-dark') {
         storage.setTheme("data-theme-light");
-        document.getElementsByTagName("body")[0].setAttribute("class", 'data-theme-light');
+        document.getElementsByTagName("html")[0].setAttribute("class", 'data-theme-light');
       } else {
         storage.setTheme("data-theme-dark");
-        document.getElementsByTagName("body")[0].setAttribute("class", 'data-theme-dark');
+        document.getElementsByTagName("html")[0].setAttribute("class", 'data-theme-dark');
       }
     },
     initStickyBehavior() {

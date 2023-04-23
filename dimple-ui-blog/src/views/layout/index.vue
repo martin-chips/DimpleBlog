@@ -71,10 +71,22 @@ export default {
 <style lang="scss">
 @import '~@/style/index.scss';
 // clear the background color
-.el-pagination .btn-next, .el-pagination .btn-prev, .el-pager li, .el-textarea__inner {
+.el-pagination ,.el-menu,.el-drawer,.btn-next, .el-pagination,.el-input__inner,.el-dialog,.btn-prev, .el-pager li, .el-textarea__inner {
   background-color: transparent !important;
 }
 
+
+body {
+  @include themify() {
+    background: themed('global-bg');
+  }
+}
+.el-drawer__body,.el-drawer__header,.el-dialog__header,.el-dialog__body{
+  margin-bottom: 0px;
+  @include themify() {
+    background: themed('global-bg');
+  }
+}
 .el-button {
   border: none;
   @include themify() {
@@ -106,10 +118,6 @@ export default {
     -ms-animation: bottom-top 1s;
     animation: bottom-top 1s;
     padding-bottom: 140px;
-    @include themify() {
-      z-index: auto;
-      background: themed('global-bg');
-    }
 
     &-content {
       display: flex;

@@ -5,7 +5,7 @@
         <i class="el-icon-c-scale-to-original"></i>
         <span>文章分类</span>
       </div>
-      <div class="panel__item-body">
+      <div v-if="category.length" class="panel__item-body">
         <ul>
           <li v-for="(item, index) in category" :key="index" @click="filterArticles(item.title, item.id)">
             <span>{{ item.title }}</span>
@@ -13,6 +13,7 @@
           </li>
         </ul>
       </div>
+      <ElEmpty v-else></ElEmpty>
     </el-card>
   </div>
 </template>

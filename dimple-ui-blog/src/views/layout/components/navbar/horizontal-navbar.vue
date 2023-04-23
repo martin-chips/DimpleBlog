@@ -109,13 +109,13 @@ export default {
 .navbar-rollup {
   .horizontal-navbar__menu {
     @include themify() {
-      color: themed('color-navbar-rollup-color');
+      color: themed('font-color');
     }
   }
 }
 
 .navbar-transparent {
-  .horizontal-navbar__menu {
+  .navbar__menus, .navbar__name {
     @include themify() {
       color: themed('nav-header');
     }

@@ -97,10 +97,12 @@ readyPromise.then(() => {
 
   // 前端请求
   server.get(['/', '/app/*'], (req, res) => {
-
     try {
       const context = {
         title: `Dimple's Blog`, url: req.url
+      }
+      if (req.url.startsWith('/app/article/') || req.url === '/app/about' || req.url === '/app/messageBoard') {
+        context._ip = getIp(req)
       }
       renderer.renderToString(context, (err, html) => {
         if (err) {
@@ -151,4 +153,12 @@ function checkPort(port = 8820) {
       }
     })
   })
+}
+
+const getIp = function (req) {
+  let ip = req.get('X-Real-IP') || req.get('X-Forwarded-For') || req.ip
+  if (ip.split(',').length > 0) {
+    ip = ip.split(',')[0]
+  }
+  return ip
 }

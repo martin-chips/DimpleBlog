@@ -5,12 +5,14 @@ import Vue from 'vue'
 import VueLazyload from '@/utils/lazyLoad'
 
 const loading = require('@/assets/img/loading.gif')
+const loading_error = require('@/assets/img/loading-error.gif')
 if (!window.ResizeObserver) {
   window.ResizeObserver = R_O_P
 }
 // eslint-disable-next-line no-undef
 Vue.use(VueLazyload, {
-  loading: loading
+  loading: loading,
+  error: loading_error
 })
 
 Vue.mixin({

@@ -4,51 +4,74 @@ PROJECT_ROOT_PATH="/home/project/DimpleBlog"
 # the docker compose home path
 PROJECT_DOCKER_PATH="$PROJECT_ROOT_PATH/docker"
 
+# build and start the base environment
 base() {
-  echo "build and start dimple-mysql/dimple-redis/dimple-nacos"
+  echo "build and start dimple-mysql/dimple-redis/dimple-nacos..."
   docker compose --compatibility up -d dimple-mysql dimple-redis dimple-nacos
 }
 
-modules() {
-  echo "build and start dimple-modules"
-  docker compose --compatibility up -d --build dimple-ui dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
-}
-
 stop() {
+  echo "start stop services..."
   docker compose stop
 }
 
 down() {
-  echo "will stop all service and rm all images, input Y/yes continue:"
+  echo "start stop all service..."
+  stop
+  echo "start rm all services, input y/yes continue:"
   read input_choose
   if [ "${input_choose,,}" == 'y' ] || [ "${input_choose,,}" == 'yes' ]; then
-    stop
-    rm
+    rm_services
   fi
 }
 
 # shellcheck disable=SC2032
-rm() {
+rm_services() {
   docker compose rm
+  echo "start rm 'none' images..."
   docker images | grep none | awk '{print $3}' | xargs docker rmi
-  docker images | grep dimple | awk '{print $3}' | xargs docker rmi
+  echo "start rm 'dimple-modules/dimple-auth/dimple-gateway' images..."
+  docker images | grep dimple-modules | awk '{print $3}' | xargs docker rmi
+  docker images | grep dimple-auth | awk '{print $3}' | xargs docker rmi
+  docker images | grep dimple-gateway | awk '{print $3}' | xargs docker rmi
+  echo "start rm 'dimple-ui/dimple-node' images..."
+  docker images | grep dimple-node | awk '{print $3}' | xargs docker rmi
+  docker images | grep dimple-ui | awk '{print $3}' | xargs docker rmi
 }
 
-init() {
-  echo 'This method only using the first deploy, <CTRL-C> exit and press any key will continue.'
+
+init_env() {
+  echo 'This method only using the first deploy, <CTRL-C> exit and press any key will continue...'
   # shellcheck disable=SC2162
   read any_key
   default_password="Di^&7so@c@drxMe4"
-  echo "please input the password:(We strongly recommend that you change the default password: ${default_password} )"
+  echo "please input the password(default is ${default_password}), this password will be used to Redis/MySQL"
   # shellcheck disable=SC2162
   read input_password
+  default_nacos_username="default_nacos_username"
+  echo "please input nacos username(default is $default_nacos_username), this username will be used to nacos discovery,config and sentinel"
+  read input_nacos_username
+  default_nacos_password="default_nacos_password"
+  echo "please input nacos password(default is default_nacos_password), this password will be used to nacos discovery,config and sentinel"
+  read input_nacos_password
+  echo "=========================="
+  echo "You should create the user with username:$input_nacos_username password:$input_nacos_password when you start services."
+  echo "=========================="
   clean_sql
   clean_html
   clean_jar
+
   cp_sql
-  build
-  echo "start change default password to $input_password"
+
+  build_jar
+  build_html
+
   change_default_password
+}
+
+build(){
+  build_jar
+  build_html
 }
 
 # change the default password in MySQL，Redis，Nacos
@@ -57,20 +80,15 @@ change_default_password() {
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/nacos/conf/application.properties
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/mysql/db/*
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/docker-compose.yml
-}
 
-build() {
-  echo 'start build the service,press any key continue.'
-  # shellcheck disable=SC2162
-  read any_key
-  build_jar
-  build_html
+  sed -i "s/$default_nacos_username/$input_nacos_username/g" $PROJECT_DOCKER_PATH/docker-compose.yml
+  sed -i "s/$default_nacos_password/$input_nacos_password/g" $PROJECT_DOCKER_PATH/docker-compose.yml
 }
 
 build_jar() {
+  echo "start build jar ..."
   cd $PROJECT_ROOT_PATH
   mvn clean package -Dmaven.test.skip=true
-  echo 'start copy jar '
   cp_jar
 }
 
@@ -88,30 +106,6 @@ build_html() {
   cp_html
 }
 
-deploy() {
-  down
-  base
-  deploy_jar
-  deploy_html
-}
-
-deploy_jar() {
-  echo "start deploy"
-  cd $PROJECT_DOCKER_PATH
-  docker compose --compatibility up -d --build dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
-}
-deploy_html() {
-  echo "start deploy"
-  cd $PROJECT_DOCKER_PATH
-  docker compose --compatibility up -d --build dimple-ui
-}
-# clean all docker env.
-clean() {
-  clean_html
-  clean_jar
-  clean_sql
-}
-
 clean_jar() {
   echo "begin clean jar "
   find $PROJECT_DOCKER_PATH -name *.jar | xargs rm -rf
@@ -119,19 +113,48 @@ clean_jar() {
 
 clean_sql() {
   # copy sql
-  echo "begin clean sql "
+  echo "begin clean sql... "
   find $PROJECT_DOCKER_PATH/mysql/db/*.sql | xargs rm -rf
 }
 
 clean_html() {
-  echo "begin clean html "
+  echo "begin clean html... "
   find $PROJECT_DOCKER_PATH/nginx/admin/dist/* | xargs rm -rf
-  find $PROJECT_DOCKER_PATH/nginx/blog/dist/* | xargs rm -rf
+  find $PROJECT_DOCKER_PATH/node/blog/dist/* | xargs rm -rf
+}
+
+deploy(){
+  deploy_html
+  deploy_jar
+}
+
+deploy_jar() {
+  echo "start jar deploy..."
+  cd $PROJECT_DOCKER_PATH
+  docker compose --compatibility up -d --build dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
+}
+
+deploy_html() {
+  echo "start html deploy ..."
+  cd $PROJECT_DOCKER_PATH
+  docker compose --compatibility up -d --build dimple-ui dimple-node
 }
 
 cp_sql() {
   echo "begin cp sql "
   /bin/cp -rf $PROJECT_ROOT_PATH/sql/*.sql $PROJECT_DOCKER_PATH/mysql/db
+}
+
+cp_html() {
+  # copy html
+  echo "begin copy html "
+  mkdir -p $PROJECT_DOCKER_PATH/nginx/admin/dist
+  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-admin/dist/** $PROJECT_DOCKER_PATH/nginx/admin/dist
+  mkdir -p $PROJECT_DOCKER_PATH/node/blog/dist
+  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-blog/dist/** $PROJECT_DOCKER_PATH/node/blog/dist
+  cd $PROJECT_DOCKER_PATH/node/blog/dist
+  echo "start build blog..."
+  npm install
 }
 
 cp_jar() {
@@ -163,25 +186,11 @@ cp_jar() {
   /bin/cp -rf $PROJECT_ROOT_PATH/dimple-modules/dimple-system/dimple-system-web/target/dimple-modules-system-web.jar $PROJECT_DOCKER_PATH/dimple/modules/system/jar
 }
 
-cp_html() {
-  # copy html
-  echo "begin copy html "
-  mkdir -p $PROJECT_DOCKER_PATH/nginx/admin/dist
-  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-admin/dist/** $PROJECT_DOCKER_PATH/nginx/admin/dist
-  mkdir -p $PROJECT_DOCKER_PATH/node/blog/dist
-  /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-blog/dist/** $PROJECT_DOCKER_PATH/node/blog/dist
-}
-
-cp() {
-  cp_sql
-  cp_jar
-  cp_html
-}
-
 bye() {
   echo "Goodbye!"
   exit 0
 }
+
 
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
@@ -192,29 +201,27 @@ RESET=$(tput sgr0)
 options=(
   "Init: only first deploy the service can using this method.",
   "Base: deploy MySQL,Naocs,Redis base services.",
-  "Modules: deploy all customer modules services. contains HTML and Jar",
-  "Stop: Stop all customer modules services",
   "Build: Build all customer modules service,contains jar and html",
   "Build Jar: Only build jar",
   "Build html: Only build html",
   "Deploy: Deploy all customer modules service,contains jar and html",
   "Deploy Jar: Only deploy jar",
   "Deploy html: Only deploy html",
+   "Stop: Stop all customer modules services",
   "Remove: Remove all customer service",
   "Exit"
 )
 commands=(
-  "init"
+  "init_env"
   "base"
-  "modules"
-  "stop"
   "build"
   "build_jar"
   "build_html"
   "deploy"
   "deploy_jar"
   "deploy_html"
-  "rm"
+  "stop"
+  "rm_services"
   "bye"
 )
 
@@ -250,3 +257,9 @@ while true; do
 done
 
 eval "${commands[$selected]}"
+
+
+
+
+
+

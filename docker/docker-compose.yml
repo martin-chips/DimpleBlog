@@ -132,6 +132,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos
   dimple-auth:
     container_name: dimple-auth
     build:
@@ -144,6 +145,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos
   dimple-modules-system:
     container_name: dimple-modules-system
     build:
@@ -157,6 +159,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos
   dimple-modules-job:
     container_name: dimple-modules-job
     build:
@@ -169,6 +172,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos
   dimple-modules-file:
     container_name: dimple-modules-file
     build:
@@ -181,6 +185,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos
   dimple-modules-monitor:
     container_name: dimple-modules-monitor
     build:
@@ -191,6 +196,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos
   dimple-modules-blog:
     container_name: dimple-modules-blog
     build:
@@ -199,6 +205,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos
     ports:
       - "9401:9401"
     links:
@@ -219,6 +226,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos
   dimple-modules-log:
     container_name: dimple-modules-log
     build:
@@ -232,3 +240,4 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos

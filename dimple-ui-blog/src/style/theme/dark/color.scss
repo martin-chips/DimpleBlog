@@ -1,16 +1,10 @@
-/**
- * @desc: 颜色表
- */
-
 $color: (
-  color-navbar-rollup-bg: rgba(255, 255, 255, 0.8),
-  color-navbar-rollup-color: #4c4948,
+  color-navbar-rollup-bg: rgba(18, 18, 18, 0.8),
   color-catalog-active: #03c1b4,
   color-avatar-bg: #c0c4cc,
   color-avatar-icon: #fff,
   meta-grey: #858585,
   nav-header: #eee,
-  global-font-size: 14px,
   global-bg: #0d0d0d,
   font-color: rgba(255, 255, 255, 0.7),
   hr-border: rgba(255, 255, 255, 0.4),
@@ -38,14 +32,5 @@ $color: (
   blockquote-bg: #2c2c2c,
   reward-pop: #2c2c2c,
   toc-link-color: rgba(255, 255, 255, 0.6),
-  hl-color: rgba(255, 255, 255, 0.7),
-  hl-bg: #171717,
-  hltools-bg: #1a1a1a,
-  hltools-color: #90a4ae,
-  hlnumber-bg: #171717,
-  hlnumber-color: rgba(255, 255, 255, 0.4),
-  hlscrollbar-bg: #1f1f1f,
-  hlexpand-bg: linear-gradient(180deg, rgba(23, 23, 23, 0.6), rgba(23, 23, 23, 0.9)),
   scrollbar-color: #1f1f1f,
-  timeline-bg: #1f1f1f
 );

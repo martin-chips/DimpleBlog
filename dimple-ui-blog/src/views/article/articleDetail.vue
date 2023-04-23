@@ -362,6 +362,82 @@ export default {
     'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
     line-height: 2;
 
+    code, pre {
+      @include themify() {
+        font-size: themed('font14');
+      }
+      font-family: consolas, Menlo, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif !important
+    }
+
+    code {
+      padding: 2px 4px;
+      background: rgba(27, 31, 35, .05);
+      color: #f47466
+    }
+
+    pre {
+      padding: 10px 20px
+    }
+
+    pre code {
+      padding: 0;
+      background: 0 0;
+      @include themify() {
+        color: themed('hl-color');
+      }
+      text-shadow: none
+    }
+
+    .code-toolbar {
+      border-radius: 8px;
+      padding-top: 24px;
+
+      > pre {
+        border-radius: 0 0 8px 8px;
+      }
+
+      > .toolbar {
+        opacity: 1 !important;
+        width: 100%;
+        top: 0px !important;
+        right: 0px !important;
+        background: #30343f;
+        border-radius: 8px 8px 0 0;
+
+        .toolbar-item:first-child {
+          float: right;
+          margin-right: 12px;
+        }
+
+        .copy-to-clipboard-button {
+          color: #bbb !important;
+          cursor: pointer;
+          background: transparent !important;
+        }
+
+        .copy-to-clipboard-button:hover {
+          color: #bbb !important;
+        }
+      }
+
+      .toolbar-item__content {
+        width: 100%;
+        height: 32px;
+        padding: 0 14px;
+        display: flex;
+        align-items: center;
+
+        span {
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          border-radius: 6px;
+          background: rgb(252, 98, 93);
+          box-shadow: rgb(253, 188, 64) 20px 0px, rgb(53, 205, 75) 40px 0px;
+        }
+      }
+    }
+
 
     img {
       width: 100%;
@@ -401,7 +477,7 @@ export default {
 
     a {
       @include themify() {
-        color: themed('a-color')
+        color: themed('a-hover-color')
       }
 
     }
@@ -710,7 +786,5 @@ export default {
       padding: 16px 0;
     }
   }
-
-
 }
 </style>

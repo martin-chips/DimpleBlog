@@ -67,9 +67,73 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '~@/style/index.scss';
+.el-dialog__wrapper,.el-dialog,.el-drower__body,.vertical-navbar__intro{
+  @include themify() {
+    background: themed('global-bg');
+  }
+}
 .vertical-navbar {
-  &__intro {
-    padding: 14px;
+  &__menu {
+    display: inline-block;
+    padding: 0 10px;
+    cursor: pointer;
+    position: relative;
+
+    [class^='el-icon-'] {
+      font-weight: 900;
+      margin-right: 4px;
+      font-size: 15px;
+    }
+
+    @include themify() {
+      color: themed('nav-header');
+    }
+
+    .navbar-menu-title {
+      .el-icon-arrow-down {
+        display: inline-block;
+        transition: all ease 0.38s;
+      }
+    }
+
+    .navbar-menu-title:hover {
+      .el-icon-arrow-down {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .vertical-navbar__menu:hover.vertical-navbar__menu:after {
+    width: 100%;
+  }
+
+  &__menu:after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #80c8f8;
+    display: inline-block;
+    transition: all ease 0.38s;
+  }
+}
+
+.navbar-rollup {
+  .vertical-navbar__menu {
+    @include themify() {
+      color: themed('font-color');
+    }
+  }
+}
+
+.navbar-transparent {
+  .vertical-navbar__menu {
+    @include themify() {
+      color: themed('nav-header');
+    }
   }
 }
 </style>

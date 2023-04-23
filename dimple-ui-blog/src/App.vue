@@ -19,9 +19,9 @@ export default {
   mounted() {
     this.initPanel();
     if (this.theme) {
-      document.getElementsByTagName("body")[0].setAttribute("class", this.theme);
+      document.getElementsByTagName("html")[0].setAttribute("class", this.theme);
     } else {
-      document.getElementsByTagName("body")[0].setAttribute("class", "data-theme-light");
+      document.getElementsByTagName("html")[0].setAttribute("class", "data-theme-light");
     }
   },
   computed: {

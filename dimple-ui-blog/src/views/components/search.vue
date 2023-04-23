@@ -115,7 +115,18 @@ export default {
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
-
+.el-dialog__header,.el-dialog__body{
+  @include themify() {
+    color: themed('nav-header');
+    background: themed('search-bg');
+  }
+}
+.el-dialog__title{
+  margin: 0 0 14px;
+  color: #49b1f5;
+  font-size: 1.4em;
+  line-height: 1;
+}
 .search {
   &__body {
   }
@@ -127,7 +138,16 @@ export default {
 
   &__input {
     .el-input__inner {
+      @include themify() {
+        color: themed('search-input-color');
+        background: themed('search-bg');
+      }
+      padding: 5px 14px;
+      width: 100%;
+      outline: 0;
       border-radius: 40px;
+      border: 2px solid #49b1f5;
+      -webkit-appearance: none;
     }
 
     .el-icon-search {
@@ -154,9 +174,7 @@ export default {
       }
 
       &__title:hover {
-        @include themify() {
-          color: themed('btn-bg');
-        }
+        color: #49b1f5;
       }
 
       &__title:before {
@@ -171,9 +189,7 @@ export default {
         border-radius: 50%;
         font-weight: normal;
         transition: all ease 0.2s;
-        @include themify() {
-          border-color: themed('btn-bg');
-        }
+        border: 3px solid #49b1f5;
       }
 
       &__title:hover:before {
@@ -208,7 +224,7 @@ export default {
 }
 
 .search-box {
-  border-radius: 8px;
+  border-radius: 8px !important;
   min-width: 340px;
 
   .el-dialog__body {

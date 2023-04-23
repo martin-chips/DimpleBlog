@@ -5,7 +5,7 @@
     </div>
     <div class="site-introduction__info" @click="goTo('home')">
       <p class="site-introduction__sitename">Dimple</p>
-      <p>
+      <p class="site-introduction__desc">
         Hi，欢迎来到 Dimple's Blog，这是一个使用 vue ssr 开发的，记录学习与生活的个人博客，你可以在
         <a href="/">这里</a>
         了解到关于本站的更多技术细节。
@@ -101,7 +101,7 @@ export default {
 
     a {
       @include themify() {
-        color: themed('a-color');
+        color: themed('a-hover-color');
       }
     }
   }

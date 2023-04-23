@@ -4,7 +4,7 @@ FROM  openjdk:8-jre
 MAINTAINER dimple
 
 ENV JAVA_OPTS=""
-
+ENV SPRING_OPTS=""
 # 挂载目录
 VOLUME /home/dimple
 # 创建目录
@@ -14,4 +14,4 @@ WORKDIR /home/dimple
 # 复制jar文件到路径
 COPY ./jar/dimple-modules-blog-front-web.jar /home/dimple/dimple-blog-front.jar
 # 启动认证服务
-CMD ["sh", "-c", "java $JAVA_OPTS -jar dimple-blog-front.jar"]
+CMD ["sh", "-c", "java $JAVA_OPTS -jar dimple-blog-front.jar $SPRING_OPTS"]

@@ -2,7 +2,7 @@
   <div class="submit">
     <div class="submit__avatar">
       <div class="submit__avatar-default">
-        <img v-show="!!visitorInfo.avatars" :src="visitorInfo.avatars" :title="visitorInfo.username"/>
+        <img v-show="!!visitorInfo.avatars" v-lazy="visitorInfo.avatars" :title="visitorInfo.username"/>
         <i v-show="!visitorInfo.avatars" class="el-icon-user" :title="visitorInfo.username"></i>
       </div>
       <div class="submit__avatar-rel"></div>
@@ -297,6 +297,19 @@ export default {
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
+
+.el-dialog{
+  -webkit-box-shadow: 0 0 8px 0 #E8EDFA99, 0 2px 4px 0 #E8EDFA7F;
+  box-shadow: 0 0 8px 0 #2056E199, 0 2px 4px 0 #E8EDFA7F;
+}
+.el-dialog{
+  -webkit-transition: box-shadow .3s ease-in-out;
+  -moz-transition: box-shadow .3s ease-in-out;
+  -o-transition: box-shadow .3s ease-in-out;
+  -ms-transition: box-shadow .3s ease-in-out;
+  transition: box-shadow .3s ease-in-out;
+}
+
 
 .submit {
   display: flex;

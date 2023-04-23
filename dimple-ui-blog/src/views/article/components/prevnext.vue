@@ -3,7 +3,7 @@
     <div class="prev-next__content">
       <div class="content__prev" v-if="prevnext.prev">
         <a :href="getHref('prev')">
-          <img :src="prevnext.prev.headImage" alt=""/>
+          <img v-lazy="prevnext.prev.headImage" alt=""/>
           <div class="content__info">
             <div>上一篇</div>
             <div class="info-title">{{ this.prevnext.prev.title }}</div>
@@ -12,7 +12,7 @@
       </div>
       <div class="content__next" v-if="prevnext.next">
         <a :href="getHref('next')">
-          <img :src="prevnext.next.headImage" alt=""/>
+          <img v-lazy="prevnext.next.headImage" alt=""/>
           <div class="content__info">
             <div>下一篇</div>
             <div class="info-title">{{ this.prevnext.next.title }}</div>
