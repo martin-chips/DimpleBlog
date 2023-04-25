@@ -37,7 +37,7 @@ public class BlogCommentVO extends BaseEntity {
 
     private Integer type;
 
-    private Long visitorId;
+    private String visitorId;
 
     private String location;
 

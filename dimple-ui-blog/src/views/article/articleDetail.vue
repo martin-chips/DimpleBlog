@@ -50,7 +50,7 @@
         <copyright :url="url"></copyright>
       </div>
       <div class="article-detail__share">
-        <share :tags="article.tag" :abstract="article.summary" :title="article.title"></share>
+        <share :tags="article.blogTags" :abstract="article.summary" :title="article.title"></share>
       </div>
       <div class="article-detail__prevnext">
         <prevnext :article="article"></prevnext>

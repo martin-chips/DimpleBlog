@@ -101,7 +101,9 @@ export default {
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
-
+a:hover{
+  color: #ff0000;
+}
 .navbar {
   width: 100%;
   height: 60px;
@@ -126,7 +128,7 @@ export default {
       color: themed('font-color');
     }
     font-weight: 700;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   &__menus {
@@ -180,12 +182,6 @@ export default {
   box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
   @include themify() {
     background: themed('color-navbar-rollup-bg');
-  }
-
-  .navbar__name a {
-    @include themify() {
-      color: themed('font-color');
-    }
   }
 }
 

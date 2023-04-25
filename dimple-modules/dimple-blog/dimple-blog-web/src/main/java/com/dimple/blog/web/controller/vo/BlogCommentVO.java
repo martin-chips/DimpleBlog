@@ -36,7 +36,7 @@ public class BlogCommentVO extends BaseEntity {
     private String browser;
     private String ip;
     private String location;
-    private Long visitorId;
+    private String visitorId;
 
     /**
      * comment content, max length is 1024

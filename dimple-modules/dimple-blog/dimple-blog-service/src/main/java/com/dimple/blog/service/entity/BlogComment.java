@@ -40,7 +40,7 @@ public class BlogComment extends BaseEntity {
      * user head image
      */
     private String avatars;
-    private Long visitorId;
+    private String visitorId;
     private String os;
     private String browser;
     private String ip;

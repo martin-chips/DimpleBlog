@@ -68,12 +68,71 @@ export default {
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
-.el-dialog__wrapper,.el-dialog,.el-drower__body,.vertical-navbar__intro{
+
+.el-dialog, .el-drower__body, .vertical-navbar__intro {
   @include themify() {
     background: themed('global-bg');
   }
 }
+
+.el-menu-demo > :nth-child(1) {
+  -webkit-animation: sidebarItem .2s;
+  -moz-animation: sidebarItem .2s;
+  -o-animation: sidebarItem .2s;
+  -ms-animation: sidebarItem .2s;
+  animation: sidebarItem .2s
+}
+
+.el-menu-demo > :nth-child(2) {
+  -webkit-animation: sidebarItem .4s;
+  -moz-animation: sidebarItem .4s;
+  -o-animation: sidebarItem .4s;
+  -ms-animation: sidebarItem .4s;
+  animation: sidebarItem .4s
+}
+
+.el-menu-demo > :nth-child(3) {
+  -webkit-animation: sidebarItem .6s;
+  -moz-animation: sidebarItem .6s;
+  -o-animation: sidebarItem .6s;
+  -ms-animation: sidebarItem .6s;
+  animation: sidebarItem .6s
+}
+
+.el-menu-demo > :nth-child(4) {
+  -webkit-animation: sidebarItem .8s;
+  -moz-animation: sidebarItem .8s;
+  -o-animation: sidebarItem .8s;
+  -ms-animation: sidebarItem .8s;
+  animation: sidebarItem .8s
+}
+
+.el-menu-demo > :nth-child(5) {
+  -webkit-animation: sidebarItem 1s;
+  -moz-animation: sidebarItem 1s;
+  -o-animation: sidebarItem 1s;
+  -ms-animation: sidebarItem 1s;
+  animation: sidebarItem 1s
+}
+
+
 .vertical-navbar {
+  .el-menu-item, .el-submenu__title {
+    @include themify() {
+      color: themed('font-color');
+    }
+  }
+
+  .el-menu-item:hover, .el-submenu__title:hover {
+    @include themify() {
+      background: themed('text-bg-hover');
+    }
+  }
+
+  .el-submenu__title {
+
+  }
+
   &__menu {
     display: inline-block;
     padding: 0 10px;
@@ -91,6 +150,10 @@ export default {
     }
 
     .navbar-menu-title {
+      @include themify() {
+        color: themed('nav-header');
+      }
+
       .el-icon-arrow-down {
         display: inline-block;
         transition: all ease 0.38s;

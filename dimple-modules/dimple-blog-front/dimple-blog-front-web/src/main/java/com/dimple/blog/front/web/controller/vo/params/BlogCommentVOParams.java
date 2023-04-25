@@ -34,7 +34,7 @@ public class BlogCommentVOParams extends BaseVOParams {
 
     private Integer type;
 
-    private Long visitorId;
+    private String visitorId;
 
     /**
      * parent comment is, default is -1

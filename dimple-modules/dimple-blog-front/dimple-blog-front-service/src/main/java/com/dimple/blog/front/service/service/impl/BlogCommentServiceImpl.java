@@ -17,11 +17,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -79,7 +75,7 @@ public class BlogCommentServiceImpl implements BlogCommentService {
         blogComment.setAdmin(false);
         if (Objects.equals(blogComment.getType(), BlogCommentType.GITHUB.getType())) {
             Optional<String> adminIdOptional = Optional.ofNullable(blogConfigService.getGithubLoginConfig()).map(GithubLoginConfig::getAdminId);
-            if (adminIdOptional.isPresent() && Objects.equals(Long.valueOf(adminIdOptional.get()), blogComment.getVisitorId())) {
+            if (adminIdOptional.isPresent() && Objects.equals(adminIdOptional.get(), blogComment.getVisitorId())) {
                 blogComment.setAdmin(true);
             }
         }

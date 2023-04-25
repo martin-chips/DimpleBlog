@@ -15,9 +15,7 @@ export default {
   methods: {
     getVisitInfo() {
       console.log(window.location.href)
-      if (window.location.href.indexOf("code=") == -1) {
-
-      } else {
+      if (window.location.href.indexOf("code=") != -1) {
         var code = window.location.href.substr(window.location.href.indexOf("code=") + 5);
         api.getVisitorInfo(code).then(response => {
           if (response.code == 200) {

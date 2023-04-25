@@ -33,7 +33,7 @@ public class BlogCommentBO extends BaseEntity {
 
     private Integer type;
 
-    private Long visitorId;
+    private String visitorId;
 
     private String ip;
     private String browser;

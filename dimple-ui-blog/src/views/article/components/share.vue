@@ -130,8 +130,16 @@ export default {
     margin-right: 12px;
 
     > .tag {
+      background: transparent;
       margin-right: 12px;
       margin-bottom: 8px;
+    }
+
+    > .tag:hover {
+      background: #49b1f5;
+      @include themify() {
+        color: themed('color-white');
+      }
     }
   }
 

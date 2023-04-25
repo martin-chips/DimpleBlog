@@ -40,7 +40,7 @@ public class BlogComment extends BaseEntity {
 
     private Integer type;
 
-    private Long visitorId;
+    private String visitorId;
 
     private String ip;
     private String location;

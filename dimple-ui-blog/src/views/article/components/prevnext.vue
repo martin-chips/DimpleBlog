@@ -44,7 +44,6 @@ export default {
   components: {},
   methods: {
     async getPrevNextArticle() {
-      console.log("getPrevNextArticle")
       const prevnextRes = await this.$api.getPrevNextArticle({
         id: this.article.id
       });

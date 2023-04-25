@@ -32,7 +32,7 @@ public class BlogCommentVOParams extends BaseVOParams {
      */
     private String avatars;
 
-    private Long visitorId;
+    private String visitorId;
 
     private String link;
 

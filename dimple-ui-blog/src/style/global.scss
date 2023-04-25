@@ -134,15 +134,6 @@ table td, table th {
   color: #f7f7f7
 }
 
-button {
-  padding: 0;
-  outline: 0;
-  border: none;
-  background: 0 0;
-  cursor: pointer;
-  touch-action: manipulation
-}
-
 a {
   @include themify() {
     color: themed('font-color');
@@ -196,4 +187,7 @@ blockquote footer cite:before {
 
 blockquote > :last-child {
   margin-bottom: 0 !important
+}
+hr:before{
+  font-family: "FontAwesome";
 }

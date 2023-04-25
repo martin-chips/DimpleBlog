@@ -58,20 +58,20 @@ init_env() {
   echo "You should create the user with username:$input_nacos_username password:$input_nacos_password when you start services."
   echo "=========================="
   clean_sql
-  clean_html
+  clean_UI
   clean_jar
 
   cp_sql
 
   build_jar
-  build_html
+  build_UI
 
   change_default_password
 }
 
 build(){
   build_jar
-  build_html
+  build_UI
 }
 
 # change the default password in MySQL，Redis，Nacos
@@ -92,7 +92,7 @@ build_jar() {
   cp_jar
 }
 
-build_html() {
+build_UI() {
   echo 'start compile dimple-admin ui'
   cd $PROJECT_ROOT_PATH/dimple-ui-admin
   npm install
@@ -101,9 +101,7 @@ build_html() {
   cd $PROJECT_ROOT_PATH/dimple-ui-blog
   npm install
   npm run build
-  cp ./dist
-  npm install
-  cp_html
+  cp_UI
 }
 
 clean_jar() {
@@ -117,14 +115,29 @@ clean_sql() {
   find $PROJECT_DOCKER_PATH/mysql/db/*.sql | xargs rm -rf
 }
 
-clean_html() {
-  echo "begin clean html... "
+clean_UI() {
+  echo "begin clean UI... "
   find $PROJECT_DOCKER_PATH/nginx/admin/dist/* | xargs rm -rf
   find $PROJECT_DOCKER_PATH/node/blog/dist/* | xargs rm -rf
 }
 
+build_deploy(){
+  build_deploy_jar
+  build_deploy_UI
+}
+
+build_deploy_jar(){
+  build_jar
+  deploy_jar
+}
+
+build_deploy_UI(){
+  build_UI
+  deploy_UI
+}
+
 deploy(){
-  deploy_html
+  deploy_UI
   deploy_jar
 }
 
@@ -134,8 +147,8 @@ deploy_jar() {
   docker compose --compatibility up -d --build dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
 }
 
-deploy_html() {
-  echo "start html deploy ..."
+deploy_UI() {
+  echo "start UI deploy ..."
   cd $PROJECT_DOCKER_PATH
   docker compose --compatibility up -d --build dimple-ui dimple-node
 }
@@ -145,9 +158,9 @@ cp_sql() {
   /bin/cp -rf $PROJECT_ROOT_PATH/sql/*.sql $PROJECT_DOCKER_PATH/mysql/db
 }
 
-cp_html() {
-  # copy html
-  echo "begin copy html "
+cp_UI() {
+  # copy UI
+  echo "begin copy UI "
   mkdir -p $PROJECT_DOCKER_PATH/nginx/admin/dist
   /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-admin/dist/** $PROJECT_DOCKER_PATH/nginx/admin/dist
   mkdir -p $PROJECT_DOCKER_PATH/node/blog/dist
@@ -195,18 +208,21 @@ bye() {
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
-# build : only build jar, dist html... but not call docker run.
-# deploy: stop and remove all service, then build jar, dist html ... and finally call docker run.
+# build : only build jar, dist UI... but not call docker run.
+# deploy: stop and remove all service, then build jar, dist UI ... and finally call docker run.
 # 设置选项数组
 options=(
   "Init: only first deploy the service can using this method.",
   "Base: deploy MySQL,Naocs,Redis base services.",
-  "Build: Build all customer modules service,contains jar and html",
+  "Build_Deploy: Build and Deploy all Jar and UI.",
+  "Build_Deploy_Jar: Build and Deploy all Jar.",
+  "Build_Deploy_UI: Build and Deploy UI.",
+  "Build: Build all customer modules service,contains jar and UI",
   "Build Jar: Only build jar",
-  "Build html: Only build html",
-  "Deploy: Deploy all customer modules service,contains jar and html",
+  "Build UI: Only build UI",
+  "Deploy: Deploy all customer modules service,contains jar and UI",
   "Deploy Jar: Only deploy jar",
-  "Deploy html: Only deploy html",
+  "Deploy UI: Only deploy UI",
    "Stop: Stop all customer modules services",
   "Remove: Remove all customer service",
   "Exit"
@@ -214,12 +230,15 @@ options=(
 commands=(
   "init_env"
   "base"
+  "build_deploy"
+  "build_deploy_jar"
+  "build_deploy_UI"
   "build"
   "build_jar"
-  "build_html"
+  "build_UI"
   "deploy"
   "deploy_jar"
-  "deploy_html"
+  "deploy_UI"
   "stop"
   "rm_services"
   "bye"

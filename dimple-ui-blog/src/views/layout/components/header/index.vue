@@ -3,7 +3,7 @@
     <div class="header__content">
       <slot>
         <div class="header__default-title">
-          <h1 style="    line-height: initial;">{{ title }}</h1>
+          <h1 style="line-height: initial;">{{ title }}</h1>
         </div>
       </slot>
     </div>
@@ -46,7 +46,9 @@ export default {
     width: 100%;
     height: 100%;
     font-size: 20px;
-    color: #fff;
+    @include themify() {
+      color: themed('text-highlight-color');
+    }
     @include flex-box-center;
   }
 }

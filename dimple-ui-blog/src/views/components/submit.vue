@@ -141,7 +141,7 @@ export default {
       },
       customInfo: {
         username: "",
-        visitorId: 0,
+        visitorId: "0",
         email: "",
         link: ""
       },
@@ -160,6 +160,8 @@ export default {
     this.addMessageListener();
     if (storage.getVisitor()) {
       this.setVisitorInfo(storage.getVisitor());
+    } else {
+      this.handleQQCb();
     }
   },
   computed: {
@@ -213,14 +215,14 @@ export default {
           this.setVisitorInfo({
             ...this.customInfo,
             avatars: "/img/avatar/avatar.png",
-            visitorId: -1,
+            visitorId: "-1",
             type: 0
           });
           this.customVisible = false;
           this.customInfo = {
             username: "",
             email: "",
-            visitorId: 0,
+            visitorId: "0",
             link: ""
           };
         }
@@ -282,6 +284,11 @@ export default {
       this.$emit("changeCurrentReplyMessage", {});
     },
     logout() {
+      var visitInfo = storage.getVisitor();
+      if (visitInfo.type == 2) {
+        // QQ logout
+        QC.Login.signOut();
+      }
       this.setVisitor({});
       storage.removeVisitor();
     },
@@ -298,11 +305,12 @@ export default {
 <style lang="scss">
 @import '~@/style/index.scss';
 
-.el-dialog{
+.el-dialog {
   -webkit-box-shadow: 0 0 8px 0 #E8EDFA99, 0 2px 4px 0 #E8EDFA7F;
   box-shadow: 0 0 8px 0 #2056E199, 0 2px 4px 0 #E8EDFA7F;
 }
-.el-dialog{
+
+.el-dialog {
   -webkit-transition: box-shadow .3s ease-in-out;
   -moz-transition: box-shadow .3s ease-in-out;
   -o-transition: box-shadow .3s ease-in-out;
@@ -332,7 +340,8 @@ export default {
       .el-icon-user {
         font-size: 42px;
       }
-      img:hover{
+
+      img:hover {
         @include zoom-trigger
       }
 

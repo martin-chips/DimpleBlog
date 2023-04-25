@@ -76,7 +76,7 @@ create table blog_comment
     email       varchar(128)            null comment 'user email, if email is not null will reply when the comment has been replied',
     reply_id    bigint       default -1 comment '',
     link        varchar(255) default '' comment '',
-    visitor_id  bigint       default 0 comment '',
+    visitor_id  varchar(255)       default '' comment '',
     type        tinyint      default 0 comment '',
     admin       tinyint      default 0 comment '',
     ip          varchar(64)  default '' comment '',
