@@ -32,6 +32,7 @@ public class BlogMessageBoardController extends BaseController {
     @VisitLog(title = VisitLogTitle.LIST_MESSAGE_BOARD)
     public TableDataInfo list(BlogCommentVOParams blogComment) {
         startPage();
+        blogComment.setArticleId(-1000L);
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
         List<BlogCommentBO> list = blogCommentService.selectBlogCommentListWithSub(blogCommentBO);
         return getDataTable(BeanMapper.convertList(list, BlogCommentVO.class));
@@ -40,6 +41,7 @@ public class BlogMessageBoardController extends BaseController {
     @PostMapping
     @VisitLog(title = VisitLogTitle.ADD_MESSAGE_BOARD)
     public AjaxResult add(@RequestBody @Validated BlogCommentVOParams blogComment) {
+        blogComment.setArticleId(-1000L);
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
         return toAjax(blogCommentService.insertBlogComment(blogCommentBO));
     }
