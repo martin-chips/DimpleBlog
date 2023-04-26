@@ -20,7 +20,7 @@ export default (context) => {
                 store,
                 route: router.currentRoute,
                 isServer: true,
-                _ip: context._ip
+                _req: context._req
               })
               return { res, Component }
             }

@@ -48,21 +48,22 @@ export default {
 <style lang="scss">
 @import '~@/style/index.scss';
 
-.copyright:hover {
-  -webkit-box-shadow: 0 0 8px 0 #E8EDFA99, 0 2px 4px 0 #E8EDFA7F;
-  box-shadow: 0 0 8px 0 #2056E199, 0 2px 4px 0 #E8EDFA7F;
-}
-
-.copyright:before {
-  position: absolute;
-  top: 2px;
-  font-family: "FontAwesome";
-  right: 12px;
-  color: #49b1f5;
-  content: '\f1f9';
-  font-size: 1.3em;
-}
 .copyright {
+  &:hover {
+    -webkit-box-shadow: 0 0 8px 0 #E8EDFA99, 0 2px 4px 0 #E8EDFA7F;
+    box-shadow: 0 0 8px 0 #2056E199, 0 2px 4px 0 #E8EDFA7F;
+  }
+
+  &:before {
+    position: absolute;
+    top: 2px;
+    font-family: "FontAwesome";
+    right: 12px;
+    color: #49b1f5;
+    content: '\f1f9';
+    font-size: 1.3em;
+  }
+
   position: relative;
   -webkit-transition: box-shadow .3s ease-in-out;
   -moz-transition: box-shadow .3s ease-in-out;
@@ -79,7 +80,6 @@ export default {
   ul {
     padding: 12px;
     margin: 0;
-
     li {
       padding: 4px 0;
     }
@@ -87,12 +87,12 @@ export default {
 
   a {
     color: #99a9bf;
-    text-decoration: underline !important;
-  }
-
-  a:hover {
-    @include themify() {
-      color: themed('btn-bg');
+    text-decoration: underline;
+    &:hover {
+      @include themify() {
+        color: themed('btn-bg');
+        text-decoration: none;
+      }
     }
   }
 

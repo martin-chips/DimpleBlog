@@ -77,9 +77,14 @@ let MarkDowner = require('markdown-it');
 server.post('/api/markdown/convert', (req, res) => {
   var md = new MarkDowner({
     html: true,
+    linkify: true,
+    typographer: true,
+    breaks: true,
   });
-  if (req.body.content) {
-    res.send(md.render(req.body.content));
+  var content = req.body.content;
+  if (content) {
+    content = content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    res.send(md.render(content));
   } else {
     res.send("N/A")
   }
@@ -102,7 +107,7 @@ readyPromise.then(() => {
         title: `Dimple's Blog`, url: req.url
       }
       if (req.url.startsWith('/app/article/') || req.url === '/app/about' || req.url === '/app/messageBoard') {
-        context._ip = getIp(req)
+        context._req = req;
       }
       renderer.renderToString(context, (err, html) => {
         if (err) {

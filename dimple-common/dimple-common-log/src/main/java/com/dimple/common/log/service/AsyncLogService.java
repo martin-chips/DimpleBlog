@@ -7,6 +7,7 @@ import com.dimple.system.api.RemoteLogService;
 import com.dimple.system.api.model.BlogVisitLogBO;
 import com.dimple.system.api.model.SysOperLogBO;
 import eu.bitwalker.useragentutils.UserAgent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  * @author Dimple
  */
 @Service
+@Slf4j
 public class AsyncLogService {
     @Autowired
     private RemoteLogService remoteLogService;

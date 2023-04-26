@@ -167,7 +167,7 @@ export default {
     this.collectTitles()
     window.addEventListener('scroll', this.handleScroll, false)
   },
-  async asyncData({route, isServer, _ip}) {
+  async asyncData({route, isServer}) {
     const articleRes = await api.getArticle(route.params.id)
     const commentRes = await api.listComment({
       pageNum: 1,
@@ -175,7 +175,6 @@ export default {
       orderByColumn: "createTime",
       isAsc: "desc",
       articleId: route.params.id,
-      _ip
     });
 
     if (articleRes.code === 200) {
@@ -479,11 +478,11 @@ export default {
       @include themify() {
         color: themed('a-hover-color')
       }
+      text-decoration: none;
 
-    }
-
-    a:hover {
-      text-decoration: underline
+      &:hover {
+        text-decoration: underline
+      }
     }
 
     img {
@@ -522,21 +521,6 @@ export default {
       margin-bottom: 0 !important
     }
 
-    a:after {
-      float: right;
-      @include themify() {
-        color: themed('headline-presudo');
-      }
-      font-family: "FontAwesome";
-      content: '\f0c1';
-      font-size: .95em;
-      -webkit-transition: all .3s;
-      -moz-transition: all .3s;
-      -o-transition: all .3s;
-      -ms-transition: all .3s;
-      transition: all .3s
-    }
-
     a:hover:after {
       @include themify() {
         color: themed('pseudo-hover')
@@ -550,7 +534,6 @@ export default {
     h1:hover a.headerlink:after, h2:hover a.headerlink:after, h3:hover a.headerlink:after, h4:hover a.headerlink:after, h5:hover a.headerlink:after, h6:hover a.headerlink:after {
       opacity: 1;
       -ms-filter: none;
-      filter: none
     }
 
     ol ol, ol ul, ul ol, ul ul {
@@ -574,7 +557,22 @@ export default {
       -moz-transition: all .2s ease-out;
       -o-transition: all .2s ease-out;
       -ms-transition: all .2s ease-out;
-      transition: all .2s ease-out
+      transition: all .2s ease-out;
+
+      > a:after {
+        float: right;
+        @include themify() {
+          color: themed('headline-presudo');
+        }
+        font-family: "FontAwesome";
+        content: '111';
+        font-size: .95em;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -o-transition: all .3s;
+        -ms-transition: all .3s;
+        transition: all .3s
+      }
     }
 
     h1:before, h2:before, h3:before, h4:before, h5:before, h6:before {

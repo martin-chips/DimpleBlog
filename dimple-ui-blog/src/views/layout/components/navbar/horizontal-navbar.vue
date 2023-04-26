@@ -107,6 +107,12 @@ export default {
 }
 
 .navbar-rollup {
+  .navbar__name {
+    &:hover {
+      color: #49b1f5;
+    }
+  }
+
   .horizontal-navbar__menu {
     @include themify() {
       color: themed('font-color');

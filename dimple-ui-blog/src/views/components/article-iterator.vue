@@ -136,16 +136,10 @@ export default {
         @include clamp(2);
         font-size: 1.72em;
         line-height: 1.4;
-        -webkit-transition: all .2s ease-in-out;
-        -moz-transition: all .2s ease-in-out;
-        -o-transition: all .2s ease-in-out;
-        -ms-transition: all .2s ease-in-out;
-        transition: all .2s ease-in-out;
-        -webkit-line-clamp: 2;
 
         a {
           @include themify() {
-            color: themed('text-highlight-color') !important;
+            color: themed('text-highlight-color');
           }
           font-size: 24px;
           line-height: 1.5;
@@ -153,11 +147,17 @@ export default {
           @include respond-to(xs) {
             font-size: 18px;
           }
-        }
+          -webkit-line-clamp: 2;
 
-        a:hover {
-          @include themify() {
-            color: themed('a-hover-color');
+          &:hover {
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            @include themify() {
+              color: themed('a-hover-color');
+            }
           }
         }
       }

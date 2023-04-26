@@ -111,8 +111,8 @@ export default {
       return `${process.env.VUE_APP_BASE_URL}/app/article/${this.article.id}`;
     },
   },
-  async asyncData({route, isServer, _ip}) {
-    const articleRes = await api.getAbout()
+  async asyncData({route, isServer, _req}) {
+    const articleRes = await api.getAbout(_req)
     if (articleRes.code === 200) {
       if (!isServer) setTimeout(() => jumpAnchor(route), 0);
       const response = await axios.post(process.env.BASE_URL + '/api/markdown/convert', {content: articleRes.data.content});

@@ -85,17 +85,17 @@ export default {
         width: 100%;
         height: 100%;
         overflow: hidden;
-      }
 
-      a:before {
-        content: '';
-        position: absolute;
-        z-index: 5;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        transition: all ease-in 0.38s;
+        &:before {
+          content: '';
+          position: absolute;
+          z-index: 5;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          transition: all ease-in 0.38s;
+        }
       }
 
       img {
@@ -106,14 +106,10 @@ export default {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: all ease 0.38s;
+        @include zoom-define
       }
-
-      a:hover:before {
-      }
-
       a:hover img {
-        transform: scale(1.2);
+        @include zoom-trigger
       }
     }
 

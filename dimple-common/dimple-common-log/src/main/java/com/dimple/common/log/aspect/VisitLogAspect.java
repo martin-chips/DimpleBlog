@@ -68,16 +68,25 @@ public class VisitLogAspect {
         BlogVisitLogBO blogVisitLogBO = new BlogVisitLogBO();
         try {
             blogVisitLogBO.setStatusCode(BusinessStatus.SUCCESS.ordinal());
-            String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
-            blogVisitLogBO.setIp(ip);
+
             blogVisitLogBO.setRequestUri(StringUtils.substring(ServletUtils.getRequest().getRequestURI(), 0, 255));
             String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
             blogVisitLogBO.setMethodName(className + "." + methodName + "()");
             blogVisitLogBO.setRequestMethod(ServletUtils.getRequest().getMethod());
-            String userAgent = ServletUtils.getRequest().getHeader("User-Agent");
+            String userRealIp = ServletUtils.getRequest().getHeader("x-node-real-ip");
+            if (StringUtils.isEmpty(userRealIp)) {
+                userRealIp = IpUtils.getIpAddr(ServletUtils.getRequest());
+            }
+            blogVisitLogBO.setIp(userRealIp);
+
+            String userRealAgent = ServletUtils.getRequest().getHeader("x-node-user-agent");
+            if (StringUtils.isEmpty(userRealAgent)) {
+                userRealAgent = ServletUtils.getRequest().getHeader("User-Agent");;
+            }
+            blogVisitLogBO.setUserAgent(userRealAgent);
+
             String referer = ServletUtils.getRequest().getHeader("Referer");
-            blogVisitLogBO.setUserAgent(userAgent);
             blogVisitLogBO.setReferer(referer);
             setControllerMethodDescription(joinPoint, visitLog, blogVisitLogBO, jsonResult);
             if (!Objects.isNull(e)) {

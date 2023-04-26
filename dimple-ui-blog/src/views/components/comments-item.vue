@@ -19,18 +19,23 @@
       <div class="comments-item__say">{{ message.content }}</div>
 
       <div class="comments-item__detail">
-        <i class="el-icon-date"></i>
-        <span class="detail-visitor-date">{{ message.createTime | formatDate }}</span>
-        <i class="el-icon-location-outline"></i>
-        <span>{{ message.location }}</span>
-        <i
-          class="el-icon-thumb"
-          @click="addLike(message)"
-          :class="{ 'el-icon-thumb--active': message.liked == 1 }"
-        ></i>
-        <span :class="{ 'el-icon-thumb--active': message.replyId == 1 }">{{ message.likeCount }}</span>
-        <i class="el-icon-chat-dot-round" @click="changeCurrentReplyMessage(message)"></i>
-        <span>{{ message | replyCount }}</span>
+        <div class="comments-item__detail__meta">
+          <i class="el-icon-date"></i>
+          <span>{{ message.createTime | formatDate }}</span>
+        </div>
+        <div class="comments-item__detail__meta">
+          <i class="el-icon-location-outline"></i>
+          <span>{{ message.location }}</span>
+        </div>
+        <div class="comments-item__detail__meta">
+          <i class="el-icon-thumb" @click="addLike(message)"></i>
+          <span>{{ message.likeCount }}</span>
+        </div>
+        <div class="comments-item__detail__meta">
+          <i class="el-icon-chat-dot-round" @click="changeCurrentReplyMessage(message)"></i>
+          <span>{{ message | replyCount }}</span>
+        </div>
+
       </div>
     </div>
   </div>
@@ -92,14 +97,15 @@ export default {
     height: 50px;
     flex: 0 0 auto;
 
-    img:hover {
-      @include zoom-trigger();
-    }
     img {
       @include zoom-define();
       border-radius: 4px;
       width: 100%;
       height: 100%;
+
+      &:hover {
+        @include zoom-trigger();
+      }
     }
   }
 
@@ -142,11 +148,7 @@ export default {
     i {
       font-size: 16px;
       margin-left: 12px;
-      // font-weight: 600;
-    }
-
-    i:hover {
-      color: #409eff;
+      font-weight: 600;
     }
 
     span {
@@ -158,8 +160,10 @@ export default {
       cursor: pointer;
     }
 
-    .el-icon-thumb--active {
-      color: #409eff;
+    &__meta:hover {
+      @include themify() {
+        color: themed('a-hover-color');
+      }
     }
   }
 

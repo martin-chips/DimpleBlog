@@ -20,6 +20,12 @@ services:
       - "9848:9848"
       - "9849:9849"
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
     depends_on:
       dimple-mysql:
         condition: service_healthy
@@ -80,7 +86,6 @@ services:
       resources:
         limits:
           memory: 512M
-
   dimple-node:
     container_name: dimple-node
     image: node
@@ -94,7 +99,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 512M
+          memory: 256M
+        reservations:
+          memory: 256M
   dimple-ui:
     container_name: dimple-ui
     image: nginx
@@ -116,11 +123,19 @@ services:
       resources:
         limits:
           memory: 256M
+        reservations:
+          memory: 256M
   dimple-gateway:
     container_name: dimple-gateway
     build:
       context: ./dimple/gateway/
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 512M
     ports:
       - "8080:8080"
     environment:
@@ -132,6 +147,12 @@ services:
     build:
       context: ./dimple/auth/
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
     ports:
       - "9200:9200"
     environment:
@@ -145,6 +166,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9201:9201"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
@@ -156,6 +183,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9203:9203"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
@@ -169,6 +202,12 @@ services:
       - "9300:9300"
     volumes:
       - ./file/uploadPath:/home/dimple/uploadPath
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
@@ -178,6 +217,12 @@ services:
     build:
       context: ./dimple/modules/monitor/
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
     ports:
       - "9100:9100"
     environment:
@@ -189,6 +234,12 @@ services:
     build:
       context: ./dimple/modules/blog/
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
@@ -200,19 +251,31 @@ services:
     build:
       context: ./dimple/modules/blog-front/
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 512M
     extra_hosts:
       - "github.com:140.82.112.3"
     ports:
       - "9500:9500"
     environment:
       - TZ=Asia/Shanghai
-      - JAVA_OPTS=-Xms512m -Xmx512m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
+      - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
       - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos
   dimple-modules-log:
     container_name: dimple-modules-log
     build:
       context: ./dimple/modules/log/
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
     ports:
       - "9408:9408"
     environment:

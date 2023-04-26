@@ -28,7 +28,7 @@
     <div class="site-introduction__social">
       <div class="social-github">
         <a href="https://github.com/martin-chips/DimpleBlog" target="_blank">
-          <el-button class="github-btn" type="primary" size="mini">
+          <el-button class="github-btn" type="custome" size="mini">
             <div class="social-github__icon">
               <svg
                 height="18"
@@ -127,30 +127,43 @@ export default {
     }
   }
 
+
   &__social {
     margin-top: 16px;
 
     .el-button {
       width: 100%;
+      @include themify() {
+        color: themed('btn-color');;
+      }
+
+      &:hover {
+        @include themify() {
+          background-color: themed('btn-hover-color');
+        }
+      }
+
       > span {
         width: 100%;
         display: inline-block;
       }
     }
 
-    .social-github__icon {
-      display: inline-block;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      svg {
+    .social-github {
+      &__icon {
         display: inline-block;
-        width: 16px;
-        height: 16px;
-        flex: 0 0 auto;
-        margin-right: 8px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          flex: 0 0 auto;
+          margin-right: 8px;
+        }
       }
     }
   }

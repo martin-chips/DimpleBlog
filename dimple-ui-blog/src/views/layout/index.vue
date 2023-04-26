@@ -70,10 +70,6 @@ export default {
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
-// clear the background color
-.el-pagination, .el-menu, .el-drawer, .btn-next, .el-pagination, .el-input__inner, .el-dialog, .btn-prev, .el-pager li, .el-textarea__inner {
-  background-color: transparent !important;
-}
 
 canvas:not(#ribbon-canvas) {
   -webkit-animation: to_show 4s;
@@ -89,18 +85,23 @@ body {
   }
 }
 
-.el-drawer__body, .el-drawer__header, .el-dialog__header, .el-dialog__body {
-  margin-bottom: 0px;
-  @include themify() {
-    background: themed('global-bg');
-  }
-}
-
 .el-button {
   border: none;
   @include themify() {
     color: themed('btn-color');
     background-color: themed('btn-bg');
+  }
+}
+
+// clear the background color
+.el-pagination, .el-menu, .el-drawer, .btn-next, .el-pagination, .el-input__inner, .el-dialog, .btn-prev, .el-pager li, .el-textarea__inner {
+  background-color: transparent !important;
+}
+
+.el-drawer__body, .el-drawer__header, .el-dialog__header, .el-dialog__body {
+  margin-bottom: 0px;
+  @include themify() {
+    background: themed('global-bg');
   }
 }
 

@@ -14,7 +14,8 @@
       <div id="rightside-config-show">
         <button id="darkmode" @click="changeTheme" type="button" title="浅色和深色模式转换"><i
           class="fa fa-adjust"></i></button>
-        <button @click="backTop" id="go-up" type="button" title="回到顶部" :class="[backupValue==100?'':'show-percent']"><span
+        <button @click="backTop" id="go-up" type="button" title="回到顶部"
+                :class="[backupValue==100?'':'show-percent']"><span
           class="scroll-percent">{{ backupValue }}</span><i
           class="fa fa-arrow-up"></i></button>
       </div>
@@ -84,7 +85,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['rollBack','panelShow']),
+    ...mapState(['rollBack', 'panelShow']),
     enums() {
       // 路由进行自定义看板、顺序
       const def = [

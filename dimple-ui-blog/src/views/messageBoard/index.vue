@@ -76,11 +76,10 @@ export default {
       messages: []
     }
   },
-  async asyncData({_ip}) {
+  async asyncData() {
     const msgRes = await api.getMessageBoard({
       pageNum: 1,
-      pageSize: 10,
-      _ip
+      pageSize: 10
     })
     if (msgRes.code === 200) return {messages: msgRes.rows, total: msgRes.total}
   },

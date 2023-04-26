@@ -33,7 +33,9 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-color)
+  @include themify() {
+    background: themed('scrollbar-color')
+  }
 }
 
 ::-webkit-scrollbar-track {
@@ -42,11 +44,15 @@ body {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-color) transparent
+  @include themify() {
+    scrollbar-color: themed('scrollbar-color') transparent
+  }
 }
 
 input::placeholder {
-  color: var(--font-color)
+  @include themify() {
+    color: themed('font-color')
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -188,6 +194,7 @@ blockquote footer cite:before {
 blockquote > :last-child {
   margin-bottom: 0 !important
 }
-hr:before{
+
+hr:before {
   font-family: "FontAwesome";
 }

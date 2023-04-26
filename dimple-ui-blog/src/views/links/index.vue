@@ -152,34 +152,119 @@ export default {
 <style lang="scss" scoped>
 @import '~@/style/index.scss';
 
-.flink .flink-list > .flink-list-item:hover:before {
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  -o-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-}
-
 .flink {
-  margin-bottom: 20px
-}
+  margin-bottom: 20px;
 
-.flink .flink-list {
-  overflow: auto;
-  padding: 10px 10px 0;
-  text-align: center
-}
+  .flink-list {
+    overflow: auto;
+    padding: 10px 10px 0;
+    text-align: center;
 
-.flink .flink-list > .flink-list-item {
-  position: relative;
-  float: left;
-  overflow: hidden;
-  margin: 15px 7px;
-  width: calc(100% / 3 - 15px);
-  height: 90px;
-  border-radius: 8px;
-  line-height: 17px;
-  -webkit-transform: translateZ(0)
+    .flink-list-item {
+      position: relative;
+      float: left;
+      overflow: hidden;
+      margin: 15px 7px;
+      width: calc(100% / 3 - 15px);
+      height: 90px;
+      border-radius: 8px;
+      line-height: 17px;
+      -webkit-transform: translateZ(0);
+
+      &:hover:before {
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -o-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+      }
+
+      .flink-item-name {
+        padding: 16px 10px 0 0;
+        height: 40px;
+        font-weight: 700;
+        font-size: 1.43em
+      }
+
+      .flink-item-desc {
+        padding: 16px 10px 16px 0;
+        height: 50px;
+        font-size: .93em
+      }
+
+      a {
+        @include themify() {
+          color: themed('font-color');
+        }
+        text-decoration: none
+      }
+
+      a .flink-item-icon img {
+        width: 100%;
+        height: 100%;
+        -webkit-transition: filter 375ms ease-in .2s, -webkit-transform .3s;
+        -moz-transition: filter 375ms ease-in .2s, -moz-transform .3s;
+        -o-transition: filter 375ms ease-in .2s, -o-transform .3s;
+        -ms-transition: filter 375ms ease-in .2s, -ms-transform .3s;
+        transition: filter 375ms ease-in .2s, transform .3s;
+        object-fit: cover
+      }
+
+      a .img-alt {
+        display: none
+      }
+
+      a .flink-item-icon {
+        float: left;
+        overflow: hidden;
+        margin: 15px 10px;
+        width: 60px;
+        height: 60px;
+        border-radius: 35px;
+        -webkit-transition: width .3s ease-out;
+        -moz-transition: width .3s ease-out;
+        -o-transition: width .3s ease-out;
+        -ms-transition: width .3s ease-out;
+        transition: width .3s ease-out
+      }
+
+      &:before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        @include themify() {
+          background: themed('text-bg-hover');
+        }
+        content: '';
+        -webkit-transition: -webkit-transform .3s ease-out;
+        -moz-transition: -moz-transform .3s ease-out;
+        -o-transition: -o-transform .3s ease-out;
+        -ms-transition: -ms-transform .3s ease-out;
+        transition: transform .3s ease-out;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        -o-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0)
+      }
+
+      &:hover .flink-item-icon {
+        margin-left: -10px;
+        width: 0
+      }
+    }
+
+    .flink-list-item:active:before, .flink .flink-list > .flink-list-item:focus:before, .flink .flink-list > .flink-list-item:hover:before {
+      -webkit-transform: scale(1);
+      -moz-transform: scale(1);
+      -o-transform: scale(1);
+      -ms-transform: scale(1);
+      transform: scale(1)
+    }
+  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -194,94 +279,4 @@ export default {
   }
 }
 
-.flink .flink-list > .flink-list-item:hover .flink-item-icon {
-  margin-left: -10px;
-  width: 0
-}
-
-.flink .flink-list > .flink-list-item:before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  @include themify() {
-    background: themed('text-bg-hover');
-  }
-  content: '';
-  -webkit-transition: -webkit-transform .3s ease-out;
-  -moz-transition: -moz-transform .3s ease-out;
-  -o-transition: -o-transform .3s ease-out;
-  -ms-transition: -ms-transform .3s ease-out;
-  transition: transform .3s ease-out;
-  -webkit-transform: scale(0);
-  -moz-transform: scale(0);
-  -o-transform: scale(0);
-  -ms-transform: scale(0);
-  transform: scale(0)
-}
-
-.flink .flink-list > .flink-list-item:active:before, .flink .flink-list > .flink-list-item:focus:before, .flink .flink-list > .flink-list-item:hover:before {
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  -o-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1)
-}
-
-.flink .flink-list > .flink-list-item a {
-  @include themify() {
-    color: themed('font-color');
-  }
-  text-decoration: none
-}
-
-.flink .flink-list > .flink-list-item a .flink-item-icon {
-  float: left;
-  overflow: hidden;
-  margin: 15px 10px;
-  width: 60px;
-  height: 60px;
-  border-radius: 35px;
-  -webkit-transition: width .3s ease-out;
-  -moz-transition: width .3s ease-out;
-  -o-transition: width .3s ease-out;
-  -ms-transition: width .3s ease-out;
-  transition: width .3s ease-out
-}
-
-.flink .flink-list > .flink-list-item a .flink-item-icon img {
-  width: 100%;
-  height: 100%;
-  -webkit-transition: filter 375ms ease-in .2s, -webkit-transform .3s;
-  -moz-transition: filter 375ms ease-in .2s, -moz-transform .3s;
-  -o-transition: filter 375ms ease-in .2s, -o-transform .3s;
-  -ms-transition: filter 375ms ease-in .2s, -ms-transform .3s;
-  transition: filter 375ms ease-in .2s, transform .3s;
-  object-fit: cover
-}
-
-.flink .flink-list > .flink-list-item a .img-alt {
-  display: none
-}
-
-.flink .flink-item-name {
-  padding: 16px 10px 0 0;
-  height: 40px;
-  font-weight: 700;
-  font-size: 1.43em
-}
-
-.flink .flink-item-desc {
-  padding: 16px 10px 16px 0;
-  height: 50px;
-  font-size: .93em
-}
-
-.flink .flink-name {
-  margin-bottom: 5px;
-  font-weight: 700;
-  font-size: 1.5em
-}
 </style>

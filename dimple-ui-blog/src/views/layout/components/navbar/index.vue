@@ -101,9 +101,6 @@ export default {
 </script>
 <style lang="scss">
 @import '~@/style/index.scss';
-a:hover{
-  color: #ff0000;
-}
 .navbar {
   width: 100%;
   height: 60px;
