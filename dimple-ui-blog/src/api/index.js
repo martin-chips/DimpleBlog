@@ -8,16 +8,18 @@ import link from "./link";
 import visitor from "./visitor";
 import panel from "./panel";
 import about from "./about";
+import asyncData from "./asyncData";
 
 export default {
-    ...article,
-    ...archives,
-    ...comments,
-    ...category,
-    ...messageBoard,
-    ...link,
-    ...about,
-    ...panel,
-    ...visitor,
-    ...tags,
+  ...article,
+  ...archives,
+  ...comments,
+  ...category,
+  ...messageBoard,
+  ...link,
+  ...about,
+  ...panel,
+  ...visitor,
+  ...tags,
+  ...asyncData
 }

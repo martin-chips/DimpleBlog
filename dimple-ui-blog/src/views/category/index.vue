@@ -43,8 +43,8 @@ export default {
     }
   },
   components: {dot},
-  async asyncData() {
-    const categoryRes = await api.listCategory({pageNum: 1, pageSize: 1000})
+  async asyncData({store, route, isServer, _req}) {
+    const categoryRes = await api.listAsyncCategory(_req)
     if (categoryRes.code == 200) return {categories: categoryRes.rows}
   },
   methods: {

@@ -115,9 +115,11 @@ export default {
       links: []
     };
   },
-  watch: {},
-  async asyncData() {
-    const archiveRes = await api.listLink(1, 10);
+  async asyncData({store, route, isServer, _req}) {
+    const archiveRes = await api.listAsyncLink({
+      pageNum: 1,
+      pageSize: 100
+    }, _req);
     if (archiveRes.code == 200) {
       return {
         links: archiveRes.rows,

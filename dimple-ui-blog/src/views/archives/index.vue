@@ -74,11 +74,8 @@ export default {
       archives: []
     };
   },
-  async asyncData() {
-    const archiveRes = await api.getArchives({
-      pageSize: 10,
-      pageNum: 1
-    });
+  async asyncData({store, route, isServer, _req}) {
+    const archiveRes = await api.getAsyncArchives(_req);
     if (archiveRes.code === 200) {
       console.log(archiveRes.rows)
       return {
@@ -110,6 +107,7 @@ export default {
 .archives {
   &__year {
     padding: 12px;
+
     .year-text {
       font-size: 22px;
       padding: 16px 0 28px 0;

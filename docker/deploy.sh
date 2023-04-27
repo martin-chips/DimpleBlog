@@ -15,6 +15,11 @@ stop() {
   docker compose stop
 }
 
+start() {
+  echo "start services..."
+  docker compose start
+}
+
 down() {
   echo "start stop all service..."
   stop
@@ -44,6 +49,21 @@ init_env() {
   echo 'This method only using the first deploy, <CTRL-C> exit and press any key will continue...'
   # shellcheck disable=SC2162
   read any_key
+  clean_sql
+  clean_UI
+  clean_jar
+  cp_sql
+  change_default_password
+  build
+}
+
+build(){
+  build_jar
+  build_UI
+}
+
+# change the default password in MySQL，Redis，Nacos
+change_default_password() {
   default_password="Di^&7so@c@drxMe4"
   echo "please input the password(default is ${default_password}), this password will be used to Redis/MySQL"
   # shellcheck disable=SC2162
@@ -54,28 +74,10 @@ init_env() {
   default_nacos_password="default_nacos_password"
   echo "please input nacos password(default is default_nacos_password), this password will be used to nacos discovery,config and sentinel"
   read input_nacos_password
-  echo "=========================="
-  echo "You should create the user with username:$input_nacos_username password:$input_nacos_password when you start services."
-  echo "=========================="
-  clean_sql
-  clean_UI
-  clean_jar
-
-  cp_sql
-
-  build_jar
-  build_UI
-
-  change_default_password
-}
-
-build(){
-  build_jar
-  build_UI
-}
-
-# change the default password in MySQL，Redis，Nacos
-change_default_password() {
+  echo "=========================================================================================================================="
+  echo "||You should create the user with username:$input_nacos_username password:$input_nacos_password when you start services.||"
+  echo "=====================================================================================================================+++++"
+  sleep 3s
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/redis/conf/redis.conf
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/nacos/conf/application.properties
   sed -i "s/$default_password/$input_password/g" $PROJECT_DOCKER_PATH/mysql/db/*
@@ -84,7 +86,6 @@ change_default_password() {
   sed -i "s/$default_nacos_username/$input_nacos_username/g" $PROJECT_DOCKER_PATH/docker-compose.yml
   sed -i "s/$default_nacos_password/$input_nacos_password/g" $PROJECT_DOCKER_PATH/docker-compose.yml
 }
-
 build_jar() {
   echo "start build jar ..."
   cd $PROJECT_ROOT_PATH
@@ -137,8 +138,8 @@ build_deploy_UI(){
 }
 
 deploy(){
-  deploy_UI
   deploy_jar
+  deploy_UI
 }
 
 deploy_jar() {
@@ -212,8 +213,10 @@ RESET=$(tput sgr0)
 # deploy: stop and remove all service, then build jar, dist UI ... and finally call docker run.
 # 设置选项数组
 options=(
-  "Init: only first deploy the service can using this method.",
   "Base: deploy MySQL,Naocs,Redis base services.",
+  "Start: Start all customer modules services",
+  "Stop: Stop all customer modules services",
+  "Init: only first deploy the service can using this method.",
   "Build_Deploy: Build and Deploy all Jar and UI.",
   "Build_Deploy_Jar: Build and Deploy all Jar.",
   "Build_Deploy_UI: Build and Deploy UI.",
@@ -223,13 +226,14 @@ options=(
   "Deploy: Deploy all customer modules service,contains jar and UI",
   "Deploy Jar: Only deploy jar",
   "Deploy UI: Only deploy UI",
-   "Stop: Stop all customer modules services",
   "Remove: Remove all customer service",
   "Exit"
 )
 commands=(
-  "init_env"
   "base"
+  "start"
+  "stop"
+  "init_env"
   "build_deploy"
   "build_deploy_jar"
   "build_deploy_UI"
@@ -239,7 +243,6 @@ commands=(
   "deploy"
   "deploy_jar"
   "deploy_UI"
-  "stop"
   "rm_services"
   "bye"
 )
@@ -276,9 +279,3 @@ while true; do
 done
 
 eval "${commands[$selected]}"
-
-
-
-
-
-

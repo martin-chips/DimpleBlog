@@ -33,7 +33,7 @@ CREATE TABLE `config_info`
     UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info';
 insert into config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-values  (1, 'application-dev.yml', 'DEFAULT_GROUP', 'spring:
+values  (26, 'application-dev.yml', 'DEFAULT_GROUP', 'spring:
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   mvc:
@@ -65,8 +65,8 @@ management:
     web:
       exposure:
         include: '' *''
-', 'aaa73b809cfd4d0058893aa13da57806', '2020-05-20 12:00:00', '2022-04-24 10:26:34', 'nacos', '0:0:0:0:0:0:0:1', '', '', '通用配置', 'null', 'null', 'yaml', null, ''),
-    (2, 'dimple-gateway-dev.yml', 'DEFAULT_GROUP', 'spring:
+', 'f648e8ba64eb311333b57a2d1c99876d', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', '通用配置', null, null, 'yaml', null, ''),
+    (27, 'dimple-gateway-dev.yml', 'DEFAULT_GROUP', 'spring:
   redis:
     host: dimple-redis
     port: 6379
@@ -159,14 +159,14 @@ security:
       - /csrf
       - /blog-front/**
       - /system/config/configKey/**
-', '58f0b035894aafb9f4af51a1670c9bfb', '2020-05-14 14:17:55', '2023-03-06 05:57:26', 'nacos', '0:0:0:0:0:0:0:1', '', '', '网关模块', 'null', 'null', 'yaml', '', ''),
-    (3, 'dimple-auth-dev.yml', 'DEFAULT_GROUP', 'spring:
+', 'f70906dcacb480e61bfe753d26338a16', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', '网关模块', null, null, 'yaml', null, ''),
+    (28, 'dimple-auth-dev.yml', 'DEFAULT_GROUP', 'spring:
   redis:
     host: dimple-redis
     port: 6379
     password: Di^&7so@c@drxMe4
-', '8bd9dada9a94822feeab40de55efced6', '2020-11-20 00:00:00', '2022-09-29 02:48:42', 'nacos', '0:0:0:0:0:0:0:1', '', '', '认证中心', 'null', 'null', 'yaml', '', ''),
-    (4, 'dimple-monitor-dev.yml', 'DEFAULT_GROUP', '# spring配置
+', '56bd4f81527b005f796e05ff93f6190c', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', '认证中心', null, null, 'yaml', null, ''),
+    (29, 'dimple-monitor-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   security:
     user:
@@ -226,8 +226,8 @@ mybatis:
 swagger:
   title: 监控模块接口文档
   license: Powered By Dimple
-  licenseUrl: https://www.bianxf.com', 'd86ff4c035ece008e552bf216bb1e48d', '2020-11-20 00:00:00', '2023-03-06 06:20:55', 'nacos', '0:0:0:0:0:0:0:1', '', '', '监控中心', 'null', 'null', 'yaml', '', ''),
-    (5, 'dimple-system-dev.yml', 'DEFAULT_GROUP', '# spring配置
+  licenseUrl: https://www.bianxf.com', 'e428adf510f8b9549555579a473d7e3e', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', '监控中心', null, null, 'yaml', null, ''),
+    (30, 'dimple-system-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   redis:
     host: dimple-redis
@@ -275,8 +275,8 @@ mybatis:
 swagger:
   title: 系统模块接口文档
   license: Powered By Dimple
-  licenseUrl: https://www.bianxf.com', '77dcac20dc4f47d5cbbdc3f33e5710d1', '2020-11-20 00:00:00', '2023-03-06 06:20:29', 'nacos', '0:0:0:0:0:0:0:1', '', '', '系统模块', 'null', 'null', 'yaml', '', ''),
-    (6, 'dimple-job-dev.yml', 'DEFAULT_GROUP', '# spring配置
+  licenseUrl: https://www.bianxf.com', 'b8bc33378da00348bce44e93fcee1dfc', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', '系统模块', null, null, 'yaml', null, ''),
+    (31, 'dimple-job-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   redis:
     host: dimple-redis
@@ -300,8 +300,8 @@ swagger:
   title: 定时任务接口文档
   license: Powered By Dimple
   licenseUrl: https://www.bianxf.com
-', 'ac4f96a97eb52fb67cd6e025b84958b3', '2020-11-20 00:00:00', '2023-03-06 06:20:42', 'nacos', '0:0:0:0:0:0:0:1', '', '', '定时任务', 'null', 'null', 'yaml', '', ''),
-    (7, 'dimple-file-dev.yml', 'DEFAULT_GROUP', '# spring配置
+', 'bc07f90839f508858f05364ce6af2bf8', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', '定时任务', null, null, 'yaml', null, ''),
+    (32, 'dimple-file-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   servlet:
     multipart:
@@ -366,8 +366,8 @@ file:
       secretKey: EvDiz--aLFdNQ4XOq237itSLqWttApEt9S3RWFNP
       bucket: dimple-file
       domain: http://rrfyveqgo.hn-bkt.clouddn.com
-      region: huanan', '8e4de7b3b6e28eb7885ed1bcd1d096bc', '2020-11-20 00:00:00', '2023-03-13 12:36:31', 'nacos', '0:0:0:0:0:0:0:1', '', '', '文件服务', 'null', 'null', 'yaml', '', ''),
-    (8, 'sentinel-dimple-gateway', 'DEFAULT_GROUP', '[
+      region: huanan', 'e4806bd3519063cd85c084d12aaa397a', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', '文件服务', null, null, 'yaml', null, ''),
+    (33, 'sentinel-dimple-gateway', 'DEFAULT_GROUP', '[
     {
         "resource": "dimple-auth",
         "count": 500,
@@ -424,8 +424,8 @@ file:
         "strategy": 0,
         "controlBehavior": 0
     }
-]', 'bd887503ee7702f7192fa67da1d72942', '2020-11-20 00:00:00', '2023-03-06 05:57:45', 'nacos', '0:0:0:0:0:0:0:1', '', '', '限流策略', 'null', 'null', 'json', '', ''),
-    (9, 'dimple-blog-dev.yml', 'DEFAULT_GROUP', '# spring配置
+]', '24db479b65487f91faa4d3f294938eee', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', '限流策略', null, null, 'json', null, ''),
+    (34, 'dimple-blog-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   redis:
     host: dimple-redis
@@ -473,8 +473,8 @@ mybatis:
 swagger:
   title: 系统模块接口文档
   license: Powered By Dimple
-  licenseUrl: https://www.bianxf.com', '9f0788d8c80350df38abdfb67d3c8f41', '2022-12-29 07:46:52', '2023-03-06 06:21:11', 'nacos', '0:0:0:0:0:0:0:1', '', '', 'BLOG模块', '', '', 'yaml', '', null),
-     (19, 'dimple-blog-front-dev.yml', 'DEFAULT_GROUP', '# spring配置
+  licenseUrl: https://www.bianxf.com', '5980a232b177e2e96a4d1b518dc2b3f5', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', 'BLOG模块', null, null, 'yaml', null, ''),
+    (35, 'dimple-blog-front-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   redis:
     host: dimple-redis
@@ -521,8 +521,8 @@ mybatis:
 swagger:
   title: 系统模块接口文档
   license: Powered By Dimple
-  licenseUrl: https://www.bianxf.com', '02e33a85c13807bc36a5d2dbd7c5750d', '2023-03-02 07:21:17', '2023-03-15 03:08:15', 'nacos', '0:0:0:0:0:0:0:1', '', '', 'BLOG-FRONT模块', '', '', 'yaml', '', null),
-    (25, 'dimple-log-dev.yml', 'DEFAULT_GROUP', '# spring配置
+  licenseUrl: https://www.bianxf.com', '6e1a2d282648b766164ac46287ece687', '2023-04-27 02:49:46', '2023-04-27 02:49:46', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', 'BLOG-FRONT模块', null, null, 'yaml', null, ''),
+    (36, 'dimple-log-dev.yml', 'DEFAULT_GROUP', '# spring配置
 spring:
   redis:
     host: dimple-redis
@@ -546,7 +546,7 @@ swagger:
   title: 日志接口文档
   license: Powered By Dimple
   licenseUrl: https://www.bianxf.com
-', '324df1f93cafac6395257eff87fff9a2', '2023-03-06 05:56:02', '2023-03-06 06:19:09', 'nacos', '0:0:0:0:0:0:0:1', '', '', '日志模块', '', '', 'yaml', '', null);
+', '5d0256da0931615b65791137b3729911', '2023-04-27 02:49:53', '2023-04-27 02:49:53', null, '183.220.108.37', '', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', '日志模块', null, null, 'yaml', null, '');
 
 /******************************************/
 /*   表名称 = config_info_aggr   */
@@ -699,6 +699,9 @@ CREATE TABLE `tenant_info` (
   UNIQUE KEY `uk_tenant_info_kptenantid` (`kp`,`tenant_id`),
   KEY `idx_tenant_id` (`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='tenant_info';
+
+insert into tenant_info (id, kp, tenant_id, tenant_name, tenant_desc, create_source, gmt_create, gmt_modified)
+values  (1, '1', '63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8', 'Dimple', 'Dimple Service Using', 'nacos', 1682563743828, 1682563743828);
 
 CREATE TABLE `users` (
 	`username` varchar(50) NOT NULL PRIMARY KEY,

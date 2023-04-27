@@ -79,13 +79,13 @@ export default {
   async mounted() {
     this.startPlay()
   },
-  async asyncData() {
-    const articleRes = await api.listArticle({
+  async asyncData({store, route, isServer, _req}) {
+    const articleRes = await api.listAsyncArticle({
       pageNum: 1,
-      pageSize: this.pageSize,
+      pageSize: 10,
       orderByColumn: "createTime",
       isAsc: "desc",
-    })
+    }, _req)
     if (articleRes.code === 200) return {articles: articleRes.rows, total: articleRes.total}
   },
   methods: {

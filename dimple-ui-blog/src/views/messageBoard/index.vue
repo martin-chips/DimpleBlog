@@ -40,7 +40,7 @@ import note from '@/components/note/'
 import splitLine from '@/components/splitLine/'
 import submit from '@/views/components/submit'
 import comments from '@/views/components/comments'
-import api from '@/api/messageBoard'
+import api from '@/api/'
 import {storage} from "@/utils/storage";
 
 export default {
@@ -76,11 +76,11 @@ export default {
       messages: []
     }
   },
-  async asyncData() {
-    const msgRes = await api.getMessageBoard({
+  async asyncData({store, route, isServer, _req}) {
+    const msgRes = await api.getAsyncMessageBoard({
       pageNum: 1,
       pageSize: 10
-    })
+    }, _req)
     if (msgRes.code === 200) return {messages: msgRes.rows, total: msgRes.total}
   },
   computed: {

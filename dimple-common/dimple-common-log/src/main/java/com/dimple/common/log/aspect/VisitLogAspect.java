@@ -82,12 +82,16 @@ public class VisitLogAspect {
 
             String userRealAgent = ServletUtils.getRequest().getHeader("x-node-user-agent");
             if (StringUtils.isEmpty(userRealAgent)) {
-                userRealAgent = ServletUtils.getRequest().getHeader("User-Agent");;
+                userRealAgent = ServletUtils.getRequest().getHeader("User-Agent");
             }
             blogVisitLogBO.setUserAgent(userRealAgent);
 
-            String referer = ServletUtils.getRequest().getHeader("Referer");
-            blogVisitLogBO.setReferer(referer);
+            String userRealReferer = ServletUtils.getRequest().getHeader("x-node-referer");
+            if (StringUtils.isEmpty(userRealReferer)) {
+                userRealReferer = ServletUtils.getRequest().getHeader("Referer");
+            }
+            blogVisitLogBO.setReferer(userRealReferer);
+
             setControllerMethodDescription(joinPoint, visitLog, blogVisitLogBO, jsonResult);
             if (!Objects.isNull(e)) {
                 blogVisitLogBO.setStatusCode(BusinessStatus.FAIL.ordinal());
@@ -98,7 +102,6 @@ public class VisitLogAspect {
             log.error(exception.getMessage(), exception);
         }
     }
-
 
     private Long getPageId(final JoinPoint joinPoint, VisitLog visitLog) {
         String pageIdStr = visitLog.pageId();

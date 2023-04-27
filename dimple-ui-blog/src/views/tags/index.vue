@@ -26,15 +26,15 @@ export default {
       ]
     }
   },
-  components: { tagsIterator },
+  components: {tagsIterator},
   data() {
     return {
       tags: []
     }
   },
-  async asyncData() {
-    const tagRes = await api.listTag({})
-    if (tagRes.code === 200) return { tags: tagRes.rows, total: tagRes.total }
+  async asyncData({store, route, isServer, _req}) {
+    const tagRes = await api.listAsyncTag(_req)
+    if (tagRes.code === 200) return {tags: tagRes.rows, total: tagRes.total}
   }
 }
 </script>

@@ -106,9 +106,7 @@ readyPromise.then(() => {
       const context = {
         title: `Dimple's Blog`, url: req.url
       }
-      if (req.url.startsWith('/app/article/') || req.url === '/app/about' || req.url === '/app/messageBoard') {
-        context._req = req;
-      }
+      context._req = req;
       renderer.renderToString(context, (err, html) => {
         if (err) {
           console.error(err)

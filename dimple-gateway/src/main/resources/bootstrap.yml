@@ -15,6 +15,7 @@ spring:
       discovery:
         # 服务注册地址
         server-addr: dimple-nacos:8848
+        namespace: 63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8
       config:
         # 配置中心地址
         server-addr: dimple-nacos:8848
@@ -23,6 +24,7 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+        namespace: 63c3335c-2ba4-42c7-b05c-d8c62c1ac5a8
     sentinel:
       # 取消控制台懒加载
       eager: true

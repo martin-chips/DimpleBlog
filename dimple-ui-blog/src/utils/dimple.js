@@ -1,5 +1,3 @@
-
-
 /**
  * 通用js方法封装处理
  * Copyright (c) 2022 Dimple
@@ -37,7 +35,9 @@ export function parseTime(time, pattern) {
   const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
     let value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     if (result.length > 0 && value < 10) {
       value = '0' + value
     }
@@ -198,13 +198,14 @@ export function handleTree(data, id, parentId, children) {
       }
     }
   }
+
   return tree;
 }
 
 /**
-* 参数处理
-* @param {*} params  参数
-*/
+ * 参数处理
+ * @param {*} params  参数
+ */
 export function tansParams(params) {
   let result = ''
   for (const propName of Object.keys(params)) {
@@ -236,4 +237,44 @@ export async function blobValidate(data) {
   } catch (error) {
     return true;
   }
+}
+
+export function addXNodeHeaders(req) {
+  if (!req) {
+    return
+  }
+  return {
+    'x-node-real-ip': getIp(req),
+    'x-node-user-agent': getUserAgent(req),
+    'x-node-referer': getReferer(req),
+  }
+}
+
+export function getIp(req) {
+  if (!req) {
+    return "";
+  }
+  let ip = req.get('X-Real-IP') || req.get('X-Forwarded-For') || req.ip;
+  if (ip.split(',').length > 0) {
+    ip = ip.split(',')[0]
+  }
+  return ip
+}
+
+export function getReferer(req) {
+  if (!req) {
+    return "";
+  }
+  let referer = req.headers.referer || req.headers.referrer || req.headers.Referer;
+  if (referer) {
+    return referer;
+  }
+  return "";
+}
+
+export function getUserAgent(req) {
+  if (!req) {
+    return "";
+  }
+  return req.headers['user-agent'];
 }

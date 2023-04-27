@@ -167,15 +167,15 @@ export default {
     this.collectTitles()
     window.addEventListener('scroll', this.handleScroll, false)
   },
-  async asyncData({route, isServer}) {
-    const articleRes = await api.getArticle(route.params.id)
-    const commentRes = await api.listComment({
+  async asyncData({store, route, isServer, _req}) {
+    const articleRes = await api.getAsyncArticle(route.params.id, _req)
+    const commentRes = await api.listAsyncComment({
       pageNum: 1,
       pageSize: 10,
       orderByColumn: "createTime",
       isAsc: "desc",
       articleId: route.params.id,
-    });
+    }, _req);
 
     if (articleRes.code === 200) {
       if (!isServer) {
