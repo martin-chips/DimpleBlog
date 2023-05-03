@@ -2,9 +2,10 @@
   <div class="message-board">
     <layout title="留言板" cover="/img/cover/msgboard.jpg">
       <div class="message-board__content">
-        <note>
-          <p class="message-board__welcome">you must be a surprise someone is looking forward to</p>
-        </note>
+        <p class="message-board__welcome">
+          Troubleshooting any problem without the error log
+          is like driving with your eyes closed.<br>
+          在没有错误日志的情况下诊断任何问题无异于闭眼开车</p>
         <splitLine></splitLine>
         <div class="message-board__title">
           <i class="el-icon-chat-dot-round"></i>
@@ -161,6 +162,7 @@ export default {
     font-family: 'sf-arch';
     font-size: 28px;
     line-height: 1.8;
+    text-align: center;
     @include respond-to(xs) {
       font-size: 18px;
     }

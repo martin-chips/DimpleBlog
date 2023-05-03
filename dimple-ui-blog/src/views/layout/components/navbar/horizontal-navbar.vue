@@ -64,7 +64,6 @@ export default {
     padding: 0 10px;
     cursor: pointer;
     position: relative;
-
     [class^='el-icon-'] {
       font-weight: 900;
       margin-right: 4px;
@@ -102,7 +101,11 @@ export default {
     height: 3px;
     background: #80c8f8;
     display: inline-block;
-    transition: all ease 0.38s;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
   }
 }
 

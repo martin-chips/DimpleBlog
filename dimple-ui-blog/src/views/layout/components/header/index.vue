@@ -33,6 +33,7 @@ export default {
 .header {
   position: relative;
   height: 400px;
+  background-color: #49b1f5;
   background-size: cover;
   background-position: center center;
 
@@ -55,6 +56,7 @@ export default {
 
 .header:before {
   content: '';
+  background-color: rgba(0, 0, 0, .5);
   position: absolute;
   top: 0;
   left: 0;

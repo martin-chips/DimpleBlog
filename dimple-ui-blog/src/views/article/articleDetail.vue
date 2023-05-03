@@ -582,7 +582,7 @@ export default {
         color: themed('pseudo-hover')
       }
       font-family: "FontAwesome";
-      content: '\f0c1';
+      content: '\f0e7  ';
       line-height: 1;
       -webkit-transition: all .2s ease-out;
       -moz-transition: all .2s ease-out;
@@ -703,21 +703,20 @@ export default {
   }
 
   &__title {
-    line-height: 1.5;
-    padding: 0 12px;
-    text-align: center;
+    margin-bottom: 8px;
     @include themify() {
       color: themed('color-white');
     }
-    @include respond-to(xs) {
-      font-size: 18px;
-    }
+    font-weight: 400;
+    font-size: 2.5em;
+    line-height: 1.5;
+    -webkit-line-clamp: 3;
   }
 
   &__info {
     padding: 0 12px;
     @include themify() {
-      color: themed('meta-grey');
+      color: themed('light-grey');
     }
   }
 

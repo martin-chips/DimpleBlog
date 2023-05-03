@@ -65,6 +65,9 @@ export default {
 @import '~@/style/index.scss';
 
 .prev-next {
+
+  background: #000;
+
   &__content {
     position: relative;
     height: 150px;
@@ -75,6 +78,7 @@ export default {
 
     .content__prev,
     .content__next {
+
       width: 50%;
       height: 100%;
       flex-grow: 1;
@@ -103,12 +107,19 @@ export default {
         z-index: 0;
         top: 0;
         left: 0;
+        opacity: .4;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        @include zoom-define
+        webkit-transition: filter 375ms ease-in .2s,-webkit-transform .6s, opacity 0.5s ease-in-out;
+        -moz-transition: filter 375ms ease-in .2s,-moz-transform .6s, opacity 0.5s ease-in-out;
+        -o-transition: filter 375ms ease-in .2s,-o-transform .6s, opacity 0.5s ease-in-out;
+        -ms-transition: filter 375ms ease-in .2s,-ms-transform .6s, opacity 0.5s ease-in-out;
+        transition: filter 375ms ease-in .2s, transform .6s, opacity 0.5s ease-in-out; /* 添加一个 opacity 的过渡 */
       }
+
       a:hover img {
+        opacity: .8;
         @include zoom-trigger
       }
     }
