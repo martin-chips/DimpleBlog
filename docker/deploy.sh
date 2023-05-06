@@ -87,6 +87,7 @@ change_default_password() {
   sed -i "s/$default_nacos_password/$input_nacos_password/g" $PROJECT_DOCKER_PATH/docker-compose.yml
 }
 build_jar() {
+  clean_jar
   echo "start build jar ..."
   cd $PROJECT_ROOT_PATH
   mvn clean package -Dmaven.test.skip=true
@@ -94,6 +95,7 @@ build_jar() {
 }
 
 build_UI() {
+  clean_UI
   echo 'start compile dimple-admin ui'
   cd $PROJECT_ROOT_PATH/dimple-ui-admin
   npm install
@@ -143,14 +145,12 @@ deploy(){
 }
 
 deploy_jar() {
-  clean_jar
   echo "start jar deploy..."
   cd $PROJECT_DOCKER_PATH
   docker compose --compatibility up -d --build dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
 }
 
 deploy_UI() {
-  clean_UI
   echo "start UI deploy ..."
   cd $PROJECT_DOCKER_PATH/node/blog/dist
   echo "start build blog..."
