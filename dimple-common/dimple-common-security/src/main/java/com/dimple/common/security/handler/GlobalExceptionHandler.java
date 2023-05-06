@@ -4,6 +4,7 @@ import com.dimple.common.core.constant.HttpStatus;
 import com.dimple.common.core.exception.DemoModeException;
 import com.dimple.common.core.exception.InnerAuthException;
 import com.dimple.common.core.exception.ServiceException;
+import com.dimple.common.core.exception.article.ArticleNotFoundException;
 import com.dimple.common.core.exception.auth.NotPermissionException;
 import com.dimple.common.core.exception.auth.NotRoleException;
 import com.dimple.common.core.utils.StringUtils;
@@ -121,5 +122,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DemoModeException.class)
     public AjaxResult handleDemoModeException(DemoModeException e) {
         return AjaxResult.error("演示模式，不允许操作");
+    }
+
+    @ExceptionHandler(ArticleNotFoundException.class)
+    public AjaxResult handleArticleNotFoundException(ArticleNotFoundException e) {
+        log.error(e.getMessage(), e);
+        return AjaxResult.error(HttpStatus.NOT_FOUND, "");
     }
 }

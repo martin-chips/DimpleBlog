@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dimple.blog.service.mapper.BlogCommentMapper">
-    
+
     <resultMap type="com.dimple.blog.service.entity.BlogComment" id="BlogCommentResult">
-        <result property="id"    column="id"    />
-        <result property="articleId"    column="article_id"    />
-        <result property="username"    column="username"    />
-        <result property="parentId"    column="parent_id"    />
-        <result property="avatars"    column="avatars"    />
-        <result property="os"    column="os"    />
-        <result property="browser"    column="browser"    />
-        <result property="ip"    column="ip"    />
-        <result property="location"    column="location"    />
-        <result property="likeCount"    column="like_count"    />
-        <result property="content"    column="content"    />
-        <result property="email"    column="email"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
+        <result property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="username" column="username"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="avatars" column="avatars"/>
+        <result property="os" column="os"/>
+        <result property="browser" column="browser"/>
+        <result property="ip" column="ip"/>
+        <result property="type" column="type"/>
+        <result property="admin" column="admin"/>
+        <result property="location" column="location"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="content" column="content"/>
+        <result property="email" column="email"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="selectBlogCommentVo">
@@ -46,16 +48,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                update_time
         from blog_comment
     </sql>
+    <select id="selectBlogCommentByParentIds" resultMap="BlogCommentResult">
+        <include refid="selectBlogCommentVo"/>
+        where parent_id in
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by create_time desc
+    </select>
+
+    <select id="selectBlogCommentCountByArticleId" resultType="com.dimple.blog.api.bo.KeyValue">
+        select article_id as `key`,count(*) as `value` from blog_comment
+        where article_id in
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        group by article_id
+    </select>
 
     <select id="selectBlogCommentList" parameterType="BlogComment" resultMap="BlogCommentResult">
         <include refid="selectBlogCommentVo"/>
-        <where>  
-            <if test="articleId != null "> and article_id = #{articleId}</if>
-            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
-            <if test="parentId != null "> and parent_id = #{parentId}</if>
-            <if test="avatars != null  and avatars != ''"> and avatars = #{avatars}</if>
-            <if test="content != null  and content != ''"> and content = #{content}</if>
-            <if test="email != null  and email != ''"> and email = #{email}</if>
+        <where>
+            <if test="articleId != null ">and article_id = #{articleId}</if>
+            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
+            <if test="parentId != null ">and parent_id = #{parentId}</if>
+            <if test="avatars != null  and avatars != ''">and avatars = #{avatars}</if>
+            <if test="content != null  and content != ''">and content = #{content}</if>
+            <if test="email != null  and email != ''">and email = #{email}</if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
@@ -64,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </if>
         </where>
     </select>
-    
+
     <select id="selectBlogCommentById" parameterType="Long" resultMap="BlogCommentResult">
         <include refid="selectBlogCommentVo"/>
         where id = #{id}
@@ -90,13 +109,66 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteBlogCommentById" parameterType="Long">
-        delete from blog_comment where id = #{id}
+        delete
+        from blog_comment
+        where id = #{id}
     </delete>
 
     <delete id="deleteBlogCommentByIds" parameterType="String">
-        delete from blog_comment where id in 
+        delete from blog_comment where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
+
+    <insert id="insertBlogComment" parameterType="BlogComment" useGeneratedKeys="true" keyProperty="id">
+        insert into blog_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">article_id,</if>
+            <if test="username != null">username,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="avatars != null">avatars,</if>
+            <if test="content != null">content,</if>
+            <if test="email != null">email,</if>
+            <if test="ip != null">ip,</if>
+            <if test="link != null">link,</if>
+            <if test="location != null">location,</if>
+            <if test="os != null">os,</if>
+            <if test="type != null">type,</if>
+            <if test="browser != null">browser,</if>
+            <if test="visitorId != null">visitor_id,</if>
+            <if test="admin != null">admin,</if>
+            <if test="replyId != null">reply_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">#{articleId},</if>
+            <if test="username != null">#{username},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="avatars != null">#{avatars},</if>
+            <if test="content != null">#{content},</if>
+            <if test="email != null">#{email},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="link != null">#{link},</if>
+            <if test="location != null">#{location},</if>
+            <if test="os != null">#{os},</if>
+            <if test="type != null">#{type},</if>
+            <if test="browser != null">#{browser},</if>
+            <if test="visitorId != null">#{visitorId},</if>
+            <if test="admin != null">#{admin},</if>
+            <if test="replyId != null">#{replyId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+    <insert id="addCommentLikeCount">
+        update blog_comment
+        set like_count=like_count + 1
+        where id = #{id}
+    </insert>
 </mapper>

@@ -163,6 +163,9 @@ export default {
   }
 
   &__list {
+    @include themify() {
+      color: themed('font-color');
+    }
     .list-item {
       &__title {
         position: relative;

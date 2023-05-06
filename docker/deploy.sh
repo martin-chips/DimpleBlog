@@ -143,13 +143,18 @@ deploy(){
 }
 
 deploy_jar() {
+  clean_jar
   echo "start jar deploy..."
   cd $PROJECT_DOCKER_PATH
   docker compose --compatibility up -d --build dimple-gateway dimple-auth dimple-modules-system dimple-modules-job dimple-modules-file dimple-modules-monitor dimple-modules-blog dimple-modules-blog-front dimple-modules-log
 }
 
 deploy_UI() {
+  clean_UI
   echo "start UI deploy ..."
+  cd $PROJECT_DOCKER_PATH/node/blog/dist
+  echo "start build blog..."
+  npm install
   cd $PROJECT_DOCKER_PATH
   docker compose --compatibility up -d --build dimple-ui dimple-node
 }
@@ -166,9 +171,6 @@ cp_UI() {
   /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-admin/dist/** $PROJECT_DOCKER_PATH/nginx/admin/dist
   mkdir -p $PROJECT_DOCKER_PATH/node/blog/dist
   /bin/cp -rf $PROJECT_ROOT_PATH/dimple-ui-blog/dist/** $PROJECT_DOCKER_PATH/node/blog/dist
-  cd $PROJECT_DOCKER_PATH/node/blog/dist
-  echo "start build blog..."
-  npm install
 }
 
 cp_jar() {

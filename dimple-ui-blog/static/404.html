@@ -1,10 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-	<meta charset="UTF-8">
-	<title>额~页面走丢了...</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>页面没有找到 | Dimple's Blog</title>
+  <style>
+
+    .error404 #error-wrap .error-content .error-info .error_subtitle {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+    }
+
+    .error404 #error-wrap .error-content {
+      border-radius: 8px;
+      background: #fff;
+      -webkit-box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
+      box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      -ms-transition: all 0.3s;
+      transition: all 0.3s;
+    }
+
+    .error404 #error-wrap .error-content:hover {
+      -webkit-box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.09);
+      box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.09);
+    }
+
+    .error404 #error-wrap .error-content .error-img img {
+      width: 100%;
+      height: 100%;
+      -webkit-transition: filter 375ms ease-in 0.2s, -webkit-transform 0.6s;
+      -moz-transition: filter 375ms ease-in 0.2s, -moz-transform 0.6s;
+      -o-transition: filter 375ms ease-in 0.2s, -o-transform 0.6s;
+      -ms-transition: filter 375ms ease-in 0.2s, -ms-transform 0.6s;
+      transition: filter 375ms ease-in 0.2s, transform 0.6s;
+      object-fit: cover;
+    }
+
+    .error404 #error-wrap .error-content .error-img img:hover {
+      -webkit-transform: scale(1.1);
+      -moz-transform: scale(1.1);
+      -o-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+
+    .error404 #error-wrap {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      padding: 60px 20px 0;
+      max-width: 1000px;
+      -webkit-transform: translate(0, -50%);
+      -moz-transform: translate(0, -50%);
+      -o-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+      transform: translate(0, -50%);
+    }
+
+    .error404 #error-wrap .error-content {
+      overflow: hidden;
+      margin: 0 20px;
+      height: 360px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .error404 #error-wrap .error-content {
+        margin: 0;
+        height: 500px;
+      }
+    }
+
+    .error404 #error-wrap .error-content .error-img {
+      display: inline-block;
+      overflow: hidden;
+      width: 50%;
+      height: 100%;
+    }
+
+    @media screen and (max-width: 768px) {
+      .error404 #error-wrap .error-content .error-img {
+        width: 100%;
+        height: 45%;
+      }
+    }
+
+    .error404 #error-wrap .error-content .error-img img {
+      background-color: #49b1f5;
+    }
+
+    .error404 #error-wrap .error-content .error-info {
+      display: -webkit-inline-box;
+      display: -moz-inline-box;
+      display: -webkit-inline-flex;
+      display: -ms-inline-flexbox;
+      display: inline-box;
+      display: inline-flex;
+      -webkit-box-orient: vertical;
+      -moz-box-orient: vertical;
+      -o-box-orient: vertical;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-pack: center;
+      -moz-box-pack: center;
+      -o-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -ms-flex-line-pack: center;
+      -webkit-align-content: center;
+      align-content: center;
+      width: 50%;
+      height: 100%;
+      vertical-align: top;
+      text-align: center;
+      font-family: Titillium Web, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
+    }
+
+    @media screen and (max-width: 768px) {
+      .error404 #error-wrap .error-content .error-info {
+        width: 100%;
+        height: 55%;
+      }
+    }
+
+    .error404 #error-wrap .error-content .error-info .error_title {
+      margin-top: -0.6em;
+      font-size: 9em;
+    }
+
+    @media screen and (max-width: 768px) {
+      .error404 #error-wrap .error-content .error-info .error_title {
+        font-size: 8em;
+      }
+    }
+
+    .error404 #error-wrap .error-content .error-info .error_subtitle {
+      margin-top: -3em;
+      word-break: break-word;
+      font-size: 1.6em;
+      -webkit-line-clamp: 2;
+    }
+  </style>
 </head>
 <body>
-	<h1 style = "text-align: center;margin-top: 20px">(⊙o⊙)…页面走丢了</h1>
+<div class="error404" id="body-wrap">
+  <div id="error-wrap">
+    <div class="error-content">
+      <div class="error-img"><img src="https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png" alt="Page not found"></div>
+      <div class="error-info"><h1 class="error_title">404</h1>
+        <div class="error_subtitle">Page Not Found</div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

@@ -75,7 +75,7 @@ export default {
   props: {},
   metaInfo() {
     return {
-      title: `关于我 - ` + "Dimple's Blog Inside",
+      title: `关于我 - ` + "Dimple's Blog",
       meta: [
         {
           name: "description",
@@ -229,6 +229,11 @@ export default {
     @include themify() {
       color: themed('color-white');
     }
+    -webkit-animation: titleScale 1s;
+    -moz-animation: titleScale 1s;
+    -o-animation: titleScale 1s;
+    -ms-animation: titleScale 1s;
+    animation: titleScale 1s;
     @include respond-to(xs) {
       font-size: 18px;
     }

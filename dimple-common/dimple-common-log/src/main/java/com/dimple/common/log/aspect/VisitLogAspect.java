@@ -84,6 +84,7 @@ public class VisitLogAspect {
             if (StringUtils.isEmpty(userRealAgent)) {
                 userRealAgent = ServletUtils.getRequest().getHeader("User-Agent");
             }
+            log.info("current user-agent : {}", userRealAgent);
             blogVisitLogBO.setUserAgent(userRealAgent);
 
             String userRealReferer = ServletUtils.getRequest().getHeader("x-node-referer");

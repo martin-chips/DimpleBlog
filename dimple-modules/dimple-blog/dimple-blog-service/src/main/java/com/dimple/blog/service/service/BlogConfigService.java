@@ -1,6 +1,7 @@
 package com.dimple.blog.service.service;
 
-import com.dimple.system.api.model.config.BlogGlobalConfig;
+
+import com.dimple.blog.api.bo.config.BlogGlobalConfig;
 
 /**
  * BlogConfigService

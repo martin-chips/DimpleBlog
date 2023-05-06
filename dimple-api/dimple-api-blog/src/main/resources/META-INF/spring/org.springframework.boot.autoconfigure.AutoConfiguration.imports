@@ -1,0 +1,8 @@
+com.dimple.blog.api.factory.RemoteBlogArchiveServiceFallbackFactory
+com.dimple.blog.api.factory.RemoteBlogArticleServiceFallbackFactory
+com.dimple.blog.api.factory.RemoteBlogCategoryServiceFallbackFactory
+com.dimple.blog.api.factory.RemoteBlogCommentServiceFallbackFactory
+com.dimple.blog.api.factory.RemoteBlogLinkServiceFallbackFactory
+com.dimple.blog.api.factory.RemoteBlogConfigServiceFallbackFactory
+com.dimple.blog.api.factory.RemoteBlogTagServiceFallbackFactory
+

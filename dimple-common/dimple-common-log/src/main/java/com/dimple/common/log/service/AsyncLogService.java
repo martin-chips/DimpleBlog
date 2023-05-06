@@ -35,7 +35,7 @@ public class AsyncLogService {
     public void saveVisitLog(BlogVisitLogBO blogVisitLogBO) {
         // set ip ,spider
         UserAgent userAgent = UserAgent.parseUserAgentString(blogVisitLogBO.getUserAgent());
-        String spider = SpiderUtils.parseUserAgent(userAgent.toString());
+        String spider = SpiderUtils.parseUserAgent(blogVisitLogBO.getUserAgent());
         blogVisitLogBO.setSpider(spider);
         blogVisitLogBO.setBrowser(userAgent.getBrowser().getName());
         blogVisitLogBO.setLocation(IpUtils.getIpLocation(blogVisitLogBO.getIp()));

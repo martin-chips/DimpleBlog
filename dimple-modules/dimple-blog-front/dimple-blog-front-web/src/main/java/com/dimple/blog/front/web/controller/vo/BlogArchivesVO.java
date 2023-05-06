@@ -1,6 +1,6 @@
 package com.dimple.blog.front.web.controller.vo;
 
-import com.dimple.blog.front.service.service.bo.BlogArchiveItemBO;
+import com.dimple.blog.api.bo.BlogArchiveItemBO;
 import lombok.Data;
 
 import java.util.List;

@@ -103,6 +103,42 @@
         </foreach>
     </select>
 
+    <select id="selectBlogArticleCountByCategoryIds" resultType="com.dimple.blog.api.bo.KeyValue">
+        select category_id as `key`, count(*) as `value` from blog_article
+        where category_id in
+        <foreach item="id" collection="collection" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        group by category_id
+    </select>
+    <update id="likeArticle">
+        update blog_article
+        set like_count=like_count + 1
+        where id = #{id}
+    </update>
+    <select id="selectBlogArticleByTagId" resultMap="BlogArticleResult">
+        <include refid="selectBlogArticleBaseVO"/>
+        where article_status=1 and id in (select article_id from blog_article_tag where tag_id=#{tagId})
+    </select>
+    <select id="selectBlogArticlePrevNext" resultMap="BlogArticleResult"
+            parameterType="java.lang.Long">
+        select id, title, header_image
+        from blog_article
+        where id in ((select max(id)
+                      from blog_article
+                      where id &lt; #{id})
+                     union all
+                     (select min(id)
+                      from blog_article
+                      where id &gt; #{id}))
+    </select>
+    <select id="getPvByArticleId" resultType="com.dimple.blog.api.bo.KeyValue">
+        select page_id as `key`, count(*) as `value`
+        from blog_visit_log
+        where page_id is not null
+          and page_id > 0
+        group by page_id
+    </select>
     <insert id="insertBlogArticle" parameterType="com.dimple.blog.service.entity.BlogArticle" useGeneratedKeys="true"
             keyProperty="id">
         insert into blog_article

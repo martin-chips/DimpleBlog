@@ -10,6 +10,7 @@
 
     <modules>
         <module>dimple-api-system</module>
+        <module>dimple-api-blog</module>
     </modules>
 
     <artifactId>dimple-api</artifactId>

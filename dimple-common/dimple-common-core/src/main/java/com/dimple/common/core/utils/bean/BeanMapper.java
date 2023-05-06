@@ -1,10 +1,13 @@
 package com.dimple.common.core.utils.bean;
 
+import com.dimple.common.core.web.page.PageDomain;
+import com.dimple.common.core.web.page.TableSupport;
 import com.github.pagehelper.Page;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import ma.glasnost.orika.metadata.ClassMapBuilder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -60,7 +63,12 @@ public class BeanMapper {
      * @return 目标实体
      */
     public static <S, T> T convert(S sourceEntity, Class<T> targetClass) {
-        return convert(sourceEntity, targetClass, null);
+        T convert = convert(sourceEntity, targetClass, null);
+        if (convert instanceof PageDomain) {
+            PageDomain context = TableSupport.buildPageRequest();
+            BeanUtils.copyProperties(context, convert);
+        }
+        return convert;
     }
 
     /**

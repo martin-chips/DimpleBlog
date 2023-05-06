@@ -1,7 +1,8 @@
 package com.dimple.blog.web.controller;
 
+import com.dimple.blog.api.bo.BlogLinkBO;
+import com.dimple.blog.api.model.BlogLinkDTO;
 import com.dimple.blog.service.service.BlogLinkService;
-import com.dimple.blog.service.service.bo.BlogLinkBO;
 import com.dimple.blog.web.controller.vo.BlogLinkVO;
 import com.dimple.blog.web.controller.vo.params.BlogLinkVOParams;
 import com.dimple.common.core.utils.bean.BeanMapper;
@@ -11,16 +12,10 @@ import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
+import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -85,5 +80,25 @@ public class BlogLinkController extends BaseController {
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(blogLinkService.deleteBlogLinkByIds(ids));
+    }
+
+    @InnerAuth
+    @PostMapping("/inner")
+    AjaxResult insertBlogLink(@RequestBody BlogLinkBO blogLink) {
+        return success(blogLinkService.insertBlogLink(blogLink));
+    }
+
+    @InnerAuth
+    @PostMapping("/inner/list")
+    TableDataInfo selectBlogLinkList(@RequestBody BlogLinkDTO blogLink) {
+        startInnerPage(blogLink);
+        List<BlogLinkBO> blogLinkBOS = blogLinkService.selectBlogLinkList(BeanMapper.convert(blogLink, BlogLinkBO.class));
+        return getDataTable(blogLinkBOS);
+    }
+
+    @InnerAuth
+    @PutMapping("/inner/visitCount/{id}")
+    AjaxResult addLinkVisitCount(@PathVariable Long id) {
+        return success(blogLinkService.addLinkVisitCount(id));
     }
 }

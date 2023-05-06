@@ -1,9 +1,9 @@
 package com.dimple.blog.service.service.impl;
 
+import com.dimple.blog.api.bo.BlogTagBO;
 import com.dimple.blog.service.entity.BlogTag;
 import com.dimple.blog.service.mapper.BlogTagMapper;
 import com.dimple.blog.service.service.BlogTagService;
-import com.dimple.blog.service.service.bo.BlogTagBO;
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +66,4 @@ public class BlogTagServiceImpl implements BlogTagService {
         return blogTagMapper.deleteBlogTagByIds(ids);
     }
 
-    @Override
-    public int deleteBlogTagById(Long id) {
-        return blogTagMapper.deleteBlogTagById(id);
-    }
 }

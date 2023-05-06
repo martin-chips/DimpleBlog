@@ -1,9 +1,9 @@
 package com.dimple.blog.service.service.impl;
 
+import com.dimple.blog.api.bo.BlogArticleTagBO;
 import com.dimple.blog.service.entity.BlogArticleTag;
 import com.dimple.blog.service.mapper.BlogArticleTagMapper;
 import com.dimple.blog.service.service.BlogArticleTagService;
-import com.dimple.blog.service.service.bo.BlogArticleTagBO;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.vo.params.AjaxResult;
 import org.apache.commons.collections4.CollectionUtils;

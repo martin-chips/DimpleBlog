@@ -55,4 +55,13 @@ public class BlogComment extends BaseEntity {
      * user email, if email is not null will reply when the comment has been replied
      */
     private String email;
+
+    /**
+     * login type, 0 local,1 GitHub
+     */
+
+    private Integer type;
+
+    private Boolean admin;
+
 }

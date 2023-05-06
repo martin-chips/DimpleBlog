@@ -1,12 +1,12 @@
 package com.dimple.blog.service.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.dimple.blog.api.bo.config.BlogGlobalConfig;
 import com.dimple.blog.service.mapper.BlogConfigMapper;
 import com.dimple.blog.service.service.BlogConfigService;
 import com.dimple.common.redis.constants.CacheConstants;
 import com.dimple.common.redis.core.RedisKeyDefine;
 import com.dimple.common.redis.service.RedisService;
-import com.dimple.system.api.model.config.BlogGlobalConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

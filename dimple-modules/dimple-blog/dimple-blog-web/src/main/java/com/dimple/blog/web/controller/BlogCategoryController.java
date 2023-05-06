@@ -1,7 +1,8 @@
 package com.dimple.blog.web.controller;
 
+import com.dimple.blog.api.bo.BlogCategoryBO;
+import com.dimple.blog.api.model.BlogCategoryDTO;
 import com.dimple.blog.service.service.BlogCategoryService;
-import com.dimple.blog.service.service.bo.BlogCategoryBO;
 import com.dimple.blog.web.controller.vo.BlogCategoryVO;
 import com.dimple.blog.web.controller.vo.params.BlogCategoryVOParams;
 import com.dimple.common.core.utils.bean.BeanMapper;
@@ -11,16 +12,10 @@ import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.OperationLog;
 import com.dimple.common.log.enums.BusinessType;
+import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -86,4 +81,13 @@ public class BlogCategoryController extends BaseController {
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(blogCategoryService.deleteBlogCategoryByIds(ids));
     }
+
+    @InnerAuth
+    @PostMapping("/inner/list")
+    TableDataInfo selectBlogCategoryList(@RequestBody BlogCategoryDTO blogCategory) {
+        startInnerPage(blogCategory);
+        List<BlogCategoryBO> list = blogCategoryService.selectBlogCategoryList(BeanMapper.convert(blogCategory, BlogCategoryBO.class));
+        return getDataTable(list);
+    }
+
 }

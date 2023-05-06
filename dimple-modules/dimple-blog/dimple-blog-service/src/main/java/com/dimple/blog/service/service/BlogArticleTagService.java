@@ -1,6 +1,6 @@
 package com.dimple.blog.service.service;
 
-import com.dimple.blog.service.service.bo.BlogArticleTagBO;
+import com.dimple.blog.api.bo.BlogArticleTagBO;
 
 import java.util.List;
 

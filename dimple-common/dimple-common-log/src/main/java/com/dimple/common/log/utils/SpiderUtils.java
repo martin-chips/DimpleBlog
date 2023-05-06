@@ -68,13 +68,14 @@ public class SpiderUtils {
         spider.put("YoudaoBot", "网易有道");
         spider.put("YodaoBot", "网易有道");
 
-        spider.put("360Spider", "360");
+        spider.put("360Spider", "360 搜索引擎爬虫");
         spider.put("bingbot", "必应");
         spider.put("Yahoo", "雅虎");
         spider.put("Sosospider", "腾讯搜搜");
         spider.put("Sosoimagespider", "搜索图片");
 
         spider.put("Sogou", "搜狗蜘蛛");
+        spider.put("MJ12bot", "Majestic 网站分析工具爬虫");
         spider.put("msnbot", "MSN蜘蛛");
         spider.put("YisouSpider", "一搜蜘蛛");
         spider.put("ia_archiver", "Alexa蜘蛛");
@@ -85,8 +86,8 @@ public class SpiderUtils {
 
         spider.put("AdsBot", "Adwords");
         spider.put("Speedy", "entireweb");
-        spider.put("YandexBot", "YandexBot");
-        spider.put("AhrefsBot", "AhrefsBot");
+        spider.put("YandexBot", "Yandex 搜索引擎爬虫");
+        spider.put("AhrefsBot", "Ahrefs 网站分析工具爬虫");
         spider.put("ezooms.bot", "ezooms.bot");
 
         spider.put("Java", "Java程序");
@@ -100,7 +101,7 @@ public class SpiderUtils {
         spider.put("Iframely", "URL Meta Debugger插件");
         spider.put("muhstik-scan", "僵尸网络-挖矿软件");
         spider.put("muhstik", "僵尸网络-挖矿软件");
-        spider.put("SEMrushBot", "站点分析蜘蛛");// 可屏蔽
+        spider.put("SEMrushBot", "站点分析蜘蛛");
         spider.put("python-requests", "python爬虫");
         spider.put("python", "python爬虫");
         spider.put("Test Certificate Info", "测试证书信息");

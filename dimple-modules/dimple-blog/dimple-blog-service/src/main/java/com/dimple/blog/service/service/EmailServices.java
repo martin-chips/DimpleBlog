@@ -1,7 +1,7 @@
 package com.dimple.blog.service.service;
 
-import com.dimple.system.api.model.config.BlogGlobalConfig;
-import com.dimple.system.api.model.config.EmailConfig;
+import com.dimple.blog.api.bo.config.BlogGlobalConfig;
+import com.dimple.blog.api.bo.config.EmailConfig;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

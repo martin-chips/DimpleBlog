@@ -1,9 +1,9 @@
 package com.dimple.blog.service.service.impl;
 
+import com.dimple.blog.api.bo.BlogArticleCategoryBO;
 import com.dimple.blog.service.entity.BlogArticleCategory;
 import com.dimple.blog.service.mapper.BlogArticleCategoryMapper;
 import com.dimple.blog.service.service.BlogArticleCategoryService;
-import com.dimple.blog.service.service.bo.BlogArticleCategoryBO;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

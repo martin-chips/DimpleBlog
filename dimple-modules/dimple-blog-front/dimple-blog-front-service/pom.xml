@@ -53,27 +53,10 @@
             <version>${swagger.fox.version}</version>
         </dependency>
 
-        <!-- Mysql Connector -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <!-- Dimple Common DataSource -->
         <dependency>
             <groupId>com.dimple</groupId>
-            <artifactId>dimple-common-datasource</artifactId>
-        </dependency>
-
-        <!-- Dimple Common DataScope -->
-        <dependency>
-            <groupId>com.dimple</groupId>
-            <artifactId>dimple-common-datascope</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dimple</groupId>
-            <artifactId>dimple-common-redis</artifactId>
+            <artifactId>dimple-api-blog</artifactId>
+            <version>3.0.0</version>
         </dependency>
 
         <!-- Dimple Common Log -->

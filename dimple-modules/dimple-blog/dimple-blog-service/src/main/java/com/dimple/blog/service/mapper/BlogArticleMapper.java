@@ -1,9 +1,13 @@
 package com.dimple.blog.service.mapper;
 
 
+import com.dimple.blog.api.bo.KeyValue;
 import com.dimple.blog.service.entity.BlogArticle;
+import org.apache.ibatis.annotations.MapKey;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -61,7 +65,18 @@ public interface BlogArticleMapper {
      */
     int deleteBlogArticleByIds(List<Long> ids);
 
+    List<BlogArticle> selectBlogArticleByTagId(Long tagId);
+
     BlogArticle selectBlogArticleDetailById(Long id);
 
     List<BlogArticle> selectBlogArticleByIds(List<Long> ids);
+
+    int likeArticle(Long id);
+
+    List<KeyValue<Long, Long>> getPvByArticleId(Collection<Long> ids);
+
+    List<BlogArticle> selectBlogArticlePrevNext(Long id);
+
+    @MapKey("category_id")
+    List<KeyValue<Long, Long>> selectBlogArticleCountByCategoryIds(Set<Long> categoryIds);
 }

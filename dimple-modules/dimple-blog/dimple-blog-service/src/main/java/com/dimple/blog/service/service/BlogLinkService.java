@@ -1,6 +1,6 @@
 package com.dimple.blog.service.service;
 
-import com.dimple.blog.service.service.bo.BlogLinkBO;
+import com.dimple.blog.api.bo.BlogLinkBO;
 
 import java.util.List;
 
@@ -58,4 +58,6 @@ public interface BlogLinkService {
      * @return affected lines
      */
     int deleteBlogLinkById(Long id);
+
+    int addLinkVisitCount(Long id);
 }

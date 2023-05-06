@@ -1,15 +1,15 @@
 package com.dimple.blog.web.controller;
 
+import com.dimple.blog.api.bo.config.BlogGlobalConfig;
+import com.dimple.blog.api.bo.config.CommentConfig;
+import com.dimple.blog.api.bo.config.EmailConfig;
+import com.dimple.blog.api.bo.config.GithubLoginConfig;
 import com.dimple.blog.service.service.BlogConfigService;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.security.annotation.InnerAuth;
 import com.dimple.common.security.annotation.RequiresPermissions;
-import com.dimple.system.api.model.config.BlogGlobalConfig;
-import com.dimple.system.api.model.config.CommentConfig;
-import com.dimple.system.api.model.config.EmailConfig;
-import com.dimple.system.api.model.config.GithubLoginConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,11 +1,12 @@
 package com.dimple.blog.service.service.impl;
 
+import com.dimple.blog.api.bo.BlogArticleBO;
+import com.dimple.blog.api.bo.BlogCommentBO;
+import com.dimple.blog.api.bo.KeyValue;
 import com.dimple.blog.service.entity.BlogComment;
 import com.dimple.blog.service.mapper.BlogCommentMapper;
 import com.dimple.blog.service.service.BlogArticleService;
 import com.dimple.blog.service.service.BlogCommentService;
-import com.dimple.blog.service.service.bo.BlogArticleBO;
-import com.dimple.blog.service.service.bo.BlogCommentBO;
 import com.dimple.common.core.enums.BlogPageId;
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,6 +37,16 @@ public class BlogCommentServiceImpl implements BlogCommentService {
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogCommentMapper.selectBlogCommentById(id), BlogCommentBO.class);
         fillCommentInfo(Arrays.asList(blogCommentBO));
         return blogCommentBO;
+    }
+
+    @Override
+    public List<BlogCommentBO> selectBlogCommentByIds(List<Long> ids) {
+        return BeanMapper.convertList(blogCommentMapper.selectBlogCommentByParentIds(ids), BlogCommentBO.class);
+    }
+
+    @Override
+    public List<KeyValue<Long, Long>> selectBlogCommentCountByArticleId(List<Long> ids) {
+        return blogCommentMapper.selectBlogCommentCountByArticleId(new HashSet<>(ids));
     }
 
     @Override
@@ -71,4 +83,15 @@ public class BlogCommentServiceImpl implements BlogCommentService {
     public int deleteBlogCommentById(Long id) {
         return blogCommentMapper.deleteBlogCommentById(id);
     }
+
+    @Override
+    public int insertBlogComment(BlogCommentBO blogComment) {
+        return blogCommentMapper.insertBlogComment(BeanMapper.convert(blogComment, BlogComment.class));
+    }
+
+    @Override
+    public int addCommentLikeCount(Long id) {
+        return blogCommentMapper.addCommentLikeCount(id);
+    }
+
 }

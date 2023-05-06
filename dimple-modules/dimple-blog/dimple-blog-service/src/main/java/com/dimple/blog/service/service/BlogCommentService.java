@@ -1,6 +1,7 @@
 package com.dimple.blog.service.service;
 
-import com.dimple.blog.service.service.bo.BlogCommentBO;
+import com.dimple.blog.api.bo.BlogCommentBO;
+import com.dimple.blog.api.bo.KeyValue;
 
 import java.util.List;
 
@@ -18,6 +19,10 @@ public interface BlogCommentService {
      * @return
      */
     BlogCommentBO selectBlogCommentById(Long id);
+
+    List<BlogCommentBO> selectBlogCommentByIds(List<Long> id);
+
+    List<KeyValue<Long, Long>> selectBlogCommentCountByArticleId(List<Long> ids);
 
     /**
      * 查询列表
@@ -50,4 +55,8 @@ public interface BlogCommentService {
      * @return affected lines
      */
     int deleteBlogCommentById(Long id);
+
+    int insertBlogComment(BlogCommentBO blogComment);
+
+    int addCommentLikeCount(Long id);
 }

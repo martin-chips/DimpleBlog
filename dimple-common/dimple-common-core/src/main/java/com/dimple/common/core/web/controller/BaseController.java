@@ -3,8 +3,11 @@ package com.dimple.common.core.web.controller;
 import com.dimple.common.core.constant.HttpStatus;
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.PageUtils;
+import com.dimple.common.core.utils.sql.SqlUtil;
+import com.dimple.common.core.web.page.PageDomain;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -39,6 +42,14 @@ public class BaseController {
      */
     protected void startPage() {
         PageUtils.startPage();
+    }
+
+    protected void startInnerPage(PageDomain pageDomain) {
+        Integer pageNum = pageDomain.getPageNum();
+        Integer pageSize = pageDomain.getPageSize();
+        String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
+        Boolean reasonable = pageDomain.getReasonable();
+        PageHelper.startPage(pageNum, pageSize, orderBy).setReasonable(reasonable);
     }
 
     /**

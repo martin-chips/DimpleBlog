@@ -47,9 +47,24 @@ export default {
     width: 100%;
     height: 100%;
     font-size: 20px;
-    @include themify() {
-      color: themed('text-highlight-color');
+
+    h1 {
+      font-family: Titillium Web,'PingFang SC','Hiragino Sans GB','Microsoft JhengHei','Microsoft YaHei',sans-serif;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, .15);
+      line-height: 1.5;
+      margin: 0;
+      font-size: 1.85em;
+      @include themify() {
+        color: themed('color-white');
+      }
+      -webkit-animation: titleScale 1s;
+      -moz-animation: titleScale 1s;
+      -o-animation: titleScale 1s;
+      -ms-animation: titleScale 1s;
+      animation: titleScale 1s;
     }
+
     @include flex-box-center;
   }
 }

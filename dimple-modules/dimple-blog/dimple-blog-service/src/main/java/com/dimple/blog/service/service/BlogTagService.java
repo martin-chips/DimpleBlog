@@ -1,6 +1,6 @@
 package com.dimple.blog.service.service;
 
-import com.dimple.blog.service.service.bo.BlogTagBO;
+import com.dimple.blog.api.bo.BlogTagBO;
 
 import java.util.List;
 
@@ -54,12 +54,4 @@ public interface BlogTagService {
      * @return affected lines
      */
     int deleteBlogTagByIds(Long[] ids);
-
-    /**
-     * 删除信息
-     *
-     * @param id 主键
-     * @return affected lines
-     */
-    int deleteBlogTagById(Long id);
 }

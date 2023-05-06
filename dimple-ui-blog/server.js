@@ -109,9 +109,15 @@ readyPromise.then(() => {
       context._req = req;
       renderer.renderToString(context, (err, html) => {
         if (err) {
-          console.error(err)
-          res.status(500).end('Internal Server Error')
-          return
+          if (err === 'NotFound') {
+            res.render('404.html', {
+              title: 'No Found'
+            });
+          } else {
+            console.error(err)
+            res.status(500).end('Internal Server Error')
+            return
+          }
         }
         if (context.meta) {
           const {title, meta} = context.meta.inject()
@@ -158,10 +164,3 @@ function checkPort(port = 8820) {
   })
 }
 
-const getIp = function (req) {
-  let ip = req.get('X-Real-IP') || req.get('X-Forwarded-For') || req.ip
-  if (ip.split(',').length > 0) {
-    ip = ip.split(',')[0]
-  }
-  return ip
-}

@@ -1,14 +1,15 @@
 package com.dimple.blog.service.service.impl;
 
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
+import com.dimple.blog.api.bo.BlogArticleBO;
+import com.dimple.blog.api.bo.BlogArticleTagBO;
+import com.dimple.blog.api.bo.BlogTagBO;
+import com.dimple.blog.api.bo.KeyValue;
 import com.dimple.blog.service.entity.BlogArticle;
 import com.dimple.blog.service.mapper.BlogArticleMapper;
 import com.dimple.blog.service.service.BlogArticleService;
 import com.dimple.blog.service.service.BlogArticleTagService;
 import com.dimple.blog.service.service.BlogTagService;
-import com.dimple.blog.service.service.bo.BlogArticleBO;
-import com.dimple.blog.service.service.bo.BlogArticleTagBO;
-import com.dimple.blog.service.service.bo.BlogTagBO;
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.vo.params.AjaxResult;
@@ -18,11 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -160,4 +157,30 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         blogArticle.setArticleStatus(articleStatus);
         return blogArticleMapper.updateBlogArticle(blogArticle);
     }
+
+    @Override
+    public List<BlogArticleBO> selectBlogArticlePrevNext(Long id) {
+        return BeanMapper.convertList(blogArticleMapper.selectBlogArticlePrevNext(id), BlogArticleBO.class);
+    }
+
+    @Override
+    public List<BlogArticleBO> selectBlogArticleByTagId(Long tagId) {
+        return BeanMapper.convertList(blogArticleMapper.selectBlogArticleByTagId(tagId), BlogArticleBO.class);
+    }
+
+    @Override
+    public int likeArticle(Long articleId) {
+        return blogArticleMapper.likeArticle(articleId);
+    }
+
+    @Override
+    public List<KeyValue<Long, Long>> getPvByArticleId(Collection<Long> ids) {
+        return blogArticleMapper.getPvByArticleId(ids);
+    }
+
+    @Override
+    public List<KeyValue<Long, Long>> selectBlogArticleCountByCategoryIds(Set<Long> categoryIds) {
+        return blogArticleMapper.selectBlogArticleCountByCategoryIds(categoryIds);
+    }
+
 }

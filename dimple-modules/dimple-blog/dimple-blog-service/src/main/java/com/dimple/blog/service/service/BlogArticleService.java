@@ -1,9 +1,12 @@
 package com.dimple.blog.service.service;
 
 
-import com.dimple.blog.service.service.bo.BlogArticleBO;
+import com.dimple.blog.api.bo.BlogArticleBO;
+import com.dimple.blog.api.bo.KeyValue;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Blog articleService接口
@@ -79,4 +82,14 @@ public interface BlogArticleService {
      * @return affected lines
      */
     int updateBlogArticleStatus(Long id, Integer articleStatus);
+
+    List<BlogArticleBO> selectBlogArticlePrevNext(Long id);
+
+    List<BlogArticleBO> selectBlogArticleByTagId(Long tagId);
+
+    int likeArticle(Long articleId);
+
+    List<KeyValue<Long, Long>> getPvByArticleId(Collection<Long> ids);
+
+    List<KeyValue<Long, Long>> selectBlogArticleCountByCategoryIds(Set<Long> categoryIds);
 }

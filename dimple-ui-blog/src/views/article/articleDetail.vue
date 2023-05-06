@@ -707,6 +707,11 @@ export default {
     @include themify() {
       color: themed('color-white');
     }
+    -webkit-animation: titleScale 1s;
+    -moz-animation: titleScale 1s;
+    -o-animation: titleScale 1s;
+    -ms-animation: titleScale 1s;
+    animation: titleScale 1s;
     font-weight: 400;
     font-size: 2.5em;
     line-height: 1.5;

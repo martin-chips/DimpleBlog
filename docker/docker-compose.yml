@@ -200,6 +200,7 @@ services:
     build:
       context: ./dimple/modules/blog-front/
       dockerfile: Dockerfile
+    restart: always
     extra_hosts:
       - "github.com:140.82.112.3"
     ports:

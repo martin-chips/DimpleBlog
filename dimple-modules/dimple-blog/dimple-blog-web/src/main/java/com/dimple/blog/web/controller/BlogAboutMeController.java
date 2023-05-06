@@ -1,7 +1,7 @@
 package com.dimple.blog.web.controller;
 
+import com.dimple.blog.api.bo.BlogArticleBO;
 import com.dimple.blog.service.service.BlogArticleService;
-import com.dimple.blog.service.service.bo.BlogArticleBO;
 import com.dimple.blog.web.controller.vo.params.BlogArticleVOParams;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.controller.BaseController;

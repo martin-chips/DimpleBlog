@@ -83,6 +83,11 @@
             <artifactId>dimple-common-swagger</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>dimple-api-blog</artifactId>
+            <version>3.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

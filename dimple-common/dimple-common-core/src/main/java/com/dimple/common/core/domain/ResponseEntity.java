@@ -1,5 +1,6 @@
 package com.dimple.common.core.domain;
 
+import com.dimple.common.core.constant.HttpStatus;
 import lombok.Data;
 
 /**
@@ -15,4 +16,12 @@ public class ResponseEntity<T> {
     private String msg;
 
     private T data;
+
+    private T rows;
+
+    private Long total;
+
+    public boolean isOk() {
+        return this.code == HttpStatus.SUCCESS;
+    }
 }

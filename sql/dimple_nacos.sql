@@ -480,43 +480,6 @@ spring:
     host: dimple-redis
     port: 6379
     password: Di^&7so@c@drxMe4
-  datasource:
-    dynamic:
-      druid:
-        initial-size: 5
-        min-idle: 5
-        maxActive: 20
-        maxWait: 60000
-        timeBetweenEvictionRunsMillis: 60000
-        minEvictableIdleTimeMillis: 300000
-        validationQuery: SELECT 1 FROM DUAL
-        testWhileIdle: true
-        testOnBorrow: false
-        testOnReturn: false
-        poolPreparedStatements: true
-        maxPoolPreparedStatementPerConnectionSize: 20
-        filters: stat,slf4j
-        connectionProperties: druid.stat.mergeSql\\=true;druid.stat.slowSqlMillis\\=5000
-      datasource:
-          # 主库数据源
-          master:
-            driver-class-name: com.mysql.cj.jdbc.Driver
-            url: jdbc:mysql://dimple-mysql:3306/dimple-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-            username: root
-            password: Di^&7so@c@drxMe4
-          # 从库数据源
-          # slave:
-            # username:
-            # password:
-            # url:
-            # driver-class-name:
-
-# mybatis配置
-mybatis:
-    # 搜索指定包别名
-    typeAliasesPackage: com.dimple.blog.front.service.entity
-    # 配置mapper的扫描，找到所有的mapper.xml映射文件
-    mapperLocations: classpath:mapper/**/*.xml
 # swagger配置
 swagger:
   title: 系统模块接口文档

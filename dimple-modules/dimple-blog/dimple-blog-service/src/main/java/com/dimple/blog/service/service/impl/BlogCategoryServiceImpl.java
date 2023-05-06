@@ -1,11 +1,11 @@
 package com.dimple.blog.service.service.impl;
 
+import com.dimple.blog.api.bo.BlogArticleBO;
+import com.dimple.blog.api.bo.BlogCategoryBO;
 import com.dimple.blog.service.entity.BlogCategory;
 import com.dimple.blog.service.mapper.BlogCategoryMapper;
 import com.dimple.blog.service.service.BlogArticleService;
 import com.dimple.blog.service.service.BlogCategoryService;
-import com.dimple.blog.service.service.bo.BlogArticleBO;
-import com.dimple.blog.service.service.bo.BlogCategoryBO;
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;

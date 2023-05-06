@@ -90,6 +90,11 @@
             <if test="updateTime != null">#{updateTime},</if>
         </trim>
     </insert>
+    <update id="addLinkVisitCount">
+        update blog_link
+        set visit_count=visit_count + 1
+        where id = #{id}
+    </update>
 
     <update id="updateBlogLink" parameterType="BlogLink">
         update blog_link

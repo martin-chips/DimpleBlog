@@ -59,4 +59,6 @@ public interface BlogLinkMapper {
      * @return affected lines
      */
     int deleteBlogLinkByIds(Long[] ids);
+
+    int addLinkVisitCount(Long id);
 }

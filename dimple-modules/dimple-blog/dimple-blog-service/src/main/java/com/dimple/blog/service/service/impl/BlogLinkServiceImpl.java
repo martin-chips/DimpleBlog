@@ -1,10 +1,10 @@
 package com.dimple.blog.service.service.impl;
 
+import com.dimple.blog.api.bo.BlogLinkBO;
 import com.dimple.blog.service.entity.BlogLink;
 import com.dimple.blog.service.mapper.BlogLinkMapper;
 import com.dimple.blog.service.service.BlogLinkService;
 import com.dimple.blog.service.service.EmailServices;
-import com.dimple.blog.service.service.bo.BlogLinkBO;
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
@@ -77,5 +77,10 @@ public class BlogLinkServiceImpl implements BlogLinkService {
     @Override
     public int deleteBlogLinkById(Long id) {
         return blogLinkMapper.deleteBlogLinkById(id);
+    }
+
+    @Override
+    public int addLinkVisitCount(Long id) {
+        return blogLinkMapper.addLinkVisitCount(id);
     }
 }
