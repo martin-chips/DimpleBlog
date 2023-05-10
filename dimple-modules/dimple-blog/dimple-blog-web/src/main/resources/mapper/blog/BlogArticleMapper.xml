@@ -92,8 +92,23 @@
     </select>
     <select id="selectBlogArticleDetailById" resultMap="BlogArticleResult"
             parameterType="java.lang.Long">
-        <include refid="selectBlogArticleDetailVo"/>
-        where id = #{id}
+        select ba.id,
+               ba.title,
+               ba.header_image,
+               ba.category_id,
+               bc.title as category_title,
+               ba.original,
+               ba.content,
+               ba.summary,
+               ba.like_count,
+               ba.article_status,
+               ba.create_by,
+               ba.create_time,
+               ba.update_by,
+               ba.update_time
+        from blog_article ba
+                 left join blog_category bc on ba.category_id = bc.id
+        where ba.id = #{id}
     </select>
     <select id="selectBlogArticleByIds" resultMap="BlogArticleResult">
         <include refid="selectBlogArticleBaseVO"/>

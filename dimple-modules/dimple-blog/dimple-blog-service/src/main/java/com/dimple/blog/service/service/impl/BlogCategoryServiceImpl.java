@@ -53,7 +53,6 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
     @Override
     public int insertBlogCategory(BlogCategoryBO blogCategoryBO) {
         BlogCategory blogCategory = BeanMapper.convert(blogCategoryBO, BlogCategory.class);
-        blogCategory.setCreateTime(DateUtils.getNowDate());
         return blogCategoryMapper.insertBlogCategory(blogCategory);
     }
 

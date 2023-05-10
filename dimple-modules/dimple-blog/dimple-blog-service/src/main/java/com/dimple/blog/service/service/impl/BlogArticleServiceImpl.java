@@ -82,7 +82,6 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     @Transactional
     public Long insertBlogArticle(BlogArticleBO blogArticleBO) {
         BlogArticle blogArticle = BeanMapper.convert(blogArticleBO, BlogArticle.class);
-        blogArticle.setCreateTime(DateUtils.getNowDate());
         blogArticleMapper.insertBlogArticle(blogArticle);
         Long articleId = blogArticle.getId();
         saveBlogTags(blogArticleBO.getTags(), articleId);

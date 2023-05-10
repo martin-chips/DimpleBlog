@@ -10,7 +10,6 @@ import com.dimple.blog.front.service.service.BlogRestConfigService;
 import com.dimple.common.core.constant.SecurityConstants;
 import com.dimple.common.core.domain.ResponseEntity;
 import com.dimple.common.core.enums.BlogCommentType;
-import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.PageUtils;
 import com.dimple.common.core.utils.ServletUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
@@ -82,7 +81,6 @@ public class BlogRestCommentServiceImpl implements BlogRestCommentService {
 
     @Override
     public int insertBlogComment(BlogCommentBO blogCommentBO) {
-        blogCommentBO.setCreateTime(DateUtils.getNowDate());
         blogCommentBO.setAdmin(false);
         if (Objects.equals(blogCommentBO.getType(), BlogCommentType.GITHUB.getType())) {
             Optional<String> adminIdOptional = Optional.ofNullable(blogRestConfigService.getGithubLoginConfig()).map(GithubLoginConfig::getAdminId);

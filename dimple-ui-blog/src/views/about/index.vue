@@ -8,11 +8,6 @@
             <i class="el-icon-date"></i>
             发表于 {{ article.createTime | formatDate }}
           </span>
-          <span>&nbsp;|&nbsp;</span>
-          <span>
-            <i class="el-icon-price-tag"></i>
-            标签 {{ tags }}
-          </span>
         </div>
         <div class="article-detail__info info-2">
           <span>
@@ -206,109 +201,6 @@ export default {
 
 <style lang="scss">
 @import '~@/style/index.scss';
+@import '~@/style/article.scss';
 
-.article-detail {
-  &__header {
-    width: 100%;
-    height: 100%;
-    @include flex-box-center;
-    flex-direction: column;
-  }
-
-  &__body {
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  &__title {
-    line-height: 1.5;
-    padding: 0 12px;
-    text-align: center;
-    @include themify() {
-      color: themed('color-white');
-    }
-    -webkit-animation: titleScale 1s;
-    -moz-animation: titleScale 1s;
-    -o-animation: titleScale 1s;
-    -ms-animation: titleScale 1s;
-    animation: titleScale 1s;
-    @include respond-to(xs) {
-      font-size: 18px;
-    }
-  }
-
-  &__info {
-    padding: 0 12px;
-    @include themify() {
-      color: themed('meta-grey');
-    }
-  }
-
-  .info-2 {
-    margin-top: 8px;
-  }
-
-  &__update {
-    margin-top: 20px;
-    padding: 14px;
-    text-align: right;
-    @include themify() {
-      color: themed('headline-presudo');
-    }
-  }
-
-  &__like {
-    margin-top: 20px;
-    padding: 14px;
-    text-align: center;
-  }
-
-  &__copyright {
-    margin-top: 28px;
-  }
-
-  &__share {
-    margin-top: 12px;
-  }
-
-  &__prevnext {
-    margin-top: 28px;
-  }
-
-  &__comment {
-    margin-top: 32px;
-
-    .comment__title {
-      padding: 16px 0;
-      font-size: 20px;
-      font-weight: 700;
-
-      > [class^='el-icon-'] {
-        font-weight: 700;
-      }
-
-      span {
-        margin-left: 12px;
-      }
-    }
-
-    .comment__total {
-
-      font-size: 25px;
-      font-weight: bold;
-      margin-top: 28px;
-    }
-
-    .comment__list {
-      margin-top: 28px;
-    }
-
-    .comment__page {
-      @include flex-box-center;
-      padding: 16px 0;
-    }
-  }
-}
 </style>

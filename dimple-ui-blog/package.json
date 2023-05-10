@@ -33,6 +33,7 @@
     "moment": "^2.29.1",
     "qs": "^6.5.1",
     "resize-observer-polyfill": "^1.5.1",
+    "sitemap": "^7.1.1",
     "vue": "^2.6.10",
     "vue-meta": "^1.5.0",
     "vue-router": "^3.5.2",

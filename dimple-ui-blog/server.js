@@ -74,6 +74,7 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({extended: true}))
 // change markdown to html
 let MarkDowner = require('markdown-it');
+const {generateSitemap} = require("./sitemap");
 server.post('/api/markdown/convert', (req, res) => {
   var md = new MarkDowner({
     html: true,
@@ -133,6 +134,29 @@ readyPromise.then(() => {
     }
   })
 
+  const {generateSitemap, sitemapFilePath} = require('./sitemap');
+  // 每隔 1 天重新生成 sitemap
+  setInterval(() => {
+    console.log("Start auto generate sitemap !")
+    generateSitemap();
+  }, 24 * 60 * 60 * 1000);
+  server.get('/sitemap.xml/:reload?', (req, res) => {
+    if (req.params.reload) {
+      generateSitemap();
+    }
+    // 检查 sitemap 文件是否存在
+    fs.access(sitemapFilePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        // 如果文件不存在，生成 sitemap 并返回
+        generateSitemap();
+        res.status(200).sendFile(sitemapFilePath, {root: "."});
+      } else {
+        // 如果文件存在，直接返回
+        res.status(200).sendFile(sitemapFilePath, {root: "."});
+      }
+    });
+  });
+
   server.get('*', function (req, res) {
     res.render('404.html', {
       title: 'No Found'
@@ -163,4 +187,3 @@ function checkPort(port = 8820) {
     })
   })
 }
-

@@ -46,7 +46,6 @@ public class BlogLinkServiceImpl implements BlogLinkService {
     @Override
     public int insertBlogLink(BlogLinkBO blogLinkBO) {
         BlogLink blogLink = BeanMapper.convert(blogLinkBO, BlogLink.class);
-        blogLink.setCreateTime(DateUtils.getNowDate());
         return blogLinkMapper.insertBlogLink(blogLink);
     }
 

@@ -38,17 +38,18 @@ public class MybatisInterceptor implements Interceptor {
         }
         LoginUser loginUser = SecurityUtils.getLoginUser();
         String username = Optional.ofNullable(loginUser).map(LoginUser::getUsername).orElse("");
+        Field updateTime = ReflectUtils.getAccessibleField(parameter, "updateTime");
         switch (sqlCommandType) {
             case INSERT:
                 Field createBy = ReflectUtils.getAccessibleField(parameter, "createBy");
                 setValue(parameter, createBy, username);
                 Field createTime = ReflectUtils.getAccessibleField(parameter, "createTime");
                 setValue(parameter, createTime, new Date());
+                setValue(parameter, updateTime, new Date());
                 break;
             case UPDATE:
                 Field updateBy = ReflectUtils.getAccessibleField(parameter, "updateBy");
                 setValue(parameter, updateBy, username);
-                Field updateTime = ReflectUtils.getAccessibleField(parameter, "updateTime");
                 setValue(parameter, updateTime, new Date());
                 break;
             default:

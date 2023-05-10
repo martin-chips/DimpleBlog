@@ -4,7 +4,6 @@ import com.dimple.blog.api.bo.BlogTagBO;
 import com.dimple.blog.service.entity.BlogTag;
 import com.dimple.blog.service.mapper.BlogTagMapper;
 import com.dimple.blog.service.service.BlogTagService;
-import com.dimple.common.core.utils.DateUtils;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +48,6 @@ public class BlogTagServiceImpl implements BlogTagService {
     @Override
     public Long insertBlogTag(BlogTagBO blogTagBO) {
         BlogTag blogTag = BeanMapper.convert(blogTagBO, BlogTag.class);
-        blogTag.setCreateTime(DateUtils.getNowDate());
         blogTagMapper.insertBlogTag(blogTag);
         return blogTag.getId();
     }
@@ -57,7 +55,6 @@ public class BlogTagServiceImpl implements BlogTagService {
     @Override
     public int updateBlogTag(BlogTagBO blogTagBO) {
         BlogTag blogTag = BeanMapper.convert(blogTagBO, BlogTag.class);
-        blogTag.setUpdateTime(DateUtils.getNowDate());
         return blogTagMapper.updateBlogTag(blogTag);
     }
 

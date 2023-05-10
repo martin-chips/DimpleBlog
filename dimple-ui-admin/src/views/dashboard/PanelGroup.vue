@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :lg="6" :sm="12" :xs="12" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+      <div class="card-panel" @click="handleSetLineChartData('visitor')">
         <div class="card-panel-icon-wrapper icon-people">
           <svg-icon class-name="card-panel-icon" icon-class="peoples"/>
         </div>
@@ -14,39 +14,39 @@
       </div>
     </el-col>
     <el-col :lg="6" :sm="12" :xs="12" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
+      <div class="card-panel" @click="handleSetLineChartData('comment')">
         <div class="card-panel-icon-wrapper icon-message">
           <svg-icon class-name="card-panel-icon" icon-class="message"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            消息
+            留言
           </div>
           <count-to :duration="3000" :end-val="81212" :start-val="0" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :lg="6" :sm="12" :xs="12" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
+      <div class="card-panel" @click="handleSetLineChartData('article')">
         <div class="card-panel-icon-wrapper icon-money">
           <svg-icon class-name="card-panel-icon" icon-class="money"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            金额
+            文章
           </div>
           <count-to :duration="3200" :end-val="9280" :start-val="0" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :lg="6" :sm="12" :xs="12" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
+      <div class="card-panel" @click="handleSetLineChartData('login')">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon class-name="card-panel-icon" icon-class="shopping"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            订单
+            登录
           </div>
           <count-to :duration="3600" :end-val="13600" :start-val="0" class="card-panel-num"/>
         </div>

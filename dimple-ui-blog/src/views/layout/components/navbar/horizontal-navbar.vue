@@ -55,6 +55,12 @@
         <span>关于我</span>
       </div>
     </router-link>
+    <a href="/sitemap.xml">
+      <div class="horizontal-navbar__menu">
+        <i class="el-icon-place"></i>
+        <span>站点地图</span>
+      </div>
+    </a>
   </div>
 </template>
 <script>
