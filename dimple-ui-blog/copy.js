@@ -5,6 +5,7 @@ console.log()
 fs.copySync('./static', './dist/front')
 fs.copySync('./src/index.template.html', './dist/front/index.template.html')
 fs.copySync('./server.js', './dist/server.js')
+fs.copySync('./sitemap.js', './dist/sitemap.js')
 fs.copySync('./ecosystem.config.js', './dist/ecosystem.config.js')
 // 处理package.json
 const json = fs.readFileSync('./package.json')

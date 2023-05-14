@@ -74,7 +74,6 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({extended: true}))
 // change markdown to html
 let MarkDowner = require('markdown-it');
-const {generateSitemap} = require("./sitemap");
 server.post('/api/markdown/convert', (req, res) => {
   var md = new MarkDowner({
     html: true,
