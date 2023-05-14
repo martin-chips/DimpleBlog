@@ -22,13 +22,36 @@ export default {
     height: {
       type: String,
       default: '300px'
+    },
+    chartData: {
+      type: Array,
+      default: [],
+    },
+    chartName: {
+      type: String,
+      default: "",
     }
   },
   data() {
     return {
-      chart: null
+      chart: null,
     }
   },
+  watch: {
+    chartName: {
+      deep: true,
+      handler(val) {
+        this.setOption(this.chartData, val)
+      }
+    },
+    chartData: {
+      deep: true,
+      handler(val) {
+        this.setOption(val, this.chartName)
+      }
+    }
+  },
+
   mounted() {
     this.$nextTick(() => {
       this.initChart()
@@ -43,8 +66,10 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
-
+      this.chart = echarts.init(this.$el, 'macarons');
+      this.setOption(this.chartData, "");
+    },
+    setOption(chartData, chartName) {
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
@@ -53,22 +78,16 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          data: chartData.map(item => item.name)
         },
         series: [
           {
-            name: '爬虫访问统计',
+            name: chartName,
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
-            data: [
-              {value: 320, name: 'baidu爬虫'},
-              {value: 240, name: 'Google爬虫'},
-              {value: 149, name: 'Forex'},
-              {value: 100, name: 'Gold'},
-              {value: 59, name: 'Forecasts'}
-            ],
+            data: chartData,
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }

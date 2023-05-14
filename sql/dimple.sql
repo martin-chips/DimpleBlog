@@ -664,7 +664,7 @@ create table sys_logininfor
     ip          varchar(128) default '' comment '登录IP地址',
     status      char(1)      default '0' comment '登录状态（0成功 1失败）',
     msg         varchar(255) default '' comment '提示信息',
-    access_time datetime comment '访问时间',
+    create_time datetime comment '访问时间',
     primary key (id)
 ) engine = innodb
   auto_increment = 100 comment = '系统访问记录';

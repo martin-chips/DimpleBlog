@@ -30,6 +30,10 @@ export default {
     chartData: {
       type: Object,
       required: true
+    },
+    xAxisData: {
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -38,10 +42,16 @@ export default {
     }
   },
   watch: {
+    xAxisData: {
+      deep: true,
+      handler(val) {
+        this.setOptions(this.chartData, val)
+      }
+    },
     chartData: {
       deep: true,
       handler(val) {
-        this.setOptions(val)
+        this.setOptions(val, this.xAxisData)
       }
     }
   },
@@ -60,12 +70,12 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
+      this.setOptions(this.chartData, this.xAxisData)
     },
-    setOptions({lastWeekData, currentWeekData} = {}) {
+    setOptions({lastWeekData, currentWeekData} = {}, xAxisData) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: xAxisData,
           boundaryGap: false,
           axisTick: {
             show: false

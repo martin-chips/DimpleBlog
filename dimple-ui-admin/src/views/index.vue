@@ -2,24 +2,39 @@
   <div class="dashboard-editor-container">
     <panel-group @handleSetLineChartData="handleSetLineChartData"/>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData"/>
+      <line-chart :xAxisData="xAxisData" :chart-data="lineChartData"/>
     </el-row>
 
     <el-row :gutter="32">
       <el-col :lg="8" :sm="24" :xs="24">
-        <div class="chart-wrapper">
-          <raddar-chart/>
-        </div>
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>卡片名称</span>
+          </div>
+          <div class="chart-wrapper">
+            <raddar-chart/>
+          </div>
+        </el-card>
       </el-col>
       <el-col :lg="8" :sm="24" :xs="24">
-        <div class="chart-wrapper">
-          <pie-chart/>
-        </div>
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>爬虫访问统计</span>
+          </div>
+          <div class="chart-wrapper">
+            <pie-chart chartName="爬虫访问统计" :chart-data="this.pieChartSpiderData"/>
+          </div>
+        </el-card>
       </el-col>
       <el-col :lg="8" :sm="24" :xs="24">
-        <div class="chart-wrapper">
-          <bar-chart/>
-        </div>
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>爬虫访问统计</span>
+          </div>
+          <div class="chart-wrapper">
+            <pie-chart chartName="网站跳转统计" :chartData="this.pieChartRefererData"/>
+          </div>
+        </el-card>
       </el-col>
     </el-row>
 
@@ -33,25 +48,8 @@ import LineChart from './dashboard/LineChart'
 import RaddarChart from './dashboard/RaddarChart'
 import PieChart from './dashboard/PieChart'
 import BarChart from './dashboard/BarChart'
+import {getDashboardCount, getDashboardSpider, getDashboardReferer} from "@/api/system/dashboard";
 
-const lineChartData = {
-  visitor: {
-    lastWeekData: [100, 120, 161, 134, 105, 160, 165],
-    currentWeekData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  comment: {
-    lastWeekData: [200, 192, 120, 144, 160, 130, 140],
-    currentWeekData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  article: {
-    lastWeekData: [80, 100, 121, 104, 105, 90, 100],
-    currentWeekData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  login: {
-    lastWeekData: [130, 140, 141, 142, 145, 150, 160],
-    currentWeekData: [120, 82, 91, 154, 162, 140, 130]
-  }
-};
 
 export default {
   name: 'Index',
@@ -64,12 +62,30 @@ export default {
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
-    }
+      lineData: {},
+      lineChartData: {},
+      xAxisData: [],
+      pieChartSpiderData: [],
+      pieChartRefererData: []
+    };
+  },
+  created() {
+    getDashboardCount().then(response => {
+      this.lineData = response.data;
+      this.handleSetLineChartData('visitor');
+    });
+    getDashboardSpider().then(response => {
+      this.pieChartSpiderData = response.data;
+    })
+
+    getDashboardReferer().then(response => {
+      this.pieChartRefererData = response.data;
+    })
   },
   methods: {
     handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
+      this.lineChartData = this.lineData[type];
+      this.xAxisData = this.lineData['weeks'];
     }
   }
 }

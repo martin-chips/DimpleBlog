@@ -3,8 +3,6 @@ package com.dimple.log.service.entity;
 import com.dimple.common.core.web.entity.BaseEntity;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * 系统访问记录表 sys_logininfor
  *
@@ -38,9 +36,4 @@ public class SysLogininfor extends BaseEntity {
      * 描述
      */
     private String msg;
-
-    /**
-     * 访问时间
-     */
-    private Date accessTime;
 }

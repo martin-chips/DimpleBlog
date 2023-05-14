@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             访客
           </div>
-          <count-to :duration="2600" :end-val="102400" :start-val="0" class="card-panel-num"/>
+          <count-to :duration="2600" :end-val="countItems.visitor" :start-val="0" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             留言
           </div>
-          <count-to :duration="3000" :end-val="81212" :start-val="0" class="card-panel-num"/>
+          <count-to :duration="3000" :end-val="countItems.comment" :start-val="0" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             文章
           </div>
-          <count-to :duration="3200" :end-val="9280" :start-val="0" class="card-panel-num"/>
+          <count-to :duration="3200" :end-val="countItems.article" :start-val="0" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -48,7 +48,7 @@
           <div class="card-panel-text">
             登录
           </div>
-          <count-to :duration="3600" :end-val="13600" :start-val="0" class="card-panel-num"/>
+          <count-to :duration="3600" :end-val="countItems.login" :start-val="0" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -57,10 +57,21 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import {getDashboardCountItem} from "@/api/system/dashboard";
 
 export default {
   components: {
     CountTo
+  },
+  created() {
+    getDashboardCountItem().then(response => {
+      this.countItems = response.data;
+    })
+  },
+  data() {
+    return {
+      countItems: {},
+    }
   },
   methods: {
     handleSetLineChartData(type) {

@@ -2,7 +2,9 @@ package com.dimple.system.service.service.impl;
 
 import com.dimple.common.core.utils.DateUtils;
 import com.dimple.system.service.entity.dashboard.Dashboard;
+import com.dimple.system.service.entity.dashboard.DashboardCountItem;
 import com.dimple.system.service.entity.dashboard.DashboardItem;
+import com.dimple.system.service.entity.dashboard.DashboardKeyValue;
 import com.dimple.system.service.mapper.SysDashboardMapper;
 import com.dimple.system.service.service.SysDashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +48,47 @@ public class SysDashboardServiceImpl implements SysDashboardService {
         return dashboard;
     }
 
+    @Override
+    public DashboardCountItem getDashboardCountItems() {
+        DashboardCountItem dashboardCountItem = new DashboardCountItem();
+        dashboardCountItem.setVisitor(dashboardMapper.getCountItem(VISIT_LOG));
+        dashboardCountItem.setLogin(dashboardMapper.getCountItem(LOGIN));
+        dashboardCountItem.setComment(dashboardMapper.getCountItem(COMMENT));
+        dashboardCountItem.setArticle(dashboardMapper.getCountItem(ARTICLE));
+        return dashboardCountItem;
+    }
+
+    @Override
+    public List<DashboardKeyValue> getSpiderCount() {
+        return dashboardMapper.getSpiderCount();
+    }
+
+    @Override
+    public List<DashboardKeyValue> getRefererCount() {
+        List<DashboardKeyValue> referCount = dashboardMapper.getReferCount();
+        for (DashboardKeyValue dashboardKeyValue : referCount) {
+            if (dashboardKeyValue.getName() == null) {
+                dashboardKeyValue.setName("直接访问");
+                break;
+            }
+        }
+        return dashboardMapper.getReferCount();
+    }
+
     private DashboardItem getDashboardItem(Date currentWeekStart, Date currentWeekEnd, Date lastWeekStart, Date lastWeekEnd, String tableName) {
-        List<Long> currentWeekCount = dashboardMapper.getCountByDay(tableName, currentWeekStart, currentWeekEnd);
-        List<Long> lastWeekCount = dashboardMapper.getCountByDay(tableName, lastWeekStart, lastWeekEnd);
+        List<Long> currentWeekCount = new ArrayList<>();
+        Date tmp = currentWeekStart;
+        while (!tmp.after(currentWeekEnd)) {
+            currentWeekCount.add(dashboardMapper.getCountByDay(tableName, DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD, tmp)));
+            tmp = DateUtils.addDays(tmp, 1);
+        }
+        tmp = lastWeekStart;
+        List<Long> lastWeekCount = new ArrayList<>();
+        while (!tmp.after(lastWeekEnd)) {
+            lastWeekCount.add(dashboardMapper.getCountByDay(tableName, DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD, tmp)));
+            tmp = DateUtils.addDays(tmp, 1);
+        }
+
         return new DashboardItem(lastWeekCount, currentWeekCount);
     }
 
@@ -59,7 +99,6 @@ public class SysDashboardServiceImpl implements SysDashboardService {
         Date tempStartDate = DateUtils.addDays(DateUtils.addWeeks(date, amount), 1);
         while (!tempStartDate.after(date)) {
             calendar.setTime(tempStartDate);
-            String dateStr = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD, tempStartDate);
             String dayOfWeek = sdf.format(calendar.getTime());
             result.add(dayOfWeek);
             tempStartDate = DateUtils.addDays(tempStartDate, 1);

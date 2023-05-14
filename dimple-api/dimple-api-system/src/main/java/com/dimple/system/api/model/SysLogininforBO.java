@@ -38,9 +38,4 @@ public class SysLogininforBO extends BaseEntity {
      * 描述
      */
     private String msg;
-
-    /**
-     * 访问时间
-     */
-    private Date accessTime;
 }

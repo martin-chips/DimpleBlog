@@ -114,10 +114,10 @@
         </template>
       </el-table-column>
       <el-table-column align="center" label="描述" prop="msg"/>
-      <el-table-column :sort-orders="['descending', 'ascending']" align="center" label="访问时间" prop="accessTime"
+      <el-table-column :sort-orders="['descending', 'ascending']" align="center" label="访问时间" prop="createTime"
                        sortable="custom" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.accessTime) }}</span>
+          <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
     </el-table>

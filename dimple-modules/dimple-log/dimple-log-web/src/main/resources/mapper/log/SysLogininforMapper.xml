@@ -10,16 +10,16 @@
         <result property="status" column="status"/>
         <result property="ip" column="ip"/>
         <result property="msg" column="msg"/>
-        <result property="accessTime" column="access_time"/>
+        <result property="createTime" column="create_time"/>
     </resultMap>
 
     <insert id="insertLogininfor" parameterType="SysLogininfor">
-        insert into sys_logininfor (user_name, status, ip, msg, access_time)
+        insert into sys_logininfor (user_name, status, ip, msg, create_time)
         values (#{userName}, #{status}, #{ip}, #{msg}, sysdate())
     </insert>
 
     <select id="selectLogininforList" parameterType="SysLogininfor" resultMap="SysLogininforResult">
-        select id, user_name, ip, status, msg, access_time from sys_logininfor
+        select id, user_name, ip, status, msg, create_time from sys_logininfor
         <where>
             <if test="ip != null and ip != '">
                 AND ip like concat('%', #{ip}, '%')
@@ -31,10 +31,10 @@
                 AND user_name like concat('%', #{userName}, '%')
             </if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-                and date_format(access_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
             <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-                and date_format(access_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
         order by id desc
