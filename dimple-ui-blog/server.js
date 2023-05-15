@@ -74,6 +74,7 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({extended: true}))
 // change markdown to html
 let MarkDowner = require('markdown-it');
+const {sitemapFilePath} = require("./sitemap");
 server.post('/api/markdown/convert', (req, res) => {
   var md = new MarkDowner({
     html: true,
@@ -134,21 +135,34 @@ readyPromise.then(() => {
   })
 
   const {generateSitemap, sitemapFilePath} = require('./sitemap');
-  // 每隔 1 天重新生成 sitemap
-  setInterval(() => {
-    console.log("Start auto generate sitemap !")
-    generateSitemap();
-  }, 24 * 60 * 60 * 1000);
+  // 每天凌晨1点重新生成 sitemap
+  const cron = require('node-cron');
+  cron.schedule('0 1 * * *', () => {
+    console.log('start auto generate sitemap');
+    var safeport = process.env.__SAFE_PORT__;
+    if (safeport == 8820) {
+      // only one node need generate sitemap.
+      generateSitemap();
+    } else {
+      console.log("current port is " + safeport + " ,just ignore generate sitemap.")
+    }
+    // 执行其他任务代码
+  });
   server.get('/sitemap.xml/:reload?', (req, res) => {
     if (req.params.reload) {
-      generateSitemap();
+      console.log("start reload sitemap.xml")
+      generateSitemap().then(() => {
+        res.status(200).sendFile(sitemapFilePath, {root: "."})
+      })
+      return
     }
     // 检查 sitemap 文件是否存在
     fs.access(sitemapFilePath, fs.constants.F_OK, (err) => {
       if (err) {
         // 如果文件不存在，生成 sitemap 并返回
-        generateSitemap();
-        res.status(200).sendFile(sitemapFilePath, {root: "."});
+        generateSitemap().then(() => {
+          res.status(200).sendFile(sitemapFilePath, {root: "."})
+        })
       } else {
         // 如果文件存在，直接返回
         res.status(200).sendFile(sitemapFilePath, {root: "."});

@@ -88,14 +88,13 @@ async function generateSitemap() {
     sitemapStream.write(url);
   });
   sitemapStream.end();
-  streamToPromise(sitemapStream)
-    .then((sitemap) => {
-      fs.writeFileSync(sitemapFilePath, sitemap);
-      console.log('Sitemap generated successfully.');
-    })
-    .catch((error) => {
-      console.error('Error generating sitemap:', error);
-    });
+  try {
+    const sitemap = await streamToPromise(sitemapStream);
+    fs.writeFileSync(sitemapFilePath, sitemap);
+    console.log('Sitemap generated successfully.');
+  } catch (error) {
+    console.error('Error generating sitemap:', error);
+  }
 }
 
 module.exports = {

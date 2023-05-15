@@ -219,6 +219,7 @@ options=(
   "Start: Start all customer modules services",
   "Stop: Stop all customer modules services",
   "Init: only first deploy the service can using this method.",
+  "Change Default Password: change default password",
   "Build_Deploy: Build and Deploy all Jar and UI.",
   "Build_Deploy_Jar: Build and Deploy all Jar.",
   "Build_Deploy_UI: Build and Deploy UI.",
@@ -236,6 +237,7 @@ commands=(
   "start"
   "stop"
   "init_env"
+  "change_default_password"
   "build_deploy"
   "build_deploy_jar"
   "build_deploy_UI"

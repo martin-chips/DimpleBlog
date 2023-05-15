@@ -1,11 +1,15 @@
-DROP DATABASE IF EXISTS `dimple-cloud`;
+DROP
+DATABASE IF EXISTS `dimple-cloud`;
 
-CREATE DATABASE `dimple-cloud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE
+DATABASE `dimple-cloud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+SET
+FOREIGN_KEY_CHECKS = 0;
 
-USE `dimple-cloud`;
+USE
+`dimple-cloud`;
 
 -- ----------------------------
 -- 用户信息表
@@ -13,7 +17,7 @@ USE `dimple-cloud`;
 drop table if exists sys_user;
 create table sys_user
 (
-    user_id     bigint(20)  not null auto_increment comment '用户ID',
+    user_id     bigint(20) not null auto_increment comment '用户ID',
     user_name   varchar(30) not null comment '用户账号',
     nick_name   varchar(30) not null comment '用户昵称',
     user_type   varchar(2)   default '00' comment '用户类型（00系统用户）',
@@ -27,9 +31,9 @@ create table sys_user
     login_ip    varchar(128) default '' comment '最后登录IP',
     login_date  datetime comment '最后登录时间',
     create_by   varchar(64)  default '' comment '创建者',
-    create_time datetime comment '创建时间',
+    create_time datetime     default (now()) comment '创建时间',
     update_by   varchar(64)  default '' comment '更新者',
-    update_time datetime comment '更新时间',
+    update_time datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     remark      varchar(500) default null comment '备注',
     primary key (user_id)
 ) engine = innodb
@@ -53,18 +57,18 @@ values (2, 'test', 'Dimple', '00', 'test@qq.com', '15666666666', '1', '',
 drop table if exists sys_role;
 create table sys_role
 (
-    role_id             bigint(20)   not null auto_increment comment '角色ID',
+    role_id             bigint(20) not null auto_increment comment '角色ID',
     role_name           varchar(30)  not null comment '角色名称',
     role_key            varchar(100) not null comment '角色权限字符串',
-    role_sort           int(4)       not null comment '显示顺序',
+    role_sort           int(4) not null comment '显示顺序',
     data_scope          char(1)      default '1' comment '数据范围（1：全部数据权限 2：自定数据权限）',
-    menu_check_strictly tinyint(1)   default 1 comment '菜单树选择项是否关联显示',
+    menu_check_strictly tinyint(1) default 1 comment '菜单树选择项是否关联显示',
     status              char(1)      not null comment '角色状态（0正常 1停用）',
     del_flag            char(1)      default '0' comment '删除标志（0代表存在 2代表删除）',
     create_by           varchar(64)  default '' comment '创建者',
-    create_time         datetime comment '创建时间',
+    create_time         datetime     default (now()) comment '创建时间',
     update_by           varchar(64)  default '' comment '更新者',
-    update_time         datetime comment '更新时间',
+    update_time         datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     remark              varchar(500) default null comment '备注',
     primary key (role_id)
 ) engine = innodb
@@ -85,15 +89,15 @@ values ('2', '普通角色', 'common', 2, 2, 1, 1, '0', 'admin', sysdate(), '', 
 drop table if exists sys_menu;
 create table sys_menu
 (
-    menu_id     bigint(20)  not null auto_increment comment '菜单ID',
+    menu_id     bigint(20) not null auto_increment comment '菜单ID',
     menu_name   varchar(50) not null comment '菜单名称',
-    parent_id   bigint(20)   default 0 comment '父菜单ID',
-    order_num   int(4)       default 0 comment '显示顺序',
+    parent_id   bigint(20) default 0 comment '父菜单ID',
+    order_num   int(4) default 0 comment '显示顺序',
     path        varchar(200) default '' comment '路由地址',
     component   varchar(255) default null comment '组件路径',
     query       varchar(255) default null comment '路由参数',
-    is_frame    int(1)       default 1 comment '是否为外链（0是 1否）',
-    is_cache    int(1)       default 0 comment '是否缓存（0缓存 1不缓存）',
+    is_frame    int(1) default 1 comment '是否为外链（0是 1否）',
+    is_cache    int(1) default 0 comment '是否缓存（0缓存 1不缓存）',
     menu_type   char(1)      default '' comment '菜单类型（M目录 C菜单 F按钮）',
     visible     char(1)      default 0 comment '菜单状态（0显示 1隐藏）',
     status      char(1)      default 0 comment '菜单状态（0正常 1停用）',
@@ -102,7 +106,7 @@ create table sys_menu
     create_by   varchar(64)  default '' comment '创建者',
     create_time datetime     default now() comment '创建时间',
     update_by   varchar(64)  default '' comment '更新者',
-    update_time datetime comment '更新时间',
+    update_time datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     remark      varchar(500) default '' comment '备注',
     primary key (menu_id)
 ) engine = innodb
@@ -424,17 +428,17 @@ create table sys_oper_log
 (
     id             bigint(20) not null auto_increment comment '日志主键',
     title          varchar(50)   default '' comment '模块标题',
-    business_type  int(2)        default 0 comment '业务类型（0其它 1新增 2修改 3删除）',
+    business_type  int(2) default 0 comment '业务类型（0其它 1新增 2修改 3删除）',
     method         varchar(100)  default '' comment '方法名称',
     request_method varchar(10)   default '' comment '请求方式',
-    operator_type  int(1)        default 0 comment '操作类别（0其它 1后台用户 2手机端用户）',
+    operator_type  int(1) default 0 comment '操作类别（0其它 1后台用户 2手机端用户）',
     oper_name      varchar(50)   default '' comment '操作人员',
     oper_url       varchar(255)  default '' comment '请求URL',
     ip             varchar(128)  default '' comment '主机地址',
     oper_location  varchar(255)  default '' comment '操作地点',
     oper_param     varchar(2000) default '' comment '请求参数',
     json_result    varchar(2000) default '' comment '返回参数',
-    status         int(1)        default 0 comment '操作状态（0正常 1异常）',
+    status         int(1) default 0 comment '操作状态（0正常 1异常）',
     error_msg      varchar(2000) default '' comment '错误消息',
     create_tme     datetime comment '操作时间',
     primary key (id)
@@ -453,9 +457,9 @@ create table sys_dict_type
     dict_type   varchar(100) default '' comment '字典类型',
     status      char(1)      default '0' comment '状态（0正常 1停用）',
     create_by   varchar(64)  default '' comment '创建者',
-    create_time datetime comment '创建时间',
+    create_time datetime     default (now()) comment '创建时间',
     update_by   varchar(64)  default '' comment '更新者',
-    update_time datetime comment '更新时间',
+    update_time datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     remark      varchar(500) default null comment '备注',
     primary key (id),
     unique (dict_type)
@@ -497,7 +501,7 @@ drop table if exists sys_dict_data;
 create table sys_dict_data
 (
     id          bigint(20) not null auto_increment comment '字典编码',
-    dict_sort   int(4)       default 0 comment '字典排序',
+    dict_sort   int(4) default 0 comment '字典排序',
     dict_label  varchar(100) default '' comment '字典标签',
     dict_value  varchar(100) default '' comment '字典键值',
     dict_type   varchar(100) default '' comment '字典类型',
@@ -506,9 +510,9 @@ create table sys_dict_data
     is_default  char(1)      default 'N' comment '是否默认（Y是 N否）',
     status      char(1)      default '0' comment '状态（0正常 1停用）',
     create_by   varchar(64)  default '' comment '创建者',
-    create_time datetime comment '创建时间',
+    create_time datetime     default (now()) comment '创建时间',
     update_by   varchar(64)  default '' comment '更新者',
-    update_time datetime comment '更新时间',
+    update_time datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     remark      varchar(500) default null comment '备注',
     primary key (id)
 ) engine = innodb
@@ -630,9 +634,9 @@ create table sys_config
     config_value varchar(500) default '' comment '参数键值',
     config_type  char(1)      default 'N' comment '系统内置（Y是 N否）',
     create_by    varchar(64)  default '' comment '创建者',
-    create_time  datetime comment '创建时间',
+    create_time  datetime     default (now()) comment '创建时间',
     update_by    varchar(64)  default '' comment '更新者',
-    update_time  datetime comment '更新时间',
+    update_time  datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     remark       varchar(500) default null comment '备注',
     primary key (id)
 ) engine = innodb
@@ -664,7 +668,7 @@ create table sys_logininfor
     ip          varchar(128) default '' comment '登录IP地址',
     status      char(1)      default '0' comment '登录状态（0成功 1失败）',
     msg         varchar(255) default '' comment '提示信息',
-    create_time datetime comment '访问时间',
+    create_time datetime     default (now()) comment '访问时间',
     primary key (id)
 ) engine = innodb
   auto_increment = 100 comment = '系统访问记录';
@@ -676,7 +680,7 @@ create table sys_logininfor
 drop table if exists sys_job;
 create table sys_job
 (
-    id              bigint(20)   not null auto_increment comment '任务ID',
+    id              bigint(20) not null auto_increment comment '任务ID',
     job_name        varchar(64)  default '' comment '任务名称',
     job_group       varchar(64)  default 'DEFAULT' comment '任务组名',
     invoke_target   varchar(500) not null comment '调用目标字符串',
@@ -685,9 +689,9 @@ create table sys_job
     concurrent      char(1)      default '1' comment '是否并发执行（0允许 1禁止）',
     status          char(1)      default '0' comment '状态（0正常 1暂停）',
     create_by       varchar(64)  default '' comment '创建者',
-    create_time     datetime comment '创建时间',
+    create_time     datetime     default (now()) comment '创建时间',
     update_by       varchar(64)  default '' comment '更新者',
-    update_time     datetime comment '更新时间',
+    update_time     datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     remark          varchar(500) default '' comment '备注信息',
     primary key (id, job_name, job_group)
 ) engine = innodb
@@ -713,14 +717,14 @@ values (3, '系统默认（多参）', 'DEFAULT', 'dimpleTask.dimpleMultiplePara
 drop table if exists sys_job_log;
 create table sys_job_log
 (
-    id             bigint(20)   not null auto_increment comment '任务日志ID',
+    id             bigint(20) not null auto_increment comment '任务日志ID',
     job_name       varchar(64)  not null comment '任务名称',
     job_group      varchar(64)  not null comment '任务组名',
     invoke_target  varchar(500) not null comment '调用目标字符串',
     job_message    varchar(500) comment '日志信息',
     status         char(1)       default '0' comment '执行状态（0正常 1失败）',
     exception_info varchar(2000) default '' comment '异常信息',
-    create_time    datetime comment '创建时间',
+    create_time    datetime      default (now()) comment '创建时间',
     primary key (id)
 ) engine = innodb comment = '定时任务调度日志表';
 
@@ -731,16 +735,16 @@ create table sys_job_log
 drop table if exists sys_notice;
 create table sys_notice
 (
-    id             int(4)      not null auto_increment comment '公告ID',
+    id             int(4) not null auto_increment comment '公告ID',
     notice_title   varchar(50) not null comment '公告标题',
     target         tinyint      default 1 comment '公告目标,1表示后台，2表示博客系统',
     notice_type    char(1)     not null comment '公告类型（1通知 2公告）',
     notice_content longblob     default null comment '公告内容',
     status         char(1)      default '0' comment '公告状态（0正常 1关闭）',
     create_by      varchar(64)  default '' comment '创建者',
-    create_time    datetime comment '创建时间',
+    create_time    datetime     default (now()) comment '创建时间',
     update_by      varchar(64)  default '' comment '更新者',
-    update_time    datetime comment '更新时间',
+    update_time    datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     remark         varchar(255) default null comment '备注',
     primary key (id)
 ) engine = innodb
@@ -766,9 +770,9 @@ create table sys_file
     type        varchar(64)  default null comment '',
     path        varchar(128) default null comment '',
     create_by   varchar(64)  default '' comment '创建者',
-    create_time datetime comment '创建时间',
+    create_time datetime     default (now()) comment '创建时间',
     update_by   varchar(64)  default '' comment '更新者',
-    update_time datetime comment '更新时间',
+    update_time datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     primary key (id)
 ) engine = innodb
   auto_increment = 1 comment = '文件表';
