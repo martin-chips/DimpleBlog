@@ -29,7 +29,6 @@ public class BlogCategoryRest extends BaseController {
     private BlogRestCategoryService blogRestCategoryService;
 
     @GetMapping("/list")
-    @VisitLog(title = VisitLogTitle.LIST_CATEGORY)
     public TableDataInfo list(BlogCategoryVOParams blogCategory) {
         BlogCategoryBO blogCategoryBO = BeanMapper.convert(blogCategory, BlogCategoryBO.class);
         List<BlogCategoryBO> list = blogRestCategoryService.selectBlogCategoryList(blogCategoryBO);

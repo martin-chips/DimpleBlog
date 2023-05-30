@@ -84,7 +84,7 @@ Vue.filter('formatDate', (val) => {
   return "N/A";
 })
 Vue.mixin(mergeAsyncData)
-Vue.prototype.$moment = moment
+Vue.prototype.$moment = moment;
 Vue.prototype.$api = api
 Vue.config.devtools = true
 

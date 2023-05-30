@@ -30,7 +30,6 @@ public class BlogLinkRest extends BaseController {
     private BlogRestLinkService blogLinkService;
 
     @GetMapping("/list")
-    @VisitLog(title = VisitLogTitle.LIST_LINK)
     public TableDataInfo list(BlogLinkVOParams params) {
         BlogLinkBO blogLinkBO = BeanMapper.convert(params, BlogLinkBO.class);
         List<BlogLinkBO> list = blogLinkService.listBlogLink(blogLinkBO);

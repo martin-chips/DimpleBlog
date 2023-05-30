@@ -2,16 +2,21 @@ package com.dimple.blog.front.web.controller;
 
 import com.dimple.blog.api.bo.BlogArticleBO;
 import com.dimple.blog.api.bo.BlogArticlePrevNextBO;
+import com.dimple.blog.api.bo.BlogCommentBO;
 import com.dimple.blog.front.service.service.BlogRestArticleService;
+import com.dimple.blog.front.service.service.BlogRestCommentService;
 import com.dimple.blog.front.web.controller.vo.BlogArticlePrevNextVO;
 import com.dimple.blog.front.web.controller.vo.BlogArticleVO;
+import com.dimple.blog.front.web.controller.vo.BlogCommentVO;
 import com.dimple.blog.front.web.controller.vo.params.BlogArticleVOParams;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.controller.BaseController;
+import com.dimple.common.core.web.page.PageDomain;
 import com.dimple.common.core.web.page.TableDataInfo;
 import com.dimple.common.core.web.vo.params.AjaxResult;
 import com.dimple.common.log.annotation.VisitLog;
 import com.dimple.common.log.enums.VisitLogTitle;
+import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +33,10 @@ import java.util.List;
 public class BlogArticleRest extends BaseController {
     @Autowired
     private BlogRestArticleService blogRestArticleService;
+    @Autowired
+    private BlogRestCommentService commentService;
 
     @GetMapping("/list")
-    @VisitLog(title = VisitLogTitle.LIST_ARTICLE)
     public TableDataInfo list(BlogArticleVOParams params) {
         BlogArticleBO blogArticleBO = BeanMapper.convert(params, BlogArticleBO.class);
         List<BlogArticleBO> list;
@@ -44,10 +50,16 @@ public class BlogArticleRest extends BaseController {
     }
 
     @GetMapping("/{id}")
-    @VisitLog(title = VisitLogTitle.GET_ARTICLE, pageId = "#id")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         BlogArticleBO blogArticleBO = blogRestArticleService.selectBlogArticleById(id);
-        return success(BeanMapper.convert(blogArticleBO, BlogArticleVO.class));
+        BlogCommentBO blogCommentBO = new BlogCommentBO();
+        blogCommentBO.setArticleId(id);
+        startInnerPage(new PageDomain());
+        List<BlogCommentBO> blogCommentBOS = commentService.selectBlogCommentListWithSub(blogCommentBO);
+        blogArticleBO.setCommentCount(((Page) blogCommentBOS).getTotal());
+        BlogArticleVO blogArticleVO = BeanMapper.convert(blogArticleBO, BlogArticleVO.class);
+        blogArticleVO.setComments(BeanMapper.convertList(blogCommentBOS, BlogCommentVO.class));
+        return success(blogArticleVO);
     }
 
 

@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.dimple</groupId>
         <artifactId>dimple-modules</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -25,7 +25,7 @@
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-modules-log-service</artifactId>
-                <version>${dimple.version}</version>
+                <version>3.1.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

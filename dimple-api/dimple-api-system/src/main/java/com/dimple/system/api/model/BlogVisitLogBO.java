@@ -15,6 +15,7 @@ public class BlogVisitLogBO extends BaseEntity {
     private String title;
     private Long pageId;
     private String requestUri;
+    private Integer requestType;
     private String referer;
     private Integer statusCode;
     private String methodName;

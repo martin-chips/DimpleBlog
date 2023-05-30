@@ -19,7 +19,7 @@ services:
       - "8848:8848"
       - "9848:9848"
       - "9849:9849"
-    restart: always
+    restart: unless-stopped
     depends_on:
       dimple-mysql:
         condition: service_healthy
@@ -46,7 +46,7 @@ services:
       '--default-time-zone=+8:00',
       '--lower-case-table-names=1'
     ]
-    restart: always
+    restart: unless-stopped
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1" ]
       interval: 5s
@@ -66,7 +66,7 @@ services:
     hostname: dimple-redis
     build:
       context: ./redis
-    restart: always
+    restart: unless-stopped
     environment:
       - TZ=Asia/Shanghai
     ports:
@@ -87,6 +87,7 @@ services:
     privileged: true
     build:
       context: node
+    restart: unless-stopped
     ports:
       - "8820:8820"
     volumes:
@@ -99,6 +100,7 @@ services:
     container_name: dimple-ui
     image: nginx
     privileged: true
+    restart: unless-stopped
     build:
       context: nginx
     environment:
@@ -121,6 +123,7 @@ services:
     build:
       context: ./dimple/gateway/
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "8080:8080"
     environment:
@@ -132,6 +135,7 @@ services:
     build:
       context: ./dimple/auth/
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "9200:9200"
     environment:
@@ -143,6 +147,7 @@ services:
     build:
       context: ./dimple/modules/system/
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "9201:9201"
     environment:
@@ -154,6 +159,7 @@ services:
     build:
       context: ./dimple/modules/job/
       dockerfile: Dockerfile
+    restart: on-failure
     ports:
       - "9203:9203"
     environment:
@@ -165,6 +171,7 @@ services:
     build:
       context: ./dimple/modules/file/
       dockerfile: Dockerfile
+    restart: on-failure
     ports:
       - "9300:9300"
     volumes:
@@ -178,6 +185,7 @@ services:
     build:
       context: ./dimple/modules/monitor/
       dockerfile: Dockerfile
+    restart: on-failure
     ports:
       - "9100:9100"
     environment:
@@ -193,6 +201,7 @@ services:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms256m -Xmx256m -Xss1m -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -XX:InitiatingHeapOccupancyPercent=40 -XX:+HeapDumpOnOutOfMemoryError -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -Xloggc:gc.log
       - SPRING_OPTS=--spring.cloud.nacos.discovery.username=default_nacos_username --spring.cloud.nacos.discovery.password=default_nacos_password --spring.cloud.nacos.config.username=default_nacos_username --spring.cloud.nacos.config.password=default_nacos_password --spring.cloud.nacos.config.context-path=/nacos 
+    restart: unless-stopped
     ports:
       - "9401:9401"
   dimple-modules-blog-front:
@@ -200,7 +209,7 @@ services:
     build:
       context: ./dimple/modules/blog-front/
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     extra_hosts:
       - "github.com:140.82.112.3"
     ports:
@@ -214,6 +223,7 @@ services:
     build:
       context: ./dimple/modules/log/
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "9408:9408"
     environment:

@@ -43,6 +43,7 @@ import submit from '@/views/components/submit'
 import comments from '@/views/components/comments'
 import api from '@/api/'
 import {storage} from "@/utils/storage";
+import {Enum} from "../../api/visitor";
 
 export default {
   name: 'messageBoard',
@@ -81,7 +82,8 @@ export default {
     const msgRes = await api.getAsyncMessageBoard({
       pageNum: 1,
       pageSize: 10
-    }, _req)
+    }, _req);
+    await api.saveVisitLog(Enum.LIST_MESSAGE_BOARD, "", "/app/messageBoard", msgRes.code, _req);
     if (msgRes.code === 200) return {messages: msgRes.rows, total: msgRes.total}
   },
   computed: {

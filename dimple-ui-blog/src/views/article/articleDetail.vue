@@ -96,6 +96,7 @@ import share from './components/share'
 import prevnext from './components/prevnext'
 import axios from 'axios';
 import {storage} from "@/utils/storage";
+import {Enum} from "../../api/visitor";
 
 function jumpAnchor(route) {
   if (route.query.anchor === 'a_cm') {
@@ -171,22 +172,15 @@ export default {
     window.addEventListener('scroll', this.handleScroll, false)
   },
   async asyncData({store, route, isServer, _req}) {
-    const articleRes = await api.getAsyncArticle(route.params.id, _req)
-    const commentRes = await api.listAsyncComment({
-      pageNum: 1,
-      pageSize: 10,
-      orderByColumn: "createTime",
-      isAsc: "desc",
-      articleId: route.params.id,
-    }, _req);
-
+    const articleRes = await api.getAsyncArticle(route.params.id, _req);
+    await api.saveVisitLog(Enum.GET_ARTICLE, route.params.id, "/app/article/" + route.params.id, articleRes.code, _req);
     if (articleRes.code === 200) {
       if (!isServer) {
         setTimeout(() => jumpAnchor(route), 0)
       }
       const response = await axios.post(process.env.BASE_URL + '/api/markdown/convert', {content: articleRes.data.content});
       articleRes.data.content = response.data;
-      return {article: articleRes.data, messages: commentRes.rows, total: commentRes.total}
+      return {article: articleRes.data, messages: articleRes.data.comments, total: articleRes.data.commentCount}
     }
   },
   methods: {

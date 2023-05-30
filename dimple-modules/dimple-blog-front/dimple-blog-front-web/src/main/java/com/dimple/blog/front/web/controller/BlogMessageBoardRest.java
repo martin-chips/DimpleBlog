@@ -29,7 +29,6 @@ public class BlogMessageBoardRest extends BaseController {
     private BlogRestCommentService blogRestCommentService;
 
     @GetMapping("/list")
-    @VisitLog(title = VisitLogTitle.LIST_MESSAGE_BOARD)
     public TableDataInfo list(BlogCommentVOParams blogComment) {
         blogComment.setArticleId(-1000L);
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);

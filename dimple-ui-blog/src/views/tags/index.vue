@@ -8,6 +8,7 @@
 <script>
 import api from '@/api/'
 import tagsIterator from '@/views/components/tags-iterator'
+import {Enum} from "../../api/visitor";
 
 export default {
   name: 'tags',
@@ -34,6 +35,7 @@ export default {
   },
   async asyncData({store, route, isServer, _req}) {
     const tagRes = await api.listAsyncTag(_req)
+    await api.saveVisitLog(Enum.LIST_TAG, "", "/app/tags", tagRes.code, _req);
     if (tagRes.code === 200) return {tags: tagRes.rows, total: tagRes.total}
   }
 }

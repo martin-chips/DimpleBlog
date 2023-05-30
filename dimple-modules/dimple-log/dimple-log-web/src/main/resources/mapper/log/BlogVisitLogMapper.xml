@@ -10,6 +10,7 @@
         <result property="pageId" column="page_id"/>
         <result property="requestUri" column="request_uri"/>
         <result property="referer" column="referer"/>
+        <result property="requestType" column="request_type"/>
         <result property="statusCode" column="status_code"/>
         <result property="methodName" column="method_name"/>
         <result property="requestMethod" column="request_method"/>
@@ -27,9 +28,9 @@
         <result property="updateBy" column="update_by"/>
     </resultMap>
     <insert id="insertVisitLog">
-        insert into blog_visit_log (title, page_id, request_uri, referer, request_method, request_params, response_params,
+        insert into blog_visit_log (title, page_id,request_type, request_uri, referer, request_method, request_params, response_params,
                                     exception, status_code, method_name, os, spider, browser, ip, location, create_by, create_time)
-        values (#{title}, #{pageId}, #{requestUri}, #{referer}, #{requestMethod},#{requestParams}, #{responseParams},
+        values (#{title}, #{pageId}, #{requestType},#{requestUri}, #{referer}, #{requestMethod},#{requestParams}, #{responseParams},
                 #{exception}, #{statusCode},#{methodName}, #{os}, #{spider}, #{browser}, #{ip}, #{location}, #{createBy}, sysdate())
     </insert>
     <delete id="deleteVisitLogByIds">

@@ -15,7 +15,7 @@ module.exports = {
       // 启用/禁用应用程序崩溃或退出时自动重启，默认为true, 发生异常的情况下自动重启
       autorestart: true,
       merge_logs: true,
-      instances: '2',
+      instances: '1',
       watch: 'false',
       env: {
         NODE_ENV: 'development'

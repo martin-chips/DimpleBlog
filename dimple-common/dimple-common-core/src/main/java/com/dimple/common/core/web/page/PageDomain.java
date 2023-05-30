@@ -11,22 +11,22 @@ public class PageDomain {
     /**
      * 当前记录起始索引
      */
-    private Integer pageNum;
+    private Integer pageNum = 1;
 
     /**
      * 每页显示记录数
      */
-    private Integer pageSize;
+    private Integer pageSize = 10;
 
     /**
      * 排序列
      */
-    private String orderByColumn;
+    private String orderByColumn = "createTime";
 
     /**
      * 排序的方向desc或者asc
      */
-    private String isAsc = "asc";
+    private String isAsc = "desc";
 
     /**
      * 分页参数合理化

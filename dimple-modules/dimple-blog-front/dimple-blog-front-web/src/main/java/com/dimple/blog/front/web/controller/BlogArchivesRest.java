@@ -7,8 +7,6 @@ import com.dimple.blog.front.web.controller.vo.params.BlogArchivesVOParams;
 import com.dimple.common.core.utils.bean.BeanMapper;
 import com.dimple.common.core.web.controller.BaseController;
 import com.dimple.common.core.web.page.TableDataInfo;
-import com.dimple.common.log.annotation.VisitLog;
-import com.dimple.common.log.enums.VisitLogTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +28,6 @@ public class BlogArchivesRest extends BaseController {
     private BlogRestArchivesService archivesService;
 
     @GetMapping
-    @VisitLog(title = VisitLogTitle.LIST_ARCHIVES)
     public TableDataInfo getArchives(BlogArchivesVOParams params) {
         List<BlogArchivesBO> archives = archivesService.getArchives(params.getCountType());
         return getDataTable(BeanMapper.convertList(archives, BlogArchivesVO.class));

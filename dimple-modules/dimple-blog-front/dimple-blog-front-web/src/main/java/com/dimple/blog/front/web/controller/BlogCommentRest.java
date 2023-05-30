@@ -29,7 +29,6 @@ public class BlogCommentRest extends BaseController {
     private BlogRestCommentService blogRestCommentService;
 
     @GetMapping("/list")
-    @VisitLog(title = VisitLogTitle.LIST_COMMENT, pageId = "#blogComment.articleId")
     public TableDataInfo list(BlogCommentVOParams blogComment) {
         BlogCommentBO blogCommentBO = BeanMapper.convert(blogComment, BlogCommentBO.class);
         List<BlogCommentBO> list = blogRestCommentService.selectBlogCommentListWithSub(blogCommentBO);

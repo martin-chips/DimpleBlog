@@ -19,6 +19,7 @@
 <script>
 import api from '@/api/'
 import dot from '@/components/dot'
+import {Enum} from "../../api/visitor";
 
 export default {
   name: 'category',
@@ -44,7 +45,8 @@ export default {
   },
   components: {dot},
   async asyncData({store, route, isServer, _req}) {
-    const categoryRes = await api.listAsyncCategory(_req)
+    const categoryRes = await api.listAsyncCategory(_req);
+    await api.saveVisitLog(Enum.LIST_CATEGORY, "", "/app/category", categoryRes.code, _req);
     if (categoryRes.code == 200) return {categories: categoryRes.rows}
   },
   methods: {

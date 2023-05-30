@@ -69,6 +69,7 @@
 </template>
 <script>
 import api from '@/api/'
+import {Enum} from "../../api/visitor";
 
 export default {
   name: "archives",
@@ -116,14 +117,15 @@ export default {
     };
   },
   async asyncData({store, route, isServer, _req}) {
-    const archiveRes = await api.listAsyncLink({
+    const linkRes = await api.listAsyncLink({
       pageNum: 1,
       pageSize: 100
     }, _req);
-    if (archiveRes.code == 200) {
+    await api.saveVisitLog(Enum.LIST_LINK, "", "/app/link", linkRes.code, _req);
+    if (linkRes.code == 200) {
       return {
-        links: archiveRes.rows,
-        total: archiveRes.total
+        links: linkRes.rows,
+        total: linkRes.total
       }
     }
   },

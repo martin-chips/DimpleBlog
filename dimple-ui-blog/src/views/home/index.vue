@@ -35,6 +35,7 @@
 import scrollTo from '@/utils/scrollTo'
 import api from '@/api/'
 import articleIterator from '@/views/components/article-iterator'
+import {Enum} from "../../api/visitor";
 
 export default {
   // 组件名称
@@ -85,7 +86,9 @@ export default {
       pageSize: 10,
       orderByColumn: "createTime",
       isAsc: "desc",
-    }, _req)
+    }, _req);
+    await api.saveVisitLog(Enum.LIST_ARTICLE, "", "/", articleRes.code, _req);
+
     if (articleRes.code === 200) return {articles: articleRes.rows, total: articleRes.total}
   },
   methods: {

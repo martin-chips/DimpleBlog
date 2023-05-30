@@ -48,6 +48,7 @@
 </template>
 <script>
 import api from "@/api/";
+import {Enum} from "../../api/visitor";
 
 export default {
   name: "archives",
@@ -76,6 +77,7 @@ export default {
   },
   async asyncData({store, route, isServer, _req}) {
     const archiveRes = await api.getAsyncArchives(_req);
+    await api.saveVisitLog(Enum.LIST_ARCHIVES, "", "/app/archives", archiveRes.code, _req);
     if (archiveRes.code === 200) {
       console.log(archiveRes.rows)
       return {

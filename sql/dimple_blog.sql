@@ -21,7 +21,7 @@ create table blog_article
     create_time    datetime              default (now()) null,
     update_by      varchar(50) null,
     update_time    datetime              default (now()) null
-) comment 'Blog article';
+)AUTO_INCREMENT=200000  comment 'Blog article';
 
 insert into blog_article (id, title, header_image, content, category_id, original, summary, article_status, like_count,
                           create_by, create_time, update_by, update_time)
@@ -463,7 +463,7 @@ create table blog_category
     create_time datetime default (now()) null,
     update_by   varchar(55) null,
     update_time datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP null
-) comment 'blog category';
+)AUTO_INCREMENT=200000 comment 'blog category';
 insert into dimple-cloud.blog_category (id, title, create_by, create_time, update_by, update_time)
 values (1, 'Markdown', 'Dimple', sysdate(), null, sysdate());
 drop table if exists blog_comment;
@@ -490,7 +490,7 @@ create table blog_comment
     create_time datetime     default (now()) null,
     update_by   varchar(55) null,
     update_time datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP null
-);
+)AUTO_INCREMENT=200000;
 
 drop table if exists blog_tag;
 create table blog_tag
@@ -501,7 +501,7 @@ create table blog_tag
     create_time datetime default (now()) null,
     update_by   varchar(55) null,
     update_time datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP null
-);
+)AUTO_INCREMENT=200000;
 
 drop table if exists blog_article_tag;
 create table blog_article_tag
@@ -509,7 +509,7 @@ create table blog_article_tag
     id         bigint auto_increment primary key,
     article_id bigint not null,
     tag_id     bigint not null
-);
+)AUTO_INCREMENT=200000;
 
 drop table if exists blog_visit_log;
 create table blog_visit_log
@@ -520,6 +520,7 @@ create table blog_visit_log
     request_uri     varchar(255)  default '' comment 'user request uri',
     referer         varchar(255)  default '' comment ' user referer in the http request',
     request_method  varchar(255)  default '' comment '',
+    request_type    tinyint       default 0 comment 'page change is 1, api request is 0',
     request_params  varchar(2000) default '' comment '',
     response_params varchar(2000) default '' comment '',
     exception       varchar(2000) default '' comment '',
@@ -534,7 +535,7 @@ create table blog_visit_log
     create_time     datetime      default (now()) null,
     update_by       varchar(55) null,
     update_time     datetime      DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP null
-);
+)AUTO_INCREMENT=200000;
 drop table if exists blog_link;
 create table blog_link
 (
@@ -551,7 +552,7 @@ create table blog_link
     create_time   datetime              default (now()) null,
     update_by     varchar(55) null,
     update_time   datetime              default (now()) null
-);
+)AUTO_INCREMENT=200000;
 
 insert into blog_link (title, header_image, description, url, email, email_content, link_status, visit_count, create_by,
                        create_time, update_by, update_time)
@@ -570,7 +571,7 @@ create table blog_config
     create_time  datetime default (now()) null,
     update_by    varchar(55) null,
     update_time  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP null
-);
+)AUTO_INCREMENT=200000;
 insert into blog_config (id, config_value, create_by, create_time, update_by, update_time)
 values (1, '{
     "commentConfig": {

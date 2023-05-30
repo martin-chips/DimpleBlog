@@ -6,6 +6,7 @@ import com.dimple.common.core.utils.StringUtils;
 import com.dimple.common.core.utils.ip.IpUtils;
 import com.dimple.common.log.annotation.VisitLog;
 import com.dimple.common.log.enums.BusinessStatus;
+import com.dimple.common.log.enums.RequestType;
 import com.dimple.common.log.enums.VisitLogTitle;
 import com.dimple.common.log.service.AsyncLogService;
 import com.dimple.system.api.model.BlogVisitLogBO;
@@ -98,6 +99,7 @@ public class VisitLogAspect {
                 blogVisitLogBO.setStatusCode(BusinessStatus.FAIL.ordinal());
                 blogVisitLogBO.setException(ThrowableUtil.stackTraceToString(e).substring(0, 2000));
             }
+            blogVisitLogBO.setRequestType(RequestType.API_REQUEST.getCode());
             asyncLogService.saveVisitLog(blogVisitLogBO);
         } catch (Exception exception) {
             log.error(exception.getMessage(), exception);

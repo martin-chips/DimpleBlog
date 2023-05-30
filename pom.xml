@@ -6,14 +6,14 @@
 
     <groupId>com.dimple</groupId>
     <artifactId>dimple</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
 
     <name>Dimple</name>
     <url>http://www.bianxf.com</url>
     <description>Dimple微服务系统：http://patorjk.com/software/taag =>Star Wars</description>
 
     <properties>
-        <dimple.version>3.0.0</dimple.version>
+        <dimple.version>3.1.0</dimple.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -166,56 +166,56 @@
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-common-core</artifactId>
-                <version>${dimple.version}</version>
+                <version>3.1.0</version>
             </dependency>
 
             <!-- 接口模块 -->
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-common-swagger</artifactId>
-                <version>${dimple.version}</version>
+                <version>3.1.0</version>
             </dependency>
 
             <!-- 安全模块 -->
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-common-security</artifactId>
-                <version>${dimple.version}</version>
+                <version>3.1.0</version>
             </dependency>
 
             <!-- 权限范围 -->
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-common-datascope</artifactId>
-                <version>${dimple.version}</version>
+                <version>3.1.0</version>
             </dependency>
 
             <!-- 多数据源 -->
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-common-datasource</artifactId>
-                <version>${dimple.version}</version>
+                <version>3.1.0</version>
             </dependency>
 
             <!-- 分布式事务 -->
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-common-seata</artifactId>
-                <version>${dimple.version}</version>
+                <version>3.1.0</version>
             </dependency>
 
             <!-- 日志记录 -->
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-common-log</artifactId>
-                <version>${dimple.version}</version>
+                <version>3.1.0</version>
             </dependency>
 
             <!-- 缓存服务 -->
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>dimple-common-redis</artifactId>
-                <version>${dimple.version}</version>
+                <version>3.1.0</version>
             </dependency>
 
             <!-- 系统接口 -->

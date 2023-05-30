@@ -56,6 +56,7 @@ import copyright from "../article/components/copyright";
 import share from "../article/components/share";
 import Prism from "@/assets/js/prism.js";
 import axios from "axios";
+import {Enum} from "../../api/visitor";
 
 function jumpAnchor(route) {
   if (route.query.anchor === 'a_cm') {
@@ -103,17 +104,19 @@ export default {
       return "";
     },
     url() {
-      return `${process.env.VUE_APP_BASE_URL}/app/article/${this.article.id}`;
+      return `${process.env.BASE_URL}/app/about`;
     },
   },
   async asyncData({store, route, isServer, _req}) {
-    const articleRes = await api.getAsyncAbout(_req)
-    if (articleRes.code === 200) {
+    const aboutRes = await api.getAsyncAbout(_req);
+    await api.saveVisitLog(Enum.LIST_ABOUT, "-2000", "/app/about", aboutRes.code, _req);
+    if (aboutRes.code === 200) {
       if (!isServer) setTimeout(() => jumpAnchor(route), 0);
-      const response = await axios.post(process.env.BASE_URL + '/api/markdown/convert', {content: articleRes.data.content});
-      articleRes.data.content = response.data;
-      return {article: articleRes.data}
+      const response = await axios.post(process.env.BASE_URL + '/api/markdown/convert', {content: aboutRes.data.content});
+      aboutRes.data.content = response.data;
+      return {article: aboutRes.data}
     }
+
   },
   mounted() {
     this.$nextTick(function () {

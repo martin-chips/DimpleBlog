@@ -1,9 +1,3 @@
-/*!
- * Vue-Lazyload.js v1.3.4
- * (c) 2022 Awe <hilongjw@gmail.com>
- * Released under the MIT License.
- */
-
 function createCommonjsModule(fn, module) {
   return (module = { exports: {} }), fn(module, module.exports), module.exports
 }

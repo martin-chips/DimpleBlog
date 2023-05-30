@@ -146,7 +146,6 @@ readyPromise.then(() => {
     } else {
       console.log("current port is " + safeport + " ,just ignore generate sitemap.")
     }
-    // 执行其他任务代码
   });
   server.get('/sitemap.xml/:reload?', (req, res) => {
     if (req.params.reload) {
